@@ -9,7 +9,7 @@ from typing import Union
 
 
 class ApiClientV2:
-    def __init__(self, base_url: str = "http://127.0.0.1:8000/v1/miners/"):
+    def __init__(self, base_url: str = "https://api.crypticorn.dev/v1/miners/"):
         self.base_url = base_url
 
     def get_response(self, endpoint: str, params: dict = None, dict_key: str = None) -> pd.DataFrame or dict:
