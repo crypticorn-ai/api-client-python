@@ -19,8 +19,9 @@ class PredictionData(BaseModel):
     p90: list[float]
 
 class ApiClient:
-    def __init__(self, base_url: str = "https://api.crypticorn.com"):
+    def __init__(self, base_url: str = "https://api.crypticorn.com", api_key: str = None):
         self.base_url = base_url
+        self.api_key = api_key
         self.client = httpx.Client()
 
     def get_response(self, endpoint: str, params: dict = None, dict_key: str = None) -> Union[DataFrame, dict]:
@@ -61,7 +62,7 @@ class ApiClient:
         df.sort_values(by="timestamp", ascending=False, inplace=True)
         return df
 
-    def get_bc_historical(self, ticker: str, entries: int, reverse: bool = False) -> DataFrame:
+    def get_bc_historical(self, ticker: str, interval: str, entries: int, reverse: bool = False) -> DataFrame:
         """
 
         get: ticker + open_unix + OHLC + Volume data , as pandas dataframe
@@ -72,17 +73,24 @@ class ApiClient:
 
         timestamp: int,
         ticker: str
-        open: float,
-        high: float,
-        low: float,
-        close: float,
-        volume: float,
+        open_interval: float,
+        high_interval: float,
+        low_interval: float,
+        close_interval: float,
+        volume_interval: float,
         """
-        df = self.get_response("/historical", {"ticker": ticker, "entries": entries, "reverse": reverse})
+        df = self.get_response("/historical", {"ticker": ticker + "@" + interval, "entries": entries, "reverse": reverse})
         df.pop("id")
         desired_order = ["timestamp", "ticker", "open", "high", "low", "close", "volume"]
         df = df[desired_order]
-        df.rename(columns={"ticker": "coin"}, inplace=True)
+        df.rename(columns={
+            "ticker": "coin",
+            "open": f"open_{interval}",
+            "high": f"high_{interval}",
+            "low": f"low_{interval}",
+            "close": f"close_{interval}",
+            "volume": f"volume_{interval}"
+        }, inplace=True)
         df[["coin", "interval"]] = df["coin"].str.split("@", expand=True)
         df.sort_values(by="timestamp", ascending=False, inplace=True)
         return df
@@ -109,7 +117,10 @@ class ApiClient:
     def post_prediction(self, data: PredictionData) -> dict:
         response = self.client.post(
             urljoin(self.base_url, "/v1/predictions"),
-            json=data
+            json=data.dict(),
+            headers={
+                "Authorization": f"Bearer {self.api_key}"
+            }
         )
         return response.json()
 
@@ -123,7 +134,7 @@ if __name__ == "__main__":
     print("")
     print("Bitcoin Historical Data")
     print("->")
-    print(client.get_bc_historical("BTCUSDT@15m", 5))
+    print(client.get_bc_historical("BTCUSDT", "15m", 5))
     print("")
     print("Fear and Greed Index Historical Data")
     print("->")
