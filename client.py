@@ -26,6 +26,8 @@ class ApiClient:
 
     def get_response(self, endpoint: str, params: dict = None, dict_key: str = None) -> Union[DataFrame, dict]:
         full_url = urljoin(self.base_url, "/v1/miners" + endpoint)
+        print(full_url)
+        print(params)
         try:
             response = self.client.get(full_url, params=params)
             response.raise_for_status()
@@ -80,7 +82,6 @@ class ApiClient:
         volume_interval: float,
         """
         df = self.get_response("/historical", {"ticker": ticker + "@" + interval, "entries": entries, "reverse": reverse})
-        df.pop("id")
         desired_order = ["timestamp", "ticker", "open", "high", "low", "close", "volume"]
         df = df[desired_order]
         df.rename(columns={
@@ -92,6 +93,7 @@ class ApiClient:
             "volume": f"volume_{interval}"
         }, inplace=True)
         df[["coin", "interval"]] = df["coin"].str.split("@", expand=True)
+        df.pop("interval")
         df.sort_values(by="timestamp", ascending=False, inplace=True)
         return df
     
