@@ -1,8 +1,8 @@
-from altair import Optional
 import httpx
+import pandas as pd
 from pandas import DataFrame
 from pydantic import BaseModel
-from typing import Union, List
+from typing import Optional, Union, List
 from urllib.parse import urljoin
 
 class PredictionData(BaseModel):
@@ -12,6 +12,7 @@ class PredictionData(BaseModel):
     symbol: str
     timestamp: int
     version: str
+    base_price: float
     p10: list[float]
     p30: list[float]
     p50: list[float]
@@ -125,6 +126,59 @@ class ApiClient:
             }
         )
         return response.json()
+    
+    def get_latest_predictions(self) -> DataFrame:
+        response = self.client.get(
+            urljoin(self.base_url, "/v1/predictions/latest?version=2"),
+            headers={
+                "Authorization": f"Bearer {self.api_key}"
+            }
+        )
+        arr = response.json()
+        flatarr = []
+        for i in arr:
+            for index, _ in enumerate(i["p50"]):
+                interval = 900
+                ts = i["timestamp"]
+                ts = ts - (ts % interval)
+                ts = ts + (index * interval)
+                pred_dict = {
+                    "id": i["id"],
+                    "action": i["action"],
+                    "course_change": i["course_change"],
+                    "symbol": i["symbol"],
+                    "timestamp": ts,
+                    "version": i["version"],
+                    # "base_price": i["base_price"],
+                    "p10": i["p10"][index],
+                    "p30": i["p30"][index],
+                    "p50": i["p50"][index],
+                    "p70": i["p70"][index],
+                    "p90": i["p90"][index]
+                }
+                flatarr.append(pred_dict)
+        df = DataFrame(flatarr)
+        df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
+        return df
+    
+    def get_prediction(self, id: int) -> PredictionData:
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/predictions/id/{id}"),
+            headers={
+                "Authorization": f"Bearer {self.api_key}"
+            }
+        )
+        return response.json()
+    
+    def get_prediction_time(self, id) -> DataFrame:
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/predictions/time/{id}"),
+            headers={
+                "Authorization": f"Bearer {self.api_key}"
+            }
+        )
+        arr = response.json()
+        return DataFrame(arr)
 
 # testing
 if __name__ == "__main__":
