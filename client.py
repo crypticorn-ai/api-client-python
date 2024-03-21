@@ -30,7 +30,7 @@ class ApiClient:
         print(full_url)
         print(params)
         try:
-            response = self.client.get(full_url, params=params)
+            response = self.client.get(full_url, params=params, timeout=None)
             response.raise_for_status()
         except httpx.HTTPStatusError as e:
             print(f"HTTP error occurred: {e}")
@@ -179,10 +179,33 @@ class ApiClient:
         )
         arr = response.json()
         return DataFrame(arr)
+    
+    def get_udf_history(self, symbol: str, entries: int) -> DataFrame:
+        now = int(pd.Timestamp.now().timestamp())
+        response = self.client.get(
+            urljoin(self.base_url, "/v1/udf/history"),
+            headers={
+                "Authorization": f"Bearer {self.api_key}"
+            },
+            params={
+                "from": now - (entries * 900),
+                "to": now,
+                "symbol": symbol,
+                "resolution": "15",
+                "countback": entries
+            }
+        )
+        # # {'s': 'ok', 't': [1710982800.0, 1710983700.0], 'c': [67860.61, 67930.01], 'o': [67656.01, 67860.6], 'h': [67944.69, 67951.15], 'l': [67656.0, 67792.06], 'v': [448.61539, 336.9907]}
+        result = response.json()
+        # construct dataframe for t, c, o, h, l, v arrays
+        df = DataFrame(result)
+        df['t'] = pd.to_datetime(df['t'], unit='s')
+        df.pop('s')
+        return df
 
 # testing
 if __name__ == "__main__":
-    client = ApiClient("https://api.crypticorn.dev")
+    client = ApiClient(base_url="https://api.crypticorn.dev", api_key="4cf3c24d455077031e4b645d32853be065b2c01af6b885ff1139e7dc958f52d3")
     print("")
     print("Economics News")
     print("->")
@@ -190,8 +213,13 @@ if __name__ == "__main__":
     print("")
     print("Bitcoin Historical Data")
     print("->")
-    print(client.get_bc_historical("BTCUSDT", "15m", 5))
+    # try 250000 there is no timeout
+    print(client.get_bc_historical("BTCUSDT", "15m", 25))
     print("")
     print("Fear and Greed Index Historical Data")
     print("->")
     print(client.get_fgi_historical(5))
+    print("")
+    print("Get UDF History")
+    print("->")
+    print(client.get_udf_history("BTCUSDT", 25))
