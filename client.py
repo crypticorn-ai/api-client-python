@@ -12,7 +12,7 @@ class PredictionData(BaseModel):
     symbol: str
     timestamp: int
     version: str
-    base_price: float
+    base_price: Optional[float]
     p10: list[float]
     p30: list[float]
     p50: list[float]
