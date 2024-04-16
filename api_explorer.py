@@ -1,6 +1,6 @@
 import pprint
 import streamlit as st
-from api_client import ApiClient
+from client import ApiClient, PredictionData, TrendQuery, TrendData
 import pandas as pd
 import inspect
 
@@ -9,19 +9,25 @@ api_client = ApiClient()
 
 def get_class_vars(class_instance, exclude_methods: list) -> dict:
     methods = inspect.getmembers(class_instance, predicate=inspect.ismethod)
-    methods = [m for m in methods if
-               not (m[0].startswith('__') and m[0].endswith('__')) and m[0] not in exclude_methods]
+    methods = [
+        m
+        for m in methods
+        if not (m[0].startswith("__") and m[0].endswith("__"))
+        and m[0] not in exclude_methods
+    ]
 
     res = {}
     for m in methods:
-        function_name = m[0],
+        function_name = (m[0],)
         function_ref = m[1]
-        res.update({
-            function_name[0]: {
-                "func_ref": function_ref,
-                "args": function_ref.__annotations__
+        res.update(
+            {
+                function_name[0]: {
+                    "func_ref": function_ref,
+                    "args": function_ref.__annotations__,
+                }
             }
-        })
+        )
 
     return res
 
@@ -30,8 +36,7 @@ class_vars = get_class_vars(api_client, exclude_methods=["get_response"])
 
 
 def main():
-    st.set_page_config(page_title="Chat with multiple PDFs",
-                       page_icon=":books:")
+    st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
     st.header("Api Explorer :books:")
     load_explorer_dropdown()
 
@@ -54,7 +59,9 @@ def load_explorer_dropdown():
 
         with form:
             ticker = st.text_input("Ticker", placeholder="BTCUSDT")
-            entries = st.number_input("Entries", placeholder="Number of entries", min_value=1)
+            entries = st.number_input(
+                "Entries", placeholder="Number of entries", min_value=1
+            )
             submit_button = st.form_submit_button("submit", type="primary")
 
         if submit_button:
@@ -77,6 +84,10 @@ def create_submit_form(selection: str):
         str: st.text_input,
         bool: st.checkbox,
         list: st.text_input,
+        float: st.number_input,
+        PredictionData: st.text_input,
+        TrendQuery: st.text_input,
+        TrendData: st.text_input,
     }
 
     form = st.form("test form")
@@ -87,12 +98,7 @@ def create_submit_form(selection: str):
         for arg in args:
             if arg == "return":
                 continue
-
-            if args[arg] is int:
-                res = mapping[args[arg]](arg, min_value=1)
-            else:
-                res = mapping[args[arg]](arg)
-
+            res = mapping[args[arg]](arg)
             collected_data.append(res)
 
         button_clicked = form.form_submit_button("submit", type="primary")
@@ -105,5 +111,5 @@ def create_submit_form(selection: str):
                 st.dataframe(df)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
