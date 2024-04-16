@@ -4,6 +4,7 @@ from pandas import DataFrame
 from pydantic import BaseModel
 from typing import Optional, Union, List
 from urllib.parse import urljoin
+import os
 
 class PredictionData(BaseModel):
     id: Optional[int] = None
@@ -19,13 +20,36 @@ class PredictionData(BaseModel):
     p70: list[float]
     p90: list[float]
 
+
+class TrendData(BaseModel):
+    timestamps: Optional[list[int]]
+    positive_prob: list[float]
+    symbol: str
+    version: Optional[str]
+
+
+class TrendQuery(BaseModel):
+    symbol: str
+    limit: int
+    offset: int
+    sort: str
+    dir: str
+    from_ts: int
+    to_ts: int
+    version: str = "1"
+
+
 class ApiClient:
-    def __init__(self, base_url: str = "https://api.crypticorn.com", api_key: str = None):
+    def __init__(
+        self, base_url: str = "https://api.crypticorn.com", api_key: str = None
+    ):
         self.base_url = base_url
         self.api_key = api_key
         self.client = httpx.Client()
 
-    def get_response(self, endpoint: str, params: dict = None, dict_key: str = None) -> Union[DataFrame, dict]:
+    def get_response(
+        self, endpoint: str, params: dict = None, dict_key: str = None
+    ) -> Union[DataFrame, dict]:
         full_url = urljoin(self.base_url, "/v1/miners" + endpoint)
         print(full_url)
         print(params)
@@ -65,7 +89,9 @@ class ApiClient:
         df.sort_values(by="timestamp", ascending=False, inplace=True)
         return df
 
-    def get_bc_historical(self, ticker: str, interval: str, entries: int, reverse: bool = False) -> DataFrame:
+    def get_bc_historical(
+        self, ticker: str, interval: str, entries: int, reverse: bool = False
+    ) -> DataFrame:
         """
 
         get: ticker + open_unix + OHLC + Volume data , as pandas dataframe
@@ -82,22 +108,36 @@ class ApiClient:
         close_interval: float,
         volume_interval: float,
         """
-        df = self.get_response("/historical", {"ticker": ticker + "@" + interval, "entries": entries, "reverse": reverse})
-        desired_order = ["timestamp", "ticker", "open", "high", "low", "close", "volume"]
+        df = self.get_response(
+            "/historical",
+            {"ticker": ticker + "@" + interval, "entries": entries, "reverse": reverse},
+        )
+        desired_order = [
+            "timestamp",
+            "ticker",
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume",
+        ]
         df = df[desired_order]
-        df.rename(columns={
-            "ticker": "coin",
-            "open": f"open_{interval}",
-            "high": f"high_{interval}",
-            "low": f"low_{interval}",
-            "close": f"close_{interval}",
-            "volume": f"volume_{interval}"
-        }, inplace=True)
+        df.rename(
+            columns={
+                "ticker": "coin",
+                "open": f"open_{interval}",
+                "high": f"high_{interval}",
+                "low": f"low_{interval}",
+                "close": f"close_{interval}",
+                "volume": f"volume_{interval}",
+            },
+            inplace=True,
+        )
         df[["coin", "interval"]] = df["coin"].str.split("@", expand=True)
         df.pop("interval")
         df.sort_values(by="timestamp", ascending=False, inplace=True)
         return df
-    
+
     def get_fgi_historical(self, days: int) -> DataFrame:
         """
 
@@ -111,28 +151,21 @@ class ApiClient:
         value: int,
 
         """
-        df = self.get_response(
-            endpoint="/historical/fgi",
-            params={"days": days}
-        )
+        df = self.get_response(endpoint="/historical/fgi", params={"days": days})
         return df
-    
+
     def post_prediction(self, data: PredictionData) -> dict:
         response = self.client.post(
             urljoin(self.base_url, "/v1/predictions"),
             json=data.dict(),
-            headers={
-                "Authorization": f"Bearer {self.api_key}"
-            }
+            headers={"Authorization": f"Bearer {self.api_key}"},
         )
         return response.json()
-    
+
     def get_latest_predictions(self) -> DataFrame:
         response = self.client.get(
             urljoin(self.base_url, "/v1/predictions/latest?version=2"),
-            headers={
-                "Authorization": f"Bearer {self.api_key}"
-            }
+            headers={"Authorization": f"Bearer {self.api_key}"},
         )
         arr = response.json()
         flatarr = []
@@ -154,58 +187,72 @@ class ApiClient:
                     "p30": i["p30"][index],
                     "p50": i["p50"][index],
                     "p70": i["p70"][index],
-                    "p90": i["p90"][index]
+                    "p90": i["p90"][index],
                 }
                 flatarr.append(pred_dict)
         df = DataFrame(flatarr)
-        df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
+        df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s")
         return df
-    
+
     def get_prediction(self, id: int) -> PredictionData:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/predictions/id/{id}"),
-            headers={
-                "Authorization": f"Bearer {self.api_key}"
-            }
+            headers={"Authorization": f"Bearer {self.api_key}"},
         )
         return response.json()
-    
+
     def get_prediction_time(self, id) -> DataFrame:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/predictions/time/{id}"),
-            headers={
-                "Authorization": f"Bearer {self.api_key}"
-            }
+            headers={"Authorization": f"Bearer {self.api_key}"},
         )
         arr = response.json()
         return DataFrame(arr)
-    
+
     def get_udf_history(self, symbol: str, entries: int) -> DataFrame:
         now = int(pd.Timestamp.now().timestamp())
         response = self.client.get(
             urljoin(self.base_url, "/v1/udf/history"),
-            headers={
-                "Authorization": f"Bearer {self.api_key}"
-            },
+            headers={"Authorization": f"Bearer {self.api_key}"},
             params={
                 "from": now - (entries * 900),
                 "to": now,
                 "symbol": symbol,
                 "resolution": "15",
-                "countback": entries
-            }
+                "countback": entries,
+            },
         )
         # # {'s': 'ok', 't': [1710982800.0, 1710983700.0], 'c': [67860.61, 67930.01], 'o': [67656.01, 67860.6], 'h': [67944.69, 67951.15], 'l': [67656.0, 67792.06], 'v': [448.61539, 336.9907]}
         result = response.json()
         # construct dataframe for t, c, o, h, l, v arrays
         df = DataFrame(result)
-        df['t'] = pd.to_datetime(df['t'], unit='s')
-        df.pop('s')
+        df["t"] = pd.to_datetime(df["t"], unit="s")
+        df.pop("s")
         return df
+
+    def post_trend(self, data: TrendData) -> dict:
+        response = self.client.post(
+            urljoin(self.base_url, "/v1/trends"),
+            json=data.dict(),
+            headers={"Authorization": f"Bearer {self.api_key}"},
+        )
+        return response.json()
+
+    def get_trends(self, query: TrendQuery):
+        response = self.client.get(
+            urljoin(self.base_url, "/v1/trends"),
+            headers={"Authorization": f"Bearer {self.api_key}"},
+            params=query.dict(),
+        )
+        return response.json()
+
 
 # testing
 if __name__ == "__main__":
-    client = ApiClient(base_url="https://api.crypticorn.dev", api_key="4cf3c24d455077031e4b645d32853be065b2c01af6b885ff1139e7dc958f52d3")
+    client = ApiClient(
+        base_url=os.getenv("CRYPTICORN_API_URL", "https://api.crypticorn.dev"),
+        api_key="4cf3c24d455077031e4b645d32853be065b2c01af6b885ff1139e7dc958f52d3",
+    )
     print("")
     print("Economics News")
     print("->")
@@ -220,6 +267,35 @@ if __name__ == "__main__":
     print("->")
     print(client.get_fgi_historical(5))
     print("")
-    print("Get UDF History")
+    # print("Get UDF History")
+    # print("->")
+    # print(client.get_udf_history("BTCUSDT", 25))
+    print("")
+    print("Post Trend Data")
     print("->")
-    print(client.get_udf_history("BTCUSDT", 25))
+    print(
+        client.post_trend(
+            TrendData(
+                timestamps=[4, 8, 12, 16, 24, 32, 48, 64],
+                positive_prob=[0.1, 0.9, 0.2, 0.8, 0.3, 0.7, 0.4, 0.6],
+                symbol="BTCUSDT",
+                version="1",
+            )
+        )
+    )
+    # query trend data
+    print("Get Trend Data")
+    print("->")
+    print(
+        client.get_trends(
+            TrendQuery(
+                symbol="BTCUSDT",
+                limit=10,
+                offset=0,
+                sort="timestamp",
+                dir="desc",
+                from_ts=1613225600,
+                to_ts=1812793600,
+            )
+        )
+    )
