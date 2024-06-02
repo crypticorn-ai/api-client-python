@@ -244,7 +244,8 @@ class ApiClient:
             headers={"Authorization": f"Bearer {self.api_key}"},
             params=query.dict(),
         )
-        return response.json()
+        df = DataFrame(response.json())
+        return df
 
 
 # testing
