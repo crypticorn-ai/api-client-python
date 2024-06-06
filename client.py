@@ -247,6 +247,56 @@ class ApiClient:
         df = DataFrame(response.json())
         return df
 
+    # New Kline Service
+    def get_symbols(self, market: str) -> DataFrame:
+        """
+        get: symbol for futures or spot, as pandas dataframe
+        market: futures or spot
+        """
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/klines/symbols/{market}"),
+        )
+        df = DataFrame(response.json()['symbols'])
+        return df
+
+    def get_klines(self, market: str, symbol: str,  interval: str, limit: int, start_timestamp: int = None, end_timestamp: int = None) -> DataFrame:
+        """
+        get: unix_time + OHLCV data , as pandas dataframe
+        symbol have to be in capital case e.g. (BTCUSDT)
+        market: futures or spot
+        interval: 1m, 3m, 5m, 15m, 30m, 1h, 4h, 1d
+        """
+        params = {"limit": limit}
+        if start_timestamp is not None:
+            params["start"] = start_timestamp
+        if end_timestamp is not None:
+            params["end"] = end_timestamp
+            
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/klines/{market}/{interval}/{symbol}"),
+            params=params,
+        )
+        df = DataFrame(response.json()['data'])
+        return df
+
+    def get_funding_rate(self, symbol: str, start_timestamp: int = None, end_timestamp: int = None, limit: int = 10) -> DataFrame:
+        """
+        get: unix_time + funding rate data , as pandas dataframe
+        symbol have to be in capital case e.g. (BTCUSDT)
+        start_timestamp and end_timestamp are optional
+        """
+        params = {"limit": limit}
+        if start_timestamp is not None:
+            params["start"] = start_timestamp
+        if end_timestamp is not None:
+            params["end"] = end_timestamp
+
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/klines/funding_rates/{symbol}"),
+            params=params,
+        )
+        df = DataFrame(response.json()['data'])
+        return df
 
 # testing
 if __name__ == "__main__":
@@ -300,3 +350,21 @@ if __name__ == "__main__":
             )
         )
     )
+    print("Kline Service")
+    print("->")
+    print("Kline Symbols for Futures")
+    print("->")
+    print(client.get_symbols("futures"))
+    print("Kline Symbols for Spot")
+    print("->")
+    print(client.get_symbols("spot"))
+    print("Futures Klines")
+    print("->")
+    print(client.get_klines("futures", "BTCUSDT", "1m", 10))
+    print("Spot Klines")
+    print("->")
+    print(client.get_klines("spot", "BTCUSDT", "1m", 10))
+    print("")
+    print("Funding Rate")
+    print("->")
+    print(client.get_funding_rate(symbol="BTCUSDT"))
