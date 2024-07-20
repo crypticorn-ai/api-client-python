@@ -297,6 +297,13 @@ class ApiClient:
         )
         df = DataFrame(response.json()['data'])
         return df
+    
+    def list_orders(self) -> DataFrame:
+        response = self.client.get(
+            urljoin(self.base_url, "/v1/trade/orders"),
+            headers={"Authorization": f"Bearer {self.api_key}"},
+        )
+        return DataFrame(response.json())
 
 # testing
 if __name__ == "__main__":
