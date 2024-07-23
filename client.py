@@ -41,10 +41,11 @@ class TrendQuery(BaseModel):
 
 class ApiClient:
     def __init__(
-        self, base_url: str = "https://api.crypticorn.com", api_key: str = None
+        self, base_url: str = "https://api.crypticorn.com", api_key: str = None, token: str = None
     ):
         self.base_url = base_url
         self.api_key = api_key
+        self.token = token
         self.client = httpx.Client()
 
     def get_response(
@@ -299,6 +300,27 @@ class ApiClient:
         )
         df = DataFrame(response.json()['data'])
         return df
+    
+    def list_orders(self) -> DataFrame:
+        response = self.client.get(
+            urljoin(self.base_url, "/v1/trade/orders"),
+            headers={"Authorization": f"Bearer {self.api_key}"},
+        )
+        return DataFrame(response.json())
+    
+    def verify(self, token: str|None = None) -> bool:
+        if token is None:
+            token = self.token
+        response = self.client.get(
+            self.base_url + "/trpc/verify",
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        response.raise_for_status()
+        try:
+            res = response.json()
+            return res['result']['data']['json']
+        except:
+            return None
 
 # testing
 if __name__ == "__main__":
