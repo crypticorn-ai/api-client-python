@@ -254,7 +254,7 @@ class ApiClient:
         market: futures or spot
         """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/klines/symbols/{market}"),
+            urljoin(self.base_url, f"/v1/klines/symbols/{market}"), timeout=None
         )
         df = DataFrame(response.json()['symbols'])
         return df
@@ -274,9 +274,11 @@ class ApiClient:
             
         response = self.client.get(
             urljoin(self.base_url, f"/v1/klines/{market}/{interval}/{symbol}"),
-            params=params,
+            params=params, timeout=None
         )
         df = DataFrame(response.json()['data'])
+        df['open_datetime'] = pd.to_datetime(df['timestamp'], unit='ms')
+        
         return df
 
     def get_funding_rate(self, symbol: str, start_timestamp: int = None, end_timestamp: int = None, limit: int = 10) -> DataFrame:
@@ -293,7 +295,7 @@ class ApiClient:
 
         response = self.client.get(
             urljoin(self.base_url, f"/v1/klines/funding_rates/{symbol}"),
-            params=params,
+            params=params, timeout=None
         )
         df = DataFrame(response.json()['data'])
         return df
@@ -360,10 +362,10 @@ if __name__ == "__main__":
     print(client.get_symbols("spot"))
     print("Futures Klines")
     print("->")
-    print(client.get_klines("futures", "BTCUSDT", "1m", 10))
+    print(client.get_klines("futures", "BTCUSDT", "1m", 100))
     print("Spot Klines")
     print("->")
-    print(client.get_klines("spot", "BTCUSDT", "1m", 10))
+    print(client.get_klines("spot", "BTCUSDT", "1m", 100))
     print("")
     print("Funding Rate")
     print("->")
