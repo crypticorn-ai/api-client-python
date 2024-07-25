@@ -308,7 +308,18 @@ class ApiClient:
         )
         return DataFrame(response.json())
     
-    def verify(self, token: str|None = None) -> bool:
+    def get_enabled_bots(self) -> DataFrame:
+        response = self.client.get(
+            urljoin(self.base_url, "/v1/trade/bots/enabled"),
+            headers={"Authorization": f"Bearer {self.api_key}"},
+        )
+        data = response.json()
+        return {
+            "bots": DataFrame(data["bots"]),
+            "api_keys": DataFrame(data["api_keys"])
+        }
+
+    def verify(self, token: Union[str, None] = None) -> bool:
         if token is None:
             token = self.token
         response = self.client.get(
@@ -345,50 +356,57 @@ if __name__ == "__main__":
     # print("Get UDF History")
     # print("->")
     # print(client.get_udf_history("BTCUSDT", 25))
+    # print("")
+    # print("Post Trend Data")
+    # print("->")
+    # print(
+    #     client.post_trend(
+    #         TrendData(
+    #             timestamps=[4, 8, 12, 16, 24, 32, 48, 64],
+    #             positive_prob=[0.1, 0.9, 0.2, 0.8, 0.3, 0.7, 0.4, 0.6],
+    #             symbol="BTCUSDT",
+    #             version="1",
+    #         )
+    #     )
+    # )
+    # # query trend data
+    # print("Get Trend Data")
+    # print("->")
+    # print(
+    #     client.get_trends(
+    #         TrendQuery(
+    #             symbol="BTCUSDT",
+    #             limit=10,
+    #             offset=0,
+    #             sort="timestamp",
+    #             dir="desc",
+    #             from_ts=1613225600,
+    #             to_ts=1812793600,
+    #         )
+    #     )
+    # )
+    # print("Kline Service")
+    # print("->")
+    # print("Kline Symbols for Futures")
+    # print("->")
+    # print(client.get_symbols("futures"))
+    # print("Kline Symbols for Spot")
+    # print("->")
+    # print(client.get_symbols("spot"))
+    # print("Futures Klines")
+    # print("->")
+    # print(client.get_klines("futures", "BTCUSDT", "1m", 100))
+    # print("Spot Klines")
+    # print("->")
+    # print(client.get_klines("spot", "BTCUSDT", "1m", 100))
+    # print("")
+    # print("Funding Rate")
+    # print("->")
+    # print(client.get_funding_rate(symbol="BTCUSDT"))
+    print("Enabled Bots")
+    print("->")
+    bots_result = client.get_enabled_bots()
+    print(bots_result["bots"])
     print("")
-    print("Post Trend Data")
-    print("->")
-    print(
-        client.post_trend(
-            TrendData(
-                timestamps=[4, 8, 12, 16, 24, 32, 48, 64],
-                positive_prob=[0.1, 0.9, 0.2, 0.8, 0.3, 0.7, 0.4, 0.6],
-                symbol="BTCUSDT",
-                version="1",
-            )
-        )
-    )
-    # query trend data
-    print("Get Trend Data")
-    print("->")
-    print(
-        client.get_trends(
-            TrendQuery(
-                symbol="BTCUSDT",
-                limit=10,
-                offset=0,
-                sort="timestamp",
-                dir="desc",
-                from_ts=1613225600,
-                to_ts=1812793600,
-            )
-        )
-    )
-    print("Kline Service")
-    print("->")
-    print("Kline Symbols for Futures")
-    print("->")
-    print(client.get_symbols("futures"))
-    print("Kline Symbols for Spot")
-    print("->")
-    print(client.get_symbols("spot"))
-    print("Futures Klines")
-    print("->")
-    print(client.get_klines("futures", "BTCUSDT", "1m", 100))
-    print("Spot Klines")
-    print("->")
-    print(client.get_klines("spot", "BTCUSDT", "1m", 100))
-    print("")
-    print("Funding Rate")
-    print("->")
-    print(client.get_funding_rate(symbol="BTCUSDT"))
+    print("API Keys")
+    print(bots_result["api_keys"])
