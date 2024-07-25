@@ -318,6 +318,15 @@ class ApiClient:
             "bots": DataFrame(data["bots"]),
             "api_keys": DataFrame(data["api_keys"])
         }
+    
+    # 
+    def get_google_trend_keyword(self, keyword: str, timeframe: str = '8m', limit: int = 100) -> DataFrame:
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/google/trends/{keyword}"),
+            params={"timeframe": timeframe, "limit": limit},
+        )
+        # TODO: convert to dataframe
+        return response.json()
 
     def verify(self, token: Union[str, None] = None) -> bool:
         if token is None:
@@ -408,5 +417,8 @@ if __name__ == "__main__":
     bots_result = client.get_enabled_bots()
     print(bots_result["bots"])
     print("")
-    print("API Keys")
-    print(bots_result["api_keys"])
+    # print("API Keys")
+    # print(bots_result["api_keys"])
+    print("Google Trend Keyword")
+    print("->")
+    print(client.get_google_trend_keyword("Bitcoin"))
