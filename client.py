@@ -319,14 +319,87 @@ class ApiClient:
             "api_keys": DataFrame(data["api_keys"])
         }
     
-    # 
+    # Get all keywords available for Google Trends
+    def get_google_trend_keywords_available(self) -> DataFrame:
+        response = self.client.get(
+            urljoin(self.base_url, "/v1/google/keywords"),
+        )
+        df = pd.DataFrame(response.json())
+        return df
+
+    # Get Google Trends data for a specific keyword
     def get_google_trend_keyword(self, keyword: str, timeframe: str = '8m', limit: int = 100) -> DataFrame:
+        """
+        Retrieves Google Trends data for a specific keyword.
+
+        Args:
+            keyword (str): The keyword to retrieve Google Trends data for.
+            timeframe (str, optional): The timeframe for the data. Defaults to '8m'.
+            limit (int, optional): The maximum number of data points to retrieve. Defaults to 100.
+
+        Returns:
+            DataFrame: A pandas DataFrame containing the Google Trends data.
+
+        """
         response = self.client.get(
             urljoin(self.base_url, f"/v1/google/trends/{keyword}"),
             params={"timeframe": timeframe, "limit": limit},
         )
-        # TODO: convert to dataframe
-        return response.json()
+        df = pd.DataFrame(response.json()['data'])
+        return df
+
+    def get_historical_marketcap(self, symbol: str, start_date: str = None, end_date: str = None, limit: int = None) -> DataFrame:
+        """
+        Retrieves historical market cap data for a specific symbol.
+
+        Args:
+            symbol (str): The symbol to retrieve historical market cap data for.
+            start_date (str, optional): The start date for the data. Defaults to None.
+            end_date (str, optional): The end date for the data. Defaults to None.
+            limit (int, optional): The maximum number of data points to retrieve. Defaults to None.
+
+        Returns:
+            DataFrame: A pandas DataFrame containing the historical market cap data.
+
+        """
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/market_service/market_cap/{symbol}"),
+            params={"start_date": start_date, "end_date": end_date, "limit": limit},
+        )
+        df = pd.DataFrame(response.json())
+        return df
+    
+    def get_coins(self) -> DataFrame:
+        response = self.client.get(
+            urljoin(self.base_url, "/v1/market_service/coins"),
+        )
+        df = pd.DataFrame(response.json())
+        return df
+
+    def get_exchange_data(self, exchange_name: str) -> DataFrame:
+        """Exchange names to be added as follows: 
+        Binance, KuCoin, Gate.io, Bybit, Bingx, Bitget
+        """
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/market_service/exchange_data/{exchange_name}"),
+        )
+        df = pd.DataFrame(response.json())
+        return df
+
+    def get_exchange_symbol(self, exchange_name: str, symbol: str) -> DataFrame:
+        """
+        Exchange names to be added as follows: 
+        Binance, KuCoin, Gate.io, Bybit, Bingx, Bitget
+
+        Exchange symbols to be added as follows:
+        Spot -> BTC-USDT, ETH-USDT, LTC-USDT
+        Futures -> BTC-USDT-USDT, ETH-USDT-USDT, LTC-USDT-USDT
+        """
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/market_service/exchange_data/{exchange_name}/{symbol}"),
+        )
+        df = pd.DataFrame(response.json())
+        return df
 
     def verify(self, token: Union[str, None] = None) -> bool:
         if token is None:
@@ -419,6 +492,24 @@ if __name__ == "__main__":
     print("")
     # print("API Keys")
     # print(bots_result["api_keys"])
+    print("Get Keywords for Google Trends")
+    print("->")
+    print(client.get_google_trend_keywords_available())
     print("Google Trend Keyword")
     print("->")
     print(client.get_google_trend_keyword("Bitcoin"))
+    # print("Historical Market Cap")
+    # print("->")
+    # print(client.get_historical_marketcap("BTC", limit=10))
+    # print("Coins")
+    # print("->")
+    # print(client.get_coins())
+    # print("Exchange Data")
+    # print("->")
+    # print(client.get_exchange_data("Binance"))
+    # print("Exchange Spot Symbol")
+    # print("->")
+    # print(client.get_exchange_symbol("Binance", "BTC-USDT"))
+    # print("Exchange Futures Symbol")
+    # print("->")
+    # print(client.get_exchange_symbol("Binance", "BTC-USDT-USDT"))
