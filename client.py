@@ -363,7 +363,7 @@ class ApiClient:
 
         """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/market_service/market_cap/{symbol}"),
+            urljoin(self.base_url, f"/v1/market-service/market-cap/{symbol}"),
             params={"start_date": start_date, "end_date": end_date, "limit": limit},
         )
         df = pd.DataFrame(response.json())
@@ -371,7 +371,7 @@ class ApiClient:
     
     def get_coins(self) -> DataFrame:
         response = self.client.get(
-            urljoin(self.base_url, "/v1/market_service/coins"),
+            urljoin(self.base_url, "/v1/market-service/coins"),
         )
         df = pd.DataFrame(response.json())
         return df
@@ -381,7 +381,7 @@ class ApiClient:
         Binance, KuCoin, Gate.io, Bybit, Bingx, Bitget
         """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/market_service/exchange_data/{exchange_name}"),
+            urljoin(self.base_url, f"/v1/market-service/exchange-data/{exchange_name}"),
         )
         df = pd.DataFrame(response.json())
         return df
@@ -396,7 +396,7 @@ class ApiClient:
         Futures -> BTC-USDT-USDT, ETH-USDT-USDT, LTC-USDT-USDT
         """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/market_service/exchange_data/{exchange_name}/{symbol}"),
+            urljoin(self.base_url, f"/v1/market-service/exchange-data/{exchange_name}/{symbol}"),
         )
         df = pd.DataFrame(response.json())
         return df
