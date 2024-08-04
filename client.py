@@ -405,7 +405,7 @@ class ApiClient:
         if token is None:
             token = self.token
         response = self.client.get(
-            self.base_url + "/trpc/verify",
+            self.base_url + "/v1/auth/verify",
             headers={"Authorization": f"Bearer {token}"},
         )
         response.raise_for_status()
