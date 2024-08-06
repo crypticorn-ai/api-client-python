@@ -363,7 +363,7 @@ class ApiClient:
 
         """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/market-service/market-cap/{symbol}"),
+            urljoin(self.base_url, f"/v1/market/market-cap/{symbol}"),
             params={"start_date": start_date, "end_date": end_date, "limit": limit},
         )
         df = pd.DataFrame(response.json())
@@ -371,7 +371,7 @@ class ApiClient:
     
     def get_coins(self) -> DataFrame:
         response = self.client.get(
-            urljoin(self.base_url, "/v1/market-service/coins"),
+            urljoin(self.base_url, "/v1/market/coins"),
         )
         df = pd.DataFrame(response.json())
         return df
@@ -381,7 +381,7 @@ class ApiClient:
         Binance, KuCoin, Gate.io, Bybit, Bingx, Bitget
         """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/market-service/exchange-data/{exchange_name}"),
+            urljoin(self.base_url, f"/v1/market/exchange-data/{exchange_name}"),
         )
         df = pd.DataFrame(response.json())
         return df
@@ -396,7 +396,35 @@ class ApiClient:
         Futures -> BTC-USDT-USDT, ETH-USDT-USDT, LTC-USDT-USDT
         """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/market-service/exchange-data/{exchange_name}/{symbol}"),
+            urljoin(self.base_url, f"/v1/market/exchange-data/{exchange_name}/{symbol}"),
+        )
+        df = pd.DataFrame(response.json())
+        return df
+    
+    def get_fng_index(self, indicator_name: str, start_date: str = None, end_date: str = None, limit: int = None) -> DataFrame:
+        """
+        Retrieves Fear and Greed Index data for a specific indicator name.
+
+        Args:
+            indicator_name (str): The indicator name to retrieve Fear and Greed Index data for.
+            start_date (str, optional): The start date for the data. Defaults to None.
+            end_date (str, optional): The end date for the data. Defaults to None.
+            limit (int, optional): The maximum number of data points to retrieve. Defaults to None.
+
+        Returns:
+            DataFrame: A pandas DataFrame containing the Fear and Greed Index data.
+
+        """
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/market/fng-index/{indicator_name}"),
+            params={"start_date": start_date, "end_date": end_date, "limit": limit},
+        )
+        df = pd.DataFrame(response.json())
+        return df
+
+    def get_indicator_names(self) -> DataFrame:
+        response = self.client.get(
+            urljoin(self.base_url, "/v1/market/fng-index/list-indicators"),
         )
         df = pd.DataFrame(response.json())
         return df
@@ -492,12 +520,12 @@ if __name__ == "__main__":
     print("")
     # print("API Keys")
     # print(bots_result["api_keys"])
-    print("Get Keywords for Google Trends")
-    print("->")
-    print(client.get_google_trend_keywords_available())
-    print("Google Trend Keyword")
-    print("->")
-    print(client.get_google_trend_keyword("Bitcoin"))
+    # print("Get Keywords for Google Trends")
+    # print("->")
+    # print(client.get_google_trend_keywords_available())
+    # print("Google Trend Keyword")
+    # print("->")
+    # print(client.get_google_trend_keyword("Bitcoin"))
     # print("Historical Market Cap")
     # print("->")
     # print(client.get_historical_marketcap("BTC", limit=10))
@@ -513,3 +541,10 @@ if __name__ == "__main__":
     # print("Exchange Futures Symbol")
     # print("->")
     # print(client.get_exchange_symbol("Binance", "BTC-USDT-USDT"))
+    # print("CNN Fear and Greed Indicators")
+    # print("->")
+    # print(client.get_indicator_names())
+    # print("Fear and Greed Index for all Indicators")
+    # print("->")
+    # for index, row in client.get_indicator_names().iterrows():
+    #     print(client.get_fng_index(row[0], limit=10))
