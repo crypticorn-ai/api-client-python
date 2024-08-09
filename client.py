@@ -369,12 +369,24 @@ class ApiClient:
         df = pd.DataFrame(response.json())
         return df
     
-    def get_coins(self) -> DataFrame:
+    def get_coins(self, limit=100, offset=0):
+        """
+        Retrieves coin data.
+
+        Args:
+            limit (int, optional): The maximum number of coins to retrieve. Defaults to 100.
+            offset (int, optional): The offset for the data. Defaults to 0. Should be used for pagination.
+
+        Returns:
+            DataFrame: A pandas DataFrame containing the coin data.
+
+        """
         response = self.client.get(
-            urljoin(self.base_url, "/v1/market/coins"),
+            urljoin(self.base_url, f"/v1/market/coins?limit={limit}&offset={offset}"),
         )
-        df = pd.DataFrame(response.json())
-        return df
+        next_offset = response.json()['offset']
+        df = pd.DataFrame(response.json()['coins'])
+        return next_offset, df
 
     def get_exchange_data(self, exchange_name: str) -> DataFrame:
         """Exchange names to be added as follows: 
@@ -526,12 +538,14 @@ if __name__ == "__main__":
     # print("Google Trend Keyword")
     # print("->")
     # print(client.get_google_trend_keyword("Bitcoin"))
-    # print("Historical Market Cap")
-    # print("->")
-    # print(client.get_historical_marketcap("BTC", limit=10))
-    # print("Coins")
-    # print("->")
-    # print(client.get_coins())
+    print("Coins")
+    print("->")
+    next_offset, coins = client.get_coins(limit=100)
+    print(f"Next Offset for Pagination: {next_offset}")
+    print(coins)
+    print("Historical Market Cap")
+    print("->")
+    print(client.get_historical_marketcap("BTC", limit=10))
     # print("Exchange Data")
     # print("->")
     # print(client.get_exchange_data("Binance"))
