@@ -137,6 +137,7 @@ class ApiClient:
         df[["coin", "interval"]] = df["coin"].str.split("@", expand=True)
         df.pop("interval")
         df.sort_values(by="timestamp", ascending=False, inplace=True)
+        df["timestamp"] = df["timestamp"] // 1000
         return df
 
     def get_fgi_historical(self, days: int) -> DataFrame:
@@ -278,8 +279,8 @@ class ApiClient:
             params=params, timeout=None
         )
         df = DataFrame(response.json()['data'])
-        df['open_datetime'] = pd.to_datetime(df['timestamp'], unit='ms')
-        
+        df['timestamp'] = df['timestamp'] // 1000
+        df['open_datetime'] = pd.to_datetime(df['timestamp'], unit='s')
         return df
 
     def get_funding_rate(self, symbol: str, start_timestamp: int = None, end_timestamp: int = None, limit: int = 10) -> DataFrame:
@@ -346,6 +347,7 @@ class ApiClient:
             params={"timeframe": timeframe, "limit": limit},
         )
         df = pd.DataFrame(response.json()['data'])
+        df.rename(columns={"values": "trend_val", "timestamps": "timestamp"}, inplace=True)
         return df
 
     def get_historical_marketcap(self, symbol: str, start_date: str = None, end_date: str = None, limit: int = None) -> DataFrame:
@@ -369,7 +371,7 @@ class ApiClient:
         df = pd.DataFrame(response.json())
         return df
     
-    def get_coins(self, limit=100, offset=0):
+    def get_hist_marketcap_coins(self, limit=100, offset=0):
         """
         Retrieves coin data.
 
@@ -388,7 +390,7 @@ class ApiClient:
         df = pd.DataFrame(response.json()['coins'])
         return next_offset, df
 
-    def get_exchange_data(self, exchange_name: str) -> DataFrame:
+    def get_exchange_all_symbols(self, exchange_name: str) -> DataFrame:
         """Exchange names to be added as follows: 
         Binance, KuCoin, Gate.io, Bybit, Bingx, Bitget
         """
@@ -398,7 +400,7 @@ class ApiClient:
         df = pd.DataFrame(response.json())
         return df
 
-    def get_exchange_symbol(self, exchange_name: str, symbol: str) -> DataFrame:
+    def get_symbol_info_exchange(self, exchange_name: str, symbol: str, market: str = 'spot') -> DataFrame:
         """
         Exchange names to be added as follows: 
         Binance, KuCoin, Gate.io, Bybit, Bingx, Bitget
@@ -407,18 +409,20 @@ class ApiClient:
         Spot -> BTC-USDT, ETH-USDT, LTC-USDT
         Futures -> BTC-USDT-USDT, ETH-USDT-USDT, LTC-USDT-USDT
         """
+        if market == 'futures':
+            symbol = symbol + '-USDT'
         response = self.client.get(
             urljoin(self.base_url, f"/v1/market/exchange-data/{exchange_name}/{symbol}"),
         )
         df = pd.DataFrame(response.json())
         return df
     
-    def get_fng_index(self, indicator_name: str, start_date: str = None, end_date: str = None, limit: int = None) -> DataFrame:
+    def get_cnn_sentiment(self, indicator_name: str, start_date: str = None, end_date: str = None, limit: int = None) -> DataFrame:
         """
         Retrieves Fear and Greed Index data for a specific indicator name.
 
         Args:
-            indicator_name (str): The indicator name to retrieve Fear and Greed Index data for.
+            indicator_name (str): The indicator name / keyword to retrieve Fear and Greed Index data for.
             start_date (str, optional): The start date for the data. Defaults to None.
             end_date (str, optional): The end date for the data. Defaults to None.
             limit (int, optional): The maximum number of data points to retrieve. Defaults to None.
@@ -434,7 +438,7 @@ class ApiClient:
         df = pd.DataFrame(response.json())
         return df
 
-    def get_indicator_names(self) -> DataFrame:
+    def get_cnn_keywords(self) -> DataFrame:
         response = self.client.get(
             urljoin(self.base_url, "/v1/market/fng-index/list-indicators"),
         )
@@ -476,9 +480,9 @@ if __name__ == "__main__":
     print("->")
     print(client.get_fgi_historical(5))
     print("")
-    # print("Get UDF History")
-    # print("->")
-    # print(client.get_udf_history("BTCUSDT", 25))
+    print("Get UDF History")
+    print("->")
+    print(client.get_udf_history("BTCUSDT", 25))
     # print("")
     # print("Post Trend Data")
     # print("->")
@@ -538,10 +542,10 @@ if __name__ == "__main__":
     print(client.get_google_trend_keywords_available())
     print("Google Trend Keyword")
     print("->")
-    print(client.get_google_trend_keyword("Bitcoin"))
+    print(client.get_google_trend_keyword("Bitcoin", limit=10000))
     print("Coins")
     print("->")
-    next_offset, coins = client.get_coins(limit=100)
+    next_offset, coins = client.get_hist_marketcap_coins(limit=100)
     print(f"Next Offset for Pagination: {next_offset}")
     print(coins)
     print("Historical Market Cap")
@@ -549,17 +553,17 @@ if __name__ == "__main__":
     print(client.get_historical_marketcap("BTC", limit=10))
     print("Exchange Data")
     print("->")
-    print(client.get_exchange_data("Binance"))
+    print(client.get_exchange_all_symbols("Binance"))
     print("Exchange Spot Symbol")
     print("->")
-    print(client.get_exchange_symbol("Binance", "BTC-USDT"))
+    print(client.get_symbol_info_exchange("Binance", "BTC-USDT", "spot"))
     print("Exchange Futures Symbol")
     print("->")
-    print(client.get_exchange_symbol("Binance", "BTC-USDT-USDT"))
+    print(client.get_symbol_info_exchange("Binance", "BTC-USDT", "futures"))
     print("CNN Fear and Greed Indicators")
     print("->")
-    print(client.get_indicator_names())
+    print(client.get_cnn_keywords())
     print("Fear and Greed Index for all Indicators")
     print("->")
-    for index, row in client.get_indicator_names().iterrows():
-        print(client.get_fng_index(row['indicator_name'], limit=10))
+    for index, row in client.get_cnn_keywords().iterrows():
+        print(client.get_cnn_sentiment(row['indicator_name'], limit=10))
