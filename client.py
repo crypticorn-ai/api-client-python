@@ -344,7 +344,7 @@ class ApiClient:
         """
         response = self.client.get(
             urljoin(self.base_url, f"/v1/google/trends/{keyword}"),
-            params={"timeframe": timeframe, "limit": limit},
+            params={"timeframe": timeframe, "limit": limit}, timeout=None
         )
         df = pd.DataFrame(response.json()['data'])
         df.rename(columns={"values": "trend_val", "timestamps": "timestamp"}, inplace=True)
@@ -395,7 +395,7 @@ class ApiClient:
         Binance, KuCoin, Gate.io, Bybit, Bingx, Bitget
         """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/market/exchange-data/{exchange_name}"),
+            urljoin(self.base_url, f"/v1/market/exchange-data/{exchange_name}"), timeout=None
         )
         df = pd.DataFrame(response.json())
         return df
@@ -412,7 +412,7 @@ class ApiClient:
         if market == 'futures':
             symbol = symbol + '-USDT'
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/market/exchange-data/{exchange_name}/{symbol}"),
+            urljoin(self.base_url, f"/v1/market/exchange-data/{exchange_name}/{symbol}"), timeout=None
         )
         df = pd.DataFrame(response.json())
         return df
@@ -433,14 +433,14 @@ class ApiClient:
         """
         response = self.client.get(
             urljoin(self.base_url, f"/v1/market/fng-index/{indicator_name}"),
-            params={"start_date": start_date, "end_date": end_date, "limit": limit},
+            params={"start_date": start_date, "end_date": end_date, "limit": limit}, timeout=None
         )
         df = pd.DataFrame(response.json())
         return df
 
     def get_cnn_keywords(self) -> DataFrame:
         response = self.client.get(
-            urljoin(self.base_url, "/v1/market/fng-index/list-indicators"),
+            urljoin(self.base_url, "/v1/market/fng-index/list-indicators"), timeout=None
         )
         df = pd.DataFrame(response.json())
         df.columns = ['indicator_name']
@@ -480,9 +480,9 @@ if __name__ == "__main__":
     print("->")
     print(client.get_fgi_historical(5))
     print("")
-    print("Get UDF History")
-    print("->")
-    print(client.get_udf_history("BTCUSDT", 25))
+    # print("Get UDF History")
+    # print("->")
+    # print(client.get_udf_history("BTCUSDT", 25))
     # print("")
     # print("Post Trend Data")
     # print("->")
@@ -520,12 +520,12 @@ if __name__ == "__main__":
     print("Kline Symbols for Spot")
     print("->")
     print(client.get_symbols("spot"))
-    print("Futures Klines")
-    print("->")
-    print(client.get_klines("futures", "BTCUSDT", "1m", 100))
-    print("Spot Klines")
-    print("->")
-    print(client.get_klines("spot", "BTCUSDT", "1m", 100))
+    # print("Futures Klines")
+    # print("->")
+    # print(client.get_klines("futures", "BTCUSDT", "1m", 100))
+    # print("Spot Klines")
+    # print("->")
+    # print(client.get_klines("spot", "BTCUSDT", "1m", 100))
     print("")
     print("Funding Rate")
     print("->")
@@ -542,7 +542,7 @@ if __name__ == "__main__":
     print(client.get_google_trend_keywords_available())
     print("Google Trend Keyword")
     print("->")
-    print(client.get_google_trend_keyword("Bitcoin", limit=10000))
+    print(client.get_google_trend_keyword("Bitcoin", limit=1000))
     print("Coins")
     print("->")
     next_offset, coins = client.get_hist_marketcap_coins(limit=100)
