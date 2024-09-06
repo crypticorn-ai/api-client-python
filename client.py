@@ -196,9 +196,9 @@ class ApiClient:
         df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s")
         return df
 
-    def get_prediction(self, id: int) -> PredictionData:
+    def get_prediction(self, pair: str, version: int = 1, limit: int = 1) -> PredictionData:
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/predictions/id/{id}"),
+            urljoin(self.base_url, f"/v1/predictions/symbol/{pair}?version={version}&limit={limit}"),
             headers={"Authorization": f"Bearer {self.api_key}"},
         )
         return response.json()
@@ -463,9 +463,12 @@ class ApiClient:
 # testing
 if __name__ == "__main__":
     client = ApiClient(
-        base_url=os.getenv("CRYPTICORN_API_URL", "https://api.crypticorn.dev"),
+        base_url=os.getenv("CRYPTICORN_API_URL", "https://api.crypticorn.com"),
         api_key="REDACTED",
     )
+    print("Latest Predictions")
+    print("->")
+    print(client.get_prediction("SOLUSDT", 1, 1))
     print("")
     print("Economics News")
     print("->")
