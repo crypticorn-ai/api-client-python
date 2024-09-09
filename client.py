@@ -2,9 +2,11 @@ import httpx
 import pandas as pd
 from pandas import DataFrame
 from pydantic import BaseModel
-from typing import Optional, Union, List
+from typing import Optional, Union, Dict, List
 from urllib.parse import urljoin
 import os
+import requests
+#from crypticorn import Crypticorn
 
 class PredictionData(BaseModel):
     id: Optional[int] = None
@@ -459,6 +461,112 @@ class ApiClient:
             return res['result']['data']['json']
         except:
             return None
+
+class HiveClient: #(Crypticorn)
+    """
+    A client to interact with the Crypticorn API via the Dashboard.
+    """
+
+    def __init__(self, token: str = None):
+        """
+        Initializes the API client with a bearer token.
+        :param token: The bearer token to be included in the headers.
+        """
+        self._base_url = "http://localhost:3456"
+        self._headers = {"Authorization": f"Bearer {token}"} if token else {}
+        #super().__init__(headers=self._headers)
+
+    def create_account(self, username: str) -> Dict:
+        """
+        Creates a new account with the specified username.
+        :param username: The username for the new account.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/account"
+        response = requests.post(
+            url=self._base_url + endpoint,
+            params={"username": username},
+            headers=self._headers
+        )
+        return response.json()
+
+    def update_username(self, username: str) -> Dict:
+        """
+        Updates the username of the current account..
+        :param username: The new username.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/account"
+        response = requests.patch(
+            url=self._base_url + endpoint,
+            params={"username": username},
+            headers=self._headers
+        )
+        return response.json()
+
+    def get_account_info(self) -> Dict:
+        """
+        Retrieves information about the current account.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/account"
+        response = requests.get(
+            url=self._base_url + endpoint,
+            headers=self._headers
+        )
+        return response.json()
+
+    def get_models(self, model_id: int = None) -> Dict:
+        """
+        Retrieves information about a specific model by ID. If empty, all models will be returned
+        :param model_id: The ID of the model to retrieve.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/model"
+        response = requests.get(
+            url=self._base_url + endpoint,
+            params={"id": model_id},
+            headers=self._headers
+        )
+        return response.json()
+
+    def generate_api_key(self) -> Dict:
+        """
+        Generates the API key for the current account.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/apikey"
+        response = requests.post(
+            url=self._base_url + endpoint,
+            headers=self._headers
+        )
+        return response.json()
+
+    def delete_api_key(self) -> Dict:
+        """
+        Deletes the API key for the current account.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/apikey"
+        response = requests.delete(
+            url=self._base_url + endpoint,
+            headers=self._headers
+        )
+        return response.json()
+
+    def get_data_versions(self, version: str) -> Dict:
+        """
+        Retrieves information about data versions.
+        :param version: The version identifier to retrieve data for.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/data_versions"
+        response = requests.get(
+            url=self._base_url + endpoint,
+            params={"version": version},
+            headers=self._headers
+        )
+        return response.json()
 
 # testing
 if __name__ == "__main__":
