@@ -462,19 +462,23 @@ class ApiClient:
         except:
             return None
 
-class HiveClient: #(Crypticorn)
+class HiveClient: #Crypticorn
     """
-    A client to interact with the Crypticorn API via the Dashboard.
+    A extension of the Crypticorn pip package to interact with the Crypticorn API via the Dashboard.
+
+    Inherits from Crypticorn and provides methods to create accounts, retrieve account
+    information, interact with models, regenerate API keys.
+
     """
 
-    def __init__(self, token: str = None):
+    def __init__(self, token: str):
         """
         Initializes the API client with a bearer token.
         :param token: The bearer token to be included in the headers.
         """
         self._base_url = "http://localhost:3456"
-        self._headers = {"Authorization": f"Bearer {token}"} if token else {}
-        #super().__init__(headers=self._headers)
+        self._headers = {"Authorization": f"Bearer {token}"}
+        #super().__init__(api_key="", headers=self._headers)
 
     def create_account(self, username: str) -> Dict:
         """
