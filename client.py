@@ -6,7 +6,7 @@ from typing import Optional, Union, Dict, List
 from urllib.parse import urljoin
 import os
 import requests
-#from crypticorn import Crypticorn
+from crypticorn import Crypticorn
 
 class PredictionData(BaseModel):
     id: Optional[int] = None
@@ -40,7 +40,6 @@ class TrendQuery(BaseModel):
     to_ts: int
     version: str = "1"
 
-
 class ApiClient:
     def __init__(
         self, base_url: str = "https://api.crypticorn.com", api_key: str = None, token: str = None
@@ -49,6 +48,7 @@ class ApiClient:
         self.api_key = api_key
         self.token = token
         self.client = httpx.Client()
+        self.hive = HiveClient(api_key)
 
     def get_response(
         self, endpoint: str, params: dict = None, dict_key: str = None
@@ -462,7 +462,7 @@ class ApiClient:
         except:
             return None
 
-class HiveClient: #Crypticorn
+class HiveClient(Crypticorn): #Crypticorn
     """
     A extension of the Crypticorn pip package to interact with the Crypticorn API via the Dashboard.
 
