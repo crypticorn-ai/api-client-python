@@ -1,0 +1,36 @@
+[project]
+name = "crypticorn"
+description = ""
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "MIT License"}
+authors = [{name = "Crypticorn", email = "support@crypticorn.com"}]
+version = "1.0.0"
+keywords = ["machine learning", "data science", "crypto", "modelling"]
+
+dependencies = [
+    "pandas >= 2.2.2",
+    "requests >= 2.32.3",
+]
+
+classifiers = [
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "License :: OSI Approved :: MIT License",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.12",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Website = "https://crypticorn.com"
+Documentation = "XXX"
+Dashboard = "https.//app.crypticorn.com/developer"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
