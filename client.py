@@ -6,7 +6,8 @@ from typing import Optional, Union, Dict, List
 from urllib.parse import urljoin
 import os
 import requests
-from crypticorn import Crypticorn
+from .public.crypticorn import Crypticorn
+from .public.crypticorn.utils import AllModelsResponse, ErrorResponse, AccountInfoResponse, GenerateApiKeyResponse
 
 class PredictionData(BaseModel):
     id: Optional[int] = None
