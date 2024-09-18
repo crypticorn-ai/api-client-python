@@ -76,24 +76,20 @@ class Crypticorn:
         )
         return response.json()
 
-    def download_data(self, model_id: Union[int, str] = None, version: Union[float, str] = None,
-                      coin_id: Union[int, str] = None, feature_size: str = None) -> Union[int, ErrorResponse]:
+    def download_data(self, model_id: Union[int, str], version: Union[float, str] = None,
+                      feature_size: str = None) -> Union[int, ErrorResponse]:
         """
         Downloads training data for models.
         Either pass a model_id or coin_id. For more details about available data, use `data_info()`.
 
         :param model_id: ID of the model to download data for.
-        :param coin_id: ID of the coin for which to download data.
         :param version: (optional) Data version to download. Defaults to the latest version if not specified.
         :param feature_size: (optional) Size of the feature set to download. Default is "all".
         """
-        if (not model_id and not coin_id) or (model_id and coin_id):
-            raise ValueError("Either model_id or coin_id must be provided.")
-
         endpoint = "/data"
         response = requests.get(
             url=self._base_url + endpoint,
-            params={"coin_id": coin_id, "feature_size": feature_size, "version": version, "model_id": model_id},
+            params={"feature_size": feature_size, "version": version, "model_id": model_id},
             headers=self._headers
         )
         if response.status_code != 200:
