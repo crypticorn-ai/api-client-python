@@ -69,24 +69,32 @@ class ErrorResponse(BaseModel):
     type: Optional[str]
 
 
-class AccountInfoResponse(BaseModel):
-    api_key: bool
-    joined: str
-    models: List[str]
-    user_id: str
-    username: str
-
-
 class ModelInfoResponse(BaseModel):
     coin_id: int
     correlation: int
+    correlations: List[int]
     created: str
     id: int
     name: str
     status: str
     target: str
     updated: str
-    url: str
+    ranks: Dict[str, str]
+
+
+class ModelInfoShortResponse(BaseModel):
+    b_correlation: int
+    a_name: str
+    coin: int
+    target: str
+
+
+class AccountInfoResponse(BaseModel):
+    api_key: bool
+    joined: str
+    models: List[ModelInfoShortResponse]
+    user_id: str
+    username: str
 
 
 class EvaluateModelResponse(BaseModel):
@@ -102,10 +110,6 @@ class HelpResponse(BaseModel):
     support: str
 
 
-class AllModelsResponse(BaseModel):
-    models: List[ModelInfoResponse]
-
-
 class GenerateApiKeyResponse(BaseModel):
     api_key: str
     message: str
@@ -113,4 +117,3 @@ class GenerateApiKeyResponse(BaseModel):
 
 class DataInfoResponse(BaseModel):
     versions: Dict[str, Dict[str, List[str]]]
-

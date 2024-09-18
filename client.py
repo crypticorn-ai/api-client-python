@@ -2,12 +2,12 @@ import httpx
 import pandas as pd
 from pandas import DataFrame
 from pydantic import BaseModel
-from typing import Optional, Union
+from typing import Optional, Union, List
 from urllib.parse import urljoin
 import os
 import requests
 from .public.crypticorn import Crypticorn
-from .public.crypticorn.utils import AllModelsResponse, ErrorResponse, AccountInfoResponse, GenerateApiKeyResponse
+from .public.crypticorn.utils import ModelInfoResponse, ErrorResponse, AccountInfoResponse, GenerateApiKeyResponse, ModelInfoShortResponse
 
 class PredictionData(BaseModel):
     id: Optional[int] = None
@@ -534,6 +534,18 @@ class HiveClient(Crypticorn):
         response = requests.get(
             url=self._base_url + endpoint,
             params={"id": model_id},
+            headers=self._headers
+        )
+        return response.json()
+
+    def get_leaderboard(self) -> Union[List[ModelInfoShortResponse], ErrorResponse]:
+        """
+        Retrieves several leaderboards.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/leaderboard"
+        response = requests.get(
+            url=self._base_url + endpoint,
             headers=self._headers
         )
         return response.json()
