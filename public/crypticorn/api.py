@@ -21,7 +21,7 @@ class Crypticorn:
         self._base_url = "http://localhost:3456"
         self._headers = headers if headers else {"Authorization": f"ApiKey {api_key}"}
 
-        self.coins = list(range(10))
+        self.coins = list(range(1, 10))
         """A list of all available coins that are available for model creation."""
 
         self.targets = ['Tatooine']

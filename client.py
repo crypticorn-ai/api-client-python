@@ -510,21 +510,23 @@ class HiveClient(Crypticorn):
         )
         return response.json()
 
-    def get_account_info(self) -> Union[AccountInfoResponse, ErrorResponse]:
+    def get_account_info(self, username: str) -> Union[AccountInfoResponse, ErrorResponse]:
         """
         Retrieves information about the current account.
+        :param username: The username of the account.
         :return: The JSON response from the API.
         """
         endpoint = "/account"
         response = requests.get(
             url=self._base_url + endpoint,
+            params={"username": username},
             headers=self._headers
         )
         return response.json()
 
-    def get_models(self, model_id: int = None) -> Union[AllModelsResponse, ErrorResponse]:
+    def get_model(self, model_id: int) -> Union[ModelInfoResponse, ErrorResponse]:
         """
-        Retrieves information about a specific model by ID. If empty, all models will be returned
+        Retrieves information about a specific model by ID.
         :param model_id: The ID of the model to retrieve.
         :return: The JSON response from the API.
         """
