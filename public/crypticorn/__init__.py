@@ -2,6 +2,6 @@
 .. include:: ../README.md
 """
 
-from crypticorn.api import Crypticorn
+from .api import Crypticorn
 
 __all__ = ['Crypticorn']

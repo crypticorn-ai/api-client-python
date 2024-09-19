@@ -1,10 +1,10 @@
+from pydantic import BaseModel
 from typing import Any, Union, Dict
 import pandas as pd
 import requests
 import os
-from crypticorn.functions import download_file, logger
+from .utils import download_file, ModelInfoResponse, EvaluateModelResponse, HelpResponse, ErrorResponse, DataInfoResponse
 
-__version__ = "1.0.0"
 
 class Crypticorn:
     """
@@ -21,13 +21,13 @@ class Crypticorn:
         self._base_url = "http://localhost:3456"
         self._headers = headers if headers else {"Authorization": f"ApiKey {api_key}"}
 
-        self.coins = [int(i) for i in list(list(self.data_info().items())[-1][1].keys())] if self.data_info() != {} else "No data available yet."
+        self.coins = list(range(1, 10))
         """A list of all available coins that are available for model creation."""
 
         self.targets = ['Tatooine']
         """A list of all available targets that are available for model creation."""
 
-    def create_model(self, coin_id: int, target: str) -> Dict:
+    def create_model(self, coin_id: int, target: str) -> Union[ModelInfoResponse, ErrorResponse]:
         """
         Creates a new model based on the specified coin_id and target.
 
@@ -47,7 +47,7 @@ class Crypticorn:
         )
         return response.json()
 
-    def evaluate_model(self, id: int, data: Any) -> Dict:
+    def evaluate_model(self, id: int, data: Any) -> Union[EvaluateModelResponse, ErrorResponse]:
         """
         Evaluates an existing model using the provided data.
 
@@ -76,37 +76,33 @@ class Crypticorn:
         )
         return response.json()
 
-    def download_data(self, model_id: Union[int, str] = None, version: Union[float, str] = None,
-                      coin_id: Union[int, str] = None, feature_size: str = None) -> None:
+    def download_data(self, model_id: Union[int, str], version: Union[float, str] = None,
+                      feature_size: str = None) -> Union[int, ErrorResponse]:
         """
         Downloads training data for models.
         Either pass a model_id or coin_id. For more details about available data, use `data_info()`.
 
         :param model_id: ID of the model to download data for.
-        :param coin_id: ID of the coin for which to download data.
         :param version: (optional) Data version to download. Defaults to the latest version if not specified.
         :param feature_size: (optional) Size of the feature set to download. Default is "all".
         """
-        if (not model_id and not coin_id) or (model_id and coin_id):
-            raise ValueError("Either model_id or coin_id must be provided.")
-
         endpoint = "/data"
         response = requests.get(
             url=self._base_url + endpoint,
-            params={"coin_id": coin_id, "feature_size": feature_size, "version": version, "model_id": model_id},
+            params={"feature_size": feature_size, "version": version, "model_id": model_id},
             headers=self._headers
         )
         if response.status_code != 200:
-            logger.error(response.json()['error'])
-            exit()
+            return response.json()
         data = response.json()
         base_path = f"v{data['version']}/coin_{data['coin']}/"
         os.makedirs(base_path, exist_ok=True)
         download_file(url=data["y_train"], dest_path=f"{base_path}y_train.feather")
         download_file(url=data["X_test"], dest_path=f"{base_path}X_test_{data['feature_size']}.feather")
         download_file(url=data["X_train"], dest_path=f"{base_path}X_train_{data['feature_size']}.feather")
+        return 200
 
-    def help(self) -> Dict:
+    def help(self) -> Union[HelpResponse, ErrorResponse]:
         """
         Retrieves useful resources from the API.
         """
@@ -116,7 +112,7 @@ class Crypticorn:
             headers=self._headers)
         return response.json()
 
-    def data_info(self) -> Dict:
+    def data_info(self) -> Union[DataInfoResponse, ErrorResponse]:
         """
         Returns information about the training data (versions, coins, features).
         Useful in combination with `download_data()`
@@ -126,36 +122,3 @@ class Crypticorn:
             url=self._base_url + endpoint,
             headers=self._headers)
         return response.json()
-
-
-if __name__ == "__main__":
-    client = Crypticorn(api_key="test1-KuNnYYz4s3kQagEaOV9MWAvt4EvCIg")
-    #print(client.coins)
-    # # Testing the methods with example prints
-    #print("Testing create_model:")
-    #print(client.create_model(4, "Tatooine"))
-    #
-    #print("\nTesting evaluate_model:")
-    #data = pd.DataFrame([{"feature1": 10, "feature2": 20}])
-    #print(client.evaluate_model(1, data))
-
-    print("\nTesting download_data with coin_id:")
-    client.download_data(coin_id=2, feature_size="all", version=1.2)
-    #print("\nTesting download_data with model_id:")
-    #client.download_data(model_id=17, version=1.2)
-
-
-    #print("\nTesting help:")
-    #print(client.help())
-
-    # print("\nTesting data info")
-    # data = client.data_info()
-    # print(type(list(data.keys())[-1]))
-
-    # print("\nCoins:")
-    # print(client.coins)
-    # print("\nTargets:")
-    # print(client.targets)
-    # print(client.create_model(2, "Tatooine"))
-
-

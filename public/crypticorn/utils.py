@@ -2,6 +2,8 @@ import requests
 import os
 import tqdm
 import logging
+from pydantic import BaseModel
+from typing import List, Optional, Dict
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -60,3 +62,58 @@ def download_file(url: str, dest_path: str, show_progress_bars: bool = True):
     # move temp file to target destination
     os.replace(temp_path, dest_path)
     return dest_path
+
+
+class ErrorResponse(BaseModel):
+    error: str
+    type: Optional[str]
+
+
+class ModelInfoResponse(BaseModel):
+    coin_id: int
+    correlation: int
+    correlations: List[int]
+    created: str
+    id: int
+    name: str
+    status: str
+    target: str
+    updated: str
+    ranks: Dict[str, str]
+
+
+class ModelInfoShortResponse(BaseModel):
+    b_correlation: int
+    a_name: str
+    coin: int
+    target: str
+
+
+class AccountInfoResponse(BaseModel):
+    api_key: bool
+    joined: str
+    models: List[ModelInfoShortResponse]
+    user_id: str
+    username: str
+
+
+class EvaluateModelResponse(BaseModel):
+    metrics: Dict[str, float]
+    model_id: int
+    class Config:
+        protected_namespaces = ()
+
+
+class HelpResponse(BaseModel):
+    dashboard: str
+    documentation: str
+    support: str
+
+
+class GenerateApiKeyResponse(BaseModel):
+    api_key: str
+    message: str
+
+
+class DataInfoResponse(BaseModel):
+    versions: Dict[str, Dict[str, List[str]]]
