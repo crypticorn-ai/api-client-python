@@ -2,11 +2,12 @@ import httpx
 import pandas as pd
 from pandas import DataFrame
 from pydantic import BaseModel
-from typing import Optional, Union, Dict, List
+from typing import Optional, Union, List
 from urllib.parse import urljoin
 import os
 import requests
-from crypticorn import Crypticorn
+from .public.crypticorn import Crypticorn
+from .public.crypticorn.utils import ModelInfoResponse, ErrorResponse, AccountInfoResponse, GenerateApiKeyResponse, ModelInfoShortResponse
 
 class PredictionData(BaseModel):
     id: Optional[int] = None
@@ -462,9 +463,10 @@ class ApiClient:
         except:
             return None
 
-class HiveClient(Crypticorn): #Crypticorn
+
+class HiveClient(Crypticorn):
     """
-    A extension of the Crypticorn pip package to interact with the Crypticorn API via the Dashboard.
+    An extension of the Crypticorn pip package to interact with the Crypticorn API via the Dashboard.
 
     Inherits from Crypticorn and provides methods to create accounts, retrieve account
     information, interact with models, regenerate API keys.
@@ -478,9 +480,9 @@ class HiveClient(Crypticorn): #Crypticorn
         """
         self._base_url = "http://localhost:3456"
         self._headers = {"Authorization": f"Bearer {token}"}
-        #super().__init__(api_key="", headers=self._headers)
+        super().__init__(api_key="", headers=self._headers)
 
-    def create_account(self, username: str) -> Dict:
+    def create_account(self, username: str) -> Union[int, ErrorResponse]:
         """
         Creates a new account with the specified username.
         :param username: The username for the new account.
@@ -494,7 +496,7 @@ class HiveClient(Crypticorn): #Crypticorn
         )
         return response.json()
 
-    def update_username(self, username: str) -> Dict:
+    def update_username(self, username: str) -> Union[int, ErrorResponse]:
         """
         Updates the username of the current account..
         :param username: The new username.
@@ -508,21 +510,23 @@ class HiveClient(Crypticorn): #Crypticorn
         )
         return response.json()
 
-    def get_account_info(self) -> Dict:
+    def get_account_info(self, username: str) -> Union[AccountInfoResponse, ErrorResponse]:
         """
         Retrieves information about the current account.
+        :param username: The username of the account.
         :return: The JSON response from the API.
         """
         endpoint = "/account"
         response = requests.get(
             url=self._base_url + endpoint,
+            params={"username": username},
             headers=self._headers
         )
         return response.json()
 
-    def get_models(self, model_id: int = None) -> Dict:
+    def get_model(self, model_id: int) -> Union[ModelInfoResponse, ErrorResponse]:
         """
-        Retrieves information about a specific model by ID. If empty, all models will be returned
+        Retrieves information about a specific model by ID.
         :param model_id: The ID of the model to retrieve.
         :return: The JSON response from the API.
         """
@@ -534,7 +538,19 @@ class HiveClient(Crypticorn): #Crypticorn
         )
         return response.json()
 
-    def generate_api_key(self) -> Dict:
+    def get_leaderboard(self) -> Union[List[ModelInfoShortResponse], ErrorResponse]:
+        """
+        Retrieves several leaderboards.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/leaderboard"
+        response = requests.get(
+            url=self._base_url + endpoint,
+            headers=self._headers
+        )
+        return response.json()
+
+    def generate_api_key(self) -> Union[GenerateApiKeyResponse, ErrorResponse]:
         """
         Generates the API key for the current account.
         :return: The JSON response from the API.
@@ -546,7 +562,7 @@ class HiveClient(Crypticorn): #Crypticorn
         )
         return response.json()
 
-    def delete_api_key(self) -> Dict:
+    def delete_api_key(self) -> Union[int, ErrorResponse]:
         """
         Deletes the API key for the current account.
         :return: The JSON response from the API.
@@ -554,20 +570,6 @@ class HiveClient(Crypticorn): #Crypticorn
         endpoint = "/apikey"
         response = requests.delete(
             url=self._base_url + endpoint,
-            headers=self._headers
-        )
-        return response.json()
-
-    def get_data_versions(self, version: str) -> Dict:
-        """
-        Retrieves information about data versions.
-        :param version: The version identifier to retrieve data for.
-        :return: The JSON response from the API.
-        """
-        endpoint = "/data_versions"
-        response = requests.get(
-            url=self._base_url + endpoint,
-            params={"version": version},
             headers=self._headers
         )
         return response.json()
