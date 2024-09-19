@@ -6,6 +6,9 @@ from typing import Optional, Union, List
 from urllib.parse import urljoin
 from datetime import datetime
 import os
+import requests
+from .public.crypticorn import Crypticorn
+from .public.crypticorn.utils import ModelInfoResponse, ErrorResponse, AccountInfoResponse, GenerateApiKeyResponse, ModelInfoShortResponse
 
 class PredictionData(BaseModel):
     id: Optional[int] = None
@@ -39,7 +42,6 @@ class TrendQuery(BaseModel):
     to_ts: int
     version: str = "1"
 
-
 class ApiClient:
     def __init__(
         self, base_url: str = "https://api.crypticorn.com", api_key: str = None, token: str = None
@@ -48,6 +50,7 @@ class ApiClient:
         self.api_key = api_key
         self.token = token
         self.client = httpx.Client()
+        self.hive = HiveClient(api_key)
 
     def get_response(
         self, endpoint: str, params: dict = None, dict_key: str = None
@@ -491,6 +494,117 @@ class ApiClient:
             return res['result']['data']['json']
         except:
             return None
+
+
+class HiveClient(Crypticorn):
+    """
+    An extension of the Crypticorn pip package to interact with the Crypticorn API via the Dashboard.
+
+    Inherits from Crypticorn and provides methods to create accounts, retrieve account
+    information, interact with models, regenerate API keys.
+
+    """
+
+    def __init__(self, token: str):
+        """
+        Initializes the API client with a bearer token.
+        :param token: The bearer token to be included in the headers.
+        """
+        self._base_url = "http://localhost:3456"
+        self._headers = {"Authorization": f"Bearer {token}"}
+        super().__init__(api_key="", headers=self._headers)
+
+    def create_account(self, username: str) -> Union[int, ErrorResponse]:
+        """
+        Creates a new account with the specified username.
+        :param username: The username for the new account.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/account"
+        response = requests.post(
+            url=self._base_url + endpoint,
+            params={"username": username},
+            headers=self._headers
+        )
+        return response.json()
+
+    def update_username(self, username: str) -> Union[int, ErrorResponse]:
+        """
+        Updates the username of the current account..
+        :param username: The new username.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/account"
+        response = requests.patch(
+            url=self._base_url + endpoint,
+            params={"username": username},
+            headers=self._headers
+        )
+        return response.json()
+
+    def get_account_info(self, username: str) -> Union[AccountInfoResponse, ErrorResponse]:
+        """
+        Retrieves information about the current account.
+        :param username: The username of the account.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/account"
+        response = requests.get(
+            url=self._base_url + endpoint,
+            params={"username": username},
+            headers=self._headers
+        )
+        return response.json()
+
+    def get_model(self, model_id: int) -> Union[ModelInfoResponse, ErrorResponse]:
+        """
+        Retrieves information about a specific model by ID.
+        :param model_id: The ID of the model to retrieve.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/model"
+        response = requests.get(
+            url=self._base_url + endpoint,
+            params={"id": model_id},
+            headers=self._headers
+        )
+        return response.json()
+
+    def get_leaderboard(self) -> Union[List[ModelInfoShortResponse], ErrorResponse]:
+        """
+        Retrieves several leaderboards.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/leaderboard"
+        response = requests.get(
+            url=self._base_url + endpoint,
+            headers=self._headers
+        )
+        return response.json()
+
+    def generate_api_key(self) -> Union[GenerateApiKeyResponse, ErrorResponse]:
+        """
+        Generates the API key for the current account.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/apikey"
+        response = requests.post(
+            url=self._base_url + endpoint,
+            headers=self._headers
+        )
+        return response.json()
+
+    def delete_api_key(self) -> Union[int, ErrorResponse]:
+        """
+        Deletes the API key for the current account.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/apikey"
+        response = requests.delete(
+            url=self._base_url + endpoint,
+            headers=self._headers
+        )
+        return response.json()
 
 # testing
 if __name__ == "__main__":
