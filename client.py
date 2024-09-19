@@ -4,6 +4,7 @@ from pandas import DataFrame
 from pydantic import BaseModel
 from typing import Optional, Union, List
 from urllib.parse import urljoin
+from datetime import datetime
 import os
 
 class PredictionData(BaseModel):
@@ -350,7 +351,7 @@ class ApiClient:
         df.rename(columns={"values": "trend_val", "timestamps": "timestamp"}, inplace=True)
         return df
 
-    def get_historical_marketcap(self, symbol: str, start_date: str = None, end_date: str = None, limit: int = None) -> DataFrame:
+    def get_historical_marketcap(self, start_date: str = None, end_date: str = None, limit: int = None) -> DataFrame:
         """
         Retrieves historical market cap data for a specific symbol.
 
@@ -371,24 +372,55 @@ class ApiClient:
         df = pd.DataFrame(response.json())
         return df
     
-    def get_hist_marketcap_coins(self, limit=100, offset=0):
+    def get_hist_marketcap_coins(self, start:int = None, end:int = None):
         """
         Retrieves coin data.
+        If start and end is not provided, it will fetch data for the last 7 days
+        Use same start and end timestamp to fetch data for a specific day
 
         Args:
-            limit (int, optional): The maximum number of coins to retrieve. Defaults to 100.
-            offset (int, optional): The offset for the data. Defaults to 0. Should be used for pagination.
+            start_timestamp (int, required): The start timestamp for the data.
+            end_timestamp (int, required): The end timestamp for the data.
 
         Returns:
             DataFrame: A pandas DataFrame containing the coin data.
 
         """
+        if start is None:
+            start = int(datetime.now().timestamp()) - (7 * 24 * 60 * 60)
+        if end is None:
+            end = int(datetime.now().timestamp())
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/market/coins?limit={limit}&offset={offset}"),
+            urljoin(self.base_url, f"/v1/market/cmc/top-coins?start_timestamp={start}&end_timestamp={end}"),
         )
-        next_offset = response.json()['offset']
-        df = pd.DataFrame(response.json()['coins'])
-        return next_offset, df
+        df = pd.DataFrame(response.json()['data'])
+        df.pop('source_ohlcv_spot')
+        df.pop('source_ohlcv_perp')
+        df.pop('id')
+        return df
+
+    def get_cmc_mc_ohlcv(self, symbol: str, market: str, start_timestamp: int, end_timestamp: int, interval: str, limit: int):
+        """
+        Retrieves OHLCV data from historical marketcap coins.
+
+        Args:
+            symbol (str): The symbol to retrieve OHLCV data for.
+            market (str): The market type (spot or perp).
+            start_timestamp (int): The start timestamp for the data.
+            end_timestamp (int): The end timestamp for the data.
+            interval (str): The interval for the data. Can be 15m, 1h, 2h, 4h, 1d (15m only when coin is available in any exchange)
+            limit (int): The maximum number of data points to retrieve.
+
+        Returns:
+            DataFrame: A pandas DataFrame containing the OHLCV data.
+
+        """
+
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/market/ohlcv/{symbol}/{interval}?market={market}&start_timestamp={start_timestamp}&end_timestamp={end_timestamp}&limit={limit}"),
+        )
+        df = pd.DataFrame(response.json()['data'])
+        return df
 
     def get_exchange_all_symbols(self, exchange_name: str) -> DataFrame:
         """Exchange names to be added as follows: 
@@ -463,26 +495,26 @@ class ApiClient:
 # testing
 if __name__ == "__main__":
     client = ApiClient(
-        base_url=os.getenv("CRYPTICORN_API_URL", "https://api.crypticorn.com"),
+        base_url=os.getenv("CRYPTICORN_API_URL", "https://api.crypticorn.dev"),
         api_key="REDACTED",
     )
-    print("Latest Predictions")
-    print("->")
-    print(client.get_prediction("SOLUSDT", 1, 1))
-    print("")
-    print("Economics News")
-    print("->")
-    print(client.get_economics_news(5))
-    print("")
-    print("Bitcoin Historical Data")
-    print("->")
-    # try 250000 there is no timeout
-    print(client.get_bc_historical("BTCUSDT", "15m", 25))
-    print("")
-    print("Fear and Greed Index Historical Data")
-    print("->")
-    print(client.get_fgi_historical(5))
-    print("")
+    # print("Latest Predictions")
+    # print("->")
+    # print(client.get_prediction("SOLUSDT", 1, 1))
+    # print("")
+    # print("Economics News")
+    # print("->")
+    # print(client.get_economics_news(5))
+    # print("")
+    # print("Bitcoin Historical Data")
+    # print("->")
+    # # try 250000 there is no timeout
+    # print(client.get_bc_historical("BTCUSDT", "15m", 25))
+    # print("")
+    # print("Fear and Greed Index Historical Data")
+    # print("->")
+    # print(client.get_fgi_historical(5))
+    # print("")
     # print("Get UDF History")
     # print("->")
     # print(client.get_udf_history("BTCUSDT", 25))
@@ -515,24 +547,24 @@ if __name__ == "__main__":
     #         )
     #     )
     # )
-    print("Kline Service")
-    print("->")
-    print("Kline Symbols for Futures")
-    print("->")
-    print(client.get_symbols("futures"))
-    print("Kline Symbols for Spot")
-    print("->")
-    print(client.get_symbols("spot"))
+    # print("Kline Service")
+    # print("->")
+    # print("Kline Symbols for Futures")
+    # print("->")
+    # print(client.get_symbols("futures"))
+    # print("Kline Symbols for Spot")
+    # print("->")
+    # print(client.get_symbols("spot"))
     # print("Futures Klines")
     # print("->")
     # print(client.get_klines("futures", "BTCUSDT", "1m", 100))
     # print("Spot Klines")
     # print("->")
     # print(client.get_klines("spot", "BTCUSDT", "1m", 100))
-    print("")
-    print("Funding Rate")
-    print("->")
-    print(client.get_funding_rate(symbol="BTCUSDT"))
+    # print("")
+    # print("Funding Rate")
+    # print("->")
+    # print(client.get_funding_rate(symbol="BTCUSDT"))
     # print("Enabled Bots")
     # print("->")
     # bots_result = client.get_enabled_bots()
@@ -540,33 +572,42 @@ if __name__ == "__main__":
     # print("")
     # print("API Keys")
     # print(bots_result["api_keys"])
-    print("Get Keywords for Google Trends")
+    # print("Get Keywords for Google Trends")
+    # print("->")
+    # print(client.get_google_trend_keywords_available())
+    # print("Google Trend Keyword")
+    # print("->")
+    # print(client.get_google_trend_keyword("Bitcoin", limit=1000))
+    # print("Coins")
+    # print("->")
+    # next_offset, coins = client.get_hist_marketcap_coins(limit=100)
+    # print(f"Next Offset for Pagination: {next_offset}")
+    # print(coins)
+    print("Top 100 MC Coins for Last 7 Days")
     print("->")
-    print(client.get_google_trend_keywords_available())
-    print("Google Trend Keyword")
+    print(client.get_hist_marketcap_coins())
+    print("Top 100 MC Coins for Specific Day")
     print("->")
-    print(client.get_google_trend_keyword("Bitcoin", limit=1000))
-    print("Coins")
+    print(client.get_hist_marketcap_coins(1695081600, 1695081600))
+    print("OHLCV Spot for MC Coins")
     print("->")
-    next_offset, coins = client.get_hist_marketcap_coins(limit=100)
-    print(f"Next Offset for Pagination: {next_offset}")
-    print(coins)
-    print("Historical Market Cap")
+    print(client.get_cmc_mc_ohlcv("BTC", "spot", 1695124332, 1726746732, "15m", 100))
+    print("OHLCV Futures for MC Coins")
     print("->")
-    print(client.get_historical_marketcap("BTC", limit=10))
-    print("Exchange Data")
-    print("->")
-    print(client.get_exchange_all_symbols("Binance"))
-    print("Exchange Spot Symbol")
-    print("->")
-    print(client.get_symbol_info_exchange("Binance", "BTC-USDT", "spot"))
-    print("Exchange Futures Symbol")
-    print("->")
-    print(client.get_symbol_info_exchange("Binance", "BTC-USDT", "futures"))
-    print("CNN Fear and Greed Indicators")
-    print("->")
-    print(client.get_cnn_keywords())
-    print("Fear and Greed Index for all Indicators")
-    print("->")
-    for index, row in client.get_cnn_keywords().iterrows():
-        print(client.get_cnn_sentiment(row['indicator_name'], limit=10))
+    print(client.get_cmc_mc_ohlcv("BTC", "perp", 1695124332, 1726746732, "15m", 100))
+    # print("Exchange Data")
+    # print("->")
+    # print(client.get_exchange_all_symbols("Binance"))
+    # print("Exchange Spot Symbol")
+    # print("->")
+    # print(client.get_symbol_info_exchange("Binance", "BTC-USDT", "spot"))
+    # print("Exchange Futures Symbol")
+    # print("->")
+    # print(client.get_symbol_info_exchange("Binance", "BTC-USDT", "futures"))
+    # print("CNN Fear and Greed Indicators")
+    # print("->")
+    # print(client.get_cnn_keywords())
+    # print("Fear and Greed Index for all Indicators")
+    # print("->")
+    # for index, row in client.get_cnn_keywords().iterrows():
+    #     print(client.get_cnn_sentiment(row['indicator_name'], limit=10))
