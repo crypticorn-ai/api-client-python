@@ -26,11 +26,11 @@ pip install crypticorn
 ```
 
 ```shell
-from crypticorn.api import crypticorn
+from crypticorn import Crypticorn
 ```
 
 ```shell
-client = crypticorn(api_key='YOUR_API_KEY')
+aic = Crypticorn(api_key='YOUR_API_KEY')
 ```
 
 Generate your authentication key in the [dashboard](https://app.crypticorn.com/developer/settings).
