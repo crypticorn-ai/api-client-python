@@ -4,3 +4,4 @@ pydantic
 streamlit
 httpx
 tqdm
+build
