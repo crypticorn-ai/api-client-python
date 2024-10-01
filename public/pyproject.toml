@@ -2,10 +2,10 @@
 name = "crypticorn"
 description = ""
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.10"
 license = {text = "MIT License"}
 authors = [{name = "Crypticorn", email = "support@crypticorn.com"}]
-version = "1.0.0"
+version = "0.1.0"
 keywords = ["machine learning", "data science", "crypto", "modelling"]
 
 dependencies = [
@@ -28,9 +28,9 @@ classifiers = [
 
 [project.urls]
 Website = "https://crypticorn.com"
-Documentation = "XXX"
-Dashboard = "https.//app.crypticorn.com/developer"
+#Documentation = "XXX"
+#Dashboard = "https://app.crypticorn.com/developer"
 
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
