@@ -1,5 +1,3 @@
-
-
 # What is Crypticorn?
 
 Crypticorn is at the forefront of cutting-edge artificial intelligence cryptocurrency trading.
