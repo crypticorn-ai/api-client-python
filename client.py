@@ -510,7 +510,6 @@ class HiveClient(Crypticorn):
         Initializes the API client with a bearer token.
         :param token: The bearer token to be included in the headers.
         """
-        self._base_url = "http://localhost:3456"
         self._headers = {"Authorization": f"Bearer {token}"}
         super().__init__(api_key="", headers=self._headers)
 

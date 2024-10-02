@@ -14,13 +14,11 @@ if __name__ == "__main__":
     print("Testing create_account:")
     #print(client.create_account("test_user1"))
 
-    print("\nTesting update_username")
-    #print(client.update_username("Mister Berta"))
     #
     # for i in range(10):
     # #
-    #     print("\nTesting create_model:")
-    #     print(client.create_model(random.choice(client.coins), random.choice(client.targets)))
+    print("\nTesting create_model:")
+    #print(client.create_model(random.choice(client.coins), random.choice(client.targets)))
     #     #
     #     print("\nTesting evaluate_model:")
     #     data = pd.DataFrame(columns=["feature1"], data=[random.gauss(1,0.02) for _ in range(4000)])
@@ -33,13 +31,13 @@ if __name__ == "__main__":
     #print(client.help())
 
     print("\nTesting get_specific_model:")
-    #print(client.get_model(8))
+    #print(client.get_model(2))
 
     print("\nTesting get_leaderboard:")
-    print(client.get_leaderboard())
+    #print(client.get_leaderboard())
 
     print("\nTesting generate_api_key:")
-    #print(client.generate_api_key())
+    print(client.generate_api_key())
 
     print("\nTesting delete_api_key:")
     #print(client.delete_api_key())
@@ -51,7 +49,7 @@ if __name__ == "__main__":
     #print(client.update_username("Mister Y"))
 
     print("\nTesting download_data:")
-    #print(client.download_data(model_id=1, feature_size="small"))
+    #print(client.download_data(model_id=1, feature_size="small", version=2))
 
     print("\nTesting get_account_info:")
-    #print(client.get_account_info(username="Mister Berta"))
+    #print(client.get_account_info(username="test_user1"))
