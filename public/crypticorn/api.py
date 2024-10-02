@@ -18,7 +18,7 @@ class Crypticorn:
 
         :param api_key: The API key required for authenticating requests.
         """
-        self._base_url = "http://localhost:3456"
+        self._base_url = 'http://127.0.0.1:3456'#"https://api.crypticorn.dev/v1/hive/"
         self._headers = headers if headers else {"Authorization": f"ApiKey {api_key}"}
 
         self.coins = list(range(1, 10))
@@ -76,7 +76,7 @@ class Crypticorn:
         )
         return response.json()
 
-    def download_data(self, model_id: Union[int, str], version: Union[float, str] = None,
+    def download_data(self, model_id: int, version: float = None,
                       feature_size: str = None) -> Union[int, ErrorResponse]:
         """
         Downloads training data for models.
@@ -89,7 +89,7 @@ class Crypticorn:
         endpoint = "/data"
         response = requests.get(
             url=self._base_url + endpoint,
-            params={"feature_size": feature_size, "version": version, "model_id": model_id},
+            params={"feature_size": feature_size, "version": float(version), "model_id": model_id},
             headers=self._headers
         )
         if response.status_code != 200:
