@@ -283,10 +283,10 @@ class ApiClient:
             params=params, timeout=None
         )
         df = DataFrame(response.json()['data'])
-        df['timestamp'] = df['timestamp'] // 1000
-        df['open_datetime'] = pd.to_datetime(df['timestamp'], unit='s')
+        df['timestamp'] = pd.to_datetime(df['timestamp'])
+        df['timestamp'] = df['timestamp'].astype(int) // 10 ** 9
         return df
-
+    
     def get_funding_rate(self, symbol: str, start_timestamp: int = None, end_timestamp: int = None, limit: int = 10) -> DataFrame:
         """
         get: unix_time + funding rate data , as pandas dataframe
