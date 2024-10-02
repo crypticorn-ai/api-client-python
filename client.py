@@ -284,7 +284,7 @@ class ApiClient:
         )
         df = DataFrame(response.json()['data'])
         df['timestamp'] = pd.to_datetime(df['timestamp'])
-        df['timestamp'] = df['timestamp'].astype(int) // 10 ** 9
+        df['timestamp'] = df['timestamp'].astype("int64") // 10 ** 9
         return df
     
     def get_funding_rate(self, symbol: str, start_timestamp: int = None, end_timestamp: int = None, limit: int = 10) -> DataFrame:
