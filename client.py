@@ -7,8 +7,8 @@ from urllib.parse import urljoin
 from datetime import datetime
 import os
 import requests
-from .public.crypticorn import Crypticorn
-from .public.crypticorn.utils import ModelInfoResponse, ErrorResponse, AccountInfoResponse, GenerateApiKeyResponse, ModelInfoShortResponse
+from python.public.crypticorn import Crypticorn
+from python.public.crypticorn.utils import ModelInfoResponse, ErrorResponse, AccountInfoResponse, GenerateApiKeyResponse, ModelInfoShortResponse
 
 class PredictionData(BaseModel):
     id: Optional[int] = None
@@ -396,6 +396,7 @@ class ApiClient:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/market/cmc/top-coins?start_timestamp={start}&end_timestamp={end}"),
         )
+        print(response.json())
         df = pd.DataFrame(response.json()['data'])
         df.pop('source_ohlcv_spot')
         df.pop('source_ohlcv_perp')
