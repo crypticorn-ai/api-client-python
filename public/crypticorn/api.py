@@ -21,24 +21,13 @@ class Crypticorn:
         self._base_url = 'http://127.0.0.1:3456'#"https://api.crypticorn.dev/v1/hive/"
         self._headers = headers if headers else {"Authorization": f"ApiKey {api_key}"}
 
-        self.coins = list(range(1, 10))
-        """A list of all available coins that are available for model creation."""
-
-        self.targets = ['Tatooine']
-        """A list of all available targets that are available for model creation."""
-
     def create_model(self, coin_id: int, target: str) -> Union[ModelInfoResponse, ErrorResponse]:
         """
         Creates a new model based on the specified coin_id and target.
 
-        :param coin_id: The ID of the coin to be used for the model. Must be one of the available `coins`.
-        :param target: The target variable for the model. Must be one of the available `targets`.
+        :param coin_id: The ID of the coin to be used for the model.
+        :param target: The target variable for the model.
         """
-        if coin_id not in self.coins:
-            raise ValueError(f"Invalid coin_id. Must be one of: {self.coins}")
-        if target not in self.targets:
-            raise ValueError(f"Invalid target. Must be one of: {self.targets}")
-
         endpoint = "/model/creation"
         response = requests.post(
             url=self._base_url + endpoint,
