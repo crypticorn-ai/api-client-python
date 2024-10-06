@@ -18,7 +18,7 @@ class Crypticorn:
 
         :param api_key: The API key required for authenticating requests.
         """
-        self._base_url = 'http://127.0.0.1:3456'#"https://api.crypticorn.dev/v1/hive/"
+        self._base_url = "https://api.crypticorn.dev/v1/hive/"
         self._headers = headers if headers else {"Authorization": f"ApiKey {api_key}"}
 
     def create_model(self, coin_id: int, target: str) -> Union[ModelInfoResponse, ErrorResponse]:
@@ -91,22 +91,22 @@ class Crypticorn:
         download_file(url=data["X_train"], dest_path=f"{base_path}X_train_{data['feature_size']}.feather")
         return 200
 
-    def help(self) -> Union[HelpResponse, ErrorResponse]:
+    def data_info(self) -> Union[DataInfoResponse, ErrorResponse]:
         """
-        Retrieves useful resources from the API.
+        Returns information about the training data (versions, coins, features).
+        Useful in combination with `download_data()` and `create_model()`.
         """
-        endpoint = "/help"
+        endpoint = "/data-version"
         response = requests.get(
             url=self._base_url + endpoint,
             headers=self._headers)
         return response.json()
 
-    def data_info(self) -> Union[DataInfoResponse, ErrorResponse]:
+    def help(self) -> Union[HelpResponse, ErrorResponse]:
         """
-        Returns information about the training data (versions, coins, features).
-        Useful in combination with `download_data()`
+        Returns useful resources from the API.
         """
-        endpoint = "/data-version"
+        endpoint = "/help"
         response = requests.get(
             url=self._base_url + endpoint,
             headers=self._headers)
