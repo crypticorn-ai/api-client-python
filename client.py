@@ -262,7 +262,7 @@ class ApiClient:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/klines/symbols/{market}"), timeout=None
         )
-        df = DataFrame(response.json()['symbols'])
+        df = DataFrame(response.json())
         return df
 
     def get_klines(self, market: str, symbol: str,  interval: str, limit: int, start_timestamp: int = None, end_timestamp: int = None) -> DataFrame:
@@ -282,12 +282,12 @@ class ApiClient:
             urljoin(self.base_url, f"/v1/klines/{market}/{interval}/{symbol}"),
             params=params, timeout=None
         )
-        df = DataFrame(response.json()['data'])
+        df = DataFrame(response.json())
         df['timestamp'] = pd.to_datetime(df['timestamp'])
         df['timestamp'] = df['timestamp'].astype("int64") // 10 ** 9 # use int64 instead of int for windows
         return df
     
-    def get_funding_rate(self, symbol: str, start_timestamp: int = None, end_timestamp: int = None, limit: int = 10) -> DataFrame:
+    def get_funding_rate(self, symbol: str, start_timestamp: int = None, end_timestamp: int = None, limit: int = 2000) -> DataFrame:
         """
         get: unix_time + funding rate data , as pandas dataframe
         symbol have to be in capital case e.g. (BTCUSDT)
@@ -303,7 +303,7 @@ class ApiClient:
             urljoin(self.base_url, f"/v1/klines/funding_rates/{symbol}"),
             params=params, timeout=None
         )
-        df = DataFrame(response.json()['data'])
+        df = DataFrame(response.json())
         return df
     
     def list_orders(self) -> DataFrame:
@@ -661,24 +661,24 @@ if __name__ == "__main__":
     #         )
     #     )
     # )
-    # print("Kline Service")
-    # print("->")
-    # print("Kline Symbols for Futures")
-    # print("->")
-    # print(client.get_symbols("futures"))
-    # print("Kline Symbols for Spot")
-    # print("->")
-    # print(client.get_symbols("spot"))
-    # print("Futures Klines")
-    # print("->")
-    # print(client.get_klines("futures", "BTCUSDT", "1m", 100))
-    # print("Spot Klines")
-    # print("->")
-    # print(client.get_klines("spot", "BTCUSDT", "1m", 100))
-    # print("")
-    # print("Funding Rate")
-    # print("->")
-    # print(client.get_funding_rate(symbol="BTCUSDT"))
+    print("Kline Service")
+    print("->")
+    print("Kline Symbols for Futures")
+    print("->")
+    print(client.get_symbols("futures"))
+    print("Kline Symbols for Spot")
+    print("->")
+    print(client.get_symbols("spot"))
+    print("Futures Klines")
+    print("->")
+    print(client.get_klines("futures", "BTCUSDT", "1m", 2000))
+    print("Spot Klines")
+    print("->")
+    print(client.get_klines("spot", "BTCUSDT", "1m", 2000))
+    print("")
+    print("Funding Rate")
+    print("->")
+    print(client.get_funding_rate(symbol="BTCUSDT"))
     # print("Enabled Bots")
     # print("->")
     # bots_result = client.get_enabled_bots()
@@ -697,18 +697,18 @@ if __name__ == "__main__":
     # next_offset, coins = client.get_hist_marketcap_coins(limit=100)
     # print(f"Next Offset for Pagination: {next_offset}")
     # print(coins)
-    print("Top 100 MC Coins for Last 7 Days")
-    print("->")
-    print(client.get_hist_marketcap_coins())
-    print("Top 100 MC Coins for Specific Day")
-    print("->")
-    print(client.get_hist_marketcap_coins(1695081600, 1695081600))
-    print("OHLCV Spot for MC Coins")
-    print("->")
-    print(client.get_cmc_mc_ohlcv("BTC", "spot", 1695124332, 1726746732, "15m", 100))
-    print("OHLCV Futures for MC Coins")
-    print("->")
-    print(client.get_cmc_mc_ohlcv("BTC", "perp", 1695124332, 1726746732, "15m", 100))
+    # print("Top 100 MC Coins for Last 7 Days")
+    # print("->")
+    # print(client.get_hist_marketcap_coins())
+    # print("Top 100 MC Coins for Specific Day")
+    # print("->")
+    # print(client.get_hist_marketcap_coins(1695081600, 1695081600))
+    # print("OHLCV Spot for MC Coins")
+    # print("->")
+    # print(client.get_cmc_mc_ohlcv("BTC", "spot", 1695124332, 1726746732, "15m", 100))
+    # print("OHLCV Futures for MC Coins")
+    # print("->")
+    # print(client.get_cmc_mc_ohlcv("BTC", "perp", 1695124332, 1726746732, "15m", 100))
     # print("Exchange Data")
     # print("->")
     # print(client.get_exchange_all_symbols("Binance"))
