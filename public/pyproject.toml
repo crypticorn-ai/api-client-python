@@ -1,11 +1,11 @@
 [project]
 name = "crypticorn"
-description = ""
+description = "Maximise Your Crypto Trading Profits with AI Predictions"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT License"}
-authors = [{name = "Crypticorn", email = "support@crypticorn.com"}]
-version = "0.1.0"
+authors = [{name = "Crypticorn", email = "timon@crypticorn.com"}]
+version = "0.1.1"
 keywords = ["machine learning", "data science", "crypto", "modelling"]
 
 dependencies = [
@@ -15,21 +15,18 @@ dependencies = [
 
 classifiers = [
     "Topic :: Scientific/Engineering",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
-    "Topic :: Scientific/Engineering :: Information Analysis",
-    "Topic :: Scientific/Engineering :: Mathematics",
     "License :: OSI Approved :: MIT License",
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3",
     "Typing :: Typed",
 ]
 
 [project.urls]
 Website = "https://crypticorn.com"
-#Documentation = "XXX"
-#Dashboard = "https://app.crypticorn.com/developer"
+Documentation = "https://api.crypticorn.dev"
+Dashboard = "https://app.crypticorn.dev/developer"
 
 [build-system]
 requires = ["setuptools>=61.0"]
