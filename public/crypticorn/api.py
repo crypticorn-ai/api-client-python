@@ -12,13 +12,13 @@ class Crypticorn:
     download data, and retrieve information about available coins, targets, and features.
     """
 
-    def __init__(self, api_key: str, headers: dict = None):
+    def __init__(self, api_key: str, headers: dict = None, base_url="https://api.crypticorn.dev"):
         """@private
         Initializes the crypticorn API client with an API key.
 
         :param api_key: The API key required for authenticating requests.
         """
-        self._base_url = "https://api.crypticorn.dev/v1/hive/"
+        self._base_url = os.getenv("BASE_URL", base_url) + "/v1/hive"
         self._headers = headers if headers else {"Authorization": f"ApiKey {api_key}"}
 
     def create_model(self, coin_id: int, target: str) -> Union[ModelInfoResponse, ErrorResponse]:
