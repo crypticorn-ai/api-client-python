@@ -116,4 +116,6 @@ class GenerateApiKeyResponse(BaseModel):
 
 
 class DataInfoResponse(BaseModel):
-    versions: Dict[str, Dict[str, List[str]]]
+    data: Dict[str, Dict[str, List[str]]]
+    coins: List[int]
+    targets: List[str]

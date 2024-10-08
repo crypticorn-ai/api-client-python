@@ -1,0 +1,122 @@
+# testing
+import os
+from python.client import ApiClient
+
+if __name__ == "__main__":
+    client = ApiClient(
+        base_url=os.getenv("CRYPTICORN_API_URL", "https://api.crypticorn.dev"),
+        api_key="4cf3c24d455077031e4b645d32853be065b2c01af6b885ff1139e7dc958f52d3",
+    )
+    # print("Latest Predictions")
+    # print("->")
+    # print(client.get_prediction("BTCUSDT", 1, 1))
+    # print("")
+    # print("Economics News")
+    # print("->")
+    # print(client.get_economics_news(5))
+    # print("")
+    # print("Bitcoin Historical Data")
+    # print("->")
+    # # try 250000 there is no timeout
+    # print(client.get_bc_historical("BTCUSDT", "15m", 25))
+    # print("")
+    # print("Fear and Greed Index Historical Data")
+    # print("->")
+    # print(client.get_fgi_historical(5))
+    # print("")
+    # print("Get UDF History")
+    # print("->")
+    # print(client.get_udf_history("BTCUSDT", 25))
+    # print("")
+    # print("Post Trend Data")
+    # print("->")
+    # print(
+    #     client.post_trend(
+    #         TrendData(
+    #             timestamps=[4, 8, 12, 16, 24, 32, 48, 64],
+    #             positive_prob=[0.1, 0.9, 0.2, 0.8, 0.3, 0.7, 0.4, 0.6],
+    #             symbol="BTCUSDT",
+    #             version="1",
+    #         )
+    #     )
+    # )
+    # # query trend data
+    # print("Get Trend Data")
+    # print("->")
+    # print(
+    #     client.get_trends(
+    #         TrendQuery(
+    #             symbol="BTCUSDT",
+    #             limit=10,
+    #             offset=0,
+    #             sort="timestamp",
+    #             dir="desc",
+    #             from_ts=1613225600,
+    #             to_ts=1812793600,
+    #         )
+    #     )
+    # )
+    # print("Kline Service")
+    # print("->")
+    # print("Kline Symbols for Futures")
+    # print("->")
+    # print(client.get_symbols("futures"))
+    # print("Kline Symbols for Spot")
+    # print("->")
+    # print(client.get_symbols("spot"))
+    # print("Futures Klines")
+    # print("->")
+    # print(client.get_klines("futures", "BTCUSDT", "1m", 100))
+    # print("Spot Klines")
+    # print("->")
+    # print(client.get_klines("spot", "BTCUSDT", "1m", 100))
+    # print("")
+    # print("Funding Rate")
+    # print("->")
+    # print(client.get_funding_rate(symbol="BTCUSDT"))
+    # print("Enabled Bots")
+    # print("->")
+    # bots_result = client.get_enabled_bots()
+    # print(bots_result["bots"])
+    # print("")
+    # print("API Keys")
+    # print(bots_result["api_keys"])
+    # print("Get Keywords for Google Trends")
+    # print("->")
+    # print(client.get_google_trend_keywords_available())
+    # print("Google Trend Keyword")
+    # print("->")
+    # print(client.get_google_trend_keyword("Bitcoin", limit=1000))
+    # print("Coins")
+    # print("->")
+    # next_offset, coins = client.get_hist_marketcap_coins(limit=100)
+    # print(f"Next Offset for Pagination: {next_offset}")
+    # print(coins)
+    print("Top 100 MC Coins for Last 7 Days")
+    print("->")
+    print(client.get_hist_marketcap_coins())
+    # print("Top 100 MC Coins for Specific Day")
+    # print("->")
+    # print(client.get_hist_marketcap_coins(1695081600, 1695081600))
+    # print("OHLCV Spot for MC Coins")
+    # print("->")
+    # print(client.get_cmc_mc_ohlcv("BTC", "spot", 1695124332, 1726746732, "15m", 100))
+    # print("OHLCV Futures for MC Coins")
+    # print("->")
+    # print(client.get_cmc_mc_ohlcv("BTC", "perp", 1695124332, 1726746732, "15m", 100))
+    # print("Exchange Data")
+    # print("->")
+    # print(client.get_exchange_all_symbols("Binance"))
+    # print("Exchange Spot Symbol")
+    # print("->")
+    # print(client.get_symbol_info_exchange("Binance", "BTC-USDT", "spot"))
+    # print("Exchange Futures Symbol")
+    # print("->")
+    # print(client.get_symbol_info_exchange("Binance", "BTC-USDT", "futures"))
+    # print("CNN Fear and Greed Indicators")
+    # print("->")
+    # print(client.get_cnn_keywords())
+    # print("Fear and Greed Index for all Indicators")
+    # print("->")
+    # for index, row in client.get_cnn_keywords().iterrows():
+    #     print(client.get_cnn_sentiment(row['indicator_name'], limit=10))
