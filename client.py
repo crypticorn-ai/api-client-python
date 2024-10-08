@@ -261,7 +261,7 @@ class ApiClient:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/klines/symbols/{market}"), timeout=None
         )
-        df = DataFrame(response.json()['symbols'])
+        df = DataFrame(response.json())
         return df
 
     def get_klines(self, market: str, symbol: str,  interval: str, limit: int, start_timestamp: int = None, end_timestamp: int = None) -> DataFrame:
@@ -281,12 +281,12 @@ class ApiClient:
             urljoin(self.base_url, f"/v1/klines/{market}/{interval}/{symbol}"),
             params=params, timeout=None
         )
-        df = DataFrame(response.json()['data'])
+        df = DataFrame(response.json())
         df['timestamp'] = pd.to_datetime(df['timestamp'])
         df['timestamp'] = df['timestamp'].astype("int64") // 10 ** 9 # use int64 instead of int for windows
         return df
     
-    def get_funding_rate(self, symbol: str, start_timestamp: int = None, end_timestamp: int = None, limit: int = 10) -> DataFrame:
+    def get_funding_rate(self, symbol: str, start_timestamp: int = None, end_timestamp: int = None, limit: int = 2000) -> DataFrame:
         """
         get: unix_time + funding rate data , as pandas dataframe
         symbol have to be in capital case e.g. (BTCUSDT)
@@ -302,7 +302,7 @@ class ApiClient:
             urljoin(self.base_url, f"/v1/klines/funding_rates/{symbol}"),
             params=params, timeout=None
         )
-        df = DataFrame(response.json()['data'])
+        df = DataFrame(response.json())
         return df
     
     def list_orders(self) -> DataFrame:
