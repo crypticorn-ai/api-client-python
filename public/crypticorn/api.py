@@ -12,33 +12,22 @@ class Crypticorn:
     download data, and retrieve information about available coins, targets, and features.
     """
 
-    def __init__(self, api_key: str, headers: dict = None):
+    def __init__(self, api_key: str, headers: dict = None, base_url="https://api.crypticorn.dev"):
         """@private
         Initializes the crypticorn API client with an API key.
 
         :param api_key: The API key required for authenticating requests.
         """
-        self._base_url = 'http://127.0.0.1:3456'#"https://api.crypticorn.dev/v1/hive/"
+        self._base_url = os.getenv("BASE_URL", base_url) + "/v1/hive"
         self._headers = headers if headers else {"Authorization": f"ApiKey {api_key}"}
-
-        self.coins = list(range(1, 10))
-        """A list of all available coins that are available for model creation."""
-
-        self.targets = ['Tatooine']
-        """A list of all available targets that are available for model creation."""
 
     def create_model(self, coin_id: int, target: str) -> Union[ModelInfoResponse, ErrorResponse]:
         """
         Creates a new model based on the specified coin_id and target.
 
-        :param coin_id: The ID of the coin to be used for the model. Must be one of the available `coins`.
-        :param target: The target variable for the model. Must be one of the available `targets`.
+        :param coin_id: The ID of the coin to be used for the model.
+        :param target: The target variable for the model.
         """
-        if coin_id not in self.coins:
-            raise ValueError(f"Invalid coin_id. Must be one of: {self.coins}")
-        if target not in self.targets:
-            raise ValueError(f"Invalid target. Must be one of: {self.targets}")
-
         endpoint = "/model/creation"
         response = requests.post(
             url=self._base_url + endpoint,
@@ -102,22 +91,22 @@ class Crypticorn:
         download_file(url=data["X_train"], dest_path=f"{base_path}X_train_{data['feature_size']}.feather")
         return 200
 
-    def help(self) -> Union[HelpResponse, ErrorResponse]:
+    def data_info(self) -> Union[DataInfoResponse, ErrorResponse]:
         """
-        Retrieves useful resources from the API.
+        Returns information about the training data (versions, coins, features).
+        Useful in combination with `download_data()` and `create_model()`.
         """
-        endpoint = "/help"
+        endpoint = "/data-version"
         response = requests.get(
             url=self._base_url + endpoint,
             headers=self._headers)
         return response.json()
 
-    def data_info(self) -> Union[DataInfoResponse, ErrorResponse]:
+    def help(self) -> Union[HelpResponse, ErrorResponse]:
         """
-        Returns information about the training data (versions, coins, features).
-        Useful in combination with `download_data()`
+        Returns useful resources from the API.
         """
-        endpoint = "/data-version"
+        endpoint = "/help"
         response = requests.get(
             url=self._base_url + endpoint,
             headers=self._headers)
