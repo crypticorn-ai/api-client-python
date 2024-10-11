@@ -18,7 +18,7 @@ class Crypticorn:
 
         :param api_key: The API key required for authenticating requests.
         """
-        self._base_url = os.getenv("BASE_URL", base_url) + "/v1/hive"
+        self._base_url = os.getenv("HIVE_BASE_URL", base_url) + "/v1/hive"
         self._headers = headers if headers else {"Authorization": f"ApiKey {api_key}"}
 
     def create_model(self, coin_id: int, target: str) -> Union[ModelInfoResponse, ErrorResponse]:
