@@ -83,8 +83,8 @@ class ModelInfoResponse(BaseModel):
 
 
 class ModelInfoShortResponse(BaseModel):
-    b_correlation: int
-    a_name: str
+    correlation: int
+    name: str
     coin: int
     target: str
 
