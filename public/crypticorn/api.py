@@ -3,7 +3,7 @@ from typing import Any, Union, Dict
 import pandas as pd
 import requests
 import os
-from .utils import download_file, ModelInfoResponse, EvaluateModelResponse, HelpResponse, ErrorResponse, DataInfoResponse
+from .utils import download_file, ModelInfoResponse, EvaluateModelResponse, ErrorResponse, DataInfoResponse
 
 
 class Crypticorn:
@@ -97,16 +97,6 @@ class Crypticorn:
         Useful in combination with `download_data()` and `create_model()`.
         """
         endpoint = "/data-version"
-        response = requests.get(
-            url=self._base_url + endpoint,
-            headers=self._headers)
-        return response.json()
-
-    def help(self) -> Union[HelpResponse, ErrorResponse]:
-        """
-        Returns useful resources from the API.
-        """
-        endpoint = "/help"
         response = requests.get(
             url=self._base_url + endpoint,
             headers=self._headers)
