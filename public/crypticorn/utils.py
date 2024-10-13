@@ -22,18 +22,17 @@ def download_file(url: str, dest_path: str, show_progress_bars: bool = True):
     req = requests.get(url, stream=True, timeout=600)
     req.raise_for_status()
 
-    # Total size in bytes.
     total_size = int(req.headers.get('content-length', 0))
     temp_path = dest_path + ".temp"
 
     if os.path.exists(dest_path):
         logger.info(f"file already exists: {dest_path}")
-        file_size = os.stat(dest_path).st_size  # File size in bytes
+        file_size = os.stat(dest_path).st_size
         if file_size == total_size:
             return dest_path
 
     if os.path.exists(temp_path):
-        file_size = os.stat(temp_path).st_size  # File size in bytes
+        file_size = os.stat(temp_path).st_size
 
         if file_size < total_size:
             # Download incomplete
