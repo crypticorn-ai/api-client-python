@@ -16,10 +16,6 @@ if __name__ == "__main__":
     #print("\nTesting download_data with model_id:")
     #client.download_data(model_id=17, version=1.2)
 
-
-    #print("\nTesting help:")
-    #print(client.help())
-
     # print("\nTesting data info")
     # data = client.data_info()
     # print(type(list(data.keys())[-1]))

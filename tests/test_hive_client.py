@@ -27,9 +27,6 @@ if __name__ == "__main__":
     #data = pd.DataFrame(columns=["feature1"], data=[random.gauss(1,0.02) for _ in range(4986)])
     #print(client.evaluate_model(1, data))
 
-    print("\nTesting help:")
-    #print(client.help())
-
     print("\nTesting get_specific_model:")
     #print(client.get_model(2))
 

@@ -102,13 +102,6 @@ class EvaluateModelResponse(BaseModel):
     class Config:
         protected_namespaces = ()
 
-
-class HelpResponse(BaseModel):
-    dashboard: str
-    documentation: str
-    support: str
-
-
 class GenerateApiKeyResponse(BaseModel):
     api_key: str
     message: str
