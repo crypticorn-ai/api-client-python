@@ -41,6 +41,8 @@ class TrendQuery(BaseModel):
     to_ts: int
     version: str = "1"
 
+default_version = "1.5"
+
 class ApiClient:
     def __init__(
         self, base_url: str = "https://api.crypticorn.com", api_key: str = None, token: str = None
@@ -167,9 +169,9 @@ class ApiClient:
         )
         return response.json()
 
-    def get_latest_predictions(self) -> DataFrame:
+    def get_latest_predictions(self, version: str = default_version) -> DataFrame:
         response = self.client.get(
-            urljoin(self.base_url, "/v1/predictions/latest?version=2"),
+            urljoin(self.base_url, f"/v1/predictions/latest?version={version}"),
             headers={"Authorization": f"Bearer {self.api_key}"},
         )
         arr = response.json()
@@ -199,7 +201,7 @@ class ApiClient:
         df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s")
         return df
 
-    def get_prediction(self, pair: str, version: int = 1, limit: int = 1) -> PredictionData:
+    def get_prediction(self, pair: str, version: str = default_version, limit: int = 1) -> PredictionData:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/predictions/symbol/{pair}?version={version}&limit={limit}"),
             headers={"Authorization": f"Bearer {self.api_key}"},
