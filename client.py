@@ -515,9 +515,9 @@ class HiveClient(Crypticorn):
         self._headers = {"Authorization": f"Bearer {token}"}
         super().__init__(api_key="", headers=self._headers)
 
-    def create_account(self, username: str) -> Union[int, ErrorResponse]:
+    def create_account(self, username: str = None) -> Union[int, ErrorResponse]:
         """
-        Creates a new account with the specified username.
+        Creates a new account with the specified username. Defaults to user id in jwt.
         :param username: The username for the new account.
         :return: The JSON response from the API.
         """
@@ -543,7 +543,7 @@ class HiveClient(Crypticorn):
         )
         return response.json()
 
-    def get_account_info(self, username: str) -> Union[AccountInfoResponse, ErrorResponse]:
+    def get_account_info(self, username: str = None) -> Union[AccountInfoResponse, ErrorResponse]:
         """
         Retrieves information about the current account.
         :param username: The username of the account.

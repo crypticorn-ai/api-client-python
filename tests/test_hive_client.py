@@ -12,7 +12,7 @@ if __name__ == "__main__":
     client = HiveClient(token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoicTdQMVh3WG9MdU5wbEJJNlFMVWMiLCJpYXQiOjE3Mjg4MTk1MDAsImV4cCI6MTcyODgyMzEwMCwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.zbV9fQUmIQ1yYwaaAHazc1eYm6kK9-YMorOcWyWiuYg")
     
     print("Testing create_account:")
-    #print(client.create_account("test_user12"))
+    #print(client.create_account())
 
     #
     # for i in range(10):
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     #print(client.update_username("Mister Y"))
 
     print("\nTesting download_data:")
-    print(client.download_data(model_id=1, feature_size="small", version=1))
+    #print(client.download_data(model_id=1, feature_size="small", version=1))
 
     print("\nTesting get_account_info:")
     #print(client.get_account_info(username="Mister Y"))
