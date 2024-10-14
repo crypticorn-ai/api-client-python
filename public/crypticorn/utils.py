@@ -82,6 +82,7 @@ class ModelInfoResponse(BaseModel):
 
 
 class ModelInfoShortResponse(BaseModel):
+    id: int
     correlation: int
     name: str
     coin: int
@@ -104,7 +105,6 @@ class EvaluateModelResponse(BaseModel):
 
 class GenerateApiKeyResponse(BaseModel):
     api_key: str
-    message: str
 
 
 class DataInfoResponse(BaseModel):
