@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from datetime import datetime
 import requests
 from .public.crypticorn import Crypticorn
-from .public.crypticorn.utils import ModelInfoResponse, ErrorResponse, AccountInfoResponse, GenerateApiKeyResponse, ModelInfoShortResponse
+from .public.crypticorn.utils import SingleModel, ErrorResponse, AccountInfo, ApiKeyGeneration, AllModels
 
 class PredictionData(BaseModel):
     id: Optional[int] = None
@@ -543,23 +543,24 @@ class HiveClient(Crypticorn):
         )
         return response.json()
 
-    def get_account_info(self, username: str = None) -> Union[AccountInfoResponse, ErrorResponse]:
+    def get_account_info(self, username: str = None, id: str = None) -> Union[AccountInfo, ErrorResponse]:
         """
-        Retrieves information about the current account.
+        Retrieves information about a user (defaults to current user if no params defined).
         :param username: The username of the account.
+        :param id: The id of the account.
         :return: The JSON response from the API.
         """
         endpoint = "/account"
         response = requests.get(
             url=self._base_url + endpoint,
-            params={"username": username},
+            params={"username": username, "id": id},
             headers=self._headers
         )
         return response.json()
 
-    def get_model(self, model_id: int) -> Union[ModelInfoResponse, ErrorResponse]:
+    def get_model(self, model_id: int = None) -> Union[Union[SingleModel, AllModels], ErrorResponse]:
         """
-        Retrieves information about a specific model by ID.
+        Retrieves all models or a specific model by ID.
         :param model_id: The ID of the model to retrieve.
         :return: The JSON response from the API.
         """
@@ -571,19 +572,7 @@ class HiveClient(Crypticorn):
         )
         return response.json()
 
-    def get_leaderboard(self) -> Union[List[ModelInfoShortResponse], ErrorResponse]:
-        """
-        Retrieves several leaderboards.
-        :return: The JSON response from the API.
-        """
-        endpoint = "/leaderboard"
-        response = requests.get(
-            url=self._base_url + endpoint,
-            headers=self._headers
-        )
-        return response.json()
-
-    def generate_api_key(self) -> Union[GenerateApiKeyResponse, ErrorResponse]:
+    def generate_api_key(self) -> Union[ApiKeyGeneration, ErrorResponse]:
         """
         Generates the API key for the current account.
         :return: The JSON response from the API.

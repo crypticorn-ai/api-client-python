@@ -3,7 +3,7 @@ from typing import Any, Union, Dict
 import pandas as pd
 import requests
 import os
-from .utils import download_file, ModelInfoResponse, EvaluateModelResponse, ErrorResponse, DataInfoResponse
+from .utils import download_file, SingleModel, ModelEvaluation, ErrorResponse, DataInfo
 
 
 class Crypticorn:
@@ -21,7 +21,7 @@ class Crypticorn:
         self._base_url = os.getenv("HIVE_BASE_URL", base_url) + "/v1/hive"
         self._headers = headers if headers else {"Authorization": f"ApiKey {api_key}"}
 
-    def create_model(self, coin_id: int, target: str) -> Union[ModelInfoResponse, ErrorResponse]:
+    def create_model(self, coin_id: int, target: str) -> Union[SingleModel, ErrorResponse]:
         """
         Creates a new model based on the specified coin_id and target.
 
@@ -36,7 +36,7 @@ class Crypticorn:
         )
         return response.json()
 
-    def evaluate_model(self, id: int, data: Any) -> Union[EvaluateModelResponse, ErrorResponse]:
+    def evaluate_model(self, id: int, data: Any) -> Union[ModelEvaluation, ErrorResponse]:
         """
         Evaluates an existing model using the provided data.
 
@@ -91,7 +91,7 @@ class Crypticorn:
         download_file(url=data["X_train"], dest_path=f"{base_path}X_train_{data['feature_size']}.feather")
         return 200
 
-    def data_info(self) -> Union[DataInfoResponse, ErrorResponse]:
+    def data_info(self) -> Union[DataInfo, ErrorResponse]:
         """
         Returns information about the training data (versions, coins, features).
         Useful in combination with `download_data()` and `create_model()`.
