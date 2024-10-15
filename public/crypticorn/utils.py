@@ -3,7 +3,7 @@ import os
 import tqdm
 import logging
 from pydantic import BaseModel
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Any
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -68,7 +68,7 @@ class ErrorResponse(BaseModel):
     type: Optional[str]
 
 
-class ModelInfoResponse(BaseModel):
+class SingleModel(BaseModel):
     coin_id: int
     correlation: int
     correlations: List[int]
@@ -78,36 +78,33 @@ class ModelInfoResponse(BaseModel):
     status: str
     target: str
     updated: str
-    ranks: Dict[str, str]
+    dev_id: str
+    
+class AllModels(BaseModel):
+    models: List[SingleModel]
 
 
-class ModelInfoShortResponse(BaseModel):
-    id: int
-    correlation: int
-    name: str
-    coin: int
-    target: str
-
-
-class AccountInfoResponse(BaseModel):
-    api_key: bool
+class AccountInfo(BaseModel):
+    api_key: bool   
     joined: str
-    models: List[ModelInfoShortResponse]
+    models: List[SingleModel]
     user_id: str
     username: str
 
 
-class EvaluateModelResponse(BaseModel):
-    metrics: Dict[str, float]
+class ModelEvaluation(BaseModel):
+    benchmarks: Dict[str, Dict[str, Dict[str, Any]]]
+    metrics: Dict[str, Dict[str, Any]]
     model_id: int
     class Config:
         protected_namespaces = ()
 
-class GenerateApiKeyResponse(BaseModel):
+
+class ApiKeyGeneration(BaseModel):
     api_key: str
 
 
-class DataInfoResponse(BaseModel):
+class DataInfo(BaseModel):
     data: Dict[str, Dict[str, List[str]]]
     coins: List[int]
     targets: List[str]
