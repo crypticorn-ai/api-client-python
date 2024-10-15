@@ -90,6 +90,8 @@ class AccountInfo(BaseModel):
     models: List[SingleModel]
     user_id: str
     username: str
+    updated: str
+    created: str
 
 
 class ModelEvaluation(BaseModel):
