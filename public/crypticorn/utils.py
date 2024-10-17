@@ -80,8 +80,7 @@ class AllModels(BaseModel):
 
 
 class AccountInfo(BaseModel):
-    api_key: bool   
-    joined: str
+    api_key: bool
     models: List[SingleModel]
     user_id: str
     username: str
