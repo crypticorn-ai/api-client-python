@@ -63,11 +63,6 @@ def download_file(url: str, dest_path: str, show_progress_bars: bool = True):
     return dest_path
 
 
-class ErrorResponse(BaseModel):
-    error: str
-    type: Optional[str]
-
-
 class SingleModel(BaseModel):
     coin_id: int
     correlation: int

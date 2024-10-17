@@ -515,7 +515,7 @@ class HiveClient(Crypticorn):
         self._headers = {"Authorization": f"Bearer {token}"}
         super().__init__(api_key="", headers=self._headers)
 
-    def create_account(self, username: str = None) -> Union[int, ErrorResponse]:
+    def create_account(self, username: str = None) -> int:
         """
         Creates a new account with the specified username. Defaults to user id in jwt.
         :param username: The username for the new account.
@@ -529,7 +529,7 @@ class HiveClient(Crypticorn):
         )
         return response.json()
 
-    def update_username(self, username: str) -> Union[int, ErrorResponse]:
+    def update_username(self, username: str) -> int:
         """
         Updates the username of the current account..
         :param username: The new username.
@@ -543,7 +543,7 @@ class HiveClient(Crypticorn):
         )
         return response.json()
 
-    def get_account_info(self, username: str = None, id: str = None) -> Union[AccountInfo, ErrorResponse]:
+    def get_account_info(self, username: str = None, id: str = None) -> AccountInfo:
         """
         Retrieves information about a user (defaults to current user if no params defined).
         :param username: The username of the account.
@@ -558,7 +558,7 @@ class HiveClient(Crypticorn):
         )
         return response.json()
 
-    def get_model(self, model_id: int = None) -> Union[Union[SingleModel, AllModels], ErrorResponse]:
+    def get_model(self, model_id: int = None) -> Union[SingleModel, AllModels]:
         """
         Retrieves all models or a specific model by ID.
         :param model_id: The ID of the model to retrieve.
@@ -571,8 +571,22 @@ class HiveClient(Crypticorn):
             headers=self._headers
         )
         return response.json()
+    
+    def delete_model(self, model_id: int) -> int:
+        """
+        Deletes a specific model by ID.
+        :param model_id: The ID of the model to delete.
+        :return: The JSON response from the API.
+        """
+        endpoint = "/model"
+        response = requests.delete(
+            url=self._base_url + endpoint,
+            params={"id": model_id},
+            headers=self._headers
+        )
+        return response.json()
 
-    def generate_api_key(self) -> Union[ApiKeyGeneration, ErrorResponse]:
+    def generate_api_key(self) -> ApiKeyGeneration:
         """
         Generates the API key for the current account.
         :return: The JSON response from the API.
@@ -584,7 +598,7 @@ class HiveClient(Crypticorn):
         )
         return response.json()
 
-    def delete_api_key(self) -> Union[int, ErrorResponse]:
+    def delete_api_key(self) -> int:
         """
         Deletes the API key for the current account.
         :return: The JSON response from the API.
