@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from datetime import datetime
 import requests
 from .public.crypticorn import Crypticorn
-from .public.crypticorn.utils import SingleModel, ErrorResponse, AccountInfo, ApiKeyGeneration, AllModels
+from .public.crypticorn.utils import SingleModel, AccountInfo, ApiKeyGeneration, AllModels
 
 class PredictionData(BaseModel):
     id: Optional[int] = None

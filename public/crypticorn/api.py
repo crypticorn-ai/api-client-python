@@ -3,7 +3,7 @@ from typing import Any, Union, Dict
 import pandas as pd
 import requests
 import os
-from .utils import download_file, SingleModel, ModelEvaluation, ErrorResponse, DataInfo
+from .utils import download_file, SingleModel, ModelEvaluation, DataInfo
 
 
 class Crypticorn:
@@ -21,7 +21,7 @@ class Crypticorn:
         self._base_url = os.getenv("HIVE_BASE_URL", base_url) + "/v1/hive"
         self._headers = headers if headers else {"Authorization": f"ApiKey {api_key}"}
 
-    def create_model(self, coin_id: int, target: str) -> Union[SingleModel, ErrorResponse]:
+    def create_model(self, coin_id: int, target: str) -> SingleModel:
         """
         Creates a new model based on the specified coin_id and target.
 
@@ -36,7 +36,7 @@ class Crypticorn:
         )
         return response.json()
 
-    def evaluate_model(self, id: int, data: Any) -> Union[ModelEvaluation, ErrorResponse]:
+    def evaluate_model(self, id: int, data: Any) -> ModelEvaluation:
         """
         Evaluates an existing model using the provided data.
 
@@ -66,7 +66,7 @@ class Crypticorn:
         return response.json()
 
     def download_data(self, model_id: int, version: float = None,
-                      feature_size: str = None) -> Union[int, ErrorResponse]:
+                      feature_size: str = None) -> int:
         """
         Downloads training data for models.
         Either pass a model_id or coin_id. For more details about available data, use `data_info()`.
@@ -91,7 +91,7 @@ class Crypticorn:
         download_file(url=data["X_train"], dest_path=f"{base_path}X_train_{data['feature_size']}.feather")
         return 200
 
-    def data_info(self) -> Union[DataInfo, ErrorResponse]:
+    def data_info(self) -> DataInfo:
         """
         Returns information about the training data (versions, coins, features).
         Useful in combination with `download_data()` and `create_model()`.
