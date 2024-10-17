@@ -23,6 +23,9 @@ if __name__ == "__main__":
     
     print("\nTesting get_all_models:")
     #print(client.get_model())
+    
+    print("\nTesting delete_model:")
+    #print(client.delete_model(id=1))
 
     print("\nTesting get_leaderboard:")
     #print(client.get_leaderboard())
