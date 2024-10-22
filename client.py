@@ -8,6 +8,7 @@ from datetime import datetime
 import requests
 from .public.crypticorn import Crypticorn
 from .public.crypticorn.utils import SingleModel, AccountInfo, ApiKeyGeneration, AllModels
+from datetime import timedelta
 
 class PredictionData(BaseModel):
     id: Optional[int] = None
@@ -355,77 +356,6 @@ class ApiClient:
         df.rename(columns={"values": "trend_val", "timestamps": "timestamp"}, inplace=True)
         return df
 
-    def get_historical_marketcap(self, start_date: str = None, end_date: str = None, limit: int = None) -> DataFrame:
-        """
-        Retrieves historical market cap data for a specific symbol.
-
-        Args:
-            symbol (str): The symbol to retrieve historical market cap data for.
-            start_date (str, optional): The start date for the data. Defaults to None.
-            end_date (str, optional): The end date for the data. Defaults to None.
-            limit (int, optional): The maximum number of data points to retrieve. Defaults to None.
-
-        Returns:
-            DataFrame: A pandas DataFrame containing the historical market cap data.
-
-        """
-        response = self.client.get(
-            urljoin(self.base_url, f"/v1/market/market-cap/{symbol}"),
-            params={"start_date": start_date, "end_date": end_date, "limit": limit},
-        )
-        df = pd.DataFrame(response.json())
-        return df
-    
-    def get_hist_marketcap_coins(self, start:int = None, end:int = None):
-        """
-        Retrieves coin data.
-        If start and end is not provided, it will fetch data for the last 7 days
-        Use same start and end timestamp to fetch data for a specific day
-
-        Args:
-            start_timestamp (int, required): The start timestamp for the data.
-            end_timestamp (int, required): The end timestamp for the data.
-
-        Returns:
-            DataFrame: A pandas DataFrame containing the coin data.
-
-        """
-        if start is None:
-            start = int(datetime.now().timestamp()) - (7 * 24 * 60 * 60)
-        if end is None:
-            end = int(datetime.now().timestamp())
-        response = self.client.get(
-            urljoin(self.base_url, f"/v1/market/cmc/top-coins?start_timestamp={start}&end_timestamp={end}"),
-        )
-        print(response.json())
-        df = pd.DataFrame(response.json()['data'])
-        df.pop('source_ohlcv_spot')
-        df.pop('source_ohlcv_perp')
-        df.pop('id')
-        return df
-
-    def get_cmc_mc_ohlcv(self, symbol: str, market: str, start_timestamp: int, end_timestamp: int, interval: str, limit: int):
-        """
-        Retrieves OHLCV data from historical marketcap coins.
-
-        Args:
-            symbol (str): The symbol to retrieve OHLCV data for.
-            market (str): The market type (spot or perp).
-            start_timestamp (int): The start timestamp for the data.
-            end_timestamp (int): The end timestamp for the data.
-            interval (str): The interval for the data. Can be 15m, 1h, 2h, 4h, 1d (15m only when coin is available in any exchange)
-            limit (int): The maximum number of data points to retrieve.
-
-        Returns:
-            DataFrame: A pandas DataFrame containing the OHLCV data.
-
-        """
-
-        response = self.client.get(
-            urljoin(self.base_url, f"/v1/market/ohlcv/{symbol}/{interval}?market={market}&start_timestamp={start_timestamp}&end_timestamp={end_timestamp}&limit={limit}"),
-        )
-        df = pd.DataFrame(response.json()['data'])
-        return df
 
     def get_exchange_all_symbols(self, exchange_name: str) -> DataFrame:
         """Exchange names to be added as follows: 
@@ -482,7 +412,38 @@ class ApiClient:
         df = pd.DataFrame(response.json())
         df.columns = ['indicator_name']
         return df
-
+    
+    #### Start Marketcap Metrics ####
+    # Get historical marketcap rankings for coins
+    def get_historical_marketcap_rankings(self, start_timestamp: int, end_timestamp: int) -> DataFrame:
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/metrics/marketcap/symbols?start_timestamp={start_timestamp}&end_timestamp={end_timestamp}"), timeout=None
+        )
+        df = pd.DataFrame(response.json())
+        return df
+    
+    def get_marketcap_indicator_values(self, symbol: str,market: str, period: int, indicator_name: str, timestamp:int = None):
+        """
+        Get marketcap indicator values for a specific indicator name and timestamp
+        Indicator names to be added as follows:
+        ker, sma
+        """
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/metrics/{indicator_name}/{symbol}"), timeout=None, params={"market": market, "period": period, "timestamp": timestamp}
+        )
+        return response.json()
+    
+    def get_exchanges_for_mc_symbol(self, symbol: str, market: str, timestamp: int = int((datetime.now() - timedelta(days=1, hours=0, minutes=0, seconds=0)).timestamp())) -> DataFrame:
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/metrics/available_exchanges/{market}/{symbol}"), timeout=None, params={"timestamp": timestamp}
+        )
+        exchanges = {k: 1 if v else 0 for item in response.json() for k, v in item.items()}
+        df = pd.DataFrame([exchanges])
+        df.rename(columns={df.columns[0]: 'timestamp'}, inplace=True)
+        df['timestamp'] = timestamp
+        return df
+    
+    #### End Marketcap Metrics ####
     def verify(self, token: Union[str, None] = None) -> bool:
         if token is None:
             token = self.token
@@ -609,3 +570,4 @@ class HiveClient(Crypticorn):
             headers=self._headers
         )
         return response.json()
+
