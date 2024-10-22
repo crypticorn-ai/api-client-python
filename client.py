@@ -454,6 +454,13 @@ class ApiClient:
         df['timestamp'] = timestamp
         return df
     
+    def get_marketcap_ranking_with_ohlcv(self, market: str, timeframe: str, top_n: int, ohlcv_limit: int, timestamp: int = int((datetime.now() - timedelta(days=1, hours=0, minutes=0, seconds=0)).timestamp())) -> DataFrame:
+        params = {"market": market, "timeframe": timeframe, "top_n": top_n, "ohlcv_limit": ohlcv_limit, "timestamp": timestamp}
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/metrics/marketcap/symbols/ohlcv"), timeout=None, params=params
+        )
+        return response.json()
+    
     #### End Marketcap Metrics ####
     def verify(self, token: Union[str, None] = None) -> bool:
         if token is None:
