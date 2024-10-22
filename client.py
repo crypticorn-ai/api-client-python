@@ -415,11 +415,22 @@ class ApiClient:
     
     #### Start Marketcap Metrics ####
     # Get historical marketcap rankings for coins
-    def get_historical_marketcap_rankings(self, start_timestamp: int, end_timestamp: int) -> DataFrame:
+    def get_historical_marketcap_rankings(self, start_timestamp: int = None, end_timestamp: int = None) -> DataFrame:
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/marketcap/symbols?start_timestamp={start_timestamp}&end_timestamp={end_timestamp}"), timeout=None
+            urljoin(self.base_url, f"/v1/metrics/marketcap/symbols"), timeout=None, params={"start_timestamp": start_timestamp, "end_timestamp": end_timestamp}
         )
         df = pd.DataFrame(response.json())
+        df.rename(columns={df.columns[0]: 'timestamp'}, inplace=True)
+        df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
+        return df
+    
+    def get_historical_marketcap_values_for_rankings(self, start_timestamp: int = None, end_timestamp: int = None) -> DataFrame:
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/metrics/marketcap"), timeout=None, params={"start_timestamp": start_timestamp, "end_timestamp": end_timestamp}
+        )
+        df = pd.DataFrame(response.json())
+        df.rename(columns={df.columns[0]: 'timestamp'}, inplace=True)
+        df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
         return df
     
     def get_marketcap_indicator_values(self, symbol: str,market: str, period: int, indicator_name: str, timestamp:int = None):
