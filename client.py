@@ -522,45 +522,45 @@ class HiveClient(Crypticorn):
         )
         return response.json()
 
-    def get_account_info(self, username: str = None, id: str = None) -> AccountInfo:
+    def get_account_info(self, username: str = None, user_id: str = None) -> AccountInfo:
         """
         Retrieves information about a user (defaults to current user if no params defined).
         :param username: The username of the account.
-        :param id: The id of the account.
+        :param user_id: The id of the account.
         :return: The JSON response from the API.
         """
         endpoint = "/account"
         response = requests.get(
             url=self._base_url + endpoint,
-            params={"username": username, "id": id},
+            params={"username": username, "user_id": user_id},
             headers=self._headers
         )
         return response.json()
 
     def get_model(self, model_id: int = None) -> Union[SingleModel, AllModels]:
         """
-        Retrieves all models or a specific model by ID.
-        :param model_id: The ID of the model to retrieve.
+        Retrieves all models or a specific model by id.
+        :param model_id: The id of the model to retrieve.
         :return: The JSON response from the API.
         """
         endpoint = "/model"
         response = requests.get(
             url=self._base_url + endpoint,
-            params={"id": model_id},
+            params={"model_id": model_id},
             headers=self._headers
         )
         return response.json()
     
     def delete_model(self, model_id: int) -> int:
         """
-        Deletes a specific model by ID.
-        :param model_id: The ID of the model to delete.
+        Deletes a specific model by id.
+        :param model_id: The id of the model to delete.
         :return: The JSON response from the API.
         """
         endpoint = "/model"
         response = requests.delete(
             url=self._base_url + endpoint,
-            params={"id": model_id},
+            params={"model_id": model_id},
             headers=self._headers
         )
         return response.json()
