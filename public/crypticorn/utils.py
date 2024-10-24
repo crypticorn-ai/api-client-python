@@ -26,7 +26,7 @@ def download_file(url: str, dest_path: str, show_progress_bars: bool = True):
     temp_path = dest_path + ".temp"
 
     if os.path.exists(dest_path):
-        logger.info(f"file already exists: {dest_path}")
+        logger.info(f" file already exists: {dest_path}")
         file_size = os.stat(dest_path).st_size
         if file_size == total_size:
             return dest_path
@@ -36,18 +36,18 @@ def download_file(url: str, dest_path: str, show_progress_bars: bool = True):
 
         if file_size < total_size:
             # Download incomplete
-            logger.info("resuming download")
+            logger.info(f" resuming download")
             resume_header = {'Range': f'bytes={file_size}-'}
             req = requests.get(url, headers=resume_header, stream=True,
                                verify=False, allow_redirects=True, timeout=600)
         else:
             # Error, delete file and restart download
-            logger.error(f"deleting file {dest_path} and restarting")
+            logger.error(f" deleting file {dest_path} and restarting")
             os.remove(temp_path)
             file_size = 0
     else:
         # File does not exist, starting download
-        logger.info("starting download")
+        logger.info(f" starting download")
 
     # write dataset to file and show progress bar
     pbar = tqdm.tqdm(total=total_size, unit='B', unit_scale=True,
@@ -65,15 +65,15 @@ def download_file(url: str, dest_path: str, show_progress_bars: bool = True):
 
 class SingleModel(BaseModel):
     coin_id: int
-    correlation: int
     correlations: List[int]
     created: str
-    id: int
+    model_id: int
     name: str
     status: str
     target: str
     updated: str
     dev_id: str
+    
     
 class AllModels(BaseModel):
     models: List[SingleModel]

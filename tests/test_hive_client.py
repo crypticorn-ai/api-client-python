@@ -19,13 +19,13 @@ if __name__ == "__main__":
     #print(client.evaluate_model(1, data))
 
     print("\nTesting get_specific_model:")
-    #print(client.get_model(id=1))
+    #print(client.get_model(model_id=1))
     
     print("\nTesting get_all_models:")
     #print(client.get_model())
     
     print("\nTesting delete_model:")
-    #print(client.delete_model(id=1))
+    #print(client.delete_model(model_id=1))
 
     print("\nTesting get_leaderboard:")
     #print(client.get_leaderboard())
@@ -45,11 +45,11 @@ if __name__ == "__main__":
     print("\nTesting download_data:")
     #print(client.download_data(model_id=1, feature_size="small", version=1))
 
-    print("\nTesting get_account_info by id:")
-    #print(client.get_account_info(id="nbZ05EjKfjXjWt0S07o9"))
+    print("\nTesting get_account_info by model_id:")
+    #print(client.get_account_info(user_id="nbZ05EjKfjXjWt0S07o9"))
     
     print("\nTesting get_account_info by username:")
-    #print(client.get_account_info(id="mateh"))
+    #print(client.get_account_info(user_id="mateh"))
     
     print("\nTesting get_account_info (current user):")
     #print(client.get_account_info())

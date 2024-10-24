@@ -36,11 +36,11 @@ class Crypticorn:
         )
         return response.json()
 
-    def evaluate_model(self, id: int, data: Any) -> ModelEvaluation:
+    def evaluate_model(self, model_id: int, data: Any) -> ModelEvaluation:
         """
         Evaluates an existing model using the provided data.
 
-        :param id: The ID of the model to evaluate. Must be one of the available `coins`.
+        :param model_id: The ID of the model to evaluate. Must be one of the available `coins`.
         :param data: The data to use for evaluation, provided in one of the following formats: pandas DataFrame,
                      or file paths with extensions `.feather`, `.parquet`, or `.json`.
         """
@@ -59,7 +59,7 @@ class Crypticorn:
         endpoint = "/model/evaluation"
         response = requests.post(
             url=self._base_url + endpoint,
-            params={"id": id},
+            params={"model_id": model_id},
             json=json_data,
             headers=self._headers
         )
@@ -73,12 +73,12 @@ class Crypticorn:
 
         :param model_id: ID of the model to download data for.
         :param version: (optional) Data version to download. Defaults to the latest version if not specified.
-        :param feature_size: (optional) Size of the feature set to download. Default is "all".
+        :param feature_size: (optional) Size of the feature set to download. Default is "large".
         """
         endpoint = "/data"
         response = requests.get(
             url=self._base_url + endpoint,
-            params={"feature_size": feature_size, "version": float(version), "model_id": model_id},
+            params={"feature_size": feature_size, "version": version, "model_id": model_id},
             headers=self._headers
         )
         if response.status_code != 200:
@@ -96,7 +96,7 @@ class Crypticorn:
         Returns information about the training data (versions, coins, features).
         Useful in combination with `download_data()` and `create_model()`.
         """
-        endpoint = "/data-version"
+        endpoint = "/data/info"
         response = requests.get(
             url=self._base_url + endpoint,
             headers=self._headers)
