@@ -73,6 +73,8 @@ class SingleModel(BaseModel):
     target: str
     updated: str
     dev_id: str
+    class Config:
+        protected_namespaces = ()
     
     
 class AllModels(BaseModel):
