@@ -11,14 +11,8 @@ if __name__ == "__main__":
     #data = pd.DataFrame([{"feature1": 10, "feature2": 20}])
     #print(client.evaluate_model(1, data))
 
-    #print("\nTesting download_data with coin_id:")
-    #client.download_data(coin_id=2, feature_size="all", version=1.2)
     #print("\nTesting download_data with model_id:")
     #client.download_data(model_id=17, version=1.2)
-
-
-    #print("\nTesting help:")
-    #print(client.help())
 
     # print("\nTesting data info")
     # data = client.data_info()
