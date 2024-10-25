@@ -3,7 +3,7 @@ import os
 import tqdm
 import logging
 from pydantic import BaseModel
-from typing import List, Optional, Dict, Any
+from typing import List, Dict, Any
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

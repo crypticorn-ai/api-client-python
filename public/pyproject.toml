@@ -25,8 +25,7 @@ classifiers = [
 
 [project.urls]
 Website = "https://crypticorn.com"
-Documentation = "https://api.crypticorn.dev"
-Dashboard = "https://app.crypticorn.dev/developer"
+Dashboard = "https://app.crypticorn.com"
 
 [build-system]
 requires = ["setuptools>=61.0"]
