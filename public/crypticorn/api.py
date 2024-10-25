@@ -1,5 +1,4 @@
-from pydantic import BaseModel
-from typing import Any, Union, Dict
+from typing import Any
 import pandas as pd
 import requests
 import os

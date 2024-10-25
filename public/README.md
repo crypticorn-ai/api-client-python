@@ -10,16 +10,6 @@ Crypticorn offers AI-based solutions for both active and passive investors, incl
 Use this API Client to contribute to the so-called Hive AI, a community driven AI Meta Model for predicting the
 cryptocurrency market.
 
-# Useful Links
-
-[Learn about Hive AI](https://docs.crypticorn.com/crypticorn-token-aic/crypticorns-technology/institutions-developer)
-
-[Official Website](https://crypticorn.com)
-
-[Go to the Dashboard](https://app.crypticorn.com/developer)
-
-[View package on PyPI](https://test.pypi.org/project/crypticorn/)
-
 # Get Started
 ```shell
 pip install crypticorn
