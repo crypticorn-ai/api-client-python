@@ -3,7 +3,7 @@ import os
 import tqdm
 import logging
 from pydantic import BaseModel
-from typing import List, Optional, Dict
+from typing import List, Dict, Any
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -22,33 +22,32 @@ def download_file(url: str, dest_path: str, show_progress_bars: bool = True):
     req = requests.get(url, stream=True, timeout=600)
     req.raise_for_status()
 
-    # Total size in bytes.
     total_size = int(req.headers.get('content-length', 0))
     temp_path = dest_path + ".temp"
 
     if os.path.exists(dest_path):
-        logger.info(f"file already exists: {dest_path}")
-        file_size = os.stat(dest_path).st_size  # File size in bytes
+        logger.info(f" file already exists: {dest_path}")
+        file_size = os.stat(dest_path).st_size
         if file_size == total_size:
             return dest_path
 
     if os.path.exists(temp_path):
-        file_size = os.stat(temp_path).st_size  # File size in bytes
+        file_size = os.stat(temp_path).st_size
 
         if file_size < total_size:
             # Download incomplete
-            logger.info("resuming download")
+            logger.info(f" resuming download")
             resume_header = {'Range': f'bytes={file_size}-'}
             req = requests.get(url, headers=resume_header, stream=True,
                                verify=False, allow_redirects=True, timeout=600)
         else:
             # Error, delete file and restart download
-            logger.error(f"deleting file {dest_path} and restarting")
+            logger.error(f" deleting file {dest_path} and restarting")
             os.remove(temp_path)
             file_size = 0
     else:
         # File does not exist, starting download
-        logger.info("starting download")
+        logger.info(f" starting download")
 
     # write dataset to file and show progress bar
     pbar = tqdm.tqdm(total=total_size, unit='B', unit_scale=True,
@@ -64,58 +63,44 @@ def download_file(url: str, dest_path: str, show_progress_bars: bool = True):
     return dest_path
 
 
-class ErrorResponse(BaseModel):
-    error: str
-    type: Optional[str]
-
-
-class ModelInfoResponse(BaseModel):
+class SingleModel(BaseModel):
     coin_id: int
-    correlation: int
     correlations: List[int]
     created: str
-    id: int
+    model_id: int
     name: str
     status: str
     target: str
     updated: str
-    ranks: Dict[str, str]
+    dev_id: str
+    
+    
+class AllModels(BaseModel):
+    models: List[SingleModel]
 
 
-class ModelInfoShortResponse(BaseModel):
-    b_correlation: int
-    a_name: str
-    coin: int
-    target: str
-
-
-class AccountInfoResponse(BaseModel):
+class AccountInfo(BaseModel):
     api_key: bool
-    joined: str
-    models: List[ModelInfoShortResponse]
+    models: List[SingleModel]
     user_id: str
     username: str
+    updated: str
+    created: str
 
 
-class EvaluateModelResponse(BaseModel):
-    metrics: Dict[str, float]
+class ModelEvaluation(BaseModel):
+    benchmarks: Dict[str, Dict[str, Dict[str, Any]]]
+    metrics: Dict[str, Dict[str, Any]]
     model_id: int
     class Config:
         protected_namespaces = ()
 
 
-class HelpResponse(BaseModel):
-    dashboard: str
-    documentation: str
-    support: str
-
-
-class GenerateApiKeyResponse(BaseModel):
+class ApiKeyGeneration(BaseModel):
     api_key: str
-    message: str
 
 
-class DataInfoResponse(BaseModel):
+class DataInfo(BaseModel):
     data: Dict[str, Dict[str, List[str]]]
     coins: List[int]
     targets: List[str]

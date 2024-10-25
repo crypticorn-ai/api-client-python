@@ -1,9 +1,8 @@
-from pydantic import BaseModel
-from typing import Any, Union, Dict
+from typing import Any
 import pandas as pd
 import requests
 import os
-from .utils import download_file, ModelInfoResponse, EvaluateModelResponse, HelpResponse, ErrorResponse, DataInfoResponse
+from .utils import download_file, SingleModel, ModelEvaluation, DataInfo
 
 
 class Crypticorn:
@@ -18,10 +17,10 @@ class Crypticorn:
 
         :param api_key: The API key required for authenticating requests.
         """
-        self._base_url = os.getenv("BASE_URL", base_url) + "/v1/hive"
+        self._base_url = os.getenv("HIVE_BASE_URL", base_url) + "/v1/hive"
         self._headers = headers if headers else {"Authorization": f"ApiKey {api_key}"}
 
-    def create_model(self, coin_id: int, target: str) -> Union[ModelInfoResponse, ErrorResponse]:
+    def create_model(self, coin_id: int, target: str) -> SingleModel:
         """
         Creates a new model based on the specified coin_id and target.
 
@@ -36,11 +35,11 @@ class Crypticorn:
         )
         return response.json()
 
-    def evaluate_model(self, id: int, data: Any) -> Union[EvaluateModelResponse, ErrorResponse]:
+    def evaluate_model(self, model_id: int, data: Any) -> ModelEvaluation:
         """
         Evaluates an existing model using the provided data.
 
-        :param id: The ID of the model to evaluate. Must be one of the available `coins`.
+        :param model_id: The ID of the model to evaluate. Must be one of the available `coins`.
         :param data: The data to use for evaluation, provided in one of the following formats: pandas DataFrame,
                      or file paths with extensions `.feather`, `.parquet`, or `.json`.
         """
@@ -59,26 +58,26 @@ class Crypticorn:
         endpoint = "/model/evaluation"
         response = requests.post(
             url=self._base_url + endpoint,
-            params={"id": id},
+            params={"model_id": model_id},
             json=json_data,
             headers=self._headers
         )
         return response.json()
 
     def download_data(self, model_id: int, version: float = None,
-                      feature_size: str = None) -> Union[int, ErrorResponse]:
+                      feature_size: str = None) -> int:
         """
         Downloads training data for models.
         Either pass a model_id or coin_id. For more details about available data, use `data_info()`.
 
         :param model_id: ID of the model to download data for.
         :param version: (optional) Data version to download. Defaults to the latest version if not specified.
-        :param feature_size: (optional) Size of the feature set to download. Default is "all".
+        :param feature_size: (optional) Size of the feature set to download. Default is "large".
         """
         endpoint = "/data"
         response = requests.get(
             url=self._base_url + endpoint,
-            params={"feature_size": feature_size, "version": float(version), "model_id": model_id},
+            params={"feature_size": feature_size, "version": version, "model_id": model_id},
             headers=self._headers
         )
         if response.status_code != 200:
@@ -91,22 +90,12 @@ class Crypticorn:
         download_file(url=data["X_train"], dest_path=f"{base_path}X_train_{data['feature_size']}.feather")
         return 200
 
-    def data_info(self) -> Union[DataInfoResponse, ErrorResponse]:
+    def data_info(self) -> DataInfo:
         """
         Returns information about the training data (versions, coins, features).
         Useful in combination with `download_data()` and `create_model()`.
         """
-        endpoint = "/data-version"
-        response = requests.get(
-            url=self._base_url + endpoint,
-            headers=self._headers)
-        return response.json()
-
-    def help(self) -> Union[HelpResponse, ErrorResponse]:
-        """
-        Returns useful resources from the API.
-        """
-        endpoint = "/help"
+        endpoint = "/data/info"
         response = requests.get(
             url=self._base_url + endpoint,
             headers=self._headers)
