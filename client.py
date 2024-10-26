@@ -485,10 +485,10 @@ class ApiClient:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/metrics/available_exchanges/{market}/{symbol}"), timeout=None, params={"timestamp": timestamp}
         )
-        exchanges = {k: 1 if v else 0 for item in response.json() for k, v in item.items()}
-        df = pd.DataFrame([exchanges])
-        df.rename(columns={df.columns[0]: 'timestamp'}, inplace=True)
+        df = pd.DataFrame([{k: int(v) for d in response.json() for k, v in d.items()}])
+        df = df.reindex(sorted(df.columns), axis=1)
         df['timestamp'] = timestamp
+        df = df[['timestamp'] + [col for col in df.columns if col != 'timestamp']]
         return df
     
     def get_marketcap_ranking_with_ohlcv(self, market: str, timeframe: str, top_n: int, ohlcv_limit: int, timestamp: int = int((datetime.now() - timedelta(days=1, hours=0, minutes=0, seconds=0)).timestamp())) -> DataFrame:
@@ -625,4 +625,3 @@ class HiveClient(Crypticorn):
             headers=self._headers
         )
         return response.json()
-
