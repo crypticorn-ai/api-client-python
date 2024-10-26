@@ -1,4 +1,9 @@
 # Changelog
+#### v0.4.1
+###### 26.10.2024
+- Add data to `data_info()`
+- Improve benchmarking in `evaluate_model()`
+
 #### v0.4.0
 ###### 24.10.2024
 - Standardize naming
