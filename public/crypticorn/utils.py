@@ -65,7 +65,7 @@ def download_file(url: str, dest_path: str, show_progress_bars: bool = True):
 
 class SingleModel(BaseModel):
     coin_id: int
-    evaluations: List[int]
+    evaluations: List[Dict[str, Any]]
     created: str
     model_id: int
     name: str
