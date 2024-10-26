@@ -1,25 +1,28 @@
-from python.client import HiveClient
+from api_client.python.client import HiveClient
 import random
 import pandas as pd
 
 ### Local Testing
-# Run app.py locally and use the token from the console to test the client
+# Run app.py locally and use the token from the browser cookies to test the client
+# Set Crypticorn base URL to localhost
+# Use the following code to test within the hive-service repo for better workflow
 
 if __name__ == "__main__":
-    client = HiveClient(token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiamhXVXVDS0pNVjQ0ZmNiWEx4VmMiLCJpYXQiOjE3Mjg5OTc4ODksImV4cCI6MTcyOTAwMTQ4OSwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.oeJqCJ63kikLEgv83wrnicnBapz3dFujAmI5D3oGeTQ")
+    client = HiveClient(token="")
     
     print("Testing create_account:")
     #print(client.create_account())
     
     print("\nTesting create_model:")
-    #print(client.create_model(1, "Alderaan"))
-    #     #
+    #print(client.create_model(1, "Hoth"))
+
     print("\nTesting evaluate_model:")
-    #data = pd.DataFrame(columns=["feature1"], data=[random.gauss(1,0.02) for _ in range(4986)])
-    #print(client.evaluate_model(1, data))
+    # data = pd.DataFrame(columns=["feature1"], data=[random.gauss(1,0.02) for _ in range(4986)])
+    # data.to_json("data.parquet")
+    # print(client.evaluate_model(2, "data.parquet"))
 
     print("\nTesting get_specific_model:")
-    #print(client.get_model(model_id=1))
+    # print(client.get_model(model_id=2))
     
     print("\nTesting get_all_models:")
     #print(client.get_model())
@@ -43,7 +46,7 @@ if __name__ == "__main__":
     #print(client.update_username("Mister Y"))
 
     print("\nTesting download_data:")
-    #print(client.download_data(model_id=1, feature_size="small", version=1))
+    #print(client.download_data(model_id=1, feature_size="small"))
 
     print("\nTesting get_account_info by model_id:")
     #print(client.get_account_info(user_id="nbZ05EjKfjXjWt0S07o9"))

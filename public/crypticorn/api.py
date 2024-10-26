@@ -24,7 +24,7 @@ class Crypticorn:
         """
         Creates a new model based on the specified coin_id and target.
 
-        :param coin_id: The ID of the coin to be used for the model.
+        :param coin_id: The id of the coin to be used for the model.
         :param target: The target variable for the model.
         """
         endpoint = "/model/creation"
@@ -35,13 +35,14 @@ class Crypticorn:
         )
         return response.json()
 
-    def evaluate_model(self, model_id: int, data: Any) -> ModelEvaluation:
+    def evaluate_model(self, model_id: int, data: Any, version: float = None) -> ModelEvaluation:
         """
         Evaluates an existing model using the provided data.
 
-        :param model_id: The ID of the model to evaluate. Must be one of the available `coins`.
+        :param model_id: The id of the model to evaluate. Must be one of the available `coins`.
         :param data: The data to use for evaluation, provided in one of the following formats: pandas DataFrame,
-                     or file paths with extensions `.feather`, `.parquet`, or `.json`.
+                     or file paths with extensions `.feather`, `.parquet`, or `pd.Dataframe`.
+        :param version: (optional) Specifies the data version for evaluation; defaults to the latest version. If provided, the evaluation will not be stored or counted on the leaderboard, which is useful for testing your model with different versions. Ensure to specify a `version` if your model was trained on older data versions; otherwise, it will be evaluated against the latest data, potentially screwing results.
         """
         if isinstance(data, pd.DataFrame):
             json_data = data.to_json(orient='records')
@@ -51,14 +52,14 @@ class Crypticorn:
             elif data.endswith('.parquet'):
                 json_data = pd.read_parquet(data).to_json(orient="records")
             else:
-                raise ValueError("Unsupported file format. Use .feather, .parquet, or .json.")
+                raise ValueError("Unsupported file format. Use .feather, .parquet, or pd.Dataframe.")
         else:
             raise ValueError("Unsupported data format. Pass a pd.DataFrame or a valid file path.")
 
         endpoint = "/model/evaluation"
         response = requests.post(
             url=self._base_url + endpoint,
-            params={"model_id": model_id},
+            params={"model_id": model_id, "version": version},
             json=json_data,
             headers=self._headers
         )
@@ -70,7 +71,7 @@ class Crypticorn:
         Downloads training data for models.
         Either pass a model_id or coin_id. For more details about available data, use `data_info()`.
 
-        :param model_id: ID of the model to download data for.
+        :param model_id: id of the model to download data for.
         :param version: (optional) Data version to download. Defaults to the latest version if not specified.
         :param feature_size: (optional) Size of the feature set to download. Default is "large".
         """
