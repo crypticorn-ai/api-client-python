@@ -511,6 +511,18 @@ class ApiClient:
         )
         return response.json()
     
+    def get_stable_or_wrapped_tokens(self, token_type: str = 'stable') -> DataFrame:
+        """
+        token_type: stable or wrapped
+        """
+        if token_type not in ['stable', 'wrapped']:
+            raise ValueError("token_type must be either stable or wrapped")
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/metrics/tokens/{token_type}"), timeout=None
+        )
+        df = pd.DataFrame(response.json())
+        return df
+    
     #### End Marketcap Metrics ####
     def verify(self, token: Union[str, None] = None) -> bool:
         if token is None:
