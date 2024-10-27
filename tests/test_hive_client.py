@@ -19,7 +19,7 @@ if __name__ == "__main__":
     print("\nTesting evaluate_model:")
     # data = pd.DataFrame(columns=["feature1"], data=[random.gauss(1,0.02) for _ in range(4986)])
     # data.to_json("data.parquet")
-    # print(client.evaluate_model(2, "data.parquet"))
+    #print(client.evaluate_model(35, data))
 
     print("\nTesting get_specific_model:")
     # print(client.get_model(model_id=2))

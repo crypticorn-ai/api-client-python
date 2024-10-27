@@ -86,14 +86,14 @@ class Crypticorn:
         data = response.json()
         base_path = f"v{data['version']}/coin_{data['coin']}/"
         os.makedirs(base_path, exist_ok=True)
-        download_file(url=data["y_train"], dest_path=f"{base_path}y_train.feather")
+        download_file(url=data["y_train"], dest_path=f"{base_path}y_train_{data['target']}.feather")
         download_file(url=data["X_test"], dest_path=f"{base_path}X_test_{data['feature_size']}.feather")
         download_file(url=data["X_train"], dest_path=f"{base_path}X_train_{data['feature_size']}.feather")
         return 200
 
     def data_info(self) -> DataInfo:
         """
-        Returns information about the training data (versions, coins, features).
+        Returns information about the training data.
         Useful in combination with `download_data()` and `create_model()`.
         """
         endpoint = "/data/info"
