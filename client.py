@@ -481,18 +481,31 @@ class ApiClient:
         )
         return response.json()
     
-    def get_exchanges_for_mc_symbol(self, symbol: str, market: str, timestamp: int = int((datetime.now() - timedelta(days=1, hours=0, minutes=0, seconds=0)).timestamp())) -> DataFrame:
+    def get_exchanges_for_mc_symbol(self, symbol: str, market: str, interval: str = '1d', start_timestamp: int = None, end_timestamp: int = None) -> DataFrame:
+        if start_timestamp is None:
+            start_timestamp = int((datetime.now() - timedelta(days=7, hours=0, minutes=0, seconds=0)).timestamp())
+        if end_timestamp is None:
+            end_timestamp = int((datetime.now() - timedelta(days=0, hours=0, minutes=0, seconds=0)).timestamp())
+            
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/available_exchanges/{market}/{symbol}"), timeout=None, params={"timestamp": timestamp}
+            urljoin(self.base_url, f"/v1/metrics/available_exchanges/{market}/{symbol}"), timeout=None, params={"interval": interval, "start_timestamp": start_timestamp, "end_timestamp": end_timestamp}
         )
-        df = pd.DataFrame([{k: int(v) for d in response.json() for k, v in d.items()}])
-        df = df.reindex(sorted(df.columns), axis=1)
-        df['timestamp'] = timestamp
-        df = df[['timestamp'] + [col for col in df.columns if col != 'timestamp']]
+        result = response.json()
+        processed_results = []
+        for row in result:
+            data = {'timestamp': row['timestamp']}
+            data.update(row['exchanges'])
+            processed_results.append(data)
+        df = pd.DataFrame(processed_results)
+        cols = ['timestamp'] + sorted([col for col in df.columns if col != 'timestamp'])
+        df = df[cols]
+        df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
+        df = df.astype(int)
         return df
     
     def get_marketcap_ranking_with_ohlcv(self, market: str, timeframe: str, top_n: int, ohlcv_limit: int, timestamp: int = int((datetime.now() - timedelta(days=1, hours=0, minutes=0, seconds=0)).timestamp())) -> DataFrame:
         params = {"market": market, "timeframe": timeframe, "top_n": top_n, "ohlcv_limit": ohlcv_limit, "timestamp": timestamp}
+        print(params)
         response = self.client.get(
             urljoin(self.base_url, f"/v1/metrics/marketcap/symbols/ohlcv"), timeout=None, params=params
         )
