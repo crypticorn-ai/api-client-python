@@ -103,7 +103,7 @@ class ApiKeyGeneration(BaseModel):
 
 class DataInfo(BaseModel):
     data: Dict[str, Dict[str, Dict[str, List[str]]]]
-    coins: List[int]
+    coins: List[str]
     feature_sizes: List[str]
     targets: Dict[str, str]
-    version_log: Dict[str, float]
+    versions: Dict[str, float]
