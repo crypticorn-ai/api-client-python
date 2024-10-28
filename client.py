@@ -572,7 +572,7 @@ class HiveClient(Crypticorn):
 
     def update_username(self, username: str) -> int:
         """
-        Updates the username of the current account..
+        Updates the username of the current account.
         :param username: The new username.
         :return: The JSON response from the API.
         """

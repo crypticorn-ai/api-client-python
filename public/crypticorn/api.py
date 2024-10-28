@@ -39,10 +39,14 @@ class Crypticorn:
         """
         Evaluates an existing model using the provided data.
 
-        :param model_id: The id of the model to evaluate. Must be one of the available `coins`.
-        :param data: The data to use for evaluation, provided in one of the following formats: pandas DataFrame,
-                     or file paths with extensions `.feather`, `.parquet`, or `pd.Dataframe`.
-        :param version: (optional) Specifies the data version for evaluation; defaults to the latest version. If provided, the evaluation will not be stored or counted on the leaderboard, which is useful for testing your model with different versions. Ensure to specify a `version` if your model was trained on older data versions; otherwise, it will be evaluated against the latest data, potentially screwing results.
+        :param model_id: The id of the model to evaluate.
+        :param data: The data to use for evaluation, which can be a pandas DataFrame or a file path with
+                 extensions `.feather` or `.parquet`.
+        :param version: (optional) Specifies the data version for evaluation. Defaults to the latest version.
+                If a different version than the latest is specified, the evaluation will not be stored
+                or counted on the leaderboard. This is useful for testing your model with different versions.
+                Ensure to specify a `version` if your model was trained on older data versions; otherwise,
+                it will be evaluated against the latest data, potentially affecting the results.
         """
         if isinstance(data, pd.DataFrame):
             json_data = data.to_json(orient='records')
@@ -68,11 +72,10 @@ class Crypticorn:
     def download_data(self, model_id: int, version: float = None,
                       feature_size: str = None) -> int:
         """
-        Downloads training data for models.
-        Either pass a model_id or coin_id. For more details about available data, use `data_info()`.
+        Downloads training data for models. For more details about available data, use `data_info()`.
 
         :param model_id: id of the model to download data for.
-        :param version: (optional) Data version to download. Defaults to the latest version if not specified.
+        :param version: (optional) Data version to download. Defaults to the latest version.
         :param feature_size: (optional) Size of the feature set to download. Default is "large".
         """
         endpoint = "/data"
