@@ -481,14 +481,25 @@ class ApiClient:
         )
         return response.json()
     
-    def get_exchanges_for_mc_symbol(self, symbol: str, market: str, interval: str = '1d', start_timestamp: int = None, end_timestamp: int = None) -> DataFrame:
+    def get_exchanges_for_mc_symbol(self, symbol: str, market: str, interval: str = '1d', start_timestamp: int = None, end_timestamp: int = None, status: str = 'ACTIVE', quote_currency: str = 'USDT') -> DataFrame:
+        """
+        status: 'ACTIVE', 'RETIRED'
+        quote_currency: USDT, USDC (can be retrieved from get_unique_quote_currencies())
+        """
+        params = {
+            "interval": interval,
+            "start_timestamp": start_timestamp,
+            "end_timestamp": end_timestamp,
+            "status": status,
+            "quote_currency": quote_currency
+        }
         if start_timestamp is None:
             start_timestamp = int((datetime.now() - timedelta(days=7, hours=0, minutes=0, seconds=0)).timestamp())
         if end_timestamp is None:
             end_timestamp = int((datetime.now() - timedelta(days=0, hours=0, minutes=0, seconds=0)).timestamp())
             
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/available_exchanges/{market}/{symbol}"), timeout=None, params={"interval": interval, "start_timestamp": start_timestamp, "end_timestamp": end_timestamp}
+            urljoin(self.base_url, f"/v1/metrics/available_exchanges/{market}/{symbol}"), timeout=None, params=params
         )
         result = response.json()
         processed_results = []
@@ -519,6 +530,30 @@ class ApiClient:
             raise ValueError("token_type must be either stable or wrapped")
         response = self.client.get(
             urljoin(self.base_url, f"/v1/metrics/tokens/{token_type}"), timeout=None
+        )
+        df = pd.DataFrame(response.json())
+        return df
+    
+    def get_exchanges_mapping_for_specific_symbol(self, market: str, symbol: str) -> DataFrame:
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/metrics/markets/{market}/{symbol}"), timeout=None
+        )
+        df = pd.DataFrame(response.json())
+        return df
+    
+    def get_exchange_mappings_for_specific_exchange(self,market: str, exchange_name: str) -> DataFrame:
+        params = {
+            "exchange_name": exchange_name
+        }
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/metrics/exchange_mappings/{market}"), timeout=None, params=params
+        )
+        df = pd.DataFrame(response.json())
+        return df
+    
+    def get_unique_quote_currencies(self, market: str) -> DataFrame:
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/metrics/quote_currencies/{market}"), timeout=None
         )
         df = pd.DataFrame(response.json())
         return df
