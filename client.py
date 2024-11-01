@@ -77,6 +77,7 @@ class ApiClient:
 
         return DataFrame(formatted_response)
 
+    # -------------------- START OF DATA PLATFORM SERVICE ------------------------ #
     def get_economics_news(self, entries: int, reverse: bool = False) -> DataFrame:
         class NewsData(BaseModel):
             timestamp: int
@@ -255,7 +256,9 @@ class ApiClient:
         df = DataFrame(response.json())
         return df
 
-    # New Kline Service
+    # -------------------- END OF DATA PLATFORM SERVICE ------------------------ #
+
+    # -------------------- START OF KLINE SERVICE ------------------------ #
     def get_symbols(self, market: str) -> DataFrame:
         """
         get: symbol for futures or spot, as pandas dataframe
@@ -308,6 +311,9 @@ class ApiClient:
         df = DataFrame(response.json())
         return df
     
+    # -------------------- END OF KLINE SERVICE ------------------------ #
+    
+    # -------------------- START OF TRADE SERVICE ------------------------ #
     def list_orders(self) -> DataFrame:
         response = self.client.get(
             urljoin(self.base_url, "/v1/trade/orders"),
@@ -326,6 +332,9 @@ class ApiClient:
             "api_keys": DataFrame(data["api_keys"])
         }
     
+    # -------------------- END OF TRADE SERVICE ------------------------ #
+    
+    # -------------------- START OF GOOGLE TRENDS ------------------------ #
     # Get all keywords available for Google Trends
     def get_google_trend_keywords_available(self) -> DataFrame:
         response = self.client.get(
@@ -356,7 +365,9 @@ class ApiClient:
         df.rename(columns={"values": "trend_val", "timestamps": "timestamp"}, inplace=True)
         return df
 
-
+    # -------------------- END OF GOOGLE TRENDS ------------------------ #
+    
+    # -------------------- START OF MARKET SERVICE ------------------------ #
     def get_exchange_all_symbols(self, exchange_name: str) -> DataFrame:
         """Exchange names to be added as follows: 
         Binance, KuCoin, Gate.io, Bybit, Bingx, Bitget
@@ -413,7 +424,33 @@ class ApiClient:
         df.columns = ['indicator_name']
         return df
     
-    #### Start Marketcap Metrics ####
+    def get_economic_calendar_events(self, start_timestamp: int = None, end_timestamp: int = None, currency: str = 'EUR', country_code: str = 'DE') -> DataFrame:
+        """
+        Function returns a pandas dataframe with the economic calendar events for the specified currency and country code during given time period.
+        currency: EUR, CNY, NZD, AUD, USD, JPY, UAH, GBP, CHF, CAD
+        country_code: CA, UA, ES, US, FR, JP, IT, NZ, AU, CN, UK, CH, EMU, DE
+        """
+        start_date = None
+        end_date = None
+        if isinstance(start_timestamp, int):
+            start_date = pd.to_datetime(start_timestamp, unit='s').strftime('%Y-%m-%d')
+        if isinstance(end_timestamp, int):
+            end_date = pd.to_datetime(end_timestamp, unit='s').strftime('%Y-%m-%d')
+            
+        params = {
+            "start_date": start_date,
+            "end_date": end_date,
+            "currency": currency,
+            "country_code": country_code
+        }
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/market/ecocal"), timeout=None, params=params
+        )
+        df = pd.DataFrame(response.json())
+        return df
+    # -------------------- END OF MARKET SERVICE ------------------------ #
+    
+    # -------------------- START OF MARKETCAP METRICS SERVICE ------------------------ #
     # Get historical marketcap rankings for coins
     def get_historical_marketcap_rankings(self, start_timestamp: int = None, end_timestamp: int = None, include_exchanges: bool = False, interval: str = "1d") -> dict:
         """
@@ -558,7 +595,8 @@ class ApiClient:
         df = pd.DataFrame(response.json())
         return df
     
-    #### End Marketcap Metrics ####
+    # -------------------- END OF MARKETCAP METRICS SERVICE ------------------------ #
+    
     def verify(self, token: Union[str, None] = None) -> bool:
         if token is None:
             token = self.token
