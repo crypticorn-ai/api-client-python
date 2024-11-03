@@ -11,13 +11,13 @@ class Crypticorn:
     download data, and retrieve information about available coins, targets, and features.
     """
 
-    def __init__(self, api_key: str, headers: dict = None, base_url="https://api.crypticorn.dev"):
+    def __init__(self, api_key: str, headers: dict = None, base_url='https://api.crypticorn.dev'):
         """@private
         Initializes the crypticorn API client with an API key.
 
         :param api_key: The API key required for authenticating requests.
         """
-        self._base_url = os.getenv("HIVE_BASE_URL", base_url) + "/v1/hive"
+        self._base_url = base_url + "/v1/hive"
         self._headers = headers if headers else {"Authorization": f"ApiKey {api_key}"}
 
     def create_model(self, coin_id: int, target: str) -> SingleModel:
@@ -72,10 +72,11 @@ class Crypticorn:
     def download_data(self, model_id: int, version: float = None,
                       feature_size: str = None) -> int:
         """
-        Downloads training data for models. For more details about available data, use `data_info()`.
+        Downloads training data for models.
+        Either pass a model_id or coin_id. For more details about available data, use `data_info()`.
 
         :param model_id: id of the model to download data for.
-        :param version: (optional) Data version to download. Defaults to the latest version.
+        :param version: (optional) Data version to download. Defaults to the latest version if not specified.
         :param feature_size: (optional) Size of the feature set to download. Default is "large".
         """
         endpoint = "/data"
