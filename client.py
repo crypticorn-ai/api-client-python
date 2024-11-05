@@ -448,6 +448,36 @@ class ApiClient:
         )
         df = pd.DataFrame(response.json())
         return df
+    
+    def get_bitstamp_symbols(self) -> List[str]:
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/market/bitstamp/symbols"), timeout=None
+        )
+        symbols = response.json()
+        # convert all symbols to uppercase
+        symbols = [symbol.upper() for symbol in symbols]
+        return symbols
+    
+    def get_bitstamp_ohlcv_spot(self, symbol: str,  interval: str, limit: int, start_timestamp: int = None, end_timestamp: int = None) -> DataFrame:
+        """
+        get: unix_time + OHLCV data , as pandas dataframe
+        symbol have to be in capital case e.g. (BTCUSDT)
+        interval: 15m, 30m, 1h, 4h, 1d
+        """
+        params = {"limit": limit}
+        if start_timestamp is not None:
+            params["start"] = start_timestamp
+        if end_timestamp is not None:
+            params["end"] = end_timestamp
+            
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/market/bitstamp/{symbol}/{interval}"),
+            params=params, timeout=None
+        )
+        df = DataFrame(response.json())
+        df['timestamp'] = pd.to_datetime(df['timestamp'])
+        df['timestamp'] = df['timestamp'].astype("int64") // 10 ** 9 # use int64 instead of int for windows
+        return df
     # -------------------- END OF MARKET SERVICE ------------------------ #
     
     # -------------------- START OF MARKETCAP METRICS SERVICE ------------------------ #
