@@ -5,7 +5,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT License"}
 authors = [{name = "Crypticorn", email = "timon@crypticorn.com"}]
-version = "0.4.7"
+version = "1.0.0"
 keywords = ["machine learning", "data science", "crypto", "modelling"]
 
 dependencies = [
@@ -24,7 +24,9 @@ classifiers = [
 ]
 
 [project.urls]
-Website = "https://crypticorn.com"
+homepage = "https://crypticorn.com"
+documentation = "https://docs.crypticorn.com"
+
 
 [build-system]
 requires = ["setuptools>=61.0"]

@@ -11,7 +11,7 @@ class Crypticorn:
     download data, and retrieve information about available coins, targets, and features.
     """
 
-    def __init__(self, api_key: str, headers: dict = None, base_url='https://api.crypticorn.dev'):
+    def __init__(self, api_key: str, headers: dict = None, base_url='https://api.crypticorn.com'):
         """@private
         Initializes the crypticorn API client with an API key.
 
