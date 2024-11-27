@@ -1,6 +1,4 @@
 # Changelog
 
-## [0.4.7] - 2024-11-13
+## [1.0.0] - 2024-11-30
 - Initial public release
-- Added support for predictions and trends
-- Added Hive client functionality
