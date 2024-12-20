@@ -270,7 +270,7 @@ class ApiClient:
         df = DataFrame(response.json())
         return df
 
-    def get_klines(self, market: str, symbol: str,  interval: str, limit: int, start_timestamp: int = None, end_timestamp: int = None) -> DataFrame:
+    def get_klines(self, market: str, symbol: str,  interval: str, limit: int, start_timestamp: int = None, end_timestamp: int = None, sort: str = "desc") -> DataFrame:
         """
         get: unix_time + OHLCV data , as pandas dataframe
         symbol have to be in capital case e.g. (BTCUSDT)
@@ -282,7 +282,9 @@ class ApiClient:
             params["start"] = start_timestamp
         if end_timestamp is not None:
             params["end"] = end_timestamp
-            
+        if sort is not None:
+            params["sort_direction"] = sort
+
         response = self.client.get(
             urljoin(self.base_url, f"/v1/klines/{market}/{interval}/{symbol}"),
             params=params, timeout=None
