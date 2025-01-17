@@ -267,8 +267,11 @@ class ApiClient:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/klines/symbols/{market}"), timeout=None
         )
-        df = DataFrame(response.json())
-        return df
+        if response.status_code == 200:
+            df = DataFrame(response.json())
+            return df
+        else:
+            raise Exception(f"Failed to get symbols: {response.json()}")
 
     def get_klines(self, market: str, symbol: str,  interval: str, limit: int, start_timestamp: int = None, end_timestamp: int = None, sort: str = "desc") -> DataFrame:
         """
@@ -289,10 +292,13 @@ class ApiClient:
             urljoin(self.base_url, f"/v1/klines/{market}/{interval}/{symbol}"),
             params=params, timeout=None
         )
-        df = DataFrame(response.json())
-        df['timestamp'] = pd.to_datetime(df['timestamp'])
-        df['timestamp'] = df['timestamp'].astype("int64") // 10 ** 9 # use int64 instead of int for windows
-        return df
+        if response.status_code == 200:
+            df = DataFrame(response.json())
+            df['timestamp'] = pd.to_datetime(df['timestamp'])
+            df['timestamp'] = df['timestamp'].astype("int64") // 10 ** 9 # use int64 instead of int for windows
+            return df
+        else:
+            raise Exception(f"Failed to get klines: {response.json()}")
     
     def get_funding_rate(self, symbol: str, start_timestamp: int = None, end_timestamp: int = None, limit: int = 2000) -> DataFrame:
         """
@@ -310,8 +316,11 @@ class ApiClient:
             urljoin(self.base_url, f"/v1/klines/funding_rates/{symbol}"),
             params=params, timeout=None
         )
-        df = DataFrame(response.json())
-        return df
+        if response.status_code == 200:
+            df = DataFrame(response.json())
+            return df
+        else:
+            raise Exception(f"Failed to get funding rates: {response.json()}")
     
     # -------------------- END OF KLINE SERVICE ------------------------ #
     
@@ -342,8 +351,11 @@ class ApiClient:
         response = self.client.get(
             urljoin(self.base_url, "/v1/google/keywords"),
         )
-        df = pd.DataFrame(response.json())
-        return df
+        if response.status_code == 200:
+            df = pd.DataFrame(response.json())
+            return df
+        else:
+            raise Exception(f"Failed to get google trends keywords available: {response.json()}")
 
     # Get Google Trends data for a specific keyword
     def get_google_trend_keyword(self, keyword: str, timeframe: str = '8m', limit: int = 100) -> DataFrame:
@@ -363,9 +375,12 @@ class ApiClient:
             urljoin(self.base_url, f"/v1/google/trends/{keyword}"),
             params={"timeframe": timeframe, "limit": limit}, timeout=None
         )
-        df = pd.DataFrame(response.json()['data'])
-        df.rename(columns={"values": "trend_val", "timestamps": "timestamp"}, inplace=True)
-        return df
+        if response.status_code == 200:
+            df = pd.DataFrame(response.json()['data'])
+            df.rename(columns={"values": "trend_val", "timestamps": "timestamp"}, inplace=True)
+            return df
+        else:
+            raise Exception(f"Failed to get google trends: {response.json()}")
 
     # -------------------- END OF GOOGLE TRENDS ------------------------ #
     
@@ -374,11 +389,16 @@ class ApiClient:
         """Exchange names to be added as follows: 
         Binance, KuCoin, Gate.io, Bybit, Bingx, Bitget
         """
+        if exchange_name not in ['Binance', 'KuCoin', 'Gate.io', 'Bybit', 'Bingx', 'Bitget']:
+            raise ValueError("Invalid exchange name it needs to be one of the following: Binance, KuCoin, Gate.io, Bybit, Bingx, Bitget")
         response = self.client.get(
             urljoin(self.base_url, f"/v1/market/exchange-data/{exchange_name}"), timeout=None
         )
-        df = pd.DataFrame(response.json())
-        return df
+        if response.status_code == 200:
+            df = pd.DataFrame(response.json())
+            return df
+        else:
+            raise Exception(f"Failed to get exchange all symbols: {response.json()}")
 
     def get_symbol_info_exchange(self, exchange_name: str, symbol: str, market: str = 'spot') -> DataFrame:
         """
@@ -394,8 +414,11 @@ class ApiClient:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/market/exchange-data/{exchange_name}/{symbol}"), timeout=None
         )
-        df = pd.DataFrame(response.json())
-        return df
+        if response.status_code == 200:
+            df = pd.DataFrame(response.json())
+            return df
+        else:
+            raise Exception(f"Failed to get symbol info: {response.json()}")
     
     def get_cnn_sentiment(self, indicator_name: str, start_date: str = None, end_date: str = None, limit: int = None) -> DataFrame:
         """
@@ -415,16 +438,22 @@ class ApiClient:
             urljoin(self.base_url, f"/v1/market/fng-index/{indicator_name}"),
             params={"start_date": start_date, "end_date": end_date, "limit": limit}, timeout=None
         )
-        df = pd.DataFrame(response.json())
-        return df
+        if response.status_code == 200:
+            df = pd.DataFrame(response.json())
+            return df
+        else:
+            raise Exception(f"Failed to get cnn sentiment: {response.json()}")
 
     def get_cnn_keywords(self) -> DataFrame:
         response = self.client.get(
             urljoin(self.base_url, "/v1/market/fng-index/list-indicators"), timeout=None
         )
-        df = pd.DataFrame(response.json())
-        df.columns = ['indicator_name']
-        return df
+        if response.status_code == 200:
+            df = pd.DataFrame(response.json())
+            df.columns = ['indicator_name']
+            return df
+        else:
+            raise Exception(f"Failed to get cnn keywords: {response.json()}")
     
     def get_economic_calendar_events(self, start_timestamp: int = None, end_timestamp: int = None, currency: str = 'EUR', country_code: str = 'DE') -> DataFrame:
         """
@@ -448,17 +477,23 @@ class ApiClient:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/market/ecocal"), timeout=None, params=params
         )
-        df = pd.DataFrame(response.json())
-        return df
+        if response.status_code == 200:
+            df = pd.DataFrame(response.json())
+            return df
+        else:
+            raise Exception(f"Failed to get economic calendar events: {response.json()}")
     
     def get_bitstamp_symbols(self) -> List[str]:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/market/bitstamp/symbols"), timeout=None
         )
-        symbols = response.json()
-        # convert all symbols to uppercase
-        symbols = [symbol.upper() for symbol in symbols]
-        return symbols
+        if response.status_code == 200:
+            symbols = response.json()
+            # convert all symbols to uppercase
+            symbols = [symbol.upper() for symbol in symbols]
+            return symbols
+        else:
+            raise Exception(f"Failed to get bitstamp symbols: {response.json()}")
     
     def get_bitstamp_ohlcv_spot(self, symbol: str,  interval: str, limit: int, start_timestamp: int = None, end_timestamp: int = None) -> DataFrame:
         """
@@ -476,10 +511,14 @@ class ApiClient:
             urljoin(self.base_url, f"/v1/market/bitstamp/{symbol}/{interval}"),
             params=params, timeout=None
         )
-        df = DataFrame(response.json())
-        df['timestamp'] = pd.to_datetime(df['timestamp'])
-        df['timestamp'] = df['timestamp'].astype("int64") // 10 ** 9 # use int64 instead of int for windows
-        return df
+        if response.status_code == 200: 
+            df = DataFrame(response.json())
+            df['timestamp'] = pd.to_datetime(df['timestamp'])
+            df['timestamp'] = df['timestamp'].astype("int64") // 10 ** 9 # use int64 instead of int for windows
+            return df
+        else:
+            raise Exception(f"Failed to get bitstamp ohlcv spot: {response.json()}")
+        
     # -------------------- END OF MARKET SERVICE ------------------------ #
     
     # -------------------- START OF MARKETCAP METRICS SERVICE ------------------------ #
@@ -531,13 +570,19 @@ class ApiClient:
         }
     
     def get_historical_marketcap_values_for_rankings(self, start_timestamp: int = None, end_timestamp: int = None) -> DataFrame:
+        """
+        Get historical marketcap values for rankings
+        """
         response = self.client.get(
             urljoin(self.base_url, f"/v1/metrics/marketcap"), timeout=None, params={"start_timestamp": start_timestamp, "end_timestamp": end_timestamp}
         )
-        df = pd.DataFrame(response.json())
-        df.rename(columns={df.columns[0]: 'timestamp'}, inplace=True)
-        df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
-        return df
+        if response.status_code == 200:
+            df = pd.DataFrame(response.json())
+            df.rename(columns={df.columns[0]: 'timestamp'}, inplace=True)
+            df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
+            return df
+        else:
+            raise Exception(f"Failed to get historical marketcap values for rankings: {response.json()}")
     
     def get_marketcap_indicator_values(self, symbol: str,market: str, period: int, indicator_name: str, timestamp:int = None):
         """
@@ -548,13 +593,22 @@ class ApiClient:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/metrics/{indicator_name}/{symbol}"), timeout=None, params={"market": market, "period": period, "timestamp": timestamp}
         )
-        return response.json()
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise Exception(f"Failed to get marketcap indicator values: {response.json()}")
     
     def get_exchanges_for_mc_symbol(self, symbol: str, market: str, interval: str = '1d', start_timestamp: int = None, end_timestamp: int = None, status: str = 'ACTIVE', quote_currency: str = 'USDT') -> DataFrame:
         """
         status: 'ACTIVE', 'RETIRED'
         quote_currency: USDT, USDC (can be retrieved from get_unique_quote_currencies())
         """
+        
+        if start_timestamp is None:
+            start_timestamp = int((datetime.now() - timedelta(days=7, hours=0, minutes=0, seconds=0)).timestamp())
+        if end_timestamp is None:
+            end_timestamp = int((datetime.now() - timedelta(days=0, hours=0, minutes=0, seconds=0)).timestamp())
+            
         params = {
             "interval": interval,
             "start_timestamp": start_timestamp,
@@ -562,26 +616,25 @@ class ApiClient:
             "status": status,
             "quote_currency": quote_currency
         }
-        if start_timestamp is None:
-            start_timestamp = int((datetime.now() - timedelta(days=7, hours=0, minutes=0, seconds=0)).timestamp())
-        if end_timestamp is None:
-            end_timestamp = int((datetime.now() - timedelta(days=0, hours=0, minutes=0, seconds=0)).timestamp())
-            
+
         response = self.client.get(
             urljoin(self.base_url, f"/v1/metrics/available_exchanges/{market}/{symbol}"), timeout=None, params=params
         )
-        result = response.json()
-        processed_results = []
-        for row in result:
-            data = {'timestamp': row['timestamp']}
-            data.update(row['exchanges'])
-            processed_results.append(data)
-        df = pd.DataFrame(processed_results)
-        cols = ['timestamp'] + sorted([col for col in df.columns if col != 'timestamp'])
-        df = df[cols]
-        df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
-        df = df.astype(int)
-        return df
+        if response.status_code == 200:
+            result = response.json()
+            processed_results = []
+            for row in result:
+                data = {'timestamp': row['timestamp']}
+                data.update(row['exchanges'])
+                processed_results.append(data)
+            df = pd.DataFrame(processed_results)
+            cols = ['timestamp'] + sorted([col for col in df.columns if col != 'timestamp'])
+            df = df[cols]
+            df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
+            df = df.astype(int)
+            return df
+        else:
+            raise Exception(f"Failed to get exchanges for mc symbol: {response.json()}")
     
     def get_marketcap_ranking_with_ohlcv(self, market: str, timeframe: str, top_n: int, ohlcv_limit: int, timestamp: int = int((datetime.now() - timedelta(days=1, hours=0, minutes=0, seconds=0)).timestamp())) -> DataFrame:
         params = {"market": market, "timeframe": timeframe, "top_n": top_n, "ohlcv_limit": ohlcv_limit, "timestamp": timestamp}
@@ -589,7 +642,11 @@ class ApiClient:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/metrics/marketcap/symbols/ohlcv"), timeout=None, params=params
         )
-        return response.json()
+        if response.status_code == 200:
+            df = pd.DataFrame(response.json())
+            return df
+        else:
+            raise Exception(f"Failed to get marketcap ranking with ohlcv: {response.json()}")
     
     def get_stable_or_wrapped_tokens(self, token_type: str = 'stable') -> DataFrame:
         """
@@ -600,32 +657,64 @@ class ApiClient:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/metrics/tokens/{token_type}"), timeout=None
         )
-        df = pd.DataFrame(response.json())
-        return df
+        if response.status_code == 200:
+            df = pd.DataFrame(response.json())
+            return df
+        else:
+            raise Exception(f"Failed to get stable or wrapped tokens: {response.json()}")
     
     def get_exchanges_mapping_for_specific_symbol(self, market: str, symbol: str) -> DataFrame:
+        """
+        Get the exchanges for a specific symbol and market
+        """
         response = self.client.get(
             urljoin(self.base_url, f"/v1/metrics/markets/{market}/{symbol}"), timeout=None
         )
-        df = pd.DataFrame(response.json())
-        return df
+        if response.status_code == 200:
+            df = pd.DataFrame(response.json())
+            return df
+        else:
+            raise Exception(f"Failed to get exchange mappings: {response.json()}")
     
     def get_exchange_mappings_for_specific_exchange(self,market: str, exchange_name: str) -> DataFrame:
+        """
+        Get the exchanges for a specific exchange and market
+        exchange_name: binance, kucoin, gate.io, bybit, bingx, bitget (lowercase)
+        market: spot, futures
+        """
         params = {
-            "exchange_name": exchange_name
+            "exchange_name": exchange_name.lower()
         }
         response = self.client.get(
             urljoin(self.base_url, f"/v1/metrics/exchange_mappings/{market}"), timeout=None, params=params
         )
-        df = pd.DataFrame(response.json())
-        return df
+        if response.status_code == 200:
+            df = pd.DataFrame(response.json())
+            return df
+        else:
+            raise Exception(f"Failed to get exchange mappings: {response.json()}")
     
     def get_unique_quote_currencies(self, market: str) -> DataFrame:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/metrics/quote_currencies/{market}"), timeout=None
         )
-        df = pd.DataFrame(response.json())
-        return df
+        if response.status_code == 200:
+            df = pd.DataFrame(response.json())
+            return df
+        else:
+            raise Exception(f"Failed to get unique quote currencies: {response.json()}")
+    
+    def get_exchanges_list_for_specific_market(self, market: str) -> List[str]:
+        """
+        Get the list of exchanges for a specific market
+        """
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/metrics/exchange_list/{market}"), timeout=None
+        )
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise Exception(f"Failed to get exchanges list: {response.json()}")
     
     # -------------------- END OF MARKETCAP METRICS SERVICE ------------------------ #
     
