@@ -6,6 +6,8 @@ from typing import Optional, Union, List
 from urllib.parse import urljoin
 from datetime import datetime
 import requests
+
+from python.models import FuturesTradingAction
 from .public.crypticorn import Crypticorn
 from .public.crypticorn.utils import SingleModel, AccountInfo, ApiKeyGeneration, AllModels
 from datetime import timedelta
@@ -76,6 +78,32 @@ class ApiClient:
             return formatted_response.get(dict_key, {})
 
         return DataFrame(formatted_response)
+    
+    async def post_futures_action(self, signal: FuturesTradingAction):
+        url = f"{self.base_url}/v1/trade/actions/futures"
+        token = self.api_key
+        headers = {"Authorization": f"Bearer {token}"}
+        print(f"Posting futures action to {url} with signal: {signal}")
+        try:
+            async with httpx.AsyncClient(timeout=30) as http_client:
+                response = await http_client.post(
+                    url, headers=headers, json=signal.model_dump()
+                )
+            print(f"Response: {response}")
+            response.raise_for_status()
+            data = response.json()
+            print(f"Saved futures action: {data}")
+            return data
+        except httpx.HTTPStatusError as e:
+            error_detail = ""
+            try:
+                error_detail = e.response.json()
+            except Exception:
+                error_detail = e.response.text
+            print(f"HTTP error occurred: {e.response.text}. Details: {error_detail}")
+        except httpx.RequestError as e:
+            print(f"Request failed: {e.request.method} {e.request.url} - {e}")
+        return []
 
     # -------------------- START OF DATA PLATFORM SERVICE ------------------------ #
     def get_economics_news(self, entries: int, reverse: bool = False) -> DataFrame:
