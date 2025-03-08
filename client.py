@@ -415,14 +415,51 @@ class ApiClient:
     
     #### Start Marketcap Metrics ####
     # Get historical marketcap rankings for coins
-    def get_historical_marketcap_rankings(self, start_timestamp: int = None, end_timestamp: int = None) -> DataFrame:
+    def get_historical_marketcap_rankings(self, start_timestamp: int = None, end_timestamp: int = None, include_exchanges: bool = False, interval: str = "1d") -> dict:
+        """
+        Get historical marketcap rankings and exchange availability for cryptocurrencies.
+        
+        Args:
+            start_timestamp (int, optional): Start timestamp for the data range
+            end_timestamp (int, optional): End timestamp for the data range
+            include_exchanges (bool, optional): Whether to include exchange data
+            interval (str, optional): Time interval between data points (e.g. "1d")
+            
+        Returns:
+            dict: Dictionary containing two DataFrames:
+                - rankings: DataFrame with timestamp, rank, and symbol columns
+                - exchanges: DataFrame with timestamp, symbol, exchange, and availability columns
+        """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/marketcap/symbols"), timeout=None, params={"start_timestamp": start_timestamp, "end_timestamp": end_timestamp}
+            urljoin(self.base_url, f"/v1/metrics/marketcap/symbols"), 
+            timeout=None,
+            params={
+                "start_timestamp": start_timestamp, 
+                "end_timestamp": end_timestamp, 
+                "include_exchanges": include_exchanges,
+                "interval": interval
+            }
         )
-        df = pd.DataFrame(response.json())
-        df.rename(columns={df.columns[0]: 'timestamp'}, inplace=True)
-        df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
-        return df
+        
+        data = response.json()
+        
+        # Process rankings data
+        rankings_data = []
+        rankings_df = pd.DataFrame(response.json()['rankings'])
+        rankings_df.rename(columns={rankings_df.columns[0]: 'timestamp'}, inplace=True)
+        rankings_df['timestamp'] = pd.to_datetime(rankings_df['timestamp']).astype("int64") // 10 ** 9
+        
+        # Process exchanges data if included
+        if include_exchanges and 'exchanges' in data:
+            return {
+                'rankings': rankings_df,
+                'exchanges': pd.DataFrame(response.json()['exchanges'])
+            }
+        
+        return {
+            'rankings': rankings_df,
+            'exchanges': pd.DataFrame()  # Empty DataFrame if exchanges not included
+        }
     
     def get_historical_marketcap_values_for_rankings(self, start_timestamp: int = None, end_timestamp: int = None) -> DataFrame:
         response = self.client.get(
