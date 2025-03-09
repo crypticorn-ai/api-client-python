@@ -94,7 +94,7 @@ if __name__ == "__main__":
     # print(coins)
     # print("Get Historical Marketcap Rankings")
     # print("->")
-    rankings = client.get_historical_marketcap_rankings(1741280855, 1741453655, include_exchanges=True)
+    rankings = client.get_historical_marketcap_rankings(1741219200, 1741519658, interval='1d', market="futures", exchange_name="binance")
     print(rankings)
     # print("Get Historical Marketcap Values")
     # print("->")
