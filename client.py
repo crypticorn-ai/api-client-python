@@ -733,6 +733,45 @@ class ApiClient:
     
     # -------------------- END OF MARKETCAP METRICS SERVICE ------------------------ #
     
+    # -------------------- START OF BINGX KLINES SERVICE ------------------------ #
+    
+    def get_bingx_symbols(self) -> List[str]:
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/bingx/symbols"), timeout=None
+        )
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise Exception(f"Failed to get bingx symbols: {response.json()}")
+    
+    def get_bingx_klines(self, symbol: str,  interval: str, limit: int, start_timestamp: int = None, end_timestamp: int = None, sort: str = "desc") -> DataFrame:
+        """
+        get: unix_time + OHLCV data , as pandas dataframe
+        symbol have to be in capital case e.g. (BTCUSDT)
+        interval: 5m, 15m, 30m, 1h, 4h, 1d
+        """
+        params = {"limit": limit}
+        if start_timestamp is not None:
+            params["start"] = start_timestamp
+        if end_timestamp is not None:
+            params["end"] = end_timestamp
+        if sort is not None:
+            params["sort"] = sort
+
+        response = self.client.get(
+            urljoin(self.base_url, f"/v1/bingx/klines/{symbol}/{interval}"),
+            params=params, timeout=None
+        )
+        if response.status_code == 200:
+            df = DataFrame(response.json())
+            df['timestamp'] = pd.to_datetime(df['timestamp'])
+            df['timestamp'] = df['timestamp'].astype("int64") // 10 ** 9 # use int64 instead of int for windows
+            return df
+        else:
+            raise Exception(f"Failed to get bingx klines: {response.json()}")
+    
+    # -------------------- END OF BINGX KLINES SERVICE ------------------------ #
+        
     def verify(self, token: Union[str, None] = None) -> bool:
         if token is None:
             token = self.token
