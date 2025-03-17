@@ -291,22 +291,40 @@ class ApiClient:
         """
         get: symbol for futures or spot, as pandas dataframe
         market: futures or spot
+
+        Returns:
+            DataFrame: A pandas DataFrame containing the symbols with columns:
+                - symbol: str (the trading pair symbol)
         """
         response = self.client.get(
             urljoin(self.base_url, f"/v1/klines/symbols/{market}"), timeout=None
         )
         if response.status_code == 200:
-            df = DataFrame(response.json())
-            return df
+            json_response = response.json()
+            if json_response.get("success"):
+                # Convert the array of symbols to a DataFrame with a 'symbol' column
+                df = DataFrame(json_response["data"], columns=["symbol"])
+                return df
+            else:
+                raise Exception(f"API returned error: {json_response.get('message')}")
         else:
             raise Exception(f"Failed to get symbols: {response.json()}")
 
-    def get_klines(self, market: str, symbol: str,  interval: str, limit: int, start_timestamp: int = None, end_timestamp: int = None, sort: str = "desc") -> DataFrame:
+    def get_klines(self, market: str, symbol: str, interval: str, limit: int, start_timestamp: int = None, end_timestamp: int = None, sort: str = "desc") -> DataFrame:
         """
         get: unix_time + OHLCV data , as pandas dataframe
         symbol have to be in capital case e.g. (BTCUSDT)
         market: futures or spot
         interval: 1m, 3m, 5m, 15m, 30m, 1h, 4h, 1d
+
+        Returns:
+            DataFrame: A pandas DataFrame containing OHLCV data with columns:
+                - timestamp: datetime
+                - open: float
+                - high: float
+                - low: float
+                - close: float
+                - volume: float
         """
         params = {"limit": limit}
         if start_timestamp is not None:
@@ -321,18 +339,43 @@ class ApiClient:
             params=params, timeout=None
         )
         if response.status_code == 200:
-            df = DataFrame(response.json())
-            df['timestamp'] = pd.to_datetime(df['timestamp'])
-            df['timestamp'] = df['timestamp'].astype("int64") // 10 ** 9 # use int64 instead of int for windows
-            return df
+            json_response = response.json()
+            if json_response.get("success"):
+                # Extract the nested data structure
+                data = json_response["data"]
+                # Create DataFrame from the arrays
+                df = DataFrame({
+                    "timestamp": data["timestamp"],
+                    "open": data["open"],
+                    "high": data["high"],
+                    "low": data["low"],
+                    "close": data["close"],
+                    "volume": data["volume"]
+                })
+                # Convert timestamp strings to datetime then to unix timestamp
+                df['timestamp'] = pd.to_datetime(df['timestamp'])
+                df['timestamp'] = df['timestamp'].astype("int64") // 10 ** 9  # use int64 instead of int for windows
+                return df
+            else:
+                raise Exception(f"API returned error: {json_response.get('message')}")
         else:
             raise Exception(f"Failed to get klines: {response.json()}")
     
     def get_funding_rate(self, symbol: str, start_timestamp: int = None, end_timestamp: int = None, limit: int = 2000) -> DataFrame:
         """
-        get: unix_time + funding rate data , as pandas dataframe
-        symbol have to be in capital case e.g. (BTCUSDT)
-        start_timestamp and end_timestamp are optional
+        Get funding rate data for a specific symbol.
+
+        Args:
+            symbol (str): Trading pair symbol in capital case (e.g., 'BTCUSDT')
+            start_timestamp (int, optional): Start time in unix timestamp
+            end_timestamp (int, optional): End time in unix timestamp
+            limit (int, optional): Number of records to return. Defaults to 2000.
+
+        Returns:
+            DataFrame: A pandas DataFrame containing funding rate data with columns:
+                - symbol: str
+                - timestamp: datetime
+                - funding_rate: float
         """
         params = {"limit": limit}
         if start_timestamp is not None:
@@ -345,8 +388,16 @@ class ApiClient:
             params=params, timeout=None
         )
         if response.status_code == 200:
-            df = DataFrame(response.json())
-            return df
+            json_response = response.json()
+            if json_response.get("success"):
+                # Create DataFrame from the data array
+                df = DataFrame(json_response["data"])
+                # Convert timestamp strings to datetime then to unix timestamp
+                df['timestamp'] = pd.to_datetime(df['timestamp'])
+                df['timestamp'] = df['timestamp'].astype("int64") // 10 ** 9  # use int64 instead of int for windows
+                return df
+            else:
+                raise Exception(f"API returned error: {json_response.get('message')}")
         else:
             raise Exception(f"Failed to get funding rates: {response.json()}")
     
