@@ -602,7 +602,7 @@ class ApiClient:
     
     # -------------------- START OF MARKETCAP METRICS SERVICE ------------------------ #
     # Get historical marketcap rankings for coins
-    def get_historical_marketcap_rankings(self, start_timestamp: int = None, end_timestamp: int = None, interval: str = "1d", market: str = None, exchange_name: str = None) -> dict:
+    def get_historical_marketcap_rankings(self, start_timestamp: int = None, end_timestamp: int = None, interval: str = "1d", market: str = None, exchange_name: str = None) -> DataFrame:
         """
         Get historical marketcap rankings and exchange availability for cryptocurrencies.
         
@@ -614,7 +614,10 @@ class ApiClient:
             exchange_name (str, optional): Exchange name (e.g. "binance", "kucoin", "gate.io", "bybit", "bingx", "bitget")
             
         Returns:
-            DataFrame: A pandas DataFrame containing the historical marketcap rankings
+            DataFrame: A pandas DataFrame containing the historical marketcap rankings where:
+                - First column is timestamp
+                - Subsequent columns represent symbol rankings (e.g., BTCUSDT, ETHUSDT, etc.)
+                - null values indicate the symbol was not ranked at that timestamp
         """
         response = self.client.get(
             urljoin(self.base_url, f"/v1/metrics/marketcap/symbols"), 
@@ -628,48 +631,113 @@ class ApiClient:
             }
         )
         
-        data = response.json()
-        # Process rankings data
-        rankings_df = pd.DataFrame(response.json())
-        rankings_df.rename(columns={rankings_df.columns[0]: 'timestamp'}, inplace=True)
-        rankings_df['timestamp'] = pd.to_datetime(rankings_df['timestamp']).astype("int64") // 10 ** 9
-        return rankings_df
+        if response.status_code == 200:
+            json_response = response.json()
+            if json_response.get("success"):
+                # Create DataFrame from the data array
+                df = pd.DataFrame(json_response["data"])
+                # Rename first column to timestamp
+                df.rename(columns={df.columns[0]: 'timestamp'}, inplace=True)
+                # Convert timestamp strings to unix timestamp
+                df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
+                return df
+            else:
+                raise Exception(f"API returned error: {json_response.get('message')}")
+        else:
+            raise Exception(f"Failed to get historical marketcap rankings: {response.json()}")
     
     def get_historical_marketcap_values_for_rankings(self, start_timestamp: int = None, end_timestamp: int = None) -> DataFrame:
         """
-        Get historical marketcap values for rankings
+        Get historical marketcap values for rankings.
+
+        Args:
+            start_timestamp (int, optional): Start timestamp for the data range
+            end_timestamp (int, optional): End timestamp for the data range
+
+        Returns:
+            DataFrame: A pandas DataFrame containing marketcap values where:
+                - First column is timestamp
+                - Subsequent columns represent marketcap values for each ranking position (1-150)
+                - Values are in USD
         """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/marketcap"), timeout=None, params={"start_timestamp": start_timestamp, "end_timestamp": end_timestamp}
+            urljoin(self.base_url, f"/v1/metrics/marketcap"), 
+            timeout=None, 
+            params={"start_timestamp": start_timestamp, "end_timestamp": end_timestamp}
         )
         if response.status_code == 200:
-            df = pd.DataFrame(response.json())
-            df.rename(columns={df.columns[0]: 'timestamp'}, inplace=True)
-            df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
-            return df
+            json_response = response.json()
+            if json_response.get("success"):
+                # Create DataFrame from the data array
+                df = pd.DataFrame(json_response["data"])
+                # Rename first column to timestamp
+                df.rename(columns={df.columns[0]: 'timestamp'}, inplace=True)
+                # Convert timestamp strings to unix timestamp
+                df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
+                return df
+            else:
+                raise Exception(f"API returned error: {json_response.get('message')}")
         else:
             raise Exception(f"Failed to get historical marketcap values for rankings: {response.json()}")
     
-    def get_marketcap_indicator_values(self, symbol: str,market: str, period: int, indicator_name: str, timestamp:int = None):
+    def get_marketcap_indicator_values(self, symbol: str, market: str, period: int, indicator_name: str, timestamp: int = None) -> float:
         """
-        Get marketcap indicator values for a specific indicator name and timestamp
-        Indicator names to be added as follows:
-        ker, sma
+        Get marketcap indicator values for a specific indicator name and timestamp.
+
+        Args:
+            symbol (str): Trading pair symbol (e.g., 'BTCUSDT')
+            market (str): Market type (e.g., 'spot', 'futures')
+            period (int): Period for the indicator calculation
+            indicator_name (str): Name of the indicator ('ker' or 'sma')
+            timestamp (int, optional): Timestamp for the data point. Defaults to None.
+
+        Returns:
+            float: The indicator value for the specified parameters
+
+        Raises:
+            Exception: If the API request fails or returns an error
         """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/{indicator_name}/{symbol}"), timeout=None, params={"market": market, "period": period, "timestamp": timestamp}
+            urljoin(self.base_url, f"/v1/metrics/{indicator_name}/{symbol}"), 
+            timeout=None, 
+            params={
+                "market": market, 
+                "period": period, 
+                "timestamp": timestamp
+            }
         )
         if response.status_code == 200:
-            return response.json()
+            json_response = response.json()
+            if json_response.get("success"):
+                # Extract the indicator value from the data object
+                return json_response["data"][indicator_name]
+            else:
+                raise Exception(f"API returned error: {json_response.get('message')}")
         else:
             raise Exception(f"Failed to get marketcap indicator values: {response.json()}")
     
     def get_exchanges_for_mc_symbol(self, symbol: str, market: str, interval: str = '1d', start_timestamp: int = None, end_timestamp: int = None, status: str = 'ACTIVE', quote_currency: str = 'USDT') -> DataFrame:
         """
-        status: 'ACTIVE', 'RETIRED'
-        quote_currency: USDT, USDC (can be retrieved from get_unique_quote_currencies())
+        Get exchange availability for a specific symbol over time.
+
+        Args:
+            symbol (str): Trading pair symbol (e.g., 'BTC')
+            market (str): Market type (e.g., 'spot', 'futures')
+            interval (str, optional): Time interval between data points. Defaults to '1d'.
+            start_timestamp (int, optional): Start timestamp for the data range
+            end_timestamp (int, optional): End timestamp for the data range
+            status (str, optional): Status of the exchanges ('ACTIVE' or 'RETIRED'). Defaults to 'ACTIVE'.
+            quote_currency (str, optional): Quote currency for the pair. Defaults to 'USDT'.
+
+        Returns:
+            DataFrame: A pandas DataFrame containing exchange availability with columns:
+                - timestamp: datetime
+                - binance: bool
+                - bitget: bool
+                - bybit: bool
+                - kucoin: bool
+                (columns are sorted alphabetically)
         """
-        
         if start_timestamp is None:
             start_timestamp = int((datetime.now() - timedelta(days=7, hours=0, minutes=0, seconds=0)).timestamp())
         if end_timestamp is None:
@@ -684,101 +752,264 @@ class ApiClient:
         }
 
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/available_exchanges/{market}/{symbol}"), timeout=None, params=params
+            urljoin(self.base_url, f"/v1/metrics/available_exchanges/{market}/{symbol}"), 
+            timeout=None, 
+            params=params
         )
         if response.status_code == 200:
-            result = response.json()
-            processed_results = []
-            for row in result:
-                data = {'timestamp': row['timestamp']}
-                data.update(row['exchanges'])
-                processed_results.append(data)
-            df = pd.DataFrame(processed_results)
-            cols = ['timestamp'] + sorted([col for col in df.columns if col != 'timestamp'])
-            df = df[cols]
-            df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
-            df = df.astype(int)
-            return df
+            json_response = response.json()
+            if json_response.get("success"):
+                # Process the data array into a DataFrame
+                processed_results = []
+                for row in json_response["data"]:
+                    data = {'timestamp': row['timestamp']}
+                    data.update(row['exchanges'])
+                    processed_results.append(data)
+                
+                # Create DataFrame and sort columns
+                df = pd.DataFrame(processed_results)
+                cols = ['timestamp'] + sorted([col for col in df.columns if col != 'timestamp'])
+                df = df[cols]
+                
+                # Convert timestamp to unix timestamp
+                df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
+                
+                # Convert exchange availability to boolean integers (0/1)
+                df = df.astype({'timestamp': 'int64', **{col: 'int8' for col in df.columns if col != 'timestamp'}})
+                return df
+            else:
+                raise Exception(f"API returned error: {json_response.get('message')}")
         else:
             raise Exception(f"Failed to get exchanges for mc symbol: {response.json()}")
     
-    def get_marketcap_ranking_with_ohlcv(self, market: str, timeframe: str, top_n: int, ohlcv_limit: int, timestamp: int = int((datetime.now() - timedelta(days=1, hours=0, minutes=0, seconds=0)).timestamp())) -> DataFrame:
-        params = {"market": market, "timeframe": timeframe, "top_n": top_n, "ohlcv_limit": ohlcv_limit, "timestamp": timestamp}
-        print(params)
+    def get_marketcap_ranking_with_ohlcv(self, market: str, timeframe: str, top_n: int, ohlcv_limit: int, 
+                                        timestamp: int = int((datetime.now() - timedelta(days=1, hours=0, minutes=0, seconds=0)).timestamp())) -> dict:
+        """
+        Get marketcap rankings with OHLCV data for top symbols.
+
+        Args:
+            market (str): Market type (e.g., 'spot', 'futures')
+            timeframe (str): Time interval for OHLCV data (e.g., '1h', '4h', '1d')
+            top_n (int): Number of top symbols to retrieve
+            ohlcv_limit (int): Number of OHLCV data points to retrieve
+            timestamp (int, optional): Timestamp for the ranking snapshot. 
+                                    Defaults to 24 hours ago.
+
+        Returns:
+            dict: A dictionary containing:
+                - info (str): Request parameters information
+                - symbols (List[str]): List of top symbols by marketcap
+                - ohlcv (dict): Dictionary of OHLCV data for each symbol with fields:
+                    - timestamp: List[str] (ISO format timestamps)
+                    - open: List[float]
+                    - high: List[float]
+                    - low: List[float]
+                    - close: List[float]
+                    - volume: List[float]
+
+        Raises:
+            Exception: If the API request fails or returns an error
+        """
+        params = {
+            "market": market, 
+            "timeframe": timeframe, 
+            "top_n": top_n, 
+            "ohlcv_limit": ohlcv_limit, 
+            "timestamp": timestamp
+        }
+        
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/marketcap/symbols/ohlcv"), timeout=None, params=params
+            urljoin(self.base_url, f"/v1/metrics/marketcap/symbols/ohlcv"), 
+            timeout=None, 
+            params=params
         )
+        
         if response.status_code == 200:
-            df = pd.DataFrame(response.json())
-            return df
+            json_response = response.json()
+            if json_response.get("success"):
+                # Return the first (and only) item from the data array
+                return json_response["data"][0]
+            else:
+                raise Exception(f"API returned error: {json_response.get('message')}")
         else:
             raise Exception(f"Failed to get marketcap ranking with ohlcv: {response.json()}")
     
     def get_stable_or_wrapped_tokens(self, token_type: str = 'stable') -> DataFrame:
         """
-        token_type: stable or wrapped
+        Get list of stable or wrapped tokens.
+
+        Args:
+            token_type (str, optional): Type of tokens to retrieve ('stable' or 'wrapped'). 
+                                      Defaults to 'stable'.
+
+        Returns:
+            DataFrame: A pandas DataFrame containing token information with columns:
+                - symbol: str (token symbol e.g., 'USDT', 'USDC')
+                - slug: str (token identifier e.g., 'tether', 'usd-coin')
+
+        Raises:
+            ValueError: If token_type is not 'stable' or 'wrapped'
+            Exception: If the API request fails or returns an error
         """
         if token_type not in ['stable', 'wrapped']:
             raise ValueError("token_type must be either stable or wrapped")
+            
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/tokens/{token_type}"), timeout=None
+            urljoin(self.base_url, f"/v1/metrics/tokens/{token_type}"), 
+            timeout=None
         )
+        
         if response.status_code == 200:
-            df = pd.DataFrame(response.json())
-            return df
+            json_response = response.json()
+            if json_response.get("success"):
+                # Create DataFrame from the data array
+                df = pd.DataFrame(json_response["data"])
+                return df
+            else:
+                raise Exception(f"API returned error: {json_response.get('message')}")
         else:
             raise Exception(f"Failed to get stable or wrapped tokens: {response.json()}")
     
-    def get_exchanges_mapping_for_specific_symbol(self, market: str, symbol: str) -> DataFrame:
+    def get_exchanges_mapping_for_specific_symbol(self, market: str, symbol: str, quote_currency: str = 'USDT', status: str = 'ACTIVE') -> DataFrame:
         """
-        Get the exchanges for a specific symbol and market
+        Get the exchanges and trading pairs information for a specific symbol and market.
+
+        Args:
+            market (str): Market type (e.g., 'spot', 'futures')
+            symbol (str): Base currency symbol (e.g., 'BTC')
+            quote_currency (str, optional): Quote currency for the pair. Defaults to 'USDT'.
+            status (str, optional): Status of the trading pairs ('ACTIVE' or 'RETIRED'). Defaults to 'ACTIVE'.
+
+        Returns:
+            DataFrame: A pandas DataFrame containing exchange information with columns:
+                - exchange_name: str (e.g., 'binance', 'kucoin')
+                - symbol: str (base currency symbol)
+                - pair: str (actual trading pair on the exchange)
+                - quote_currency: str (quote currency used)
+                - status: str (trading pair status)
+                - first_trade_timestamp: str (ISO format timestamp of first trade)
+                - last_trade_timestamp: str (ISO format timestamp of last trade)
+
+        Raises:
+            Exception: If the API request fails or returns an error
         """
+        params = {
+            "quote_currency": quote_currency,
+            "status": status
+        }
+        
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/markets/{market}/{symbol}"), timeout=None
+            urljoin(self.base_url, f"/v1/metrics/markets/{market}/{symbol}"), 
+            timeout=None,
+            params=params
         )
+        
         if response.status_code == 200:
-            df = pd.DataFrame(response.json())
-            return df
+            json_response = response.json()
+            if json_response.get("success"):
+                # Create DataFrame from the data array
+                df = pd.DataFrame(json_response["data"])
+                return df
+            else:
+                raise Exception(f"API returned error: {json_response.get('message')}")
         else:
             raise Exception(f"Failed to get exchange mappings: {response.json()}")
     
-    def get_exchange_mappings_for_specific_exchange(self,market: str, exchange_name: str) -> DataFrame:
+    def get_exchange_mappings_for_specific_exchange(self, market: str, exchange_name: str) -> DataFrame:
         """
-        Get the exchanges for a specific exchange and market
-        exchange_name: binance, kucoin, gate.io, bybit, bingx, bitget (lowercase)
-        market: spot, futures
+        Get all trading pairs and their information for a specific exchange and market.
+
+        Args:
+            market (str): Market type (e.g., 'spot', 'futures')
+            exchange_name (str): Name of the exchange (e.g., 'binance', 'kucoin', 'bybit')
+                               Should be in lowercase
+
+        Returns:
+            DataFrame: A pandas DataFrame containing trading pair information with columns:
+                - exchange_name: str (name of the exchange)
+                - symbol: str (base currency symbol)
+                - quote_currency: str (quote currency used)
+                - pair: str (actual trading pair on the exchange)
+                - first_trade_timestamp: str (ISO format timestamp of first trade)
+                - last_trade_timestamp: str (ISO format timestamp of last trade)
+                - status: str ('ACTIVE' or 'RETIRED')
+                - market_type: str (type of market e.g., 'spot')
+
+        Raises:
+            Exception: If the API request fails or returns an error
         """
         params = {
             "exchange_name": exchange_name.lower()
         }
+        
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/exchange_mappings/{market}"), timeout=None, params=params
+            urljoin(self.base_url, f"/v1/metrics/exchange_mappings/{market}"), 
+            timeout=None, 
+            params=params
         )
+        
         if response.status_code == 200:
-            df = pd.DataFrame(response.json())
-            return df
+            json_response = response.json()
+            if json_response.get("success"):
+                # Create DataFrame from the data array
+                df = pd.DataFrame(json_response["data"])
+                return df
+            else:
+                raise Exception(f"API returned error: {json_response.get('message')}")
         else:
             raise Exception(f"Failed to get exchange mappings: {response.json()}")
     
-    def get_unique_quote_currencies(self, market: str) -> DataFrame:
+    def get_unique_quote_currencies(self, market: str) -> List[str]:
+        """
+        Get list of unique quote currencies available for a specific market.
+
+        Args:
+            market (str): Market type (e.g., 'spot', 'futures')
+
+        Returns:
+            List[str]: A list of quote currencies (e.g., ['USDT', 'BTC', 'ETH', ...])
+
+        Raises:
+            Exception: If the API request fails or returns an error
+        """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/quote_currencies/{market}"), timeout=None
+            urljoin(self.base_url, f"/v1/metrics/quote_currencies/{market}"), 
+            timeout=None
         )
+        
         if response.status_code == 200:
-            df = pd.DataFrame(response.json())
-            return df
+            json_response = response.json()
+            if json_response.get("success"):
+                return json_response["data"]
+            else:
+                raise Exception(f"API returned error: {json_response.get('message')}")
         else:
             raise Exception(f"Failed to get unique quote currencies: {response.json()}")
     
     def get_exchanges_list_for_specific_market(self, market: str) -> List[str]:
         """
-        Get the list of exchanges for a specific market
+        Get the list of exchanges available for a specific market.
+
+        Args:
+            market (str): Market type (e.g., 'spot', 'futures')
+
+        Returns:
+            List[str]: A list of exchange names (e.g., ['binance', 'kucoin', 'bybit', ...])
+
+        Raises:
+            Exception: If the API request fails or returns an error
         """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/exchange_list/{market}"), timeout=None
+            urljoin(self.base_url, f"/v1/metrics/exchange_list/{market}"), 
+            timeout=None
         )
+        
         if response.status_code == 200:
-            return response.json()
+            json_response = response.json()
+            if json_response.get("success"):
+                return json_response["data"]
+            else:
+                raise Exception(f"API returned error: {json_response.get('message')}")
         else:
             raise Exception(f"Failed to get exchanges list: {response.json()}")
     
