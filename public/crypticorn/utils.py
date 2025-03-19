@@ -8,13 +8,14 @@ from typing import List, Dict, Any
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.INFO)
+if not logger.handlers:
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
 
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-console_handler.setFormatter(formatter)
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    console_handler.setFormatter(formatter)
 
-logger.addHandler(console_handler)
+    logger.addHandler(console_handler)
 
 def download_file(url: str, dest_path: str, show_progress_bars: bool = True):
     """downloads a file and shows a progress bar. allow resuming a download"""
@@ -65,7 +66,7 @@ def download_file(url: str, dest_path: str, show_progress_bars: bool = True):
 
 class SingleModel(BaseModel):
     coin_id: int
-    correlations: List[int]
+    evaluations: List[Dict[str, Any]]
     created: str
     model_id: int
     name: str
@@ -73,6 +74,9 @@ class SingleModel(BaseModel):
     target: str
     updated: str
     dev_id: str
+    target_type: str
+    class Config:
+        protected_namespaces = ()
     
     
 class AllModels(BaseModel):
@@ -89,11 +93,8 @@ class AccountInfo(BaseModel):
 
 
 class ModelEvaluation(BaseModel):
-    benchmarks: Dict[str, Dict[str, Dict[str, Any]]]
-    metrics: Dict[str, Dict[str, Any]]
-    model_id: int
-    class Config:
-        protected_namespaces = ()
+    benchmarks: Dict[str, Dict[str, Any]]
+    metrics: Dict[str, Any]
 
 
 class ApiKeyGeneration(BaseModel):
@@ -101,6 +102,8 @@ class ApiKeyGeneration(BaseModel):
 
 
 class DataInfo(BaseModel):
-    data: Dict[str, Dict[str, List[str]]]
-    coins: List[int]
-    targets: List[str]
+    data: Dict[str, Dict[str, Dict[str, List[str]]]]
+    coins: List[str]
+    feature_sizes: List[str]
+    targets: Dict[str, str]
+    versions: Dict[str, float]

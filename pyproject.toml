@@ -1,20 +1,17 @@
 [project]
-name = "crypticorn"
+name = "crypticorn-internal"
 description = "Maximise Your Crypto Trading Profits with AI Predictions"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT License"}
 authors = [{name = "Crypticorn", email = "timon@crypticorn.com"}]
-version = "1.0.1"
+version = "0.4.7"
 keywords = ["machine learning", "data science", "crypto", "modelling"]
 
 dependencies = [
     "pandas >= 2.2.0, < 3.0.0",
     "requests >= 2.32.0, < 3.0.0",
-    "tqdm >= 4.67.0, < 5.0.0",
-    "pydantic >= 2.0.0, < 3.0.0",
 ]
-
 
 classifiers = [
     "Topic :: Scientific/Engineering",
@@ -26,14 +23,12 @@ classifiers = [
     "Typing :: Typed",
 ]
 
-[project.optional-dependencies]
-dev = ["black", "twine", "build"]
-
 [project.urls]
-homepage = "https://crypticorn.com"
-documentation = "https://docs.crypticorn.com"
-
+Website = "https://crypticorn.com"
 
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "."}
