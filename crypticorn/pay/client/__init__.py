@@ -18,6 +18,7 @@ __version__ = "1.0.0"
 
 # import apis into sdk package
 from crypticorn.pay.client.api.now_payments_api import NOWPaymentsApi
+from crypticorn.pay.client.api.payments_api import PaymentsApi
 from crypticorn.pay.client.api.products_api import ProductsApi
 from crypticorn.pay.client.api.status_api import StatusApi
 
@@ -33,19 +34,17 @@ from crypticorn.pay.client.exceptions import ApiAttributeError
 from crypticorn.pay.client.exceptions import ApiException
 
 # import models into sdk package
-from crypticorn.pay.client.models.api_status_res import APIStatusRes
-from crypticorn.pay.client.models.create_invoice_req import CreateInvoiceReq
-from crypticorn.pay.client.models.create_invoice_res import CreateInvoiceRes
-from crypticorn.pay.client.models.currency import Currency
-from crypticorn.pay.client.models.estimate_price_req import EstimatePriceReq
-from crypticorn.pay.client.models.estimate_price_res import EstimatePriceRes
-from crypticorn.pay.client.models.get_currencies_res import GetCurrenciesRes
-from crypticorn.pay.client.models.get_payment_status_res import GetPaymentStatusRes
-from crypticorn.pay.client.models.get_payments_list_res import GetPaymentsListRes
 from crypticorn.pay.client.models.http_validation_error import HTTPValidationError
-from crypticorn.pay.client.models.min_amount_req import MinAmountReq
-from crypticorn.pay.client.models.min_amount_res import MinAmountRes
-from crypticorn.pay.client.models.payment import Payment
-from crypticorn.pay.client.models.product import Product
+from crypticorn.pay.client.models.now_api_status_res import NowAPIStatusRes
+from crypticorn.pay.client.models.now_create_invoice_req import NowCreateInvoiceReq
+from crypticorn.pay.client.models.now_create_invoice_res import NowCreateInvoiceRes
+from crypticorn.pay.client.models.now_fee_structure import NowFeeStructure
+from crypticorn.pay.client.models.now_payment_status import NowPaymentStatus
+from crypticorn.pay.client.models.now_webhook_payload import NowWebhookPayload
+from crypticorn.pay.client.models.payment_status import PaymentStatus
+from crypticorn.pay.client.models.product_model import ProductModel
+from crypticorn.pay.client.models.product_subs_model import ProductSubsModel
+from crypticorn.pay.client.models.services import Services
+from crypticorn.pay.client.models.unified_payment_model import UnifiedPaymentModel
 from crypticorn.pay.client.models.validation_error import ValidationError
 from crypticorn.pay.client.models.validation_error_loc_inner import ValidationErrorLocInner

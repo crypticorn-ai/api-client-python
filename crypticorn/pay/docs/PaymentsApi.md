@@ -1,20 +1,20 @@
-# client.ProductsApi
+# client.PaymentsApi
 
 All URIs are relative to *http://localhost/v1/pay*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_product**](ProductsApi.md#create_product) | **POST** /products | Create Product
-[**get_products**](ProductsApi.md#get_products) | **GET** /products | Get Products
-[**update_product**](ProductsApi.md#update_product) | **PUT** /products/{id} | Update Product
+[**get_payment_history**](PaymentsApi.md#get_payment_history) | **GET** /payments/history | Get Payments
+[**get_payments_html_get**](PaymentsApi.md#get_payments_html_get) | **GET** /payments/html | Get
+[**get_subscriptions**](PaymentsApi.md#get_subscriptions) | **GET** /payments/subscriptions | Get Subscriptions
 
 
-# **create_product**
-> object create_product(product_model, access_token=access_token)
+# **get_payment_history**
+> List[UnifiedPaymentModel] get_payment_history(access_token=access_token)
 
-Create Product
+Get Payments
 
-Create a new product
+Get combined payment history for a user across all payment services.
 
 ### Example
 
@@ -22,7 +22,7 @@ Create a new product
 
 ```python
 import client
-from client.models.product_model import ProductModel
+from client.models.unified_payment_model import UnifiedPaymentModel
 from client.rest import ApiException
 from pprint import pprint
 
@@ -42,17 +42,16 @@ configuration.access_token = os.environ["ACCESS_TOKEN"]
 # Enter a context with an instance of the API client
 with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = client.ProductsApi(api_client)
-    product_model = client.ProductModel() # ProductModel | 
+    api_instance = client.PaymentsApi(api_client)
     access_token = 'access_token_example' # str |  (optional)
 
     try:
-        # Create Product
-        api_response = api_instance.create_product(product_model, access_token=access_token)
-        print("The response of ProductsApi->create_product:\n")
+        # Get Payments
+        api_response = api_instance.get_payment_history(access_token=access_token)
+        print("The response of PaymentsApi->get_payment_history:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling ProductsApi->create_product: %s\n" % e)
+        print("Exception when calling PaymentsApi->get_payment_history: %s\n" % e)
 ```
 
 
@@ -62,12 +61,11 @@ with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **product_model** | [**ProductModel**](ProductModel.md)|  | 
  **access_token** | **str**|  | [optional] 
 
 ### Return type
 
-**object**
+[**List[UnifiedPaymentModel]**](UnifiedPaymentModel.md)
 
 ### Authorization
 
@@ -75,7 +73,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 ### HTTP response details
@@ -87,20 +85,16 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_products**
-> List[ProductModel] get_products(limit=limit, offset=offset, access_token=access_token, body=body)
+# **get_payments_html_get**
+> object get_payments_html_get()
 
-Get Products
-
-Get all products
+Get
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
 
 ```python
 import client
-from client.models.product_model import ProductModel
 from client.rest import ApiException
 from pprint import pprint
 
@@ -110,122 +104,26 @@ configuration = client.Configuration(
     host = "http://localhost/v1/pay"
 )
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = client.ProductsApi(api_client)
-    limit = 0 # int |  (optional) (default to 0)
-    offset = 0 # int |  (optional) (default to 0)
-    access_token = 'access_token_example' # str |  (optional)
-    body = None # object |  (optional)
+    api_instance = client.PaymentsApi(api_client)
 
     try:
-        # Get Products
-        api_response = api_instance.get_products(limit=limit, offset=offset, access_token=access_token, body=body)
-        print("The response of ProductsApi->get_products:\n")
+        # Get
+        api_response = api_instance.get_payments_html_get()
+        print("The response of PaymentsApi->get_payments_html_get:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling ProductsApi->get_products: %s\n" % e)
+        print("Exception when calling PaymentsApi->get_payments_html_get: %s\n" % e)
 ```
 
 
 
 ### Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **limit** | **int**|  | [optional] [default to 0]
- **offset** | **int**|  | [optional] [default to 0]
- **access_token** | **str**|  | [optional] 
- **body** | **object**|  | [optional] 
-
-### Return type
-
-[**List[ProductModel]**](ProductModel.md)
-
-### Authorization
-
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful Response |  -  |
-**422** | Validation Error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **update_product**
-> object update_product(id, product_model, access_token=access_token)
-
-Update Product
-
-Update an existing product
-
-### Example
-
-* OAuth Authentication (OAuth2PasswordBearer):
-
-```python
-import client
-from client.models.product_model import ProductModel
-from client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost/v1/pay
-# See configuration.py for a list of all supported configuration parameters.
-configuration = client.Configuration(
-    host = "http://localhost/v1/pay"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
-
-# Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = client.ProductsApi(api_client)
-    id = 'id_example' # str | 
-    product_model = client.ProductModel() # ProductModel | 
-    access_token = 'access_token_example' # str |  (optional)
-
-    try:
-        # Update Product
-        api_response = api_instance.update_product(id, product_model, access_token=access_token)
-        print("The response of ProductsApi->update_product:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ProductsApi->update_product: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **str**|  | 
- **product_model** | [**ProductModel**](ProductModel.md)|  | 
- **access_token** | **str**|  | [optional] 
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -233,11 +131,84 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_subscriptions**
+> List[ProductSubsModel] get_subscriptions(access_token=access_token)
+
+Get Subscriptions
+
+### Example
+
+* OAuth Authentication (OAuth2PasswordBearer):
+
+```python
+import client
+from client.models.product_subs_model import ProductSubsModel
+from client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost/v1/pay
+# See configuration.py for a list of all supported configuration parameters.
+configuration = client.Configuration(
+    host = "http://localhost/v1/pay"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
+# Enter a context with an instance of the API client
+with client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = client.PaymentsApi(api_client)
+    access_token = 'access_token_example' # str |  (optional)
+
+    try:
+        # Get Subscriptions
+        api_response = api_instance.get_subscriptions(access_token=access_token)
+        print("The response of PaymentsApi->get_subscriptions:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling PaymentsApi->get_subscriptions: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **access_token** | **str**|  | [optional] 
+
+### Return type
+
+[**List[ProductSubsModel]**](ProductSubsModel.md)
+
+### Authorization
+
 [OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 ### HTTP response details
