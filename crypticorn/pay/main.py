@@ -1,4 +1,4 @@
-from crypticorn.pay import ApiClient, Configuration, NOWPaymentsApi, StatusApi
+from crypticorn.pay import ApiClient, Configuration, NOWPaymentsApi, StatusApi, PaymentsApi, ProductsApi
 
 
 class PayClient:
@@ -17,3 +17,5 @@ class PayClient:
         base_client = ApiClient(configuration=config)
         self.now = NOWPaymentsApi(base_client)
         self.status = StatusApi(base_client)
+        self.payments = PaymentsApi(base_client)
+        self.products = ProductsApi(base_client)

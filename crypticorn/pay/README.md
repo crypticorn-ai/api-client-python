@@ -73,16 +73,16 @@ configuration.access_token = os.environ["ACCESS_TOKEN"]
 with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NOWPaymentsApi(api_client)
-    create_invoice_req = client.CreateInvoiceReq() # CreateInvoiceReq | 
+    now_create_invoice_req = client.NowCreateInvoiceReq() # NowCreateInvoiceReq | 
     access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Create Invoice
-        api_response = api_instance.now_create_invoice(create_invoice_req, access_token=access_token)
-        print("The response of NOWPaymentsApi->now_create_invoice:\n")
+        api_response = api_instance.create_now_invoice(now_create_invoice_req, access_token=access_token)
+        print("The response of NOWPaymentsApi->create_now_invoice:\n")
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling NOWPaymentsApi->now_create_invoice: %s\n" % e)
+        print("Exception when calling NOWPaymentsApi->create_now_invoice: %s\n" % e)
 
 ```
 
@@ -92,34 +92,32 @@ All URIs are relative to *http://localhost/v1/pay*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*NOWPaymentsApi* | [**now_create_invoice**](docs/NOWPaymentsApi.md#now_create_invoice) | **POST** /now/invoice | Create Invoice
-*NOWPaymentsApi* | [**now_get_api_status**](docs/NOWPaymentsApi.md#now_get_api_status) | **GET** /now/status | Get Api Status
-*NOWPaymentsApi* | [**now_get_currencies**](docs/NOWPaymentsApi.md#now_get_currencies) | **GET** /now/currencies | Get Currencies
-*NOWPaymentsApi* | [**now_get_estimate_price**](docs/NOWPaymentsApi.md#now_get_estimate_price) | **POST** /now/estimate | Get Estimate Price
-*NOWPaymentsApi* | [**now_get_minimum_payment_amount**](docs/NOWPaymentsApi.md#now_get_minimum_payment_amount) | **POST** /now/min-amount | Get Minimum Payment Amount
-*NOWPaymentsApi* | [**now_get_payment_status**](docs/NOWPaymentsApi.md#now_get_payment_status) | **GET** /now/payment/{payment_id} | Get Payment Status
-*NOWPaymentsApi* | [**now_get_payments_list**](docs/NOWPaymentsApi.md#now_get_payments_list) | **GET** /now/payment | Get Payments List
-*NOWPaymentsApi* | [**now_handle_webhook**](docs/NOWPaymentsApi.md#now_handle_webhook) | **POST** /now/webhook | Handle Nowpayments Webhook
+*NOWPaymentsApi* | [**create_now_invoice**](docs/NOWPaymentsApi.md#create_now_invoice) | **POST** /now/invoice | Create Invoice
+*NOWPaymentsApi* | [**get_now_api_status**](docs/NOWPaymentsApi.md#get_now_api_status) | **GET** /now/status | Get Status
+*NOWPaymentsApi* | [**send_now_webhook**](docs/NOWPaymentsApi.md#send_now_webhook) | **POST** /now/webhook | Handle Webhook
+*PaymentsApi* | [**get_payment_history**](docs/PaymentsApi.md#get_payment_history) | **GET** /payments/history | Get Payments
+*PaymentsApi* | [**get_payments_html_get**](docs/PaymentsApi.md#get_payments_html_get) | **GET** /payments/html | Get
+*PaymentsApi* | [**get_subscriptions**](docs/PaymentsApi.md#get_subscriptions) | **GET** /payments/subscriptions | Get Subscriptions
+*ProductsApi* | [**create_product**](docs/ProductsApi.md#create_product) | **POST** /products | Create Product
 *ProductsApi* | [**get_products**](docs/ProductsApi.md#get_products) | **GET** /products | Get Products
+*ProductsApi* | [**update_product**](docs/ProductsApi.md#update_product) | **PUT** /products/{id} | Update Product
 *StatusApi* | [**ping**](docs/StatusApi.md#ping) | **GET** / | Ping
 
 
 ## Documentation For Models
 
- - [APIStatusRes](docs/APIStatusRes.md)
- - [CreateInvoiceReq](docs/CreateInvoiceReq.md)
- - [CreateInvoiceRes](docs/CreateInvoiceRes.md)
- - [Currency](docs/Currency.md)
- - [EstimatePriceReq](docs/EstimatePriceReq.md)
- - [EstimatePriceRes](docs/EstimatePriceRes.md)
- - [GetCurrenciesRes](docs/GetCurrenciesRes.md)
- - [GetPaymentStatusRes](docs/GetPaymentStatusRes.md)
- - [GetPaymentsListRes](docs/GetPaymentsListRes.md)
  - [HTTPValidationError](docs/HTTPValidationError.md)
- - [MinAmountReq](docs/MinAmountReq.md)
- - [MinAmountRes](docs/MinAmountRes.md)
- - [Payment](docs/Payment.md)
- - [Product](docs/Product.md)
+ - [NowAPIStatusRes](docs/NowAPIStatusRes.md)
+ - [NowCreateInvoiceReq](docs/NowCreateInvoiceReq.md)
+ - [NowCreateInvoiceRes](docs/NowCreateInvoiceRes.md)
+ - [NowFeeStructure](docs/NowFeeStructure.md)
+ - [NowPaymentStatus](docs/NowPaymentStatus.md)
+ - [NowWebhookPayload](docs/NowWebhookPayload.md)
+ - [PaymentStatus](docs/PaymentStatus.md)
+ - [ProductModel](docs/ProductModel.md)
+ - [ProductSubsModel](docs/ProductSubsModel.md)
+ - [Services](docs/Services.md)
+ - [UnifiedPaymentModel](docs/UnifiedPaymentModel.md)
  - [ValidationError](docs/ValidationError.md)
  - [ValidationErrorLocInner](docs/ValidationErrorLocInner.md)
 

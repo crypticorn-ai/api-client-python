@@ -16,19 +16,13 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictInt, StrictStr, field_validator
-from typing import Any, Dict, Optional
+from pydantic import Field, StrictStr
+from typing import Any, Optional
 from typing_extensions import Annotated
-from crypticorn.pay.client.models.api_status_res import APIStatusRes
-from crypticorn.pay.client.models.create_invoice_req import CreateInvoiceReq
-from crypticorn.pay.client.models.create_invoice_res import CreateInvoiceRes
-from crypticorn.pay.client.models.estimate_price_req import EstimatePriceReq
-from crypticorn.pay.client.models.estimate_price_res import EstimatePriceRes
-from crypticorn.pay.client.models.get_currencies_res import GetCurrenciesRes
-from crypticorn.pay.client.models.get_payment_status_res import GetPaymentStatusRes
-from crypticorn.pay.client.models.get_payments_list_res import GetPaymentsListRes
-from crypticorn.pay.client.models.min_amount_req import MinAmountReq
-from crypticorn.pay.client.models.min_amount_res import MinAmountRes
+from crypticorn.pay.client.models.now_api_status_res import NowAPIStatusRes
+from crypticorn.pay.client.models.now_create_invoice_req import NowCreateInvoiceReq
+from crypticorn.pay.client.models.now_create_invoice_res import NowCreateInvoiceRes
+from crypticorn.pay.client.models.now_webhook_payload import NowWebhookPayload
 
 from crypticorn.pay.client.api_client import ApiClient, RequestSerialized
 from crypticorn.pay.client.api_response import ApiResponse
@@ -49,9 +43,9 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def now_create_invoice(
+    def create_now_invoice(
         self,
-        create_invoice_req: CreateInvoiceReq,
+        now_create_invoice_req: NowCreateInvoiceReq,
         access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -65,13 +59,13 @@ class NOWPaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateInvoiceRes:
+    ) -> NowCreateInvoiceRes:
         """Create Invoice
 
         Create a payment invoice with a payment link for customer completion
 
-        :param create_invoice_req: (required)
-        :type create_invoice_req: CreateInvoiceReq
+        :param now_create_invoice_req: (required)
+        :type now_create_invoice_req: NowCreateInvoiceReq
         :param access_token:
         :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
@@ -96,8 +90,8 @@ class NOWPaymentsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._now_create_invoice_serialize(
-            create_invoice_req=create_invoice_req,
+        _param = self._create_now_invoice_serialize(
+            now_create_invoice_req=now_create_invoice_req,
             access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -106,7 +100,7 @@ class NOWPaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateInvoiceRes",
+            '200': "NowCreateInvoiceRes",
             '422': "HTTPValidationError",
         }
         response_data = self.api_client.call_api(
@@ -121,9 +115,9 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def now_create_invoice_with_http_info(
+    def create_now_invoice_with_http_info(
         self,
-        create_invoice_req: CreateInvoiceReq,
+        now_create_invoice_req: NowCreateInvoiceReq,
         access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -137,13 +131,13 @@ class NOWPaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateInvoiceRes]:
+    ) -> ApiResponse[NowCreateInvoiceRes]:
         """Create Invoice
 
         Create a payment invoice with a payment link for customer completion
 
-        :param create_invoice_req: (required)
-        :type create_invoice_req: CreateInvoiceReq
+        :param now_create_invoice_req: (required)
+        :type now_create_invoice_req: NowCreateInvoiceReq
         :param access_token:
         :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
@@ -168,8 +162,8 @@ class NOWPaymentsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._now_create_invoice_serialize(
-            create_invoice_req=create_invoice_req,
+        _param = self._create_now_invoice_serialize(
+            now_create_invoice_req=now_create_invoice_req,
             access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -178,7 +172,7 @@ class NOWPaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateInvoiceRes",
+            '200': "NowCreateInvoiceRes",
             '422': "HTTPValidationError",
         }
         response_data = self.api_client.call_api(
@@ -193,9 +187,9 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def now_create_invoice_without_preload_content(
+    def create_now_invoice_without_preload_content(
         self,
-        create_invoice_req: CreateInvoiceReq,
+        now_create_invoice_req: NowCreateInvoiceReq,
         access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -214,8 +208,8 @@ class NOWPaymentsApi:
 
         Create a payment invoice with a payment link for customer completion
 
-        :param create_invoice_req: (required)
-        :type create_invoice_req: CreateInvoiceReq
+        :param now_create_invoice_req: (required)
+        :type now_create_invoice_req: NowCreateInvoiceReq
         :param access_token:
         :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
@@ -240,8 +234,8 @@ class NOWPaymentsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._now_create_invoice_serialize(
-            create_invoice_req=create_invoice_req,
+        _param = self._create_now_invoice_serialize(
+            now_create_invoice_req=now_create_invoice_req,
             access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -250,7 +244,7 @@ class NOWPaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "CreateInvoiceRes",
+            '200': "NowCreateInvoiceRes",
             '422': "HTTPValidationError",
         }
         response_data = self.api_client.call_api(
@@ -260,9 +254,9 @@ class NOWPaymentsApi:
         return response_data.response
 
 
-    def _now_create_invoice_serialize(
+    def _create_now_invoice_serialize(
         self,
-        create_invoice_req,
+        now_create_invoice_req,
         access_token,
         _request_auth,
         _content_type,
@@ -289,8 +283,8 @@ class NOWPaymentsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if create_invoice_req is not None:
-            _body_params = create_invoice_req
+        if now_create_invoice_req is not None:
+            _body_params = now_create_invoice_req
 
 
         # set the HTTP header `Accept`
@@ -339,7 +333,7 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def now_get_api_status(
+    def get_now_api_status(
         self,
         _request_timeout: Union[
             None,
@@ -353,8 +347,8 @@ class NOWPaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> APIStatusRes:
-        """Get Api Status
+    ) -> NowAPIStatusRes:
+        """Get Status
 
         Get NOWPayments API status
 
@@ -380,7 +374,7 @@ class NOWPaymentsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._now_get_api_status_serialize(
+        _param = self._get_now_api_status_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -388,7 +382,7 @@ class NOWPaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "APIStatusRes",
+            '200': "NowAPIStatusRes",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -402,7 +396,7 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def now_get_api_status_with_http_info(
+    def get_now_api_status_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -416,8 +410,8 @@ class NOWPaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[APIStatusRes]:
-        """Get Api Status
+    ) -> ApiResponse[NowAPIStatusRes]:
+        """Get Status
 
         Get NOWPayments API status
 
@@ -443,7 +437,7 @@ class NOWPaymentsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._now_get_api_status_serialize(
+        _param = self._get_now_api_status_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -451,7 +445,7 @@ class NOWPaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "APIStatusRes",
+            '200': "NowAPIStatusRes",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -465,7 +459,7 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def now_get_api_status_without_preload_content(
+    def get_now_api_status_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -480,7 +474,7 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Api Status
+        """Get Status
 
         Get NOWPayments API status
 
@@ -506,7 +500,7 @@ class NOWPaymentsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._now_get_api_status_serialize(
+        _param = self._get_now_api_status_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -514,7 +508,7 @@ class NOWPaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "APIStatusRes",
+            '200': "NowAPIStatusRes",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -523,7 +517,7 @@ class NOWPaymentsApi:
         return response_data.response
 
 
-    def _now_get_api_status_serialize(
+    def _get_now_api_status_serialize(
         self,
         _request_auth,
         _content_type,
@@ -584,1508 +578,10 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def now_get_currencies(
+    def send_now_webhook(
         self,
-        access_token: Optional[StrictStr] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GetCurrenciesRes:
-        """Get Currencies
-
-        Get all available cryptocurrencies
-
-        :param access_token:
-        :type access_token: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._now_get_currencies_serialize(
-            access_token=access_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetCurrenciesRes",
-            '422': "HTTPValidationError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-
-    @validate_call
-    def now_get_currencies_with_http_info(
-        self,
-        access_token: Optional[StrictStr] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GetCurrenciesRes]:
-        """Get Currencies
-
-        Get all available cryptocurrencies
-
-        :param access_token:
-        :type access_token: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._now_get_currencies_serialize(
-            access_token=access_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetCurrenciesRes",
-            '422': "HTTPValidationError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-
-    @validate_call
-    def now_get_currencies_without_preload_content(
-        self,
-        access_token: Optional[StrictStr] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Get Currencies
-
-        Get all available cryptocurrencies
-
-        :param access_token:
-        :type access_token: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._now_get_currencies_serialize(
-            access_token=access_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetCurrenciesRes",
-            '422': "HTTPValidationError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
-    def _now_get_currencies_serialize(
-        self,
-        access_token,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {
-        }
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
-
-
-        # authentication setting
-        _auth_settings: List[str] = [
-            'OAuth2PasswordBearer'
-        ]
-
-        return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/now/currencies',
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
-        )
-
-
-
-
-    @validate_call
-    def now_get_estimate_price(
-        self,
-        estimate_price_req: EstimatePriceReq,
-        access_token: Optional[StrictStr] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> EstimatePriceRes:
-        """Get Estimate Price
-
-        Get price estimate for currency conversion
-
-        :param estimate_price_req: (required)
-        :type estimate_price_req: EstimatePriceReq
-        :param access_token:
-        :type access_token: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._now_get_estimate_price_serialize(
-            estimate_price_req=estimate_price_req,
-            access_token=access_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "EstimatePriceRes",
-            '422': "HTTPValidationError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-
-    @validate_call
-    def now_get_estimate_price_with_http_info(
-        self,
-        estimate_price_req: EstimatePriceReq,
-        access_token: Optional[StrictStr] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[EstimatePriceRes]:
-        """Get Estimate Price
-
-        Get price estimate for currency conversion
-
-        :param estimate_price_req: (required)
-        :type estimate_price_req: EstimatePriceReq
-        :param access_token:
-        :type access_token: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._now_get_estimate_price_serialize(
-            estimate_price_req=estimate_price_req,
-            access_token=access_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "EstimatePriceRes",
-            '422': "HTTPValidationError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-
-    @validate_call
-    def now_get_estimate_price_without_preload_content(
-        self,
-        estimate_price_req: EstimatePriceReq,
-        access_token: Optional[StrictStr] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Get Estimate Price
-
-        Get price estimate for currency conversion
-
-        :param estimate_price_req: (required)
-        :type estimate_price_req: EstimatePriceReq
-        :param access_token:
-        :type access_token: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._now_get_estimate_price_serialize(
-            estimate_price_req=estimate_price_req,
-            access_token=access_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "EstimatePriceRes",
-            '422': "HTTPValidationError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
-    def _now_get_estimate_price_serialize(
-        self,
-        estimate_price_req,
-        access_token,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {
-        }
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-        if estimate_price_req is not None:
-            _body_params = estimate_price_req
-
-
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
-
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params['Content-Type'] = _content_type
-        else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
-            )
-            if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
-
-        # authentication setting
-        _auth_settings: List[str] = [
-            'OAuth2PasswordBearer'
-        ]
-
-        return self.api_client.param_serialize(
-            method='POST',
-            resource_path='/now/estimate',
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
-        )
-
-
-
-
-    @validate_call
-    def now_get_minimum_payment_amount(
-        self,
-        min_amount_req: MinAmountReq,
-        access_token: Optional[StrictStr] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> MinAmountRes:
-        """Get Minimum Payment Amount
-
-        Get minimum payment amount for a currency pair
-
-        :param min_amount_req: (required)
-        :type min_amount_req: MinAmountReq
-        :param access_token:
-        :type access_token: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._now_get_minimum_payment_amount_serialize(
-            min_amount_req=min_amount_req,
-            access_token=access_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "MinAmountRes",
-            '422': "HTTPValidationError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-
-    @validate_call
-    def now_get_minimum_payment_amount_with_http_info(
-        self,
-        min_amount_req: MinAmountReq,
-        access_token: Optional[StrictStr] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[MinAmountRes]:
-        """Get Minimum Payment Amount
-
-        Get minimum payment amount for a currency pair
-
-        :param min_amount_req: (required)
-        :type min_amount_req: MinAmountReq
-        :param access_token:
-        :type access_token: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._now_get_minimum_payment_amount_serialize(
-            min_amount_req=min_amount_req,
-            access_token=access_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "MinAmountRes",
-            '422': "HTTPValidationError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-
-    @validate_call
-    def now_get_minimum_payment_amount_without_preload_content(
-        self,
-        min_amount_req: MinAmountReq,
-        access_token: Optional[StrictStr] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Get Minimum Payment Amount
-
-        Get minimum payment amount for a currency pair
-
-        :param min_amount_req: (required)
-        :type min_amount_req: MinAmountReq
-        :param access_token:
-        :type access_token: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._now_get_minimum_payment_amount_serialize(
-            min_amount_req=min_amount_req,
-            access_token=access_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "MinAmountRes",
-            '422': "HTTPValidationError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
-    def _now_get_minimum_payment_amount_serialize(
-        self,
-        min_amount_req,
-        access_token,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {
-        }
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-        if min_amount_req is not None:
-            _body_params = min_amount_req
-
-
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
-
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params['Content-Type'] = _content_type
-        else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
-            )
-            if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
-
-        # authentication setting
-        _auth_settings: List[str] = [
-            'OAuth2PasswordBearer'
-        ]
-
-        return self.api_client.param_serialize(
-            method='POST',
-            resource_path='/now/min-amount',
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
-        )
-
-
-
-
-    @validate_call
-    def now_get_payment_status(
-        self,
-        payment_id: StrictInt,
-        access_token: Optional[StrictStr] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GetPaymentStatusRes:
-        """Get Payment Status
-
-        Get status of a specific payment
-
-        :param payment_id: (required)
-        :type payment_id: int
-        :param access_token:
-        :type access_token: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._now_get_payment_status_serialize(
-            payment_id=payment_id,
-            access_token=access_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetPaymentStatusRes",
-            '422': "HTTPValidationError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-
-    @validate_call
-    def now_get_payment_status_with_http_info(
-        self,
-        payment_id: StrictInt,
-        access_token: Optional[StrictStr] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GetPaymentStatusRes]:
-        """Get Payment Status
-
-        Get status of a specific payment
-
-        :param payment_id: (required)
-        :type payment_id: int
-        :param access_token:
-        :type access_token: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._now_get_payment_status_serialize(
-            payment_id=payment_id,
-            access_token=access_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetPaymentStatusRes",
-            '422': "HTTPValidationError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-
-    @validate_call
-    def now_get_payment_status_without_preload_content(
-        self,
-        payment_id: StrictInt,
-        access_token: Optional[StrictStr] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Get Payment Status
-
-        Get status of a specific payment
-
-        :param payment_id: (required)
-        :type payment_id: int
-        :param access_token:
-        :type access_token: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._now_get_payment_status_serialize(
-            payment_id=payment_id,
-            access_token=access_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetPaymentStatusRes",
-            '422': "HTTPValidationError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
-    def _now_get_payment_status_serialize(
-        self,
-        payment_id,
-        access_token,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {
-        }
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        if payment_id is not None:
-            _path_params['payment_id'] = payment_id
-        # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
-
-
-        # authentication setting
-        _auth_settings: List[str] = [
-            'OAuth2PasswordBearer'
-        ]
-
-        return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/now/payment/{payment_id}',
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
-        )
-
-
-
-
-    @validate_call
-    def now_get_payments_list(
-        self,
-        limit: Optional[Annotated[int, Field(le=500, strict=True, ge=1)]] = None,
-        page: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
-        invoice_id: Optional[StrictStr] = None,
-        sort_by: Optional[Annotated[str, Field(strict=True)]] = None,
-        order_by: Optional[Annotated[str, Field(strict=True)]] = None,
-        date_from: Optional[StrictStr] = None,
-        date_to: Optional[StrictStr] = None,
-        access_token: Optional[StrictStr] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GetPaymentsListRes:
-        """Get Payments List
-
-        Get list of all payments with optional filtering and pagination
-
-        :param limit:
-        :type limit: int
-        :param page:
-        :type page: int
-        :param invoice_id:
-        :type invoice_id: str
-        :param sort_by:
-        :type sort_by: str
-        :param order_by:
-        :type order_by: str
-        :param date_from:
-        :type date_from: str
-        :param date_to:
-        :type date_to: str
-        :param access_token:
-        :type access_token: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._now_get_payments_list_serialize(
-            limit=limit,
-            page=page,
-            invoice_id=invoice_id,
-            sort_by=sort_by,
-            order_by=order_by,
-            date_from=date_from,
-            date_to=date_to,
-            access_token=access_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetPaymentsListRes",
-            '422': "HTTPValidationError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-
-    @validate_call
-    def now_get_payments_list_with_http_info(
-        self,
-        limit: Optional[Annotated[int, Field(le=500, strict=True, ge=1)]] = None,
-        page: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
-        invoice_id: Optional[StrictStr] = None,
-        sort_by: Optional[Annotated[str, Field(strict=True)]] = None,
-        order_by: Optional[Annotated[str, Field(strict=True)]] = None,
-        date_from: Optional[StrictStr] = None,
-        date_to: Optional[StrictStr] = None,
-        access_token: Optional[StrictStr] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GetPaymentsListRes]:
-        """Get Payments List
-
-        Get list of all payments with optional filtering and pagination
-
-        :param limit:
-        :type limit: int
-        :param page:
-        :type page: int
-        :param invoice_id:
-        :type invoice_id: str
-        :param sort_by:
-        :type sort_by: str
-        :param order_by:
-        :type order_by: str
-        :param date_from:
-        :type date_from: str
-        :param date_to:
-        :type date_to: str
-        :param access_token:
-        :type access_token: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._now_get_payments_list_serialize(
-            limit=limit,
-            page=page,
-            invoice_id=invoice_id,
-            sort_by=sort_by,
-            order_by=order_by,
-            date_from=date_from,
-            date_to=date_to,
-            access_token=access_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetPaymentsListRes",
-            '422': "HTTPValidationError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-
-    @validate_call
-    def now_get_payments_list_without_preload_content(
-        self,
-        limit: Optional[Annotated[int, Field(le=500, strict=True, ge=1)]] = None,
-        page: Optional[Annotated[int, Field(strict=True, ge=0)]] = None,
-        invoice_id: Optional[StrictStr] = None,
-        sort_by: Optional[Annotated[str, Field(strict=True)]] = None,
-        order_by: Optional[Annotated[str, Field(strict=True)]] = None,
-        date_from: Optional[StrictStr] = None,
-        date_to: Optional[StrictStr] = None,
-        access_token: Optional[StrictStr] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Get Payments List
-
-        Get list of all payments with optional filtering and pagination
-
-        :param limit:
-        :type limit: int
-        :param page:
-        :type page: int
-        :param invoice_id:
-        :type invoice_id: str
-        :param sort_by:
-        :type sort_by: str
-        :param order_by:
-        :type order_by: str
-        :param date_from:
-        :type date_from: str
-        :param date_to:
-        :type date_to: str
-        :param access_token:
-        :type access_token: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._now_get_payments_list_serialize(
-            limit=limit,
-            page=page,
-            invoice_id=invoice_id,
-            sort_by=sort_by,
-            order_by=order_by,
-            date_from=date_from,
-            date_to=date_to,
-            access_token=access_token,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetPaymentsListRes",
-            '422': "HTTPValidationError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
-    def _now_get_payments_list_serialize(
-        self,
-        limit,
-        page,
-        invoice_id,
-        sort_by,
-        order_by,
-        date_from,
-        date_to,
-        access_token,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {
-        }
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        # process the query parameters
-        if limit is not None:
-            
-            _query_params.append(('limit', limit))
-            
-        if page is not None:
-            
-            _query_params.append(('page', page))
-            
-        if invoice_id is not None:
-            
-            _query_params.append(('invoice_id', invoice_id))
-            
-        if sort_by is not None:
-            
-            _query_params.append(('sort_by', sort_by))
-            
-        if order_by is not None:
-            
-            _query_params.append(('order_by', order_by))
-            
-        if date_from is not None:
-            
-            _query_params.append(('date_from', date_from))
-            
-        if date_to is not None:
-            
-            _query_params.append(('date_to', date_to))
-            
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
-
-
-        # authentication setting
-        _auth_settings: List[str] = [
-            'OAuth2PasswordBearer'
-        ]
-
-        return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/now/payment',
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
-        )
-
-
-
-
-    @validate_call
-    def now_handle_webhook(
-        self,
+        x_nowpayments_sig: Annotated[StrictStr, Field(description="Signature for the webhook")],
+        now_webhook_payload: NowWebhookPayload,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2099,10 +595,14 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Handle Nowpayments Webhook
+        """Handle Webhook
 
-        Handle NOWPayments webhook notifications (IPN). Validates the signature and forwards the payment status update to the auth service.
+        Handle NOWPayments webhook notifications (IPN). Validates the signature, updates the payment status and creates a product subscription if the payment is successful.
 
+        :param x_nowpayments_sig: Signature for the webhook (required)
+        :type x_nowpayments_sig: str
+        :param now_webhook_payload: (required)
+        :type now_webhook_payload: NowWebhookPayload
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2125,7 +625,9 @@ class NOWPaymentsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._now_handle_webhook_serialize(
+        _param = self._send_now_webhook_serialize(
+            x_nowpayments_sig=x_nowpayments_sig,
+            now_webhook_payload=now_webhook_payload,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2134,6 +636,7 @@ class NOWPaymentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "object",
+            '422': "HTTPValidationError",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2147,8 +650,10 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def now_handle_webhook_with_http_info(
+    def send_now_webhook_with_http_info(
         self,
+        x_nowpayments_sig: Annotated[StrictStr, Field(description="Signature for the webhook")],
+        now_webhook_payload: NowWebhookPayload,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2162,10 +667,14 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Handle Nowpayments Webhook
+        """Handle Webhook
 
-        Handle NOWPayments webhook notifications (IPN). Validates the signature and forwards the payment status update to the auth service.
+        Handle NOWPayments webhook notifications (IPN). Validates the signature, updates the payment status and creates a product subscription if the payment is successful.
 
+        :param x_nowpayments_sig: Signature for the webhook (required)
+        :type x_nowpayments_sig: str
+        :param now_webhook_payload: (required)
+        :type now_webhook_payload: NowWebhookPayload
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2188,7 +697,9 @@ class NOWPaymentsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._now_handle_webhook_serialize(
+        _param = self._send_now_webhook_serialize(
+            x_nowpayments_sig=x_nowpayments_sig,
+            now_webhook_payload=now_webhook_payload,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2197,6 +708,7 @@ class NOWPaymentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "object",
+            '422': "HTTPValidationError",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2210,8 +722,10 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def now_handle_webhook_without_preload_content(
+    def send_now_webhook_without_preload_content(
         self,
+        x_nowpayments_sig: Annotated[StrictStr, Field(description="Signature for the webhook")],
+        now_webhook_payload: NowWebhookPayload,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2225,10 +739,14 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Handle Nowpayments Webhook
+        """Handle Webhook
 
-        Handle NOWPayments webhook notifications (IPN). Validates the signature and forwards the payment status update to the auth service.
+        Handle NOWPayments webhook notifications (IPN). Validates the signature, updates the payment status and creates a product subscription if the payment is successful.
 
+        :param x_nowpayments_sig: Signature for the webhook (required)
+        :type x_nowpayments_sig: str
+        :param now_webhook_payload: (required)
+        :type now_webhook_payload: NowWebhookPayload
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2251,7 +769,9 @@ class NOWPaymentsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._now_handle_webhook_serialize(
+        _param = self._send_now_webhook_serialize(
+            x_nowpayments_sig=x_nowpayments_sig,
+            now_webhook_payload=now_webhook_payload,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2260,6 +780,7 @@ class NOWPaymentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "object",
+            '422': "HTTPValidationError",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2268,8 +789,10 @@ class NOWPaymentsApi:
         return response_data.response
 
 
-    def _now_handle_webhook_serialize(
+    def _send_now_webhook_serialize(
         self,
+        x_nowpayments_sig,
+        now_webhook_payload,
         _request_auth,
         _content_type,
         _headers,
@@ -2293,8 +816,12 @@ class NOWPaymentsApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
+        if x_nowpayments_sig is not None:
+            _header_params['x-nowpayments-sig'] = x_nowpayments_sig
         # process the form parameters
         # process the body parameter
+        if now_webhook_payload is not None:
+            _body_params = now_webhook_payload
 
 
         # set the HTTP header `Accept`
@@ -2305,6 +832,19 @@ class NOWPaymentsApi:
                 ]
             )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
