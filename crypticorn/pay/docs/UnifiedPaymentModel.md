@@ -6,6 +6,8 @@ Combined payment model across all services
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**id** | **str** | Payment ID | 
+**product_id** | **str** | Product ID | 
 **var_date** | **int** | Payment date in seconds | 
 **amount** | **float** | Payment amount | 
 **currency** | **str** | Payment currency | 

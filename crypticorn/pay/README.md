@@ -95,8 +95,8 @@ Class | Method | HTTP request | Description
 *NOWPaymentsApi* | [**create_now_invoice**](docs/NOWPaymentsApi.md#create_now_invoice) | **POST** /now/invoice | Create Invoice
 *NOWPaymentsApi* | [**get_now_api_status**](docs/NOWPaymentsApi.md#get_now_api_status) | **GET** /now/status | Get Status
 *NOWPaymentsApi* | [**send_now_webhook**](docs/NOWPaymentsApi.md#send_now_webhook) | **POST** /now/webhook | Handle Webhook
+*PaymentsApi* | [**get_latest_payment_from_invoice**](docs/PaymentsApi.md#get_latest_payment_from_invoice) | **GET** /payments | Get Latest Payment From Invoice
 *PaymentsApi* | [**get_payment_history**](docs/PaymentsApi.md#get_payment_history) | **GET** /payments/history | Get Payments
-*PaymentsApi* | [**get_payments_html_get**](docs/PaymentsApi.md#get_payments_html_get) | **GET** /payments/html | Get
 *PaymentsApi* | [**get_subscriptions**](docs/PaymentsApi.md#get_subscriptions) | **GET** /payments/subscriptions | Get Subscriptions
 *ProductsApi* | [**create_product**](docs/ProductsApi.md#create_product) | **POST** /products | Create Product
 *ProductsApi* | [**get_products**](docs/ProductsApi.md#get_products) | **GET** /products | Get Products

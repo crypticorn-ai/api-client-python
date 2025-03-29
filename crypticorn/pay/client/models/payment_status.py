@@ -26,7 +26,8 @@ class PaymentStatus(str, Enum):
     """
     allowed enum values
     """
-    PENDING = 'pending'
+    WAITING = 'waiting'
+    PROCESSING = 'processing'
     PAID = 'paid'
     PARTIALLY_PAID = 'partially_paid'
     REFUNDED = 'refunded'
