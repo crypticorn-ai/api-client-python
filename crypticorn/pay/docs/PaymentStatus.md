@@ -4,7 +4,9 @@ Payment status
 
 ## Enum
 
-* `PENDING` (value: `'pending'`)
+* `WAITING` (value: `'waiting'`)
+
+* `PROCESSING` (value: `'processing'`)
 
 * `PAID` (value: `'paid'`)
 

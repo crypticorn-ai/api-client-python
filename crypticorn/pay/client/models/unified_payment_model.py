@@ -28,13 +28,15 @@ class UnifiedPaymentModel(BaseModel):
     """
     Combined payment model across all services
     """ # noqa: E501
+    id: StrictStr = Field(description="Payment ID")
+    product_id: StrictStr = Field(description="Product ID")
     var_date: StrictInt = Field(description="Payment date in seconds", alias="date")
     amount: Union[StrictFloat, StrictInt] = Field(description="Payment amount")
     currency: StrictStr = Field(description="Payment currency")
     status: PaymentStatus
     service: Services = Field(description="Payment service")
     market: StrictStr = Field(description="Payment market")
-    __properties: ClassVar[List[str]] = ["date", "amount", "currency", "status", "service", "market"]
+    __properties: ClassVar[List[str]] = ["id", "product_id", "date", "amount", "currency", "status", "service", "market"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -87,6 +89,8 @@ class UnifiedPaymentModel(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "id": obj.get("id"),
+            "product_id": obj.get("product_id"),
             "date": obj.get("date"),
             "amount": obj.get("amount"),
             "currency": obj.get("currency"),
