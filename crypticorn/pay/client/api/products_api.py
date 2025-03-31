@@ -39,7 +39,7 @@ class ProductsApi:
 
 
     @validate_call
-    def create_product(
+    async def create_product(
         self,
         product_model: ProductModel,
         access_token: Optional[StrictStr] = None,
@@ -99,11 +99,11 @@ class ProductsApi:
             '200': "object",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -111,7 +111,7 @@ class ProductsApi:
 
 
     @validate_call
-    def create_product_with_http_info(
+    async def create_product_with_http_info(
         self,
         product_model: ProductModel,
         access_token: Optional[StrictStr] = None,
@@ -171,11 +171,11 @@ class ProductsApi:
             '200': "object",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -183,7 +183,7 @@ class ProductsApi:
 
 
     @validate_call
-    def create_product_without_preload_content(
+    async def create_product_without_preload_content(
         self,
         product_model: ProductModel,
         access_token: Optional[StrictStr] = None,
@@ -243,7 +243,7 @@ class ProductsApi:
             '200': "object",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -307,7 +307,7 @@ class ProductsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'OAuth2PasswordBearer'
+            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -329,7 +329,7 @@ class ProductsApi:
 
 
     @validate_call
-    def get_products(
+    async def get_products(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -397,11 +397,11 @@ class ProductsApi:
             '200': "List[ProductModel]",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -409,7 +409,7 @@ class ProductsApi:
 
 
     @validate_call
-    def get_products_with_http_info(
+    async def get_products_with_http_info(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -477,11 +477,11 @@ class ProductsApi:
             '200': "List[ProductModel]",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -489,7 +489,7 @@ class ProductsApi:
 
 
     @validate_call
-    def get_products_without_preload_content(
+    async def get_products_without_preload_content(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -557,7 +557,7 @@ class ProductsApi:
             '200': "List[ProductModel]",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -631,7 +631,7 @@ class ProductsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'OAuth2PasswordBearer'
+            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -653,7 +653,7 @@ class ProductsApi:
 
 
     @validate_call
-    def update_product(
+    async def update_product(
         self,
         id: StrictStr,
         product_model: ProductModel,
@@ -717,11 +717,11 @@ class ProductsApi:
             '200': "object",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -729,7 +729,7 @@ class ProductsApi:
 
 
     @validate_call
-    def update_product_with_http_info(
+    async def update_product_with_http_info(
         self,
         id: StrictStr,
         product_model: ProductModel,
@@ -793,11 +793,11 @@ class ProductsApi:
             '200': "object",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -805,7 +805,7 @@ class ProductsApi:
 
 
     @validate_call
-    def update_product_without_preload_content(
+    async def update_product_without_preload_content(
         self,
         id: StrictStr,
         product_model: ProductModel,
@@ -869,7 +869,7 @@ class ProductsApi:
             '200': "object",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -936,7 +936,7 @@ class ProductsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'OAuth2PasswordBearer'
+            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
