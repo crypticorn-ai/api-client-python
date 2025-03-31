@@ -11,7 +11,9 @@ class ApiClient:
         api_key: str = None,
         jwt: str = None,
     ):
-
+        self.base_url = base_url
+        self.api_key = api_key
+        self.jwt = jwt
         self.hive = HiveClient(base_url, api_key, jwt)
         self.trade = TradeClient(base_url, api_key, jwt)
         self.klines = KlinesClient(base_url, api_key, jwt)
