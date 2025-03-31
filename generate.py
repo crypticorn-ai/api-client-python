@@ -4,7 +4,7 @@ import requests
 import subprocess
 
 # List of possible module names
-MODULES = ["trade", "klines", "hive", "pay"]
+MODULES = ["trade", "klines", "hive", "pay", "auth"]
 ROOT_URL = "http://localhost/v1"
 
 def main():

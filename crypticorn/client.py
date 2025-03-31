@@ -2,7 +2,7 @@ from crypticorn.hive import HiveClient
 from crypticorn.klines import KlinesClient
 from crypticorn.pay import PayClient
 from crypticorn.trade import TradeClient
-
+from crypticorn.auth import AuthClient
 
 class ApiClient:
     def __init__(
@@ -18,3 +18,4 @@ class ApiClient:
         self.trade = TradeClient(base_url, api_key, jwt)
         self.klines = KlinesClient(base_url, api_key, jwt)
         self.pay = PayClient(base_url, api_key, jwt)
+        self.auth = AuthClient(base_url, api_key, jwt)
