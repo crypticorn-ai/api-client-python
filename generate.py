@@ -44,7 +44,8 @@ def main():
         "--skip-validate-spec",
         "-o", f"python/crypticorn/{module_name}",
         "--openapi-generator-ignore-list", "setup.py,setup.cfg,pyproject.toml,tox.ini,py.typed,.gitignore,.gitlab-ci.yml,.github/,git_push.sh,test/,.travis.yml,test-requirements.txt",
-        "--minimal-update"
+        "--minimal-update",
+        "--library", "asyncio"
     ]
     subprocess.run(generator_cmd, check=True)
 
