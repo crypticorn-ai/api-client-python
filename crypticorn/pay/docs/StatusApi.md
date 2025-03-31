@@ -28,13 +28,13 @@ configuration = client.Configuration(
 
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.StatusApi(api_client)
 
     try:
         # Ping
-        api_response = api_instance.ping()
+        api_response = await api_instance.ping()
         print("The response of StatusApi->ping:\n")
         pprint(api_response)
     except Exception as e:

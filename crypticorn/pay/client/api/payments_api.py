@@ -40,7 +40,7 @@ class PaymentsApi:
 
 
     @validate_call
-    def get_latest_payment_from_invoice(
+    async def get_latest_payment_from_invoice(
         self,
         invoice_id: StrictStr,
         access_token: Optional[StrictStr] = None,
@@ -100,11 +100,11 @@ class PaymentsApi:
             '200': "UnifiedPaymentModel",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -112,7 +112,7 @@ class PaymentsApi:
 
 
     @validate_call
-    def get_latest_payment_from_invoice_with_http_info(
+    async def get_latest_payment_from_invoice_with_http_info(
         self,
         invoice_id: StrictStr,
         access_token: Optional[StrictStr] = None,
@@ -172,11 +172,11 @@ class PaymentsApi:
             '200': "UnifiedPaymentModel",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -184,7 +184,7 @@ class PaymentsApi:
 
 
     @validate_call
-    def get_latest_payment_from_invoice_without_preload_content(
+    async def get_latest_payment_from_invoice_without_preload_content(
         self,
         invoice_id: StrictStr,
         access_token: Optional[StrictStr] = None,
@@ -244,7 +244,7 @@ class PaymentsApi:
             '200': "UnifiedPaymentModel",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -297,7 +297,7 @@ class PaymentsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'OAuth2PasswordBearer'
+            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -319,7 +319,7 @@ class PaymentsApi:
 
 
     @validate_call
-    def get_payment_history(
+    async def get_payment_history(
         self,
         access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -375,11 +375,11 @@ class PaymentsApi:
             '200': "List[UnifiedPaymentModel]",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -387,7 +387,7 @@ class PaymentsApi:
 
 
     @validate_call
-    def get_payment_history_with_http_info(
+    async def get_payment_history_with_http_info(
         self,
         access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -443,11 +443,11 @@ class PaymentsApi:
             '200': "List[UnifiedPaymentModel]",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -455,7 +455,7 @@ class PaymentsApi:
 
 
     @validate_call
-    def get_payment_history_without_preload_content(
+    async def get_payment_history_without_preload_content(
         self,
         access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -511,7 +511,7 @@ class PaymentsApi:
             '200': "List[UnifiedPaymentModel]",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -559,7 +559,7 @@ class PaymentsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'OAuth2PasswordBearer'
+            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -581,8 +581,9 @@ class PaymentsApi:
 
 
     @validate_call
-    def get_subscriptions(
+    async def get_subscriptions(
         self,
+        user_id: Optional[StrictStr] = None,
         access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -600,6 +601,8 @@ class PaymentsApi:
         """Get Subscriptions
 
 
+        :param user_id:
+        :type user_id: str
         :param access_token:
         :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
@@ -625,6 +628,7 @@ class PaymentsApi:
         """ # noqa: E501
 
         _param = self._get_subscriptions_serialize(
+            user_id=user_id,
             access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -636,11 +640,11 @@ class PaymentsApi:
             '200': "List[ProductSubsModel]",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -648,8 +652,9 @@ class PaymentsApi:
 
 
     @validate_call
-    def get_subscriptions_with_http_info(
+    async def get_subscriptions_with_http_info(
         self,
+        user_id: Optional[StrictStr] = None,
         access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -667,6 +672,8 @@ class PaymentsApi:
         """Get Subscriptions
 
 
+        :param user_id:
+        :type user_id: str
         :param access_token:
         :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
@@ -692,6 +699,7 @@ class PaymentsApi:
         """ # noqa: E501
 
         _param = self._get_subscriptions_serialize(
+            user_id=user_id,
             access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -703,11 +711,11 @@ class PaymentsApi:
             '200': "List[ProductSubsModel]",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -715,8 +723,9 @@ class PaymentsApi:
 
 
     @validate_call
-    def get_subscriptions_without_preload_content(
+    async def get_subscriptions_without_preload_content(
         self,
+        user_id: Optional[StrictStr] = None,
         access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -734,6 +743,8 @@ class PaymentsApi:
         """Get Subscriptions
 
 
+        :param user_id:
+        :type user_id: str
         :param access_token:
         :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
@@ -759,6 +770,7 @@ class PaymentsApi:
         """ # noqa: E501
 
         _param = self._get_subscriptions_serialize(
+            user_id=user_id,
             access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -770,7 +782,7 @@ class PaymentsApi:
             '200': "List[ProductSubsModel]",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -779,6 +791,7 @@ class PaymentsApi:
 
     def _get_subscriptions_serialize(
         self,
+        user_id,
         access_token,
         _request_auth,
         _content_type,
@@ -802,6 +815,10 @@ class PaymentsApi:
 
         # process the path parameters
         # process the query parameters
+        if user_id is not None:
+            
+            _query_params.append(('user_id', user_id))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -818,7 +835,8 @@ class PaymentsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'OAuth2PasswordBearer'
+            'APIKeyHeader', 
+            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(

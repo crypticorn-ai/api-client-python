@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**create_now_invoice**](NOWPaymentsApi.md#create_now_invoice) | **POST** /now/invoice | Create Invoice
 [**get_now_api_status**](NOWPaymentsApi.md#get_now_api_status) | **GET** /now/status | Get Status
-[**send_now_webhook**](NOWPaymentsApi.md#send_now_webhook) | **POST** /now/webhook | Handle Webhook
+[**handle_now_webhook**](NOWPaymentsApi.md#handle_now_webhook) | **POST** /now/webhook | Handle Webhook
 
 
 # **create_now_invoice**
@@ -18,7 +18,7 @@ Create a payment invoice with a payment link for customer completion
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -38,10 +38,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NOWPaymentsApi(api_client)
     now_create_invoice_req = client.NowCreateInvoiceReq() # NowCreateInvoiceReq | 
@@ -49,7 +52,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Create Invoice
-        api_response = api_instance.create_now_invoice(now_create_invoice_req, access_token=access_token)
+        api_response = await api_instance.create_now_invoice(now_create_invoice_req, access_token=access_token)
         print("The response of NOWPaymentsApi->create_now_invoice:\n")
         pprint(api_response)
     except Exception as e:
@@ -72,7 +75,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -112,13 +115,13 @@ configuration = client.Configuration(
 
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NOWPaymentsApi(api_client)
 
     try:
         # Get Status
-        api_response = api_instance.get_now_api_status()
+        api_response = await api_instance.get_now_api_status()
         print("The response of NOWPaymentsApi->get_now_api_status:\n")
         pprint(api_response)
     except Exception as e:
@@ -152,8 +155,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **send_now_webhook**
-> object send_now_webhook(x_nowpayments_sig, now_webhook_payload)
+# **handle_now_webhook**
+> object handle_now_webhook(x_nowpayments_sig, now_webhook_payload)
 
 Handle Webhook
 
@@ -176,7 +179,7 @@ configuration = client.Configuration(
 
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NOWPaymentsApi(api_client)
     x_nowpayments_sig = 'x_nowpayments_sig_example' # str | Signature for the webhook
@@ -184,11 +187,11 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Handle Webhook
-        api_response = api_instance.send_now_webhook(x_nowpayments_sig, now_webhook_payload)
-        print("The response of NOWPaymentsApi->send_now_webhook:\n")
+        api_response = await api_instance.handle_now_webhook(x_nowpayments_sig, now_webhook_payload)
+        print("The response of NOWPaymentsApi->handle_now_webhook:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling NOWPaymentsApi->send_now_webhook: %s\n" % e)
+        print("Exception when calling NOWPaymentsApi->handle_now_webhook: %s\n" % e)
 ```
 
 

@@ -43,7 +43,7 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def create_now_invoice(
+    async def create_now_invoice(
         self,
         now_create_invoice_req: NowCreateInvoiceReq,
         access_token: Optional[StrictStr] = None,
@@ -103,11 +103,11 @@ class NOWPaymentsApi:
             '200': "NowCreateInvoiceRes",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -115,7 +115,7 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def create_now_invoice_with_http_info(
+    async def create_now_invoice_with_http_info(
         self,
         now_create_invoice_req: NowCreateInvoiceReq,
         access_token: Optional[StrictStr] = None,
@@ -175,11 +175,11 @@ class NOWPaymentsApi:
             '200': "NowCreateInvoiceRes",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -187,7 +187,7 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def create_now_invoice_without_preload_content(
+    async def create_now_invoice_without_preload_content(
         self,
         now_create_invoice_req: NowCreateInvoiceReq,
         access_token: Optional[StrictStr] = None,
@@ -247,7 +247,7 @@ class NOWPaymentsApi:
             '200': "NowCreateInvoiceRes",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -311,7 +311,7 @@ class NOWPaymentsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'OAuth2PasswordBearer'
+            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -333,7 +333,7 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def get_now_api_status(
+    async def get_now_api_status(
         self,
         _request_timeout: Union[
             None,
@@ -384,11 +384,11 @@ class NOWPaymentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "NowAPIStatusRes",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -396,7 +396,7 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def get_now_api_status_with_http_info(
+    async def get_now_api_status_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -447,11 +447,11 @@ class NOWPaymentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "NowAPIStatusRes",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -459,7 +459,7 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def get_now_api_status_without_preload_content(
+    async def get_now_api_status_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -510,7 +510,7 @@ class NOWPaymentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "NowAPIStatusRes",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
@@ -578,7 +578,7 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def send_now_webhook(
+    async def handle_now_webhook(
         self,
         x_nowpayments_sig: Annotated[StrictStr, Field(description="Signature for the webhook")],
         now_webhook_payload: NowWebhookPayload,
@@ -625,7 +625,7 @@ class NOWPaymentsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._send_now_webhook_serialize(
+        _param = self._handle_now_webhook_serialize(
             x_nowpayments_sig=x_nowpayments_sig,
             now_webhook_payload=now_webhook_payload,
             _request_auth=_request_auth,
@@ -638,11 +638,11 @@ class NOWPaymentsApi:
             '200': "object",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -650,7 +650,7 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def send_now_webhook_with_http_info(
+    async def handle_now_webhook_with_http_info(
         self,
         x_nowpayments_sig: Annotated[StrictStr, Field(description="Signature for the webhook")],
         now_webhook_payload: NowWebhookPayload,
@@ -697,7 +697,7 @@ class NOWPaymentsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._send_now_webhook_serialize(
+        _param = self._handle_now_webhook_serialize(
             x_nowpayments_sig=x_nowpayments_sig,
             now_webhook_payload=now_webhook_payload,
             _request_auth=_request_auth,
@@ -710,11 +710,11 @@ class NOWPaymentsApi:
             '200': "object",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
@@ -722,7 +722,7 @@ class NOWPaymentsApi:
 
 
     @validate_call
-    def send_now_webhook_without_preload_content(
+    async def handle_now_webhook_without_preload_content(
         self,
         x_nowpayments_sig: Annotated[StrictStr, Field(description="Signature for the webhook")],
         now_webhook_payload: NowWebhookPayload,
@@ -769,7 +769,7 @@ class NOWPaymentsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._send_now_webhook_serialize(
+        _param = self._handle_now_webhook_serialize(
             x_nowpayments_sig=x_nowpayments_sig,
             now_webhook_payload=now_webhook_payload,
             _request_auth=_request_auth,
@@ -782,14 +782,14 @@ class NOWPaymentsApi:
             '200': "object",
             '422': "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param,
             _request_timeout=_request_timeout
         )
         return response_data.response
 
 
-    def _send_now_webhook_serialize(
+    def _handle_now_webhook_serialize(
         self,
         x_nowpayments_sig,
         now_webhook_payload,

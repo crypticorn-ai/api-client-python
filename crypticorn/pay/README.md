@@ -66,11 +66,14 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NOWPaymentsApi(api_client)
     now_create_invoice_req = client.NowCreateInvoiceReq() # NowCreateInvoiceReq | 
@@ -78,7 +81,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Create Invoice
-        api_response = api_instance.create_now_invoice(now_create_invoice_req, access_token=access_token)
+        api_response = await api_instance.create_now_invoice(now_create_invoice_req, access_token=access_token)
         print("The response of NOWPaymentsApi->create_now_invoice:\n")
         pprint(api_response)
     except ApiException as e:
@@ -94,7 +97,7 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *NOWPaymentsApi* | [**create_now_invoice**](docs/NOWPaymentsApi.md#create_now_invoice) | **POST** /now/invoice | Create Invoice
 *NOWPaymentsApi* | [**get_now_api_status**](docs/NOWPaymentsApi.md#get_now_api_status) | **GET** /now/status | Get Status
-*NOWPaymentsApi* | [**send_now_webhook**](docs/NOWPaymentsApi.md#send_now_webhook) | **POST** /now/webhook | Handle Webhook
+*NOWPaymentsApi* | [**handle_now_webhook**](docs/NOWPaymentsApi.md#handle_now_webhook) | **POST** /now/webhook | Handle Webhook
 *PaymentsApi* | [**get_latest_payment_from_invoice**](docs/PaymentsApi.md#get_latest_payment_from_invoice) | **GET** /payments | Get Latest Payment From Invoice
 *PaymentsApi* | [**get_payment_history**](docs/PaymentsApi.md#get_payment_history) | **GET** /payments/history | Get Payments
 *PaymentsApi* | [**get_subscriptions**](docs/PaymentsApi.md#get_subscriptions) | **GET** /payments/subscriptions | Get Subscriptions
@@ -127,13 +130,17 @@ Class | Method | HTTP request | Description
 
 
 Authentication schemes defined for the API:
-<a id="OAuth2PasswordBearer"></a>
-### OAuth2PasswordBearer
+<a id="HTTPBearer"></a>
+### HTTPBearer
 
-- **Type**: OAuth
-- **Flow**: password
-- **Authorization URL**: 
-- **Scopes**: N/A
+- **Type**: Bearer authentication
+
+<a id="APIKeyHeader"></a>
+### APIKeyHeader
+
+- **Type**: API key
+- **API key parameter name**: X-API-Key
+- **Location**: HTTP header
 
 
 ## Author
