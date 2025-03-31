@@ -4,7 +4,7 @@ from crypticorn.pay import PayClient
 from crypticorn.trade import TradeClient
 
 
-class Crypticorn:
+class ApiClient:
     def __init__(
         self,
         base_url: str = "https://api.crypticorn.com",
