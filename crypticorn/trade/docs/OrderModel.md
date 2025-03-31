@@ -30,7 +30,7 @@ Name | Type | Description | Notes
 **filled_qty** | **float** |  | [optional] 
 **fee** | **float** |  | [optional] 
 **leverage** | **float** |  | [optional] 
-**order_details** | **object** |  | [optional] 
+**order_details** | [**AnyOf**](AnyOf.md) | Exchange specific details of the order | [optional] 
 **pnl** | **float** |  | [optional] 
 **order_time** | **int** |  | [optional] 
 

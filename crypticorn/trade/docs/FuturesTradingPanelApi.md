@@ -18,7 +18,7 @@ Cancel Order
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -36,10 +36,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.FuturesTradingPanelApi(api_client)
     order_id = 'order_id_example' # str | 
@@ -49,7 +52,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Cancel Order
-        api_response = api_instance.cancel_futures_order(order_id, symbol, key, access_token=access_token)
+        api_response = await api_instance.cancel_futures_order(order_id, symbol, key, access_token=access_token)
         print("The response of FuturesTradingPanelApi->cancel_futures_order:\n")
         pprint(api_response)
     except Exception as e:
@@ -74,7 +77,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -97,7 +100,7 @@ Get Futures Balance
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -116,17 +119,20 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.FuturesTradingPanelApi(api_client)
     access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Get Futures Balance
-        api_response = api_instance.get_futures_balance(access_token=access_token)
+        api_response = await api_instance.get_futures_balance(access_token=access_token)
         print("The response of FuturesTradingPanelApi->get_futures_balance:\n")
         pprint(api_response)
     except Exception as e:
@@ -148,7 +154,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -171,7 +177,7 @@ Get Futures Ledger
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -189,10 +195,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.FuturesTradingPanelApi(api_client)
     key = 'key_example' # str | 
@@ -200,7 +209,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Get Futures Ledger
-        api_response = api_instance.get_futures_ledger(key, access_token=access_token)
+        api_response = await api_instance.get_futures_ledger(key, access_token=access_token)
         print("The response of FuturesTradingPanelApi->get_futures_ledger:\n")
         pprint(api_response)
     except Exception as e:
@@ -223,7 +232,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -246,7 +255,7 @@ Get Historical Futures Orders
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -264,10 +273,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.FuturesTradingPanelApi(api_client)
     key = 'key_example' # str | 
@@ -275,7 +287,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Get Historical Futures Orders
-        api_response = api_instance.get_historical_futures_orders(key, access_token=access_token)
+        api_response = await api_instance.get_historical_futures_orders(key, access_token=access_token)
         print("The response of FuturesTradingPanelApi->get_historical_futures_orders:\n")
         pprint(api_response)
     except Exception as e:
@@ -298,7 +310,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -315,13 +327,13 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **place_futures_order**
-> object place_futures_order(key, body, access_token=access_token)
+> object place_futures_order(key, request_body, access_token=access_token)
 
 Place Order
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -339,19 +351,22 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.FuturesTradingPanelApi(api_client)
     key = 'key_example' # str | 
-    body = None # object | 
+    request_body = None # Dict[str, object] | 
     access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Place Order
-        api_response = api_instance.place_futures_order(key, body, access_token=access_token)
+        api_response = await api_instance.place_futures_order(key, request_body, access_token=access_token)
         print("The response of FuturesTradingPanelApi->place_futures_order:\n")
         pprint(api_response)
     except Exception as e:
@@ -366,7 +381,7 @@ with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **key** | **str**|  | 
- **body** | **object**|  | 
+ **request_body** | [**Dict[str, object]**](object.md)|  | 
  **access_token** | **str**|  | [optional] 
 
 ### Return type
@@ -375,7 +390,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
