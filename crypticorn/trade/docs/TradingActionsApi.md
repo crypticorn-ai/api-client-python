@@ -16,7 +16,8 @@ Get Actions
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Api Key Authentication (APIKeyHeader):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -35,10 +36,19 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.TradingActionsApi(api_client)
     limit = 0 # int |  (optional) (default to 0)
@@ -47,7 +57,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Get Actions
-        api_response = api_instance.get_actions(limit=limit, offset=offset, access_token=access_token)
+        api_response = await api_instance.get_actions(limit=limit, offset=offset, access_token=access_token)
         print("The response of TradingActionsApi->get_actions:\n")
         pprint(api_response)
     except Exception as e:
@@ -71,7 +81,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -88,7 +98,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_futures_action**
-> PostFuturesAction post_futures_action(futures_trading_action, authorization=authorization)
+> PostFuturesAction post_futures_action(futures_trading_action)
 
 Post Futures Action
 
@@ -96,6 +106,7 @@ Endpoint to receive futures trading actions from the trading strategy
 
 ### Example
 
+* Api Key Authentication (APIKeyHeader):
 
 ```python
 import client
@@ -110,17 +121,26 @@ configuration = client.Configuration(
     host = "http://localhost/v1/trade"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.TradingActionsApi(api_client)
     futures_trading_action = client.FuturesTradingAction() # FuturesTradingAction | 
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Post Futures Action
-        api_response = api_instance.post_futures_action(futures_trading_action, authorization=authorization)
+        api_response = await api_instance.post_futures_action(futures_trading_action)
         print("The response of TradingActionsApi->post_futures_action:\n")
         pprint(api_response)
     except Exception as e:
@@ -135,7 +155,6 @@ with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **futures_trading_action** | [**FuturesTradingAction**](FuturesTradingAction.md)|  | 
- **authorization** | **str**|  | [optional] 
 
 ### Return type
 
@@ -143,7 +162,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[APIKeyHeader](../README.md#APIKeyHeader)
 
 ### HTTP request headers
 
@@ -166,7 +185,7 @@ Post Spot Action
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Api Key Authentication (APIKeyHeader):
 
 ```python
 import client
@@ -185,17 +204,21 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.TradingActionsApi(api_client)
     futures_trading_action = client.FuturesTradingAction() # FuturesTradingAction | 
 
     try:
         # Post Spot Action
-        api_response = api_instance.post_spot_action(futures_trading_action)
+        api_response = await api_instance.post_spot_action(futures_trading_action)
         print("The response of TradingActionsApi->post_spot_action:\n")
         pprint(api_response)
     except Exception as e:
@@ -217,7 +240,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[APIKeyHeader](../README.md#APIKeyHeader)
 
 ### HTTP request headers
 

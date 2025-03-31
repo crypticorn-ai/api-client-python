@@ -17,7 +17,7 @@ Create Bot
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -36,10 +36,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.BotsApi(api_client)
     bot_model = client.BotModel() # BotModel | 
@@ -47,7 +50,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Create Bot
-        api_response = api_instance.create_bot(bot_model, access_token=access_token)
+        api_response = await api_instance.create_bot(bot_model, access_token=access_token)
         print("The response of BotsApi->create_bot:\n")
         pprint(api_response)
     except Exception as e:
@@ -70,7 +73,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -93,7 +96,7 @@ Delete Bot
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -111,10 +114,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.BotsApi(api_client)
     id = 'id_example' # str | 
@@ -122,7 +128,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Delete Bot
-        api_response = api_instance.delete_bot(id, access_token=access_token)
+        api_response = await api_instance.delete_bot(id, access_token=access_token)
         print("The response of BotsApi->delete_bot:\n")
         pprint(api_response)
     except Exception as e:
@@ -145,7 +151,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -168,7 +174,7 @@ Get Bots
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -187,10 +193,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.BotsApi(api_client)
     include_deleted = False # bool |  (optional) (default to False)
@@ -200,7 +209,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Get Bots
-        api_response = api_instance.get_bots(include_deleted=include_deleted, limit=limit, offset=offset, access_token=access_token)
+        api_response = await api_instance.get_bots(include_deleted=include_deleted, limit=limit, offset=offset, access_token=access_token)
         print("The response of BotsApi->get_bots:\n")
         pprint(api_response)
     except Exception as e:
@@ -225,7 +234,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -248,7 +257,7 @@ Update Bot
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -267,10 +276,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.BotsApi(api_client)
     id = 'id_example' # str | 
@@ -279,7 +291,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Update Bot
-        api_response = api_instance.update_bot(id, bot_model, access_token=access_token)
+        api_response = await api_instance.update_bot(id, bot_model, access_token=access_token)
         print("The response of BotsApi->update_bot:\n")
         pprint(api_response)
     except Exception as e:
@@ -303,7 +315,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 

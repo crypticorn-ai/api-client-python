@@ -14,7 +14,7 @@ Get Orders
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -33,10 +33,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.OrdersApi(api_client)
     limit = 0 # int |  (optional) (default to 0)
@@ -45,7 +48,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Get Orders
-        api_response = api_instance.get_orders(limit=limit, offset=offset, access_token=access_token)
+        api_response = await api_instance.get_orders(limit=limit, offset=offset, access_token=access_token)
         print("The response of OrdersApi->get_orders:\n")
         pprint(api_response)
     except Exception as e:
@@ -69,7 +72,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 

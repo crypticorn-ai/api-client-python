@@ -21,7 +21,7 @@ Create a new notification
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -40,10 +40,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NotificationsApi(api_client)
     notification_model = client.NotificationModel() # NotificationModel | 
@@ -51,7 +54,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Create Notification
-        api_response = api_instance.create_notification(notification_model, access_token=access_token)
+        api_response = await api_instance.create_notification(notification_model, access_token=access_token)
         print("The response of NotificationsApi->create_notification:\n")
         pprint(api_response)
     except Exception as e:
@@ -74,7 +77,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -97,7 +100,7 @@ Delete Notification
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -115,10 +118,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NotificationsApi(api_client)
     id = 'id_example' # str | 
@@ -126,7 +132,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Delete Notification
-        api_response = api_instance.delete_notification(id, access_token=access_token)
+        api_response = await api_instance.delete_notification(id, access_token=access_token)
         print("The response of NotificationsApi->delete_notification:\n")
         pprint(api_response)
     except Exception as e:
@@ -149,7 +155,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -174,7 +180,7 @@ Delete all notifications for the authenticated user
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -192,17 +198,20 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NotificationsApi(api_client)
     access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Delete Notifications
-        api_response = api_instance.delete_notifications(access_token=access_token)
+        api_response = await api_instance.delete_notifications(access_token=access_token)
         print("The response of NotificationsApi->delete_notifications:\n")
         pprint(api_response)
     except Exception as e:
@@ -224,7 +233,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -249,7 +258,7 @@ Get all notifications for the authenticated user
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -268,10 +277,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NotificationsApi(api_client)
     limit = 0 # int |  (optional) (default to 0)
@@ -280,7 +292,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Get Notifications
-        api_response = api_instance.get_notifications(limit=limit, offset=offset, access_token=access_token)
+        api_response = await api_instance.get_notifications(limit=limit, offset=offset, access_token=access_token)
         print("The response of NotificationsApi->get_notifications:\n")
         pprint(api_response)
     except Exception as e:
@@ -304,7 +316,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -329,7 +341,7 @@ Update a notification's viewed status
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -347,10 +359,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NotificationsApi(api_client)
     id = 'id_example' # str | 
@@ -360,7 +375,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Update Notification
-        api_response = api_instance.update_notification(id, viewed, sent, access_token=access_token)
+        api_response = await api_instance.update_notification(id, viewed, sent, access_token=access_token)
         print("The response of NotificationsApi->update_notification:\n")
         pprint(api_response)
     except Exception as e:
@@ -385,7 +400,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -410,7 +425,7 @@ Bulk update notifications
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -428,10 +443,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NotificationsApi(api_client)
     viewed = True # bool | 
@@ -440,7 +458,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Update Notifications
-        api_response = api_instance.update_notifications(viewed, sent, access_token=access_token)
+        api_response = await api_instance.update_notifications(viewed, sent, access_token=access_token)
         print("The response of NotificationsApi->update_notifications:\n")
         pprint(api_response)
     except Exception as e:
@@ -464,7 +482,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 

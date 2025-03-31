@@ -18,7 +18,7 @@ Post Api Key
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -37,10 +37,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.APIKeysApi(api_client)
     api_key_model = client.APIKeyModel() # APIKeyModel | 
@@ -48,7 +51,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Post Api Key
-        api_response = api_instance.create_api_key(api_key_model, access_token=access_token)
+        api_response = await api_instance.create_api_key(api_key_model, access_token=access_token)
         print("The response of APIKeysApi->create_api_key:\n")
         pprint(api_response)
     except Exception as e:
@@ -71,7 +74,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -94,7 +97,7 @@ Delete Api Key
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -112,10 +115,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.APIKeysApi(api_client)
     id = 'id_example' # str | 
@@ -123,7 +129,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Delete Api Key
-        api_response = api_instance.delete_api_key(id, access_token=access_token)
+        api_response = await api_instance.delete_api_key(id, access_token=access_token)
         print("The response of APIKeysApi->delete_api_key:\n")
         pprint(api_response)
     except Exception as e:
@@ -146,7 +152,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -169,7 +175,7 @@ Get Api Key By Id
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -188,10 +194,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.APIKeysApi(api_client)
     id = 'id_example' # str | 
@@ -199,7 +208,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Get Api Key By Id
-        api_response = api_instance.get_api_key_by_id(id, access_token=access_token)
+        api_response = await api_instance.get_api_key_by_id(id, access_token=access_token)
         print("The response of APIKeysApi->get_api_key_by_id:\n")
         pprint(api_response)
     except Exception as e:
@@ -222,7 +231,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -245,7 +254,7 @@ Get Api Keys
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -264,10 +273,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.APIKeysApi(api_client)
     limit = 0 # int |  (optional) (default to 0)
@@ -276,7 +288,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Get Api Keys
-        api_response = api_instance.get_api_keys(limit=limit, offset=offset, access_token=access_token)
+        api_response = await api_instance.get_api_keys(limit=limit, offset=offset, access_token=access_token)
         print("The response of APIKeysApi->get_api_keys:\n")
         pprint(api_response)
     except Exception as e:
@@ -300,7 +312,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -323,7 +335,7 @@ Put Api Key
 
 ### Example
 
-* OAuth Authentication (OAuth2PasswordBearer):
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import client
@@ -342,10 +354,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure Bearer authorization: HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.APIKeysApi(api_client)
     id = 'id_example' # str | 
@@ -354,7 +369,7 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Put Api Key
-        api_response = api_instance.update_api_key(id, api_key_model, access_token=access_token)
+        api_response = await api_instance.update_api_key(id, api_key_model, access_token=access_token)
         print("The response of APIKeysApi->update_api_key:\n")
         pprint(api_response)
     except Exception as e:
@@ -378,7 +393,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2PasswordBearer](../README.md#OAuth2PasswordBearer)
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
