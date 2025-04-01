@@ -23,23 +23,30 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class ErrorResponse(BaseModel):
     """
     ErrorResponse
-    """ # noqa: E501
+    """  # noqa: E501
+
     success: Optional[StrictBool] = False
     message: StrictStr
     error_code: StrictStr
     details: Optional[Dict[str, Any]] = None
     timestamp: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["success", "message", "error_code", "details", "timestamp"]
+    __properties: ClassVar[List[str]] = [
+        "success",
+        "message",
+        "error_code",
+        "details",
+        "timestamp",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -65,8 +72,7 @@ class ErrorResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -76,7 +82,7 @@ class ErrorResponse(BaseModel):
         # set to None if details (nullable) is None
         # and model_fields_set contains the field
         if self.details is None and "details" in self.model_fields_set:
-            _dict['details'] = None
+            _dict["details"] = None
 
         return _dict
 
@@ -89,13 +95,15 @@ class ErrorResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "success": obj.get("success") if obj.get("success") is not None else False,
-            "message": obj.get("message"),
-            "error_code": obj.get("error_code"),
-            "details": obj.get("details"),
-            "timestamp": obj.get("timestamp")
-        })
+        _obj = cls.model_validate(
+            {
+                "success": (
+                    obj.get("success") if obj.get("success") is not None else False
+                ),
+                "message": obj.get("message"),
+                "error_code": obj.get("error_code"),
+                "details": obj.get("details"),
+                "timestamp": obj.get("timestamp"),
+            }
+        )
         return _obj
-
-

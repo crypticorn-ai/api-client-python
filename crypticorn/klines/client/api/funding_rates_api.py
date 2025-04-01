@@ -19,7 +19,9 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
-from crypticorn.klines.client.models.base_response_list_funding_rate_response import BaseResponseListFundingRateResponse
+from crypticorn.klines.client.models.base_response_list_funding_rate_response import (
+    BaseResponseListFundingRateResponse,
+)
 
 from crypticorn.klines.client.api_client import ApiClient, RequestSerialized
 from crypticorn.klines.client.api_response import ApiResponse
@@ -38,21 +40,28 @@ class FundingRatesApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
-
     @validate_call
     def funding_rate_funding_rates_symbol_get(
         self,
-        symbol: Annotated[StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")],
-        start: Annotated[Optional[StrictInt], Field(description="Start timestamp in milliseconds")] = None,
-        end: Annotated[Optional[StrictInt], Field(description="End timestamp in milliseconds")] = None,
-        limit: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="Number of funding rates to return")] = None,
+        symbol: Annotated[
+            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
+        ],
+        start: Annotated[
+            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
+        ] = None,
+        end: Annotated[
+            Optional[StrictInt], Field(description="End timestamp in milliseconds")
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Number of funding rates to return"),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -91,7 +100,7 @@ class FundingRatesApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._funding_rate_funding_rates_symbol_get_serialize(
             symbol=symbol,
@@ -101,19 +110,18 @@ class FundingRatesApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "BaseResponseListFundingRateResponse",
-            '400': "ErrorResponse",
-            '404': "ErrorResponse",
-            '500': "ErrorResponse",
-            '422': "HTTPValidationError",
+            "200": "BaseResponseListFundingRateResponse",
+            "400": "ErrorResponse",
+            "404": "ErrorResponse",
+            "500": "ErrorResponse",
+            "422": "HTTPValidationError",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -121,21 +129,28 @@ class FundingRatesApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     def funding_rate_funding_rates_symbol_get_with_http_info(
         self,
-        symbol: Annotated[StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")],
-        start: Annotated[Optional[StrictInt], Field(description="Start timestamp in milliseconds")] = None,
-        end: Annotated[Optional[StrictInt], Field(description="End timestamp in milliseconds")] = None,
-        limit: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="Number of funding rates to return")] = None,
+        symbol: Annotated[
+            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
+        ],
+        start: Annotated[
+            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
+        ] = None,
+        end: Annotated[
+            Optional[StrictInt], Field(description="End timestamp in milliseconds")
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Number of funding rates to return"),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -174,7 +189,7 @@ class FundingRatesApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._funding_rate_funding_rates_symbol_get_serialize(
             symbol=symbol,
@@ -184,19 +199,18 @@ class FundingRatesApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "BaseResponseListFundingRateResponse",
-            '400': "ErrorResponse",
-            '404': "ErrorResponse",
-            '500': "ErrorResponse",
-            '422': "HTTPValidationError",
+            "200": "BaseResponseListFundingRateResponse",
+            "400": "ErrorResponse",
+            "404": "ErrorResponse",
+            "500": "ErrorResponse",
+            "422": "HTTPValidationError",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -204,21 +218,28 @@ class FundingRatesApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     def funding_rate_funding_rates_symbol_get_without_preload_content(
         self,
-        symbol: Annotated[StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")],
-        start: Annotated[Optional[StrictInt], Field(description="Start timestamp in milliseconds")] = None,
-        end: Annotated[Optional[StrictInt], Field(description="End timestamp in milliseconds")] = None,
-        limit: Annotated[Optional[Annotated[int, Field(strict=True, ge=1)]], Field(description="Number of funding rates to return")] = None,
+        symbol: Annotated[
+            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
+        ],
+        start: Annotated[
+            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
+        ] = None,
+        end: Annotated[
+            Optional[StrictInt], Field(description="End timestamp in milliseconds")
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Number of funding rates to return"),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -257,7 +278,7 @@ class FundingRatesApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._funding_rate_funding_rates_symbol_get_serialize(
             symbol=symbol,
@@ -267,22 +288,20 @@ class FundingRatesApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "BaseResponseListFundingRateResponse",
-            '400': "ErrorResponse",
-            '404': "ErrorResponse",
-            '500': "ErrorResponse",
-            '422': "HTTPValidationError",
+            "200": "BaseResponseListFundingRateResponse",
+            "400": "ErrorResponse",
+            "404": "ErrorResponse",
+            "500": "ErrorResponse",
+            "422": "HTTPValidationError",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _funding_rate_funding_rates_symbol_get_serialize(
         self,
@@ -298,8 +317,7 @@ class FundingRatesApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -312,41 +330,36 @@ class FundingRatesApi:
 
         # process the path parameters
         if symbol is not None:
-            _path_params['symbol'] = symbol
+            _path_params["symbol"] = symbol
         # process the query parameters
         if start is not None:
-            
-            _query_params.append(('start', start))
-            
+
+            _query_params.append(("start", start))
+
         if end is not None:
-            
-            _query_params.append(('end', end))
-            
+
+            _query_params.append(("end", end))
+
         if limit is not None:
-            
-            _query_params.append(('limit', limit))
-            
+
+            _query_params.append(("limit", limit))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
-
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/funding_rates/{symbol}',
+            method="GET",
+            resource_path="/funding_rates/{symbol}",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -356,7 +369,5 @@ class FundingRatesApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-

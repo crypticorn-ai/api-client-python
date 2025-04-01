@@ -22,10 +22,12 @@ from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class SymbolInfoResponse(BaseModel):
     """
     SymbolInfoResponse
-    """ # noqa: E501
+    """  # noqa: E501
+
     name: StrictStr
     exchange_traded: StrictStr = Field(alias="exchange-traded")
     exchange_listed: StrictStr = Field(alias="exchange-listed")
@@ -41,14 +43,29 @@ class SymbolInfoResponse(BaseModel):
     supported_resolutions: List[StrictStr]
     pricescale: StrictInt
     ticker: StrictStr
-    __properties: ClassVar[List[str]] = ["name", "exchange-traded", "exchange-listed", "timezone", "minmov", "minmov2", "pointvalue", "session", "has_intraday", "has_no_volume", "description", "type", "supported_resolutions", "pricescale", "ticker"]
+    __properties: ClassVar[List[str]] = [
+        "name",
+        "exchange-traded",
+        "exchange-listed",
+        "timezone",
+        "minmov",
+        "minmov2",
+        "pointvalue",
+        "session",
+        "has_intraday",
+        "has_no_volume",
+        "description",
+        "type",
+        "supported_resolutions",
+        "pricescale",
+        "ticker",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -74,8 +91,7 @@ class SymbolInfoResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -93,23 +109,23 @@ class SymbolInfoResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "name": obj.get("name"),
-            "exchange-traded": obj.get("exchange-traded"),
-            "exchange-listed": obj.get("exchange-listed"),
-            "timezone": obj.get("timezone"),
-            "minmov": obj.get("minmov"),
-            "minmov2": obj.get("minmov2"),
-            "pointvalue": obj.get("pointvalue"),
-            "session": obj.get("session"),
-            "has_intraday": obj.get("has_intraday"),
-            "has_no_volume": obj.get("has_no_volume"),
-            "description": obj.get("description"),
-            "type": obj.get("type"),
-            "supported_resolutions": obj.get("supported_resolutions"),
-            "pricescale": obj.get("pricescale"),
-            "ticker": obj.get("ticker")
-        })
+        _obj = cls.model_validate(
+            {
+                "name": obj.get("name"),
+                "exchange-traded": obj.get("exchange-traded"),
+                "exchange-listed": obj.get("exchange-listed"),
+                "timezone": obj.get("timezone"),
+                "minmov": obj.get("minmov"),
+                "minmov2": obj.get("minmov2"),
+                "pointvalue": obj.get("pointvalue"),
+                "session": obj.get("session"),
+                "has_intraday": obj.get("has_intraday"),
+                "has_no_volume": obj.get("has_no_volume"),
+                "description": obj.get("description"),
+                "type": obj.get("type"),
+                "supported_resolutions": obj.get("supported_resolutions"),
+                "pricescale": obj.get("pricescale"),
+                "ticker": obj.get("ticker"),
+            }
+        )
         return _obj
-
-

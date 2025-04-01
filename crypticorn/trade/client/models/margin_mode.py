@@ -26,12 +26,10 @@ class MarginMode(str, Enum):
     """
     allowed enum values
     """
-    ISOLATED = 'isolated'
-    CROSS = 'cross'
+    ISOLATED = "isolated"
+    CROSS = "cross"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
         """Create an instance of MarginMode from a JSON string"""
         return cls(json.loads(json_str))
-
-

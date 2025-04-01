@@ -26,11 +26,9 @@ class Services(str, Enum):
     """
     allowed enum values
     """
-    NOW = 'now'
+    NOW = "now"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
         """Create an instance of Services from a JSON string"""
         return cls(json.loads(json_str))
-
-

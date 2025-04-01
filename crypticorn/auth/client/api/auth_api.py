@@ -19,10 +19,16 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
-from crypticorn.auth.client.models.authorize_user200_response import AuthorizeUser200Response
+from crypticorn.auth.client.models.authorize_user200_response import (
+    AuthorizeUser200Response,
+)
 from crypticorn.auth.client.models.authorize_user_request import AuthorizeUserRequest
-from crypticorn.auth.client.models.refresh_token_info200_response import RefreshTokenInfo200Response
-from crypticorn.auth.client.models.rotate_tokens200_response import RotateTokens200Response
+from crypticorn.auth.client.models.refresh_token_info200_response import (
+    RefreshTokenInfo200Response,
+)
+from crypticorn.auth.client.models.rotate_tokens200_response import (
+    RotateTokens200Response,
+)
 from crypticorn.auth.client.models.token_info200_response import TokenInfo200Response
 from crypticorn.auth.client.models.verify200_response import Verify200Response
 
@@ -43,7 +49,6 @@ class AuthApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
-
     @validate_call
     async def authorize_user(
         self,
@@ -52,9 +57,8 @@ class AuthApi:
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -87,29 +91,27 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._authorize_user_serialize(
             authorize_user_request=authorize_user_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "AuthorizeUser200Response",
+            "200": "AuthorizeUser200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
 
     @validate_call
     async def authorize_user_with_http_info(
@@ -119,9 +121,8 @@ class AuthApi:
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -154,29 +155,27 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._authorize_user_serialize(
             authorize_user_request=authorize_user_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "AuthorizeUser200Response",
+            "200": "AuthorizeUser200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
-
 
     @validate_call
     async def authorize_user_without_preload_content(
@@ -186,9 +185,8 @@ class AuthApi:
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -221,25 +219,23 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._authorize_user_serialize(
             authorize_user_request=authorize_user_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "AuthorizeUser200Response",
+            "200": "AuthorizeUser200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _authorize_user_serialize(
         self,
@@ -252,8 +248,7 @@ class AuthApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -272,36 +267,28 @@ class AuthApi:
         if authorize_user_request is not None:
             _body_params = authorize_user_request
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
         # set the HTTP header `Content-Type`
         if _content_type:
-            _header_params['Content-Type'] = _content_type
+            _header_params["Content-Type"] = _content_type
         else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
+            _default_content_type = self.api_client.select_header_content_type(
+                ["application/json"]
             )
             if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
+                _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='POST',
-            resource_path='/authorize',
+            method="POST",
+            resource_path="/authorize",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -311,11 +298,8 @@ class AuthApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     async def get_google_auth_url(
@@ -325,9 +309,8 @@ class AuthApi:
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -360,29 +343,27 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_google_auth_url_serialize(
             origin=origin,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "str",
+            "200": "str",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
 
     @validate_call
     async def get_google_auth_url_with_http_info(
@@ -392,9 +373,8 @@ class AuthApi:
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -427,29 +407,27 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_google_auth_url_serialize(
             origin=origin,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "str",
+            "200": "str",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
-
 
     @validate_call
     async def get_google_auth_url_without_preload_content(
@@ -459,9 +437,8 @@ class AuthApi:
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -494,25 +471,23 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_google_auth_url_serialize(
             origin=origin,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "str",
+            "200": "str",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _get_google_auth_url_serialize(
         self,
@@ -525,8 +500,7 @@ class AuthApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -540,30 +514,25 @@ class AuthApi:
         # process the path parameters
         # process the query parameters
         if origin is not None:
-            
-            _query_params.append(('origin', origin))
-            
+
+            _query_params.append(("origin", origin))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
-
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/get-google-auth-url',
+            method="GET",
+            resource_path="/get-google-auth-url",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -573,11 +542,8 @@ class AuthApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     async def oauth_callback(
@@ -591,9 +557,8 @@ class AuthApi:
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -634,7 +599,7 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._oauth_callback_serialize(
             code=code,
@@ -645,22 +610,20 @@ class AuthApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "AuthorizeUser200Response",
+            "200": "AuthorizeUser200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
 
     @validate_call
     async def oauth_callback_with_http_info(
@@ -674,9 +637,8 @@ class AuthApi:
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -717,7 +679,7 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._oauth_callback_serialize(
             code=code,
@@ -728,22 +690,20 @@ class AuthApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "AuthorizeUser200Response",
+            "200": "AuthorizeUser200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
-
 
     @validate_call
     async def oauth_callback_without_preload_content(
@@ -757,9 +717,8 @@ class AuthApi:
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -800,7 +759,7 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._oauth_callback_serialize(
             code=code,
@@ -811,18 +770,16 @@ class AuthApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "AuthorizeUser200Response",
+            "200": "AuthorizeUser200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _oauth_callback_serialize(
         self,
@@ -839,8 +796,7 @@ class AuthApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -854,46 +810,41 @@ class AuthApi:
         # process the path parameters
         # process the query parameters
         if code is not None:
-            
-            _query_params.append(('code', code))
-            
+
+            _query_params.append(("code", code))
+
         if scope is not None:
-            
-            _query_params.append(('scope', scope))
-            
+
+            _query_params.append(("scope", scope))
+
         if authuser is not None:
-            
-            _query_params.append(('authuser', authuser))
-            
+
+            _query_params.append(("authuser", authuser))
+
         if prompt is not None:
-            
-            _query_params.append(('prompt', prompt))
-            
+
+            _query_params.append(("prompt", prompt))
+
         if origin is not None:
-            
-            _query_params.append(('origin', origin))
-            
+
+            _query_params.append(("origin", origin))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
-
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/oauth-callback',
+            method="GET",
+            resource_path="/oauth-callback",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -903,23 +854,22 @@ class AuthApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     async def refresh_token_info(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -952,22 +902,21 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._refresh_token_info_serialize(
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "RefreshTokenInfo200Response",
+            "200": "RefreshTokenInfo200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -975,18 +924,19 @@ class AuthApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     async def refresh_token_info_with_http_info(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1019,22 +969,21 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._refresh_token_info_serialize(
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "RefreshTokenInfo200Response",
+            "200": "RefreshTokenInfo200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -1042,18 +991,19 @@ class AuthApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     async def refresh_token_info_without_preload_content(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1086,25 +1036,23 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._refresh_token_info_serialize(
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "RefreshTokenInfo200Response",
+            "200": "RefreshTokenInfo200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _refresh_token_info_serialize(
         self,
@@ -1117,8 +1065,7 @@ class AuthApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -1133,27 +1080,22 @@ class AuthApi:
         # process the query parameters
         # process the header parameters
         if x_refresh_token is not None:
-            _header_params['X-Refresh-Token'] = x_refresh_token
+            _header_params["X-Refresh-Token"] = x_refresh_token
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
-
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/refresh-token-info',
+            method="GET",
+            resource_path="/refresh-token-info",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1163,23 +1105,22 @@ class AuthApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     async def refresh_token_scopes(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1212,22 +1153,21 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._refresh_token_scopes_serialize(
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "RotateTokens200Response",
+            "200": "RotateTokens200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -1235,18 +1175,19 @@ class AuthApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     async def refresh_token_scopes_with_http_info(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1279,22 +1220,21 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._refresh_token_scopes_serialize(
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "RotateTokens200Response",
+            "200": "RotateTokens200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -1302,18 +1242,19 @@ class AuthApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     async def refresh_token_scopes_without_preload_content(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1346,25 +1287,23 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._refresh_token_scopes_serialize(
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "RotateTokens200Response",
+            "200": "RotateTokens200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _refresh_token_scopes_serialize(
         self,
@@ -1377,8 +1316,7 @@ class AuthApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -1393,27 +1331,22 @@ class AuthApi:
         # process the query parameters
         # process the header parameters
         if x_refresh_token is not None:
-            _header_params['X-Refresh-Token'] = x_refresh_token
+            _header_params["X-Refresh-Token"] = x_refresh_token
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
-
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='POST',
-            resource_path='/refresh-token-scopes',
+            method="POST",
+            resource_path="/refresh-token-scopes",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1423,23 +1356,22 @@ class AuthApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     async def rotate_tokens(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1472,22 +1404,21 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._rotate_tokens_serialize(
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "RotateTokens200Response",
+            "200": "RotateTokens200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -1495,18 +1426,19 @@ class AuthApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     async def rotate_tokens_with_http_info(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1539,22 +1471,21 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._rotate_tokens_serialize(
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "RotateTokens200Response",
+            "200": "RotateTokens200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -1562,18 +1493,19 @@ class AuthApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     async def rotate_tokens_without_preload_content(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1606,25 +1538,23 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._rotate_tokens_serialize(
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "RotateTokens200Response",
+            "200": "RotateTokens200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _rotate_tokens_serialize(
         self,
@@ -1637,8 +1567,7 @@ class AuthApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -1653,27 +1582,22 @@ class AuthApi:
         # process the query parameters
         # process the header parameters
         if x_refresh_token is not None:
-            _header_params['X-Refresh-Token'] = x_refresh_token
+            _header_params["X-Refresh-Token"] = x_refresh_token
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
-
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='POST',
-            resource_path='/rotate-tokens',
+            method="POST",
+            resource_path="/rotate-tokens",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1683,23 +1607,22 @@ class AuthApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     async def token_info(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1732,22 +1655,21 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._token_info_serialize(
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TokenInfo200Response",
+            "200": "TokenInfo200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -1755,18 +1677,19 @@ class AuthApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     async def token_info_with_http_info(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1799,22 +1722,21 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._token_info_serialize(
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TokenInfo200Response",
+            "200": "TokenInfo200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -1822,18 +1744,19 @@ class AuthApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     async def token_info_without_preload_content(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1866,25 +1789,23 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._token_info_serialize(
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TokenInfo200Response",
+            "200": "TokenInfo200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _token_info_serialize(
         self,
@@ -1897,8 +1818,7 @@ class AuthApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -1913,27 +1833,22 @@ class AuthApi:
         # process the query parameters
         # process the header parameters
         if x_refresh_token is not None:
-            _header_params['X-Refresh-Token'] = x_refresh_token
+            _header_params["X-Refresh-Token"] = x_refresh_token
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
-
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/token-info',
+            method="GET",
+            resource_path="/token-info",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1943,11 +1858,8 @@ class AuthApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     async def verify(
@@ -1956,9 +1868,8 @@ class AuthApi:
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1989,28 +1900,26 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._verify_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Verify200Response",
+            "200": "Verify200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
 
     @validate_call
     async def verify_with_http_info(
@@ -2019,9 +1928,8 @@ class AuthApi:
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -2052,28 +1960,26 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._verify_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Verify200Response",
+            "200": "Verify200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
-
 
     @validate_call
     async def verify_without_preload_content(
@@ -2082,9 +1988,8 @@ class AuthApi:
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -2115,24 +2020,22 @@ class AuthApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._verify_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "Verify200Response",
+            "200": "Verify200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _verify_serialize(
         self,
@@ -2144,8 +2047,7 @@ class AuthApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -2162,23 +2064,18 @@ class AuthApi:
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
-
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/verify',
+            method="GET",
+            resource_path="/verify",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -2188,7 +2085,5 @@ class AuthApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-

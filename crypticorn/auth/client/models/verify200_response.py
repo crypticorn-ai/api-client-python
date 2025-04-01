@@ -22,10 +22,12 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class Verify200Response(BaseModel):
     """
     Verify200Response
-    """ # noqa: E501
+    """  # noqa: E501
+
     iss: Optional[StrictStr] = None
     sub: Optional[StrictStr] = None
     aud: Optional[StrictStr] = None
@@ -34,14 +36,22 @@ class Verify200Response(BaseModel):
     iat: Optional[Union[StrictFloat, StrictInt]] = None
     jti: Optional[StrictStr] = None
     scopes: Optional[List[StrictStr]] = None
-    __properties: ClassVar[List[str]] = ["iss", "sub", "aud", "exp", "nbf", "iat", "jti", "scopes"]
+    __properties: ClassVar[List[str]] = [
+        "iss",
+        "sub",
+        "aud",
+        "exp",
+        "nbf",
+        "iat",
+        "jti",
+        "scopes",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -67,8 +77,7 @@ class Verify200Response(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -86,16 +95,16 @@ class Verify200Response(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "iss": obj.get("iss"),
-            "sub": obj.get("sub"),
-            "aud": obj.get("aud"),
-            "exp": obj.get("exp"),
-            "nbf": obj.get("nbf"),
-            "iat": obj.get("iat"),
-            "jti": obj.get("jti"),
-            "scopes": obj.get("scopes")
-        })
+        _obj = cls.model_validate(
+            {
+                "iss": obj.get("iss"),
+                "sub": obj.get("sub"),
+                "aud": obj.get("aud"),
+                "exp": obj.get("exp"),
+                "nbf": obj.get("nbf"),
+                "iat": obj.get("iat"),
+                "jti": obj.get("jti"),
+                "scopes": obj.get("scopes"),
+            }
+        )
         return _obj
-
-

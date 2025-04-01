@@ -22,10 +22,12 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class APIKeyModel(BaseModel):
     """
     APIKeyModel
-    """ # noqa: E501
+    """  # noqa: E501
+
     created_at: Optional[StrictInt] = None
     updated_at: Optional[StrictInt] = None
     id: Optional[StrictStr] = None
@@ -36,14 +38,24 @@ class APIKeyModel(BaseModel):
     label: StrictStr = Field(description="Label for the API key")
     enabled: Optional[StrictBool] = None
     user_id: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["created_at", "updated_at", "id", "exchange", "api_key", "secret", "passphrase", "label", "enabled", "user_id"]
+    __properties: ClassVar[List[str]] = [
+        "created_at",
+        "updated_at",
+        "id",
+        "exchange",
+        "api_key",
+        "secret",
+        "passphrase",
+        "label",
+        "enabled",
+        "user_id",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -69,8 +81,7 @@ class APIKeyModel(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -80,42 +91,42 @@ class APIKeyModel(BaseModel):
         # set to None if created_at (nullable) is None
         # and model_fields_set contains the field
         if self.created_at is None and "created_at" in self.model_fields_set:
-            _dict['created_at'] = None
+            _dict["created_at"] = None
 
         # set to None if updated_at (nullable) is None
         # and model_fields_set contains the field
         if self.updated_at is None and "updated_at" in self.model_fields_set:
-            _dict['updated_at'] = None
+            _dict["updated_at"] = None
 
         # set to None if id (nullable) is None
         # and model_fields_set contains the field
         if self.id is None and "id" in self.model_fields_set:
-            _dict['id'] = None
+            _dict["id"] = None
 
         # set to None if api_key (nullable) is None
         # and model_fields_set contains the field
         if self.api_key is None and "api_key" in self.model_fields_set:
-            _dict['api_key'] = None
+            _dict["api_key"] = None
 
         # set to None if secret (nullable) is None
         # and model_fields_set contains the field
         if self.secret is None and "secret" in self.model_fields_set:
-            _dict['secret'] = None
+            _dict["secret"] = None
 
         # set to None if passphrase (nullable) is None
         # and model_fields_set contains the field
         if self.passphrase is None and "passphrase" in self.model_fields_set:
-            _dict['passphrase'] = None
+            _dict["passphrase"] = None
 
         # set to None if enabled (nullable) is None
         # and model_fields_set contains the field
         if self.enabled is None and "enabled" in self.model_fields_set:
-            _dict['enabled'] = None
+            _dict["enabled"] = None
 
         # set to None if user_id (nullable) is None
         # and model_fields_set contains the field
         if self.user_id is None and "user_id" in self.model_fields_set:
-            _dict['user_id'] = None
+            _dict["user_id"] = None
 
         return _dict
 
@@ -128,18 +139,18 @@ class APIKeyModel(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "created_at": obj.get("created_at"),
-            "updated_at": obj.get("updated_at"),
-            "id": obj.get("id"),
-            "exchange": obj.get("exchange"),
-            "api_key": obj.get("api_key"),
-            "secret": obj.get("secret"),
-            "passphrase": obj.get("passphrase"),
-            "label": obj.get("label"),
-            "enabled": obj.get("enabled"),
-            "user_id": obj.get("user_id")
-        })
+        _obj = cls.model_validate(
+            {
+                "created_at": obj.get("created_at"),
+                "updated_at": obj.get("updated_at"),
+                "id": obj.get("id"),
+                "exchange": obj.get("exchange"),
+                "api_key": obj.get("api_key"),
+                "secret": obj.get("secret"),
+                "passphrase": obj.get("passphrase"),
+                "label": obj.get("label"),
+                "enabled": obj.get("enabled"),
+                "user_id": obj.get("user_id"),
+            }
+        )
         return _obj
-
-

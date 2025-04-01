@@ -26,12 +26,10 @@ class MarketType(str, Enum):
     """
     allowed enum values
     """
-    SPOT = 'spot'
-    FUTURES = 'futures'
+    SPOT = "spot"
+    FUTURES = "futures"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
         """Create an instance of MarketType from a JSON string"""
         return cls(json.loads(json_str))
-
-

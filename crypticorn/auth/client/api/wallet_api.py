@@ -21,11 +21,17 @@ from typing import Any, Optional, Union
 from typing_extensions import Annotated
 from crypticorn.auth.client.models.add_wallet200_response import AddWallet200Response
 from crypticorn.auth.client.models.add_wallet_request import AddWalletRequest
-from crypticorn.auth.client.models.list_wallets200_response import ListWallets200Response
-from crypticorn.auth.client.models.list_wallets200_response_user_value import ListWallets200ResponseUserValue
+from crypticorn.auth.client.models.list_wallets200_response import (
+    ListWallets200Response,
+)
+from crypticorn.auth.client.models.list_wallets200_response_user_value import (
+    ListWallets200ResponseUserValue,
+)
 from crypticorn.auth.client.models.unlink_wallet_request import UnlinkWalletRequest
 from crypticorn.auth.client.models.verify_wallet_request import VerifyWalletRequest
-from crypticorn.auth.client.models.wallet_verified200_response import WalletVerified200Response
+from crypticorn.auth.client.models.wallet_verified200_response import (
+    WalletVerified200Response,
+)
 
 from crypticorn.auth.client.api_client import ApiClient, RequestSerialized
 from crypticorn.auth.client.api_response import ApiResponse
@@ -44,19 +50,20 @@ class WalletApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
-
     @validate_call
     async def add_wallet(
         self,
         add_wallet_request: AddWalletRequest,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -91,7 +98,7 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._add_wallet_serialize(
             add_wallet_request=add_wallet_request,
@@ -99,15 +106,14 @@ class WalletApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "AddWallet200Response",
+            "200": "AddWallet200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -115,19 +121,20 @@ class WalletApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     async def add_wallet_with_http_info(
         self,
         add_wallet_request: AddWalletRequest,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -162,7 +169,7 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._add_wallet_serialize(
             add_wallet_request=add_wallet_request,
@@ -170,15 +177,14 @@ class WalletApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "AddWallet200Response",
+            "200": "AddWallet200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -186,19 +192,20 @@ class WalletApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     async def add_wallet_without_preload_content(
         self,
         add_wallet_request: AddWalletRequest,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -233,7 +240,7 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._add_wallet_serialize(
             add_wallet_request=add_wallet_request,
@@ -241,18 +248,16 @@ class WalletApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "AddWallet200Response",
+            "200": "AddWallet200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _add_wallet_serialize(
         self,
@@ -266,8 +271,7 @@ class WalletApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -282,42 +286,34 @@ class WalletApi:
         # process the query parameters
         # process the header parameters
         if x_refresh_token is not None:
-            _header_params['X-Refresh-Token'] = x_refresh_token
+            _header_params["X-Refresh-Token"] = x_refresh_token
         # process the form parameters
         # process the body parameter
         if add_wallet_request is not None:
             _body_params = add_wallet_request
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
         # set the HTTP header `Content-Type`
         if _content_type:
-            _header_params['Content-Type'] = _content_type
+            _header_params["Content-Type"] = _content_type
         else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
+            _default_content_type = self.api_client.select_header_content_type(
+                ["application/json"]
             )
             if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
+                _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='POST',
-            resource_path='/wallet/add',
+            method="POST",
+            resource_path="/wallet/add",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -327,23 +323,22 @@ class WalletApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     async def get_balances(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -376,22 +371,21 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_balances_serialize(
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ListWallets200ResponseUserValue",
+            "200": "ListWallets200ResponseUserValue",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -399,18 +393,19 @@ class WalletApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     async def get_balances_with_http_info(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -443,22 +438,21 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_balances_serialize(
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ListWallets200ResponseUserValue",
+            "200": "ListWallets200ResponseUserValue",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -466,18 +460,19 @@ class WalletApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     async def get_balances_without_preload_content(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -510,25 +505,23 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_balances_serialize(
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ListWallets200ResponseUserValue",
+            "200": "ListWallets200ResponseUserValue",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _get_balances_serialize(
         self,
@@ -541,8 +534,7 @@ class WalletApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -557,27 +549,22 @@ class WalletApi:
         # process the query parameters
         # process the header parameters
         if x_refresh_token is not None:
-            _header_params['X-Refresh-Token'] = x_refresh_token
+            _header_params["X-Refresh-Token"] = x_refresh_token
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
-
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/wallet/balances',
+            method="GET",
+            resource_path="/wallet/balances",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -587,25 +574,29 @@ class WalletApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     async def list_wallets(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
-        limit: Optional[Union[Annotated[float, Field(le=100, strict=True)], Annotated[int, Field(le=100, strict=True)]]] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        limit: Optional[
+            Union[
+                Annotated[float, Field(le=100, strict=True)],
+                Annotated[int, Field(le=100, strict=True)],
+            ]
+        ] = None,
         offset: Optional[Union[StrictFloat, StrictInt]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -642,7 +633,7 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._list_wallets_serialize(
             x_refresh_token=x_refresh_token,
@@ -651,15 +642,14 @@ class WalletApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ListWallets200Response",
+            "200": "ListWallets200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -667,20 +657,26 @@ class WalletApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     async def list_wallets_with_http_info(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
-        limit: Optional[Union[Annotated[float, Field(le=100, strict=True)], Annotated[int, Field(le=100, strict=True)]]] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        limit: Optional[
+            Union[
+                Annotated[float, Field(le=100, strict=True)],
+                Annotated[int, Field(le=100, strict=True)],
+            ]
+        ] = None,
         offset: Optional[Union[StrictFloat, StrictInt]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -717,7 +713,7 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._list_wallets_serialize(
             x_refresh_token=x_refresh_token,
@@ -726,15 +722,14 @@ class WalletApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ListWallets200Response",
+            "200": "ListWallets200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -742,20 +737,26 @@ class WalletApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     async def list_wallets_without_preload_content(
         self,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
-        limit: Optional[Union[Annotated[float, Field(le=100, strict=True)], Annotated[int, Field(le=100, strict=True)]]] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        limit: Optional[
+            Union[
+                Annotated[float, Field(le=100, strict=True)],
+                Annotated[int, Field(le=100, strict=True)],
+            ]
+        ] = None,
         offset: Optional[Union[StrictFloat, StrictInt]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -792,7 +793,7 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._list_wallets_serialize(
             x_refresh_token=x_refresh_token,
@@ -801,18 +802,16 @@ class WalletApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ListWallets200Response",
+            "200": "ListWallets200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _list_wallets_serialize(
         self,
@@ -827,8 +826,7 @@ class WalletApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -842,36 +840,31 @@ class WalletApi:
         # process the path parameters
         # process the query parameters
         if limit is not None:
-            
-            _query_params.append(('limit', limit))
-            
+
+            _query_params.append(("limit", limit))
+
         if offset is not None:
-            
-            _query_params.append(('offset', offset))
-            
+
+            _query_params.append(("offset", offset))
+
         # process the header parameters
         if x_refresh_token is not None:
-            _header_params['X-Refresh-Token'] = x_refresh_token
+            _header_params["X-Refresh-Token"] = x_refresh_token
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
-
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/wallet/list',
+            method="GET",
+            resource_path="/wallet/list",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -881,24 +874,23 @@ class WalletApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     async def unlink_wallet(
         self,
         unlink_wallet_request: UnlinkWalletRequest,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -933,7 +925,7 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._unlink_wallet_serialize(
             unlink_wallet_request=unlink_wallet_request,
@@ -941,15 +933,14 @@ class WalletApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "object",
+            "200": "object",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -957,19 +948,20 @@ class WalletApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     async def unlink_wallet_with_http_info(
         self,
         unlink_wallet_request: UnlinkWalletRequest,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1004,7 +996,7 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._unlink_wallet_serialize(
             unlink_wallet_request=unlink_wallet_request,
@@ -1012,15 +1004,14 @@ class WalletApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "object",
+            "200": "object",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -1028,19 +1019,20 @@ class WalletApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     async def unlink_wallet_without_preload_content(
         self,
         unlink_wallet_request: UnlinkWalletRequest,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1075,7 +1067,7 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._unlink_wallet_serialize(
             unlink_wallet_request=unlink_wallet_request,
@@ -1083,18 +1075,16 @@ class WalletApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "object",
+            "200": "object",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _unlink_wallet_serialize(
         self,
@@ -1108,8 +1098,7 @@ class WalletApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -1124,42 +1113,34 @@ class WalletApi:
         # process the query parameters
         # process the header parameters
         if x_refresh_token is not None:
-            _header_params['X-Refresh-Token'] = x_refresh_token
+            _header_params["X-Refresh-Token"] = x_refresh_token
         # process the form parameters
         # process the body parameter
         if unlink_wallet_request is not None:
             _body_params = unlink_wallet_request
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
         # set the HTTP header `Content-Type`
         if _content_type:
-            _header_params['Content-Type'] = _content_type
+            _header_params["Content-Type"] = _content_type
         else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
+            _default_content_type = self.api_client.select_header_content_type(
+                ["application/json"]
             )
             if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
+                _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='POST',
-            resource_path='/wallet/unlink',
+            method="POST",
+            resource_path="/wallet/unlink",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1169,24 +1150,23 @@ class WalletApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     async def verify_wallet(
         self,
         verify_wallet_request: VerifyWalletRequest,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1221,7 +1201,7 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._verify_wallet_serialize(
             verify_wallet_request=verify_wallet_request,
@@ -1229,15 +1209,14 @@ class WalletApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "object",
+            "200": "object",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -1245,19 +1224,20 @@ class WalletApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     async def verify_wallet_with_http_info(
         self,
         verify_wallet_request: VerifyWalletRequest,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1292,7 +1272,7 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._verify_wallet_serialize(
             verify_wallet_request=verify_wallet_request,
@@ -1300,15 +1280,14 @@ class WalletApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "object",
+            "200": "object",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -1316,19 +1295,20 @@ class WalletApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     async def verify_wallet_without_preload_content(
         self,
         verify_wallet_request: VerifyWalletRequest,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1363,7 +1343,7 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._verify_wallet_serialize(
             verify_wallet_request=verify_wallet_request,
@@ -1371,18 +1351,16 @@ class WalletApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "object",
+            "200": "object",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _verify_wallet_serialize(
         self,
@@ -1396,8 +1374,7 @@ class WalletApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -1412,42 +1389,34 @@ class WalletApi:
         # process the query parameters
         # process the header parameters
         if x_refresh_token is not None:
-            _header_params['X-Refresh-Token'] = x_refresh_token
+            _header_params["X-Refresh-Token"] = x_refresh_token
         # process the form parameters
         # process the body parameter
         if verify_wallet_request is not None:
             _body_params = verify_wallet_request
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
         # set the HTTP header `Content-Type`
         if _content_type:
-            _header_params['Content-Type'] = _content_type
+            _header_params["Content-Type"] = _content_type
         else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
+            _default_content_type = self.api_client.select_header_content_type(
+                ["application/json"]
             )
             if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
+                _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='POST',
-            resource_path='/wallet/verify',
+            method="POST",
+            resource_path="/wallet/verify",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1457,24 +1426,23 @@ class WalletApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     async def wallet_verified(
         self,
         address: StrictStr,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1509,7 +1477,7 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._wallet_verified_serialize(
             address=address,
@@ -1517,15 +1485,14 @@ class WalletApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "WalletVerified200Response",
+            "200": "WalletVerified200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -1533,19 +1500,20 @@ class WalletApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     async def wallet_verified_with_http_info(
         self,
         address: StrictStr,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1580,7 +1548,7 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._wallet_verified_serialize(
             address=address,
@@ -1588,15 +1556,14 @@ class WalletApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "WalletVerified200Response",
+            "200": "WalletVerified200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -1604,19 +1571,20 @@ class WalletApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     async def wallet_verified_without_preload_content(
         self,
         address: StrictStr,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1651,7 +1619,7 @@ class WalletApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._wallet_verified_serialize(
             address=address,
@@ -1659,18 +1627,16 @@ class WalletApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "WalletVerified200Response",
+            "200": "WalletVerified200Response",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _wallet_verified_serialize(
         self,
@@ -1684,8 +1650,7 @@ class WalletApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -1699,32 +1664,27 @@ class WalletApi:
         # process the path parameters
         # process the query parameters
         if address is not None:
-            
-            _query_params.append(('address', address))
-            
+
+            _query_params.append(("address", address))
+
         # process the header parameters
         if x_refresh_token is not None:
-            _header_params['X-Refresh-Token'] = x_refresh_token
+            _header_params["X-Refresh-Token"] = x_refresh_token
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
-
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/wallet/verified',
+            method="GET",
+            resource_path="/wallet/verified",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1734,7 +1694,5 @@ class WalletApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-

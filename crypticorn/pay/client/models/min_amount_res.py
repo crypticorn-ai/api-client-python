@@ -22,22 +22,30 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class MinAmountRes(BaseModel):
     """
     Response for the minimum payment amount for a specific currency pair. https://documenter.getpostman.com/view/7907941/2s93JusNJt#ce3fe3a3-00cd-4df2-bfba-641fde741da7
-    """ # noqa: E501
+    """  # noqa: E501
+
     currency_from: StrictStr = Field(description="Payin currency")
     currency_to: StrictStr = Field(description="Outcome currency")
-    min_amount: Union[StrictFloat, StrictInt] = Field(description="Minimal amount for payment using mentioned currencies")
+    min_amount: Union[StrictFloat, StrictInt] = Field(
+        description="Minimal amount for payment using mentioned currencies"
+    )
     fiat_equivalent: Optional[Union[StrictFloat, StrictInt]] = None
-    __properties: ClassVar[List[str]] = ["currency_from", "currency_to", "min_amount", "fiat_equivalent"]
+    __properties: ClassVar[List[str]] = [
+        "currency_from",
+        "currency_to",
+        "min_amount",
+        "fiat_equivalent",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -63,8 +71,7 @@ class MinAmountRes(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -74,7 +81,7 @@ class MinAmountRes(BaseModel):
         # set to None if fiat_equivalent (nullable) is None
         # and model_fields_set contains the field
         if self.fiat_equivalent is None and "fiat_equivalent" in self.model_fields_set:
-            _dict['fiat_equivalent'] = None
+            _dict["fiat_equivalent"] = None
 
         return _dict
 
@@ -87,12 +94,12 @@ class MinAmountRes(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "currency_from": obj.get("currency_from"),
-            "currency_to": obj.get("currency_to"),
-            "min_amount": obj.get("min_amount"),
-            "fiat_equivalent": obj.get("fiat_equivalent")
-        })
+        _obj = cls.model_validate(
+            {
+                "currency_from": obj.get("currency_from"),
+                "currency_to": obj.get("currency_to"),
+                "min_amount": obj.get("min_amount"),
+                "fiat_equivalent": obj.get("fiat_equivalent"),
+            }
+        )
         return _obj
-
-

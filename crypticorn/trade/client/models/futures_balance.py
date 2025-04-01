@@ -22,25 +22,42 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class FuturesBalance(BaseModel):
     """
     Model for futures balance
-    """ # noqa: E501
+    """  # noqa: E501
+
     api_key_id: StrictStr = Field(description="API key ID", alias="apiKeyId")
     asset: StrictStr = Field(description="Asset/Currency code")
     balance: Union[StrictFloat, StrictInt] = Field(description="Total balance/equity")
-    available: Union[StrictFloat, StrictInt] = Field(description="Available balance for trading/withdrawal")
-    unrealized_pnl: Union[StrictFloat, StrictInt] = Field(description="Unrealized profit and loss", alias="unrealizedPnl")
-    used_margin: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="usedMargin")
-    frozen_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="frozenAmount")
-    __properties: ClassVar[List[str]] = ["apiKeyId", "asset", "balance", "available", "unrealizedPnl", "usedMargin", "frozenAmount"]
+    available: Union[StrictFloat, StrictInt] = Field(
+        description="Available balance for trading/withdrawal"
+    )
+    unrealized_pnl: Union[StrictFloat, StrictInt] = Field(
+        description="Unrealized profit and loss", alias="unrealizedPnl"
+    )
+    used_margin: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, alias="usedMargin"
+    )
+    frozen_amount: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, alias="frozenAmount"
+    )
+    __properties: ClassVar[List[str]] = [
+        "apiKeyId",
+        "asset",
+        "balance",
+        "available",
+        "unrealizedPnl",
+        "usedMargin",
+        "frozenAmount",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -66,8 +83,7 @@ class FuturesBalance(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -77,12 +93,12 @@ class FuturesBalance(BaseModel):
         # set to None if used_margin (nullable) is None
         # and model_fields_set contains the field
         if self.used_margin is None and "used_margin" in self.model_fields_set:
-            _dict['usedMargin'] = None
+            _dict["usedMargin"] = None
 
         # set to None if frozen_amount (nullable) is None
         # and model_fields_set contains the field
         if self.frozen_amount is None and "frozen_amount" in self.model_fields_set:
-            _dict['frozenAmount'] = None
+            _dict["frozenAmount"] = None
 
         return _dict
 
@@ -95,15 +111,15 @@ class FuturesBalance(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "apiKeyId": obj.get("apiKeyId"),
-            "asset": obj.get("asset"),
-            "balance": obj.get("balance"),
-            "available": obj.get("available"),
-            "unrealizedPnl": obj.get("unrealizedPnl"),
-            "usedMargin": obj.get("usedMargin"),
-            "frozenAmount": obj.get("frozenAmount")
-        })
+        _obj = cls.model_validate(
+            {
+                "apiKeyId": obj.get("apiKeyId"),
+                "asset": obj.get("asset"),
+                "balance": obj.get("balance"),
+                "available": obj.get("available"),
+                "unrealizedPnl": obj.get("unrealizedPnl"),
+                "usedMargin": obj.get("usedMargin"),
+                "frozenAmount": obj.get("frozenAmount"),
+            }
+        )
         return _obj
-
-

@@ -22,24 +22,32 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class Whoami200Response(BaseModel):
     """
     Whoami200Response
-    """ # noqa: E501
+    """  # noqa: E501
+
     email: StrictStr
     id: StrictStr
     name: Optional[StrictStr] = None
     picture: Optional[StrictStr] = None
     username: Optional[StrictStr] = None
     phone: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["email", "id", "name", "picture", "username", "phone"]
+    __properties: ClassVar[List[str]] = [
+        "email",
+        "id",
+        "name",
+        "picture",
+        "username",
+        "phone",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -65,8 +73,7 @@ class Whoami200Response(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -84,14 +91,14 @@ class Whoami200Response(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "email": obj.get("email"),
-            "id": obj.get("id"),
-            "name": obj.get("name"),
-            "picture": obj.get("picture"),
-            "username": obj.get("username"),
-            "phone": obj.get("phone")
-        })
+        _obj = cls.model_validate(
+            {
+                "email": obj.get("email"),
+                "id": obj.get("id"),
+                "name": obj.get("name"),
+                "picture": obj.get("picture"),
+                "username": obj.get("username"),
+                "phone": obj.get("phone"),
+            }
+        )
         return _obj
-
-

@@ -26,15 +26,13 @@ class OrderStatus(str, Enum):
     """
     allowed enum values
     """
-    NEW = 'new'
-    FILLED = 'filled'
-    PARTIALLY_FILLED = 'partially_filled'
-    CANCELLED = 'cancelled'
-    FAILED = 'failed'
+    NEW = "new"
+    FILLED = "filled"
+    PARTIALLY_FILLED = "partially_filled"
+    CANCELLED = "cancelled"
+    FAILED = "failed"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
         """Create an instance of OrderStatus from a JSON string"""
         return cls(json.loads(json_str))
-
-

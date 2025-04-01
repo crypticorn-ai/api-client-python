@@ -22,22 +22,32 @@ from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class EstimatePriceRes(BaseModel):
     """
     Response for the estimate price calculation.  Contains the source currency and amount, target currency, and the estimated conversion amount. https://documenter.getpostman.com/view/7907941/2s93JusNJt#3c86a16e-94ad-4230-a470-4e833766a4c7
-    """ # noqa: E501
+    """  # noqa: E501
+
     currency_from: StrictStr = Field(description="Source currency")
-    amount_from: Union[StrictFloat, StrictInt] = Field(description="Original amount in source currency")
+    amount_from: Union[StrictFloat, StrictInt] = Field(
+        description="Original amount in source currency"
+    )
     currency_to: StrictStr = Field(description="Target cryptocurrency")
-    estimated_amount: Union[StrictFloat, StrictInt] = Field(description="Estimated amount in target cryptocurrency")
-    __properties: ClassVar[List[str]] = ["currency_from", "amount_from", "currency_to", "estimated_amount"]
+    estimated_amount: Union[StrictFloat, StrictInt] = Field(
+        description="Estimated amount in target cryptocurrency"
+    )
+    __properties: ClassVar[List[str]] = [
+        "currency_from",
+        "amount_from",
+        "currency_to",
+        "estimated_amount",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -63,8 +73,7 @@ class EstimatePriceRes(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -82,12 +91,12 @@ class EstimatePriceRes(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "currency_from": obj.get("currency_from"),
-            "amount_from": obj.get("amount_from"),
-            "currency_to": obj.get("currency_to"),
-            "estimated_amount": obj.get("estimated_amount")
-        })
+        _obj = cls.model_validate(
+            {
+                "currency_from": obj.get("currency_from"),
+                "amount_from": obj.get("amount_from"),
+                "currency_to": obj.get("currency_to"),
+                "estimated_amount": obj.get("estimated_amount"),
+            }
+        )
         return _obj
-
-

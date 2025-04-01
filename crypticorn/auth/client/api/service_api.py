@@ -19,7 +19,9 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
-from crypticorn.auth.client.models.list_wallets200_response_user_value import ListWallets200ResponseUserValue
+from crypticorn.auth.client.models.list_wallets200_response_user_value import (
+    ListWallets200ResponseUserValue,
+)
 
 from crypticorn.auth.client.api_client import ApiClient, RequestSerialized
 from crypticorn.auth.client.api_response import ApiResponse
@@ -38,19 +40,20 @@ class ServiceApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
-
     @validate_call
     async def get_balances_by_email(
         self,
         email: StrictStr,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -85,7 +88,7 @@ class ServiceApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_balances_by_email_serialize(
             email=email,
@@ -93,15 +96,14 @@ class ServiceApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ListWallets200ResponseUserValue",
+            "200": "ListWallets200ResponseUserValue",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -109,19 +111,20 @@ class ServiceApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     async def get_balances_by_email_with_http_info(
         self,
         email: StrictStr,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -156,7 +159,7 @@ class ServiceApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_balances_by_email_serialize(
             email=email,
@@ -164,15 +167,14 @@ class ServiceApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ListWallets200ResponseUserValue",
+            "200": "ListWallets200ResponseUserValue",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         await response_data.read()
         return self.api_client.response_deserialize(
@@ -180,19 +182,20 @@ class ServiceApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     async def get_balances_by_email_without_preload_content(
         self,
         email: StrictStr,
-        x_refresh_token: Annotated[Optional[StrictStr], Field(description="The refresh token for rotating the access token.")] = None,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -227,7 +230,7 @@ class ServiceApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_balances_by_email_serialize(
             email=email,
@@ -235,18 +238,16 @@ class ServiceApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ListWallets200ResponseUserValue",
+            "200": "ListWallets200ResponseUserValue",
         }
         response_data = await self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _get_balances_by_email_serialize(
         self,
@@ -260,8 +261,7 @@ class ServiceApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -275,32 +275,27 @@ class ServiceApi:
         # process the path parameters
         # process the query parameters
         if email is not None:
-            
-            _query_params.append(('email', email))
-            
+
+            _query_params.append(("email", email))
+
         # process the header parameters
         if x_refresh_token is not None:
-            _header_params['X-Refresh-Token'] = x_refresh_token
+            _header_params["X-Refresh-Token"] = x_refresh_token
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
-
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/wallet/balances/email',
+            method="GET",
+            resource_path="/wallet/balances/email",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -310,7 +305,5 @@ class ServiceApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-

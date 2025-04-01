@@ -24,12 +24,18 @@ from crypticorn.pay.client.models.now_payment_status import NowPaymentStatus
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class NowWebhookPayload(BaseModel):
     """
     Model for NOWPayments webhook (IPN) payload.
-    """ # noqa: E501
-    actually_paid: Union[StrictFloat, StrictInt] = Field(description="Actually paid amount")
-    actually_paid_at_fiat: Union[StrictFloat, StrictInt] = Field(description="Actually paid amount in fiat currency")
+    """  # noqa: E501
+
+    actually_paid: Union[StrictFloat, StrictInt] = Field(
+        description="Actually paid amount"
+    )
+    actually_paid_at_fiat: Union[StrictFloat, StrictInt] = Field(
+        description="Actually paid amount in fiat currency"
+    )
     fee: NowFeeStructure = Field(description="Fee structure for the payment")
     invoice_id: StrictInt = Field(description="Associated invoice ID")
     order_description: StrictStr = Field(description="Order description")
@@ -42,19 +48,41 @@ class NowWebhookPayload(BaseModel):
     pay_currency: StrictStr = Field(description="Payment currency")
     payment_id: StrictInt = Field(description="Unique payment identifier")
     payment_status: NowPaymentStatus = Field(description="Current payment status")
-    price_amount: Union[StrictFloat, StrictInt] = Field(description="Original price amount")
+    price_amount: Union[StrictFloat, StrictInt] = Field(
+        description="Original price amount"
+    )
     price_currency: StrictStr = Field(description="Original price currency")
     purchase_id: StrictStr = Field(description="Purchase ID")
-    updated_at: StrictInt = Field(description="Payment last update timestamp in milliseconds")
+    updated_at: StrictInt = Field(
+        description="Payment last update timestamp in milliseconds"
+    )
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["actually_paid", "actually_paid_at_fiat", "fee", "invoice_id", "order_description", "order_id", "outcome_amount", "outcome_currency", "parent_payment_id", "pay_address", "pay_amount", "pay_currency", "payment_id", "payment_status", "price_amount", "price_currency", "purchase_id", "updated_at"]
+    __properties: ClassVar[List[str]] = [
+        "actually_paid",
+        "actually_paid_at_fiat",
+        "fee",
+        "invoice_id",
+        "order_description",
+        "order_id",
+        "outcome_amount",
+        "outcome_currency",
+        "parent_payment_id",
+        "pay_address",
+        "pay_amount",
+        "pay_currency",
+        "payment_id",
+        "payment_status",
+        "price_amount",
+        "price_currency",
+        "purchase_id",
+        "updated_at",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -81,9 +109,11 @@ class NowWebhookPayload(BaseModel):
           are ignored.
         * Fields in `self.additional_properties` are added to the output dict.
         """
-        excluded_fields: Set[str] = set([
-            "additional_properties",
-        ])
+        excluded_fields: Set[str] = set(
+            [
+                "additional_properties",
+            ]
+        )
 
         _dict = self.model_dump(
             by_alias=True,
@@ -92,7 +122,7 @@ class NowWebhookPayload(BaseModel):
         )
         # override the default output from pydantic by calling `to_dict()` of fee
         if self.fee:
-            _dict['fee'] = self.fee.to_dict()
+            _dict["fee"] = self.fee.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -100,8 +130,11 @@ class NowWebhookPayload(BaseModel):
 
         # set to None if parent_payment_id (nullable) is None
         # and model_fields_set contains the field
-        if self.parent_payment_id is None and "parent_payment_id" in self.model_fields_set:
-            _dict['parent_payment_id'] = None
+        if (
+            self.parent_payment_id is None
+            and "parent_payment_id" in self.model_fields_set
+        ):
+            _dict["parent_payment_id"] = None
 
         return _dict
 
@@ -114,31 +147,35 @@ class NowWebhookPayload(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "actually_paid": obj.get("actually_paid"),
-            "actually_paid_at_fiat": obj.get("actually_paid_at_fiat"),
-            "fee": NowFeeStructure.from_dict(obj["fee"]) if obj.get("fee") is not None else None,
-            "invoice_id": obj.get("invoice_id"),
-            "order_description": obj.get("order_description"),
-            "order_id": obj.get("order_id"),
-            "outcome_amount": obj.get("outcome_amount"),
-            "outcome_currency": obj.get("outcome_currency"),
-            "parent_payment_id": obj.get("parent_payment_id"),
-            "pay_address": obj.get("pay_address"),
-            "pay_amount": obj.get("pay_amount"),
-            "pay_currency": obj.get("pay_currency"),
-            "payment_id": obj.get("payment_id"),
-            "payment_status": obj.get("payment_status"),
-            "price_amount": obj.get("price_amount"),
-            "price_currency": obj.get("price_currency"),
-            "purchase_id": obj.get("purchase_id"),
-            "updated_at": obj.get("updated_at")
-        })
+        _obj = cls.model_validate(
+            {
+                "actually_paid": obj.get("actually_paid"),
+                "actually_paid_at_fiat": obj.get("actually_paid_at_fiat"),
+                "fee": (
+                    NowFeeStructure.from_dict(obj["fee"])
+                    if obj.get("fee") is not None
+                    else None
+                ),
+                "invoice_id": obj.get("invoice_id"),
+                "order_description": obj.get("order_description"),
+                "order_id": obj.get("order_id"),
+                "outcome_amount": obj.get("outcome_amount"),
+                "outcome_currency": obj.get("outcome_currency"),
+                "parent_payment_id": obj.get("parent_payment_id"),
+                "pay_address": obj.get("pay_address"),
+                "pay_amount": obj.get("pay_amount"),
+                "pay_currency": obj.get("pay_currency"),
+                "payment_id": obj.get("payment_id"),
+                "payment_status": obj.get("payment_status"),
+                "price_amount": obj.get("price_amount"),
+                "price_currency": obj.get("price_currency"),
+                "purchase_id": obj.get("purchase_id"),
+                "updated_at": obj.get("updated_at"),
+            }
+        )
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:
                 _obj.additional_properties[_key] = obj.get(_key)
 
         return _obj
-
-

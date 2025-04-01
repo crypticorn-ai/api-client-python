@@ -26,14 +26,12 @@ class ApiErrorLevel(str, Enum):
     """
     allowed enum values
     """
-    ERROR = 'error'
-    SUCCESS = 'success'
-    INFO = 'info'
-    WARNING = 'warning'
+    ERROR = "error"
+    SUCCESS = "success"
+    INFO = "info"
+    WARNING = "warning"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
         """Create an instance of ApiErrorLevel from a JSON string"""
         return cls(json.loads(json_str))
-
-

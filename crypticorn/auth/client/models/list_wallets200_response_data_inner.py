@@ -23,23 +23,30 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class ListWallets200ResponseDataInner(BaseModel):
     """
     ListWallets200ResponseDataInner
-    """ # noqa: E501
+    """  # noqa: E501
+
     id: StrictStr
     user_id: StrictStr
     name: Optional[StrictStr] = None
     address: Optional[StrictStr] = None
     verified_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["id", "user_id", "name", "address", "verified_at"]
+    __properties: ClassVar[List[str]] = [
+        "id",
+        "user_id",
+        "name",
+        "address",
+        "verified_at",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -65,8 +72,7 @@ class ListWallets200ResponseDataInner(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -84,13 +90,13 @@ class ListWallets200ResponseDataInner(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "user_id": obj.get("user_id"),
-            "name": obj.get("name"),
-            "address": obj.get("address"),
-            "verified_at": obj.get("verified_at")
-        })
+        _obj = cls.model_validate(
+            {
+                "id": obj.get("id"),
+                "user_id": obj.get("user_id"),
+                "name": obj.get("name"),
+                "address": obj.get("address"),
+                "verified_at": obj.get("verified_at"),
+            }
+        )
         return _obj
-
-

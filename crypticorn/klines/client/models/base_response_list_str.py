@@ -23,10 +23,12 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class BaseResponseListStr(BaseModel):
     """
     BaseResponseListStr
-    """ # noqa: E501
+    """  # noqa: E501
+
     success: Optional[StrictBool] = True
     message: Optional[StrictStr] = None
     data: Optional[List[StrictStr]] = None
@@ -38,7 +40,6 @@ class BaseResponseListStr(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -64,8 +65,7 @@ class BaseResponseListStr(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -75,12 +75,12 @@ class BaseResponseListStr(BaseModel):
         # set to None if message (nullable) is None
         # and model_fields_set contains the field
         if self.message is None and "message" in self.model_fields_set:
-            _dict['message'] = None
+            _dict["message"] = None
 
         # set to None if data (nullable) is None
         # and model_fields_set contains the field
         if self.data is None and "data" in self.model_fields_set:
-            _dict['data'] = None
+            _dict["data"] = None
 
         return _dict
 
@@ -93,12 +93,14 @@ class BaseResponseListStr(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "success": obj.get("success") if obj.get("success") is not None else True,
-            "message": obj.get("message"),
-            "data": obj.get("data"),
-            "timestamp": obj.get("timestamp")
-        })
+        _obj = cls.model_validate(
+            {
+                "success": (
+                    obj.get("success") if obj.get("success") is not None else True
+                ),
+                "message": obj.get("message"),
+                "data": obj.get("data"),
+                "timestamp": obj.get("timestamp"),
+            }
+        )
         return _obj
-
-

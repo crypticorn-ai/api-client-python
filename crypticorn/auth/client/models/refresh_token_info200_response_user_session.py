@@ -23,24 +23,32 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class RefreshTokenInfo200ResponseUserSession(BaseModel):
     """
     RefreshTokenInfo200ResponseUserSession
-    """ # noqa: E501
+    """  # noqa: E501
+
     id: StrictStr
     user_id: StrictStr
     token: StrictStr
     expires_at: datetime
     client_ip: Optional[StrictStr] = None
     user_agent: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["id", "user_id", "token", "expires_at", "client_ip", "user_agent"]
+    __properties: ClassVar[List[str]] = [
+        "id",
+        "user_id",
+        "token",
+        "expires_at",
+        "client_ip",
+        "user_agent",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -66,8 +74,7 @@ class RefreshTokenInfo200ResponseUserSession(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -85,14 +92,14 @@ class RefreshTokenInfo200ResponseUserSession(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "user_id": obj.get("user_id"),
-            "token": obj.get("token"),
-            "expires_at": obj.get("expires_at"),
-            "client_ip": obj.get("client_ip"),
-            "user_agent": obj.get("user_agent")
-        })
+        _obj = cls.model_validate(
+            {
+                "id": obj.get("id"),
+                "user_id": obj.get("user_id"),
+                "token": obj.get("token"),
+                "expires_at": obj.get("expires_at"),
+                "client_ip": obj.get("client_ip"),
+                "user_agent": obj.get("user_agent"),
+            }
+        )
         return _obj
-
-

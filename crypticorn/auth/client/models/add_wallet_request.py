@@ -22,23 +22,32 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class AddWalletRequest(BaseModel):
     """
     AddWalletRequest
-    """ # noqa: E501
+    """  # noqa: E501
+
     host: StrictStr
     origin: StrictStr
     address: StrictStr
-    chain_id: Optional[Union[StrictFloat, StrictInt]] = Field(default=1, alias="chainId")
-    statement: Optional[StrictStr] = 'Sign in with Ethereum wallet'
-    __properties: ClassVar[List[str]] = ["host", "origin", "address", "chainId", "statement"]
+    chain_id: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=1, alias="chainId"
+    )
+    statement: Optional[StrictStr] = "Sign in with Ethereum wallet"
+    __properties: ClassVar[List[str]] = [
+        "host",
+        "origin",
+        "address",
+        "chainId",
+        "statement",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -64,8 +73,7 @@ class AddWalletRequest(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -83,13 +91,17 @@ class AddWalletRequest(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "host": obj.get("host"),
-            "origin": obj.get("origin"),
-            "address": obj.get("address"),
-            "chainId": obj.get("chainId") if obj.get("chainId") is not None else 1,
-            "statement": obj.get("statement") if obj.get("statement") is not None else 'Sign in with Ethereum wallet'
-        })
+        _obj = cls.model_validate(
+            {
+                "host": obj.get("host"),
+                "origin": obj.get("origin"),
+                "address": obj.get("address"),
+                "chainId": obj.get("chainId") if obj.get("chainId") is not None else 1,
+                "statement": (
+                    obj.get("statement")
+                    if obj.get("statement") is not None
+                    else "Sign in with Ethereum wallet"
+                ),
+            }
+        )
         return _obj
-
-

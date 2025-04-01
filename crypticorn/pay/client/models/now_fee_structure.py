@@ -22,22 +22,34 @@ from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class NowFeeStructure(BaseModel):
     """
     Fee structure for the payment
-    """ # noqa: E501
+    """  # noqa: E501
+
     currency: StrictStr = Field(description="Currency of the fee")
-    deposit_fee: Union[StrictFloat, StrictInt] = Field(description="Deposit fee amount", alias="depositFee")
-    service_fee: Union[StrictFloat, StrictInt] = Field(description="Service fee amount", alias="serviceFee")
-    withdrawal_fee: Union[StrictFloat, StrictInt] = Field(description="Withdrawal fee amount", alias="withdrawalFee")
-    __properties: ClassVar[List[str]] = ["currency", "depositFee", "serviceFee", "withdrawalFee"]
+    deposit_fee: Union[StrictFloat, StrictInt] = Field(
+        description="Deposit fee amount", alias="depositFee"
+    )
+    service_fee: Union[StrictFloat, StrictInt] = Field(
+        description="Service fee amount", alias="serviceFee"
+    )
+    withdrawal_fee: Union[StrictFloat, StrictInt] = Field(
+        description="Withdrawal fee amount", alias="withdrawalFee"
+    )
+    __properties: ClassVar[List[str]] = [
+        "currency",
+        "depositFee",
+        "serviceFee",
+        "withdrawalFee",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -63,8 +75,7 @@ class NowFeeStructure(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -82,12 +93,12 @@ class NowFeeStructure(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "currency": obj.get("currency"),
-            "depositFee": obj.get("depositFee"),
-            "serviceFee": obj.get("serviceFee"),
-            "withdrawalFee": obj.get("withdrawalFee")
-        })
+        _obj = cls.model_validate(
+            {
+                "currency": obj.get("currency"),
+                "depositFee": obj.get("depositFee"),
+                "serviceFee": obj.get("serviceFee"),
+                "withdrawalFee": obj.get("withdrawalFee"),
+            }
+        )
         return _obj
-
-

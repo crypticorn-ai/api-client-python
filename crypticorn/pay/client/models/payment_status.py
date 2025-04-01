@@ -26,17 +26,15 @@ class PaymentStatus(str, Enum):
     """
     allowed enum values
     """
-    WAITING = 'waiting'
-    PROCESSING = 'processing'
-    PAID = 'paid'
-    PARTIALLY_PAID = 'partially_paid'
-    REFUNDED = 'refunded'
-    FAILED = 'failed'
-    CANCELLED = 'cancelled'
+    WAITING = "waiting"
+    PROCESSING = "processing"
+    PAID = "paid"
+    PARTIALLY_PAID = "partially_paid"
+    REFUNDED = "refunded"
+    FAILED = "failed"
+    CANCELLED = "cancelled"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
         """Create an instance of PaymentStatus from a JSON string"""
         return cls(json.loads(json_str))
-
-

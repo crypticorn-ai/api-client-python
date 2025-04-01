@@ -19,26 +19,36 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from crypticorn.auth.client.models.verify_email200_response_auth_auth import VerifyEmail200ResponseAuthAuth
+from crypticorn.auth.client.models.verify_email200_response_auth_auth import (
+    VerifyEmail200ResponseAuthAuth,
+)
 from typing import Optional, Set
 from typing_extensions import Self
+
 
 class RotateTokens200Response(BaseModel):
     """
     RotateTokens200Response
-    """ # noqa: E501
+    """  # noqa: E501
+
     access_token: Optional[StrictStr] = Field(default=None, alias="accessToken")
     refresh_token: Optional[StrictStr] = Field(default=None, alias="refreshToken")
     auth: Optional[VerifyEmail200ResponseAuthAuth] = None
-    token_expires_at: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="tokenExpiresAt")
-    __properties: ClassVar[List[str]] = ["accessToken", "refreshToken", "auth", "tokenExpiresAt"]
+    token_expires_at: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, alias="tokenExpiresAt"
+    )
+    __properties: ClassVar[List[str]] = [
+        "accessToken",
+        "refreshToken",
+        "auth",
+        "tokenExpiresAt",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -64,8 +74,7 @@ class RotateTokens200Response(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -74,7 +83,7 @@ class RotateTokens200Response(BaseModel):
         )
         # override the default output from pydantic by calling `to_dict()` of auth
         if self.auth:
-            _dict['auth'] = self.auth.to_dict()
+            _dict["auth"] = self.auth.to_dict()
         return _dict
 
     @classmethod
@@ -86,12 +95,16 @@ class RotateTokens200Response(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "accessToken": obj.get("accessToken"),
-            "refreshToken": obj.get("refreshToken"),
-            "auth": VerifyEmail200ResponseAuthAuth.from_dict(obj["auth"]) if obj.get("auth") is not None else None,
-            "tokenExpiresAt": obj.get("tokenExpiresAt")
-        })
+        _obj = cls.model_validate(
+            {
+                "accessToken": obj.get("accessToken"),
+                "refreshToken": obj.get("refreshToken"),
+                "auth": (
+                    VerifyEmail200ResponseAuthAuth.from_dict(obj["auth"])
+                    if obj.get("auth") is not None
+                    else None
+                ),
+                "tokenExpiresAt": obj.get("tokenExpiresAt"),
+            }
+        )
         return _obj
-
-

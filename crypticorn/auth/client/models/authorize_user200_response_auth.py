@@ -19,14 +19,18 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
-from crypticorn.auth.client.models.verify_email200_response_auth_auth import VerifyEmail200ResponseAuthAuth
+from crypticorn.auth.client.models.verify_email200_response_auth_auth import (
+    VerifyEmail200ResponseAuthAuth,
+)
 from typing import Optional, Set
 from typing_extensions import Self
+
 
 class AuthorizeUser200ResponseAuth(BaseModel):
     """
     AuthorizeUser200ResponseAuth
-    """ # noqa: E501
+    """  # noqa: E501
+
     access_token: StrictStr = Field(alias="accessToken")
     refresh_token: StrictStr = Field(alias="refreshToken")
     auth: VerifyEmail200ResponseAuthAuth
@@ -37,7 +41,6 @@ class AuthorizeUser200ResponseAuth(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -63,8 +66,7 @@ class AuthorizeUser200ResponseAuth(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -73,7 +75,7 @@ class AuthorizeUser200ResponseAuth(BaseModel):
         )
         # override the default output from pydantic by calling `to_dict()` of auth
         if self.auth:
-            _dict['auth'] = self.auth.to_dict()
+            _dict["auth"] = self.auth.to_dict()
         return _dict
 
     @classmethod
@@ -85,11 +87,15 @@ class AuthorizeUser200ResponseAuth(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "accessToken": obj.get("accessToken"),
-            "refreshToken": obj.get("refreshToken"),
-            "auth": VerifyEmail200ResponseAuthAuth.from_dict(obj["auth"]) if obj.get("auth") is not None else None
-        })
+        _obj = cls.model_validate(
+            {
+                "accessToken": obj.get("accessToken"),
+                "refreshToken": obj.get("refreshToken"),
+                "auth": (
+                    VerifyEmail200ResponseAuthAuth.from_dict(obj["auth"])
+                    if obj.get("auth") is not None
+                    else None
+                ),
+            }
+        )
         return _obj
-
-

@@ -24,10 +24,12 @@ from crypticorn.klines.client.models.funding_rate_response import FundingRateRes
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class BaseResponseListFundingRateResponse(BaseModel):
     """
     BaseResponseListFundingRateResponse
-    """ # noqa: E501
+    """  # noqa: E501
+
     success: Optional[StrictBool] = True
     message: Optional[StrictStr] = None
     data: Optional[List[FundingRateResponse]] = None
@@ -39,7 +41,6 @@ class BaseResponseListFundingRateResponse(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -65,8 +66,7 @@ class BaseResponseListFundingRateResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -79,16 +79,16 @@ class BaseResponseListFundingRateResponse(BaseModel):
             for _item_data in self.data:
                 if _item_data:
                     _items.append(_item_data.to_dict())
-            _dict['data'] = _items
+            _dict["data"] = _items
         # set to None if message (nullable) is None
         # and model_fields_set contains the field
         if self.message is None and "message" in self.model_fields_set:
-            _dict['message'] = None
+            _dict["message"] = None
 
         # set to None if data (nullable) is None
         # and model_fields_set contains the field
         if self.data is None and "data" in self.model_fields_set:
-            _dict['data'] = None
+            _dict["data"] = None
 
         return _dict
 
@@ -101,12 +101,18 @@ class BaseResponseListFundingRateResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "success": obj.get("success") if obj.get("success") is not None else True,
-            "message": obj.get("message"),
-            "data": [FundingRateResponse.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None,
-            "timestamp": obj.get("timestamp")
-        })
+        _obj = cls.model_validate(
+            {
+                "success": (
+                    obj.get("success") if obj.get("success") is not None else True
+                ),
+                "message": obj.get("message"),
+                "data": (
+                    [FundingRateResponse.from_dict(_item) for _item in obj["data"]]
+                    if obj.get("data") is not None
+                    else None
+                ),
+                "timestamp": obj.get("timestamp"),
+            }
+        )
         return _obj
-
-

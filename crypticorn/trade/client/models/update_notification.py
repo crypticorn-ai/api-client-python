@@ -22,13 +22,19 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class UpdateNotification(BaseModel):
     """
     UpdateNotification
-    """ # noqa: E501
+    """  # noqa: E501
+
     id: StrictStr = Field(description="UID, required in the request body")
-    viewed: Optional[StrictBool] = Field(default=False, description="Whether the notification has been marked as seen")
-    sent: Optional[StrictBool] = Field(default=False, description="Whether the notification has been sent as an email")
+    viewed: Optional[StrictBool] = Field(
+        default=False, description="Whether the notification has been marked as seen"
+    )
+    sent: Optional[StrictBool] = Field(
+        default=False, description="Whether the notification has been sent as an email"
+    )
     __properties: ClassVar[List[str]] = ["id", "viewed", "sent"]
 
     model_config = ConfigDict(
@@ -36,7 +42,6 @@ class UpdateNotification(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -62,8 +67,7 @@ class UpdateNotification(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -81,11 +85,11 @@ class UpdateNotification(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "viewed": obj.get("viewed") if obj.get("viewed") is not None else False,
-            "sent": obj.get("sent") if obj.get("sent") is not None else False
-        })
+        _obj = cls.model_validate(
+            {
+                "id": obj.get("id"),
+                "viewed": obj.get("viewed") if obj.get("viewed") is not None else False,
+                "sent": obj.get("sent") if obj.get("sent") is not None else False,
+            }
+        )
         return _obj
-
-

@@ -19,27 +19,36 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt
 from typing import Any, ClassVar, Dict, List, Union
-from crypticorn.auth.client.models.list_wallets200_response_balances_inner import ListWallets200ResponseBalancesInner
+from crypticorn.auth.client.models.list_wallets200_response_balances_inner import (
+    ListWallets200ResponseBalancesInner,
+)
 from typing import Optional, Set
 from typing_extensions import Self
+
 
 class ListWallets200ResponseUserValue(BaseModel):
     """
     ListWallets200ResponseUserValue
-    """ # noqa: E501
+    """  # noqa: E501
+
     sum: Union[StrictFloat, StrictInt]
     usd: Union[StrictFloat, StrictInt]
     balances: List[ListWallets200ResponseBalancesInner]
     access_minimum_usd: Union[StrictFloat, StrictInt] = Field(alias="accessMinimumUSD")
     has_access: StrictBool = Field(alias="hasAccess")
-    __properties: ClassVar[List[str]] = ["sum", "usd", "balances", "accessMinimumUSD", "hasAccess"]
+    __properties: ClassVar[List[str]] = [
+        "sum",
+        "usd",
+        "balances",
+        "accessMinimumUSD",
+        "hasAccess",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -65,8 +74,7 @@ class ListWallets200ResponseUserValue(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -79,7 +87,7 @@ class ListWallets200ResponseUserValue(BaseModel):
             for _item_balances in self.balances:
                 if _item_balances:
                     _items.append(_item_balances.to_dict())
-            _dict['balances'] = _items
+            _dict["balances"] = _items
         return _dict
 
     @classmethod
@@ -91,13 +99,20 @@ class ListWallets200ResponseUserValue(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "sum": obj.get("sum"),
-            "usd": obj.get("usd"),
-            "balances": [ListWallets200ResponseBalancesInner.from_dict(_item) for _item in obj["balances"]] if obj.get("balances") is not None else None,
-            "accessMinimumUSD": obj.get("accessMinimumUSD"),
-            "hasAccess": obj.get("hasAccess")
-        })
+        _obj = cls.model_validate(
+            {
+                "sum": obj.get("sum"),
+                "usd": obj.get("usd"),
+                "balances": (
+                    [
+                        ListWallets200ResponseBalancesInner.from_dict(_item)
+                        for _item in obj["balances"]
+                    ]
+                    if obj.get("balances") is not None
+                    else None
+                ),
+                "accessMinimumUSD": obj.get("accessMinimumUSD"),
+                "hasAccess": obj.get("hasAccess"),
+            }
+        )
         return _obj
-
-

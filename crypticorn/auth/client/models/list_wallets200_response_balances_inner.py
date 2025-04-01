@@ -19,15 +19,21 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
 from typing import Any, ClassVar, Dict, List, Union
-from crypticorn.auth.client.models.list_wallets200_response_balances_inner_sale_round import ListWallets200ResponseBalancesInnerSaleRound
-from crypticorn.auth.client.models.list_wallets200_response_balances_inner_wallet import ListWallets200ResponseBalancesInnerWallet
+from crypticorn.auth.client.models.list_wallets200_response_balances_inner_sale_round import (
+    ListWallets200ResponseBalancesInnerSaleRound,
+)
+from crypticorn.auth.client.models.list_wallets200_response_balances_inner_wallet import (
+    ListWallets200ResponseBalancesInnerWallet,
+)
 from typing import Optional, Set
 from typing_extensions import Self
+
 
 class ListWallets200ResponseBalancesInner(BaseModel):
     """
     ListWallets200ResponseBalancesInner
-    """ # noqa: E501
+    """  # noqa: E501
+
     wallet: ListWallets200ResponseBalancesInnerWallet
     sale_round: ListWallets200ResponseBalancesInnerSaleRound = Field(alias="saleRound")
     value_usd: Union[StrictFloat, StrictInt] = Field(alias="valueUsd")
@@ -39,7 +45,6 @@ class ListWallets200ResponseBalancesInner(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -65,8 +70,7 @@ class ListWallets200ResponseBalancesInner(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -75,10 +79,10 @@ class ListWallets200ResponseBalancesInner(BaseModel):
         )
         # override the default output from pydantic by calling `to_dict()` of wallet
         if self.wallet:
-            _dict['wallet'] = self.wallet.to_dict()
+            _dict["wallet"] = self.wallet.to_dict()
         # override the default output from pydantic by calling `to_dict()` of sale_round
         if self.sale_round:
-            _dict['saleRound'] = self.sale_round.to_dict()
+            _dict["saleRound"] = self.sale_round.to_dict()
         return _dict
 
     @classmethod
@@ -90,12 +94,22 @@ class ListWallets200ResponseBalancesInner(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "wallet": ListWallets200ResponseBalancesInnerWallet.from_dict(obj["wallet"]) if obj.get("wallet") is not None else None,
-            "saleRound": ListWallets200ResponseBalancesInnerSaleRound.from_dict(obj["saleRound"]) if obj.get("saleRound") is not None else None,
-            "valueUsd": obj.get("valueUsd"),
-            "valueAic": obj.get("valueAic")
-        })
+        _obj = cls.model_validate(
+            {
+                "wallet": (
+                    ListWallets200ResponseBalancesInnerWallet.from_dict(obj["wallet"])
+                    if obj.get("wallet") is not None
+                    else None
+                ),
+                "saleRound": (
+                    ListWallets200ResponseBalancesInnerSaleRound.from_dict(
+                        obj["saleRound"]
+                    )
+                    if obj.get("saleRound") is not None
+                    else None
+                ),
+                "valueUsd": obj.get("valueUsd"),
+                "valueAic": obj.get("valueAic"),
+            }
+        )
         return _obj
-
-

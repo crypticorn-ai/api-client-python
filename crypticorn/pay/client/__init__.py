@@ -47,4 +47,6 @@ from crypticorn.pay.client.models.product_subs_model import ProductSubsModel
 from crypticorn.pay.client.models.services import Services
 from crypticorn.pay.client.models.unified_payment_model import UnifiedPaymentModel
 from crypticorn.pay.client.models.validation_error import ValidationError
-from crypticorn.pay.client.models.validation_error_loc_inner import ValidationErrorLocInner
+from crypticorn.pay.client.models.validation_error_loc_inner import (
+    ValidationErrorLocInner,
+)

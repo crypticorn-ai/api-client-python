@@ -22,33 +22,56 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class Currency(BaseModel):
     """
     Model representing a single cryptocurrency supported by the API.  This model contains detailed information about each cryptocurrency available for payments, including its identifiers, network details, validation patterns, and configuration settings.
-    """ # noqa: E501
+    """  # noqa: E501
+
     id: StrictInt = Field(description="Unique identifier for the currency")
     code: StrictStr = Field(description="Currency code/ticker symbol")
     name: StrictStr = Field(description="Full name of the currency")
     enable: StrictBool = Field(description="Whether the currency is currently enabled")
-    wallet_regex: StrictStr = Field(description="Regex pattern for valid wallet addresses")
+    wallet_regex: StrictStr = Field(
+        description="Regex pattern for valid wallet addresses"
+    )
     priority: StrictInt = Field(description="Priority ranking of the currency")
-    extra_id_exists: StrictBool = Field(description="Whether the currency requires an extra ID/memo/tag")
+    extra_id_exists: StrictBool = Field(
+        description="Whether the currency requires an extra ID/memo/tag"
+    )
     extra_id_regex: Optional[StrictStr] = None
     logo_url: StrictStr = Field(description="URL path to currency logo image")
     track: StrictBool = Field(description="Whether the currency is being tracked")
     cg_id: Optional[StrictStr] = None
-    is_maxlimit: StrictBool = Field(description="Whether the currency has a maximum limit")
+    is_maxlimit: StrictBool = Field(
+        description="Whether the currency has a maximum limit"
+    )
     network: Optional[StrictStr] = None
     smart_contract: Optional[StrictStr] = None
     network_precision: Optional[StrictInt] = None
-    __properties: ClassVar[List[str]] = ["id", "code", "name", "enable", "wallet_regex", "priority", "extra_id_exists", "extra_id_regex", "logo_url", "track", "cg_id", "is_maxlimit", "network", "smart_contract", "network_precision"]
+    __properties: ClassVar[List[str]] = [
+        "id",
+        "code",
+        "name",
+        "enable",
+        "wallet_regex",
+        "priority",
+        "extra_id_exists",
+        "extra_id_regex",
+        "logo_url",
+        "track",
+        "cg_id",
+        "is_maxlimit",
+        "network",
+        "smart_contract",
+        "network_precision",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -74,8 +97,7 @@ class Currency(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -85,27 +107,30 @@ class Currency(BaseModel):
         # set to None if extra_id_regex (nullable) is None
         # and model_fields_set contains the field
         if self.extra_id_regex is None and "extra_id_regex" in self.model_fields_set:
-            _dict['extra_id_regex'] = None
+            _dict["extra_id_regex"] = None
 
         # set to None if cg_id (nullable) is None
         # and model_fields_set contains the field
         if self.cg_id is None and "cg_id" in self.model_fields_set:
-            _dict['cg_id'] = None
+            _dict["cg_id"] = None
 
         # set to None if network (nullable) is None
         # and model_fields_set contains the field
         if self.network is None and "network" in self.model_fields_set:
-            _dict['network'] = None
+            _dict["network"] = None
 
         # set to None if smart_contract (nullable) is None
         # and model_fields_set contains the field
         if self.smart_contract is None and "smart_contract" in self.model_fields_set:
-            _dict['smart_contract'] = None
+            _dict["smart_contract"] = None
 
         # set to None if network_precision (nullable) is None
         # and model_fields_set contains the field
-        if self.network_precision is None and "network_precision" in self.model_fields_set:
-            _dict['network_precision'] = None
+        if (
+            self.network_precision is None
+            and "network_precision" in self.model_fields_set
+        ):
+            _dict["network_precision"] = None
 
         return _dict
 
@@ -118,23 +143,23 @@ class Currency(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "code": obj.get("code"),
-            "name": obj.get("name"),
-            "enable": obj.get("enable"),
-            "wallet_regex": obj.get("wallet_regex"),
-            "priority": obj.get("priority"),
-            "extra_id_exists": obj.get("extra_id_exists"),
-            "extra_id_regex": obj.get("extra_id_regex"),
-            "logo_url": obj.get("logo_url"),
-            "track": obj.get("track"),
-            "cg_id": obj.get("cg_id"),
-            "is_maxlimit": obj.get("is_maxlimit"),
-            "network": obj.get("network"),
-            "smart_contract": obj.get("smart_contract"),
-            "network_precision": obj.get("network_precision")
-        })
+        _obj = cls.model_validate(
+            {
+                "id": obj.get("id"),
+                "code": obj.get("code"),
+                "name": obj.get("name"),
+                "enable": obj.get("enable"),
+                "wallet_regex": obj.get("wallet_regex"),
+                "priority": obj.get("priority"),
+                "extra_id_exists": obj.get("extra_id_exists"),
+                "extra_id_regex": obj.get("extra_id_regex"),
+                "logo_url": obj.get("logo_url"),
+                "track": obj.get("track"),
+                "cg_id": obj.get("cg_id"),
+                "is_maxlimit": obj.get("is_maxlimit"),
+                "network": obj.get("network"),
+                "smart_contract": obj.get("smart_contract"),
+                "network_precision": obj.get("network_precision"),
+            }
+        )
         return _obj
-
-

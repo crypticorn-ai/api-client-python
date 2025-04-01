@@ -6,4 +6,3 @@ from crypticorn.klines.client.api.health_check_api import HealthCheckApi
 from crypticorn.klines.client.api.ohlcv_data_api import OHLCVDataApi
 from crypticorn.klines.client.api.symbols_api import SymbolsApi
 from crypticorn.klines.client.api.udf_api import UDFApi
-

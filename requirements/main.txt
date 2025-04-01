@@ -19,3 +19,6 @@ pydantic >= 2.0.0, < 3.0.0
 
 # crypticorn/pay/requirements.txt
 # same as trade
+
+# crypticorn/auth/requirements.txt
+# same as trade

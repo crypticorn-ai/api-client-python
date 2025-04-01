@@ -26,15 +26,13 @@ class Timeframe(str, Enum):
     """
     allowed enum values
     """
-    ENUM_15M = '15m'
-    ENUM_30M = '30m'
-    ENUM_1H = '1h'
-    ENUM_4H = '4h'
-    ENUM_1D = '1d'
+    ENUM_15M = "15m"
+    ENUM_30M = "30m"
+    ENUM_1H = "1h"
+    ENUM_4H = "4h"
+    ENUM_1D = "1d"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
         """Create an instance of Timeframe from a JSON string"""
         return cls(json.loads(json_str))
-
-

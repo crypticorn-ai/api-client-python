@@ -23,29 +23,46 @@ from crypticorn.pay.client.models.now_payment_status import NowPaymentStatus
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class NowPaymentModel(BaseModel):
     """
     NowPaymentModel
-    """ # noqa: E501
+    """  # noqa: E501
+
     id: StrictStr = Field(description="Product ID")
     payment_id: StrictInt = Field(description="Unique payment identifier")
     invoice_id: StrictInt = Field(description="Associated invoice ID")
     product_id: StrictStr = Field(description="Product ID")
     user_id: StrictStr = Field(description="User ID")
     order_id: StrictStr = Field(description="Internal order ID")
-    paid_amount: Union[StrictFloat, StrictInt] = Field(description="Actually paid amount")
+    paid_amount: Union[StrictFloat, StrictInt] = Field(
+        description="Actually paid amount"
+    )
     pay_amount: Union[StrictFloat, StrictInt] = Field(description="Amount to pay")
     pay_currency: StrictStr = Field(description="Payment currency")
     status: NowPaymentStatus = Field(description="Current payment status")
-    updated_at: StrictInt = Field(description="Payment last update timestamp in milliseconds")
-    __properties: ClassVar[List[str]] = ["id", "payment_id", "invoice_id", "product_id", "user_id", "order_id", "paid_amount", "pay_amount", "pay_currency", "status", "updated_at"]
+    updated_at: StrictInt = Field(
+        description="Payment last update timestamp in milliseconds"
+    )
+    __properties: ClassVar[List[str]] = [
+        "id",
+        "payment_id",
+        "invoice_id",
+        "product_id",
+        "user_id",
+        "order_id",
+        "paid_amount",
+        "pay_amount",
+        "pay_currency",
+        "status",
+        "updated_at",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -71,8 +88,7 @@ class NowPaymentModel(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -90,19 +106,19 @@ class NowPaymentModel(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "payment_id": obj.get("payment_id"),
-            "invoice_id": obj.get("invoice_id"),
-            "product_id": obj.get("product_id"),
-            "user_id": obj.get("user_id"),
-            "order_id": obj.get("order_id"),
-            "paid_amount": obj.get("paid_amount"),
-            "pay_amount": obj.get("pay_amount"),
-            "pay_currency": obj.get("pay_currency"),
-            "status": obj.get("status"),
-            "updated_at": obj.get("updated_at")
-        })
+        _obj = cls.model_validate(
+            {
+                "id": obj.get("id"),
+                "payment_id": obj.get("payment_id"),
+                "invoice_id": obj.get("invoice_id"),
+                "product_id": obj.get("product_id"),
+                "user_id": obj.get("user_id"),
+                "order_id": obj.get("order_id"),
+                "paid_amount": obj.get("paid_amount"),
+                "pay_amount": obj.get("pay_amount"),
+                "pay_currency": obj.get("pay_currency"),
+                "status": obj.get("status"),
+                "updated_at": obj.get("updated_at"),
+            }
+        )
         return _obj
-
-

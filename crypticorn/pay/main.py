@@ -1,4 +1,11 @@
-from crypticorn.pay import ApiClient, Configuration, NOWPaymentsApi, StatusApi, PaymentsApi, ProductsApi
+from crypticorn.pay import (
+    ApiClient,
+    Configuration,
+    NOWPaymentsApi,
+    StatusApi,
+    PaymentsApi,
+    ProductsApi,
+)
 
 
 class PayClient:

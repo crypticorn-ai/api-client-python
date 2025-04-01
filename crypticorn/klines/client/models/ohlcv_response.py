@@ -23,24 +23,32 @@ from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class OHLCVResponse(BaseModel):
     """
     OHLCVResponse
-    """ # noqa: E501
+    """  # noqa: E501
+
     timestamp: List[datetime]
     open: List[Union[StrictFloat, StrictInt]]
     high: List[Union[StrictFloat, StrictInt]]
     low: List[Union[StrictFloat, StrictInt]]
     close: List[Union[StrictFloat, StrictInt]]
     volume: List[Union[StrictFloat, StrictInt]]
-    __properties: ClassVar[List[str]] = ["timestamp", "open", "high", "low", "close", "volume"]
+    __properties: ClassVar[List[str]] = [
+        "timestamp",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -66,8 +74,7 @@ class OHLCVResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -85,14 +92,14 @@ class OHLCVResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "timestamp": obj.get("timestamp"),
-            "open": obj.get("open"),
-            "high": obj.get("high"),
-            "low": obj.get("low"),
-            "close": obj.get("close"),
-            "volume": obj.get("volume")
-        })
+        _obj = cls.model_validate(
+            {
+                "timestamp": obj.get("timestamp"),
+                "open": obj.get("open"),
+                "high": obj.get("high"),
+                "low": obj.get("low"),
+                "close": obj.get("close"),
+                "volume": obj.get("volume"),
+            }
+        )
         return _obj
-
-

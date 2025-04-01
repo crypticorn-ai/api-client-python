@@ -23,14 +23,18 @@ from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class AuthorizeUserRequest(BaseModel):
     """
     AuthorizeUserRequest
-    """ # noqa: E501
+    """  # noqa: E501
+
     email: Annotated[str, Field(min_length=1, strict=True)]
     password: Annotated[str, Field(min_length=1, strict=True)]
     admin: Optional[StrictBool] = None
-    captcha_token: Annotated[str, Field(min_length=1, strict=True)] = Field(alias="captchaToken")
+    captcha_token: Annotated[str, Field(min_length=1, strict=True)] = Field(
+        alias="captchaToken"
+    )
     __properties: ClassVar[List[str]] = ["email", "password", "admin", "captchaToken"]
 
     model_config = ConfigDict(
@@ -38,7 +42,6 @@ class AuthorizeUserRequest(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -64,8 +67,7 @@ class AuthorizeUserRequest(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -83,12 +85,12 @@ class AuthorizeUserRequest(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "email": obj.get("email"),
-            "password": obj.get("password"),
-            "admin": obj.get("admin"),
-            "captchaToken": obj.get("captchaToken")
-        })
+        _obj = cls.model_validate(
+            {
+                "email": obj.get("email"),
+                "password": obj.get("password"),
+                "admin": obj.get("admin"),
+                "captchaToken": obj.get("captchaToken"),
+            }
+        )
         return _obj
-
-

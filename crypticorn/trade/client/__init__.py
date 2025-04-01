@@ -62,4 +62,6 @@ from crypticorn.trade.client.models.strategy_model import StrategyModel
 from crypticorn.trade.client.models.tpsl import TPSL
 from crypticorn.trade.client.models.trading_action_type import TradingActionType
 from crypticorn.trade.client.models.validation_error import ValidationError
-from crypticorn.trade.client.models.validation_error_loc_inner import ValidationErrorLocInner
+from crypticorn.trade.client.models.validation_error_loc_inner import (
+    ValidationErrorLocInner,
+)
