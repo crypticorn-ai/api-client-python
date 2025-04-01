@@ -41,7 +41,6 @@ def main():
         "--package-name", "client",
         "--global-property", "supportingFiles,models,apis",
         "--additional-properties", "pipPackageName=crypticorn,mainClientName=CrypticornClient",
-        "--skip-validate-spec",
         "-o", f"python/crypticorn/{module_name}",
         "--openapi-generator-ignore-list", "setup.py,setup.cfg,pyproject.toml,tox.ini,py.typed,.gitignore,.gitlab-ci.yml,.github/,git_push.sh,test/,.travis.yml,test-requirements.txt",
         "--minimal-update",
