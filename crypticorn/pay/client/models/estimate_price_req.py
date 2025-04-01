@@ -22,10 +22,12 @@ from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class EstimatePriceReq(BaseModel):
     """
     Method for calculating the approximate price in cryptocurrency for a given value.  This endpoint estimates the cryptocurrency amount for a given fiat currency value, or estimates crypto-to-crypto conversions. https://documenter.getpostman.com/view/7907941/2s93JusNJt#3c86a16e-94ad-4230-a470-4e833766a4c7
-    """ # noqa: E501
+    """  # noqa: E501
+
     amount: Union[StrictFloat, StrictInt] = Field(description="Cost value")
     currency_from: StrictStr = Field(description="Fiat currency")
     currency_to: StrictStr = Field(description="Cryptocurrency")
@@ -36,7 +38,6 @@ class EstimatePriceReq(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -62,8 +63,7 @@ class EstimatePriceReq(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -81,11 +81,11 @@ class EstimatePriceReq(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "amount": obj.get("amount"),
-            "currency_from": obj.get("currency_from"),
-            "currency_to": obj.get("currency_to")
-        })
+        _obj = cls.model_validate(
+            {
+                "amount": obj.get("amount"),
+                "currency_from": obj.get("currency_from"),
+                "currency_to": obj.get("currency_to"),
+            }
+        )
         return _obj
-
-

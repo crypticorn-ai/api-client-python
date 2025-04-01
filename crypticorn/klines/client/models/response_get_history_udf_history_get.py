@@ -17,16 +17,32 @@ from inspect import getfullargspec
 import json
 import pprint
 import re  # noqa: F401
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictStr,
+    ValidationError,
+    field_validator,
+)
 from typing import Optional
 from crypticorn.klines.client.models.history_error_response import HistoryErrorResponse
-from crypticorn.klines.client.models.history_no_data_response import HistoryNoDataResponse
-from crypticorn.klines.client.models.history_success_response import HistorySuccessResponse
+from crypticorn.klines.client.models.history_no_data_response import (
+    HistoryNoDataResponse,
+)
+from crypticorn.klines.client.models.history_success_response import (
+    HistorySuccessResponse,
+)
 from typing import Union, Any, List, Set, TYPE_CHECKING, Optional, Dict
 from typing_extensions import Literal, Self
 from pydantic import Field
 
-RESPONSEGETHISTORYUDFHISTORYGET_ANY_OF_SCHEMAS = ["HistoryErrorResponse", "HistoryNoDataResponse", "HistorySuccessResponse"]
+RESPONSEGETHISTORYUDFHISTORYGET_ANY_OF_SCHEMAS = [
+    "HistoryErrorResponse",
+    "HistoryNoDataResponse",
+    "HistorySuccessResponse",
+]
+
 
 class ResponseGetHistoryUdfHistoryGet(BaseModel):
     """
@@ -40,10 +56,16 @@ class ResponseGetHistoryUdfHistoryGet(BaseModel):
     # data type: HistoryErrorResponse
     anyof_schema_3_validator: Optional[HistoryErrorResponse] = None
     if TYPE_CHECKING:
-        actual_instance: Optional[Union[HistoryErrorResponse, HistoryNoDataResponse, HistorySuccessResponse]] = None
+        actual_instance: Optional[
+            Union[HistoryErrorResponse, HistoryNoDataResponse, HistorySuccessResponse]
+        ] = None
     else:
         actual_instance: Any = None
-    any_of_schemas: Set[str] = { "HistoryErrorResponse", "HistoryNoDataResponse", "HistorySuccessResponse" }
+    any_of_schemas: Set[str] = {
+        "HistoryErrorResponse",
+        "HistoryNoDataResponse",
+        "HistorySuccessResponse",
+    }
 
     model_config = {
         "validate_assignment": True,
@@ -53,38 +75,51 @@ class ResponseGetHistoryUdfHistoryGet(BaseModel):
     def __init__(self, *args, **kwargs) -> None:
         if args:
             if len(args) > 1:
-                raise ValueError("If a position argument is used, only 1 is allowed to set `actual_instance`")
+                raise ValueError(
+                    "If a position argument is used, only 1 is allowed to set `actual_instance`"
+                )
             if kwargs:
-                raise ValueError("If a position argument is used, keyword arguments cannot be used.")
+                raise ValueError(
+                    "If a position argument is used, keyword arguments cannot be used."
+                )
             super().__init__(actual_instance=args[0])
         else:
             super().__init__(**kwargs)
 
-    @field_validator('actual_instance')
+    @field_validator("actual_instance")
     def actual_instance_must_validate_anyof(cls, v):
         instance = ResponseGetHistoryUdfHistoryGet.model_construct()
         error_messages = []
         # validate data type: HistorySuccessResponse
         if not isinstance(v, HistorySuccessResponse):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `HistorySuccessResponse`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `HistorySuccessResponse`"
+            )
         else:
             return v
 
         # validate data type: HistoryNoDataResponse
         if not isinstance(v, HistoryNoDataResponse):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `HistoryNoDataResponse`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `HistoryNoDataResponse`"
+            )
         else:
             return v
 
         # validate data type: HistoryErrorResponse
         if not isinstance(v, HistoryErrorResponse):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `HistoryErrorResponse`")
+            error_messages.append(
+                f"Error! Input type `{type(v)}` is not `HistoryErrorResponse`"
+            )
         else:
             return v
 
         if error_messages:
             # no match
-            raise ValueError("No match found when setting the actual_instance in ResponseGetHistoryUdfHistoryGet with anyOf schemas: HistoryErrorResponse, HistoryNoDataResponse, HistorySuccessResponse. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "No match found when setting the actual_instance in ResponseGetHistoryUdfHistoryGet with anyOf schemas: HistoryErrorResponse, HistoryNoDataResponse, HistorySuccessResponse. Details: "
+                + ", ".join(error_messages)
+            )
         else:
             return v
 
@@ -102,23 +137,26 @@ class ResponseGetHistoryUdfHistoryGet(BaseModel):
             instance.actual_instance = HistorySuccessResponse.from_json(json_str)
             return instance
         except (ValidationError, ValueError) as e:
-             error_messages.append(str(e))
+            error_messages.append(str(e))
         # anyof_schema_2_validator: Optional[HistoryNoDataResponse] = None
         try:
             instance.actual_instance = HistoryNoDataResponse.from_json(json_str)
             return instance
         except (ValidationError, ValueError) as e:
-             error_messages.append(str(e))
+            error_messages.append(str(e))
         # anyof_schema_3_validator: Optional[HistoryErrorResponse] = None
         try:
             instance.actual_instance = HistoryErrorResponse.from_json(json_str)
             return instance
         except (ValidationError, ValueError) as e:
-             error_messages.append(str(e))
+            error_messages.append(str(e))
 
         if error_messages:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into ResponseGetHistoryUdfHistoryGet with anyOf schemas: HistoryErrorResponse, HistoryNoDataResponse, HistorySuccessResponse. Details: " + ", ".join(error_messages))
+            raise ValueError(
+                "No match found when deserializing the JSON string into ResponseGetHistoryUdfHistoryGet with anyOf schemas: HistoryErrorResponse, HistoryNoDataResponse, HistorySuccessResponse. Details: "
+                + ", ".join(error_messages)
+            )
         else:
             return instance
 
@@ -127,17 +165,30 @@ class ResponseGetHistoryUdfHistoryGet(BaseModel):
         if self.actual_instance is None:
             return "null"
 
-        if hasattr(self.actual_instance, "to_json") and callable(self.actual_instance.to_json):
+        if hasattr(self.actual_instance, "to_json") and callable(
+            self.actual_instance.to_json
+        ):
             return self.actual_instance.to_json()
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], HistoryErrorResponse, HistoryNoDataResponse, HistorySuccessResponse]]:
+    def to_dict(
+        self,
+    ) -> Optional[
+        Union[
+            Dict[str, Any],
+            HistoryErrorResponse,
+            HistoryNoDataResponse,
+            HistorySuccessResponse,
+        ]
+    ]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None
 
-        if hasattr(self.actual_instance, "to_dict") and callable(self.actual_instance.to_dict):
+        if hasattr(self.actual_instance, "to_dict") and callable(
+            self.actual_instance.to_dict
+        ):
             return self.actual_instance.to_dict()
         else:
             return self.actual_instance
@@ -145,5 +196,3 @@ class ResponseGetHistoryUdfHistoryGet(BaseModel):
     def to_str(self) -> str:
         """Returns the string representation of the actual instance"""
         return pprint.pformat(self.model_dump())
-
-

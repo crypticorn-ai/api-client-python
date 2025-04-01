@@ -22,23 +22,30 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class MinAmountReq(BaseModel):
     """
     Get the minimum payment amount for a specific currency pair. https://documenter.getpostman.com/view/7907941/2s93JusNJt#ce3fe3a3-00cd-4df2-bfba-641fde741da7  You can provide both currencies in the pair or just currency_from. If only currency_from is provided, the minimum payment amount will be calculated for currency_from and the default currency specified in Payment Settings.  You can specify a fiat currency in currency_from to calculate the minimum payment in that fiat currency.  The fiat_equivalent field can be added to get the fiat equivalent of the minimum amount.  The is_fixed_rate and is_fee_paid_by_user parameters allow you to see current minimal amounts for corresponding flows, which may differ from the standard flow.  For multiple outcome wallets, the minimum amount is calculated based on the payment routing logic.
-    """ # noqa: E501
+    """  # noqa: E501
+
     currency_from: StrictStr = Field(description="Payin currency")
     currency_to: Optional[StrictStr] = None
     fiat_equivalent: Optional[StrictStr] = None
     is_fixed_rate: Optional[StrictBool] = None
     is_fee_paid_by_user: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["currency_from", "currency_to", "fiat_equivalent", "is_fixed_rate", "is_fee_paid_by_user"]
+    __properties: ClassVar[List[str]] = [
+        "currency_from",
+        "currency_to",
+        "fiat_equivalent",
+        "is_fixed_rate",
+        "is_fee_paid_by_user",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -64,8 +71,7 @@ class MinAmountReq(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -75,22 +81,25 @@ class MinAmountReq(BaseModel):
         # set to None if currency_to (nullable) is None
         # and model_fields_set contains the field
         if self.currency_to is None and "currency_to" in self.model_fields_set:
-            _dict['currency_to'] = None
+            _dict["currency_to"] = None
 
         # set to None if fiat_equivalent (nullable) is None
         # and model_fields_set contains the field
         if self.fiat_equivalent is None and "fiat_equivalent" in self.model_fields_set:
-            _dict['fiat_equivalent'] = None
+            _dict["fiat_equivalent"] = None
 
         # set to None if is_fixed_rate (nullable) is None
         # and model_fields_set contains the field
         if self.is_fixed_rate is None and "is_fixed_rate" in self.model_fields_set:
-            _dict['is_fixed_rate'] = None
+            _dict["is_fixed_rate"] = None
 
         # set to None if is_fee_paid_by_user (nullable) is None
         # and model_fields_set contains the field
-        if self.is_fee_paid_by_user is None and "is_fee_paid_by_user" in self.model_fields_set:
-            _dict['is_fee_paid_by_user'] = None
+        if (
+            self.is_fee_paid_by_user is None
+            and "is_fee_paid_by_user" in self.model_fields_set
+        ):
+            _dict["is_fee_paid_by_user"] = None
 
         return _dict
 
@@ -103,13 +112,13 @@ class MinAmountReq(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "currency_from": obj.get("currency_from"),
-            "currency_to": obj.get("currency_to"),
-            "fiat_equivalent": obj.get("fiat_equivalent"),
-            "is_fixed_rate": obj.get("is_fixed_rate"),
-            "is_fee_paid_by_user": obj.get("is_fee_paid_by_user")
-        })
+        _obj = cls.model_validate(
+            {
+                "currency_from": obj.get("currency_from"),
+                "currency_to": obj.get("currency_to"),
+                "fiat_equivalent": obj.get("fiat_equivalent"),
+                "is_fixed_rate": obj.get("is_fixed_rate"),
+                "is_fee_paid_by_user": obj.get("is_fee_paid_by_user"),
+            }
+        )
         return _obj
-
-

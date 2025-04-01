@@ -19,30 +19,46 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from crypticorn.auth.client.models.list_wallets200_response_balances_inner_wallet_vesting_wallets_inner import ListWallets200ResponseBalancesInnerWalletVestingWalletsInner
+from crypticorn.auth.client.models.list_wallets200_response_balances_inner_wallet_vesting_wallets_inner import (
+    ListWallets200ResponseBalancesInnerWalletVestingWalletsInner,
+)
 from typing import Optional, Set
 from typing_extensions import Self
+
 
 class ListWallets200ResponseBalancesInnerWallet(BaseModel):
     """
     ListWallets200ResponseBalancesInnerWallet
-    """ # noqa: E501
+    """  # noqa: E501
+
     id: Optional[Any] = Field(default=None, alias="_id")
     v: Optional[Any] = Field(default=None, alias="__v")
     created_at: Optional[StrictStr] = Field(default=None, alias="createdAt")
     updated_at: Optional[StrictStr] = Field(default=None, alias="updatedAt")
     address: Optional[StrictStr] = None
-    value_aic: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="valueAic")
+    value_aic: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, alias="valueAic"
+    )
     expires_at: Optional[StrictStr] = Field(default=None, alias="expiresAt")
-    vesting_wallets: List[ListWallets200ResponseBalancesInnerWalletVestingWalletsInner] = Field(alias="vestingWallets")
-    __properties: ClassVar[List[str]] = ["_id", "__v", "createdAt", "updatedAt", "address", "valueAic", "expiresAt", "vestingWallets"]
+    vesting_wallets: List[
+        ListWallets200ResponseBalancesInnerWalletVestingWalletsInner
+    ] = Field(alias="vestingWallets")
+    __properties: ClassVar[List[str]] = [
+        "_id",
+        "__v",
+        "createdAt",
+        "updatedAt",
+        "address",
+        "valueAic",
+        "expiresAt",
+        "vestingWallets",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -68,8 +84,7 @@ class ListWallets200ResponseBalancesInnerWallet(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -82,41 +97,41 @@ class ListWallets200ResponseBalancesInnerWallet(BaseModel):
             for _item_vesting_wallets in self.vesting_wallets:
                 if _item_vesting_wallets:
                     _items.append(_item_vesting_wallets.to_dict())
-            _dict['vestingWallets'] = _items
+            _dict["vestingWallets"] = _items
         # set to None if id (nullable) is None
         # and model_fields_set contains the field
         if self.id is None and "id" in self.model_fields_set:
-            _dict['_id'] = None
+            _dict["_id"] = None
 
         # set to None if v (nullable) is None
         # and model_fields_set contains the field
         if self.v is None and "v" in self.model_fields_set:
-            _dict['__v'] = None
+            _dict["__v"] = None
 
         # set to None if created_at (nullable) is None
         # and model_fields_set contains the field
         if self.created_at is None and "created_at" in self.model_fields_set:
-            _dict['createdAt'] = None
+            _dict["createdAt"] = None
 
         # set to None if updated_at (nullable) is None
         # and model_fields_set contains the field
         if self.updated_at is None and "updated_at" in self.model_fields_set:
-            _dict['updatedAt'] = None
+            _dict["updatedAt"] = None
 
         # set to None if address (nullable) is None
         # and model_fields_set contains the field
         if self.address is None and "address" in self.model_fields_set:
-            _dict['address'] = None
+            _dict["address"] = None
 
         # set to None if value_aic (nullable) is None
         # and model_fields_set contains the field
         if self.value_aic is None and "value_aic" in self.model_fields_set:
-            _dict['valueAic'] = None
+            _dict["valueAic"] = None
 
         # set to None if expires_at (nullable) is None
         # and model_fields_set contains the field
         if self.expires_at is None and "expires_at" in self.model_fields_set:
-            _dict['expiresAt'] = None
+            _dict["expiresAt"] = None
 
         return _dict
 
@@ -129,16 +144,25 @@ class ListWallets200ResponseBalancesInnerWallet(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "_id": obj.get("_id"),
-            "__v": obj.get("__v"),
-            "createdAt": obj.get("createdAt"),
-            "updatedAt": obj.get("updatedAt"),
-            "address": obj.get("address"),
-            "valueAic": obj.get("valueAic"),
-            "expiresAt": obj.get("expiresAt"),
-            "vestingWallets": [ListWallets200ResponseBalancesInnerWalletVestingWalletsInner.from_dict(_item) for _item in obj["vestingWallets"]] if obj.get("vestingWallets") is not None else None
-        })
+        _obj = cls.model_validate(
+            {
+                "_id": obj.get("_id"),
+                "__v": obj.get("__v"),
+                "createdAt": obj.get("createdAt"),
+                "updatedAt": obj.get("updatedAt"),
+                "address": obj.get("address"),
+                "valueAic": obj.get("valueAic"),
+                "expiresAt": obj.get("expiresAt"),
+                "vestingWallets": (
+                    [
+                        ListWallets200ResponseBalancesInnerWalletVestingWalletsInner.from_dict(
+                            _item
+                        )
+                        for _item in obj["vestingWallets"]
+                    ]
+                    if obj.get("vestingWallets") is not None
+                    else None
+                ),
+            }
+        )
         return _obj
-
-

@@ -23,14 +23,18 @@ from crypticorn.pay.client.models.payment import Payment
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class GetPaymentsListRes(BaseModel):
     """
     Response model for the list of payments. https://documenter.getpostman.com/view/7907941/2s93JusNJt#c38d2410-1523-4313-8764-0043ba1cb24f
-    """ # noqa: E501
+    """  # noqa: E501
+
     data: List[Payment] = Field(description="List of payments")
     limit: StrictInt = Field(description="Number of records per page")
     page: StrictInt = Field(description="Current page number")
-    pages_count: StrictInt = Field(description="Total number of pages", alias="pagesCount")
+    pages_count: StrictInt = Field(
+        description="Total number of pages", alias="pagesCount"
+    )
     total: StrictInt = Field(description="Total number of records")
     __properties: ClassVar[List[str]] = ["data", "limit", "page", "pagesCount", "total"]
 
@@ -39,7 +43,6 @@ class GetPaymentsListRes(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -65,8 +68,7 @@ class GetPaymentsListRes(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -79,7 +81,7 @@ class GetPaymentsListRes(BaseModel):
             for _item_data in self.data:
                 if _item_data:
                     _items.append(_item_data.to_dict())
-            _dict['data'] = _items
+            _dict["data"] = _items
         return _dict
 
     @classmethod
@@ -91,13 +93,17 @@ class GetPaymentsListRes(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "data": [Payment.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None,
-            "limit": obj.get("limit"),
-            "page": obj.get("page"),
-            "pagesCount": obj.get("pagesCount"),
-            "total": obj.get("total")
-        })
+        _obj = cls.model_validate(
+            {
+                "data": (
+                    [Payment.from_dict(_item) for _item in obj["data"]]
+                    if obj.get("data") is not None
+                    else None
+                ),
+                "limit": obj.get("limit"),
+                "page": obj.get("page"),
+                "pagesCount": obj.get("pagesCount"),
+                "total": obj.get("total"),
+            }
+        )
         return _obj
-
-

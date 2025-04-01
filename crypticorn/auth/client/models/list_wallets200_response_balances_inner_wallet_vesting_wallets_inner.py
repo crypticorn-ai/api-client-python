@@ -17,34 +17,61 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictBool,
+    StrictFloat,
+    StrictInt,
+    StrictStr,
+)
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class ListWallets200ResponseBalancesInnerWalletVestingWalletsInner(BaseModel):
     """
     ListWallets200ResponseBalancesInnerWalletVestingWalletsInner
-    """ # noqa: E501
+    """  # noqa: E501
+
     id: Optional[Any] = Field(default=None, alias="_id")
     address: Optional[StrictStr] = None
-    value_aic: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="valueAic")
+    value_aic: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, alias="valueAic"
+    )
     round: Optional[Union[StrictFloat, StrictInt]] = None
     released: Optional[Union[StrictFloat, StrictInt]] = None
-    vested_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="vestedAmount")
+    vested_amount: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, alias="vestedAmount"
+    )
     start_at: Optional[StrictStr] = Field(default=None, alias="startAt")
     end_at: Optional[StrictStr] = Field(default=None, alias="endAt")
     cliff_at: Optional[StrictStr] = Field(default=None, alias="cliffAt")
     started: Optional[StrictBool] = None
-    claimable_amount: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="claimableAmount")
-    __properties: ClassVar[List[str]] = ["_id", "address", "valueAic", "round", "released", "vestedAmount", "startAt", "endAt", "cliffAt", "started", "claimableAmount"]
+    claimable_amount: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, alias="claimableAmount"
+    )
+    __properties: ClassVar[List[str]] = [
+        "_id",
+        "address",
+        "valueAic",
+        "round",
+        "released",
+        "vestedAmount",
+        "startAt",
+        "endAt",
+        "cliffAt",
+        "started",
+        "claimableAmount",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -70,8 +97,7 @@ class ListWallets200ResponseBalancesInnerWalletVestingWalletsInner(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -81,57 +107,60 @@ class ListWallets200ResponseBalancesInnerWalletVestingWalletsInner(BaseModel):
         # set to None if id (nullable) is None
         # and model_fields_set contains the field
         if self.id is None and "id" in self.model_fields_set:
-            _dict['_id'] = None
+            _dict["_id"] = None
 
         # set to None if address (nullable) is None
         # and model_fields_set contains the field
         if self.address is None and "address" in self.model_fields_set:
-            _dict['address'] = None
+            _dict["address"] = None
 
         # set to None if value_aic (nullable) is None
         # and model_fields_set contains the field
         if self.value_aic is None and "value_aic" in self.model_fields_set:
-            _dict['valueAic'] = None
+            _dict["valueAic"] = None
 
         # set to None if round (nullable) is None
         # and model_fields_set contains the field
         if self.round is None and "round" in self.model_fields_set:
-            _dict['round'] = None
+            _dict["round"] = None
 
         # set to None if released (nullable) is None
         # and model_fields_set contains the field
         if self.released is None and "released" in self.model_fields_set:
-            _dict['released'] = None
+            _dict["released"] = None
 
         # set to None if vested_amount (nullable) is None
         # and model_fields_set contains the field
         if self.vested_amount is None and "vested_amount" in self.model_fields_set:
-            _dict['vestedAmount'] = None
+            _dict["vestedAmount"] = None
 
         # set to None if start_at (nullable) is None
         # and model_fields_set contains the field
         if self.start_at is None and "start_at" in self.model_fields_set:
-            _dict['startAt'] = None
+            _dict["startAt"] = None
 
         # set to None if end_at (nullable) is None
         # and model_fields_set contains the field
         if self.end_at is None and "end_at" in self.model_fields_set:
-            _dict['endAt'] = None
+            _dict["endAt"] = None
 
         # set to None if cliff_at (nullable) is None
         # and model_fields_set contains the field
         if self.cliff_at is None and "cliff_at" in self.model_fields_set:
-            _dict['cliffAt'] = None
+            _dict["cliffAt"] = None
 
         # set to None if started (nullable) is None
         # and model_fields_set contains the field
         if self.started is None and "started" in self.model_fields_set:
-            _dict['started'] = None
+            _dict["started"] = None
 
         # set to None if claimable_amount (nullable) is None
         # and model_fields_set contains the field
-        if self.claimable_amount is None and "claimable_amount" in self.model_fields_set:
-            _dict['claimableAmount'] = None
+        if (
+            self.claimable_amount is None
+            and "claimable_amount" in self.model_fields_set
+        ):
+            _dict["claimableAmount"] = None
 
         return _dict
 
@@ -144,19 +173,19 @@ class ListWallets200ResponseBalancesInnerWalletVestingWalletsInner(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "_id": obj.get("_id"),
-            "address": obj.get("address"),
-            "valueAic": obj.get("valueAic"),
-            "round": obj.get("round"),
-            "released": obj.get("released"),
-            "vestedAmount": obj.get("vestedAmount"),
-            "startAt": obj.get("startAt"),
-            "endAt": obj.get("endAt"),
-            "cliffAt": obj.get("cliffAt"),
-            "started": obj.get("started"),
-            "claimableAmount": obj.get("claimableAmount")
-        })
+        _obj = cls.model_validate(
+            {
+                "_id": obj.get("_id"),
+                "address": obj.get("address"),
+                "valueAic": obj.get("valueAic"),
+                "round": obj.get("round"),
+                "released": obj.get("released"),
+                "vestedAmount": obj.get("vestedAmount"),
+                "startAt": obj.get("startAt"),
+                "endAt": obj.get("endAt"),
+                "cliffAt": obj.get("cliffAt"),
+                "started": obj.get("started"),
+                "claimableAmount": obj.get("claimableAmount"),
+            }
+        )
         return _obj
-
-

@@ -35,22 +35,34 @@ from crypticorn.klines.client.exceptions import ApiAttributeError
 from crypticorn.klines.client.exceptions import ApiException
 
 # import models into sdk package
-from crypticorn.klines.client.models.base_response_health_check_response import BaseResponseHealthCheckResponse
-from crypticorn.klines.client.models.base_response_list_funding_rate_response import BaseResponseListFundingRateResponse
+from crypticorn.klines.client.models.base_response_health_check_response import (
+    BaseResponseHealthCheckResponse,
+)
+from crypticorn.klines.client.models.base_response_list_funding_rate_response import (
+    BaseResponseListFundingRateResponse,
+)
 from crypticorn.klines.client.models.base_response_list_str import BaseResponseListStr
-from crypticorn.klines.client.models.base_response_ohlcv_response import BaseResponseOHLCVResponse
+from crypticorn.klines.client.models.base_response_ohlcv_response import (
+    BaseResponseOHLCVResponse,
+)
 from crypticorn.klines.client.models.error_response import ErrorResponse
 from crypticorn.klines.client.models.exchange import Exchange
 from crypticorn.klines.client.models.funding_rate_response import FundingRateResponse
 from crypticorn.klines.client.models.http_validation_error import HTTPValidationError
 from crypticorn.klines.client.models.health_check_response import HealthCheckResponse
 from crypticorn.klines.client.models.history_error_response import HistoryErrorResponse
-from crypticorn.klines.client.models.history_no_data_response import HistoryNoDataResponse
-from crypticorn.klines.client.models.history_success_response import HistorySuccessResponse
+from crypticorn.klines.client.models.history_no_data_response import (
+    HistoryNoDataResponse,
+)
+from crypticorn.klines.client.models.history_success_response import (
+    HistorySuccessResponse,
+)
 from crypticorn.klines.client.models.market import Market
 from crypticorn.klines.client.models.ohlcv_response import OHLCVResponse
 from crypticorn.klines.client.models.resolution import Resolution
-from crypticorn.klines.client.models.response_get_history_udf_history_get import ResponseGetHistoryUdfHistoryGet
+from crypticorn.klines.client.models.response_get_history_udf_history_get import (
+    ResponseGetHistoryUdfHistoryGet,
+)
 from crypticorn.klines.client.models.search_symbol_response import SearchSymbolResponse
 from crypticorn.klines.client.models.sort_direction import SortDirection
 from crypticorn.klines.client.models.symbol_group_response import SymbolGroupResponse
@@ -59,4 +71,6 @@ from crypticorn.klines.client.models.symbol_type import SymbolType
 from crypticorn.klines.client.models.timeframe import Timeframe
 from crypticorn.klines.client.models.udf_config_response import UDFConfigResponse
 from crypticorn.klines.client.models.validation_error import ValidationError
-from crypticorn.klines.client.models.validation_error_loc_inner import ValidationErrorLocInner
+from crypticorn.klines.client.models.validation_error_loc_inner import (
+    ValidationErrorLocInner,
+)

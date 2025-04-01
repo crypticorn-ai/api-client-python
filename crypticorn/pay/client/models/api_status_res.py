@@ -22,10 +22,12 @@ from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class APIStatusRes(BaseModel):
     """
     Response for the API status.
-    """ # noqa: E501
+    """  # noqa: E501
+
     message: StrictStr = Field(description="API status message")
     __properties: ClassVar[List[str]] = ["message"]
 
@@ -34,7 +36,6 @@ class APIStatusRes(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -60,8 +61,7 @@ class APIStatusRes(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -79,9 +79,5 @@ class APIStatusRes(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "message": obj.get("message")
-        })
+        _obj = cls.model_validate({"message": obj.get("message")})
         return _obj
-
-

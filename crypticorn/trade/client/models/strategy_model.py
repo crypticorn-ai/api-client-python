@@ -25,29 +25,49 @@ from crypticorn.trade.client.models.strategy_exchange_info import StrategyExchan
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class StrategyModel(BaseModel):
     """
     StrategyModel
-    """ # noqa: E501
+    """  # noqa: E501
+
     created_at: Optional[StrictInt] = None
     updated_at: Optional[StrictInt] = None
     id: Optional[StrictStr] = None
-    identifier: StrictStr = Field(description="Unique human readable identifier for the strategy e.g. 'daily_trend_momentum'")
+    identifier: StrictStr = Field(
+        description="Unique human readable identifier for the strategy e.g. 'daily_trend_momentum'"
+    )
     name: StrictStr = Field(description="Name of the strategy")
     description: StrictStr = Field(description="Description of the strategy")
-    exchanges: List[StrategyExchangeInfo] = Field(description="Exchanges supported by the strategy.")
+    exchanges: List[StrategyExchangeInfo] = Field(
+        description="Exchanges supported by the strategy."
+    )
     enabled: StrictBool = Field(description="Whether the strategy is enabled")
     leverage: StrictInt = Field(description="Leverage for the strategy")
-    performance_fee: Union[Annotated[float, Field(le=1.0, strict=True)], Annotated[int, Field(le=1, strict=True)]] = Field(description="Performance fee for the strategy")
+    performance_fee: Union[
+        Annotated[float, Field(le=1.0, strict=True)],
+        Annotated[int, Field(le=1, strict=True)],
+    ] = Field(description="Performance fee for the strategy")
     market_type: MarketType = Field(description="Market of operation of the strategy")
-    __properties: ClassVar[List[str]] = ["created_at", "updated_at", "id", "identifier", "name", "description", "exchanges", "enabled", "leverage", "performance_fee", "market_type"]
+    __properties: ClassVar[List[str]] = [
+        "created_at",
+        "updated_at",
+        "id",
+        "identifier",
+        "name",
+        "description",
+        "exchanges",
+        "enabled",
+        "leverage",
+        "performance_fee",
+        "market_type",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -73,8 +93,7 @@ class StrategyModel(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -87,21 +106,21 @@ class StrategyModel(BaseModel):
             for _item_exchanges in self.exchanges:
                 if _item_exchanges:
                     _items.append(_item_exchanges.to_dict())
-            _dict['exchanges'] = _items
+            _dict["exchanges"] = _items
         # set to None if created_at (nullable) is None
         # and model_fields_set contains the field
         if self.created_at is None and "created_at" in self.model_fields_set:
-            _dict['created_at'] = None
+            _dict["created_at"] = None
 
         # set to None if updated_at (nullable) is None
         # and model_fields_set contains the field
         if self.updated_at is None and "updated_at" in self.model_fields_set:
-            _dict['updated_at'] = None
+            _dict["updated_at"] = None
 
         # set to None if id (nullable) is None
         # and model_fields_set contains the field
         if self.id is None and "id" in self.model_fields_set:
-            _dict['id'] = None
+            _dict["id"] = None
 
         return _dict
 
@@ -114,19 +133,26 @@ class StrategyModel(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "created_at": obj.get("created_at"),
-            "updated_at": obj.get("updated_at"),
-            "id": obj.get("id"),
-            "identifier": obj.get("identifier"),
-            "name": obj.get("name"),
-            "description": obj.get("description"),
-            "exchanges": [StrategyExchangeInfo.from_dict(_item) for _item in obj["exchanges"]] if obj.get("exchanges") is not None else None,
-            "enabled": obj.get("enabled"),
-            "leverage": obj.get("leverage"),
-            "performance_fee": obj.get("performance_fee"),
-            "market_type": obj.get("market_type")
-        })
+        _obj = cls.model_validate(
+            {
+                "created_at": obj.get("created_at"),
+                "updated_at": obj.get("updated_at"),
+                "id": obj.get("id"),
+                "identifier": obj.get("identifier"),
+                "name": obj.get("name"),
+                "description": obj.get("description"),
+                "exchanges": (
+                    [
+                        StrategyExchangeInfo.from_dict(_item)
+                        for _item in obj["exchanges"]
+                    ]
+                    if obj.get("exchanges") is not None
+                    else None
+                ),
+                "enabled": obj.get("enabled"),
+                "leverage": obj.get("leverage"),
+                "performance_fee": obj.get("performance_fee"),
+                "market_type": obj.get("market_type"),
+            }
+        )
         return _obj
-
-

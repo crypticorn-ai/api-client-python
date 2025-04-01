@@ -22,23 +22,32 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class ProductSubsModel(BaseModel):
     """
     ProductSubsModel
-    """ # noqa: E501
+    """  # noqa: E501
+
     id: Optional[StrictStr] = None
     user_id: StrictStr = Field(description="User ID")
     product_id: StrictStr = Field(description="Product ID")
     access_from: StrictInt = Field(description="Access from timestamp in milliseconds")
-    access_until: StrictInt = Field(description="Access until timestamp in milliseconds. 0 means unlimited.")
-    __properties: ClassVar[List[str]] = ["id", "user_id", "product_id", "access_from", "access_until"]
+    access_until: StrictInt = Field(
+        description="Access until timestamp in milliseconds. 0 means unlimited."
+    )
+    __properties: ClassVar[List[str]] = [
+        "id",
+        "user_id",
+        "product_id",
+        "access_from",
+        "access_until",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -64,8 +73,7 @@ class ProductSubsModel(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -75,7 +83,7 @@ class ProductSubsModel(BaseModel):
         # set to None if id (nullable) is None
         # and model_fields_set contains the field
         if self.id is None and "id" in self.model_fields_set:
-            _dict['id'] = None
+            _dict["id"] = None
 
         return _dict
 
@@ -88,13 +96,13 @@ class ProductSubsModel(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "user_id": obj.get("user_id"),
-            "product_id": obj.get("product_id"),
-            "access_from": obj.get("access_from"),
-            "access_until": obj.get("access_until")
-        })
+        _obj = cls.model_validate(
+            {
+                "id": obj.get("id"),
+                "user_id": obj.get("user_id"),
+                "product_id": obj.get("product_id"),
+                "access_from": obj.get("access_from"),
+                "access_until": obj.get("access_until"),
+            }
+        )
         return _obj
-
-

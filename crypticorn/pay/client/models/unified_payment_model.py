@@ -24,10 +24,12 @@ from crypticorn.pay.client.models.services import Services
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class UnifiedPaymentModel(BaseModel):
     """
     Combined payment model across all services
-    """ # noqa: E501
+    """  # noqa: E501
+
     id: StrictStr = Field(description="Payment ID")
     product_id: StrictStr = Field(description="Product ID")
     var_date: StrictInt = Field(description="Payment date in seconds", alias="date")
@@ -36,14 +38,22 @@ class UnifiedPaymentModel(BaseModel):
     status: PaymentStatus
     service: Services = Field(description="Payment service")
     market: StrictStr = Field(description="Payment market")
-    __properties: ClassVar[List[str]] = ["id", "product_id", "date", "amount", "currency", "status", "service", "market"]
+    __properties: ClassVar[List[str]] = [
+        "id",
+        "product_id",
+        "date",
+        "amount",
+        "currency",
+        "status",
+        "service",
+        "market",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -69,8 +79,7 @@ class UnifiedPaymentModel(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -88,16 +97,16 @@ class UnifiedPaymentModel(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "product_id": obj.get("product_id"),
-            "date": obj.get("date"),
-            "amount": obj.get("amount"),
-            "currency": obj.get("currency"),
-            "status": obj.get("status"),
-            "service": obj.get("service"),
-            "market": obj.get("market")
-        })
+        _obj = cls.model_validate(
+            {
+                "id": obj.get("id"),
+                "product_id": obj.get("product_id"),
+                "date": obj.get("date"),
+                "amount": obj.get("amount"),
+                "currency": obj.get("currency"),
+                "status": obj.get("status"),
+                "service": obj.get("service"),
+                "market": obj.get("market"),
+            }
+        )
         return _obj
-
-

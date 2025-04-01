@@ -22,19 +22,25 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class Payment(BaseModel):
     """
     Model representing a single payment.
-    """ # noqa: E501
+    """  # noqa: E501
+
     payment_id: StrictInt = Field(description="Unique payment identifier")
     invoice_id: Optional[StrictInt] = None
     payment_status: StrictStr = Field(description="Current payment status")
     pay_address: StrictStr = Field(description="Payment destination address")
     payin_extra_id: Optional[StrictStr] = None
-    price_amount: Union[StrictFloat, StrictInt] = Field(description="Original price amount")
+    price_amount: Union[StrictFloat, StrictInt] = Field(
+        description="Original price amount"
+    )
     price_currency: StrictStr = Field(description="Original price currency")
     pay_amount: Union[StrictFloat, StrictInt] = Field(description="Amount to pay")
-    actually_paid: Union[StrictFloat, StrictInt] = Field(description="Actually paid amount")
+    actually_paid: Union[StrictFloat, StrictInt] = Field(
+        description="Actually paid amount"
+    )
     pay_currency: StrictStr = Field(description="Payment currency")
     order_id: Optional[StrictStr] = None
     order_description: Optional[StrictStr] = None
@@ -49,14 +55,37 @@ class Payment(BaseModel):
     payment_extra_ids: Optional[List[StrictInt]] = None
     parent_payment_id: Optional[StrictInt] = None
     origin_type: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["payment_id", "invoice_id", "payment_status", "pay_address", "payin_extra_id", "price_amount", "price_currency", "pay_amount", "actually_paid", "pay_currency", "order_id", "order_description", "purchase_id", "outcome_amount", "outcome_currency", "payout_hash", "payin_hash", "created_at", "updated_at", "type", "payment_extra_ids", "parent_payment_id", "origin_type"]
+    __properties: ClassVar[List[str]] = [
+        "payment_id",
+        "invoice_id",
+        "payment_status",
+        "pay_address",
+        "payin_extra_id",
+        "price_amount",
+        "price_currency",
+        "pay_amount",
+        "actually_paid",
+        "pay_currency",
+        "order_id",
+        "order_description",
+        "purchase_id",
+        "outcome_amount",
+        "outcome_currency",
+        "payout_hash",
+        "payin_hash",
+        "created_at",
+        "updated_at",
+        "type",
+        "payment_extra_ids",
+        "parent_payment_id",
+        "origin_type",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -82,8 +111,7 @@ class Payment(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -93,62 +121,74 @@ class Payment(BaseModel):
         # set to None if invoice_id (nullable) is None
         # and model_fields_set contains the field
         if self.invoice_id is None and "invoice_id" in self.model_fields_set:
-            _dict['invoice_id'] = None
+            _dict["invoice_id"] = None
 
         # set to None if payin_extra_id (nullable) is None
         # and model_fields_set contains the field
         if self.payin_extra_id is None and "payin_extra_id" in self.model_fields_set:
-            _dict['payin_extra_id'] = None
+            _dict["payin_extra_id"] = None
 
         # set to None if order_id (nullable) is None
         # and model_fields_set contains the field
         if self.order_id is None and "order_id" in self.model_fields_set:
-            _dict['order_id'] = None
+            _dict["order_id"] = None
 
         # set to None if order_description (nullable) is None
         # and model_fields_set contains the field
-        if self.order_description is None and "order_description" in self.model_fields_set:
-            _dict['order_description'] = None
+        if (
+            self.order_description is None
+            and "order_description" in self.model_fields_set
+        ):
+            _dict["order_description"] = None
 
         # set to None if purchase_id (nullable) is None
         # and model_fields_set contains the field
         if self.purchase_id is None and "purchase_id" in self.model_fields_set:
-            _dict['purchase_id'] = None
+            _dict["purchase_id"] = None
 
         # set to None if outcome_amount (nullable) is None
         # and model_fields_set contains the field
         if self.outcome_amount is None and "outcome_amount" in self.model_fields_set:
-            _dict['outcome_amount'] = None
+            _dict["outcome_amount"] = None
 
         # set to None if outcome_currency (nullable) is None
         # and model_fields_set contains the field
-        if self.outcome_currency is None and "outcome_currency" in self.model_fields_set:
-            _dict['outcome_currency'] = None
+        if (
+            self.outcome_currency is None
+            and "outcome_currency" in self.model_fields_set
+        ):
+            _dict["outcome_currency"] = None
 
         # set to None if payout_hash (nullable) is None
         # and model_fields_set contains the field
         if self.payout_hash is None and "payout_hash" in self.model_fields_set:
-            _dict['payout_hash'] = None
+            _dict["payout_hash"] = None
 
         # set to None if payin_hash (nullable) is None
         # and model_fields_set contains the field
         if self.payin_hash is None and "payin_hash" in self.model_fields_set:
-            _dict['payin_hash'] = None
+            _dict["payin_hash"] = None
 
         # set to None if payment_extra_ids (nullable) is None
         # and model_fields_set contains the field
-        if self.payment_extra_ids is None and "payment_extra_ids" in self.model_fields_set:
-            _dict['payment_extra_ids'] = None
+        if (
+            self.payment_extra_ids is None
+            and "payment_extra_ids" in self.model_fields_set
+        ):
+            _dict["payment_extra_ids"] = None
 
         # set to None if parent_payment_id (nullable) is None
         # and model_fields_set contains the field
-        if self.parent_payment_id is None and "parent_payment_id" in self.model_fields_set:
-            _dict['parent_payment_id'] = None
+        if (
+            self.parent_payment_id is None
+            and "parent_payment_id" in self.model_fields_set
+        ):
+            _dict["parent_payment_id"] = None
 
         # set to None if origin_type (nullable) is None
         # and model_fields_set contains the field
         if self.origin_type is None and "origin_type" in self.model_fields_set:
-            _dict['origin_type'] = None
+            _dict["origin_type"] = None
 
         return _dict
 
@@ -161,31 +201,31 @@ class Payment(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "payment_id": obj.get("payment_id"),
-            "invoice_id": obj.get("invoice_id"),
-            "payment_status": obj.get("payment_status"),
-            "pay_address": obj.get("pay_address"),
-            "payin_extra_id": obj.get("payin_extra_id"),
-            "price_amount": obj.get("price_amount"),
-            "price_currency": obj.get("price_currency"),
-            "pay_amount": obj.get("pay_amount"),
-            "actually_paid": obj.get("actually_paid"),
-            "pay_currency": obj.get("pay_currency"),
-            "order_id": obj.get("order_id"),
-            "order_description": obj.get("order_description"),
-            "purchase_id": obj.get("purchase_id"),
-            "outcome_amount": obj.get("outcome_amount"),
-            "outcome_currency": obj.get("outcome_currency"),
-            "payout_hash": obj.get("payout_hash"),
-            "payin_hash": obj.get("payin_hash"),
-            "created_at": obj.get("created_at"),
-            "updated_at": obj.get("updated_at"),
-            "type": obj.get("type"),
-            "payment_extra_ids": obj.get("payment_extra_ids"),
-            "parent_payment_id": obj.get("parent_payment_id"),
-            "origin_type": obj.get("origin_type")
-        })
+        _obj = cls.model_validate(
+            {
+                "payment_id": obj.get("payment_id"),
+                "invoice_id": obj.get("invoice_id"),
+                "payment_status": obj.get("payment_status"),
+                "pay_address": obj.get("pay_address"),
+                "payin_extra_id": obj.get("payin_extra_id"),
+                "price_amount": obj.get("price_amount"),
+                "price_currency": obj.get("price_currency"),
+                "pay_amount": obj.get("pay_amount"),
+                "actually_paid": obj.get("actually_paid"),
+                "pay_currency": obj.get("pay_currency"),
+                "order_id": obj.get("order_id"),
+                "order_description": obj.get("order_description"),
+                "purchase_id": obj.get("purchase_id"),
+                "outcome_amount": obj.get("outcome_amount"),
+                "outcome_currency": obj.get("outcome_currency"),
+                "payout_hash": obj.get("payout_hash"),
+                "payin_hash": obj.get("payin_hash"),
+                "created_at": obj.get("created_at"),
+                "updated_at": obj.get("updated_at"),
+                "type": obj.get("type"),
+                "payment_extra_ids": obj.get("payment_extra_ids"),
+                "parent_payment_id": obj.get("parent_payment_id"),
+                "origin_type": obj.get("origin_type"),
+            }
+        )
         return _obj
-
-

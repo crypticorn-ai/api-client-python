@@ -23,18 +23,28 @@ from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class CreateUserRequest(BaseModel):
     """
     CreateUserRequest
-    """ # noqa: E501
+    """  # noqa: E501
+
     email: Annotated[str, Field(min_length=1, strict=True)]
     password: Annotated[str, Field(min_length=8, strict=True)]
-    username: Optional[Annotated[str, Field(min_length=3, strict=True, max_length=32)]] = None
+    username: Optional[
+        Annotated[str, Field(min_length=3, strict=True, max_length=32)]
+    ] = None
     name: Optional[Annotated[str, Field(min_length=1, strict=True)]] = None
     picture: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["email", "password", "username", "name", "picture"]
+    __properties: ClassVar[List[str]] = [
+        "email",
+        "password",
+        "username",
+        "name",
+        "picture",
+    ]
 
-    @field_validator('username')
+    @field_validator("username")
     def username_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
@@ -49,7 +59,6 @@ class CreateUserRequest(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -75,8 +84,7 @@ class CreateUserRequest(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -94,13 +102,13 @@ class CreateUserRequest(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "email": obj.get("email"),
-            "password": obj.get("password"),
-            "username": obj.get("username"),
-            "name": obj.get("name"),
-            "picture": obj.get("picture")
-        })
+        _obj = cls.model_validate(
+            {
+                "email": obj.get("email"),
+                "password": obj.get("password"),
+                "username": obj.get("username"),
+                "name": obj.get("name"),
+                "picture": obj.get("picture"),
+            }
+        )
         return _obj
-
-

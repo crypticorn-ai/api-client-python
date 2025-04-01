@@ -22,24 +22,32 @@ from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class SearchSymbolResponse(BaseModel):
     """
     SearchSymbolResponse
-    """ # noqa: E501
+    """  # noqa: E501
+
     symbol: StrictStr
     full_name: StrictStr
     description: StrictStr
     exchange: StrictStr
     ticker: StrictStr
     type: StrictStr
-    __properties: ClassVar[List[str]] = ["symbol", "full_name", "description", "exchange", "ticker", "type"]
+    __properties: ClassVar[List[str]] = [
+        "symbol",
+        "full_name",
+        "description",
+        "exchange",
+        "ticker",
+        "type",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -65,8 +73,7 @@ class SearchSymbolResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -84,14 +91,14 @@ class SearchSymbolResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "symbol": obj.get("symbol"),
-            "full_name": obj.get("full_name"),
-            "description": obj.get("description"),
-            "exchange": obj.get("exchange"),
-            "ticker": obj.get("ticker"),
-            "type": obj.get("type")
-        })
+        _obj = cls.model_validate(
+            {
+                "symbol": obj.get("symbol"),
+                "full_name": obj.get("full_name"),
+                "description": obj.get("description"),
+                "exchange": obj.get("exchange"),
+                "ticker": obj.get("ticker"),
+                "type": obj.get("type"),
+            }
+        )
         return _obj
-
-

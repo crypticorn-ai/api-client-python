@@ -17,29 +17,47 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictBool,
+    StrictFloat,
+    StrictInt,
+    StrictStr,
+)
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class ProductModel(BaseModel):
     """
     ProductModel
-    """ # noqa: E501
+    """  # noqa: E501
+
     id: Optional[StrictStr] = None
     name: StrictStr = Field(description="Product name")
     price: Union[StrictFloat, StrictInt] = Field(description="Product price")
-    duration: StrictInt = Field(description="Product duration in days. 0 means unlimited.")
+    duration: StrictInt = Field(
+        description="Product duration in days. 0 means unlimited."
+    )
     description: StrictStr = Field(description="Product description")
     is_active: StrictBool = Field(description="Product is active")
-    __properties: ClassVar[List[str]] = ["id", "name", "price", "duration", "description", "is_active"]
+    __properties: ClassVar[List[str]] = [
+        "id",
+        "name",
+        "price",
+        "duration",
+        "description",
+        "is_active",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -65,8 +83,7 @@ class ProductModel(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -76,7 +93,7 @@ class ProductModel(BaseModel):
         # set to None if id (nullable) is None
         # and model_fields_set contains the field
         if self.id is None and "id" in self.model_fields_set:
-            _dict['id'] = None
+            _dict["id"] = None
 
         return _dict
 
@@ -89,14 +106,14 @@ class ProductModel(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "name": obj.get("name"),
-            "price": obj.get("price"),
-            "duration": obj.get("duration"),
-            "description": obj.get("description"),
-            "is_active": obj.get("is_active")
-        })
+        _obj = cls.model_validate(
+            {
+                "id": obj.get("id"),
+                "name": obj.get("name"),
+                "price": obj.get("price"),
+                "duration": obj.get("duration"),
+                "description": obj.get("description"),
+                "is_active": obj.get("is_active"),
+            }
+        )
         return _obj
-
-

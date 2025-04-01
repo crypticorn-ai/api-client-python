@@ -7,6 +7,7 @@ import subprocess
 MODULES = ["trade", "klines", "hive", "pay", "auth"]
 ROOT_URL = "http://localhost/v1"
 
+
 def main():
     # Check if script is run from the root directory
     if not os.path.exists("python/crypticorn"):
@@ -35,16 +36,25 @@ def main():
 
     # Run the OpenAPI generator
     generator_cmd = [
-        "openapi-generator-cli", "generate",
-        "-i", f"{ROOT_URL}/{module_name}/openapi.json",
-        "-g", "python",
-        "--package-name", "client",
-        "--global-property", "supportingFiles,models,apis",
-        "--additional-properties", "pipPackageName=crypticorn,mainClientName=CrypticornClient",
-        "-o", f"python/crypticorn/{module_name}",
-        "--openapi-generator-ignore-list", "setup.py,setup.cfg,pyproject.toml,tox.ini,py.typed,.gitignore,.gitlab-ci.yml,.github/,git_push.sh,test/,.travis.yml,test-requirements.txt",
+        "openapi-generator-cli",
+        "generate",
+        "-i",
+        f"{ROOT_URL}/{module_name}/openapi.json",
+        "-g",
+        "python",
+        "--package-name",
+        "client",
+        "--global-property",
+        "supportingFiles,models,apis",
+        "--additional-properties",
+        "pipPackageName=crypticorn,mainClientName=CrypticornClient",
+        "-o",
+        f"python/crypticorn/{module_name}",
+        "--openapi-generator-ignore-list",
+        "setup.py,setup.cfg,pyproject.toml,tox.ini,py.typed,.gitignore,.gitlab-ci.yml,.github/,git_push.sh,test/,.travis.yml,test-requirements.txt",
         "--minimal-update",
-        "--library", "asyncio"
+        "--library",
+        "asyncio",
     ]
     subprocess.run(generator_cmd, check=True)
 
@@ -52,10 +62,10 @@ def main():
     init_path = f"python/crypticorn/{module_name}/__init__.py"
     if not os.path.exists(init_path):
         print(f"Creating {init_path} file")
-        init_content = f'''from crypticorn.{module_name}.client import *
+        init_content = f"""from crypticorn.{module_name}.client import *
 from crypticorn.{module_name}.main import {upper_module_name}Client
-'''
-        with open(init_path, 'w') as f:
+"""
+        with open(init_path, "w") as f:
             f.write(init_content)
 
     # Create main.py file if it doesn't exist
@@ -91,31 +101,46 @@ class {upper_module_name}Client:
         # self.exchanges = ExchangesApi(base_client)
         # self.notifications = NotificationsApi(base_client)
 '''
-        with open(main_path, 'w') as f:
+        with open(main_path, "w") as f:
             f.write(main_content)
 
     # Update imports to use fully qualified package name
     print("Updating imports to use fully qualified package name")
     for root, _, files in os.walk(f"python/crypticorn/{module_name}"):
         for file in files:
-            if file.endswith('.py'):
+            if file.endswith(".py"):
                 file_path = os.path.join(root, file)
-                with open(file_path, 'r') as f:
+                with open(file_path, "r") as f:
                     content = f.read()
-                
-                content = content.replace('from client.', f'from crypticorn.{module_name}.client.')
-                content = content.replace('from client ', f'from crypticorn.{module_name}.client ')
-                content = content.replace('import client.', f'import crypticorn.{module_name}.client.')
-                content = content.replace('import client', f'import crypticorn.{module_name}.client')
-                content = content.replace('klass = getattr(client', f'klass = getattr(crypticorn.{module_name}.client')
-                
-                with open(file_path, 'w') as f:
+
+                content = content.replace(
+                    "from client.", f"from crypticorn.{module_name}.client."
+                )
+                content = content.replace(
+                    "from client ", f"from crypticorn.{module_name}.client "
+                )
+                content = content.replace(
+                    "import client.", f"import crypticorn.{module_name}.client."
+                )
+                content = content.replace(
+                    "import client", f"import crypticorn.{module_name}.client"
+                )
+                content = content.replace(
+                    "klass = getattr(client",
+                    f"klass = getattr(crypticorn.{module_name}.client",
+                )
+
+                with open(file_path, "w") as f:
                     f.write(content)
 
     print("========================IMPORTANT========================")
-    print(f"Add the dependencies in crypticorn/{module_name}/requirements.txt to the requirements/main.txt file.")
+    print(
+        f"Add the dependencies in crypticorn/{module_name}/requirements.txt to the requirements/main.txt file."
+    )
     print(f"Edit the generated crypticorn/{module_name}/main.py file.")
     print("=========================================================")
 
+
 if __name__ == "__main__":
     main()
+    subprocess.run(["black", ".", "-q"])

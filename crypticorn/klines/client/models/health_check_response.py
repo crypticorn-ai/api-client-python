@@ -22,12 +22,14 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class HealthCheckResponse(BaseModel):
     """
     HealthCheckResponse
-    """ # noqa: E501
-    status: Optional[StrictStr] = 'ok'
-    version: Optional[StrictStr] = '1.0.0'
+    """  # noqa: E501
+
+    status: Optional[StrictStr] = "ok"
+    version: Optional[StrictStr] = "1.0.0"
     __properties: ClassVar[List[str]] = ["status", "version"]
 
     model_config = ConfigDict(
@@ -35,7 +37,6 @@ class HealthCheckResponse(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -61,8 +62,7 @@ class HealthCheckResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -80,10 +80,12 @@ class HealthCheckResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "status": obj.get("status") if obj.get("status") is not None else 'ok',
-            "version": obj.get("version") if obj.get("version") is not None else '1.0.0'
-        })
+        _obj = cls.model_validate(
+            {
+                "status": obj.get("status") if obj.get("status") is not None else "ok",
+                "version": (
+                    obj.get("version") if obj.get("version") is not None else "1.0.0"
+                ),
+            }
+        )
         return _obj
-
-

@@ -26,14 +26,12 @@ class TradingActionType(str, Enum):
     """
     allowed enum values
     """
-    OPEN_LONG = 'open_long'
-    OPEN_SHORT = 'open_short'
-    CLOSE_LONG = 'close_long'
-    CLOSE_SHORT = 'close_short'
+    OPEN_LONG = "open_long"
+    OPEN_SHORT = "open_short"
+    CLOSE_LONG = "close_long"
+    CLOSE_SHORT = "close_short"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
         """Create an instance of TradingActionType from a JSON string"""
         return cls(json.loads(json_str))
-
-

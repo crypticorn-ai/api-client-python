@@ -22,10 +22,12 @@ from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class RevokeUserTokensRequest(BaseModel):
     """
     RevokeUserTokensRequest
-    """ # noqa: E501
+    """  # noqa: E501
+
     user_id: StrictStr = Field(alias="userId")
     __properties: ClassVar[List[str]] = ["userId"]
 
@@ -34,7 +36,6 @@ class RevokeUserTokensRequest(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -60,8 +61,7 @@ class RevokeUserTokensRequest(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -79,9 +79,5 @@ class RevokeUserTokensRequest(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "userId": obj.get("userId")
-        })
+        _obj = cls.model_validate({"userId": obj.get("userId")})
         return _obj
-
-

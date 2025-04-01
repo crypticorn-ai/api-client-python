@@ -26,12 +26,10 @@ class Exchange(str, Enum):
     """
     allowed enum values
     """
-    KUCOIN = 'kucoin'
-    BINGX = 'bingx'
+    KUCOIN = "kucoin"
+    BINGX = "bingx"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
         """Create an instance of Exchange from a JSON string"""
         return cls(json.loads(json_str))
-
-

@@ -19,14 +19,18 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.auth.client.models.logout_default_response_issues_inner import LogoutDefaultResponseIssuesInner
+from crypticorn.auth.client.models.logout_default_response_issues_inner import (
+    LogoutDefaultResponseIssuesInner,
+)
 from typing import Optional, Set
 from typing_extensions import Self
+
 
 class LogoutDefaultResponse(BaseModel):
     """
     LogoutDefaultResponse
-    """ # noqa: E501
+    """  # noqa: E501
+
     message: StrictStr
     code: StrictStr
     issues: Optional[List[LogoutDefaultResponseIssuesInner]] = None
@@ -37,7 +41,6 @@ class LogoutDefaultResponse(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -63,8 +66,7 @@ class LogoutDefaultResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -77,7 +79,7 @@ class LogoutDefaultResponse(BaseModel):
             for _item_issues in self.issues:
                 if _item_issues:
                     _items.append(_item_issues.to_dict())
-            _dict['issues'] = _items
+            _dict["issues"] = _items
         return _dict
 
     @classmethod
@@ -89,11 +91,18 @@ class LogoutDefaultResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "message": obj.get("message"),
-            "code": obj.get("code"),
-            "issues": [LogoutDefaultResponseIssuesInner.from_dict(_item) for _item in obj["issues"]] if obj.get("issues") is not None else None
-        })
+        _obj = cls.model_validate(
+            {
+                "message": obj.get("message"),
+                "code": obj.get("code"),
+                "issues": (
+                    [
+                        LogoutDefaultResponseIssuesInner.from_dict(_item)
+                        for _item in obj["issues"]
+                    ]
+                    if obj.get("issues") is not None
+                    else None
+                ),
+            }
+        )
         return _obj
-
-

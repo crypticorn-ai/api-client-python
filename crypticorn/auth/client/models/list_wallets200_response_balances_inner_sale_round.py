@@ -23,26 +23,40 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class ListWallets200ResponseBalancesInnerSaleRound(BaseModel):
     """
     ListWallets200ResponseBalancesInnerSaleRound
-    """ # noqa: E501
+    """  # noqa: E501
+
     id: Union[StrictFloat, StrictInt]
     name: StrictStr
     price_usd: Union[StrictFloat, StrictInt] = Field(alias="priceUsd")
-    recommended_usd: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="recommendedUsd")
-    contract_sales_to_date: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="contractSalesToDate")
+    recommended_usd: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, alias="recommendedUsd"
+    )
+    contract_sales_to_date: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, alias="contractSalesToDate"
+    )
     allocation: Union[StrictFloat, StrictInt]
     start: datetime
     state: StrictStr
-    __properties: ClassVar[List[str]] = ["id", "name", "priceUsd", "recommendedUsd", "contractSalesToDate", "allocation", "start", "state"]
+    __properties: ClassVar[List[str]] = [
+        "id",
+        "name",
+        "priceUsd",
+        "recommendedUsd",
+        "contractSalesToDate",
+        "allocation",
+        "start",
+        "state",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -68,8 +82,7 @@ class ListWallets200ResponseBalancesInnerSaleRound(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -87,16 +100,16 @@ class ListWallets200ResponseBalancesInnerSaleRound(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "name": obj.get("name"),
-            "priceUsd": obj.get("priceUsd"),
-            "recommendedUsd": obj.get("recommendedUsd"),
-            "contractSalesToDate": obj.get("contractSalesToDate"),
-            "allocation": obj.get("allocation"),
-            "start": obj.get("start"),
-            "state": obj.get("state")
-        })
+        _obj = cls.model_validate(
+            {
+                "id": obj.get("id"),
+                "name": obj.get("name"),
+                "priceUsd": obj.get("priceUsd"),
+                "recommendedUsd": obj.get("recommendedUsd"),
+                "contractSalesToDate": obj.get("contractSalesToDate"),
+                "allocation": obj.get("allocation"),
+                "start": obj.get("start"),
+                "state": obj.get("state"),
+            }
+        )
         return _obj
-
-

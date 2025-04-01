@@ -3,6 +3,7 @@ import asyncio
 
 jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiUHZMRlI3RU9SUEZoeTdyRzg0SWMiLCJpYXQiOjE3NDM1MzU0NTksImV4cCI6MTc0MzUzOTA1OSwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.91rIX0uQ76U_sv9F0rdahRUDa7MKqOPL_aMH88-EAhg"
 
+
 async def main():
     client = ApiClient(base_url="http://localhost", jwt=jwt)
     # json response - NOT WORKING
@@ -23,6 +24,6 @@ async def main():
     response = await client.auth.admin.user_list_with_http_info()
     print(response)
 
+
 if __name__ == "__main__":
     asyncio.run(main())
-

@@ -4,6 +4,7 @@ from crypticorn.pay import PayClient
 from crypticorn.trade import TradeClient
 from crypticorn.auth import AuthClient
 
+
 class ApiClient:
     def __init__(
         self,

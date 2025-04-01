@@ -22,13 +22,19 @@ from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class ExecutionIds(BaseModel):
     """
     ExecutionIds
-    """ # noqa: E501
+    """  # noqa: E501
+
     main: List[StrictStr] = Field(description="Main execution ID. List with one item.")
-    sl: List[StrictStr] = Field(description="Stop loss execution IDs. List with multiple items ordered by the next stop loss.")
-    tp: List[StrictStr] = Field(description="Take profit execution IDs. List with multiple items ordered by the next take profit.")
+    sl: List[StrictStr] = Field(
+        description="Stop loss execution IDs. List with multiple items ordered by the next stop loss."
+    )
+    tp: List[StrictStr] = Field(
+        description="Take profit execution IDs. List with multiple items ordered by the next take profit."
+    )
     __properties: ClassVar[List[str]] = ["main", "sl", "tp"]
 
     model_config = ConfigDict(
@@ -36,7 +42,6 @@ class ExecutionIds(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -62,8 +67,7 @@ class ExecutionIds(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -81,11 +85,7 @@ class ExecutionIds(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "main": obj.get("main"),
-            "sl": obj.get("sl"),
-            "tp": obj.get("tp")
-        })
+        _obj = cls.model_validate(
+            {"main": obj.get("main"), "sl": obj.get("sl"), "tp": obj.get("tp")}
+        )
         return _obj
-
-

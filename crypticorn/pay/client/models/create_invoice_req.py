@@ -17,17 +17,31 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictBool,
+    StrictFloat,
+    StrictInt,
+    StrictStr,
+)
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class CreateInvoiceReq(BaseModel):
     """
     Request model for creating a payment invoice.  Creates a payment link where the customer can complete the payment. With this method, the customer is required to follow the generated url to complete the payment.  https://documenter.getpostman.com/view/7907941/2s93JusNJt#f5e4e645-dce2-4b06-b2ca-2a29aaa5e845
-    """ # noqa: E501
-    price_amount: Union[StrictFloat, StrictInt] = Field(description="Amount to pay in fiat currency")
-    price_currency: StrictStr = Field(description="Fiat currency for the price (usd, eur, etc)")
+    """  # noqa: E501
+
+    price_amount: Union[StrictFloat, StrictInt] = Field(
+        description="Amount to pay in fiat currency"
+    )
+    price_currency: StrictStr = Field(
+        description="Fiat currency for the price (usd, eur, etc)"
+    )
     pay_currency: Optional[StrictStr] = None
     ipn_callback_url: Optional[StrictStr] = None
     order_id: Optional[StrictStr] = None
@@ -37,14 +51,25 @@ class CreateInvoiceReq(BaseModel):
     partially_paid_url: Optional[StrictStr] = None
     is_fixed_rate: Optional[StrictBool] = None
     is_fee_paid_by_user: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["price_amount", "price_currency", "pay_currency", "ipn_callback_url", "order_id", "order_description", "success_url", "cancel_url", "partially_paid_url", "is_fixed_rate", "is_fee_paid_by_user"]
+    __properties: ClassVar[List[str]] = [
+        "price_amount",
+        "price_currency",
+        "pay_currency",
+        "ipn_callback_url",
+        "order_id",
+        "order_description",
+        "success_url",
+        "cancel_url",
+        "partially_paid_url",
+        "is_fixed_rate",
+        "is_fee_paid_by_user",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -70,8 +95,7 @@ class CreateInvoiceReq(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -81,47 +105,59 @@ class CreateInvoiceReq(BaseModel):
         # set to None if pay_currency (nullable) is None
         # and model_fields_set contains the field
         if self.pay_currency is None and "pay_currency" in self.model_fields_set:
-            _dict['pay_currency'] = None
+            _dict["pay_currency"] = None
 
         # set to None if ipn_callback_url (nullable) is None
         # and model_fields_set contains the field
-        if self.ipn_callback_url is None and "ipn_callback_url" in self.model_fields_set:
-            _dict['ipn_callback_url'] = None
+        if (
+            self.ipn_callback_url is None
+            and "ipn_callback_url" in self.model_fields_set
+        ):
+            _dict["ipn_callback_url"] = None
 
         # set to None if order_id (nullable) is None
         # and model_fields_set contains the field
         if self.order_id is None and "order_id" in self.model_fields_set:
-            _dict['order_id'] = None
+            _dict["order_id"] = None
 
         # set to None if order_description (nullable) is None
         # and model_fields_set contains the field
-        if self.order_description is None and "order_description" in self.model_fields_set:
-            _dict['order_description'] = None
+        if (
+            self.order_description is None
+            and "order_description" in self.model_fields_set
+        ):
+            _dict["order_description"] = None
 
         # set to None if success_url (nullable) is None
         # and model_fields_set contains the field
         if self.success_url is None and "success_url" in self.model_fields_set:
-            _dict['success_url'] = None
+            _dict["success_url"] = None
 
         # set to None if cancel_url (nullable) is None
         # and model_fields_set contains the field
         if self.cancel_url is None and "cancel_url" in self.model_fields_set:
-            _dict['cancel_url'] = None
+            _dict["cancel_url"] = None
 
         # set to None if partially_paid_url (nullable) is None
         # and model_fields_set contains the field
-        if self.partially_paid_url is None and "partially_paid_url" in self.model_fields_set:
-            _dict['partially_paid_url'] = None
+        if (
+            self.partially_paid_url is None
+            and "partially_paid_url" in self.model_fields_set
+        ):
+            _dict["partially_paid_url"] = None
 
         # set to None if is_fixed_rate (nullable) is None
         # and model_fields_set contains the field
         if self.is_fixed_rate is None and "is_fixed_rate" in self.model_fields_set:
-            _dict['is_fixed_rate'] = None
+            _dict["is_fixed_rate"] = None
 
         # set to None if is_fee_paid_by_user (nullable) is None
         # and model_fields_set contains the field
-        if self.is_fee_paid_by_user is None and "is_fee_paid_by_user" in self.model_fields_set:
-            _dict['is_fee_paid_by_user'] = None
+        if (
+            self.is_fee_paid_by_user is None
+            and "is_fee_paid_by_user" in self.model_fields_set
+        ):
+            _dict["is_fee_paid_by_user"] = None
 
         return _dict
 
@@ -134,19 +170,19 @@ class CreateInvoiceReq(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "price_amount": obj.get("price_amount"),
-            "price_currency": obj.get("price_currency"),
-            "pay_currency": obj.get("pay_currency"),
-            "ipn_callback_url": obj.get("ipn_callback_url"),
-            "order_id": obj.get("order_id"),
-            "order_description": obj.get("order_description"),
-            "success_url": obj.get("success_url"),
-            "cancel_url": obj.get("cancel_url"),
-            "partially_paid_url": obj.get("partially_paid_url"),
-            "is_fixed_rate": obj.get("is_fixed_rate"),
-            "is_fee_paid_by_user": obj.get("is_fee_paid_by_user")
-        })
+        _obj = cls.model_validate(
+            {
+                "price_amount": obj.get("price_amount"),
+                "price_currency": obj.get("price_currency"),
+                "pay_currency": obj.get("pay_currency"),
+                "ipn_callback_url": obj.get("ipn_callback_url"),
+                "order_id": obj.get("order_id"),
+                "order_description": obj.get("order_description"),
+                "success_url": obj.get("success_url"),
+                "cancel_url": obj.get("cancel_url"),
+                "partially_paid_url": obj.get("partially_paid_url"),
+                "is_fixed_rate": obj.get("is_fixed_rate"),
+                "is_fee_paid_by_user": obj.get("is_fee_paid_by_user"),
+            }
+        )
         return _obj
-
-

@@ -10,4 +10,3 @@ from crypticorn.trade.client.api.orders_api import OrdersApi
 from crypticorn.trade.client.api.status_api import StatusApi
 from crypticorn.trade.client.api.strategies_api import StrategiesApi
 from crypticorn.trade.client.api.trading_actions_api import TradingActionsApi
-

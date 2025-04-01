@@ -22,11 +22,13 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class HistorySuccessResponse(BaseModel):
     """
     HistorySuccessResponse
-    """ # noqa: E501
-    s: Optional[StrictStr] = 'ok'
+    """  # noqa: E501
+
+    s: Optional[StrictStr] = "ok"
     t: List[StrictInt]
     o: List[Union[StrictFloat, StrictInt]]
     h: List[Union[StrictFloat, StrictInt]]
@@ -40,7 +42,6 @@ class HistorySuccessResponse(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -66,8 +67,7 @@ class HistorySuccessResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -85,15 +85,15 @@ class HistorySuccessResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "s": obj.get("s") if obj.get("s") is not None else 'ok',
-            "t": obj.get("t"),
-            "o": obj.get("o"),
-            "h": obj.get("h"),
-            "l": obj.get("l"),
-            "c": obj.get("c"),
-            "v": obj.get("v")
-        })
+        _obj = cls.model_validate(
+            {
+                "s": obj.get("s") if obj.get("s") is not None else "ok",
+                "t": obj.get("t"),
+                "o": obj.get("o"),
+                "h": obj.get("h"),
+                "l": obj.get("l"),
+                "c": obj.get("c"),
+                "v": obj.get("v"),
+            }
+        )
         return _obj
-
-

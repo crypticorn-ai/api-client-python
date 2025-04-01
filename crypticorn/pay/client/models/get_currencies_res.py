@@ -23,10 +23,12 @@ from crypticorn.pay.client.models.currency import Currency
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class GetCurrenciesRes(BaseModel):
     """
     Response containing list of available cryptocurrencies.
-    """ # noqa: E501
+    """  # noqa: E501
+
     currencies: List[Currency] = Field(description="List of supported cryptocurrencies")
     __properties: ClassVar[List[str]] = ["currencies"]
 
@@ -35,7 +37,6 @@ class GetCurrenciesRes(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -61,8 +62,7 @@ class GetCurrenciesRes(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -75,7 +75,7 @@ class GetCurrenciesRes(BaseModel):
             for _item_currencies in self.currencies:
                 if _item_currencies:
                     _items.append(_item_currencies.to_dict())
-            _dict['currencies'] = _items
+            _dict["currencies"] = _items
         return _dict
 
     @classmethod
@@ -87,9 +87,13 @@ class GetCurrenciesRes(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "currencies": [Currency.from_dict(_item) for _item in obj["currencies"]] if obj.get("currencies") is not None else None
-        })
+        _obj = cls.model_validate(
+            {
+                "currencies": (
+                    [Currency.from_dict(_item) for _item in obj["currencies"]]
+                    if obj.get("currencies") is not None
+                    else None
+                )
+            }
+        )
         return _obj
-
-

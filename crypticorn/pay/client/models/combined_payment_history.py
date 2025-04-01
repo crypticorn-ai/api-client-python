@@ -23,11 +23,15 @@ from crypticorn.pay.client.models.now_payment_model import NowPaymentModel
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class CombinedPaymentHistory(BaseModel):
     """
     Combined payment history across all services
-    """ # noqa: E501
-    now: Optional[List[NowPaymentModel]] = Field(default=None, description="NOWPayments payment history")
+    """  # noqa: E501
+
+    now: Optional[List[NowPaymentModel]] = Field(
+        default=None, description="NOWPayments payment history"
+    )
     __properties: ClassVar[List[str]] = ["now"]
 
     model_config = ConfigDict(
@@ -35,7 +39,6 @@ class CombinedPaymentHistory(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -61,8 +64,7 @@ class CombinedPaymentHistory(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -75,7 +77,7 @@ class CombinedPaymentHistory(BaseModel):
             for _item_now in self.now:
                 if _item_now:
                     _items.append(_item_now.to_dict())
-            _dict['now'] = _items
+            _dict["now"] = _items
         return _dict
 
     @classmethod
@@ -87,9 +89,13 @@ class CombinedPaymentHistory(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "now": [NowPaymentModel.from_dict(_item) for _item in obj["now"]] if obj.get("now") is not None else None
-        })
+        _obj = cls.model_validate(
+            {
+                "now": (
+                    [NowPaymentModel.from_dict(_item) for _item in obj["now"]]
+                    if obj.get("now") is not None
+                    else None
+                )
+            }
+        )
         return _obj
-
-

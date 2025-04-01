@@ -19,14 +19,18 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
-from crypticorn.auth.client.models.refresh_token_info200_response_user_session import RefreshTokenInfo200ResponseUserSession
+from crypticorn.auth.client.models.refresh_token_info200_response_user_session import (
+    RefreshTokenInfo200ResponseUserSession,
+)
 from typing import Optional, Set
 from typing_extensions import Self
+
 
 class RefreshTokenInfo200Response(BaseModel):
     """
     RefreshTokenInfo200Response
-    """ # noqa: E501
+    """  # noqa: E501
+
     user_session: RefreshTokenInfo200ResponseUserSession = Field(alias="userSession")
     __properties: ClassVar[List[str]] = ["userSession"]
 
@@ -35,7 +39,6 @@ class RefreshTokenInfo200Response(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -61,8 +64,7 @@ class RefreshTokenInfo200Response(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -71,7 +73,7 @@ class RefreshTokenInfo200Response(BaseModel):
         )
         # override the default output from pydantic by calling `to_dict()` of user_session
         if self.user_session:
-            _dict['userSession'] = self.user_session.to_dict()
+            _dict["userSession"] = self.user_session.to_dict()
         return _dict
 
     @classmethod
@@ -83,9 +85,13 @@ class RefreshTokenInfo200Response(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "userSession": RefreshTokenInfo200ResponseUserSession.from_dict(obj["userSession"]) if obj.get("userSession") is not None else None
-        })
+        _obj = cls.model_validate(
+            {
+                "userSession": (
+                    RefreshTokenInfo200ResponseUserSession.from_dict(obj["userSession"])
+                    if obj.get("userSession") is not None
+                    else None
+                )
+            }
+        )
         return _obj
-
-

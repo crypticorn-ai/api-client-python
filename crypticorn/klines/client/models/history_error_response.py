@@ -22,11 +22,13 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class HistoryErrorResponse(BaseModel):
     """
     HistoryErrorResponse
-    """ # noqa: E501
-    s: Optional[StrictStr] = 'error'
+    """  # noqa: E501
+
+    s: Optional[StrictStr] = "error"
     errmsg: StrictStr
     __properties: ClassVar[List[str]] = ["s", "errmsg"]
 
@@ -35,7 +37,6 @@ class HistoryErrorResponse(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -61,8 +62,7 @@ class HistoryErrorResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -80,10 +80,10 @@ class HistoryErrorResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "s": obj.get("s") if obj.get("s") is not None else 'error',
-            "errmsg": obj.get("errmsg")
-        })
+        _obj = cls.model_validate(
+            {
+                "s": obj.get("s") if obj.get("s") is not None else "error",
+                "errmsg": obj.get("errmsg"),
+            }
+        )
         return _obj
-
-

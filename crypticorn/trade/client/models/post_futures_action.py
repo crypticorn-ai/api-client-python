@@ -23,10 +23,12 @@ from crypticorn.trade.client.models.execution_ids import ExecutionIds
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class PostFuturesAction(BaseModel):
     """
     PostFuturesAction
-    """ # noqa: E501
+    """  # noqa: E501
+
     id: StrictStr = Field(description="Action ID.")
     execution_ids: ExecutionIds = Field(description="Execution IDs for the action.")
     __properties: ClassVar[List[str]] = ["id", "execution_ids"]
@@ -36,7 +38,6 @@ class PostFuturesAction(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -62,8 +63,7 @@ class PostFuturesAction(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -72,7 +72,7 @@ class PostFuturesAction(BaseModel):
         )
         # override the default output from pydantic by calling `to_dict()` of execution_ids
         if self.execution_ids:
-            _dict['execution_ids'] = self.execution_ids.to_dict()
+            _dict["execution_ids"] = self.execution_ids.to_dict()
         return _dict
 
     @classmethod
@@ -84,10 +84,14 @@ class PostFuturesAction(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "execution_ids": ExecutionIds.from_dict(obj["execution_ids"]) if obj.get("execution_ids") is not None else None
-        })
+        _obj = cls.model_validate(
+            {
+                "id": obj.get("id"),
+                "execution_ids": (
+                    ExecutionIds.from_dict(obj["execution_ids"])
+                    if obj.get("execution_ids") is not None
+                    else None
+                ),
+            }
+        )
         return _obj
-
-

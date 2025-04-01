@@ -24,10 +24,12 @@ from crypticorn.klines.client.models.ohlcv_response import OHLCVResponse
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class BaseResponseOHLCVResponse(BaseModel):
     """
     BaseResponseOHLCVResponse
-    """ # noqa: E501
+    """  # noqa: E501
+
     success: Optional[StrictBool] = True
     message: Optional[StrictStr] = None
     data: Optional[OHLCVResponse] = None
@@ -39,7 +41,6 @@ class BaseResponseOHLCVResponse(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -65,8 +66,7 @@ class BaseResponseOHLCVResponse(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -75,16 +75,16 @@ class BaseResponseOHLCVResponse(BaseModel):
         )
         # override the default output from pydantic by calling `to_dict()` of data
         if self.data:
-            _dict['data'] = self.data.to_dict()
+            _dict["data"] = self.data.to_dict()
         # set to None if message (nullable) is None
         # and model_fields_set contains the field
         if self.message is None and "message" in self.model_fields_set:
-            _dict['message'] = None
+            _dict["message"] = None
 
         # set to None if data (nullable) is None
         # and model_fields_set contains the field
         if self.data is None and "data" in self.model_fields_set:
-            _dict['data'] = None
+            _dict["data"] = None
 
         return _dict
 
@@ -97,12 +97,18 @@ class BaseResponseOHLCVResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "success": obj.get("success") if obj.get("success") is not None else True,
-            "message": obj.get("message"),
-            "data": OHLCVResponse.from_dict(obj["data"]) if obj.get("data") is not None else None,
-            "timestamp": obj.get("timestamp")
-        })
+        _obj = cls.model_validate(
+            {
+                "success": (
+                    obj.get("success") if obj.get("success") is not None else True
+                ),
+                "message": obj.get("message"),
+                "data": (
+                    OHLCVResponse.from_dict(obj["data"])
+                    if obj.get("data") is not None
+                    else None
+                ),
+                "timestamp": obj.get("timestamp"),
+            }
+        )
         return _obj
-
-

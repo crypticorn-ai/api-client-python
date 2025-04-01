@@ -23,23 +23,38 @@ from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class TPSL(BaseModel):
     """
     Model for take profit and stop loss targets
-    """ # noqa: E501
-    price_delta: Optional[Union[Annotated[float, Field(strict=True, ge=0.0)], Annotated[int, Field(strict=True, ge=0)]]] = None
+    """  # noqa: E501
+
+    price_delta: Optional[
+        Union[
+            Annotated[float, Field(strict=True, ge=0.0)],
+            Annotated[int, Field(strict=True, ge=0)],
+        ]
+    ] = None
     price: Optional[Union[StrictFloat, StrictInt]] = None
-    allocation: Union[Annotated[float, Field(le=1.0, strict=True, ge=0.0)], Annotated[int, Field(le=1, strict=True, ge=0)]] = Field(description="Percentage of the order to sell")
+    allocation: Union[
+        Annotated[float, Field(le=1.0, strict=True, ge=0.0)],
+        Annotated[int, Field(le=1, strict=True, ge=0)],
+    ] = Field(description="Percentage of the order to sell")
     execution_id: Optional[StrictStr] = None
     client_order_id: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["price_delta", "price", "allocation", "execution_id", "client_order_id"]
+    __properties: ClassVar[List[str]] = [
+        "price_delta",
+        "price",
+        "allocation",
+        "execution_id",
+        "client_order_id",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -65,8 +80,7 @@ class TPSL(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -76,22 +90,22 @@ class TPSL(BaseModel):
         # set to None if price_delta (nullable) is None
         # and model_fields_set contains the field
         if self.price_delta is None and "price_delta" in self.model_fields_set:
-            _dict['price_delta'] = None
+            _dict["price_delta"] = None
 
         # set to None if price (nullable) is None
         # and model_fields_set contains the field
         if self.price is None and "price" in self.model_fields_set:
-            _dict['price'] = None
+            _dict["price"] = None
 
         # set to None if execution_id (nullable) is None
         # and model_fields_set contains the field
         if self.execution_id is None and "execution_id" in self.model_fields_set:
-            _dict['execution_id'] = None
+            _dict["execution_id"] = None
 
         # set to None if client_order_id (nullable) is None
         # and model_fields_set contains the field
         if self.client_order_id is None and "client_order_id" in self.model_fields_set:
-            _dict['client_order_id'] = None
+            _dict["client_order_id"] = None
 
         return _dict
 
@@ -104,13 +118,13 @@ class TPSL(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "price_delta": obj.get("price_delta"),
-            "price": obj.get("price"),
-            "allocation": obj.get("allocation"),
-            "execution_id": obj.get("execution_id"),
-            "client_order_id": obj.get("client_order_id")
-        })
+        _obj = cls.model_validate(
+            {
+                "price_delta": obj.get("price_delta"),
+                "price": obj.get("price"),
+                "allocation": obj.get("allocation"),
+                "execution_id": obj.get("execution_id"),
+                "client_order_id": obj.get("client_order_id"),
+            }
+        )
         return _obj
-
-
