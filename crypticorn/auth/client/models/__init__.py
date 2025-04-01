@@ -1,7 +1,6 @@
 # coding: utf-8
 
 # flake8: noqa
-
 """
     Crypticorn Auth API
 
@@ -14,27 +13,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.0.0"
-
-# import apis into sdk package
-from crypticorn.auth.client.api.admin_api import AdminApi
-from crypticorn.auth.client.api.auth_api import AuthApi
-from crypticorn.auth.client.api.service_api import ServiceApi
-from crypticorn.auth.client.api.user_api import UserApi
-from crypticorn.auth.client.api.wallet_api import WalletApi
-
-# import ApiClient
-from crypticorn.auth.client.api_response import ApiResponse
-from crypticorn.auth.client.api_client import ApiClient
-from crypticorn.auth.client.configuration import Configuration
-from crypticorn.auth.client.exceptions import OpenApiException
-from crypticorn.auth.client.exceptions import ApiTypeError
-from crypticorn.auth.client.exceptions import ApiValueError
-from crypticorn.auth.client.exceptions import ApiKeyError
-from crypticorn.auth.client.exceptions import ApiAttributeError
-from crypticorn.auth.client.exceptions import ApiException
-
-# import models into sdk package
+# import models into model package
 from crypticorn.auth.client.models.add_wallet200_response import AddWallet200Response
 from crypticorn.auth.client.models.add_wallet_request import AddWalletRequest
 from crypticorn.auth.client.models.authorize_user200_response import AuthorizeUser200Response
