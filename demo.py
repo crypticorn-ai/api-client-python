@@ -7,7 +7,7 @@ jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdv
 
 async def main():
     async with ApiClient(base_url="http://localhost", jwt=jwt) as client:
-        # json response - NOT WORKING
+        # json response
         response = await client.pay.products.get_products_without_preload_content()
         print(10 * "=" + "This is the raw json response" + 10 * "=")
         print(await response.json())
@@ -29,5 +29,10 @@ async def main():
         # print(response)
 
 
+
 if __name__ == "__main__":
-    asyncio.run(main())
+    # asyncio.run(main())
+    client = ApiClient(base_url="http://localhost", jwt=jwt)
+    response = asyncio.run(client.hive.models.get_all_models())
+    print(response)
+    asyncio.run(client.close())
