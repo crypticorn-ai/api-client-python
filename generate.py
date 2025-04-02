@@ -89,17 +89,17 @@ class {upper_module_name}Client:
     def __init__(self, base_url: str = None, api_key: str = None, jwt: str = None):
         # Configure {upper_module_name} client
         self.host = f"{{base_url}}/v1/{module_name}"
-        config = Configuration(
+        self.config = Configuration(
             host=self.host,
             #access_token=jwt, # change to the correct auth method  
             #authorization=api_key, # change to the correct auth method
         )
-        base_client = ApiClient(configuration=config)
+        self.base_client = ApiClient(configuration=self.config)
         # Instantiate all the endpoint clients
         # Example:
-        # self.bots = BotsApi(base_client)
-        # self.exchanges = ExchangesApi(base_client)
-        # self.notifications = NotificationsApi(base_client)
+        # self.bots = BotsApi(self.base_client)
+        # self.exchanges = ExchangesApi(self.base_client)
+        # self.notifications = NotificationsApi(self.base_client)
 '''
         with open(main_path, "w") as f:
             f.write(main_content)
