@@ -21,19 +21,19 @@ class TradeClient:
     def __init__(self, base_url: str = None, api_key: str = None, jwt: str = None):
         # Configure Trade client
         self.host = f"{base_url}/v1/trade"
-        config = Configuration(
+        self.config = Configuration(
             host=self.host,
             access_token=jwt,
             # authorization=api_key, # TODO: add api key verification
         )
-        base_client = ApiClient(configuration=config)
+        self.base_client = ApiClient(configuration=self.config)
         # Instantiate all the endpoint clients
-        self.bots = BotsApi(base_client)
-        self.exchanges = ExchangesApi(base_client)
-        self.notifications = NotificationsApi(base_client)
-        self.orders = OrdersApi(base_client)
-        self.status = StatusApi(base_client)
-        self.strategies = StrategiesApi(base_client)
-        self.actions = TradingActionsApi(base_client)
-        self.futures = FuturesTradingPanelApi(base_client)
-        self.api_keys = APIKeysApi(base_client)
+        self.bots = BotsApi(self.base_client)
+        self.exchanges = ExchangesApi(self.base_client)
+        self.notifications = NotificationsApi(self.base_client)
+        self.orders = OrdersApi(self.base_client)
+        self.status = StatusApi(self.base_client)
+        self.strategies = StrategiesApi(self.base_client)
+        self.actions = TradingActionsApi(self.base_client)
+        self.futures = FuturesTradingPanelApi(self.base_client)
+        self.api_keys = APIKeysApi(self.base_client)

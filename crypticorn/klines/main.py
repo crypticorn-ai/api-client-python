@@ -47,13 +47,13 @@ class KlinesClient:
     ):
         # Configure Klines client
         self.host = f"{base_url}/v1/klines"
-        klines_config = Configuration(
+        self.config = Configuration(
             host=self.host,
         )
-        base_client = ApiClient(configuration=klines_config)
+        self.base_client = ApiClient(configuration=self.config)
         # Instantiate all the endpoint clients
-        self.funding = FundingRatesApiWrapper(base_client)
-        self.ohlcv = OHLCVDataApiWrapper(base_client)
-        self.symbols = SymbolsApiWrapper(base_client)
-        self.udf = UDFApiWrapper(base_client)
-        self.health = HealthCheckApi(base_client)
+        self.funding = FundingRatesApiWrapper(self.base_client)
+        self.ohlcv = OHLCVDataApiWrapper(self.base_client)
+        self.symbols = SymbolsApiWrapper(self.base_client)
+        self.udf = UDFApiWrapper(self.base_client)
+        self.health = HealthCheckApi(self.base_client)
