@@ -79,6 +79,7 @@ from crypticorn.{module_name}.main import {upper_module_name}Client
     # ExchangesApi,
     # NotificationsApi,
 )
+from crypticorn.common import APIKeyHeader, BaseURL, APIVersion, ServiceSuffix
 
 
 class {upper_module_name}Client:
@@ -86,17 +87,26 @@ class {upper_module_name}Client:
     A client for interacting with the Crypticorn {upper_module_name} API.
     """
 
-    def __init__(self, base_url: str = None, api_key: str = None, jwt: str = None):
-        # Configure {upper_module_name} client
-        self.host = f"{{base_url}}/v1/{module_name}"
+    def __init__(
+        self,
+        base_url: BaseURL | str,
+        api_version: APIVersion,
+        api_key: str = None,
+        jwt: str = None,
+    ):
+        self.host = f"{{base_url}}/{{api_version.value}}/{{Service.{{upper_module_name}}.value}}"
         self.config = Configuration(
             host=self.host,
-            #access_token=jwt, # change to the correct auth method  
-            #authorization=api_key, # change to the correct auth method
+            access_token=jwt,
+            api_key={{APIKeyHeader.name: api_key}} if api_key else None,
+            api_key_prefix=(
+                {{APIKeyHeader.name: APIKeyHeader.prefix}} 
+                if api_key 
+                else None,
+            ),
         )
         self.base_client = ApiClient(configuration=self.config)
         # Instantiate all the endpoint clients
-        # Example:
         # self.bots = BotsApi(self.base_client)
         # self.exchanges = ExchangesApi(self.base_client)
         # self.notifications = NotificationsApi(self.base_client)
@@ -134,10 +144,12 @@ class {upper_module_name}Client:
                     f.write(content)
 
     print("========================IMPORTANT========================")
+    print("If you are adding a new module, you need to do the following:")
     print(
-        f"Add the dependencies in crypticorn/{module_name}/requirements.txt to the requirements/main.txt file."
+        f"- Add the dependencies in crypticorn/{module_name}/requirements.txt to the requirements/main.txt file."
     )
-    print(f"Edit the generated crypticorn/{module_name}/main.py file.")
+    print(f"- Edit the generated crypticorn/{module_name}/main.py file.")
+    print(f"- Edit the crypticorn/common/urls.py file to add the new module.")
     print("=========================================================")
 
 
