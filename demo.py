@@ -32,7 +32,7 @@ async def main():
 
 if __name__ == "__main__":
     # asyncio.run(main())
-    client = ApiClient(base_url="http://localhost", jwt=jwt)
+    client = ApiClient(base_url="http://localhost", api_key="1234567890")
     response = asyncio.run(client.hive.models.get_all_models())
     print(response)
     asyncio.run(client.close())

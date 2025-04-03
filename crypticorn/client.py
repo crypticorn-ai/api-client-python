@@ -4,23 +4,28 @@ from crypticorn.pay import PayClient
 from crypticorn.trade import TradeClient
 from crypticorn.auth import AuthClient
 import asyncio
-
+from crypticorn.common import BaseURL, APIVersion
 
 class ApiClient:
     def __init__(
         self,
-        base_url: str = "https://api.crypticorn.com",
+        base_url: BaseURL | str = BaseURL.PROD,
         api_key: str = None,
         jwt: str = None,
+        hive_version: APIVersion = APIVersion.V1,
+        klines_version: APIVersion = APIVersion.V1,
+        pay_version: APIVersion = APIVersion.V1,
+        trade_version: APIVersion = APIVersion.V1,
+        auth_version: APIVersion = APIVersion.V1,
     ):
         self.base_url = base_url
         self.api_key = api_key
         self.jwt = jwt
-        self.hive = HiveClient(base_url, api_key, jwt)
-        self.trade = TradeClient(base_url, api_key, jwt)
-        self.klines = KlinesClient(base_url, api_key, jwt)
-        self.pay = PayClient(base_url, api_key, jwt)
-        self.auth = AuthClient(base_url, api_key, jwt)
+        self.hive = HiveClient(base_url, hive_version, api_key, jwt)
+        self.trade = TradeClient(base_url, trade_version, api_key, jwt)
+        self.klines = KlinesClient(base_url, klines_version, api_key, jwt)
+        self.pay = PayClient(base_url, pay_version, api_key, jwt)
+        self.auth = AuthClient(base_url, auth_version, api_key, jwt)
 
     async def __aenter__(self):
         return self

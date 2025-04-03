@@ -8,27 +8,44 @@ from crypticorn.klines import (
     SymbolsApi,
     UDFApi,
 )
+from crypticorn.common import APIKeyHeader, BaseURL, APIVersion, Service
 
 
 class FundingRatesApiWrapper(FundingRatesApi):
+    """
+    A wrapper for the FundingRatesApi class.
+    """
+
     def get_funding_rates_fmt(self):
         response = self.funding_rate_funding_rates_symbol_get()
         return pd.DataFrame(response.json())
 
 
 class OHLCVDataApiWrapper(OHLCVDataApi):
+    """
+    A wrapper for the OHLCVDataApi class.
+    """
+
     def get_ohlcv_data_fmt(self):
         response = self.get_ohlcv_market_timeframe_symbol_get()
         return pd.DataFrame(response.json())
 
 
 class SymbolsApiWrapper(SymbolsApi):
+    """
+    A wrapper for the SymbolsApi class.
+    """
+
     def get_symbols_fmt(self):
         response = self.symbols_symbols_market_get()
         return pd.DataFrame(response.json())
 
 
 class UDFApiWrapper(UDFApi):
+    """
+    A wrapper for the UDFApi class.
+    """
+
     def get_udf_fmt(self):
         response = self.get_history_udf_history_get()
         return pd.DataFrame(response.json())
@@ -41,14 +58,21 @@ class KlinesClient:
 
     def __init__(
         self,
-        base_url: str = "https://api.crypticorn.dev",
+        base_url: BaseURL | str,
+        api_version: APIVersion,
         api_key: str = None,
         jwt: str = None,
     ):
-        # Configure Klines client
-        self.host = f"{base_url}/v1/klines"
+        self.host = f"{base_url}/{api_version.value}/{Service.KLINES.value}"
         self.config = Configuration(
             host=self.host,
+            access_token=jwt,
+            api_key={APIKeyHeader.name: api_key} if api_key else None,
+            api_key_prefix=(
+                {APIKeyHeader.name: APIKeyHeader.prefix}
+                if api_key
+                else None
+            ),
         )
         self.base_client = ApiClient(configuration=self.config)
         # Instantiate all the endpoint clients
