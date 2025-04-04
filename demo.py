@@ -14,7 +14,9 @@ async def main():
 
         # serialized response with pydantic models
         response = await client.pay.products.get_products()
-        print(10 * "=" + "This is the serialized response with pydantic models" + 10 * "=")
+        print(
+            10 * "=" + "This is the serialized response with pydantic models" + 10 * "="
+        )
         print(response)
 
         # json response with http info
@@ -27,7 +29,6 @@ async def main():
 
         # response = await client.hive.models.get_all_models()
         # print(response)
-
 
 
 if __name__ == "__main__":

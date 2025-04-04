@@ -32,9 +32,7 @@ class TradeClient:
             access_token=jwt,
             api_key={APIKeyHeader.name: api_key} if api_key else None,
             api_key_prefix=(
-                {APIKeyHeader.name: APIKeyHeader.prefix}
-                if api_key
-                else None
+                {APIKeyHeader.name: APIKeyHeader.prefix} if api_key else None
             ),
         )
         self.base_client = ApiClient(configuration=self.config)

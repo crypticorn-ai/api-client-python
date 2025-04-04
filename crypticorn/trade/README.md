@@ -118,7 +118,10 @@ Class | Method | HTTP request | Description
 *NotificationsApi* | [**update_notifications**](docs/NotificationsApi.md#update_notifications) | **PUT** /notifications | Update Notifications
 *OrdersApi* | [**get_orders**](docs/OrdersApi.md#get_orders) | **GET** /orders | Get Orders
 *StatusApi* | [**ping**](docs/StatusApi.md#ping) | **GET** / | Ping
+*StrategiesApi* | [**create_strategy**](docs/StrategiesApi.md#create_strategy) | **POST** /strategies | Create Strategy
 *StrategiesApi* | [**get_strategies**](docs/StrategiesApi.md#get_strategies) | **GET** /strategies | Get Strategies
+*StrategiesApi* | [**kill_strategy**](docs/StrategiesApi.md#kill_strategy) | **DELETE** /strategies/{id} | Kill Strategy
+*StrategiesApi* | [**update_strategy**](docs/StrategiesApi.md#update_strategy) | **PUT** /strategies/{id} | Update Strategy
 *TradingActionsApi* | [**get_actions**](docs/TradingActionsApi.md#get_actions) | **GET** /actions | Get Actions
 *TradingActionsApi* | [**post_futures_action**](docs/TradingActionsApi.md#post_futures_action) | **POST** /actions/futures | Post Futures Action
 *TradingActionsApi* | [**post_spot_action**](docs/TradingActionsApi.md#post_spot_action) | **POST** /actions/spot | Post Spot Action
@@ -145,7 +148,8 @@ Class | Method | HTTP request | Description
  - [OrderStatus](docs/OrderStatus.md)
  - [PostFuturesAction](docs/PostFuturesAction.md)
  - [StrategyExchangeInfo](docs/StrategyExchangeInfo.md)
- - [StrategyModel](docs/StrategyModel.md)
+ - [StrategyModelInput](docs/StrategyModelInput.md)
+ - [StrategyModelOutput](docs/StrategyModelOutput.md)
  - [TPSL](docs/TPSL.md)
  - [TradingActionType](docs/TradingActionType.md)
  - [ValidationError](docs/ValidationError.md)

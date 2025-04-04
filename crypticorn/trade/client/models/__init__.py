@@ -33,7 +33,8 @@ from crypticorn.trade.client.models.order_model import OrderModel
 from crypticorn.trade.client.models.order_status import OrderStatus
 from crypticorn.trade.client.models.post_futures_action import PostFuturesAction
 from crypticorn.trade.client.models.strategy_exchange_info import StrategyExchangeInfo
-from crypticorn.trade.client.models.strategy_model import StrategyModel
+from crypticorn.trade.client.models.strategy_model_input import StrategyModelInput
+from crypticorn.trade.client.models.strategy_model_output import StrategyModelOutput
 from crypticorn.trade.client.models.tpsl import TPSL
 from crypticorn.trade.client.models.trading_action_type import TradingActionType
 from crypticorn.trade.client.models.validation_error import ValidationError

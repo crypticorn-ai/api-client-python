@@ -15,6 +15,8 @@ Method | HTTP request | Description
 
 Create Bot
 
+Creates a new bot.
+
 ### Example
 
 * Bearer Authentication (HTTPBearer):
@@ -93,6 +95,8 @@ Name | Type | Description  | Notes
 > object delete_bot(id, access_token=access_token)
 
 Delete Bot
+
+Soft deletes a bot by cancelling all orders and closing all positions.
 
 ### Example
 
@@ -254,6 +258,8 @@ Name | Type | Description  | Notes
 > object update_bot(id, bot_model, access_token=access_token)
 
 Update Bot
+
+Updates a bot.
 
 ### Example
 

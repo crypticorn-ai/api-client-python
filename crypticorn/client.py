@@ -6,6 +6,7 @@ from crypticorn.auth import AuthClient
 import asyncio
 from crypticorn.common import BaseURL, APIVersion
 
+
 class ApiClient:
     def __init__(
         self,
@@ -32,8 +33,7 @@ class ApiClient:
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         await self.close()
-    
-     
+
     async def close(self):
         """Close all client sessions."""
         clients = [
@@ -41,9 +41,9 @@ class ApiClient:
             self.trade.base_client,
             self.klines.base_client,
             self.pay.base_client,
-            self.auth.base_client
+            self.auth.base_client,
         ]
-        
+
         for client in clients:
-            if hasattr(client, 'close'):
+            if hasattr(client, "close"):
                 await client.close()
