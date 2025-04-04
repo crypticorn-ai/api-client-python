@@ -5,8 +5,9 @@ from crypticorn.auth import (
     ServiceApi,
     UserApi,
     WalletApi,
+    AuthApi,
 )
-from crypticorn.common import APIKeyHeader, BaseURL, APIVersion, Service
+from crypticorn.common import APIKeyScheme, BaseURL, APIVersion, Service
 
 
 class AuthClient:
@@ -25,9 +26,9 @@ class AuthClient:
         self.config = Configuration(
             host=self.host,
             access_token=jwt,
-            api_key={APIKeyHeader.name: api_key} if api_key else None,
+            api_key={APIKeyScheme.name: api_key} if api_key else None,
             api_key_prefix=(
-                {APIKeyHeader.name: APIKeyHeader.prefix} if api_key else None
+                {APIKeyScheme.name: APIKeyScheme.prefix} if api_key else None
             ),
         )
         self.base_client = ApiClient(configuration=self.config)
@@ -36,6 +37,7 @@ class AuthClient:
         self.service = ServiceApi(self.base_client)
         self.user = UserApi(self.base_client)
         self.wallet = WalletApi(self.base_client)
+        self.login = AuthApi(self.base_client)
 
     def close(self):
         self.base_client.__aexit__()

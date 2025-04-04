@@ -1,16 +1,24 @@
 from typing import Optional
+
+from fastapi import Cookie, Depends, HTTPException, status
+from fastapi.security import HTTPAuthorizationCredentials
 from typing_extensions import Annotated, Doc
+
+from crypticorn.auth import AuthClient, Verify200Response
 from crypticorn.common import (
-    AuthScheme,
-    HTTPBearer,
-    APIKeyHeader,
-    Service,
+    ApiError,
+    APIKeyScheme,
+    APIScope,
+    APIVersion,
+    BaseURL,
+    BearerScheme,
     Domain,
-    HTTPMethod,
+    Service,
+    TokenType,
 )
 
 
-class AuthClient:
+class AuthHandler:
     """
     Middleware for verifying API requests. Verifies the validity of the authentication token, allowed scopes, etc.
     """
@@ -18,24 +26,151 @@ class AuthClient:
     def __init__(
         self,
         service: Annotated[Service, Doc("The service that is using the client.")],
-        auth_schemes: Annotated[
-            Optional[list[AuthScheme]],
-            Doc(
-                "The authentication schemes to use for the client. Defaults to HTTPBearer and APIKeyHeader. Can be overridden per request."
-            ),
-        ] = [HTTPBearer, APIKeyHeader],
+        base_url: Annotated[
+            Optional[BaseURL], Doc("The base URL for the auth service.")
+        ] = BaseURL.PROD,
+        api_version: Annotated[
+            Optional[APIVersion], Doc("The API version of the auth service.")
+        ] = APIVersion.V1,
         whitelist: Annotated[
             Optional[list[Domain]],
-            Doc("The domains that are allowed full access to the service."),
-        ] = [Domain.PROD, Domain.DEV],
-        excluded_methods: Annotated[
-            Optional[list[HTTPMethod]], Doc("The methods that are excluded by default.")
-        ] = [],
+            Doc(
+                "The domains of which requests are allowed full access to the service."
+            ),
+        ] = [
+            Domain.PROD,
+            Domain.DEV,
+        ],  # TODO: decide whether this is needed, else omit
     ):
-        self.auth_schemes = auth_schemes
         self.service = service
         self.whitelist = whitelist
-        self.excluded_methods = excluded_methods
+        self.auth_client = AuthClient(base_url=base_url, api_version=api_version)
 
-    def auth(self) -> bool:
-        raise NotImplementedError()
+        self.invalid_scopes_exception = HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ApiError.INSUFFICIENT_SCOPES.identifier,
+        )
+        self.no_credentials_exception = HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=ApiError.NO_CREDENTIALS.identifier,
+        )
+        self.invalid_api_key_exception = HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=ApiError.INVALID_API_KEY.identifier,
+        )
+        self.invalid_bearer_exception = HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=ApiError.INVALID_BEARER.identifier,
+        )
+
+    async def _verify_api_key(self, api_key: str) -> None:
+        """
+        Verifies the API key.
+        """
+        # TODO: Implement
+        return NotImplementedError()
+
+    async def _verify_bearer(
+        self, bearer: HTTPAuthorizationCredentials
+    ) -> Verify200Response:
+        """
+        Verifies the bearer token.
+        """
+        return await self.auth_client.login.verify(bearer.credentials)
+
+    async def _check_scopes(
+        self, api_scopes: list[APIScope], user_scopes: list[APIScope]
+    ) -> bool:
+        """
+        Checks if the user scopes are a subset of the API scopes.
+        """
+        return set(api_scopes).issubset(user_scopes)
+
+    async def api_key_auth(
+        self,
+        api_key: Annotated[str | None, Depends(APIKeyScheme.to_dep)] = None,
+        scopes: list[APIScope] = [],
+    ) -> Verify200Response:
+        """
+        Verifies the API key and checks if the user scopes are a subset of the API scopes.
+        """
+        if not api_key:
+            raise self.no_credentials_exception
+        try:
+            res = await self._verify_api_key(api_key)
+        except Exception as e:  # TODO: Add specific exceptions
+            raise self.invalid_api_key_exception
+        valid_scopes = await self._check_scopes(scopes, res.scopes)
+        if not valid_scopes:
+            raise self.invalid_scopes_exception
+        return res
+
+    async def bearer_auth(
+        self,
+        bearer: Annotated[
+            HTTPAuthorizationCredentials | None,
+            Depends(BearerScheme.to_dep),
+        ] = None,
+        scopes: list[APIScope] = [],
+    ) -> Verify200Response:
+        """
+        Verifies the bearer token and checks if the user scopes are a subset of the API scopes.
+        """
+        if not bearer:
+            raise self.no_credentials_exception
+
+        try:
+            res = await self._verify_bearer(bearer)
+        except Exception as e:  # TODO: Add specific exceptions
+            raise self.invalid_bearer_exception
+        valid_scopes = await self._check_scopes(scopes, res.scopes)
+        if not valid_scopes:
+            raise self.invalid_scopes_exception
+        return res
+
+    async def combined_auth(
+        self,
+        accessToken: Annotated[str | None, Cookie()] = None,
+        bearer: Annotated[
+            HTTPAuthorizationCredentials | None, Depends(BearerScheme.to_dep)
+        ] = None,
+        api_key: Annotated[str | None, Depends(APIKeyScheme.to_dep)] = None,
+        scopes: list[APIScope] = [],
+    ) -> Verify200Response:
+        """
+        Verifies the access token, bearer token, and API key and checks if the user scopes are a subset of the API scopes.
+        Returns early on the first successful verification, otherwise tries all available tokens.
+        """
+        tokens_map = {
+            api_key: TokenType.API_KEY,
+            bearer: TokenType.BEARER,
+            accessToken: TokenType.BEARER,
+        }
+
+        tokens = [token for token in tokens_map.keys() if token is not None]
+
+        if not tokens:
+            raise self.no_credentials_exception
+
+        last_error = None
+        for token in tokens:
+            try:
+                token_type = tokens_map[token]
+                res = None
+
+                if token_type == TokenType.API_KEY:
+                    res = await self._verify_api_key(token)
+                elif token_type == TokenType.BEARER:
+                    res = await self._verify_bearer(token)
+
+                if scopes:
+                    valid_scopes = await self._check_scopes(scopes, res.scopes)
+                    if not valid_scopes:
+                        raise self.invalid_scopes_exception
+
+                return res
+            except Exception as e:
+                last_error = e
+                continue
+
+        raise last_error or self.no_credentials_exception

@@ -7,9 +7,9 @@ class Domain(Enum):
 
 
 class BaseURL(Enum):
-    PROD = f"https://{Domain.PROD.value}"
+    PROD = "https://api.crypticorn.com"
     DEV = "https://api.crypticorn.dev"
-    LOCALHOST = "http://localhost"
+    LOCAL = "http://localhost"
     DOCKER = "http://host.docker.internal"
 
 
