@@ -34,7 +34,8 @@ client/models/order_model.py
 client/models/order_status.py
 client/models/post_futures_action.py
 client/models/strategy_exchange_info.py
-client/models/strategy_model.py
+client/models/strategy_model_input.py
+client/models/strategy_model_output.py
 client/models/tpsl.py
 client/models/trading_action_type.py
 client/models/validation_error.py
@@ -68,7 +69,8 @@ docs/PostFuturesAction.md
 docs/StatusApi.md
 docs/StrategiesApi.md
 docs/StrategyExchangeInfo.md
-docs/StrategyModel.md
+docs/StrategyModelInput.md
+docs/StrategyModelOutput.md
 docs/TPSL.md
 docs/TradingActionType.md
 docs/TradingActionsApi.md

@@ -106,6 +106,14 @@ API error identifiers
 
 * `BOT_STOPPING_COMPLETED` (value: `'bot_stopping_completed'`)
 
+* `OBJECT_NOT_FOUND` (value: `'object_not_found'`)
+
+* `STRATEGY_DISABLED` (value: `'strategy_disabled'`)
+
+* `API_KEY_IN_USE_BY_BOTS` (value: `'api_key_in_use_by_bots'`)
+
+* `BOT_ALREADY_DELETED` (value: `'bot_already_deleted'`)
+
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

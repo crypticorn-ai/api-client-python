@@ -56,6 +56,7 @@ class BotsApi:
     ) -> object:
         """Create Bot
 
+        Creates a new bot.
 
         :param bot_model: (required)
         :type bot_model: BotModel
@@ -124,6 +125,7 @@ class BotsApi:
     ) -> ApiResponse[object]:
         """Create Bot
 
+        Creates a new bot.
 
         :param bot_model: (required)
         :type bot_model: BotModel
@@ -192,6 +194,7 @@ class BotsApi:
     ) -> RESTResponseType:
         """Create Bot
 
+        Creates a new bot.
 
         :param bot_model: (required)
         :type bot_model: BotModel
@@ -321,6 +324,7 @@ class BotsApi:
     ) -> object:
         """Delete Bot
 
+        Soft deletes a bot by cancelling all orders and closing all positions.
 
         :param id: (required)
         :type id: str
@@ -389,6 +393,7 @@ class BotsApi:
     ) -> ApiResponse[object]:
         """Delete Bot
 
+        Soft deletes a bot by cancelling all orders and closing all positions.
 
         :param id: (required)
         :type id: str
@@ -457,6 +462,7 @@ class BotsApi:
     ) -> RESTResponseType:
         """Delete Bot
 
+        Soft deletes a bot by cancelling all orders and closing all positions.
 
         :param id: (required)
         :type id: str
@@ -868,6 +874,7 @@ class BotsApi:
     ) -> object:
         """Update Bot
 
+        Updates a bot.
 
         :param id: (required)
         :type id: str
@@ -940,6 +947,7 @@ class BotsApi:
     ) -> ApiResponse[object]:
         """Update Bot
 
+        Updates a bot.
 
         :param id: (required)
         :type id: str
@@ -1012,6 +1020,7 @@ class BotsApi:
     ) -> RESTResponseType:
         """Update Bot
 
+        Updates a bot.
 
         :param id: (required)
         :type id: str

@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class AuthScheme(BaseModel):
     name: str
     type: str
@@ -8,5 +9,10 @@ class AuthScheme(BaseModel):
     in_: str | None = None
     prefix: str | None = None
 
-HTTPBearer = AuthScheme(name="HTTPBearer", type="http", scheme="bearer", bearerFormat="JWT")
-APIKeyHeader = AuthScheme(name="APIKeyHeader", type="apiKey", in_="header", prefix="X-API-Key")
+
+HTTPBearer = AuthScheme(
+    name="HTTPBearer", type="http", scheme="bearer", bearerFormat="JWT"
+)
+APIKeyHeader = AuthScheme(
+    name="APIKeyHeader", type="apiKey", in_="header", prefix="X-API-Key"
+)

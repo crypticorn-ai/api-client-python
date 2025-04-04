@@ -1,8 +1,10 @@
 from enum import Enum
 
+
 class Domain(Enum):
     PROD = "crypticorn.com"
     DEV = "crypticorn.dev"
+
 
 class BaseURL(Enum):
     PROD = f"https://{Domain.PROD.value}"
@@ -10,8 +12,10 @@ class BaseURL(Enum):
     LOCALHOST = "http://localhost"
     DOCKER = "http://host.docker.internal"
 
+
 class APIVersion(Enum):
     V1 = "v1"
+
 
 class Service(Enum):
     HIVE = "hive"

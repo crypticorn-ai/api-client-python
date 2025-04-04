@@ -81,6 +81,10 @@ class ApiErrorIdentifier(str, Enum):
     DELETE_BOT_ERROR = "delete_bot_error"
     JWT_EXPIRED = "jwt_expired"
     BOT_STOPPING_COMPLETED = "bot_stopping_completed"
+    OBJECT_NOT_FOUND = "object_not_found"
+    STRATEGY_DISABLED = "strategy_disabled"
+    API_KEY_IN_USE_BY_BOTS = "api_key_in_use_by_bots"
+    BOT_ALREADY_DELETED = "bot_already_deleted"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
