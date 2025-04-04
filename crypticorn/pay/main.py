@@ -6,7 +6,7 @@ from crypticorn.pay import (
     PaymentsApi,
     ProductsApi,
 )
-from crypticorn.common import APIKeyHeader, BaseURL, APIVersion, Service
+from crypticorn.common import APIKeyScheme, BaseURL, APIVersion, Service
 
 
 class PayClient:
@@ -25,9 +25,9 @@ class PayClient:
         self.config = Configuration(
             host=self.host,
             access_token=jwt,
-            api_key={APIKeyHeader.name: api_key} if api_key else None,
+            api_key={APIKeyScheme.name: api_key} if api_key else None,
             api_key_prefix=(
-                {APIKeyHeader.name: APIKeyHeader.prefix} if api_key else None
+                {APIKeyScheme.name: APIKeyScheme.prefix} if api_key else None
             ),
         )
         self.base_client = ApiClient(configuration=self.config)
