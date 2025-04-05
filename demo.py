@@ -4,7 +4,7 @@ from crypticorn.common import BaseURL, ApiVersion
 from crypticorn import ApiClient
 import asyncio
 
-jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoicHVxSmIwazVDYVNYTnFWZWw3UUEiLCJpYXQiOjE3NDM4ODUyMjksImV4cCI6MTc0Mzg4ODgyOSwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.l5RuMl0VH1GJXrLBQwFUNSwHqUKaVKV7TOBCrc6Mplc"
+jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiT0NsVUc2dG9ORWJYNkM1alpQZUUiLCJpYXQiOjE3NDM4ODkxNDIsImV4cCI6MTc0Mzg5Mjc0Miwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.ej1O5cRni-pHczAMUR6JvP9VyTCb-e4J847zUYs6luw"
 
 async def main():
     async with ApiClient(base_url=BaseURL.LOCAL, jwt=jwt) as client:
@@ -44,14 +44,14 @@ async def auth():
     ) as client:
         try:
             res = await client.login.verify()
-            print(res)
+            print(res.sub)
         except UnauthorizedException as e:
             print(e.body)
 
 
 if __name__ == "__main__":
-    # asyncio.run(main())
-    asyncio.run(auth())
+    asyncio.run(main())
+    # asyncio.run(auth())
     # client = ApiClient(base_url="http://localhost", api_key="1234567890")
     # response = asyncio.run(client.hive.models.get_all_models())
     # print(response)
