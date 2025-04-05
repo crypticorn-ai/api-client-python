@@ -445,6 +445,7 @@ Returns the payload of the access token.
 
 ### Example
 
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -458,6 +459,15 @@ configuration = client.Configuration(
     host = "http://localhost/v1/auth"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
@@ -489,7 +499,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -514,6 +524,7 @@ Verifies the user is authenticated.
 
 ### Example
 
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -527,6 +538,15 @@ configuration = client.Configuration(
     host = "http://localhost/v1/auth"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
@@ -554,7 +574,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
