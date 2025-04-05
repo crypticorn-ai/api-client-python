@@ -3,6 +3,7 @@ from fastapi.security import HTTPAuthorizationCredentials
 from typing_extensions import Annotated, Doc
 
 from crypticorn.auth import AuthClient, Verify200Response
+from crypticorn.auth.client.exceptions import UnauthorizedException
 from crypticorn.common import (
     ApiError,
     ApiScope,
@@ -93,7 +94,7 @@ class AuthHandler:
             raise self.no_credentials_exception
         try:
             res = await self._verify_api_key(api_key)
-        except Exception as e:  # TODO: Add specific exceptions
+        except UnauthorizedException as e:
             raise self.invalid_api_key_exception
         valid_scopes = await self._check_scopes(scopes, res.scopes)
         if not valid_scopes:
@@ -116,7 +117,7 @@ class AuthHandler:
 
         try:
             res = await self._verify_bearer(bearer)
-        except Exception as e:  # TODO: Add specific exceptions
+        except UnauthorizedException as e:
             raise self.invalid_bearer_exception
         valid_scopes = await self._check_scopes(scopes, res.scopes)
         if not valid_scopes:
@@ -155,7 +156,7 @@ class AuthHandler:
                         raise self.invalid_scopes_exception
                 return res
 
-            except Exception as e:
+            except UnauthorizedException as e:
                 last_error = e
                 continue
 
