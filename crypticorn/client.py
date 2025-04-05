@@ -2,7 +2,7 @@ from crypticorn.hive import HiveClient
 from crypticorn.klines import KlinesClient
 from crypticorn.pay import PayClient
 from crypticorn.trade import TradeClient
-from crypticorn.common import BaseURL, APIVersion
+from crypticorn.common import BaseURL, ApiVersion
 
 
 class ApiClient:
@@ -14,13 +14,14 @@ class ApiClient:
 
     def __init__(
         self,
-        base_url: BaseURL | str = BaseURL.PROD,
+        base_url: BaseURL = BaseURL.PROD,
         api_key: str = None,
         jwt: str = None,
-        hive_version: APIVersion = APIVersion.V1,
-        klines_version: APIVersion = APIVersion.V1,
-        pay_version: APIVersion = APIVersion.V1,
-        trade_version: APIVersion = APIVersion.V1,
+        hive_version: ApiVersion = ApiVersion.V1,
+        klines_version: ApiVersion = ApiVersion.V1,
+        pay_version: ApiVersion = ApiVersion.V1,
+        trade_version: ApiVersion = ApiVersion.V1,
+        auth_version: ApiVersion = ApiVersion.V1,
     ):
         self.base_url = base_url
         self.api_key = api_key
@@ -29,6 +30,9 @@ class ApiClient:
         self.trade = TradeClient(base_url, trade_version, api_key, jwt)
         self.klines = KlinesClient(base_url, klines_version, api_key, jwt)
         self.pay = PayClient(base_url, pay_version, api_key, jwt)
+        # currently not working due to circular import since the AUTH_Handler
+        # is also using the ApiClient
+        # self.auth = AuthClient(base_url, auth_version, api_key, jwt)
 
     async def __aenter__(self):
         return self

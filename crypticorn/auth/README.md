@@ -156,8 +156,8 @@ Class | Method | HTTP request | Description
 
 
 Authentication schemes defined for the API:
-<a id="HttpBearer"></a>
-### HttpBearer
+<a id="HTTPBearer"></a>
+### HTTPBearer
 
 - **Type**: Bearer authentication (JWT)
 

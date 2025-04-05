@@ -119,7 +119,7 @@ HTTPSignatureAuthSetting = TypedDict(
 AuthSettings = TypedDict(
     "AuthSettings",
     {
-        "HttpBearer": BearerFormatAuthSetting,
+        "HTTPBearer": BearerFormatAuthSetting,
     },
     total=False,
 )
@@ -492,7 +492,7 @@ class Configuration:
         """
         auth: AuthSettings = {}
         if self.access_token is not None:
-            auth["HttpBearer"] = {
+            auth["HTTPBearer"] = {
                 "type": "bearer",
                 "in": "header",
                 "format": "JWT",

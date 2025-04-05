@@ -1,20 +1,16 @@
-from typing import Optional
-
-from fastapi import Cookie, Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials
 from typing_extensions import Annotated, Doc
 
 from crypticorn.auth import AuthClient, Verify200Response
 from crypticorn.common import (
     ApiError,
-    APIKeyScheme,
-    APIScope,
-    APIVersion,
+    ApiScope,
+    ApiVersion,
     BaseURL,
-    BearerScheme,
     Domain,
-    Service,
-    TokenType,
+    apikey_header,
+    http_bearer,
 )
 
 
@@ -25,15 +21,14 @@ class AuthHandler:
 
     def __init__(
         self,
-        service: Annotated[Service, Doc("The service that is using the client.")],
         base_url: Annotated[
-            Optional[BaseURL], Doc("The base URL for the auth service.")
+            BaseURL, Doc("The base URL for the auth service.")
         ] = BaseURL.PROD,
         api_version: Annotated[
-            Optional[APIVersion], Doc("The API version of the auth service.")
-        ] = APIVersion.V1,
+            ApiVersion, Doc("The API version of the auth service.")
+        ] = ApiVersion.V1,
         whitelist: Annotated[
-            Optional[list[Domain]],
+            list[Domain],
             Doc(
                 "The domains of which requests are allowed full access to the service."
             ),
@@ -42,7 +37,6 @@ class AuthHandler:
             Domain.DEV,
         ],  # TODO: decide whether this is needed, else omit
     ):
-        self.service = service
         self.whitelist = whitelist
         self.auth_client = AuthClient(base_url=base_url, api_version=api_version)
 
@@ -67,7 +61,7 @@ class AuthHandler:
         """
         Verifies the API key.
         """
-        # TODO: Implement
+        # TODO: Implement in auth service
         return NotImplementedError()
 
     async def _verify_bearer(
@@ -76,10 +70,11 @@ class AuthHandler:
         """
         Verifies the bearer token.
         """
-        return await self.auth_client.login.verify(bearer.credentials)
+        self.auth_client.config.access_token = bearer.credentials
+        return await self.auth_client.login.verify()
 
     async def _check_scopes(
-        self, api_scopes: list[APIScope], user_scopes: list[APIScope]
+        self, api_scopes: list[ApiScope], user_scopes: list[ApiScope]
     ) -> bool:
         """
         Checks if the user scopes are a subset of the API scopes.
@@ -88,8 +83,8 @@ class AuthHandler:
 
     async def api_key_auth(
         self,
-        api_key: Annotated[str | None, Depends(APIKeyScheme.to_dep)] = None,
-        scopes: list[APIScope] = [],
+        api_key: Annotated[str | None, Depends(apikey_header)] = None,
+        scopes: list[ApiScope] = [],
     ) -> Verify200Response:
         """
         Verifies the API key and checks if the user scopes are a subset of the API scopes.
@@ -109,9 +104,9 @@ class AuthHandler:
         self,
         bearer: Annotated[
             HTTPAuthorizationCredentials | None,
-            Depends(BearerScheme.to_dep),
+            Depends(http_bearer),
         ] = None,
-        scopes: list[APIScope] = [],
+        scopes: list[ApiScope] = [],
     ) -> Verify200Response:
         """
         Verifies the bearer token and checks if the user scopes are a subset of the API scopes.
@@ -130,45 +125,36 @@ class AuthHandler:
 
     async def combined_auth(
         self,
-        accessToken: Annotated[str | None, Cookie()] = None,
         bearer: Annotated[
-            HTTPAuthorizationCredentials | None, Depends(BearerScheme.to_dep)
+            HTTPAuthorizationCredentials | None, Depends(http_bearer)
         ] = None,
-        api_key: Annotated[str | None, Depends(APIKeyScheme.to_dep)] = None,
-        scopes: list[APIScope] = [],
+        api_key: Annotated[str | None, Depends(apikey_header)] = None,
+        scopes: list[ApiScope] = [],
     ) -> Verify200Response:
         """
-        Verifies the access token, bearer token, and API key and checks if the user scopes are a subset of the API scopes.
+        Verifies the bearer token and API key and checks if the user scopes are a subset of the API scopes.
         Returns early on the first successful verification, otherwise tries all available tokens.
         """
-        tokens_map = {
-            api_key: TokenType.API_KEY,
-            bearer: TokenType.BEARER,
-            accessToken: TokenType.BEARER,
-        }
-
-        tokens = [token for token in tokens_map.keys() if token is not None]
-
-        if not tokens:
-            raise self.no_credentials_exception
+        tokens = [bearer, api_key]
 
         last_error = None
         for token in tokens:
             try:
-                token_type = tokens_map[token]
+                if token is None:
+                    continue
                 res = None
-
-                if token_type == TokenType.API_KEY:
+                if isinstance(token, str):
                     res = await self._verify_api_key(token)
-                elif token_type == TokenType.BEARER:
+                elif isinstance(token, HTTPAuthorizationCredentials):
                     res = await self._verify_bearer(token)
-
+                if res is None:
+                    continue
                 if scopes:
                     valid_scopes = await self._check_scopes(scopes, res.scopes)
                     if not valid_scopes:
                         raise self.invalid_scopes_exception
-
                 return res
+
             except Exception as e:
                 last_error = e
                 continue

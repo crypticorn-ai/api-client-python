@@ -13,7 +13,7 @@ class BaseURL(Enum):
     DOCKER = "http://host.docker.internal"
 
 
-class APIVersion(Enum):
+class ApiVersion(Enum):
     V1 = "v1"
 
 

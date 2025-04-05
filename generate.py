@@ -71,48 +71,8 @@ from crypticorn.{module_name}.main import {upper_module_name}Client
     # Create main.py file if it doesn't exist
     main_path = f"python/crypticorn/{module_name}/main.py"
     if not os.path.exists(main_path):
-        print(f"Creating {main_path} file")
-        main_content = f'''from crypticorn.{module_name} import (
-    ApiClient,
-    Configuration,
-    # BotsApi,
-    # ExchangesApi,
-    # NotificationsApi,
-)
-from crypticorn.common import APIKeyHeader, BaseURL, APIVersion, ServiceSuffix
-
-
-class {upper_module_name}Client:
-    """
-    A client for interacting with the Crypticorn {upper_module_name} API.
-    """
-
-    def __init__(
-        self,
-        base_url: BaseURL | str,
-        api_version: APIVersion,
-        api_key: str = None,
-        jwt: str = None,
-    ):
-        self.host = f"{{base_url}}/{{api_version.value}}/{{Service.{{upper_module_name}}.value}}"
-        self.config = Configuration(
-            host=self.host,
-            access_token=jwt,
-            api_key={{APIKeyHeader.name: api_key}} if api_key else None,
-            api_key_prefix=(
-                {{APIKeyHeader.name: APIKeyHeader.prefix}} 
-                if api_key 
-                else None,
-            ),
-        )
-        self.base_client = ApiClient(configuration=self.config)
-        # Instantiate all the endpoint clients
-        # self.bots = BotsApi(self.base_client)
-        # self.exchanges = ExchangesApi(self.base_client)
-        # self.notifications = NotificationsApi(self.base_client)
-'''
         with open(main_path, "w") as f:
-            f.write(main_content)
+            f.write('# Edit this file. You can look in the other modules for examples.')
 
     # Update imports to use fully qualified package name
     print("Updating imports to use fully qualified package name")
