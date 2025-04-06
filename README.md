@@ -10,9 +10,28 @@ Crypticorn offers AI-based solutions for both active and passive investors, incl
 Use this API Client to contribute to the so-called Hive AI, a community driven AI Meta Model for predicting the
 cryptocurrency market.
 
+## Installation
+
+You can install the latest stable version from PyPi:
+```bash
+pip install crypticorn
+```
+
+If you want a specific version, run:
+```bash
+pip install crypticorn==2.0.0
+```
+
+If you want the latest version, which could be a pre release, run:
+```bash
+pip install --pre crypticorn
+```
+
 ## Usage
 
-Within an asynchronous context the session is closed automatically.
+As of know the library is available in async mode only. There are two was of using it.
+
+## With Async Context Protocol
 ```python
 async with ApiClient(base_url="http://localhost", jwt=jwt) as client:
         # json response
@@ -26,6 +45,7 @@ async with ApiClient(base_url="http://localhost", jwt=jwt) as client:
         print(response)
 ```
 
+## Without Async Context Protocol
 Without the context you need to close the session manually.
 ```python
 client = ApiClient(base_url="http://localhost", jwt=jwt)
