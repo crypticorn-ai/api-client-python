@@ -1,6 +1,30 @@
 # CHANGELOG
 
 
+## v2.0.1 (2025-04-06)
+
+### Bug Fixes
+
+- Refactor Scopes and Exception handling in auth client
+  ([`8e9a64a`](https://github.com/crypticorn-ai/api-client/commit/8e9a64aa091cc3c840230ad2a7167c98426ae5c9))
+
+### Build System
+
+- Fix ci syntax and ssh errors
+  ([`9ecfaa4`](https://github.com/crypticorn-ai/api-client/commit/9ecfaa4f09dfa4ae1667f9c1b9307d2623288f5f))
+
+- Separate ci and update package config and deps
+  ([`5367f2a`](https://github.com/crypticorn-ai/api-client/commit/5367f2a79028ed1f5e2c05ddded91a9ddbd0d9fa))
+
+- Update ci
+  ([`799fd96`](https://github.com/crypticorn-ai/api-client/commit/799fd962529b0120b290c3f5c253e9050b40a41b))
+
+### Documentation
+
+- Update Readme
+  ([`39825b1`](https://github.com/crypticorn-ai/api-client/commit/39825b1506c2d5663ae8eecc6f73f8d6bed5692e))
+
+
 ## v2.0.0 (2025-04-06)
 
 ### Build System
