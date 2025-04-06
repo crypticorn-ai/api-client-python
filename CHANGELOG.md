@@ -5,8 +5,17 @@
 
 ### Build System
 
-- Fixes ci issue with psr
-  ([`470a097`](https://github.com/crypticorn-ai/api-client/commit/470a0974c0a1ccd5a85ff92a09e95e344d876c00))
+- Add psr build_command
+  ([`b661846`](https://github.com/crypticorn-ai/api-client/commit/b6618464c7d7727d34ab4a448f2e0104fcf4f3cc))
+
+- Fix ci-cd
+  ([`6edcb36`](https://github.com/crypticorn-ai/api-client/commit/6edcb3611673f191ec482e9d40614c7c2d2b59f3))
+
+- Fix signing error in ci
+  ([`0dcbf22`](https://github.com/crypticorn-ai/api-client/commit/0dcbf22892dbc17297cf9b91b35d62ec205a76ea))
+
+- Fixes pypi packages dir
+  ([`a25a458`](https://github.com/crypticorn-ai/api-client/commit/a25a4580c6a656e30d55b52c837480b833cb9aab))
 
 - Update ci cd and configure PSR
   ([`e5d6fa5`](https://github.com/crypticorn-ai/api-client/commit/e5d6fa5d2ff4355f59fd4c92e4b9bed77fcae2d8))
