@@ -1,0 +1,43 @@
+# https://github.com/marketplace/actions/pytest-coverage-comment
+name: Pytest Coverage Comment
+on:
+  pull_request:
+    branches:
+      - '*'
+
+permissions:
+  contents: write
+  checks: write
+  pull-requests: write
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.12
+
+    - name: Check-out repository
+      uses: actions/checkout@v2
+
+    - name: Install package
+      run: pip install -e python/[test]
+
+    - name: Test with pytest
+      run: pytest tests/ --cov=crypticorn --cov-branch --cov-report=xml
+
+    # - name: Use Codecov to track coverage
+    #   uses: codecov/codecov-action@v2
+    #   with:
+    #     files: ./coverage.xml
+
+    - name: Pytest coverage comment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-xml-coverage-path: ./coverage.xml
+
+    # - name: Build documentation
+    #   run: poetry run make html --directory docs/
