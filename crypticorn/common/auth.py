@@ -5,7 +5,7 @@ from enum import Enum
 from fastapi import params
 from fastapi.security import APIKeyHeader, HTTPBearer
 
-from crypticorn.common import ApiScope
+from crypticorn.common import Scope
 
 
 http_bearer = HTTPBearer(
@@ -26,7 +26,7 @@ def Security(  # noqa: N802
         Optional[Callable[..., Any]], Doc("A dependable callable (like a function).")
     ] = None,
     scopes: Annotated[
-        Optional[list[ApiScope]],  # Optional[Sequence[Union[str, APIScope]]],
+        Optional[list[Scope]],  # Optional[Sequence[Union[str, Scope]]],
         Doc("OAuth2 scopes required for the *path operation*."),
     ] = None,
     use_cache: Annotated[
