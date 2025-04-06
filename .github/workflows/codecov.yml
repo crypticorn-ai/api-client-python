@@ -35,9 +35,9 @@ jobs:
     #     files: ./coverage.xml
 
     - name: Pytest coverage comment
-        uses: MishaKav/pytest-coverage-comment@main
-        with:
-          pytest-xml-coverage-path: ./coverage.xml
+      uses: MishaKav/pytest-coverage-comment@main
+      with:
+        pytest-xml-coverage-path: ./coverage.xml
 
     # - name: Build documentation
     #   run: poetry run make html --directory docs/
