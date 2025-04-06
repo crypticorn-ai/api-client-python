@@ -1,12 +1,13 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials
 from typing_extensions import Annotated, Doc
+import json
 
 from crypticorn.auth import AuthClient, Verify200Response
-from crypticorn.auth.client.exceptions import UnauthorizedException
+from crypticorn.auth.client.exceptions import ApiException
 from crypticorn.common import (
     ApiError,
-    ApiScope,
+    Scope,
     ApiVersion,
     BaseURL,
     Domain,
@@ -41,21 +42,9 @@ class AuthHandler:
         self.whitelist = whitelist
         self.auth_client = AuthClient(base_url=base_url, api_version=api_version)
 
-        self.invalid_scopes_exception = HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail=ApiError.INSUFFICIENT_SCOPES.identifier,
-        )
         self.no_credentials_exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=ApiError.NO_CREDENTIALS.identifier,
-        )
-        self.invalid_api_key_exception = HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ApiError.INVALID_API_KEY.identifier,
-        )
-        self.invalid_bearer_exception = HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ApiError.INVALID_BEARER.identifier,
         )
 
     async def _verify_api_key(self, api_key: str) -> None:
@@ -63,7 +52,7 @@ class AuthHandler:
         Verifies the API key.
         """
         # TODO: Implement in auth service
-        return NotImplementedError()
+        raise NotImplementedError("API key verification not implemented")
 
     async def _verify_bearer(
         self, bearer: HTTPAuthorizationCredentials
@@ -74,32 +63,66 @@ class AuthHandler:
         self.auth_client.config.access_token = bearer.credentials
         return await self.auth_client.login.verify()
 
-    async def _check_scopes(
-        self, api_scopes: list[ApiScope], user_scopes: list[ApiScope]
+    async def _validate_scopes(
+        self, api_scopes: list[Scope], user_scopes: list[Scope]
     ) -> bool:
         """
         Checks if the user scopes are a subset of the API scopes.
         """
-        return set(api_scopes).issubset(user_scopes)
+        if not set(api_scopes).issubset(user_scopes):
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=ApiError.INSUFFICIENT_SCOPES.identifier,
+            )
 
+    async def _extract_message(self, e: ApiException) -> str:
+        '''
+        Tries to extract the message from the body of the exception.
+        '''
+        try:
+            load = json.loads(e.body)
+        except (json.JSONDecodeError, TypeError):
+            return e.body
+        else:
+            common_keys = ["message"]
+            for key in common_keys:
+                if key in load:
+                    return load[key]
+            return load
+
+    async def _handle_exception(self, e: Exception) -> HTTPException:
+        '''
+        Handles exceptions and returns a HTTPException with the appropriate status code and detail.
+        '''
+        if isinstance(e, ApiException):
+            return HTTPException(
+                status_code=e.status,
+                detail=await self._extract_message(e),
+            )
+        elif isinstance(e, HTTPException):
+            return e
+        else:
+            return HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+    
     async def api_key_auth(
         self,
         api_key: Annotated[str | None, Depends(apikey_header)] = None,
-        scopes: list[ApiScope] = [],
+        scopes: list[Scope] = [],
     ) -> Verify200Response:
         """
         Verifies the API key and checks if the user scopes are a subset of the API scopes.
         """
-        if not api_key:
-            raise self.no_credentials_exception
         try:
+            if not api_key:
+                raise self.no_credentials_exception
+            
             res = await self._verify_api_key(api_key)
-        except UnauthorizedException as e:
-            raise self.invalid_api_key_exception
-        valid_scopes = await self._check_scopes(scopes, res.scopes)
-        if not valid_scopes:
-            raise self.invalid_scopes_exception
-        return res
+            await self._validate_scopes(scopes, [Scope.from_str(scope) for scope in res.scopes])
+            return res
+        except Exception as e:
+            raise await self._handle_exception(e)
 
     async def bearer_auth(
         self,
@@ -107,7 +130,7 @@ class AuthHandler:
             HTTPAuthorizationCredentials | None,
             Depends(http_bearer),
         ] = None,
-        scopes: list[ApiScope] = [],
+        scopes: list[Scope] = [],
     ) -> Verify200Response:
         """
         Verifies the bearer token and checks if the user scopes are a subset of the API scopes.
@@ -117,12 +140,11 @@ class AuthHandler:
 
         try:
             res = await self._verify_bearer(bearer)
-        except UnauthorizedException as e:
-            raise self.invalid_bearer_exception
-        valid_scopes = await self._check_scopes(scopes, res.scopes)
-        if not valid_scopes:
-            raise self.invalid_scopes_exception
-        return res
+            await self._validate_scopes(scopes, [Scope.from_str(scope) for scope in res.scopes])
+            return res
+        except Exception as e:
+            raise await self._handle_exception(e)
+
 
     async def combined_auth(
         self,
@@ -130,7 +152,7 @@ class AuthHandler:
             HTTPAuthorizationCredentials | None, Depends(http_bearer)
         ] = None,
         api_key: Annotated[str | None, Depends(apikey_header)] = None,
-        scopes: list[ApiScope] = [],
+        scopes: list[Scope] = [],
     ) -> Verify200Response:
         """
         Verifies the bearer token and API key and checks if the user scopes are a subset of the API scopes.
@@ -151,13 +173,11 @@ class AuthHandler:
                 if res is None:
                     continue
                 if scopes:
-                    valid_scopes = await self._check_scopes(scopes, res.scopes)
-                    if not valid_scopes:
-                        raise self.invalid_scopes_exception
+                    await self._validate_scopes(scopes, [Scope.from_str(scope) for scope in res.scopes])
                 return res
 
-            except UnauthorizedException as e:
-                last_error = e
+            except Exception as e:
+                last_error = await self._handle_exception(e)
                 continue
 
         raise last_error or self.no_credentials_exception

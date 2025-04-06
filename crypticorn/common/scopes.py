@@ -1,10 +1,14 @@
 from enum import Enum
 
 
-class ApiScope(str, Enum):
+class Scope(str, Enum):
     """
     The permission scopes for the API.
     """
+
+    @classmethod
+    def from_str(cls, value: str) -> "Scope":
+        return cls(value)
 
     # Hive scopes
     HIVE_MODEL_READ = "hive:model:read"
@@ -27,3 +31,6 @@ class ApiScope(str, Enum):
     TRADE_NOTIFICATIONS_WRITE = "trade:notifications:write"
     TRADE_STRATEGIES_READ = "trade:strategies:read"
     TRADE_STRATEGIES_WRITE = "trade:strategies:write"
+
+    # Read projections
+    READ_PREDICTIONS = "read:predictions"
