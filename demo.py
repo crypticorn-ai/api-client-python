@@ -1,4 +1,4 @@
-from crypticorn.auth import AuthClient
+from crypticorn.auth import AuthClient, AddWalletRequest
 from crypticorn.auth.client.exceptions import UnauthorizedException
 from crypticorn.common import BaseURL, ApiVersion
 from crypticorn import ApiClient
