@@ -17,33 +17,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class Whoami200Response(BaseModel):
+class CreateApiKey200Response(BaseModel):
     """
-    Whoami200Response
+    CreateApiKey200Response
     """  # noqa: E501
 
-    email: StrictStr
-    id: StrictStr
-    name: Optional[StrictStr] = None
-    picture: Optional[StrictStr] = None
-    username: Optional[StrictStr] = None
-    phone: Optional[StrictStr] = None
-    apikeys: Optional[List[StrictStr]] = None
-    __properties: ClassVar[List[str]] = [
-        "email",
-        "id",
-        "name",
-        "picture",
-        "username",
-        "phone",
-        "apikeys",
-    ]
+    api_key: StrictStr = Field(alias="apiKey")
+    __properties: ClassVar[List[str]] = ["apiKey"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -62,7 +48,7 @@ class Whoami200Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Whoami200Response from a JSON string"""
+        """Create an instance of CreateApiKey200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -86,22 +72,12 @@ class Whoami200Response(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Whoami200Response from a dict"""
+        """Create an instance of CreateApiKey200Response from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "email": obj.get("email"),
-                "id": obj.get("id"),
-                "name": obj.get("name"),
-                "picture": obj.get("picture"),
-                "username": obj.get("username"),
-                "phone": obj.get("phone"),
-                "apikeys": obj.get("apikeys"),
-            }
-        )
+        _obj = cls.model_validate({"apiKey": obj.get("apiKey")})
         return _obj

@@ -40,8 +40,8 @@ class Scope(str, Enum):
     WRITE_PAY_PRODUCTS = "write:pay:products"
     READ_PAY_SUBSCRIPTIONS = "read:pay:subscriptions"
     WRITE_PAY_SUBSCRIPTIONS = "write:pay:subscriptions"
-    READ_PAY_NOW_PAYMENTS = "read:pay:now_payments"
-    WRITE_PAY_NOW_PAYMENTS = "write:pay:now_payments"
+    READ_PAY_NOW = "read:pay:now"
+    WRITE_PAY_NOW = "write:pay:now"
 
     # Read projections
     READ_PREDICTIONS = "read:predictions"

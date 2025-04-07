@@ -26,17 +26,17 @@ def Security(  # noqa: N802
         Optional[Callable[..., Any]], Doc("A dependable callable (like a function).")
     ] = None,
     scopes: Annotated[
-        Optional[list[Scope]],  # Optional[Sequence[Union[str, Scope]]],
-        Doc("OAuth2 scopes required for the *path operation*."),
+        Optional[list[Scope]],
+        Doc("API scopes required for the *path operation*."),
     ] = None,
     use_cache: Annotated[
         bool, Doc("Whether to cache the dependency during a single request.")
     ] = True,
 ) -> Any:
+    """Security Dependency. Extends the fastapi.Security class to support enum scopes instead of strings."""
+
     # Convert Enum scopes to string
-    scopes_str = (
-        [s.value if isinstance(s, Enum) else s for s in scopes] if scopes else None
-    )
+    scopes_str = [s.value for s in scopes] if scopes else None
 
     return params.Security(
         dependency=dependency, scopes=scopes_str, use_cache=use_cache

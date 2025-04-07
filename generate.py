@@ -72,7 +72,7 @@ from crypticorn.{module_name}.main import {upper_module_name}Client
     main_path = f"python/crypticorn/{module_name}/main.py"
     if not os.path.exists(main_path):
         with open(main_path, "w") as f:
-            f.write('# Edit this file. You can look in the other modules for examples.')
+            f.write("# Edit this file. You can look in the other modules for examples.")
 
     # Update imports to use fully qualified package name
     print("Updating imports to use fully qualified package name")
