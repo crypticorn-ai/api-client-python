@@ -6,31 +6,42 @@ class Scope(str, Enum):
     The permission scopes for the API.
     """
 
+    # If you update anything here, also update the scopes in the auth-service repository
+
     @classmethod
     def from_str(cls, value: str) -> "Scope":
         return cls(value)
 
     # Hive scopes
-    HIVE_MODEL_READ = "hive:model:read"
-    HIVE_DATA_READ = "hive:data:read"
-    HIVE_MODEL_WRITE = "hive:model:write"
-    HIVE_DATA_WRITE = "hive:data:write"
+    READ_HIVE_MODEL = "read:hive:model"
+    READ_HIVE_DATA = "read:hive:data"
+    WRITE_HIVE_MODEL = "write:hive:model"
+    WRITE_HIVE_DATA = "write:hive:data"
 
     # Trade scopes
-    TRADE_BOTS_READ = "trade:bots:read"
-    TRADE_BOTS_WRITE = "trade:bots:write"
-    TRADE_API_KEYS_READ = "trade:api_keys:read"
-    TRADE_API_KEYS_WRITE = "trade:api_keys:write"
-    TRADE_ORDERS_READ = "trade:orders:read"
-    TRADE_ACTIONS_READ = "trade:actions:read"
-    TRADE_ACTIONS_WRITE = "trade:actions:write"
-    TRADE_EXCHANGES_READ = "trade:exchanges:read"
-    TRADE_FUTURES_READ = "trade:futures:read"
-    TRADE_FUTURES_WRITE = "trade:futures:write"
-    TRADE_NOTIFICATIONS_READ = "trade:notifications:read"
-    TRADE_NOTIFICATIONS_WRITE = "trade:notifications:write"
-    TRADE_STRATEGIES_READ = "trade:strategies:read"
-    TRADE_STRATEGIES_WRITE = "trade:strategies:write"
+    READ_TRADE_BOTS = "read:trade:bots"
+    WRITE_TRADE_BOTS = "write:trade:bots"
+    READ_TRADE_API_KEYS = "read:trade:api_keys"
+    WRITE_TRADE_API_KEYS = "write:trade:api_keys"
+    READ_TRADE_ORDERS = "read:trade:orders"
+    READ_TRADE_ACTIONS = "read:trade:actions"
+    WRITE_TRADE_ACTIONS = "write:trade:actions"
+    READ_TRADE_EXCHANGES = "read:trade:exchanges"
+    READ_TRADE_FUTURES = "read:trade:futures"
+    WRITE_TRADE_FUTURES = "write:trade:futures"
+    READ_TRADE_NOTIFICATIONS = "read:trade:notifications"
+    WRITE_TRADE_NOTIFICATIONS = "write:trade:notifications"
+    READ_TRADE_STRATEGIES = "read:trade:strategies"
+    WRITE_TRADE_STRATEGIES = "write:trade:strategies"
+
+    # Payment scopes
+    READ_PAY_PAYMENTS = "read:pay:payments"
+    READ_PAY_PRODUCTS = "read:pay:products"
+    WRITE_PAY_PRODUCTS = "write:pay:products"
+    READ_PAY_SUBSCRIPTIONS = "read:pay:subscriptions"
+    WRITE_PAY_SUBSCRIPTIONS = "write:pay:subscriptions"
+    READ_PAY_NOW_PAYMENTS = "read:pay:now_payments"
+    WRITE_PAY_NOW_PAYMENTS = "write:pay:now_payments"
 
     # Read projections
     READ_PREDICTIONS = "read:predictions"
