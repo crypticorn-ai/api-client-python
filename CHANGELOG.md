@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v2.1.0 (2025-04-07)
+
+### Features
+
+- Add api key authorization and websocket auth support
+  ([`adeb8bd`](https://github.com/crypticorn-ai/api-client/commit/adeb8bdf42ed3da1b63b430f291e920e97d62d14))
+
+### Refactoring
+
+- Rename scopes and make requirements more strict
+  ([`abf53a6`](https://github.com/crypticorn-ai/api-client/commit/abf53a6de46703a3ac2b0c66c101ec58ae8928f2))
+
+
 ## v2.0.1 (2025-04-06)
 
 ### Bug Fixes
