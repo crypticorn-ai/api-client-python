@@ -88,13 +88,17 @@ Class | Method | HTTP request | Description
 *AdminApi* | [**revoke_user_tokens**](docs/AdminApi.md#revoke_user_tokens) | **POST** /revoke-user-tokens | Revoke user tokens
 *AdminApi* | [**user_list**](docs/AdminApi.md#user_list) | **GET** /user-list | User List
 *AuthApi* | [**authorize_user**](docs/AuthApi.md#authorize_user) | **POST** /authorize | Authorize a user
+*AuthApi* | [**create_api_key**](docs/AuthApi.md#create_api_key) | **POST** /create-api-key | Create API Key
+*AuthApi* | [**delete_api_key**](docs/AuthApi.md#delete_api_key) | **DELETE** /delete-api-key | Delete API Key
+*AuthApi* | [**get_api_keys**](docs/AuthApi.md#get_api_keys) | **GET** /get-api-keys | Get API Keys
 *AuthApi* | [**get_google_auth_url**](docs/AuthApi.md#get_google_auth_url) | **GET** /get-google-auth-url | Get Google Auth URL
 *AuthApi* | [**oauth_callback**](docs/AuthApi.md#oauth_callback) | **GET** /oauth-callback | OAuth Callback
 *AuthApi* | [**refresh_token_info**](docs/AuthApi.md#refresh_token_info) | **GET** /refresh-token-info | Refresh token info
 *AuthApi* | [**refresh_token_scopes**](docs/AuthApi.md#refresh_token_scopes) | **POST** /refresh-token-scopes | Refresh token scopes
 *AuthApi* | [**rotate_tokens**](docs/AuthApi.md#rotate_tokens) | **POST** /rotate-tokens | Rotate tokens
 *AuthApi* | [**token_info**](docs/AuthApi.md#token_info) | **GET** /token-info | Token info
-*AuthApi* | [**verify**](docs/AuthApi.md#verify) | **GET** /verify | Verify
+*AuthApi* | [**verify**](docs/AuthApi.md#verify) | **GET** /verify | Verify Bearer Token
+*AuthApi* | [**verify_api_key**](docs/AuthApi.md#verify_api_key) | **GET** /verify-api-key | Verify API Key
 *ServiceApi* | [**get_balances_by_email**](docs/ServiceApi.md#get_balances_by_email) | **GET** /wallet/balances/email | Get the balances of a user by email
 *UserApi* | [**create_user**](docs/UserApi.md#create_user) | **POST** /create-user | Create User
 *UserApi* | [**logout**](docs/UserApi.md#logout) | **POST** /logout | Logout
@@ -121,7 +125,10 @@ Class | Method | HTTP request | Description
  - [AuthorizeUser200Response](docs/AuthorizeUser200Response.md)
  - [AuthorizeUser200ResponseAuth](docs/AuthorizeUser200ResponseAuth.md)
  - [AuthorizeUserRequest](docs/AuthorizeUserRequest.md)
+ - [CreateApiKey200Response](docs/CreateApiKey200Response.md)
+ - [CreateApiKeyRequest](docs/CreateApiKeyRequest.md)
  - [CreateUserRequest](docs/CreateUserRequest.md)
+ - [GetApiKeys200ResponseInner](docs/GetApiKeys200ResponseInner.md)
  - [ListWallets200Response](docs/ListWallets200Response.md)
  - [ListWallets200ResponseBalancesInner](docs/ListWallets200ResponseBalancesInner.md)
  - [ListWallets200ResponseBalancesInnerSaleRound](docs/ListWallets200ResponseBalancesInnerSaleRound.md)
@@ -131,6 +138,8 @@ Class | Method | HTTP request | Description
  - [ListWallets200ResponseUserValue](docs/ListWallets200ResponseUserValue.md)
  - [LogoutDefaultResponse](docs/LogoutDefaultResponse.md)
  - [LogoutDefaultResponseIssuesInner](docs/LogoutDefaultResponseIssuesInner.md)
+ - [OauthCallback200Response](docs/OauthCallback200Response.md)
+ - [OauthCallback200ResponseUser](docs/OauthCallback200ResponseUser.md)
  - [RefreshTokenInfo200Response](docs/RefreshTokenInfo200Response.md)
  - [RefreshTokenInfo200ResponseUserSession](docs/RefreshTokenInfo200ResponseUserSession.md)
  - [ResendVerificationEmailRequest](docs/ResendVerificationEmailRequest.md)

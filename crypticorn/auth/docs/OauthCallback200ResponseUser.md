@@ -1,4 +1,4 @@
-# Whoami200Response
+# OauthCallback200ResponseUser
 
 
 ## Properties
@@ -11,24 +11,23 @@ Name | Type | Description | Notes
 **picture** | **str** |  | [optional] 
 **username** | **str** |  | [optional] 
 **phone** | **str** |  | [optional] 
-**apikeys** | **List[str]** |  | [optional] 
 
 ## Example
 
 ```python
-from client.models.whoami200_response import Whoami200Response
+from client.models.oauth_callback200_response_user import OauthCallback200ResponseUser
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of Whoami200Response from a JSON string
-whoami200_response_instance = Whoami200Response.from_json(json)
+# create an instance of OauthCallback200ResponseUser from a JSON string
+oauth_callback200_response_user_instance = OauthCallback200ResponseUser.from_json(json)
 # print the JSON string representation of the object
-print(Whoami200Response.to_json())
+print(OauthCallback200ResponseUser.to_json())
 
 # convert the object into a dict
-whoami200_response_dict = whoami200_response_instance.to_dict()
-# create an instance of Whoami200Response from a dict
-whoami200_response_from_dict = Whoami200Response.from_dict(whoami200_response_dict)
+oauth_callback200_response_user_dict = oauth_callback200_response_user_instance.to_dict()
+# create an instance of OauthCallback200ResponseUser from a dict
+oauth_callback200_response_user_from_dict = OauthCallback200ResponseUser.from_dict(oauth_callback200_response_user_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

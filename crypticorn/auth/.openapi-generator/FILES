@@ -16,7 +16,10 @@ client/models/add_wallet_request.py
 client/models/authorize_user200_response.py
 client/models/authorize_user200_response_auth.py
 client/models/authorize_user_request.py
+client/models/create_api_key200_response.py
+client/models/create_api_key_request.py
 client/models/create_user_request.py
+client/models/get_api_keys200_response_inner.py
 client/models/list_wallets200_response.py
 client/models/list_wallets200_response_balances_inner.py
 client/models/list_wallets200_response_balances_inner_sale_round.py
@@ -26,6 +29,8 @@ client/models/list_wallets200_response_data_inner.py
 client/models/list_wallets200_response_user_value.py
 client/models/logout_default_response.py
 client/models/logout_default_response_issues_inner.py
+client/models/oauth_callback200_response.py
+client/models/oauth_callback200_response_user.py
 client/models/refresh_token_info200_response.py
 client/models/refresh_token_info200_response_user_session.py
 client/models/resend_verification_email_request.py
@@ -53,7 +58,10 @@ docs/AuthApi.md
 docs/AuthorizeUser200Response.md
 docs/AuthorizeUser200ResponseAuth.md
 docs/AuthorizeUserRequest.md
+docs/CreateApiKey200Response.md
+docs/CreateApiKeyRequest.md
 docs/CreateUserRequest.md
+docs/GetApiKeys200ResponseInner.md
 docs/ListWallets200Response.md
 docs/ListWallets200ResponseBalancesInner.md
 docs/ListWallets200ResponseBalancesInnerSaleRound.md
@@ -63,6 +71,8 @@ docs/ListWallets200ResponseDataInner.md
 docs/ListWallets200ResponseUserValue.md
 docs/LogoutDefaultResponse.md
 docs/LogoutDefaultResponseIssuesInner.md
+docs/OauthCallback200Response.md
+docs/OauthCallback200ResponseUser.md
 docs/RefreshTokenInfo200Response.md
 docs/RefreshTokenInfo200ResponseUserSession.md
 docs/ResendVerificationEmailRequest.md

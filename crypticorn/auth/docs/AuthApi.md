@@ -5,13 +5,17 @@ All URIs are relative to *http://localhost/v1/auth*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**authorize_user**](AuthApi.md#authorize_user) | **POST** /authorize | Authorize a user
+[**create_api_key**](AuthApi.md#create_api_key) | **POST** /create-api-key | Create API Key
+[**delete_api_key**](AuthApi.md#delete_api_key) | **DELETE** /delete-api-key | Delete API Key
+[**get_api_keys**](AuthApi.md#get_api_keys) | **GET** /get-api-keys | Get API Keys
 [**get_google_auth_url**](AuthApi.md#get_google_auth_url) | **GET** /get-google-auth-url | Get Google Auth URL
 [**oauth_callback**](AuthApi.md#oauth_callback) | **GET** /oauth-callback | OAuth Callback
 [**refresh_token_info**](AuthApi.md#refresh_token_info) | **GET** /refresh-token-info | Refresh token info
 [**refresh_token_scopes**](AuthApi.md#refresh_token_scopes) | **POST** /refresh-token-scopes | Refresh token scopes
 [**rotate_tokens**](AuthApi.md#rotate_tokens) | **POST** /rotate-tokens | Rotate tokens
 [**token_info**](AuthApi.md#token_info) | **GET** /token-info | Token info
-[**verify**](AuthApi.md#verify) | **GET** /verify | Verify
+[**verify**](AuthApi.md#verify) | **GET** /verify | Verify Bearer Token
+[**verify_api_key**](AuthApi.md#verify_api_key) | **GET** /verify-api-key | Verify API Key
 
 
 # **authorize_user**
@@ -73,6 +77,239 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful response |  -  |
+**0** | Error response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **create_api_key**
+> CreateApiKey200Response create_api_key(create_api_key_request)
+
+Create API Key
+
+Creates a new API key for the user.
+
+### Example
+
+* Bearer (JWT) Authentication (HTTPBearer):
+
+```python
+import client
+from client.models.create_api_key200_response import CreateApiKey200Response
+from client.models.create_api_key_request import CreateApiKeyRequest
+from client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost/v1/auth
+# See configuration.py for a list of all supported configuration parameters.
+configuration = client.Configuration(
+    host = "http://localhost/v1/auth"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = client.AuthApi(api_client)
+    create_api_key_request = client.CreateApiKeyRequest() # CreateApiKeyRequest | 
+
+    try:
+        # Create API Key
+        api_response = await api_instance.create_api_key(create_api_key_request)
+        print("The response of AuthApi->create_api_key:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthApi->create_api_key: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **create_api_key_request** | [**CreateApiKeyRequest**](CreateApiKeyRequest.md)|  | 
+
+### Return type
+
+[**CreateApiKey200Response**](CreateApiKey200Response.md)
+
+### Authorization
+
+[HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful response |  -  |
+**0** | Error response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **delete_api_key**
+> object delete_api_key(id)
+
+Delete API Key
+
+Deletes an API key for the user.
+
+### Example
+
+* Bearer (JWT) Authentication (HTTPBearer):
+
+```python
+import client
+from client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost/v1/auth
+# See configuration.py for a list of all supported configuration parameters.
+configuration = client.Configuration(
+    host = "http://localhost/v1/auth"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = client.AuthApi(api_client)
+    id = 'id_example' # str | 
+
+    try:
+        # Delete API Key
+        api_response = await api_instance.delete_api_key(id)
+        print("The response of AuthApi->delete_api_key:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthApi->delete_api_key: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **str**|  | 
+
+### Return type
+
+**object**
+
+### Authorization
+
+[HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful response |  -  |
+**0** | Error response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_api_keys**
+> List[GetApiKeys200ResponseInner] get_api_keys()
+
+Get API Keys
+
+Gets all API keys for the user.
+
+### Example
+
+* Bearer (JWT) Authentication (HTTPBearer):
+
+```python
+import client
+from client.models.get_api_keys200_response_inner import GetApiKeys200ResponseInner
+from client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost/v1/auth
+# See configuration.py for a list of all supported configuration parameters.
+configuration = client.Configuration(
+    host = "http://localhost/v1/auth"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = client.AuthApi(api_client)
+
+    try:
+        # Get API Keys
+        api_response = await api_instance.get_api_keys()
+        print("The response of AuthApi->get_api_keys:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthApi->get_api_keys: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**List[GetApiKeys200ResponseInner]**](GetApiKeys200ResponseInner.md)
+
+### Authorization
+
+[HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 ### HTTP response details
@@ -153,7 +390,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **oauth_callback**
-> AuthorizeUser200Response oauth_callback(code, scope, authuser, prompt, origin)
+> OauthCallback200Response oauth_callback(code, scope, authuser, prompt, origin)
 
 OAuth Callback
 
@@ -164,7 +401,7 @@ Handles the OAuth callback from Google.
 
 ```python
 import client
-from client.models.authorize_user200_response import AuthorizeUser200Response
+from client.models.oauth_callback200_response import OauthCallback200Response
 from client.rest import ApiException
 from pprint import pprint
 
@@ -209,7 +446,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AuthorizeUser200Response**](AuthorizeUser200Response.md)
+[**OauthCallback200Response**](OauthCallback200Response.md)
 
 ### Authorization
 
@@ -518,9 +755,9 @@ Name | Type | Description  | Notes
 # **verify**
 > Verify200Response verify()
 
-Verify
+Verify Bearer Token
 
-Verifies the user is authenticated.
+Verifies the bearer token is valid.
 
 ### Example
 
@@ -554,7 +791,7 @@ async with client.ApiClient(configuration) as api_client:
     api_instance = client.AuthApi(api_client)
 
     try:
-        # Verify
+        # Verify Bearer Token
         api_response = await api_instance.verify()
         print("The response of AuthApi->verify:\n")
         pprint(api_response)
@@ -575,6 +812,75 @@ This endpoint does not need any parameter.
 ### Authorization
 
 [HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful response |  -  |
+**0** | Error response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **verify_api_key**
+> Verify200Response verify_api_key(api_key)
+
+Verify API Key
+
+Verifies the API key is valid.
+
+### Example
+
+
+```python
+import client
+from client.models.verify200_response import Verify200Response
+from client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost/v1/auth
+# See configuration.py for a list of all supported configuration parameters.
+configuration = client.Configuration(
+    host = "http://localhost/v1/auth"
+)
+
+
+# Enter a context with an instance of the API client
+async with client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = client.AuthApi(api_client)
+    api_key = 'api_key_example' # str | 
+
+    try:
+        # Verify API Key
+        api_response = await api_instance.verify_api_key(api_key)
+        print("The response of AuthApi->verify_api_key:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthApi->verify_api_key: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **api_key** | **str**|  | 
+
+### Return type
+
+[**Verify200Response**](Verify200Response.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 

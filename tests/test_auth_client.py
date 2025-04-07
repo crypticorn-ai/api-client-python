@@ -1,102 +1,330 @@
-from crypticorn.common import BaseURL, AuthHandler, Scope, http_bearer
 import asyncio
-from fastapi import HTTPException
-import pytest_asyncio
+import os
+
+import dotenv
 import pytest
+import pytest_asyncio
+from crypticorn.common import AuthHandler, BaseURL, Scope, http_bearer
+from fastapi import HTTPException
 from fastapi.security import HTTPAuthorizationCredentials
 
-VALID_JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiTXY3ZTBpMkt0TlliYmN0TVp2aGYiLCJpYXQiOjE3NDM5NzI4NjgsImV4cCI6MTc0Mzk3NjQ2OCwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.NkQ6FlmViPFZDqT9SLV0u8bnm2pegLQ0TknxYgutoGk"
-EXPIRED_JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiM3FlU0h5S082VVNvMkZBU1VxMmkiLCJpYXQiOjE3NDM5Njc2MzAsImV4cCI6MTc0Mzk3MTIzMCwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.d3yfsTGIZaygORyrRQvPPZTZLK0oM2rYz4ijUtpl3xk"
+dotenv.load_dotenv()
+
+# JWT
+EXPIRED_JWT = os.getenv("EXPIRED_JWT")
+VALID_JWT = os.getenv("VALID_JWT")
+
+# API KEY
+FULL_SCOPE_API_KEY = os.getenv("FULL_SCOPE_API_KEY")
+ONE_SCOPE_API_KEY = os.getenv("ONE_SCOPE_API_KEY")
+EXPIRED_API_KEY = os.getenv("EXPIRED_API_KEY")
+
+# ASSERT SCOPE
+ALL_SCOPES = [scope.value for scope in Scope]
+JWT_SCOPE = Scope.READ_PREDICTIONS
+API_KEY_SCOPE = Scope.READ_TRADE_BOTS
+
+# ERROR MESSAGES
+API_KEY_EXPIRED = "API key expired"
+API_KEY_INVALID = "Invalid API key"
+BEARER_EXPIRED = "jwt expired"
+
+# Debug
+UPDATE_SCOPES = "you probably need to bring the scopes in both the api client and the auth service in sync"
+
+# Each function is tested without credentials, with invalid credentials, and with valid credentials.
+# The test is successful if the correct HTTPException is raised.
+#
 
 
 @pytest_asyncio.fixture
 async def auth_handler() -> AuthHandler:
-    return AuthHandler(BaseURL.DEV)
+    return AuthHandler(BaseURL.LOCAL)
+
+
+# COMBINED AUTH
+
 
 @pytest.mark.asyncio
 async def test_combined_auth_without_credentials(auth_handler: AuthHandler):
+    """Without credentials"""
     with pytest.raises(HTTPException) as e:
         await auth_handler.combined_auth(bearer=None, api_key=None)
     assert e.value.status_code == 401
     assert e.value.detail == auth_handler.no_credentials_exception.detail
 
+
+# BEARER
 @pytest.mark.asyncio
 async def test_combined_auth_with_invalid_bearer_token(auth_handler: AuthHandler):
+    """With invalid bearer token"""
     with pytest.raises(HTTPException) as e:
         await auth_handler.combined_auth(
             bearer=HTTPAuthorizationCredentials(scheme="Bearer", credentials="123"),
-            api_key=None
+            api_key=None,
         )
     assert e.value.status_code == 401
+
 
 @pytest.mark.asyncio
 async def test_combined_auth_with_expired_bearer_token(auth_handler: AuthHandler):
+    """With expired bearer token"""
     with pytest.raises(HTTPException) as e:
         await auth_handler.combined_auth(
-            bearer=HTTPAuthorizationCredentials(scheme="Bearer", credentials=EXPIRED_JWT),
-            api_key=None
+            bearer=HTTPAuthorizationCredentials(
+                scheme="Bearer", credentials=EXPIRED_JWT
+            ),
+            api_key=None,
         )
     assert e.value.status_code == 401
-    assert e.value.detail == "jwt expired"
+    assert e.value.detail == BEARER_EXPIRED
 
-@pytest.mark.asyncio
-async def test_combined_auth_with_invalid_api_key(auth_handler: AuthHandler):
-    with pytest.raises(HTTPException) as e:
-        return await auth_handler.combined_auth(bearer=None, api_key="123")
-    assert e.value.status_code == 500 # Not implemented
 
 @pytest.mark.asyncio
 async def test_combined_auth_with_valid_bearer_token(auth_handler: AuthHandler):
-    res = await auth_handler.combined_auth(bearer=HTTPAuthorizationCredentials(scheme="Bearer", credentials=VALID_JWT), api_key=None)
-    assert res.scopes == [Scope.READ_PREDICTIONS]
+    """With valid bearer token"""
+    res = await auth_handler.combined_auth(
+        bearer=HTTPAuthorizationCredentials(scheme="Bearer", credentials=VALID_JWT),
+        api_key=None,
+    )
+    assert JWT_SCOPE in res.scopes, UPDATE_SCOPES
+
+
+# API KEY
+@pytest.mark.asyncio
+async def test_combined_auth_with_invalid_api_key(auth_handler: AuthHandler):
+    """With invalid api key"""
+    with pytest.raises(HTTPException) as e:
+        return await auth_handler.combined_auth(bearer=None, api_key="123")
+    assert e.value.status_code == 401
+
 
 @pytest.mark.asyncio
-async def test_combined_auth_with_valid_api_key(auth_handler: AuthHandler):
-    # res = await auth_handler.combined_auth(bearer=None, api_key="123")
-    # assert res.scopes == [Scope.READ_PREDICTIONS]
-    assert True # not implemented
+async def test_combined_auth_with_full_scope_valid_api_key(auth_handler: AuthHandler):
+    """With full scope valid api key"""
+    res = await auth_handler.combined_auth(bearer=None, api_key=FULL_SCOPE_API_KEY)
+    assert res.scopes == ALL_SCOPES, UPDATE_SCOPES
 
+
+@pytest.mark.asyncio
+async def test_combined_auth_with_one_scope_valid_api_key(auth_handler: AuthHandler):
+    """With one scope valid api key"""
+    res = await auth_handler.combined_auth(bearer=None, api_key=ONE_SCOPE_API_KEY)
+    assert API_KEY_SCOPE in res.scopes, UPDATE_SCOPES
+
+
+@pytest.mark.asyncio
+async def test_combined_auth_with_expired_api_key(auth_handler: AuthHandler):
+    """With expired api key"""
+    with pytest.raises(HTTPException) as e:
+        res = await auth_handler.combined_auth(bearer=None, api_key=EXPIRED_API_KEY)
+    assert e.value.status_code == 401
+    assert e.value.detail == API_KEY_EXPIRED
+
+
+# API KEY AUTH
 @pytest.mark.asyncio
 async def test_api_key_auth_without_api_key(auth_handler: AuthHandler):
+    """Without api key"""
     with pytest.raises(HTTPException) as e:
         return await auth_handler.api_key_auth(api_key=None)
     assert e.value.status_code == 401
 
+
 @pytest.mark.asyncio
 async def test_api_key_auth_with_invalid_api_key(auth_handler: AuthHandler):
+    """With invalid api key"""
     with pytest.raises(HTTPException) as e:
         return await auth_handler.api_key_auth(api_key="123")
-    assert e.value.status_code == 500 # Not implemented
+    assert e.value.status_code == 401
+
 
 @pytest.mark.asyncio
-async def test_api_key_auth_with_valid_api_key(auth_handler: AuthHandler):  
-    # res = await auth_handler.api_key_auth(api_key="123")
-    # assert res.scopes == [Scope.READ_PREDICTIONS]
-    assert True # not implemented
+async def test_api_key_auth_with_full_scope_valid_api_key(auth_handler: AuthHandler):
+    """With full scope valid api key"""
+    res = await auth_handler.api_key_auth(api_key=FULL_SCOPE_API_KEY)
+    assert res.scopes == ALL_SCOPES, UPDATE_SCOPES
 
+
+@pytest.mark.asyncio
+async def test_api_key_auth_with_one_scope_valid_api_key(auth_handler: AuthHandler):
+    """With one scope valid api key"""
+    res = await auth_handler.api_key_auth(api_key=ONE_SCOPE_API_KEY)
+    assert API_KEY_SCOPE in res.scopes, UPDATE_SCOPES
+
+
+@pytest.mark.asyncio
+async def test_api_key_auth_with_expired_api_key(auth_handler: AuthHandler):
+    """With expired api key"""
+    with pytest.raises(HTTPException) as e:
+        res = await auth_handler.api_key_auth(api_key=EXPIRED_API_KEY)
+    assert e.value.status_code == 401
+    assert e.value.detail == API_KEY_EXPIRED
+
+
+# BEARER AUTH
 @pytest.mark.asyncio
 async def test_bearer_auth_without_bearer(auth_handler: AuthHandler):
+    """Without bearer"""
     with pytest.raises(HTTPException) as e:
         return await auth_handler.bearer_auth(bearer=None)
     assert e.value.status_code == 401
 
+
 @pytest.mark.asyncio
 async def test_bearer_auth_with_invalid_bearer(auth_handler: AuthHandler):
+    """With invalid bearer"""
     with pytest.raises(HTTPException) as e:
-        return await auth_handler.bearer_auth(bearer=HTTPAuthorizationCredentials(scheme="Bearer", credentials="123"))
+        return await auth_handler.bearer_auth(
+            bearer=HTTPAuthorizationCredentials(scheme="Bearer", credentials="123")
+        )
     assert e.value.status_code == 401
+
 
 @pytest.mark.asyncio
 async def test_bearer_auth_with_valid_bearer(auth_handler: AuthHandler):
-    res = await auth_handler.bearer_auth(bearer=HTTPAuthorizationCredentials(scheme="Bearer", credentials=VALID_JWT))
-    assert res.scopes == [Scope.READ_PREDICTIONS]
+    """With valid bearer"""
+    res = await auth_handler.bearer_auth(
+        bearer=HTTPAuthorizationCredentials(scheme="Bearer", credentials=VALID_JWT)
+    )
+    assert JWT_SCOPE in res.scopes, UPDATE_SCOPES
+
 
 @pytest.mark.asyncio
 async def test_bearer_auth_with_expired_bearer(auth_handler: AuthHandler):
+    """With expired bearer"""
     with pytest.raises(HTTPException) as e:
-        return await auth_handler.bearer_auth(bearer=HTTPAuthorizationCredentials(scheme="Bearer", credentials=EXPIRED_JWT))
+        return await auth_handler.bearer_auth(
+            bearer=HTTPAuthorizationCredentials(
+                scheme="Bearer", credentials=EXPIRED_JWT
+            )
+        )
     assert e.value.status_code == 401
-    assert e.value.detail == "jwt expired"
-    
-    
-    
+    assert e.value.detail == BEARER_EXPIRED
+
+
+# WS COMBINED AUTH
+@pytest.mark.asyncio
+async def test_ws_combined_auth_without_credentials(auth_handler: AuthHandler):
+    """Without credentials"""
+    with pytest.raises(HTTPException) as e:
+        return await auth_handler.ws_combined_auth(bearer=None, api_key=None)
+    assert e.value.status_code == 401
+    assert e.value.detail == auth_handler.no_credentials_exception.detail
+
+
+# BEARER
+@pytest.mark.asyncio
+async def test_ws_combined_auth_with_invalid_bearer(auth_handler: AuthHandler):
+    """With invalid bearer"""
+    with pytest.raises(HTTPException) as e:
+        return await auth_handler.ws_combined_auth(bearer="123", api_key=None)
+    assert e.value.status_code == 401
+
+
+@pytest.mark.asyncio
+async def test_ws_combined_auth_with_valid_bearer(auth_handler: AuthHandler):
+    res = await auth_handler.ws_combined_auth(bearer=VALID_JWT, api_key=None)
+    assert JWT_SCOPE in res.scopes, UPDATE_SCOPES
+
+
+@pytest.mark.asyncio
+async def test_ws_combined_auth_with_expired_bearer(auth_handler: AuthHandler):
+    """With expired bearer"""
+    with pytest.raises(HTTPException) as e:
+        res = await auth_handler.ws_combined_auth(bearer=EXPIRED_JWT, api_key=None)
+    assert e.value.status_code == 401
+    assert e.value.detail == BEARER_EXPIRED
+
+
+# API KEY
+@pytest.mark.asyncio
+async def test_ws_combined_auth_with_invalid_api_key(auth_handler: AuthHandler):
+    """With invalid api key"""
+    with pytest.raises(HTTPException) as e:
+        res = await auth_handler.ws_combined_auth(bearer=None, api_key="123")
+    assert e.value.status_code == 401
+
+
+@pytest.mark.asyncio
+async def test_ws_combined_auth_with_full_scope_valid_api_key(
+    auth_handler: AuthHandler,
+):
+    """With full scope valid api key"""
+    res = await auth_handler.ws_combined_auth(bearer=None, api_key=FULL_SCOPE_API_KEY)
+    assert res.scopes == ALL_SCOPES, UPDATE_SCOPES
+
+
+@pytest.mark.asyncio
+async def test_ws_combined_auth_with_one_scope_valid_api_key(auth_handler: AuthHandler):
+    """With one scope valid api key"""
+    res = await auth_handler.ws_combined_auth(bearer=None, api_key=ONE_SCOPE_API_KEY)
+    assert API_KEY_SCOPE in res.scopes, UPDATE_SCOPES
+
+
+@pytest.mark.asyncio
+async def test_ws_combined_auth_with_expired_api_key(auth_handler: AuthHandler):
+    """With expired api key"""
+    with pytest.raises(HTTPException) as e:
+        res = await auth_handler.ws_combined_auth(bearer=None, api_key=EXPIRED_API_KEY)
+    assert e.value.status_code == 401
+    assert e.value.detail == API_KEY_EXPIRED
+
+
+# WS BEARER AUTH
+@pytest.mark.asyncio
+async def test_ws_bearer_auth_without_bearer(auth_handler: AuthHandler):
+    with pytest.raises(HTTPException) as e:
+        return await auth_handler.ws_bearer_auth(bearer=None)
+    assert e.value.status_code == 401
+
+
+@pytest.mark.asyncio
+async def test_ws_bearer_auth_with_invalid_bearer(auth_handler: AuthHandler):
+    with pytest.raises(HTTPException) as e:
+        return await auth_handler.ws_bearer_auth(bearer="123")
+    assert e.value.status_code == 401
+
+
+@pytest.mark.asyncio
+async def test_ws_bearer_auth_with_valid_bearer(auth_handler: AuthHandler):
+    res = await auth_handler.ws_bearer_auth(bearer=VALID_JWT)
+    assert JWT_SCOPE in res.scopes, UPDATE_SCOPES
+
+
+# WS API KEY AUTH
+@pytest.mark.asyncio
+async def test_ws_api_key_auth_without_api_key(auth_handler: AuthHandler):
+    with pytest.raises(HTTPException) as e:
+        return await auth_handler.ws_api_key_auth(api_key=None)
+    assert e.value.status_code == 401
+
+
+@pytest.mark.asyncio
+async def test_ws_api_key_auth_with_invalid_api_key(auth_handler: AuthHandler):
+    with pytest.raises(HTTPException) as e:
+        return await auth_handler.ws_api_key_auth(api_key="123")
+    assert e.value.status_code == 401
+
+
+@pytest.mark.asyncio
+async def test_ws_api_key_auth_with_expired_api_key(auth_handler: AuthHandler):
+    with pytest.raises(HTTPException) as e:
+        return await auth_handler.ws_api_key_auth(api_key=EXPIRED_API_KEY)
+    assert e.value.status_code == 401
+    assert e.value.detail == API_KEY_EXPIRED
+
+
+@pytest.mark.asyncio
+async def test_ws_api_key_auth_with_full_scope_valid_api_key(auth_handler: AuthHandler):
+    res = await auth_handler.ws_api_key_auth(api_key=FULL_SCOPE_API_KEY)
+    assert res.scopes == ALL_SCOPES, UPDATE_SCOPES
+
+
+@pytest.mark.asyncio
+async def test_ws_api_key_auth_with_one_scope_valid_api_key(auth_handler: AuthHandler):
+    res = await auth_handler.ws_api_key_auth(api_key=ONE_SCOPE_API_KEY)
+    assert API_KEY_SCOPE in res.scopes, UPDATE_SCOPES
+
+
+# print(asyncio.run(test_ws_api_key_auth_with_one_scope_valid_api_key(AuthHandler(BaseURL.LOCAL))))

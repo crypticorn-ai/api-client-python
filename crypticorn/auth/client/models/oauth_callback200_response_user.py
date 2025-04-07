@@ -23,9 +23,9 @@ from typing import Optional, Set
 from typing_extensions import Self
 
 
-class Whoami200Response(BaseModel):
+class OauthCallback200ResponseUser(BaseModel):
     """
-    Whoami200Response
+    OauthCallback200ResponseUser
     """  # noqa: E501
 
     email: StrictStr
@@ -34,7 +34,6 @@ class Whoami200Response(BaseModel):
     picture: Optional[StrictStr] = None
     username: Optional[StrictStr] = None
     phone: Optional[StrictStr] = None
-    apikeys: Optional[List[StrictStr]] = None
     __properties: ClassVar[List[str]] = [
         "email",
         "id",
@@ -42,7 +41,6 @@ class Whoami200Response(BaseModel):
         "picture",
         "username",
         "phone",
-        "apikeys",
     ]
 
     model_config = ConfigDict(
@@ -62,7 +60,7 @@ class Whoami200Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Whoami200Response from a JSON string"""
+        """Create an instance of OauthCallback200ResponseUser from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -86,7 +84,7 @@ class Whoami200Response(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Whoami200Response from a dict"""
+        """Create an instance of OauthCallback200ResponseUser from a dict"""
         if obj is None:
             return None
 
@@ -101,7 +99,6 @@ class Whoami200Response(BaseModel):
                 "picture": obj.get("picture"),
                 "username": obj.get("username"),
                 "phone": obj.get("phone"),
-                "apikeys": obj.get("apikeys"),
             }
         )
         return _obj

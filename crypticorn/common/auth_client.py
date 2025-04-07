@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, Query, status
 from fastapi.security import HTTPAuthorizationCredentials
 from typing_extensions import Annotated, Doc
 import json
@@ -51,8 +51,7 @@ class AuthHandler:
         """
         Verifies the API key.
         """
-        # TODO: Implement in auth service
-        raise NotImplementedError("API key verification not implemented")
+        return await self.auth_client.login.verify_api_key(api_key)
 
     async def _verify_bearer(
         self, bearer: HTTPAuthorizationCredentials
@@ -76,9 +75,9 @@ class AuthHandler:
             )
 
     async def _extract_message(self, e: ApiException) -> str:
-        '''
+        """
         Tries to extract the message from the body of the exception.
-        '''
+        """
         try:
             load = json.loads(e.body)
         except (json.JSONDecodeError, TypeError):
@@ -91,9 +90,9 @@ class AuthHandler:
             return load
 
     async def _handle_exception(self, e: Exception) -> HTTPException:
-        '''
+        """
         Handles exceptions and returns a HTTPException with the appropriate status code and detail.
-        '''
+        """
         if isinstance(e, ApiException):
             return HTTPException(
                 status_code=e.status,
@@ -104,8 +103,9 @@ class AuthHandler:
         else:
             return HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=str(e),
             )
-    
+
     async def api_key_auth(
         self,
         api_key: Annotated[str | None, Depends(apikey_header)] = None,
@@ -113,16 +113,9 @@ class AuthHandler:
     ) -> Verify200Response:
         """
         Verifies the API key and checks if the user scopes are a subset of the API scopes.
+        Use this function if you only want to allow access via the API key.
         """
-        try:
-            if not api_key:
-                raise self.no_credentials_exception
-            
-            res = await self._verify_api_key(api_key)
-            await self._validate_scopes(scopes, [Scope.from_str(scope) for scope in res.scopes])
-            return res
-        except Exception as e:
-            raise await self._handle_exception(e)
+        return await self.combined_auth(bearer=None, api_key=api_key, scopes=scopes)
 
     async def bearer_auth(
         self,
@@ -134,17 +127,9 @@ class AuthHandler:
     ) -> Verify200Response:
         """
         Verifies the bearer token and checks if the user scopes are a subset of the API scopes.
+        Use this function if you only want to allow access via the bearer token.
         """
-        if not bearer:
-            raise self.no_credentials_exception
-
-        try:
-            res = await self._verify_bearer(bearer)
-            await self._validate_scopes(scopes, [Scope.from_str(scope) for scope in res.scopes])
-            return res
-        except Exception as e:
-            raise await self._handle_exception(e)
-
+        return await self.combined_auth(bearer=bearer, api_key=None, scopes=scopes)
 
     async def combined_auth(
         self,
@@ -155,8 +140,9 @@ class AuthHandler:
         scopes: list[Scope] = [],
     ) -> Verify200Response:
         """
-        Verifies the bearer token and API key and checks if the user scopes are a subset of the API scopes.
+        Verifies the bearer token and/or API key and checks if the user scopes are a subset of the API scopes.
         Returns early on the first successful verification, otherwise tries all available tokens.
+        Use this function if you want to allow access via either the bearer token or the API key.
         """
         tokens = [bearer, api_key]
 
@@ -173,7 +159,9 @@ class AuthHandler:
                 if res is None:
                     continue
                 if scopes:
-                    await self._validate_scopes(scopes, [Scope.from_str(scope) for scope in res.scopes])
+                    await self._validate_scopes(
+                        scopes, [Scope.from_str(scope) for scope in res.scopes]
+                    )
                 return res
 
             except Exception as e:
@@ -181,3 +169,49 @@ class AuthHandler:
                 continue
 
         raise last_error or self.no_credentials_exception
+
+    async def ws_api_key_auth(
+        self,
+        api_key: Annotated[str | None, Query()] = None,
+        scopes: list[Scope] = [],
+    ) -> Verify200Response:
+        """
+        Verifies the API key and checks if the user scopes are a subset of the API scopes.
+        Use this function if you only want to allow access via the API key.
+        """
+        return await self.api_key_auth(api_key=api_key, scopes=scopes)
+
+    async def ws_bearer_auth(
+        self,
+        bearer: Annotated[str | None, Query()] = None,
+        scopes: list[Scope] = [],
+    ) -> Verify200Response:
+        """
+        Verifies the bearer token and checks if the user scopes are a subset of the API scopes.
+        Use this function if you only want to allow access via the bearer token.
+        """
+        credentials = (
+            HTTPAuthorizationCredentials(scheme="Bearer", credentials=bearer)
+            if bearer
+            else None
+        )
+        return await self.bearer_auth(bearer=credentials, scopes=scopes)
+
+    async def ws_combined_auth(
+        self,
+        bearer: Annotated[str | None, Query()] = None,
+        api_key: Annotated[str | None, Query()] = None,
+        scopes: list[Scope] = [],
+    ) -> Verify200Response:
+        """
+        Verifies the bearer token and/or API key and checks if the user scopes are a subset of the API scopes.
+        Use this function if you want to allow access via either the bearer token or the API key.
+        """
+        credentials = (
+            HTTPAuthorizationCredentials(scheme="Bearer", credentials=bearer)
+            if bearer
+            else None
+        )
+        return await self.combined_auth(
+            bearer=credentials, api_key=api_key, scopes=scopes
+        )
