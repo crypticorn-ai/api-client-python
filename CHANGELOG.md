@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.1.6 (2025-04-08)
+
+### Bug Fixes
+
+- Add market metrics module
+  ([`2954702`](https://github.com/crypticorn-ai/api-client/commit/29547025a0226bca1b9da9cfff5c89d3ed30f497))
+
+
 ## v2.1.5 (2025-04-08)
 
 ### Bug Fixes
