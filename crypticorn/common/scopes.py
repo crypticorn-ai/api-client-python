@@ -16,13 +16,12 @@ class Scope(str, Enum):
     READ_HIVE_MODEL = "read:hive:model"
     READ_HIVE_DATA = "read:hive:data"
     WRITE_HIVE_MODEL = "write:hive:model"
-    WRITE_HIVE_DATA = "write:hive:data"
 
     # Trade scopes
     READ_TRADE_BOTS = "read:trade:bots"
     WRITE_TRADE_BOTS = "write:trade:bots"
-    READ_TRADE_API_KEYS = "read:trade:api_keys"
-    WRITE_TRADE_API_KEYS = "write:trade:api_keys"
+    READ_TRADE_APIKEYS = "read:trade:api_keys"
+    WRITE_TRADE_APIKEYS = "write:trade:api_keys"
     READ_TRADE_ORDERS = "read:trade:orders"
     READ_TRADE_ACTIONS = "read:trade:actions"
     WRITE_TRADE_ACTIONS = "write:trade:actions"
@@ -38,8 +37,6 @@ class Scope(str, Enum):
     READ_PAY_PAYMENTS = "read:pay:payments"
     READ_PAY_PRODUCTS = "read:pay:products"
     WRITE_PAY_PRODUCTS = "write:pay:products"
-    READ_PAY_SUBSCRIPTIONS = "read:pay:subscriptions"
-    WRITE_PAY_SUBSCRIPTIONS = "write:pay:subscriptions"
     READ_PAY_NOW = "read:pay:now"
     WRITE_PAY_NOW = "write:pay:now"
 
