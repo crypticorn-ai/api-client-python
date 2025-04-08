@@ -13,7 +13,9 @@ jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdv
 
 
 async def main():
-    async with ApiClient(base_url=BaseURL.LOCAL, api_key=os.getenv("ONE_SCOPE_API_KEY")) as client:
+    async with ApiClient(
+        base_url=BaseURL.LOCAL, api_key=os.getenv("ONE_SCOPE_API_KEY")
+    ) as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
         # print(10 * "=" + "This is the raw json response" + 10 * "=")

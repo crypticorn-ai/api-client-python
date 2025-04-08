@@ -297,7 +297,7 @@ class ProductsApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        request_body: Optional[Dict[str, Any]] = None,
+        body: Optional[Dict[str, Any]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -318,8 +318,8 @@ class ProductsApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param request_body:
-        :type request_body: Dict[str, object]
+        :param body:
+        :type body: object
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -345,7 +345,7 @@ class ProductsApi:
         _param = self._get_products_serialize(
             limit=limit,
             offset=offset,
-            request_body=request_body,
+            body=body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -370,7 +370,7 @@ class ProductsApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        request_body: Optional[Dict[str, Any]] = None,
+        body: Optional[Dict[str, Any]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -391,8 +391,8 @@ class ProductsApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param request_body:
-        :type request_body: Dict[str, object]
+        :param body:
+        :type body: object
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -418,7 +418,7 @@ class ProductsApi:
         _param = self._get_products_serialize(
             limit=limit,
             offset=offset,
-            request_body=request_body,
+            body=body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -443,7 +443,7 @@ class ProductsApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        request_body: Optional[Dict[str, Any]] = None,
+        body: Optional[Dict[str, Any]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -464,8 +464,8 @@ class ProductsApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param request_body:
-        :type request_body: Dict[str, object]
+        :param body:
+        :type body: object
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -491,7 +491,7 @@ class ProductsApi:
         _param = self._get_products_serialize(
             limit=limit,
             offset=offset,
-            request_body=request_body,
+            body=body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -511,7 +511,7 @@ class ProductsApi:
         self,
         limit,
         offset,
-        request_body,
+        body,
         _request_auth,
         _content_type,
         _headers,
@@ -544,8 +544,8 @@ class ProductsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if request_body is not None:
-            _body_params = request_body
+        if body is not None:
+            _body_params = body
 
         # set the HTTP header `Accept`
         if "Accept" not in _header_params:

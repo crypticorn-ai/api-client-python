@@ -1031,7 +1031,7 @@ class FuturesTradingPanelApi:
     async def place_futures_order(
         self,
         key: StrictStr,
-        request_body: Dict[str, Any],
+        body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1049,8 +1049,8 @@ class FuturesTradingPanelApi:
 
         :param key: (required)
         :type key: str
-        :param request_body: (required)
-        :type request_body: Dict[str, object]
+        :param body: (required)
+        :type body: object
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1075,7 +1075,7 @@ class FuturesTradingPanelApi:
 
         _param = self._place_futures_order_serialize(
             key=key,
-            request_body=request_body,
+            body=body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1099,7 +1099,7 @@ class FuturesTradingPanelApi:
     async def place_futures_order_with_http_info(
         self,
         key: StrictStr,
-        request_body: Dict[str, Any],
+        body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1117,8 +1117,8 @@ class FuturesTradingPanelApi:
 
         :param key: (required)
         :type key: str
-        :param request_body: (required)
-        :type request_body: Dict[str, object]
+        :param body: (required)
+        :type body: object
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1143,7 +1143,7 @@ class FuturesTradingPanelApi:
 
         _param = self._place_futures_order_serialize(
             key=key,
-            request_body=request_body,
+            body=body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1167,7 +1167,7 @@ class FuturesTradingPanelApi:
     async def place_futures_order_without_preload_content(
         self,
         key: StrictStr,
-        request_body: Dict[str, Any],
+        body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1185,8 +1185,8 @@ class FuturesTradingPanelApi:
 
         :param key: (required)
         :type key: str
-        :param request_body: (required)
-        :type request_body: Dict[str, object]
+        :param body: (required)
+        :type body: object
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1211,7 +1211,7 @@ class FuturesTradingPanelApi:
 
         _param = self._place_futures_order_serialize(
             key=key,
-            request_body=request_body,
+            body=body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1230,7 +1230,7 @@ class FuturesTradingPanelApi:
     def _place_futures_order_serialize(
         self,
         key,
-        request_body,
+        body,
         _request_auth,
         _content_type,
         _headers,
@@ -1259,8 +1259,8 @@ class FuturesTradingPanelApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if request_body is not None:
-            _body_params = request_body
+        if body is not None:
+            _body_params = body
 
         # set the HTTP header `Accept`
         if "Accept" not in _header_params:

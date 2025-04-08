@@ -20,15 +20,15 @@ from typing_extensions import Self
 
 class ApiErrorLevel(str, Enum):
     """
-    ApiErrorLevel
+    API error levels
     """
 
     """
     allowed enum values
     """
     ERROR = "error"
-    SUCCESS = "success"
     INFO = "info"
+    SUCCESS = "success"
     WARNING = "warning"
 
     @classmethod

@@ -36,7 +36,7 @@ class NowWebhookPayload(BaseModel):
     actually_paid_at_fiat: Union[StrictFloat, StrictInt] = Field(
         description="Actually paid amount in fiat currency"
     )
-    fee: NowFeeStructure
+    fee: NowFeeStructure = Field(description="Fee structure for the payment")
     invoice_id: StrictInt = Field(description="Associated invoice ID")
     order_description: StrictStr = Field(description="Order description")
     order_id: StrictStr = Field(description="Internal order ID")

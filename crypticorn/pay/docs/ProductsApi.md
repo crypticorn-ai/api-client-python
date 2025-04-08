@@ -96,7 +96,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_products**
-> List[ProductModel] get_products(limit=limit, offset=offset, request_body=request_body)
+> List[ProductModel] get_products(limit=limit, offset=offset, body=body)
 
 Get Products
 
@@ -141,11 +141,11 @@ async with client.ApiClient(configuration) as api_client:
     api_instance = client.ProductsApi(api_client)
     limit = 0 # int |  (optional) (default to 0)
     offset = 0 # int |  (optional) (default to 0)
-    request_body = None # Dict[str, object] |  (optional)
+    body = None # object |  (optional)
 
     try:
         # Get Products
-        api_response = await api_instance.get_products(limit=limit, offset=offset, request_body=request_body)
+        api_response = await api_instance.get_products(limit=limit, offset=offset, body=body)
         print("The response of ProductsApi->get_products:\n")
         pprint(api_response)
     except Exception as e:
@@ -161,7 +161,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **limit** | **int**|  | [optional] [default to 0]
  **offset** | **int**|  | [optional] [default to 0]
- **request_body** | [**Dict[str, object]**](object.md)|  | [optional] 
+ **body** | **object**|  | [optional] 
 
 ### Return type
 

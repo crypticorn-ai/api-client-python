@@ -33,7 +33,7 @@ As of know the library is available in async mode only. There are two was of usi
 
 ## With Async Context Protocol
 ```python
-async with ApiClient(base_url="http://localhost", jwt=jwt) as client:
+async with ApiClient(base_url=BaseUrl.Prod, api_key="your-api-key") as client:
         # json response
         response = await client.pay.products.get_products_without_preload_content()
         print(await response.json())
@@ -48,7 +48,7 @@ async with ApiClient(base_url="http://localhost", jwt=jwt) as client:
 ## Without Async Context Protocol
 Without the context you need to close the session manually.
 ```python
-client = ApiClient(base_url="http://localhost", jwt=jwt)
+client = ApiClient(base_url=BaseUrl.Prod, api_key="your-api-key")
 response = asyncio.run(client.hive.models.get_all_models())
 asyncio.run(client.close())
 ```
