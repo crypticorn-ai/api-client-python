@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.1.1 (2025-04-08)
+
+### Bug Fixes
+
+- Remove three unused scopes
+  ([`3167308`](https://github.com/crypticorn-ai/api-client/commit/3167308b3df0c68b8e4c134841b437f40315a8e9))
+
+
 ## v2.1.0 (2025-04-07)
 
 ### Features
