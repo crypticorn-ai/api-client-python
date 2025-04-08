@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.1.4 (2025-04-08)
+
+### Bug Fixes
+
+- Refactor api errors
+  ([`885a20e`](https://github.com/crypticorn-ai/api-client/commit/885a20ec839dcf14fb4ec8d946cea76dcb15a65e))
+
+
 ## v2.1.3 (2025-04-08)
 
 ### Bug Fixes
