@@ -66,7 +66,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -77,11 +83,10 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.APIKeysApi(api_client)
     api_key_model = client.APIKeyModel() # APIKeyModel | 
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Post Api Key
-        api_response = await api_instance.create_api_key(api_key_model, access_token=access_token)
+        api_response = await api_instance.create_api_key(api_key_model)
         print("The response of APIKeysApi->create_api_key:\n")
         pprint(api_response)
     except ApiException as e:
@@ -164,7 +169,7 @@ Authentication schemes defined for the API:
 <a id="HTTPBearer"></a>
 ### HTTPBearer
 
-- **Type**: Bearer authentication
+- **Type**: Bearer authentication (JWT)
 
 <a id="APIKeyHeader"></a>
 ### APIKeyHeader

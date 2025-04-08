@@ -16,7 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictInt, StrictStr
+from pydantic import StrictInt
 from typing import List, Optional
 from crypticorn.trade.client.models.order_model import OrderModel
 
@@ -42,7 +42,6 @@ class OrdersApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -62,8 +61,6 @@ class OrdersApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -89,7 +86,6 @@ class OrdersApi:
         _param = self._get_orders_serialize(
             limit=limit,
             offset=offset,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -114,7 +110,6 @@ class OrdersApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -134,8 +129,6 @@ class OrdersApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -161,7 +154,6 @@ class OrdersApi:
         _param = self._get_orders_serialize(
             limit=limit,
             offset=offset,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -186,7 +178,6 @@ class OrdersApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -206,8 +197,6 @@ class OrdersApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -233,7 +222,6 @@ class OrdersApi:
         _param = self._get_orders_serialize(
             limit=limit,
             offset=offset,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -253,7 +241,6 @@ class OrdersApi:
         self,
         limit,
         offset,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -294,7 +281,7 @@ class OrdersApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",

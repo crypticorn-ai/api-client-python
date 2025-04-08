@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 from crypticorn.trade.client.models.futures_balance import FuturesBalance
 
 from crypticorn.trade.client.api_client import ApiClient, RequestSerialized
@@ -43,7 +43,6 @@ class FuturesTradingPanelApi:
         order_id: StrictStr,
         symbol: StrictStr,
         key: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -65,8 +64,6 @@ class FuturesTradingPanelApi:
         :type symbol: str
         :param key: (required)
         :type key: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -93,7 +90,6 @@ class FuturesTradingPanelApi:
             order_id=order_id,
             symbol=symbol,
             key=key,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -119,7 +115,6 @@ class FuturesTradingPanelApi:
         order_id: StrictStr,
         symbol: StrictStr,
         key: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -141,8 +136,6 @@ class FuturesTradingPanelApi:
         :type symbol: str
         :param key: (required)
         :type key: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -169,7 +162,6 @@ class FuturesTradingPanelApi:
             order_id=order_id,
             symbol=symbol,
             key=key,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -195,7 +187,6 @@ class FuturesTradingPanelApi:
         order_id: StrictStr,
         symbol: StrictStr,
         key: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -217,8 +208,6 @@ class FuturesTradingPanelApi:
         :type symbol: str
         :param key: (required)
         :type key: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -245,7 +234,6 @@ class FuturesTradingPanelApi:
             order_id=order_id,
             symbol=symbol,
             key=key,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -266,7 +254,6 @@ class FuturesTradingPanelApi:
         order_id,
         symbol,
         key,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -311,7 +298,7 @@ class FuturesTradingPanelApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="DELETE",
@@ -331,7 +318,6 @@ class FuturesTradingPanelApi:
     @validate_call
     async def get_futures_balance(
         self,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -347,8 +333,6 @@ class FuturesTradingPanelApi:
         """Get Futures Balance
 
 
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -372,7 +356,6 @@ class FuturesTradingPanelApi:
         """  # noqa: E501
 
         _param = self._get_futures_balance_serialize(
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -381,7 +364,6 @@ class FuturesTradingPanelApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[FuturesBalance]",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -395,7 +377,6 @@ class FuturesTradingPanelApi:
     @validate_call
     async def get_futures_balance_with_http_info(
         self,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -411,8 +392,6 @@ class FuturesTradingPanelApi:
         """Get Futures Balance
 
 
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -436,7 +415,6 @@ class FuturesTradingPanelApi:
         """  # noqa: E501
 
         _param = self._get_futures_balance_serialize(
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -445,7 +423,6 @@ class FuturesTradingPanelApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[FuturesBalance]",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -459,7 +436,6 @@ class FuturesTradingPanelApi:
     @validate_call
     async def get_futures_balance_without_preload_content(
         self,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -475,8 +451,6 @@ class FuturesTradingPanelApi:
         """Get Futures Balance
 
 
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -500,7 +474,6 @@ class FuturesTradingPanelApi:
         """  # noqa: E501
 
         _param = self._get_futures_balance_serialize(
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -509,7 +482,6 @@ class FuturesTradingPanelApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[FuturesBalance]",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -518,7 +490,6 @@ class FuturesTradingPanelApi:
 
     def _get_futures_balance_serialize(
         self,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -551,7 +522,7 @@ class FuturesTradingPanelApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -572,7 +543,6 @@ class FuturesTradingPanelApi:
     async def get_futures_ledger(
         self,
         key: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -590,8 +560,6 @@ class FuturesTradingPanelApi:
 
         :param key: (required)
         :type key: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -616,7 +584,6 @@ class FuturesTradingPanelApi:
 
         _param = self._get_futures_ledger_serialize(
             key=key,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -640,7 +607,6 @@ class FuturesTradingPanelApi:
     async def get_futures_ledger_with_http_info(
         self,
         key: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -658,8 +624,6 @@ class FuturesTradingPanelApi:
 
         :param key: (required)
         :type key: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -684,7 +648,6 @@ class FuturesTradingPanelApi:
 
         _param = self._get_futures_ledger_serialize(
             key=key,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -708,7 +671,6 @@ class FuturesTradingPanelApi:
     async def get_futures_ledger_without_preload_content(
         self,
         key: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -726,8 +688,6 @@ class FuturesTradingPanelApi:
 
         :param key: (required)
         :type key: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -752,7 +712,6 @@ class FuturesTradingPanelApi:
 
         _param = self._get_futures_ledger_serialize(
             key=key,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -771,7 +730,6 @@ class FuturesTradingPanelApi:
     def _get_futures_ledger_serialize(
         self,
         key,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -808,7 +766,7 @@ class FuturesTradingPanelApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -829,7 +787,6 @@ class FuturesTradingPanelApi:
     async def get_historical_futures_orders(
         self,
         key: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -847,8 +804,6 @@ class FuturesTradingPanelApi:
 
         :param key: (required)
         :type key: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -873,7 +828,6 @@ class FuturesTradingPanelApi:
 
         _param = self._get_historical_futures_orders_serialize(
             key=key,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -897,7 +851,6 @@ class FuturesTradingPanelApi:
     async def get_historical_futures_orders_with_http_info(
         self,
         key: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -915,8 +868,6 @@ class FuturesTradingPanelApi:
 
         :param key: (required)
         :type key: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -941,7 +892,6 @@ class FuturesTradingPanelApi:
 
         _param = self._get_historical_futures_orders_serialize(
             key=key,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -965,7 +915,6 @@ class FuturesTradingPanelApi:
     async def get_historical_futures_orders_without_preload_content(
         self,
         key: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -983,8 +932,6 @@ class FuturesTradingPanelApi:
 
         :param key: (required)
         :type key: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1009,7 +956,6 @@ class FuturesTradingPanelApi:
 
         _param = self._get_historical_futures_orders_serialize(
             key=key,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1028,7 +974,6 @@ class FuturesTradingPanelApi:
     def _get_historical_futures_orders_serialize(
         self,
         key,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -1065,7 +1010,7 @@ class FuturesTradingPanelApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -1087,7 +1032,6 @@ class FuturesTradingPanelApi:
         self,
         key: StrictStr,
         request_body: Dict[str, Any],
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1107,8 +1051,6 @@ class FuturesTradingPanelApi:
         :type key: str
         :param request_body: (required)
         :type request_body: Dict[str, object]
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1134,7 +1076,6 @@ class FuturesTradingPanelApi:
         _param = self._place_futures_order_serialize(
             key=key,
             request_body=request_body,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1159,7 +1100,6 @@ class FuturesTradingPanelApi:
         self,
         key: StrictStr,
         request_body: Dict[str, Any],
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1179,8 +1119,6 @@ class FuturesTradingPanelApi:
         :type key: str
         :param request_body: (required)
         :type request_body: Dict[str, object]
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1206,7 +1144,6 @@ class FuturesTradingPanelApi:
         _param = self._place_futures_order_serialize(
             key=key,
             request_body=request_body,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1231,7 +1168,6 @@ class FuturesTradingPanelApi:
         self,
         key: StrictStr,
         request_body: Dict[str, Any],
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1251,8 +1187,6 @@ class FuturesTradingPanelApi:
         :type key: str
         :param request_body: (required)
         :type request_body: Dict[str, object]
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1278,7 +1212,6 @@ class FuturesTradingPanelApi:
         _param = self._place_futures_order_serialize(
             key=key,
             request_body=request_body,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1298,7 +1231,6 @@ class FuturesTradingPanelApi:
         self,
         key,
         request_body,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -1347,7 +1279,7 @@ class FuturesTradingPanelApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",

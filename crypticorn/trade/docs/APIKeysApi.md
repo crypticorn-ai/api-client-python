@@ -12,13 +12,14 @@ Method | HTTP request | Description
 
 
 # **create_api_key**
-> object create_api_key(api_key_model, access_token=access_token)
+> object create_api_key(api_key_model)
 
 Post Api Key
 
 ### Example
 
-* Bearer Authentication (HTTPBearer):
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -37,7 +38,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -47,11 +54,10 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.APIKeysApi(api_client)
     api_key_model = client.APIKeyModel() # APIKeyModel | 
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Post Api Key
-        api_response = await api_instance.create_api_key(api_key_model, access_token=access_token)
+        api_response = await api_instance.create_api_key(api_key_model)
         print("The response of APIKeysApi->create_api_key:\n")
         pprint(api_response)
     except Exception as e:
@@ -66,7 +72,6 @@ async with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **api_key_model** | [**APIKeyModel**](APIKeyModel.md)|  | 
- **access_token** | **str**|  | [optional] 
 
 ### Return type
 
@@ -74,7 +79,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -91,13 +96,14 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_api_key**
-> object delete_api_key(id, access_token=access_token)
+> object delete_api_key(id)
 
 Delete Api Key
 
 ### Example
 
-* Bearer Authentication (HTTPBearer):
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -115,7 +121,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -125,11 +137,10 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.APIKeysApi(api_client)
     id = 'id_example' # str | 
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Delete Api Key
-        api_response = await api_instance.delete_api_key(id, access_token=access_token)
+        api_response = await api_instance.delete_api_key(id)
         print("The response of APIKeysApi->delete_api_key:\n")
         pprint(api_response)
     except Exception as e:
@@ -144,7 +155,6 @@ async with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**|  | 
- **access_token** | **str**|  | [optional] 
 
 ### Return type
 
@@ -152,7 +162,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -169,13 +179,14 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_api_key_by_id**
-> APIKeyModel get_api_key_by_id(id, access_token=access_token)
+> APIKeyModel get_api_key_by_id(id)
 
 Get Api Key By Id
 
 ### Example
 
-* Bearer Authentication (HTTPBearer):
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -194,7 +205,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -204,11 +221,10 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.APIKeysApi(api_client)
     id = 'id_example' # str | 
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Get Api Key By Id
-        api_response = await api_instance.get_api_key_by_id(id, access_token=access_token)
+        api_response = await api_instance.get_api_key_by_id(id)
         print("The response of APIKeysApi->get_api_key_by_id:\n")
         pprint(api_response)
     except Exception as e:
@@ -223,7 +239,6 @@ async with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**|  | 
- **access_token** | **str**|  | [optional] 
 
 ### Return type
 
@@ -231,7 +246,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -248,13 +263,14 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_api_keys**
-> List[APIKeyModel] get_api_keys(limit=limit, offset=offset, access_token=access_token)
+> List[APIKeyModel] get_api_keys(limit=limit, offset=offset)
 
 Get Api Keys
 
 ### Example
 
-* Bearer Authentication (HTTPBearer):
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -273,7 +289,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -284,11 +306,10 @@ async with client.ApiClient(configuration) as api_client:
     api_instance = client.APIKeysApi(api_client)
     limit = 0 # int |  (optional) (default to 0)
     offset = 0 # int |  (optional) (default to 0)
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Get Api Keys
-        api_response = await api_instance.get_api_keys(limit=limit, offset=offset, access_token=access_token)
+        api_response = await api_instance.get_api_keys(limit=limit, offset=offset)
         print("The response of APIKeysApi->get_api_keys:\n")
         pprint(api_response)
     except Exception as e:
@@ -304,7 +325,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **limit** | **int**|  | [optional] [default to 0]
  **offset** | **int**|  | [optional] [default to 0]
- **access_token** | **str**|  | [optional] 
 
 ### Return type
 
@@ -312,7 +332,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -329,13 +349,14 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_api_key**
-> object update_api_key(id, api_key_model, access_token=access_token)
+> object update_api_key(id, api_key_model)
 
 Put Api Key
 
 ### Example
 
-* Bearer Authentication (HTTPBearer):
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -354,7 +375,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -365,11 +392,10 @@ async with client.ApiClient(configuration) as api_client:
     api_instance = client.APIKeysApi(api_client)
     id = 'id_example' # str | 
     api_key_model = client.APIKeyModel() # APIKeyModel | 
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Put Api Key
-        api_response = await api_instance.update_api_key(id, api_key_model, access_token=access_token)
+        api_response = await api_instance.update_api_key(id, api_key_model)
         print("The response of APIKeysApi->update_api_key:\n")
         pprint(api_response)
     except Exception as e:
@@ -385,7 +411,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**|  | 
  **api_key_model** | [**APIKeyModel**](APIKeyModel.md)|  | 
- **access_token** | **str**|  | [optional] 
 
 ### Return type
 
@@ -393,7 +418,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 

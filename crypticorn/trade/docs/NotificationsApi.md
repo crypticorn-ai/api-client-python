@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **create_notification**
-> object create_notification(notification_model, access_token=access_token)
+> object create_notification(notification_model)
 
 Create Notification
 
@@ -21,7 +21,8 @@ Create a new notification
 
 ### Example
 
-* Bearer Authentication (HTTPBearer):
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -40,7 +41,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -50,11 +57,10 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NotificationsApi(api_client)
     notification_model = client.NotificationModel() # NotificationModel | 
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Create Notification
-        api_response = await api_instance.create_notification(notification_model, access_token=access_token)
+        api_response = await api_instance.create_notification(notification_model)
         print("The response of NotificationsApi->create_notification:\n")
         pprint(api_response)
     except Exception as e:
@@ -69,7 +75,6 @@ async with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **notification_model** | [**NotificationModel**](NotificationModel.md)|  | 
- **access_token** | **str**|  | [optional] 
 
 ### Return type
 
@@ -77,7 +82,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -94,13 +99,14 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_notification**
-> object delete_notification(id, access_token=access_token)
+> object delete_notification(id)
 
 Delete Notification
 
 ### Example
 
-* Bearer Authentication (HTTPBearer):
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -118,7 +124,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -128,11 +140,10 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NotificationsApi(api_client)
     id = 'id_example' # str | 
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Delete Notification
-        api_response = await api_instance.delete_notification(id, access_token=access_token)
+        api_response = await api_instance.delete_notification(id)
         print("The response of NotificationsApi->delete_notification:\n")
         pprint(api_response)
     except Exception as e:
@@ -147,7 +158,6 @@ async with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**|  | 
- **access_token** | **str**|  | [optional] 
 
 ### Return type
 
@@ -155,7 +165,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -172,7 +182,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_notifications**
-> object delete_notifications(access_token=access_token)
+> object delete_notifications()
 
 Delete Notifications
 
@@ -180,7 +190,8 @@ Delete all notifications for the authenticated user
 
 ### Example
 
-* Bearer Authentication (HTTPBearer):
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -198,7 +209,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -207,11 +224,10 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NotificationsApi(api_client)
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Delete Notifications
-        api_response = await api_instance.delete_notifications(access_token=access_token)
+        api_response = await api_instance.delete_notifications()
         print("The response of NotificationsApi->delete_notifications:\n")
         pprint(api_response)
     except Exception as e:
@@ -222,10 +238,7 @@ async with client.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **access_token** | **str**|  | [optional] 
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -233,7 +246,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -245,12 +258,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_notifications**
-> List[NotificationModel] get_notifications(limit=limit, offset=offset, access_token=access_token)
+> List[NotificationModel] get_notifications(limit=limit, offset=offset)
 
 Get Notifications
 
@@ -258,7 +270,8 @@ Get all notifications for the authenticated user
 
 ### Example
 
-* Bearer Authentication (HTTPBearer):
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -277,7 +290,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -288,11 +307,10 @@ async with client.ApiClient(configuration) as api_client:
     api_instance = client.NotificationsApi(api_client)
     limit = 0 # int |  (optional) (default to 0)
     offset = 0 # int |  (optional) (default to 0)
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Get Notifications
-        api_response = await api_instance.get_notifications(limit=limit, offset=offset, access_token=access_token)
+        api_response = await api_instance.get_notifications(limit=limit, offset=offset)
         print("The response of NotificationsApi->get_notifications:\n")
         pprint(api_response)
     except Exception as e:
@@ -308,7 +326,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **limit** | **int**|  | [optional] [default to 0]
  **offset** | **int**|  | [optional] [default to 0]
- **access_token** | **str**|  | [optional] 
 
 ### Return type
 
@@ -316,7 +333,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -333,7 +350,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_notification**
-> object update_notification(id, viewed, sent, access_token=access_token)
+> object update_notification(id, viewed, sent)
 
 Update Notification
 
@@ -341,7 +358,8 @@ Update a notification's viewed status
 
 ### Example
 
-* Bearer Authentication (HTTPBearer):
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -359,7 +377,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -371,11 +395,10 @@ async with client.ApiClient(configuration) as api_client:
     id = 'id_example' # str | 
     viewed = True # bool | 
     sent = True # bool | 
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Update Notification
-        api_response = await api_instance.update_notification(id, viewed, sent, access_token=access_token)
+        api_response = await api_instance.update_notification(id, viewed, sent)
         print("The response of NotificationsApi->update_notification:\n")
         pprint(api_response)
     except Exception as e:
@@ -392,7 +415,6 @@ Name | Type | Description  | Notes
  **id** | **str**|  | 
  **viewed** | **bool**|  | 
  **sent** | **bool**|  | 
- **access_token** | **str**|  | [optional] 
 
 ### Return type
 
@@ -400,7 +422,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -417,7 +439,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_notifications**
-> object update_notifications(viewed, sent, access_token=access_token)
+> object update_notifications(viewed, sent)
 
 Update Notifications
 
@@ -425,7 +447,8 @@ Bulk update notifications
 
 ### Example
 
-* Bearer Authentication (HTTPBearer):
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -443,7 +466,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -454,11 +483,10 @@ async with client.ApiClient(configuration) as api_client:
     api_instance = client.NotificationsApi(api_client)
     viewed = True # bool | 
     sent = True # bool | 
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Update Notifications
-        api_response = await api_instance.update_notifications(viewed, sent, access_token=access_token)
+        api_response = await api_instance.update_notifications(viewed, sent)
         print("The response of NotificationsApi->update_notifications:\n")
         pprint(api_response)
     except Exception as e:
@@ -474,7 +502,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **viewed** | **bool**|  | 
  **sent** | **bool**|  | 
- **access_token** | **str**|  | [optional] 
 
 ### Return type
 
@@ -482,7 +509,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 

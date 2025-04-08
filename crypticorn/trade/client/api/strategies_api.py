@@ -42,7 +42,6 @@ class StrategiesApi:
     async def create_strategy(
         self,
         strategy_model_input: StrategyModelInput,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -60,8 +59,6 @@ class StrategiesApi:
 
         :param strategy_model_input: (required)
         :type strategy_model_input: StrategyModelInput
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -86,7 +83,6 @@ class StrategiesApi:
 
         _param = self._create_strategy_serialize(
             strategy_model_input=strategy_model_input,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -110,7 +106,6 @@ class StrategiesApi:
     async def create_strategy_with_http_info(
         self,
         strategy_model_input: StrategyModelInput,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -128,8 +123,6 @@ class StrategiesApi:
 
         :param strategy_model_input: (required)
         :type strategy_model_input: StrategyModelInput
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -154,7 +147,6 @@ class StrategiesApi:
 
         _param = self._create_strategy_serialize(
             strategy_model_input=strategy_model_input,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -178,7 +170,6 @@ class StrategiesApi:
     async def create_strategy_without_preload_content(
         self,
         strategy_model_input: StrategyModelInput,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -196,8 +187,6 @@ class StrategiesApi:
 
         :param strategy_model_input: (required)
         :type strategy_model_input: StrategyModelInput
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -222,7 +211,6 @@ class StrategiesApi:
 
         _param = self._create_strategy_serialize(
             strategy_model_input=strategy_model_input,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -241,7 +229,6 @@ class StrategiesApi:
     def _create_strategy_serialize(
         self,
         strategy_model_input,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -286,7 +273,7 @@ class StrategiesApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -308,7 +295,6 @@ class StrategiesApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -328,8 +314,6 @@ class StrategiesApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -355,7 +339,6 @@ class StrategiesApi:
         _param = self._get_strategies_serialize(
             limit=limit,
             offset=offset,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -380,7 +363,6 @@ class StrategiesApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -400,8 +382,6 @@ class StrategiesApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -427,7 +407,6 @@ class StrategiesApi:
         _param = self._get_strategies_serialize(
             limit=limit,
             offset=offset,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -452,7 +431,6 @@ class StrategiesApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -472,8 +450,6 @@ class StrategiesApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -499,7 +475,6 @@ class StrategiesApi:
         _param = self._get_strategies_serialize(
             limit=limit,
             offset=offset,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -519,7 +494,6 @@ class StrategiesApi:
         self,
         limit,
         offset,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -560,7 +534,7 @@ class StrategiesApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -581,7 +555,6 @@ class StrategiesApi:
     async def kill_strategy(
         self,
         id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -600,8 +573,6 @@ class StrategiesApi:
 
         :param id: (required)
         :type id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -626,7 +597,6 @@ class StrategiesApi:
 
         _param = self._kill_strategy_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -650,7 +620,6 @@ class StrategiesApi:
     async def kill_strategy_with_http_info(
         self,
         id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -669,8 +638,6 @@ class StrategiesApi:
 
         :param id: (required)
         :type id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -695,7 +662,6 @@ class StrategiesApi:
 
         _param = self._kill_strategy_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -719,7 +685,6 @@ class StrategiesApi:
     async def kill_strategy_without_preload_content(
         self,
         id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -738,8 +703,6 @@ class StrategiesApi:
 
         :param id: (required)
         :type id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -764,7 +727,6 @@ class StrategiesApi:
 
         _param = self._kill_strategy_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -783,7 +745,6 @@ class StrategiesApi:
     def _kill_strategy_serialize(
         self,
         id,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -818,7 +779,7 @@ class StrategiesApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="DELETE",
@@ -840,7 +801,6 @@ class StrategiesApi:
         self,
         id: StrictStr,
         strategy_model_input: StrategyModelInput,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -861,8 +821,6 @@ class StrategiesApi:
         :type id: str
         :param strategy_model_input: (required)
         :type strategy_model_input: StrategyModelInput
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -888,7 +846,6 @@ class StrategiesApi:
         _param = self._update_strategy_serialize(
             id=id,
             strategy_model_input=strategy_model_input,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -913,7 +870,6 @@ class StrategiesApi:
         self,
         id: StrictStr,
         strategy_model_input: StrategyModelInput,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -934,8 +890,6 @@ class StrategiesApi:
         :type id: str
         :param strategy_model_input: (required)
         :type strategy_model_input: StrategyModelInput
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -961,7 +915,6 @@ class StrategiesApi:
         _param = self._update_strategy_serialize(
             id=id,
             strategy_model_input=strategy_model_input,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -986,7 +939,6 @@ class StrategiesApi:
         self,
         id: StrictStr,
         strategy_model_input: StrategyModelInput,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1007,8 +959,6 @@ class StrategiesApi:
         :type id: str
         :param strategy_model_input: (required)
         :type strategy_model_input: StrategyModelInput
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1034,7 +984,6 @@ class StrategiesApi:
         _param = self._update_strategy_serialize(
             id=id,
             strategy_model_input=strategy_model_input,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1054,7 +1003,6 @@ class StrategiesApi:
         self,
         id,
         strategy_model_input,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -1101,7 +1049,7 @@ class StrategiesApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="PUT",
