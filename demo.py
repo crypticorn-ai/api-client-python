@@ -7,15 +7,14 @@ import dotenv
 import asyncio
 import os
 from crypticorn.common.scopes import Scope
+from crypticorn.metrics import Market
 
 dotenv.load_dotenv()
-jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiTlBVSmpQRmJmVnphOU4xcTU0R0siLCJpYXQiOjE3NDQxMTczNTAsImV4cCI6MTc0NDEyMDk1MCwic2NvcGVzIjpbInJlYWQ6aGl2ZTptb2RlbCIsInJlYWQ6aGl2ZTpkYXRhIiwicmVhZDp0cmFkZTpib3RzIiwicmVhZDp0cmFkZTpvcmRlcnMiLCJyZWFkOnRyYWRlOmFjdGlvbnMiLCJyZWFkOnRyYWRlOnN0cmF0ZWdpZXMiLCJyZWFkOnRyYWRlOmV4Y2hhbmdlcyIsInJlYWQ6dHJhZGU6ZnV0dXJlcyIsInJlYWQ6dHJhZGU6bm90aWZpY2F0aW9ucyIsInJlYWQ6dHJhZGU6YXBpX2tleXMiLCJyZWFkOnBheTpub3ciLCJyZWFkOnBheTpwcm9kdWN0cyIsInJlYWQ6cGF5OnBheW1lbnRzIiwid3JpdGU6aGl2ZTptb2RlbCIsIndyaXRlOnRyYWRlOmJvdHMiLCJ3cml0ZTp0cmFkZTpmdXR1cmVzIiwid3JpdGU6dHJhZGU6bm90aWZpY2F0aW9ucyIsIndyaXRlOnRyYWRlOmFwaV9rZXlzIiwid3JpdGU6dHJhZGU6c3RyYXRlZ2llcyIsInJlYWQ6cHJlZGljdGlvbnMiLCJ3cml0ZTpwYXk6cHJvZHVjdHMiLCJ3cml0ZTpwYXk6bm93IiwicmVhZDpwcmVkaWN0aW9ucyJdfQ.xD-Bi2YZ6Vk5k1JfqD9O2qJHrVWbuQ51yDzatzDoKkU"
+jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoieVk1SHZVNVV6QlA5eFNiYzg1eGQiLCJpYXQiOjE3NDQxMzQ1NTEsImV4cCI6MTc0NDEzODE1MSwic2NvcGVzIjpbInJlYWQ6aGl2ZTptb2RlbCIsInJlYWQ6aGl2ZTpkYXRhIiwicmVhZDp0cmFkZTpib3RzIiwicmVhZDp0cmFkZTpvcmRlcnMiLCJyZWFkOnRyYWRlOmFjdGlvbnMiLCJyZWFkOnRyYWRlOnN0cmF0ZWdpZXMiLCJyZWFkOnRyYWRlOmV4Y2hhbmdlcyIsInJlYWQ6dHJhZGU6ZnV0dXJlcyIsInJlYWQ6dHJhZGU6bm90aWZpY2F0aW9ucyIsInJlYWQ6dHJhZGU6YXBpX2tleXMiLCJyZWFkOnBheTpub3ciLCJyZWFkOnBheTpwcm9kdWN0cyIsInJlYWQ6cGF5OnBheW1lbnRzIiwid3JpdGU6aGl2ZTptb2RlbCIsIndyaXRlOnRyYWRlOmJvdHMiLCJ3cml0ZTp0cmFkZTpmdXR1cmVzIiwid3JpdGU6dHJhZGU6bm90aWZpY2F0aW9ucyIsIndyaXRlOnRyYWRlOmFwaV9rZXlzIiwid3JpdGU6dHJhZGU6c3RyYXRlZ2llcyIsInJlYWQ6cHJlZGljdGlvbnMiLCJ3cml0ZTpwYXk6cHJvZHVjdHMiLCJ3cml0ZTpwYXk6bm93IiwicmVhZDpwcmVkaWN0aW9ucyJdfQ._hIlj2NK8FqDJq2M6qc_JGAOq6Dj_6vJKqvf2SMntcc"
 
 
 async def main():
-    async with ApiClient(
-        base_url=BaseURL.LOCAL, api_key=os.getenv("ONE_SCOPE_API_KEY")
-    ) as client:
+    async with ApiClient(base_url=BaseURL.DEV, jwt=jwt) as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
         # print(10 * "=" + "This is the raw json response" + 10 * "=")
@@ -52,7 +51,17 @@ async def main():
         #     ),
         # )
 
-        res = await client.pay.products.get_products()
+        # res = await client.pay.products.get_products()
+        # print(res)
+
+        # res = await client.metrics.status.health_check()
+        # print(res)
+        res = await client.metrics.marketcap.get_marketcap_symbols_fmt(
+            market=Market.FUTURES,
+            exchange="binance",
+        )
+        print(res)
+        res = await client.metrics.tokens.get_tokens_fmt(token_type="stable")
         print(res)
 
 
@@ -84,8 +93,8 @@ async def auth():
 
 
 if __name__ == "__main__":
-    # asyncio.run(main())
-    asyncio.run(auth())
+    asyncio.run(main())
+    # asyncio.run(auth())
     # client = ApiClient(base_url="http://localhost", api_key="1234567890")
     # response = asyncio.run(client.hive.models.get_all_models())
     # print(response)

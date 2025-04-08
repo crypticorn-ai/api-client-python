@@ -70,10 +70,10 @@ import client
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/klines
+# Defining the host is optional and defaults to http://localhost/v1/klines
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/klines"
+    host = "http://localhost/v1/klines"
 )
 
 
@@ -99,7 +99,7 @@ with client.ApiClient(configuration) as api_client:
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://api.crypticorn.dev/v1/klines*
+All URIs are relative to *http://localhost/v1/klines*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------

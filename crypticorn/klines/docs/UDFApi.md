@@ -1,6 +1,6 @@
 # client.UDFApi
 
-All URIs are relative to *https://api.crypticorn.dev/v1/klines*
+All URIs are relative to *http://localhost/v1/klines*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -27,10 +27,10 @@ from client.models.udf_config_response import UDFConfigResponse
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/klines
+# Defining the host is optional and defaults to http://localhost/v1/klines
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/klines"
+    host = "http://localhost/v1/klines"
 )
 
 
@@ -90,10 +90,10 @@ from client.models.response_get_history_udf_history_get import ResponseGetHistor
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/klines
+# Defining the host is optional and defaults to http://localhost/v1/klines
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/klines"
+    host = "http://localhost/v1/klines"
 )
 
 
@@ -164,10 +164,10 @@ import client
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/klines
+# Defining the host is optional and defaults to http://localhost/v1/klines
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/klines"
+    host = "http://localhost/v1/klines"
 )
 
 
@@ -228,10 +228,10 @@ from client.models.symbol_group_response import SymbolGroupResponse
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/klines
+# Defining the host is optional and defaults to http://localhost/v1/klines
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/klines"
+    host = "http://localhost/v1/klines"
 )
 
 
@@ -295,10 +295,10 @@ from client.models.symbol_info_response import SymbolInfoResponse
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/klines
+# Defining the host is optional and defaults to http://localhost/v1/klines
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/klines"
+    host = "http://localhost/v1/klines"
 )
 
 
@@ -363,10 +363,10 @@ import client
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/klines
+# Defining the host is optional and defaults to http://localhost/v1/klines
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/klines"
+    host = "http://localhost/v1/klines"
 )
 
 
@@ -432,10 +432,10 @@ from client.models.search_symbol_response import SearchSymbolResponse
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/klines
+# Defining the host is optional and defaults to http://localhost/v1/klines
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/klines"
+    host = "http://localhost/v1/klines"
 )
 
 

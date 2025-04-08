@@ -23,3 +23,4 @@ class Service(Enum):
     PAY = "pay"
     TRADE = "trade"
     AUTH = "auth"
+    METRICS = "metrics"
