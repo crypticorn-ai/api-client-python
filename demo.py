@@ -13,7 +13,7 @@ jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdv
 
 
 async def main():
-    async with ApiClient(base_url=BaseURL.LOCAL, jwt=jwt) as client:
+    async with ApiClient(base_url=BaseURL.LOCAL, api_key=os.getenv("ONE_SCOPE_API_KEY")) as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
         # print(10 * "=" + "This is the raw json response" + 10 * "=")
@@ -42,13 +42,16 @@ async def main():
 
         # response = await client.trade.bots.get_bots()
         # print(response)
-        await client.pay.products.update_product(
-            id="123",
-            ProductModel(
-                name="test",
-                description="test",
-            ),
-        )
+        # await client.pay.products.update_product(
+        #     id="123",
+        #     ProductModel(
+        #         name="test",
+        #         description="test",
+        #     ),
+        # )
+
+        res = await client.pay.products.get_products()
+        print(res)
 
 
 async def auth():
