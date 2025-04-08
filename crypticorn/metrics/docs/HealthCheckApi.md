@@ -1,16 +1,16 @@
 # client.HealthCheckApi
 
-All URIs are relative to *http://localhost/v1/klines*
+All URIs are relative to *https://api.crypticorn.dev/v1/metrics*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**index_get**](HealthCheckApi.md#index_get) | **GET** / | Index
+[**health_check**](HealthCheckApi.md#health_check) | **GET** / | Read Root
 
 
-# **index_get**
-> BaseResponseHealthCheckResponse index_get()
+# **health_check**
+> BaseResponseHealthCheckResponse health_check()
 
-Index
+Read Root
 
 Health check endpoint to verify if the API is running.
 
@@ -23,25 +23,25 @@ from client.models.base_response_health_check_response import BaseResponseHealth
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost/v1/klines
+# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://localhost/v1/klines"
+    host = "https://api.crypticorn.dev/v1/metrics"
 )
 
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.HealthCheckApi(api_client)
 
     try:
-        # Index
-        api_response = api_instance.index_get()
-        print("The response of HealthCheckApi->index_get:\n")
+        # Read Root
+        api_response = await api_instance.health_check()
+        print("The response of HealthCheckApi->health_check:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling HealthCheckApi->index_get: %s\n" % e)
+        print("Exception when calling HealthCheckApi->health_check: %s\n" % e)
 ```
 
 

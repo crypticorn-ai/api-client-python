@@ -4,7 +4,7 @@ import requests
 import subprocess
 
 # List of possible module names
-MODULES = ["trade", "klines", "hive", "pay", "auth"]
+MODULES = ["trade", "klines", "hive", "pay", "auth", "metrics"]
 ROOT_URL = "http://localhost/v1"
 
 
@@ -64,6 +64,8 @@ def main():
         print(f"Creating {init_path} file")
         init_content = f"""from crypticorn.{module_name}.client import *
 from crypticorn.{module_name}.main import {upper_module_name}Client
+
+__all__ = ["{upper_module_name}Client", ]
 """
         with open(init_path, "w") as f:
             f.write(init_content)
