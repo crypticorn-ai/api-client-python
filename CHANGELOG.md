@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.1.2 (2025-04-08)
+
+### Bug Fixes
+
+- Allow scopes to be set as strings
+  ([`600babb`](https://github.com/crypticorn-ai/api-client/commit/600babb87c93aeecdc42aa19ebff1076a76404ea))
+
+
 ## v2.1.1 (2025-04-08)
 
 ### Bug Fixes
