@@ -34,7 +34,6 @@ class Whoami200Response(BaseModel):
     picture: Optional[StrictStr] = None
     username: Optional[StrictStr] = None
     phone: Optional[StrictStr] = None
-    apikeys: Optional[List[StrictStr]] = None
     __properties: ClassVar[List[str]] = [
         "email",
         "id",
@@ -42,7 +41,6 @@ class Whoami200Response(BaseModel):
         "picture",
         "username",
         "phone",
-        "apikeys",
     ]
 
     model_config = ConfigDict(
@@ -101,7 +99,6 @@ class Whoami200Response(BaseModel):
                 "picture": obj.get("picture"),
                 "username": obj.get("username"),
                 "phone": obj.get("phone"),
-                "apikeys": obj.get("apikeys"),
             }
         )
         return _obj

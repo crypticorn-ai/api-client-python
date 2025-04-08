@@ -30,9 +30,6 @@ from crypticorn.auth.client.models.create_api_key_request import CreateApiKeyReq
 from crypticorn.auth.client.models.get_api_keys200_response_inner import (
     GetApiKeys200ResponseInner,
 )
-from crypticorn.auth.client.models.oauth_callback200_response import (
-    OauthCallback200Response,
-)
 from crypticorn.auth.client.models.refresh_token_info200_response import (
     RefreshTokenInfo200Response,
 )
@@ -1297,7 +1294,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> OauthCallback200Response:
+    ) -> AuthorizeUser200Response:
         """OAuth Callback
 
         Handles the OAuth callback from Google.
@@ -1347,7 +1344,7 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "OauthCallback200Response",
+            "200": "AuthorizeUser200Response",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1377,7 +1374,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[OauthCallback200Response]:
+    ) -> ApiResponse[AuthorizeUser200Response]:
         """OAuth Callback
 
         Handles the OAuth callback from Google.
@@ -1427,7 +1424,7 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "OauthCallback200Response",
+            "200": "AuthorizeUser200Response",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1507,7 +1504,7 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "OauthCallback200Response",
+            "200": "AuthorizeUser200Response",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout

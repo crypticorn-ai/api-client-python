@@ -56,12 +56,6 @@ from crypticorn.auth.client.models.logout_default_response import LogoutDefaultR
 from crypticorn.auth.client.models.logout_default_response_issues_inner import (
     LogoutDefaultResponseIssuesInner,
 )
-from crypticorn.auth.client.models.oauth_callback200_response import (
-    OauthCallback200Response,
-)
-from crypticorn.auth.client.models.oauth_callback200_response_user import (
-    OauthCallback200ResponseUser,
-)
 from crypticorn.auth.client.models.refresh_token_info200_response import (
     RefreshTokenInfo200Response,
 )
