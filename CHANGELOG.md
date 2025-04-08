@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.1.3 (2025-04-08)
+
+### Bug Fixes
+
+- Use SecurityScopes class instead of list[Scope]
+  ([`b41c718`](https://github.com/crypticorn-ai/api-client/commit/b41c718acc108e05b307abb399137c2fc30e56fd))
+
+
 ## v2.1.2 (2025-04-08)
 
 ### Bug Fixes
