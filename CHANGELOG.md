@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.1.5 (2025-04-08)
+
+### Bug Fixes
+
+- Update auth and trade module
+  ([`df936b6`](https://github.com/crypticorn-ai/api-client/commit/df936b6eb76179a3eac6d7997c82ef30e74de860))
+
+
 ## v2.1.4 (2025-04-08)
 
 ### Bug Fixes
