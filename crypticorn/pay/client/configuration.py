@@ -119,7 +119,7 @@ HTTPSignatureAuthSetting = TypedDict(
 AuthSettings = TypedDict(
     "AuthSettings",
     {
-        "HTTPBearer": BearerAuthSetting,
+        "HTTPBearer": BearerFormatAuthSetting,
         "APIKeyHeader": APIKeyAuthSetting,
     },
     total=False,
@@ -515,6 +515,7 @@ class Configuration:
             auth["HTTPBearer"] = {
                 "type": "bearer",
                 "in": "header",
+                "format": "JWT",
                 "key": "Authorization",
                 "value": "Bearer " + self.access_token,
             }

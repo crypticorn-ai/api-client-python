@@ -17,44 +17,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    StrictBool,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
-)
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict
+from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.pay.client.models.scope import Scope
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class ProductModel(BaseModel):
+class BodyGetProducts(BaseModel):
     """
-    ProductModel
+    BodyGetProducts
     """  # noqa: E501
 
-    id: Optional[StrictStr] = None
-    name: StrictStr = Field(description="Product name")
-    price: Union[StrictFloat, StrictInt] = Field(description="Product price")
+    query: Optional[Dict[str, Any]] = None
     scopes: Optional[List[Scope]] = None
-    duration: StrictInt = Field(
-        description="Product duration in days. 0 means unlimited."
-    )
-    description: StrictStr = Field(description="Product description")
-    is_active: StrictBool = Field(description="Product is active")
-    __properties: ClassVar[List[str]] = [
-        "id",
-        "name",
-        "price",
-        "scopes",
-        "duration",
-        "description",
-        "is_active",
-    ]
+    __properties: ClassVar[List[str]] = ["query", "scopes"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -73,7 +50,7 @@ class ProductModel(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ProductModel from a JSON string"""
+        """Create an instance of BodyGetProducts from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -93,21 +70,11 @@ class ProductModel(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if id (nullable) is None
-        # and model_fields_set contains the field
-        if self.id is None and "id" in self.model_fields_set:
-            _dict["id"] = None
-
-        # set to None if scopes (nullable) is None
-        # and model_fields_set contains the field
-        if self.scopes is None and "scopes" in self.model_fields_set:
-            _dict["scopes"] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ProductModel from a dict"""
+        """Create an instance of BodyGetProducts from a dict"""
         if obj is None:
             return None
 
@@ -115,14 +82,6 @@ class ProductModel(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {
-                "id": obj.get("id"),
-                "name": obj.get("name"),
-                "price": obj.get("price"),
-                "scopes": obj.get("scopes"),
-                "duration": obj.get("duration"),
-                "description": obj.get("description"),
-                "is_active": obj.get("is_active"),
-            }
+            {"query": obj.get("query"), "scopes": obj.get("scopes")}
         )
         return _obj

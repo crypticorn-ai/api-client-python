@@ -66,7 +66,7 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -77,11 +77,10 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NOWPaymentsApi(api_client)
     now_create_invoice_req = client.NowCreateInvoiceReq() # NowCreateInvoiceReq | 
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Create Invoice
-        api_response = await api_instance.create_now_invoice(now_create_invoice_req, access_token=access_token)
+        api_response = await api_instance.create_now_invoice(now_create_invoice_req)
         print("The response of NOWPaymentsApi->create_now_invoice:\n")
         pprint(api_response)
     except ApiException as e:
@@ -119,6 +118,7 @@ Class | Method | HTTP request | Description
  - [PaymentStatus](docs/PaymentStatus.md)
  - [ProductModel](docs/ProductModel.md)
  - [ProductSubsModel](docs/ProductSubsModel.md)
+ - [Scope](docs/Scope.md)
  - [Services](docs/Services.md)
  - [UnifiedPaymentModel](docs/UnifiedPaymentModel.md)
  - [ValidationError](docs/ValidationError.md)
@@ -133,7 +133,7 @@ Authentication schemes defined for the API:
 <a id="HTTPBearer"></a>
 ### HTTPBearer
 
-- **Type**: Bearer authentication
+- **Type**: Bearer authentication (JWT)
 
 <a id="APIKeyHeader"></a>
 ### APIKeyHeader

@@ -1,6 +1,7 @@
 from crypticorn.auth import AuthClient, AddWalletRequest, CreateApiKeyRequest
 from crypticorn.auth.client.exceptions import UnauthorizedException
 from crypticorn.common import BaseURL, ApiVersion
+from crypticorn.pay import ProductModel
 from crypticorn import ApiClient
 import dotenv
 import asyncio
@@ -9,6 +10,7 @@ from crypticorn.common.scopes import Scope
 
 dotenv.load_dotenv()
 jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiTlBVSmpQRmJmVnphOU4xcTU0R0siLCJpYXQiOjE3NDQxMTczNTAsImV4cCI6MTc0NDEyMDk1MCwic2NvcGVzIjpbInJlYWQ6aGl2ZTptb2RlbCIsInJlYWQ6aGl2ZTpkYXRhIiwicmVhZDp0cmFkZTpib3RzIiwicmVhZDp0cmFkZTpvcmRlcnMiLCJyZWFkOnRyYWRlOmFjdGlvbnMiLCJyZWFkOnRyYWRlOnN0cmF0ZWdpZXMiLCJyZWFkOnRyYWRlOmV4Y2hhbmdlcyIsInJlYWQ6dHJhZGU6ZnV0dXJlcyIsInJlYWQ6dHJhZGU6bm90aWZpY2F0aW9ucyIsInJlYWQ6dHJhZGU6YXBpX2tleXMiLCJyZWFkOnBheTpub3ciLCJyZWFkOnBheTpwcm9kdWN0cyIsInJlYWQ6cGF5OnBheW1lbnRzIiwid3JpdGU6aGl2ZTptb2RlbCIsIndyaXRlOnRyYWRlOmJvdHMiLCJ3cml0ZTp0cmFkZTpmdXR1cmVzIiwid3JpdGU6dHJhZGU6bm90aWZpY2F0aW9ucyIsIndyaXRlOnRyYWRlOmFwaV9rZXlzIiwid3JpdGU6dHJhZGU6c3RyYXRlZ2llcyIsInJlYWQ6cHJlZGljdGlvbnMiLCJ3cml0ZTpwYXk6cHJvZHVjdHMiLCJ3cml0ZTpwYXk6bm93IiwicmVhZDpwcmVkaWN0aW9ucyJdfQ.xD-Bi2YZ6Vk5k1JfqD9O2qJHrVWbuQ51yDzatzDoKkU"
+
 
 async def main():
     async with ApiClient(base_url=BaseURL.LOCAL, jwt=jwt) as client:
@@ -40,7 +42,13 @@ async def main():
 
         # response = await client.trade.bots.get_bots()
         # print(response)
-        pass
+        await client.pay.products.update_product(
+            id="123",
+            ProductModel(
+                name="test",
+                description="test",
+            ),
+        )
 
 
 async def auth():
@@ -51,10 +59,7 @@ async def auth():
             res = await client.login.create_api_key(
                 CreateApiKeyRequest(
                     name="pytest expired",
-                    scopes=[
-                        "read:hive:model",
-                        Scope.READ_HIVE_MODEL
-                    ],
+                    scopes=["read:hive:model", Scope.READ_HIVE_MODEL],
                     expiresIn=60 * 60 * 24 * 30 * (-1),  # 30 days
                 )
             )

@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **id** | **str** |  | [optional] 
 **name** | **str** | Product name | 
 **price** | **float** | Product price | 
+**scopes** | [**List[Scope]**](Scope.md) |  | [optional] 
 **duration** | **int** | Product duration in days. 0 means unlimited. | 
 **description** | **str** | Product description | 
 **is_active** | **bool** | Product is active | 

@@ -42,7 +42,6 @@ class PaymentsApi:
     async def get_latest_payment_from_invoice(
         self,
         invoice_id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -61,8 +60,6 @@ class PaymentsApi:
 
         :param invoice_id: (required)
         :type invoice_id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -87,7 +84,6 @@ class PaymentsApi:
 
         _param = self._get_latest_payment_from_invoice_serialize(
             invoice_id=invoice_id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -111,7 +107,6 @@ class PaymentsApi:
     async def get_latest_payment_from_invoice_with_http_info(
         self,
         invoice_id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -130,8 +125,6 @@ class PaymentsApi:
 
         :param invoice_id: (required)
         :type invoice_id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -156,7 +149,6 @@ class PaymentsApi:
 
         _param = self._get_latest_payment_from_invoice_serialize(
             invoice_id=invoice_id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -180,7 +172,6 @@ class PaymentsApi:
     async def get_latest_payment_from_invoice_without_preload_content(
         self,
         invoice_id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -199,8 +190,6 @@ class PaymentsApi:
 
         :param invoice_id: (required)
         :type invoice_id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -225,7 +214,6 @@ class PaymentsApi:
 
         _param = self._get_latest_payment_from_invoice_serialize(
             invoice_id=invoice_id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -244,7 +232,6 @@ class PaymentsApi:
     def _get_latest_payment_from_invoice_serialize(
         self,
         invoice_id,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -301,7 +288,6 @@ class PaymentsApi:
     @validate_call
     async def get_payment_history(
         self,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -318,8 +304,6 @@ class PaymentsApi:
 
         Get combined payment history for a user across all payment services.
 
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -343,7 +327,6 @@ class PaymentsApi:
         """  # noqa: E501
 
         _param = self._get_payment_history_serialize(
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -352,7 +335,6 @@ class PaymentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[UnifiedPaymentModel]",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -366,7 +348,6 @@ class PaymentsApi:
     @validate_call
     async def get_payment_history_with_http_info(
         self,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -383,8 +364,6 @@ class PaymentsApi:
 
         Get combined payment history for a user across all payment services.
 
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -408,7 +387,6 @@ class PaymentsApi:
         """  # noqa: E501
 
         _param = self._get_payment_history_serialize(
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -417,7 +395,6 @@ class PaymentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[UnifiedPaymentModel]",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -431,7 +408,6 @@ class PaymentsApi:
     @validate_call
     async def get_payment_history_without_preload_content(
         self,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -448,8 +424,6 @@ class PaymentsApi:
 
         Get combined payment history for a user across all payment services.
 
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -473,7 +447,6 @@ class PaymentsApi:
         """  # noqa: E501
 
         _param = self._get_payment_history_serialize(
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -482,7 +455,6 @@ class PaymentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[UnifiedPaymentModel]",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -491,7 +463,6 @@ class PaymentsApi:
 
     def _get_payment_history_serialize(
         self,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -545,7 +516,6 @@ class PaymentsApi:
     async def get_subscriptions(
         self,
         user_id: Optional[StrictStr] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -563,8 +533,6 @@ class PaymentsApi:
 
         :param user_id:
         :type user_id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -589,7 +557,6 @@ class PaymentsApi:
 
         _param = self._get_subscriptions_serialize(
             user_id=user_id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -613,7 +580,6 @@ class PaymentsApi:
     async def get_subscriptions_with_http_info(
         self,
         user_id: Optional[StrictStr] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -631,8 +597,6 @@ class PaymentsApi:
 
         :param user_id:
         :type user_id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -657,7 +621,6 @@ class PaymentsApi:
 
         _param = self._get_subscriptions_serialize(
             user_id=user_id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -681,7 +644,6 @@ class PaymentsApi:
     async def get_subscriptions_without_preload_content(
         self,
         user_id: Optional[StrictStr] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -699,8 +661,6 @@ class PaymentsApi:
 
         :param user_id:
         :type user_id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -725,7 +685,6 @@ class PaymentsApi:
 
         _param = self._get_subscriptions_serialize(
             user_id=user_id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -744,7 +703,6 @@ class PaymentsApi:
     def _get_subscriptions_serialize(
         self,
         user_id,
-        access_token,
         _request_auth,
         _content_type,
         _headers,

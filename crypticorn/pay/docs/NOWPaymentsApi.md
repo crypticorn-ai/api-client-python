@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 
 # **create_now_invoice**
-> NowCreateInvoiceRes create_now_invoice(now_create_invoice_req, access_token=access_token)
+> NowCreateInvoiceRes create_now_invoice(now_create_invoice_req)
 
 Create Invoice
 
@@ -18,7 +18,7 @@ Create a payment invoice with a payment link for customer completion
 
 ### Example
 
-* Bearer Authentication (HTTPBearer):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -38,7 +38,7 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -48,11 +48,10 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NOWPaymentsApi(api_client)
     now_create_invoice_req = client.NowCreateInvoiceReq() # NowCreateInvoiceReq | 
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Create Invoice
-        api_response = await api_instance.create_now_invoice(now_create_invoice_req, access_token=access_token)
+        api_response = await api_instance.create_now_invoice(now_create_invoice_req)
         print("The response of NOWPaymentsApi->create_now_invoice:\n")
         pprint(api_response)
     except Exception as e:
@@ -67,7 +66,6 @@ async with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **now_create_invoice_req** | [**NowCreateInvoiceReq**](NowCreateInvoiceReq.md)|  | 
- **access_token** | **str**|  | [optional] 
 
 ### Return type
 
@@ -100,6 +98,7 @@ Get NOWPayments API status
 
 ### Example
 
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -113,6 +112,15 @@ configuration = client.Configuration(
     host = "http://localhost/v1/pay"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
@@ -140,7 +148,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -164,6 +172,7 @@ Handle NOWPayments webhook notifications (IPN). Validates the signature, updates
 
 ### Example
 
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -177,6 +186,15 @@ configuration = client.Configuration(
     host = "http://localhost/v1/pay"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
@@ -210,7 +228,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 

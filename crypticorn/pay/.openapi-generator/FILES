@@ -20,6 +20,7 @@ client/models/now_webhook_payload.py
 client/models/payment_status.py
 client/models/product_model.py
 client/models/product_subs_model.py
+client/models/scope.py
 client/models/services.py
 client/models/unified_payment_model.py
 client/models/validation_error.py
@@ -39,6 +40,7 @@ docs/PaymentsApi.md
 docs/ProductModel.md
 docs/ProductSubsModel.md
 docs/ProductsApi.md
+docs/Scope.md
 docs/Services.md
 docs/StatusApi.md
 docs/UnifiedPaymentModel.md

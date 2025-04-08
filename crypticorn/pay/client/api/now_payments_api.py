@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr
-from typing import Any, Optional
+from typing import Any
 from typing_extensions import Annotated
 from crypticorn.pay.client.models.now_api_status_res import NowAPIStatusRes
 from crypticorn.pay.client.models.now_create_invoice_req import NowCreateInvoiceReq
@@ -45,7 +45,6 @@ class NOWPaymentsApi:
     async def create_now_invoice(
         self,
         now_create_invoice_req: NowCreateInvoiceReq,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -64,8 +63,6 @@ class NOWPaymentsApi:
 
         :param now_create_invoice_req: (required)
         :type now_create_invoice_req: NowCreateInvoiceReq
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -90,7 +87,6 @@ class NOWPaymentsApi:
 
         _param = self._create_now_invoice_serialize(
             now_create_invoice_req=now_create_invoice_req,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -114,7 +110,6 @@ class NOWPaymentsApi:
     async def create_now_invoice_with_http_info(
         self,
         now_create_invoice_req: NowCreateInvoiceReq,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -133,8 +128,6 @@ class NOWPaymentsApi:
 
         :param now_create_invoice_req: (required)
         :type now_create_invoice_req: NowCreateInvoiceReq
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -159,7 +152,6 @@ class NOWPaymentsApi:
 
         _param = self._create_now_invoice_serialize(
             now_create_invoice_req=now_create_invoice_req,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -183,7 +175,6 @@ class NOWPaymentsApi:
     async def create_now_invoice_without_preload_content(
         self,
         now_create_invoice_req: NowCreateInvoiceReq,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -202,8 +193,6 @@ class NOWPaymentsApi:
 
         :param now_create_invoice_req: (required)
         :type now_create_invoice_req: NowCreateInvoiceReq
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -228,7 +217,6 @@ class NOWPaymentsApi:
 
         _param = self._create_now_invoice_serialize(
             now_create_invoice_req=now_create_invoice_req,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -247,7 +235,6 @@ class NOWPaymentsApi:
     def _create_now_invoice_serialize(
         self,
         now_create_invoice_req,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -519,7 +506,7 @@ class NOWPaymentsApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -795,7 +782,7 @@ class NOWPaymentsApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
