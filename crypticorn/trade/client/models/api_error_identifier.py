@@ -85,6 +85,10 @@ class ApiErrorIdentifier(str, Enum):
     STRATEGY_DISABLED = "strategy_disabled"
     API_KEY_IN_USE_BY_BOTS = "api_key_in_use_by_bots"
     BOT_ALREADY_DELETED = "bot_already_deleted"
+    INVALID_API_KEY = "invalid_api_key"
+    INVALID_BEARER = "invalid_bearer"
+    NO_CREDENTIALS = "no_credentials"
+    INSUFFICIENT_SCOPES = "insufficient_scopes"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

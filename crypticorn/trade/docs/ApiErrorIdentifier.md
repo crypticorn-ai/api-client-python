@@ -114,6 +114,14 @@ API error identifiers
 
 * `BOT_ALREADY_DELETED` (value: `'bot_already_deleted'`)
 
+* `INVALID_API_KEY` (value: `'invalid_api_key'`)
+
+* `INVALID_BEARER` (value: `'invalid_bearer'`)
+
+* `NO_CREDENTIALS` (value: `'no_credentials'`)
+
+* `INSUFFICIENT_SCOPES` (value: `'insufficient_scopes'`)
+
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

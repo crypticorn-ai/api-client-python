@@ -10,14 +10,14 @@ Method | HTTP request | Description
 
 
 # **get_actions**
-> List[ActionModel] get_actions(limit=limit, offset=offset, access_token=access_token)
+> List[ActionModel] get_actions(limit=limit, offset=offset)
 
 Get Actions
 
 ### Example
 
 * Api Key Authentication (APIKeyHeader):
-* Bearer Authentication (HTTPBearer):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -42,7 +42,7 @@ configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
 
-# Configure Bearer authorization: HTTPBearer
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -53,11 +53,10 @@ async with client.ApiClient(configuration) as api_client:
     api_instance = client.TradingActionsApi(api_client)
     limit = 0 # int |  (optional) (default to 0)
     offset = 0 # int |  (optional) (default to 0)
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Get Actions
-        api_response = await api_instance.get_actions(limit=limit, offset=offset, access_token=access_token)
+        api_response = await api_instance.get_actions(limit=limit, offset=offset)
         print("The response of TradingActionsApi->get_actions:\n")
         pprint(api_response)
     except Exception as e:
@@ -73,7 +72,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **limit** | **int**|  | [optional] [default to 0]
  **offset** | **int**|  | [optional] [default to 0]
- **access_token** | **str**|  | [optional] 
 
 ### Return type
 

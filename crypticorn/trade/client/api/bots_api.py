@@ -41,7 +41,6 @@ class BotsApi:
     async def create_bot(
         self,
         bot_model: BotModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -60,8 +59,6 @@ class BotsApi:
 
         :param bot_model: (required)
         :type bot_model: BotModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -86,7 +83,6 @@ class BotsApi:
 
         _param = self._create_bot_serialize(
             bot_model=bot_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -110,7 +106,6 @@ class BotsApi:
     async def create_bot_with_http_info(
         self,
         bot_model: BotModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -129,8 +124,6 @@ class BotsApi:
 
         :param bot_model: (required)
         :type bot_model: BotModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -155,7 +148,6 @@ class BotsApi:
 
         _param = self._create_bot_serialize(
             bot_model=bot_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -179,7 +171,6 @@ class BotsApi:
     async def create_bot_without_preload_content(
         self,
         bot_model: BotModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -198,8 +189,6 @@ class BotsApi:
 
         :param bot_model: (required)
         :type bot_model: BotModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -224,7 +213,6 @@ class BotsApi:
 
         _param = self._create_bot_serialize(
             bot_model=bot_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -243,7 +231,6 @@ class BotsApi:
     def _create_bot_serialize(
         self,
         bot_model,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -288,7 +275,7 @@ class BotsApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -309,7 +296,6 @@ class BotsApi:
     async def delete_bot(
         self,
         id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -328,8 +314,6 @@ class BotsApi:
 
         :param id: (required)
         :type id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -354,7 +338,6 @@ class BotsApi:
 
         _param = self._delete_bot_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -378,7 +361,6 @@ class BotsApi:
     async def delete_bot_with_http_info(
         self,
         id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -397,8 +379,6 @@ class BotsApi:
 
         :param id: (required)
         :type id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -423,7 +403,6 @@ class BotsApi:
 
         _param = self._delete_bot_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -447,7 +426,6 @@ class BotsApi:
     async def delete_bot_without_preload_content(
         self,
         id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -466,8 +444,6 @@ class BotsApi:
 
         :param id: (required)
         :type id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -492,7 +468,6 @@ class BotsApi:
 
         _param = self._delete_bot_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -511,7 +486,6 @@ class BotsApi:
     def _delete_bot_serialize(
         self,
         id,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -546,7 +520,7 @@ class BotsApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="DELETE",
@@ -569,7 +543,6 @@ class BotsApi:
         include_deleted: Optional[StrictBool] = None,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -591,8 +564,6 @@ class BotsApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -619,7 +590,6 @@ class BotsApi:
             include_deleted=include_deleted,
             limit=limit,
             offset=offset,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -645,7 +615,6 @@ class BotsApi:
         include_deleted: Optional[StrictBool] = None,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -667,8 +636,6 @@ class BotsApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -695,7 +662,6 @@ class BotsApi:
             include_deleted=include_deleted,
             limit=limit,
             offset=offset,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -721,7 +687,6 @@ class BotsApi:
         include_deleted: Optional[StrictBool] = None,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -743,8 +708,6 @@ class BotsApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -771,7 +734,6 @@ class BotsApi:
             include_deleted=include_deleted,
             limit=limit,
             offset=offset,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -792,7 +754,6 @@ class BotsApi:
         include_deleted,
         limit,
         offset,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -837,7 +798,7 @@ class BotsApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -859,7 +820,6 @@ class BotsApi:
         self,
         id: StrictStr,
         bot_model: BotModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -880,8 +840,6 @@ class BotsApi:
         :type id: str
         :param bot_model: (required)
         :type bot_model: BotModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -907,7 +865,6 @@ class BotsApi:
         _param = self._update_bot_serialize(
             id=id,
             bot_model=bot_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -932,7 +889,6 @@ class BotsApi:
         self,
         id: StrictStr,
         bot_model: BotModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -953,8 +909,6 @@ class BotsApi:
         :type id: str
         :param bot_model: (required)
         :type bot_model: BotModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -980,7 +934,6 @@ class BotsApi:
         _param = self._update_bot_serialize(
             id=id,
             bot_model=bot_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1005,7 +958,6 @@ class BotsApi:
         self,
         id: StrictStr,
         bot_model: BotModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1026,8 +978,6 @@ class BotsApi:
         :type id: str
         :param bot_model: (required)
         :type bot_model: BotModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1053,7 +1003,6 @@ class BotsApi:
         _param = self._update_bot_serialize(
             id=id,
             bot_model=bot_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1073,7 +1022,6 @@ class BotsApi:
         self,
         id,
         bot_model,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -1120,7 +1068,7 @@ class BotsApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="PUT",

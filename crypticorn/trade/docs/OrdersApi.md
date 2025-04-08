@@ -8,13 +8,14 @@ Method | HTTP request | Description
 
 
 # **get_orders**
-> List[OrderModel] get_orders(limit=limit, offset=offset, access_token=access_token)
+> List[OrderModel] get_orders(limit=limit, offset=offset)
 
 Get Orders
 
 ### Example
 
-* Bearer Authentication (HTTPBearer):
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -33,7 +34,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -44,11 +51,10 @@ async with client.ApiClient(configuration) as api_client:
     api_instance = client.OrdersApi(api_client)
     limit = 0 # int |  (optional) (default to 0)
     offset = 0 # int |  (optional) (default to 0)
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Get Orders
-        api_response = await api_instance.get_orders(limit=limit, offset=offset, access_token=access_token)
+        api_response = await api_instance.get_orders(limit=limit, offset=offset)
         print("The response of OrdersApi->get_orders:\n")
         pprint(api_response)
     except Exception as e:
@@ -64,7 +70,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **limit** | **int**|  | [optional] [default to 0]
  **offset** | **int**|  | [optional] [default to 0]
- **access_token** | **str**|  | [optional] 
 
 ### Return type
 
@@ -72,7 +77,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 

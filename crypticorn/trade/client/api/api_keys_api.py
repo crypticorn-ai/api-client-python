@@ -41,7 +41,6 @@ class APIKeysApi:
     async def create_api_key(
         self,
         api_key_model: APIKeyModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -59,8 +58,6 @@ class APIKeysApi:
 
         :param api_key_model: (required)
         :type api_key_model: APIKeyModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -85,7 +82,6 @@ class APIKeysApi:
 
         _param = self._create_api_key_serialize(
             api_key_model=api_key_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -109,7 +105,6 @@ class APIKeysApi:
     async def create_api_key_with_http_info(
         self,
         api_key_model: APIKeyModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -127,8 +122,6 @@ class APIKeysApi:
 
         :param api_key_model: (required)
         :type api_key_model: APIKeyModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -153,7 +146,6 @@ class APIKeysApi:
 
         _param = self._create_api_key_serialize(
             api_key_model=api_key_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -177,7 +169,6 @@ class APIKeysApi:
     async def create_api_key_without_preload_content(
         self,
         api_key_model: APIKeyModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -195,8 +186,6 @@ class APIKeysApi:
 
         :param api_key_model: (required)
         :type api_key_model: APIKeyModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -221,7 +210,6 @@ class APIKeysApi:
 
         _param = self._create_api_key_serialize(
             api_key_model=api_key_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -240,7 +228,6 @@ class APIKeysApi:
     def _create_api_key_serialize(
         self,
         api_key_model,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -285,7 +272,7 @@ class APIKeysApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -306,7 +293,6 @@ class APIKeysApi:
     async def delete_api_key(
         self,
         id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -324,8 +310,6 @@ class APIKeysApi:
 
         :param id: (required)
         :type id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -350,7 +334,6 @@ class APIKeysApi:
 
         _param = self._delete_api_key_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -374,7 +357,6 @@ class APIKeysApi:
     async def delete_api_key_with_http_info(
         self,
         id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -392,8 +374,6 @@ class APIKeysApi:
 
         :param id: (required)
         :type id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -418,7 +398,6 @@ class APIKeysApi:
 
         _param = self._delete_api_key_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -442,7 +421,6 @@ class APIKeysApi:
     async def delete_api_key_without_preload_content(
         self,
         id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -460,8 +438,6 @@ class APIKeysApi:
 
         :param id: (required)
         :type id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -486,7 +462,6 @@ class APIKeysApi:
 
         _param = self._delete_api_key_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -505,7 +480,6 @@ class APIKeysApi:
     def _delete_api_key_serialize(
         self,
         id,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -540,7 +514,7 @@ class APIKeysApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="DELETE",
@@ -561,7 +535,6 @@ class APIKeysApi:
     async def get_api_key_by_id(
         self,
         id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -579,8 +552,6 @@ class APIKeysApi:
 
         :param id: (required)
         :type id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -605,7 +576,6 @@ class APIKeysApi:
 
         _param = self._get_api_key_by_id_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -629,7 +599,6 @@ class APIKeysApi:
     async def get_api_key_by_id_with_http_info(
         self,
         id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -647,8 +616,6 @@ class APIKeysApi:
 
         :param id: (required)
         :type id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -673,7 +640,6 @@ class APIKeysApi:
 
         _param = self._get_api_key_by_id_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -697,7 +663,6 @@ class APIKeysApi:
     async def get_api_key_by_id_without_preload_content(
         self,
         id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -715,8 +680,6 @@ class APIKeysApi:
 
         :param id: (required)
         :type id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -741,7 +704,6 @@ class APIKeysApi:
 
         _param = self._get_api_key_by_id_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -760,7 +722,6 @@ class APIKeysApi:
     def _get_api_key_by_id_serialize(
         self,
         id,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -795,7 +756,7 @@ class APIKeysApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -817,7 +778,6 @@ class APIKeysApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -837,8 +797,6 @@ class APIKeysApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -864,7 +822,6 @@ class APIKeysApi:
         _param = self._get_api_keys_serialize(
             limit=limit,
             offset=offset,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -889,7 +846,6 @@ class APIKeysApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -909,8 +865,6 @@ class APIKeysApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -936,7 +890,6 @@ class APIKeysApi:
         _param = self._get_api_keys_serialize(
             limit=limit,
             offset=offset,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -961,7 +914,6 @@ class APIKeysApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -981,8 +933,6 @@ class APIKeysApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1008,7 +958,6 @@ class APIKeysApi:
         _param = self._get_api_keys_serialize(
             limit=limit,
             offset=offset,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1028,7 +977,6 @@ class APIKeysApi:
         self,
         limit,
         offset,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -1069,7 +1017,7 @@ class APIKeysApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -1091,7 +1039,6 @@ class APIKeysApi:
         self,
         id: StrictStr,
         api_key_model: APIKeyModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1111,8 +1058,6 @@ class APIKeysApi:
         :type id: str
         :param api_key_model: (required)
         :type api_key_model: APIKeyModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1138,7 +1083,6 @@ class APIKeysApi:
         _param = self._update_api_key_serialize(
             id=id,
             api_key_model=api_key_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1163,7 +1107,6 @@ class APIKeysApi:
         self,
         id: StrictStr,
         api_key_model: APIKeyModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1183,8 +1126,6 @@ class APIKeysApi:
         :type id: str
         :param api_key_model: (required)
         :type api_key_model: APIKeyModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1210,7 +1151,6 @@ class APIKeysApi:
         _param = self._update_api_key_serialize(
             id=id,
             api_key_model=api_key_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1235,7 +1175,6 @@ class APIKeysApi:
         self,
         id: StrictStr,
         api_key_model: APIKeyModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1255,8 +1194,6 @@ class APIKeysApi:
         :type id: str
         :param api_key_model: (required)
         :type api_key_model: APIKeyModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1282,7 +1219,6 @@ class APIKeysApi:
         _param = self._update_api_key_serialize(
             id=id,
             api_key_model=api_key_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1302,7 +1238,6 @@ class APIKeysApi:
         self,
         id,
         api_key_model,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -1349,7 +1284,7 @@ class APIKeysApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="PUT",

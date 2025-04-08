@@ -41,7 +41,6 @@ class NotificationsApi:
     async def create_notification(
         self,
         notification_model: NotificationModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -60,8 +59,6 @@ class NotificationsApi:
 
         :param notification_model: (required)
         :type notification_model: NotificationModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -86,7 +83,6 @@ class NotificationsApi:
 
         _param = self._create_notification_serialize(
             notification_model=notification_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -110,7 +106,6 @@ class NotificationsApi:
     async def create_notification_with_http_info(
         self,
         notification_model: NotificationModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -129,8 +124,6 @@ class NotificationsApi:
 
         :param notification_model: (required)
         :type notification_model: NotificationModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -155,7 +148,6 @@ class NotificationsApi:
 
         _param = self._create_notification_serialize(
             notification_model=notification_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -179,7 +171,6 @@ class NotificationsApi:
     async def create_notification_without_preload_content(
         self,
         notification_model: NotificationModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -198,8 +189,6 @@ class NotificationsApi:
 
         :param notification_model: (required)
         :type notification_model: NotificationModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -224,7 +213,6 @@ class NotificationsApi:
 
         _param = self._create_notification_serialize(
             notification_model=notification_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -243,7 +231,6 @@ class NotificationsApi:
     def _create_notification_serialize(
         self,
         notification_model,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -288,7 +275,7 @@ class NotificationsApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -309,7 +296,6 @@ class NotificationsApi:
     async def delete_notification(
         self,
         id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -327,8 +313,6 @@ class NotificationsApi:
 
         :param id: (required)
         :type id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -353,7 +337,6 @@ class NotificationsApi:
 
         _param = self._delete_notification_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -377,7 +360,6 @@ class NotificationsApi:
     async def delete_notification_with_http_info(
         self,
         id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -395,8 +377,6 @@ class NotificationsApi:
 
         :param id: (required)
         :type id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -421,7 +401,6 @@ class NotificationsApi:
 
         _param = self._delete_notification_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -445,7 +424,6 @@ class NotificationsApi:
     async def delete_notification_without_preload_content(
         self,
         id: StrictStr,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -463,8 +441,6 @@ class NotificationsApi:
 
         :param id: (required)
         :type id: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -489,7 +465,6 @@ class NotificationsApi:
 
         _param = self._delete_notification_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -508,7 +483,6 @@ class NotificationsApi:
     def _delete_notification_serialize(
         self,
         id,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -543,7 +517,7 @@ class NotificationsApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="DELETE",
@@ -563,7 +537,6 @@ class NotificationsApi:
     @validate_call
     async def delete_notifications(
         self,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -580,8 +553,6 @@ class NotificationsApi:
 
         Delete all notifications for the authenticated user
 
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -605,7 +576,6 @@ class NotificationsApi:
         """  # noqa: E501
 
         _param = self._delete_notifications_serialize(
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -614,7 +584,6 @@ class NotificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -628,7 +597,6 @@ class NotificationsApi:
     @validate_call
     async def delete_notifications_with_http_info(
         self,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -645,8 +613,6 @@ class NotificationsApi:
 
         Delete all notifications for the authenticated user
 
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -670,7 +636,6 @@ class NotificationsApi:
         """  # noqa: E501
 
         _param = self._delete_notifications_serialize(
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -679,7 +644,6 @@ class NotificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -693,7 +657,6 @@ class NotificationsApi:
     @validate_call
     async def delete_notifications_without_preload_content(
         self,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -710,8 +673,6 @@ class NotificationsApi:
 
         Delete all notifications for the authenticated user
 
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -735,7 +696,6 @@ class NotificationsApi:
         """  # noqa: E501
 
         _param = self._delete_notifications_serialize(
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -744,7 +704,6 @@ class NotificationsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -753,7 +712,6 @@ class NotificationsApi:
 
     def _delete_notifications_serialize(
         self,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -786,7 +744,7 @@ class NotificationsApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="DELETE",
@@ -808,7 +766,6 @@ class NotificationsApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -829,8 +786,6 @@ class NotificationsApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -856,7 +811,6 @@ class NotificationsApi:
         _param = self._get_notifications_serialize(
             limit=limit,
             offset=offset,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -881,7 +835,6 @@ class NotificationsApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -902,8 +855,6 @@ class NotificationsApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -929,7 +880,6 @@ class NotificationsApi:
         _param = self._get_notifications_serialize(
             limit=limit,
             offset=offset,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -954,7 +904,6 @@ class NotificationsApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -975,8 +924,6 @@ class NotificationsApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1002,7 +949,6 @@ class NotificationsApi:
         _param = self._get_notifications_serialize(
             limit=limit,
             offset=offset,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1022,7 +968,6 @@ class NotificationsApi:
         self,
         limit,
         offset,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -1063,7 +1008,7 @@ class NotificationsApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -1086,7 +1031,6 @@ class NotificationsApi:
         id: StrictStr,
         viewed: StrictBool,
         sent: StrictBool,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1109,8 +1053,6 @@ class NotificationsApi:
         :type viewed: bool
         :param sent: (required)
         :type sent: bool
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1137,7 +1079,6 @@ class NotificationsApi:
             id=id,
             viewed=viewed,
             sent=sent,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1163,7 +1104,6 @@ class NotificationsApi:
         id: StrictStr,
         viewed: StrictBool,
         sent: StrictBool,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1186,8 +1126,6 @@ class NotificationsApi:
         :type viewed: bool
         :param sent: (required)
         :type sent: bool
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1214,7 +1152,6 @@ class NotificationsApi:
             id=id,
             viewed=viewed,
             sent=sent,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1240,7 +1177,6 @@ class NotificationsApi:
         id: StrictStr,
         viewed: StrictBool,
         sent: StrictBool,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1263,8 +1199,6 @@ class NotificationsApi:
         :type viewed: bool
         :param sent: (required)
         :type sent: bool
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1291,7 +1225,6 @@ class NotificationsApi:
             id=id,
             viewed=viewed,
             sent=sent,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1312,7 +1245,6 @@ class NotificationsApi:
         id,
         viewed,
         sent,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -1355,7 +1287,7 @@ class NotificationsApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="PUT",
@@ -1377,7 +1309,6 @@ class NotificationsApi:
         self,
         viewed: StrictBool,
         sent: StrictBool,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1398,8 +1329,6 @@ class NotificationsApi:
         :type viewed: bool
         :param sent: (required)
         :type sent: bool
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1425,7 +1354,6 @@ class NotificationsApi:
         _param = self._update_notifications_serialize(
             viewed=viewed,
             sent=sent,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1450,7 +1378,6 @@ class NotificationsApi:
         self,
         viewed: StrictBool,
         sent: StrictBool,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1471,8 +1398,6 @@ class NotificationsApi:
         :type viewed: bool
         :param sent: (required)
         :type sent: bool
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1498,7 +1423,6 @@ class NotificationsApi:
         _param = self._update_notifications_serialize(
             viewed=viewed,
             sent=sent,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1523,7 +1447,6 @@ class NotificationsApi:
         self,
         viewed: StrictBool,
         sent: StrictBool,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1544,8 +1467,6 @@ class NotificationsApi:
         :type viewed: bool
         :param sent: (required)
         :type sent: bool
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1571,7 +1492,6 @@ class NotificationsApi:
         _param = self._update_notifications_serialize(
             viewed=viewed,
             sent=sent,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1591,7 +1511,6 @@ class NotificationsApi:
         self,
         viewed,
         sent,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -1632,7 +1551,7 @@ class NotificationsApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="PUT",
