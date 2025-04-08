@@ -138,8 +138,6 @@ Class | Method | HTTP request | Description
  - [ListWallets200ResponseUserValue](docs/ListWallets200ResponseUserValue.md)
  - [LogoutDefaultResponse](docs/LogoutDefaultResponse.md)
  - [LogoutDefaultResponseIssuesInner](docs/LogoutDefaultResponseIssuesInner.md)
- - [OauthCallback200Response](docs/OauthCallback200Response.md)
- - [OauthCallback200ResponseUser](docs/OauthCallback200ResponseUser.md)
  - [RefreshTokenInfo200Response](docs/RefreshTokenInfo200Response.md)
  - [RefreshTokenInfo200ResponseUserSession](docs/RefreshTokenInfo200ResponseUserSession.md)
  - [ResendVerificationEmailRequest](docs/ResendVerificationEmailRequest.md)

@@ -29,8 +29,6 @@ client/models/list_wallets200_response_data_inner.py
 client/models/list_wallets200_response_user_value.py
 client/models/logout_default_response.py
 client/models/logout_default_response_issues_inner.py
-client/models/oauth_callback200_response.py
-client/models/oauth_callback200_response_user.py
 client/models/refresh_token_info200_response.py
 client/models/refresh_token_info200_response_user_session.py
 client/models/resend_verification_email_request.py
@@ -71,8 +69,6 @@ docs/ListWallets200ResponseDataInner.md
 docs/ListWallets200ResponseUserValue.md
 docs/LogoutDefaultResponse.md
 docs/LogoutDefaultResponseIssuesInner.md
-docs/OauthCallback200Response.md
-docs/OauthCallback200ResponseUser.md
 docs/RefreshTokenInfo200Response.md
 docs/RefreshTokenInfo200ResponseUserSession.md
 docs/ResendVerificationEmailRequest.md

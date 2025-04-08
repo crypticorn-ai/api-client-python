@@ -11,7 +11,6 @@ Name | Type | Description | Notes
 **picture** | **str** |  | [optional] 
 **username** | **str** |  | [optional] 
 **phone** | **str** |  | [optional] 
-**apikeys** | **List[str]** |  | [optional] 
 
 ## Example
 
