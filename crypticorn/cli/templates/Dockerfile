@@ -1,0 +1,26 @@
+FROM python:3.11.5
+
+COPY ./requirements.txt /code/requirements.txt
+
+WORKDIR /code
+
+# add to compose file
+# build:
+#     context: .
+#     dockerfile: src/api/Dockerfile
+#     args:
+#       - API_ENV=${API_ENV}
+# and to the workflow:
+# env:
+#     API_ENV: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
+ARG API_ENV
+
+RUN if [ "$API_ENV" != "prod" ]; then \
+    pip install --pre crypticorn; \
+    fi
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY ./src /code/src
+
+CMD ["uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "3000"]
