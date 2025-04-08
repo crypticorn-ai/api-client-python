@@ -1,5 +1,5 @@
 from fastapi import Depends, HTTPException, Query, status
-from fastapi.security import HTTPAuthorizationCredentials
+from fastapi.security import HTTPAuthorizationCredentials, SecurityScopes
 from typing_extensions import Annotated, Doc
 import json
 
@@ -109,13 +109,13 @@ class AuthHandler:
     async def api_key_auth(
         self,
         api_key: Annotated[str | None, Depends(apikey_header)] = None,
-        scopes: list[Scope] = [],
+        sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """
         Verifies the API key and checks if the user scopes are a subset of the API scopes.
         Use this function if you only want to allow access via the API key.
         """
-        return await self.combined_auth(bearer=None, api_key=api_key, scopes=scopes)
+        return await self.combined_auth(bearer=None, api_key=api_key, sec=sec)
 
     async def bearer_auth(
         self,
@@ -123,13 +123,13 @@ class AuthHandler:
             HTTPAuthorizationCredentials | None,
             Depends(http_bearer),
         ] = None,
-        scopes: list[Scope] = [],
+        sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """
         Verifies the bearer token and checks if the user scopes are a subset of the API scopes.
         Use this function if you only want to allow access via the bearer token.
         """
-        return await self.combined_auth(bearer=bearer, api_key=None, scopes=scopes)
+        return await self.combined_auth(bearer=bearer, api_key=None, sec=sec)
 
     async def combined_auth(
         self,
@@ -137,7 +137,7 @@ class AuthHandler:
             HTTPAuthorizationCredentials | None, Depends(http_bearer)
         ] = None,
         api_key: Annotated[str | None, Depends(apikey_header)] = None,
-        scopes: list[Scope] = [],
+        sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """
         Verifies the bearer token and/or API key and checks if the user scopes are a subset of the API scopes.
@@ -158,10 +158,8 @@ class AuthHandler:
                     res = await self._verify_bearer(token)
                 if res is None:
                     continue
-                if scopes:
-                    await self._validate_scopes(
-                        scopes, [Scope.from_str(scope) for scope in res.scopes]
-                    )
+                if sec:
+                    await self._validate_scopes(sec.scopes, res.scopes)
                 return res
 
             except Exception as e:
@@ -173,18 +171,18 @@ class AuthHandler:
     async def ws_api_key_auth(
         self,
         api_key: Annotated[str | None, Query()] = None,
-        scopes: list[Scope] = [],
+        sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """
         Verifies the API key and checks if the user scopes are a subset of the API scopes.
         Use this function if you only want to allow access via the API key.
         """
-        return await self.api_key_auth(api_key=api_key, scopes=scopes)
+        return await self.api_key_auth(api_key=api_key, sec=sec)
 
     async def ws_bearer_auth(
         self,
         bearer: Annotated[str | None, Query()] = None,
-        scopes: list[Scope] = [],
+        sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """
         Verifies the bearer token and checks if the user scopes are a subset of the API scopes.
@@ -195,13 +193,13 @@ class AuthHandler:
             if bearer
             else None
         )
-        return await self.bearer_auth(bearer=credentials, scopes=scopes)
+        return await self.bearer_auth(bearer=credentials, sec=sec)
 
     async def ws_combined_auth(
         self,
         bearer: Annotated[str | None, Query()] = None,
         api_key: Annotated[str | None, Query()] = None,
-        scopes: list[Scope] = [],
+        sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """
         Verifies the bearer token and/or API key and checks if the user scopes are a subset of the API scopes.
@@ -212,6 +210,4 @@ class AuthHandler:
             if bearer
             else None
         )
-        return await self.combined_auth(
-            bearer=credentials, api_key=api_key, scopes=scopes
-        )
+        return await self.combined_auth(bearer=credentials, api_key=api_key, sec=sec)
