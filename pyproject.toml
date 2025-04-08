@@ -17,6 +17,9 @@ classifiers = [
     "Typing :: Typed",
 ]
 
+[project.scripts]
+crypticorn = "crypticorn.cli.__main__:cli"
+
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements/main.txt"] }
 optional-dependencies.dev = { file = ["requirements/dev.txt"] }
