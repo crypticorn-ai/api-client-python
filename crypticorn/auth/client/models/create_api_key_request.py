@@ -53,7 +53,6 @@ class CreateApiKeyRequest(BaseModel):
                     "read:hive:model",
                     "read:hive:data",
                     "write:hive:model",
-                    "write:hive:data",
                     "read:trade:bots",
                     "write:trade:bots",
                     "read:trade:api_keys",
@@ -71,15 +70,13 @@ class CreateApiKeyRequest(BaseModel):
                     "read:pay:payments",
                     "read:pay:products",
                     "write:pay:products",
-                    "read:pay:subscriptions",
-                    "write:pay:subscriptions",
-                    "read:pay:now_payments",
-                    "write:pay:now_payments",
+                    "read:pay:now",
+                    "write:pay:now",
                     "read:predictions",
                 ]
             ):
                 raise ValueError(
-                    "each list item must be one of ('read:hive:model', 'read:hive:data', 'write:hive:model', 'write:hive:data', 'read:trade:bots', 'write:trade:bots', 'read:trade:api_keys', 'write:trade:api_keys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'read:pay:subscriptions', 'write:pay:subscriptions', 'read:pay:now_payments', 'write:pay:now_payments', 'read:predictions')"
+                    "each list item must be one of ('read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:api_keys', 'write:trade:api_keys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'read:pay:now', 'write:pay:now', 'read:predictions')"
                 )
         return value
 
