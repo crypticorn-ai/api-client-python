@@ -41,7 +41,6 @@ class ProductsApi:
     async def create_product(
         self,
         product_model: ProductModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -60,8 +59,6 @@ class ProductsApi:
 
         :param product_model: (required)
         :type product_model: ProductModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -86,7 +83,6 @@ class ProductsApi:
 
         _param = self._create_product_serialize(
             product_model=product_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -110,7 +106,6 @@ class ProductsApi:
     async def create_product_with_http_info(
         self,
         product_model: ProductModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -129,8 +124,6 @@ class ProductsApi:
 
         :param product_model: (required)
         :type product_model: ProductModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -155,7 +148,6 @@ class ProductsApi:
 
         _param = self._create_product_serialize(
             product_model=product_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -179,7 +171,6 @@ class ProductsApi:
     async def create_product_without_preload_content(
         self,
         product_model: ProductModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -198,8 +189,6 @@ class ProductsApi:
 
         :param product_model: (required)
         :type product_model: ProductModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -224,7 +213,6 @@ class ProductsApi:
 
         _param = self._create_product_serialize(
             product_model=product_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -243,7 +231,6 @@ class ProductsApi:
     def _create_product_serialize(
         self,
         product_model,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -288,7 +275,7 @@ class ProductsApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -310,8 +297,7 @@ class ProductsApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
-        body: Optional[Dict[str, Any]] = None,
+        request_body: Optional[Dict[str, Any]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -332,10 +318,8 @@ class ProductsApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
-        :param body:
-        :type body: object
+        :param request_body:
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -361,8 +345,7 @@ class ProductsApi:
         _param = self._get_products_serialize(
             limit=limit,
             offset=offset,
-            access_token=access_token,
-            body=body,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -387,8 +370,7 @@ class ProductsApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
-        body: Optional[Dict[str, Any]] = None,
+        request_body: Optional[Dict[str, Any]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -409,10 +391,8 @@ class ProductsApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
-        :param body:
-        :type body: object
+        :param request_body:
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -438,8 +418,7 @@ class ProductsApi:
         _param = self._get_products_serialize(
             limit=limit,
             offset=offset,
-            access_token=access_token,
-            body=body,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -464,8 +443,7 @@ class ProductsApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
-        access_token: Optional[StrictStr] = None,
-        body: Optional[Dict[str, Any]] = None,
+        request_body: Optional[Dict[str, Any]] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -486,10 +464,8 @@ class ProductsApi:
         :type limit: int
         :param offset:
         :type offset: int
-        :param access_token:
-        :type access_token: str
-        :param body:
-        :type body: object
+        :param request_body:
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -515,8 +491,7 @@ class ProductsApi:
         _param = self._get_products_serialize(
             limit=limit,
             offset=offset,
-            access_token=access_token,
-            body=body,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -536,8 +511,7 @@ class ProductsApi:
         self,
         limit,
         offset,
-        access_token,
-        body,
+        request_body,
         _request_auth,
         _content_type,
         _headers,
@@ -570,8 +544,8 @@ class ProductsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body is not None:
-            _body_params = body
+        if request_body is not None:
+            _body_params = request_body
 
         # set the HTTP header `Accept`
         if "Accept" not in _header_params:
@@ -590,7 +564,7 @@ class ProductsApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -612,7 +586,6 @@ class ProductsApi:
         self,
         id: StrictStr,
         product_model: ProductModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -633,8 +606,6 @@ class ProductsApi:
         :type id: str
         :param product_model: (required)
         :type product_model: ProductModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -660,7 +631,6 @@ class ProductsApi:
         _param = self._update_product_serialize(
             id=id,
             product_model=product_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -685,7 +655,6 @@ class ProductsApi:
         self,
         id: StrictStr,
         product_model: ProductModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -706,8 +675,6 @@ class ProductsApi:
         :type id: str
         :param product_model: (required)
         :type product_model: ProductModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -733,7 +700,6 @@ class ProductsApi:
         _param = self._update_product_serialize(
             id=id,
             product_model=product_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -758,7 +724,6 @@ class ProductsApi:
         self,
         id: StrictStr,
         product_model: ProductModel,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -779,8 +744,6 @@ class ProductsApi:
         :type id: str
         :param product_model: (required)
         :type product_model: ProductModel
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -806,7 +769,6 @@ class ProductsApi:
         _param = self._update_product_serialize(
             id=id,
             product_model=product_model,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -826,7 +788,6 @@ class ProductsApi:
         self,
         id,
         product_model,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -873,7 +834,7 @@ class ProductsApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="PUT",

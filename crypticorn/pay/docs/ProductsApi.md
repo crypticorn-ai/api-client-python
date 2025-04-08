@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 
 # **create_product**
-> object create_product(product_model, access_token=access_token)
+> object create_product(product_model)
 
 Create Product
 
@@ -18,7 +18,8 @@ Create a new product
 
 ### Example
 
-* Bearer Authentication (HTTPBearer):
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -37,7 +38,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -47,11 +54,10 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.ProductsApi(api_client)
     product_model = client.ProductModel() # ProductModel | 
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Create Product
-        api_response = await api_instance.create_product(product_model, access_token=access_token)
+        api_response = await api_instance.create_product(product_model)
         print("The response of ProductsApi->create_product:\n")
         pprint(api_response)
     except Exception as e:
@@ -66,7 +72,6 @@ async with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **product_model** | [**ProductModel**](ProductModel.md)|  | 
- **access_token** | **str**|  | [optional] 
 
 ### Return type
 
@@ -74,7 +79,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -91,7 +96,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_products**
-> List[ProductModel] get_products(limit=limit, offset=offset, access_token=access_token, body=body)
+> List[ProductModel] get_products(limit=limit, offset=offset, request_body=request_body)
 
 Get Products
 
@@ -99,7 +104,8 @@ Get all products
 
 ### Example
 
-* Bearer Authentication (HTTPBearer):
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -118,7 +124,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -129,12 +141,11 @@ async with client.ApiClient(configuration) as api_client:
     api_instance = client.ProductsApi(api_client)
     limit = 0 # int |  (optional) (default to 0)
     offset = 0 # int |  (optional) (default to 0)
-    access_token = 'access_token_example' # str |  (optional)
-    body = None # object |  (optional)
+    request_body = None # Dict[str, object] |  (optional)
 
     try:
         # Get Products
-        api_response = await api_instance.get_products(limit=limit, offset=offset, access_token=access_token, body=body)
+        api_response = await api_instance.get_products(limit=limit, offset=offset, request_body=request_body)
         print("The response of ProductsApi->get_products:\n")
         pprint(api_response)
     except Exception as e:
@@ -150,8 +161,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **limit** | **int**|  | [optional] [default to 0]
  **offset** | **int**|  | [optional] [default to 0]
- **access_token** | **str**|  | [optional] 
- **body** | **object**|  | [optional] 
+ **request_body** | [**Dict[str, object]**](object.md)|  | [optional] 
 
 ### Return type
 
@@ -159,7 +169,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -176,7 +186,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_product**
-> object update_product(id, product_model, access_token=access_token)
+> object update_product(id, product_model)
 
 Update Product
 
@@ -184,7 +194,8 @@ Update an existing product
 
 ### Example
 
-* Bearer Authentication (HTTPBearer):
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -203,7 +214,13 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure Bearer authorization: HTTPBearer
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -214,11 +231,10 @@ async with client.ApiClient(configuration) as api_client:
     api_instance = client.ProductsApi(api_client)
     id = 'id_example' # str | 
     product_model = client.ProductModel() # ProductModel | 
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Update Product
-        api_response = await api_instance.update_product(id, product_model, access_token=access_token)
+        api_response = await api_instance.update_product(id, product_model)
         print("The response of ProductsApi->update_product:\n")
         pprint(api_response)
     except Exception as e:
@@ -234,7 +250,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**|  | 
  **product_model** | [**ProductModel**](ProductModel.md)|  | 
- **access_token** | **str**|  | [optional] 
 
 ### Return type
 
@@ -242,7 +257,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
