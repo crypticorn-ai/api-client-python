@@ -1,13 +1,14 @@
 # ApiErrorLevel
 
+API error levels
 
 ## Enum
 
 * `ERROR` (value: `'error'`)
 
-* `SUCCESS` (value: `'success'`)
-
 * `INFO` (value: `'info'`)
+
+* `SUCCESS` (value: `'success'`)
 
 * `WARNING` (value: `'warning'`)
 

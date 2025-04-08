@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **actually_paid** | **float** | Actually paid amount | 
 **actually_paid_at_fiat** | **float** | Actually paid amount in fiat currency | 
-**fee** | [**NowFeeStructure**](NowFeeStructure.md) |  | 
+**fee** | [**NowFeeStructure**](NowFeeStructure.md) | Fee structure for the payment | 
 **invoice_id** | **int** | Associated invoice ID | 
 **order_description** | **str** | Order description | 
 **order_id** | **str** | Internal order ID | 
