@@ -115,6 +115,7 @@ Class | Method | HTTP request | Description
  - [NowFeeStructure](docs/NowFeeStructure.md)
  - [NowPaymentStatus](docs/NowPaymentStatus.md)
  - [NowWebhookPayload](docs/NowWebhookPayload.md)
+ - [PartialProductUpdateModel](docs/PartialProductUpdateModel.md)
  - [PaymentStatus](docs/PaymentStatus.md)
  - [ProductModel](docs/ProductModel.md)
  - [ProductSubsModel](docs/ProductSubsModel.md)

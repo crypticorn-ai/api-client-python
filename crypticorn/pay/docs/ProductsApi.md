@@ -96,11 +96,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_products**
-> List[ProductModel] get_products(limit=limit, offset=offset, body=body)
+> List[ProductModel] get_products(limit=limit, offset=offset)
 
 Get Products
 
-Get all products
+Get all software products from Crypticorn
 
 ### Example
 
@@ -139,13 +139,12 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.ProductsApi(api_client)
-    limit = 0 # int |  (optional) (default to 0)
-    offset = 0 # int |  (optional) (default to 0)
-    body = None # object |  (optional)
+    limit = 0 # int | Limit the number of products returned. 0 means no limit. (optional) (default to 0)
+    offset = 0 # int | Offset the number of products returned. 0 means no offset. (optional) (default to 0)
 
     try:
         # Get Products
-        api_response = await api_instance.get_products(limit=limit, offset=offset, body=body)
+        api_response = await api_instance.get_products(limit=limit, offset=offset)
         print("The response of ProductsApi->get_products:\n")
         pprint(api_response)
     except Exception as e:
@@ -159,9 +158,8 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int**|  | [optional] [default to 0]
- **offset** | **int**|  | [optional] [default to 0]
- **body** | **object**|  | [optional] 
+ **limit** | **int**| Limit the number of products returned. 0 means no limit. | [optional] [default to 0]
+ **offset** | **int**| Offset the number of products returned. 0 means no offset. | [optional] [default to 0]
 
 ### Return type
 
@@ -173,7 +171,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 ### HTTP response details
@@ -186,7 +184,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_product**
-> object update_product(id, product_model)
+> object update_product(id, partial_product_update_model)
 
 Update Product
 
@@ -199,7 +197,7 @@ Update an existing product
 
 ```python
 import client
-from client.models.product_model import ProductModel
+from client.models.partial_product_update_model import PartialProductUpdateModel
 from client.rest import ApiException
 from pprint import pprint
 
@@ -229,12 +227,12 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.ProductsApi(api_client)
-    id = 'id_example' # str | 
-    product_model = client.ProductModel() # ProductModel | 
+    id = 'id_example' # str | The ID of the product to update
+    partial_product_update_model = client.PartialProductUpdateModel() # PartialProductUpdateModel | 
 
     try:
         # Update Product
-        api_response = await api_instance.update_product(id, product_model)
+        api_response = await api_instance.update_product(id, partial_product_update_model)
         print("The response of ProductsApi->update_product:\n")
         pprint(api_response)
     except Exception as e:
@@ -248,8 +246,8 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **str**|  | 
- **product_model** | [**ProductModel**](ProductModel.md)|  | 
+ **id** | **str**| The ID of the product to update | 
+ **partial_product_update_model** | [**PartialProductUpdateModel**](PartialProductUpdateModel.md)|  | 
 
 ### Return type
 

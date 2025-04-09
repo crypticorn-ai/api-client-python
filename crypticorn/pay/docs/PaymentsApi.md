@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 Get Latest Payment From Invoice
 
-Get the latest payment from an invoice
+Get the latest payment by a user from an invoice
 
 ### Example
 
@@ -46,7 +46,7 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.PaymentsApi(api_client)
-    invoice_id = 'invoice_id_example' # str | 
+    invoice_id = 'invoice_id_example' # str | The invoice ID to get the latest payment from
 
     try:
         # Get Latest Payment From Invoice
@@ -64,7 +64,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **invoice_id** | **str**|  | 
+ **invoice_id** | **str**| The invoice ID to get the latest payment from | 
 
 ### Return type
 
@@ -93,7 +93,7 @@ Name | Type | Description  | Notes
 
 Get Payments
 
-Get combined payment history for a user across all payment services.
+Get the combined payment history for a user across all payment services.
 
 ### Example
 
@@ -167,6 +167,8 @@ This endpoint does not need any parameter.
 
 Get Subscriptions
 
+Get all subscriptions for a user. Subscriptions are the products a user has subscribed to. Returns both active and inactive subscriptions.
+
 ### Example
 
 * Api Key Authentication (APIKeyHeader):
@@ -204,7 +206,7 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.PaymentsApi(api_client)
-    user_id = 'user_id_example' # str |  (optional)
+    user_id = 'user_id_example' # str | The user ID to get subscriptions for. Defaults to the authenticated user. (optional)
 
     try:
         # Get Subscriptions
@@ -222,7 +224,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user_id** | **str**|  | [optional] 
+ **user_id** | **str**| The user ID to get subscriptions for. Defaults to the authenticated user. | [optional] 
 
 ### Return type
 

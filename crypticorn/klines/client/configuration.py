@@ -190,9 +190,7 @@ class Configuration:
         debug: Optional[bool] = None,
     ) -> None:
         """Constructor"""
-        self._base_path = (
-            "http://localhost/v1/klines" if host is None else host
-        )
+        self._base_path = "http://localhost/v1/klines" if host is None else host
         """Default Base url
         """
         self.server_index = 0 if server_index is None and host is None else server_index

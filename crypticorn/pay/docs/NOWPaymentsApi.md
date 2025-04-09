@@ -94,7 +94,7 @@ Name | Type | Description  | Notes
 
 Get Status
 
-Get NOWPayments API status
+Get the status of the NOWPayments API
 
 ### Example
 
