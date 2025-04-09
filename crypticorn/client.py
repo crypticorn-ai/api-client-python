@@ -1,11 +1,11 @@
-from crypticorn.hive import HiveClient
+from crypticorn.hive import HiveClient, Configuration
 from crypticorn.klines import KlinesClient
 from crypticorn.pay import PayClient
 from crypticorn.trade import TradeClient
 from crypticorn.metrics import MetricsClient
-from crypticorn.common import BaseURL, ApiVersion
-
-
+from crypticorn.auth import AuthClient
+from crypticorn.common import BaseUrl, ApiVersion, Service, apikey_header as aph
+import warnings
 class ApiClient:
     """
     The official client for interacting with the Crypticorn API.
@@ -15,34 +15,30 @@ class ApiClient:
 
     def __init__(
         self,
-        base_url: BaseURL = BaseURL.PROD,
         api_key: str = None,
         jwt: str = None,
-        hive_version: ApiVersion = ApiVersion.V1,
-        klines_version: ApiVersion = ApiVersion.V1,
-        pay_version: ApiVersion = ApiVersion.V1,
-        trade_version: ApiVersion = ApiVersion.V1,
-        auth_version: ApiVersion = ApiVersion.V1,
-        metrics_version: ApiVersion = ApiVersion.V1,
+        base_url: BaseUrl = BaseUrl.PROD,
     ):
         self.base_url = base_url
+        '''The base URL the client will use to connect to the API.'''
         self.api_key = api_key
+        '''The API key to use for authentication.'''
         self.jwt = jwt
-        self.hive = HiveClient(base_url, hive_version, api_key, jwt)
-        self.trade = TradeClient(base_url, trade_version, api_key, jwt)
-        self.klines = KlinesClient(base_url, klines_version, api_key, jwt)
-        self.pay = PayClient(base_url, pay_version, api_key, jwt)
-        self.metrics = MetricsClient(base_url, metrics_version, api_key, jwt)
-        # currently not working due to circular import since the AUTH_Handler
-        # is also using the ApiClient
-        # self.auth = AuthClient(base_url, auth_version, api_key, jwt)
+        '''The JWT to use for authentication.'''
 
-    async def __aenter__(self):
-        return self
+        self.hive = HiveClient(self._get_default_config(Service.HIVE))
+        self.trade = TradeClient(self._get_default_config(Service.TRADE))
+        self.klines = KlinesClient(self._get_default_config(Service.KLINES))
+        self.pay = PayClient(self._get_default_config(Service.PAY))
+        self.metrics = MetricsClient(self._get_default_config(Service.METRICS))
+        self.auth = AuthClient(self._get_default_config(Service.AUTH)) 
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
-        await self.close()
-
+    def __new__(cls, *args, **kwargs):
+        if kwargs.get("api_key") and not kwargs.get("jwt"):
+            # auth-service does not allow api_key
+            warnings.warn("The auth module does only accept JWT to be used to authenticate. If you use this module, you need to provide a JWT.")
+        return super().__new__(cls)
+    
     async def close(self):
         """Close all client sessions."""
         clients = [
@@ -51,12 +47,23 @@ class ApiClient:
             self.klines.base_client,
             self.pay.base_client,
             self.metrics.base_client,
+            self.auth.base_client,
         ]
 
         for client in clients:
             if hasattr(client, "close"):
                 await client.close()
 
+    def _get_default_config(self, service: Service, version: ApiVersion = ApiVersion.V1):
+        """
+        Get the default configuration for a given service.
+        """
+        return Configuration(
+            host=f"{self.base_url}/{version}/{service}",
+            access_token=self.jwt,
+            api_key={aph.scheme_name: self.api_key} if self.api_key else None,
+            api_key_prefix=({aph.scheme_name: aph.model.name} if self.api_key else None),
+        )
     
     def configure(self, config: Configuration, sub_client: any):
         """
@@ -91,4 +98,10 @@ class ApiClient:
             self.auth = AuthClient(new_config)
         else:
             raise ValueError(f"Unknown sub-client: {sub_client}")
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        await self.close()
 
