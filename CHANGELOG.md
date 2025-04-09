@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.2.1 (2025-04-09)
+
+### Bug Fixes
+
+- Add pydantic decorator that makes all fields of a model optional
+  ([`1ae4432`](https://github.com/crypticorn-ai/api-client/commit/1ae44325194be3ca86eb72be5d3edc2442dd00cc))
+
+
 ## v2.2.0 (2025-04-09)
 
 ### Bug Fixes
