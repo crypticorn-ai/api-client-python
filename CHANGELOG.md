@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.2.2 (2025-04-09)
+
+### Bug Fixes
+
+- Refactor generated model name by partial_model and add to init file
+  ([`e663848`](https://github.com/crypticorn-ai/api-client/commit/e6638483bdeb01121749b579268493c7c67227dc))
+
+
 ## v2.2.1 (2025-04-09)
 
 ### Bug Fixes
