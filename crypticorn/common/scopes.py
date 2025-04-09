@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import StrEnum
 
 
-class Scope(str, Enum):
+class Scope(StrEnum):
     """
     The permission scopes for the API.
     """

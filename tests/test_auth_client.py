@@ -4,7 +4,7 @@ import os
 import dotenv
 import pytest
 import pytest_asyncio
-from crypticorn.common import AuthHandler, BaseURL, Scope, http_bearer
+from crypticorn.common import AuthHandler, BaseUrl, Scope
 from fastapi import HTTPException
 from fastapi.security import HTTPAuthorizationCredentials
 
@@ -13,16 +13,14 @@ print(dotenv.dotenv_values())
 
 # JWT
 EXPIRED_JWT = os.getenv("EXPIRED_JWT")
-VALID_JWT = os.getenv("VALID_JWT")
-# VALID_JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiNVN4aGNjeGVteEVvUHA1VEJSNjUiLCJpYXQiOjE3NDQxMjIwODksImV4cCI6MTc0NDEyNTY4OSwic2NvcGVzIjpbInJlYWQ6aGl2ZTptb2RlbCIsInJlYWQ6aGl2ZTpkYXRhIiwicmVhZDp0cmFkZTpib3RzIiwicmVhZDp0cmFkZTpvcmRlcnMiLCJyZWFkOnRyYWRlOmFjdGlvbnMiLCJyZWFkOnRyYWRlOnN0cmF0ZWdpZXMiLCJyZWFkOnRyYWRlOmV4Y2hhbmdlcyIsInJlYWQ6dHJhZGU6ZnV0dXJlcyIsInJlYWQ6dHJhZGU6bm90aWZpY2F0aW9ucyIsInJlYWQ6dHJhZGU6YXBpX2tleXMiLCJyZWFkOnBheTpub3ciLCJyZWFkOnBheTpwcm9kdWN0cyIsInJlYWQ6cGF5OnBheW1lbnRzIiwid3JpdGU6aGl2ZTptb2RlbCIsIndyaXRlOnRyYWRlOmJvdHMiLCJ3cml0ZTp0cmFkZTpmdXR1cmVzIiwid3JpdGU6dHJhZGU6bm90aWZpY2F0aW9ucyIsIndyaXRlOnRyYWRlOmFwaV9rZXlzIiwid3JpdGU6dHJhZGU6c3RyYXRlZ2llcyIsInJlYWQ6cHJlZGljdGlvbnMiLCJ3cml0ZTpwYXk6cHJvZHVjdHMiLCJ3cml0ZTpwYXk6bm93IiwicmVhZDpwcmVkaWN0aW9ucyJdfQ.YC28dKeJTm1vLrg4F6xMSDBScSub1BWcjVJeKbs87uY"
-
+VALID_JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoibHlmQktacTM1OXBWYlZldkQ1MWgiLCJpYXQiOjE3NDQyMjc2NDMsImV4cCI6MTc0NDIzMTI0Mywic2NvcGVzIjpbInJlYWQ6aGl2ZTptb2RlbCIsInJlYWQ6aGl2ZTpkYXRhIiwicmVhZDp0cmFkZTpib3RzIiwicmVhZDp0cmFkZTpvcmRlcnMiLCJyZWFkOnRyYWRlOmFjdGlvbnMiLCJyZWFkOnRyYWRlOnN0cmF0ZWdpZXMiLCJyZWFkOnRyYWRlOmV4Y2hhbmdlcyIsInJlYWQ6dHJhZGU6ZnV0dXJlcyIsInJlYWQ6dHJhZGU6bm90aWZpY2F0aW9ucyIsInJlYWQ6dHJhZGU6YXBpX2tleXMiLCJyZWFkOnBheTpub3ciLCJyZWFkOnBheTpwcm9kdWN0cyIsInJlYWQ6cGF5OnBheW1lbnRzIiwid3JpdGU6aGl2ZTptb2RlbCIsIndyaXRlOnRyYWRlOmJvdHMiLCJ3cml0ZTp0cmFkZTpmdXR1cmVzIiwid3JpdGU6dHJhZGU6bm90aWZpY2F0aW9ucyIsIndyaXRlOnRyYWRlOmFwaV9rZXlzIiwid3JpdGU6dHJhZGU6c3RyYXRlZ2llcyIsInJlYWQ6cHJlZGljdGlvbnMiLCJ3cml0ZTpwYXk6cHJvZHVjdHMiLCJ3cml0ZTpwYXk6bm93IiwicmVhZDpwcmVkaWN0aW9ucyJdfQ.q_zjXytY7lDmwIDB0B7LIpQ-b83JOEboECLTTBAnT9M"
 # API KEY
 FULL_SCOPE_API_KEY = os.getenv("FULL_SCOPE_API_KEY")
 ONE_SCOPE_API_KEY = os.getenv("ONE_SCOPE_API_KEY")
 EXPIRED_API_KEY = os.getenv("EXPIRED_API_KEY")
 
 # ASSERT SCOPE
-ALL_SCOPES = [scope.value for scope in Scope]
+ALL_SCOPES = list(Scope)
 JWT_SCOPE = Scope.READ_PREDICTIONS
 API_KEY_SCOPE = Scope.READ_TRADE_BOTS
 
@@ -36,12 +34,11 @@ UPDATE_SCOPES = "you probably need to bring the scopes in both the api client an
 
 # Each function is tested without credentials, with invalid credentials, and with valid credentials.
 # The test is successful if the correct HTTPException is raised.
-#
 
 
 @pytest_asyncio.fixture
 async def auth_handler() -> AuthHandler:
-    return AuthHandler(BaseURL.LOCAL)
+    return AuthHandler(BaseUrl.LOCAL)
 
 
 # COMBINED AUTH
@@ -329,4 +326,4 @@ async def test_ws_api_key_auth_with_one_scope_valid_api_key(auth_handler: AuthHa
     assert API_KEY_SCOPE in res.scopes, UPDATE_SCOPES
 
 
-# print(asyncio.run(test_ws_api_key_auth_with_one_scope_valid_api_key(AuthHandler(BaseURL.LOCAL))))
+# print(asyncio.run(test_ws_api_key_auth_with_one_scope_valid_api_key(AuthHandler(BaseUrl.LOCAL))))
