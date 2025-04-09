@@ -73,3 +73,14 @@ def init_auth(output, force):
         environment:
             - IS_DOCKER=1
     ''', fg="yellow")
+
+@init_group.command("dependabot")
+@click.option('-f', '--force', is_flag=True, help='Force overwrite the dependabot.yml')
+def init_dependabot(force):
+    """Add dependabot.yml"""
+    root = get_git_root()
+    target = root / ".github/dependabot.yml"
+    if target.exists() and not force:
+        click.secho("File already exists, use --force / -f to overwrite", fg="red")
+        return
+    copy_template("dependabot.yml", target)
