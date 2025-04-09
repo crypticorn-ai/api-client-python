@@ -16,8 +16,9 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import Field, StrictStr
 from typing import List, Optional
+from typing_extensions import Annotated
 from crypticorn.pay.client.models.product_subs_model import ProductSubsModel
 from crypticorn.pay.client.models.unified_payment_model import UnifiedPaymentModel
 
@@ -41,7 +42,10 @@ class PaymentsApi:
     @validate_call
     async def get_latest_payment_from_invoice(
         self,
-        invoice_id: StrictStr,
+        invoice_id: Annotated[
+            StrictStr,
+            Field(description="The invoice ID to get the latest payment from"),
+        ],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -56,9 +60,9 @@ class PaymentsApi:
     ) -> UnifiedPaymentModel:
         """Get Latest Payment From Invoice
 
-        Get the latest payment from an invoice
+        Get the latest payment by a user from an invoice
 
-        :param invoice_id: (required)
+        :param invoice_id: The invoice ID to get the latest payment from (required)
         :type invoice_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -106,7 +110,10 @@ class PaymentsApi:
     @validate_call
     async def get_latest_payment_from_invoice_with_http_info(
         self,
-        invoice_id: StrictStr,
+        invoice_id: Annotated[
+            StrictStr,
+            Field(description="The invoice ID to get the latest payment from"),
+        ],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -121,9 +128,9 @@ class PaymentsApi:
     ) -> ApiResponse[UnifiedPaymentModel]:
         """Get Latest Payment From Invoice
 
-        Get the latest payment from an invoice
+        Get the latest payment by a user from an invoice
 
-        :param invoice_id: (required)
+        :param invoice_id: The invoice ID to get the latest payment from (required)
         :type invoice_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -171,7 +178,10 @@ class PaymentsApi:
     @validate_call
     async def get_latest_payment_from_invoice_without_preload_content(
         self,
-        invoice_id: StrictStr,
+        invoice_id: Annotated[
+            StrictStr,
+            Field(description="The invoice ID to get the latest payment from"),
+        ],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -186,9 +196,9 @@ class PaymentsApi:
     ) -> RESTResponseType:
         """Get Latest Payment From Invoice
 
-        Get the latest payment from an invoice
+        Get the latest payment by a user from an invoice
 
-        :param invoice_id: (required)
+        :param invoice_id: The invoice ID to get the latest payment from (required)
         :type invoice_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -302,7 +312,7 @@ class PaymentsApi:
     ) -> List[UnifiedPaymentModel]:
         """Get Payments
 
-        Get combined payment history for a user across all payment services.
+        Get the combined payment history for a user across all payment services.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -362,7 +372,7 @@ class PaymentsApi:
     ) -> ApiResponse[List[UnifiedPaymentModel]]:
         """Get Payments
 
-        Get combined payment history for a user across all payment services.
+        Get the combined payment history for a user across all payment services.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -422,7 +432,7 @@ class PaymentsApi:
     ) -> RESTResponseType:
         """Get Payments
 
-        Get combined payment history for a user across all payment services.
+        Get the combined payment history for a user across all payment services.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -515,7 +525,12 @@ class PaymentsApi:
     @validate_call
     async def get_subscriptions(
         self,
-        user_id: Optional[StrictStr] = None,
+        user_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The user ID to get subscriptions for. Defaults to the authenticated user."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -530,8 +545,9 @@ class PaymentsApi:
     ) -> List[ProductSubsModel]:
         """Get Subscriptions
 
+        Get all subscriptions for a user. Subscriptions are the products a user has subscribed to. Returns both active and inactive subscriptions.
 
-        :param user_id:
+        :param user_id: The user ID to get subscriptions for. Defaults to the authenticated user.
         :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -579,7 +595,12 @@ class PaymentsApi:
     @validate_call
     async def get_subscriptions_with_http_info(
         self,
-        user_id: Optional[StrictStr] = None,
+        user_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The user ID to get subscriptions for. Defaults to the authenticated user."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -594,8 +615,9 @@ class PaymentsApi:
     ) -> ApiResponse[List[ProductSubsModel]]:
         """Get Subscriptions
 
+        Get all subscriptions for a user. Subscriptions are the products a user has subscribed to. Returns both active and inactive subscriptions.
 
-        :param user_id:
+        :param user_id: The user ID to get subscriptions for. Defaults to the authenticated user.
         :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -643,7 +665,12 @@ class PaymentsApi:
     @validate_call
     async def get_subscriptions_without_preload_content(
         self,
-        user_id: Optional[StrictStr] = None,
+        user_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The user ID to get subscriptions for. Defaults to the authenticated user."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -658,8 +685,9 @@ class PaymentsApi:
     ) -> RESTResponseType:
         """Get Subscriptions
 
+        Get all subscriptions for a user. Subscriptions are the products a user has subscribed to. Returns both active and inactive subscriptions.
 
-        :param user_id:
+        :param user_id: The user ID to get subscriptions for. Defaults to the authenticated user.
         :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

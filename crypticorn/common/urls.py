@@ -1,10 +1,12 @@
 from enum import StrEnum
 
+
 class ApiEnv(StrEnum):
     PROD = "prod"
     DEV = "dev"
     LOCAL = "local"
     DOCKER = "docker"
+
 
 class BaseUrl(StrEnum):
     PROD = "https://api.crypticorn.com"

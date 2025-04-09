@@ -31,6 +31,7 @@ apikey_header = APIKeyHeader(
     description="The API key to use for authentication.",
 )
 
+
 # Auth Handler
 class AuthHandler:
     """

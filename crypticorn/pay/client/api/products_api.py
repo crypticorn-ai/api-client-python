@@ -16,8 +16,12 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictInt, StrictStr
-from typing import Any, Dict, List, Optional
+from pydantic import Field, StrictInt, StrictStr
+from typing import Any, List, Optional
+from typing_extensions import Annotated
+from crypticorn.pay.client.models.partial_product_update_model import (
+    PartialProductUpdateModel,
+)
 from crypticorn.pay.client.models.product_model import ProductModel
 
 from crypticorn.pay.client.api_client import ApiClient, RequestSerialized
@@ -295,9 +299,18 @@ class ProductsApi:
     @validate_call
     async def get_products(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
-        body: Optional[Dict[str, Any]] = None,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Limit the number of products returned. 0 means no limit."
+            ),
+        ] = None,
+        offset: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Offset the number of products returned. 0 means no offset."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -312,14 +325,12 @@ class ProductsApi:
     ) -> List[ProductModel]:
         """Get Products
 
-        Get all products
+        Get all software products from Crypticorn
 
-        :param limit:
+        :param limit: Limit the number of products returned. 0 means no limit.
         :type limit: int
-        :param offset:
+        :param offset: Offset the number of products returned. 0 means no offset.
         :type offset: int
-        :param body:
-        :type body: object
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -345,7 +356,6 @@ class ProductsApi:
         _param = self._get_products_serialize(
             limit=limit,
             offset=offset,
-            body=body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -368,9 +378,18 @@ class ProductsApi:
     @validate_call
     async def get_products_with_http_info(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
-        body: Optional[Dict[str, Any]] = None,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Limit the number of products returned. 0 means no limit."
+            ),
+        ] = None,
+        offset: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Offset the number of products returned. 0 means no offset."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -385,14 +404,12 @@ class ProductsApi:
     ) -> ApiResponse[List[ProductModel]]:
         """Get Products
 
-        Get all products
+        Get all software products from Crypticorn
 
-        :param limit:
+        :param limit: Limit the number of products returned. 0 means no limit.
         :type limit: int
-        :param offset:
+        :param offset: Offset the number of products returned. 0 means no offset.
         :type offset: int
-        :param body:
-        :type body: object
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -418,7 +435,6 @@ class ProductsApi:
         _param = self._get_products_serialize(
             limit=limit,
             offset=offset,
-            body=body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -441,9 +457,18 @@ class ProductsApi:
     @validate_call
     async def get_products_without_preload_content(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
-        body: Optional[Dict[str, Any]] = None,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Limit the number of products returned. 0 means no limit."
+            ),
+        ] = None,
+        offset: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Offset the number of products returned. 0 means no offset."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -458,14 +483,12 @@ class ProductsApi:
     ) -> RESTResponseType:
         """Get Products
 
-        Get all products
+        Get all software products from Crypticorn
 
-        :param limit:
+        :param limit: Limit the number of products returned. 0 means no limit.
         :type limit: int
-        :param offset:
+        :param offset: Offset the number of products returned. 0 means no offset.
         :type offset: int
-        :param body:
-        :type body: object
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -491,7 +514,6 @@ class ProductsApi:
         _param = self._get_products_serialize(
             limit=limit,
             offset=offset,
-            body=body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -511,7 +533,6 @@ class ProductsApi:
         self,
         limit,
         offset,
-        body,
         _request_auth,
         _content_type,
         _headers,
@@ -544,24 +565,12 @@ class ProductsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body is not None:
-            _body_params = body
 
         # set the HTTP header `Accept`
         if "Accept" not in _header_params:
             _header_params["Accept"] = self.api_client.select_header_accept(
                 ["application/json"]
             )
-
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params["Content-Type"] = _content_type
-        else:
-            _default_content_type = self.api_client.select_header_content_type(
-                ["application/json"]
-            )
-            if _default_content_type is not None:
-                _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
@@ -584,8 +593,8 @@ class ProductsApi:
     @validate_call
     async def update_product(
         self,
-        id: StrictStr,
-        product_model: ProductModel,
+        id: Annotated[StrictStr, Field(description="The ID of the product to update")],
+        partial_product_update_model: PartialProductUpdateModel,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -602,10 +611,10 @@ class ProductsApi:
 
         Update an existing product
 
-        :param id: (required)
+        :param id: The ID of the product to update (required)
         :type id: str
-        :param product_model: (required)
-        :type product_model: ProductModel
+        :param partial_product_update_model: (required)
+        :type partial_product_update_model: PartialProductUpdateModel
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -630,7 +639,7 @@ class ProductsApi:
 
         _param = self._update_product_serialize(
             id=id,
-            product_model=product_model,
+            partial_product_update_model=partial_product_update_model,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -653,8 +662,8 @@ class ProductsApi:
     @validate_call
     async def update_product_with_http_info(
         self,
-        id: StrictStr,
-        product_model: ProductModel,
+        id: Annotated[StrictStr, Field(description="The ID of the product to update")],
+        partial_product_update_model: PartialProductUpdateModel,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -671,10 +680,10 @@ class ProductsApi:
 
         Update an existing product
 
-        :param id: (required)
+        :param id: The ID of the product to update (required)
         :type id: str
-        :param product_model: (required)
-        :type product_model: ProductModel
+        :param partial_product_update_model: (required)
+        :type partial_product_update_model: PartialProductUpdateModel
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -699,7 +708,7 @@ class ProductsApi:
 
         _param = self._update_product_serialize(
             id=id,
-            product_model=product_model,
+            partial_product_update_model=partial_product_update_model,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -722,8 +731,8 @@ class ProductsApi:
     @validate_call
     async def update_product_without_preload_content(
         self,
-        id: StrictStr,
-        product_model: ProductModel,
+        id: Annotated[StrictStr, Field(description="The ID of the product to update")],
+        partial_product_update_model: PartialProductUpdateModel,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -740,10 +749,10 @@ class ProductsApi:
 
         Update an existing product
 
-        :param id: (required)
+        :param id: The ID of the product to update (required)
         :type id: str
-        :param product_model: (required)
-        :type product_model: ProductModel
+        :param partial_product_update_model: (required)
+        :type partial_product_update_model: PartialProductUpdateModel
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -768,7 +777,7 @@ class ProductsApi:
 
         _param = self._update_product_serialize(
             id=id,
-            product_model=product_model,
+            partial_product_update_model=partial_product_update_model,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -787,7 +796,7 @@ class ProductsApi:
     def _update_product_serialize(
         self,
         id,
-        product_model,
+        partial_product_update_model,
         _request_auth,
         _content_type,
         _headers,
@@ -814,8 +823,8 @@ class ProductsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if product_model is not None:
-            _body_params = product_model
+        if partial_product_update_model is not None:
+            _body_params = partial_product_update_model
 
         # set the HTTP header `Accept`
         if "Accept" not in _header_params:

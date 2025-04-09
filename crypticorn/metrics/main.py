@@ -38,7 +38,6 @@ class MetricsClient:
         self.exchanges = ExchangesApi(self.base_client)
 
 
-
 class MarketcapApiWrapper(MarketcapApi):
     """
     A wrapper for the MarketcapApi class.
@@ -77,8 +76,8 @@ class MarketcapApiWrapper(MarketcapApi):
         )
         json_response = await response.json()
         df = pd.DataFrame(json_response["data"])
-        df.rename(columns={df.columns[0]: 'timestamp'}, inplace=True)
-        df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
+        df.rename(columns={df.columns[0]: "timestamp"}, inplace=True)
+        df["timestamp"] = pd.to_datetime(df["timestamp"]).astype("int64") // 10**9
         return df
 
 
@@ -97,6 +96,8 @@ class TokensApiWrapper(TokensApi):
         """
         Get the tokens in a pandas dataframe
         """
-        response = await self.get_stable_and_wrapped_tokens_without_preload_content(token_type=token_type)
+        response = await self.get_stable_and_wrapped_tokens_without_preload_content(
+            token_type=token_type
+        )
         json_data = await response.json()
-        return pd.DataFrame(json_data['data'])
+        return pd.DataFrame(json_data["data"])
