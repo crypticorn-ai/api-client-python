@@ -1,6 +1,24 @@
 # CHANGELOG
 
 
+## v2.2.0 (2025-04-09)
+
+### Bug Fixes
+
+- Fix import issues (fixes #22) and add auth module to main client
+  ([`7f3f7c2`](https://github.com/crypticorn-ai/api-client/commit/7f3f7c2120af053b916aaa045444331998986f7d))
+
+### Documentation
+
+- Update README with configuration and response type sections
+  ([`a9fbccf`](https://github.com/crypticorn-ai/api-client/commit/a9fbccfed254573d3e62332901704f39d8a6777f))
+
+### Features
+
+- Add module based configuration options for the client
+  ([`553400c`](https://github.com/crypticorn-ai/api-client/commit/553400c642d3da4459daa4fa9b56588e9f519581))
+
+
 ## v2.1.6 (2025-04-08)
 
 ### Bug Fixes
