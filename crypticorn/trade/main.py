@@ -11,7 +11,6 @@ from crypticorn.trade import (
     StrategiesApi,
     TradingActionsApi,
 )
-from crypticorn.common import BaseURL, ApiVersion, Service, apikey_header as aph
 
 
 class TradeClient:
@@ -21,18 +20,9 @@ class TradeClient:
 
     def __init__(
         self,
-        base_url: BaseURL,
-        api_version: ApiVersion,
-        api_key: str = None,
-        jwt: str = None,
+        config: Configuration,
     ):
-        self.host = f"{base_url.value}/{api_version.value}/{Service.TRADE.value}"
-        self.config = Configuration(
-            host=self.host,
-            access_token=jwt,
-            api_key={aph.scheme_name: api_key} if api_key else None,
-            api_key_prefix=({aph.scheme_name: aph.model.name} if api_key else None),
-        )
+        self.config = config
         self.base_client = ApiClient(configuration=self.config)
         # Instantiate all the endpoint clients
         self.bots = BotsApi(self.base_client)

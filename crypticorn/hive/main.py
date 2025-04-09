@@ -4,8 +4,9 @@ from crypticorn.hive import (
     ModelsApi,
     DataApi,
     StatusApi,
+    Configuration,
 )
-from crypticorn.common import BaseURL, ApiVersion, Service, apikey_header as aph
+from crypticorn.common import apikey_header as aph
 
 
 class HiveClient:
@@ -15,18 +16,9 @@ class HiveClient:
 
     def __init__(
         self,
-        base_url: BaseURL,
-        api_version: ApiVersion,
-        api_key: str = None,
-        jwt: str = None,
+        config: Configuration,
     ):
-        self.host = f"{base_url.value}/{api_version.value}/{Service.HIVE.value}"
-        self.config = Configuration(
-            host=self.host,
-            access_token=jwt,
-            api_key={aph.scheme_name: api_key} if api_key else None,
-            api_key_prefix=({aph.scheme_name: aph.model.name} if api_key else None),
-        )
+        self.config = config
         self.base_client = ApiClient(configuration=self.config)
         # Instantiate all the endpoint clients
         self.models = ModelsApi(self.base_client)
