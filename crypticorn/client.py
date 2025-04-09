@@ -56,3 +56,39 @@ class ApiClient:
         for client in clients:
             if hasattr(client, "close"):
                 await client.close()
+
+    
+    def configure(self, config: Configuration, sub_client: any):
+        """
+        Update a sub-client's configuration by overriding with the values set in the new config.
+        Useful for testing a specific service against a local server instead of the default proxy.
+
+        :param config: The new configuration to use for the sub-client.
+        :param sub_client: The sub-client to configure.
+
+        Example:
+        This will override the host for the Hive client to connect to http://localhost:8000 instead of the default proxy:
+        >>> async with ApiClient(base_url=BaseUrl.DEV, jwt=jwt) as client:
+        >>>     client.configure(config=HiveConfig(host="http://localhost:8000"), sub_client=client.hive)
+        """
+        new_config = sub_client.config
+        for attr in vars(config):
+            new_value = getattr(config, attr)
+            if new_value is not None:
+                setattr(new_config, attr, new_value)
+
+        if sub_client == self.hive:
+            self.hive = HiveClient(new_config)
+        elif sub_client == self.trade:
+            self.trade = TradeClient(new_config)
+        elif sub_client == self.klines:
+            self.klines = KlinesClient(new_config)
+        elif sub_client == self.pay:
+            self.pay = PayClient(new_config)
+        elif sub_client == self.metrics:
+            self.metrics = MetricsClient(new_config)
+        elif sub_client == self.auth:
+            self.auth = AuthClient(new_config)
+        else:
+            raise ValueError(f"Unknown sub-client: {sub_client}")
+
