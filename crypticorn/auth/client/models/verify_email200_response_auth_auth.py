@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
@@ -28,14 +28,20 @@ class VerifyEmail200ResponseAuthAuth(BaseModel):
     VerifyEmail200ResponseAuthAuth
     """  # noqa: E501
 
-    iss: Optional[StrictStr] = None
-    sub: Optional[StrictStr] = None
-    aud: Optional[StrictStr] = None
-    exp: Optional[Union[StrictFloat, StrictInt]] = None
-    nbf: Optional[Union[StrictFloat, StrictInt]] = None
-    iat: Optional[Union[StrictFloat, StrictInt]] = None
-    jti: Optional[StrictStr] = None
-    scopes: Optional[List[StrictStr]] = None
+    iss: Optional[StrictStr] = Field(default=None, description="Issuer")
+    sub: Optional[StrictStr] = Field(default=None, description="Subject")
+    aud: Optional[StrictStr] = Field(default=None, description="Audience")
+    exp: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, description="Expiration time"
+    )
+    nbf: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, description="Not valid before time"
+    )
+    iat: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, description="Issued at time"
+    )
+    jti: Optional[StrictStr] = Field(default=None, description="JWT ID")
+    scopes: Optional[List[StrictStr]] = Field(default=None, description="Scopes")
     __properties: ClassVar[List[str]] = [
         "iss",
         "sub",

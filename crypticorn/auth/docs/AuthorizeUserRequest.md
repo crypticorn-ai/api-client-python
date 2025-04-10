@@ -5,10 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**email** | **str** |  | 
-**password** | **str** |  | 
-**admin** | **bool** |  | [optional] 
-**captcha_token** | **str** |  | 
+**email** | **str** | Email of the user | 
+**password** | **str** | Password of the user | 
+**admin** | **bool** | Whether the user is an admin | [optional] 
+**captcha_token** | **str** | Captcha token of the authorization request | 
 
 ## Example
 

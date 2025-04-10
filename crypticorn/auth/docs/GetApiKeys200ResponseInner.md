@@ -5,12 +5,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | 
-**user_id** | **str** |  | 
-**scopes** | **List[str]** |  | 
-**name** | **str** |  | 
-**expires_at** | **datetime** |  | [optional] 
-**created_at** | **datetime** |  | 
+**id** | **str** | ID of the API key | 
+**user_id** | **str** | User ID of the API key | 
+**scopes** | **List[str]** | Scopes of the API key | 
+**name** | **str** | Name of the API key | 
+**expires_at** | **datetime** | Expiration time of the API key | [optional] 
+**created_at** | **datetime** | Creation time of the API key | 
+**ip_whitelist** | **List[str]** | IP addresses that can access the API key. If empty, the API key will be accessible from any IP address. | [optional] 
 
 ## Example
 

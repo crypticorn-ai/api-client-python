@@ -5,12 +5,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | 
-**user_id** | **str** |  | 
-**token** | **str** |  | 
-**expires_at** | **datetime** |  | 
-**client_ip** | **str** |  | [optional] 
-**user_agent** | **str** |  | [optional] 
+**id** | **str** | ID of the user session | 
+**user_id** | **str** | User ID of the user session | 
+**token** | **str** | Token of the user session | 
+**expires_at** | **datetime** | Expiration time of the user session | 
+**client_ip** | **str** | Client IP address of the user session | [optional] 
+**user_agent** | **str** | User agent of the user session | [optional] 
 
 ## Example
 

@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,12 +29,16 @@ class RefreshTokenInfo200ResponseUserSession(BaseModel):
     RefreshTokenInfo200ResponseUserSession
     """  # noqa: E501
 
-    id: StrictStr
-    user_id: StrictStr
-    token: StrictStr
-    expires_at: datetime
-    client_ip: Optional[StrictStr] = None
-    user_agent: Optional[StrictStr] = None
+    id: StrictStr = Field(description="ID of the user session")
+    user_id: StrictStr = Field(description="User ID of the user session")
+    token: StrictStr = Field(description="Token of the user session")
+    expires_at: datetime = Field(description="Expiration time of the user session")
+    client_ip: Optional[StrictStr] = Field(
+        default=None, description="Client IP address of the user session"
+    )
+    user_agent: Optional[StrictStr] = Field(
+        default=None, description="User agent of the user session"
+    )
     __properties: ClassVar[List[str]] = [
         "id",
         "user_id",
