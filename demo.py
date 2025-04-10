@@ -10,7 +10,7 @@ from crypticorn.metrics import Market
 from crypticorn.trade import BotModel, BotStatus
 
 dotenv.load_dotenv()
-jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiRDU2NFZjSTFtdjRNRGhVdWVuSHgiLCJpYXQiOjE3NDQyMzkwODUsImV4cCI6MTc0NDI0MjY4NSwic2NvcGVzIjpbInJlYWQ6aGl2ZTptb2RlbCIsInJlYWQ6aGl2ZTpkYXRhIiwicmVhZDp0cmFkZTpib3RzIiwicmVhZDp0cmFkZTpvcmRlcnMiLCJyZWFkOnRyYWRlOmFjdGlvbnMiLCJyZWFkOnRyYWRlOnN0cmF0ZWdpZXMiLCJyZWFkOnRyYWRlOmV4Y2hhbmdlcyIsInJlYWQ6dHJhZGU6ZnV0dXJlcyIsInJlYWQ6dHJhZGU6bm90aWZpY2F0aW9ucyIsInJlYWQ6dHJhZGU6YXBpX2tleXMiLCJyZWFkOnBheTpub3ciLCJyZWFkOnBheTpwcm9kdWN0cyIsInJlYWQ6cGF5OnBheW1lbnRzIiwid3JpdGU6aGl2ZTptb2RlbCIsIndyaXRlOnRyYWRlOmJvdHMiLCJ3cml0ZTp0cmFkZTpmdXR1cmVzIiwid3JpdGU6dHJhZGU6bm90aWZpY2F0aW9ucyIsIndyaXRlOnRyYWRlOmFwaV9rZXlzIiwid3JpdGU6dHJhZGU6c3RyYXRlZ2llcyIsInJlYWQ6cHJlZGljdGlvbnMiLCJ3cml0ZTpwYXk6cHJvZHVjdHMiLCJ3cml0ZTpwYXk6bm93IiwicmVhZDpwcmVkaWN0aW9ucyJdfQ.SCKn6GIjMrtwENbDNE5CiXPHWKLZNc8o6OVNQWO8M0U"
+jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiSDFaMVRUUmJKbUJMQUtrQmw5cDIiLCJpYXQiOjE3NDQyODE4NjMsImV4cCI6MTc0NDI4NTQ2Mywic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.3lLMcUvwffkkpFU7_yHKSWuszDmddZkqZ-hXjo91JGs"
 
 
 async def main():
@@ -72,21 +72,19 @@ async def main():
         #     )
         # )
         try:
-            # res = await client.auth.login.create_api_key(
-            #     CreateApiKeyRequest(
-            #         name="writes products",
-            #         scopes=[Scope.WRITE_PAY_PRODUCTS],
-            #         expiresIn=60 * 60 * 24 * 30,  # 30 days
-            #         ip_whitelist=["192.168.178.106", "127.0.0.1"],
-            #     )
-            # )
-            # print(res.api_key)
-            # ress = await client.auth.login.get_api_keys()
-            # print(ress)
-            res = await client.auth.login.verify_api_key_with_http_info(
-                "TJWWkYMR8214yly3KV8HcTQU5K6xSV"
+            res = await client.auth.login.create_api_key(
+                CreateApiKeyRequest(
+                    name="writes products",
+                    scopes=[],
+                    expiresIn=60 * 60 * 24 * 30,  # 30 days
+                    ip="127.0.0.1",
+                )
             )
-            print(res.headers)
+            print(res.api_key)
+            ress = await client.auth.login.get_api_keys()
+            print(ress)
+            res = await client.auth.login.verify_api_key(res.api_key)
+            print(res)
 
         except UnauthorizedException as e:
             print(e.body)
