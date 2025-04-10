@@ -85,12 +85,12 @@ async with client.ApiClient(configuration) as api_client:
     api_key_model = client.APIKeyModel() # APIKeyModel | 
 
     try:
-        # Post Api Key
-        api_response = await api_instance.create_api_key(api_key_model)
-        print("The response of APIKeysApi->create_api_key:\n")
+        # Post Exchange Key
+        api_response = await api_instance.create_exchange_key(api_key_model)
+        print("The response of APIKeysApi->create_exchange_key:\n")
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling APIKeysApi->create_api_key: %s\n" % e)
+        print("Exception when calling APIKeysApi->create_exchange_key: %s\n" % e)
 
 ```
 
@@ -100,11 +100,11 @@ All URIs are relative to *http://localhost/v1/trade*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*APIKeysApi* | [**create_api_key**](docs/APIKeysApi.md#create_api_key) | **POST** /api-keys | Post Api Key
-*APIKeysApi* | [**delete_api_key**](docs/APIKeysApi.md#delete_api_key) | **DELETE** /api-keys/{id} | Delete Api Key
-*APIKeysApi* | [**get_api_key_by_id**](docs/APIKeysApi.md#get_api_key_by_id) | **GET** /api-keys/{id} | Get Api Key By Id
-*APIKeysApi* | [**get_api_keys**](docs/APIKeysApi.md#get_api_keys) | **GET** /api-keys | Get Api Keys
-*APIKeysApi* | [**update_api_key**](docs/APIKeysApi.md#update_api_key) | **PUT** /api-keys/{id} | Put Api Key
+*APIKeysApi* | [**create_exchange_key**](docs/APIKeysApi.md#create_exchange_key) | **POST** /api-keys | Post Exchange Key
+*APIKeysApi* | [**delete_exchange_key**](docs/APIKeysApi.md#delete_exchange_key) | **DELETE** /api-keys/{id} | Delete Exchange Key
+*APIKeysApi* | [**get_exchange_key_by_id**](docs/APIKeysApi.md#get_exchange_key_by_id) | **GET** /api-keys/{id} | Get Exchange Key By Id
+*APIKeysApi* | [**get_exchange_keys**](docs/APIKeysApi.md#get_exchange_keys) | **GET** /api-keys | Get Exchange Keys
+*APIKeysApi* | [**update_exchange_key**](docs/APIKeysApi.md#update_exchange_key) | **PUT** /api-keys/{id} | Put Exchange Key
 *BotsApi* | [**create_bot**](docs/BotsApi.md#create_bot) | **POST** /bots | Create Bot
 *BotsApi* | [**delete_bot**](docs/BotsApi.md#delete_bot) | **DELETE** /bots/{id} | Delete Bot
 *BotsApi* | [**get_bots**](docs/BotsApi.md#get_bots) | **GET** /bots | Get Bots

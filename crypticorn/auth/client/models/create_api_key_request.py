@@ -17,16 +17,9 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
-    field_validator,
-)
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from datetime import datetime
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
@@ -41,14 +34,14 @@ class CreateApiKeyRequest(BaseModel):
     scopes: Annotated[List[StrictStr], Field(min_length=1)] = Field(
         description="Scopes of the API key"
     )
-    expires_in: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, description="Expiration time of the API key", alias="expiresIn"
+    expires_at: Optional[datetime] = Field(
+        default=None, description="Expiration time of the API key as a date"
     )
     ip_whitelist: Optional[List[StrictStr]] = Field(
         default=None,
         description="IP addresses that can access the API key. If empty, the API key will be accessible from any IP address.",
     )
-    __properties: ClassVar[List[str]] = ["name", "scopes", "expiresIn", "ip_whitelist"]
+    __properties: ClassVar[List[str]] = ["name", "scopes", "expires_at", "ip_whitelist"]
 
     @field_validator("scopes")
     def scopes_validate_enum(cls, value):
@@ -61,8 +54,8 @@ class CreateApiKeyRequest(BaseModel):
                     "write:hive:model",
                     "read:trade:bots",
                     "write:trade:bots",
-                    "read:trade:api_keys",
-                    "write:trade:api_keys",
+                    "read:trade:exchangekeys",
+                    "write:trade:exchangekeys",
                     "read:trade:orders",
                     "read:trade:actions",
                     "write:trade:actions",
@@ -82,7 +75,7 @@ class CreateApiKeyRequest(BaseModel):
                 ]
             ):
                 raise ValueError(
-                    "each list item must be one of ('read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:api_keys', 'write:trade:api_keys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'read:pay:now', 'write:pay:now', 'read:predictions')"
+                    "each list item must be one of ('read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:exchangekeys', 'write:trade:exchangekeys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'read:pay:now', 'write:pay:now', 'read:predictions')"
                 )
         return value
 
@@ -138,7 +131,7 @@ class CreateApiKeyRequest(BaseModel):
             {
                 "name": obj.get("name"),
                 "scopes": obj.get("scopes"),
-                "expiresIn": obj.get("expiresIn"),
+                "expires_at": obj.get("expires_at"),
                 "ip_whitelist": obj.get("ip_whitelist"),
             }
         )

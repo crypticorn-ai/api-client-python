@@ -8,10 +8,10 @@ import dotenv
 import asyncio
 from crypticorn.metrics import Market
 from crypticorn.trade import BotModel, BotStatus
+from datetime import datetime, timedelta
 
 dotenv.load_dotenv()
-jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiSDFaMVRUUmJKbUJMQUtrQmw5cDIiLCJpYXQiOjE3NDQyODE4NjMsImV4cCI6MTc0NDI4NTQ2Mywic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.3lLMcUvwffkkpFU7_yHKSWuszDmddZkqZ-hXjo91JGs"
-
+jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiRFB0UDZVU3Bkcm96dEFoOTR2RTYiLCJpYXQiOjE3NDQzMTQyODIsImV4cCI6MTc0NDMxNzg4Miwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.UC9p2d2wu5YtOYCwTtRHJFhQnGm0equ9ujjyJMBt9ys"
 
 async def main():
     async with ApiClient(base_url=BaseUrl.LOCAL, jwt=jwt) as client:
@@ -72,19 +72,19 @@ async def main():
         #     )
         # )
         try:
-            res = await client.auth.login.create_api_key(
+            res = await client.auth.login.create_api_key_without_preload_content(
                 CreateApiKeyRequest(
                     name="writes products",
-                    scopes=[],
-                    expiresIn=60 * 60 * 24 * 30,  # 30 days
+                    scopes=[Scope.WRITE_PAY_NOW],
+                    expires_at=datetime.now() + timedelta(days=30),
                     ip="127.0.0.1",
                 )
             )
             print(res.api_key)
-            ress = await client.auth.login.get_api_keys()
-            print(ress)
-            res = await client.auth.login.verify_api_key(res.api_key)
-            print(res)
+            # ress = await client.auth.login.get_api_keys()
+            # print(ress)
+            # res = await client.auth.login.verify_api_key('asdf')
+            # print(res)
 
         except UnauthorizedException as e:
             print(e.body)

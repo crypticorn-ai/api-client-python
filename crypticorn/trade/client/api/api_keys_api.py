@@ -38,7 +38,7 @@ class APIKeysApi:
         self.api_client = api_client
 
     @validate_call
-    async def create_api_key(
+    async def create_exchange_key(
         self,
         api_key_model: APIKeyModel,
         _request_timeout: Union[
@@ -53,7 +53,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Post Api Key
+        """Post Exchange Key
 
 
         :param api_key_model: (required)
@@ -80,7 +80,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._create_api_key_serialize(
+        _param = self._create_exchange_key_serialize(
             api_key_model=api_key_model,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -102,7 +102,7 @@ class APIKeysApi:
         ).data
 
     @validate_call
-    async def create_api_key_with_http_info(
+    async def create_exchange_key_with_http_info(
         self,
         api_key_model: APIKeyModel,
         _request_timeout: Union[
@@ -117,7 +117,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Post Api Key
+        """Post Exchange Key
 
 
         :param api_key_model: (required)
@@ -144,7 +144,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._create_api_key_serialize(
+        _param = self._create_exchange_key_serialize(
             api_key_model=api_key_model,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -166,7 +166,7 @@ class APIKeysApi:
         )
 
     @validate_call
-    async def create_api_key_without_preload_content(
+    async def create_exchange_key_without_preload_content(
         self,
         api_key_model: APIKeyModel,
         _request_timeout: Union[
@@ -181,7 +181,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Post Api Key
+        """Post Exchange Key
 
 
         :param api_key_model: (required)
@@ -208,7 +208,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._create_api_key_serialize(
+        _param = self._create_exchange_key_serialize(
             api_key_model=api_key_model,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -225,7 +225,7 @@ class APIKeysApi:
         )
         return response_data.response
 
-    def _create_api_key_serialize(
+    def _create_exchange_key_serialize(
         self,
         api_key_model,
         _request_auth,
@@ -290,7 +290,7 @@ class APIKeysApi:
         )
 
     @validate_call
-    async def delete_api_key(
+    async def delete_exchange_key(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -305,7 +305,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Delete Api Key
+        """Delete Exchange Key
 
 
         :param id: (required)
@@ -332,7 +332,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._delete_api_key_serialize(
+        _param = self._delete_exchange_key_serialize(
             id=id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -354,7 +354,7 @@ class APIKeysApi:
         ).data
 
     @validate_call
-    async def delete_api_key_with_http_info(
+    async def delete_exchange_key_with_http_info(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -369,7 +369,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Delete Api Key
+        """Delete Exchange Key
 
 
         :param id: (required)
@@ -396,7 +396,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._delete_api_key_serialize(
+        _param = self._delete_exchange_key_serialize(
             id=id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -418,7 +418,7 @@ class APIKeysApi:
         )
 
     @validate_call
-    async def delete_api_key_without_preload_content(
+    async def delete_exchange_key_without_preload_content(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -433,7 +433,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Delete Api Key
+        """Delete Exchange Key
 
 
         :param id: (required)
@@ -460,7 +460,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._delete_api_key_serialize(
+        _param = self._delete_exchange_key_serialize(
             id=id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -477,7 +477,7 @@ class APIKeysApi:
         )
         return response_data.response
 
-    def _delete_api_key_serialize(
+    def _delete_exchange_key_serialize(
         self,
         id,
         _request_auth,
@@ -532,7 +532,7 @@ class APIKeysApi:
         )
 
     @validate_call
-    async def get_api_key_by_id(
+    async def get_exchange_key_by_id(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -547,7 +547,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> APIKeyModel:
-        """Get Api Key By Id
+        """Get Exchange Key By Id
 
 
         :param id: (required)
@@ -574,7 +574,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_api_key_by_id_serialize(
+        _param = self._get_exchange_key_by_id_serialize(
             id=id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -596,7 +596,7 @@ class APIKeysApi:
         ).data
 
     @validate_call
-    async def get_api_key_by_id_with_http_info(
+    async def get_exchange_key_by_id_with_http_info(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -611,7 +611,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[APIKeyModel]:
-        """Get Api Key By Id
+        """Get Exchange Key By Id
 
 
         :param id: (required)
@@ -638,7 +638,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_api_key_by_id_serialize(
+        _param = self._get_exchange_key_by_id_serialize(
             id=id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -660,7 +660,7 @@ class APIKeysApi:
         )
 
     @validate_call
-    async def get_api_key_by_id_without_preload_content(
+    async def get_exchange_key_by_id_without_preload_content(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -675,7 +675,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Api Key By Id
+        """Get Exchange Key By Id
 
 
         :param id: (required)
@@ -702,7 +702,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_api_key_by_id_serialize(
+        _param = self._get_exchange_key_by_id_serialize(
             id=id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -719,7 +719,7 @@ class APIKeysApi:
         )
         return response_data.response
 
-    def _get_api_key_by_id_serialize(
+    def _get_exchange_key_by_id_serialize(
         self,
         id,
         _request_auth,
@@ -774,7 +774,7 @@ class APIKeysApi:
         )
 
     @validate_call
-    async def get_api_keys(
+    async def get_exchange_keys(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -790,7 +790,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[APIKeyModel]:
-        """Get Api Keys
+        """Get Exchange Keys
 
 
         :param limit:
@@ -819,7 +819,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_api_keys_serialize(
+        _param = self._get_exchange_keys_serialize(
             limit=limit,
             offset=offset,
             _request_auth=_request_auth,
@@ -842,7 +842,7 @@ class APIKeysApi:
         ).data
 
     @validate_call
-    async def get_api_keys_with_http_info(
+    async def get_exchange_keys_with_http_info(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -858,7 +858,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[APIKeyModel]]:
-        """Get Api Keys
+        """Get Exchange Keys
 
 
         :param limit:
@@ -887,7 +887,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_api_keys_serialize(
+        _param = self._get_exchange_keys_serialize(
             limit=limit,
             offset=offset,
             _request_auth=_request_auth,
@@ -910,7 +910,7 @@ class APIKeysApi:
         )
 
     @validate_call
-    async def get_api_keys_without_preload_content(
+    async def get_exchange_keys_without_preload_content(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -926,7 +926,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Api Keys
+        """Get Exchange Keys
 
 
         :param limit:
@@ -955,7 +955,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_api_keys_serialize(
+        _param = self._get_exchange_keys_serialize(
             limit=limit,
             offset=offset,
             _request_auth=_request_auth,
@@ -973,7 +973,7 @@ class APIKeysApi:
         )
         return response_data.response
 
-    def _get_api_keys_serialize(
+    def _get_exchange_keys_serialize(
         self,
         limit,
         offset,
@@ -1035,7 +1035,7 @@ class APIKeysApi:
         )
 
     @validate_call
-    async def update_api_key(
+    async def update_exchange_key(
         self,
         id: StrictStr,
         api_key_model: APIKeyModel,
@@ -1051,7 +1051,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Put Api Key
+        """Put Exchange Key
 
 
         :param id: (required)
@@ -1080,7 +1080,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._update_api_key_serialize(
+        _param = self._update_exchange_key_serialize(
             id=id,
             api_key_model=api_key_model,
             _request_auth=_request_auth,
@@ -1103,7 +1103,7 @@ class APIKeysApi:
         ).data
 
     @validate_call
-    async def update_api_key_with_http_info(
+    async def update_exchange_key_with_http_info(
         self,
         id: StrictStr,
         api_key_model: APIKeyModel,
@@ -1119,7 +1119,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Put Api Key
+        """Put Exchange Key
 
 
         :param id: (required)
@@ -1148,7 +1148,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._update_api_key_serialize(
+        _param = self._update_exchange_key_serialize(
             id=id,
             api_key_model=api_key_model,
             _request_auth=_request_auth,
@@ -1171,7 +1171,7 @@ class APIKeysApi:
         )
 
     @validate_call
-    async def update_api_key_without_preload_content(
+    async def update_exchange_key_without_preload_content(
         self,
         id: StrictStr,
         api_key_model: APIKeyModel,
@@ -1187,7 +1187,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Put Api Key
+        """Put Exchange Key
 
 
         :param id: (required)
@@ -1216,7 +1216,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._update_api_key_serialize(
+        _param = self._update_exchange_key_serialize(
             id=id,
             api_key_model=api_key_model,
             _request_auth=_request_auth,
@@ -1234,7 +1234,7 @@ class APIKeysApi:
         )
         return response_data.response
 
-    def _update_api_key_serialize(
+    def _update_exchange_key_serialize(
         self,
         id,
         api_key_model,

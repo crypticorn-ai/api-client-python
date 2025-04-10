@@ -9,8 +9,8 @@ Name | Type | Description | Notes
 **user_id** | **str** | User ID of the API key | 
 **scopes** | **List[str]** | Scopes of the API key | 
 **name** | **str** | Name of the API key | 
-**expires_at** | **datetime** | Expiration time of the API key | [optional] 
-**created_at** | **datetime** | Creation time of the API key | 
+**expires_at** | **datetime** | Expiration time of the API key as a date | [optional] 
+**created_at** | **datetime** | Creation time of the API key as a date | 
 **ip_whitelist** | **List[str]** | IP addresses that can access the API key. If empty, the API key will be accessible from any IP address. | [optional] 
 
 ## Example

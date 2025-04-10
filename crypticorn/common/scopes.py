@@ -20,8 +20,8 @@ class Scope(StrEnum):
     # Trade scopes
     READ_TRADE_BOTS = "read:trade:bots"
     WRITE_TRADE_BOTS = "write:trade:bots"
-    READ_TRADE_APIKEYS = "read:trade:api_keys"
-    WRITE_TRADE_APIKEYS = "write:trade:api_keys"
+    READ_TRADE_EXCHANGEKEYS = "read:trade:exchangekeys"
+    WRITE_TRADE_EXCHANGEKEYS = "write:trade:exchangekeys"
     READ_TRADE_ORDERS = "read:trade:orders"
     READ_TRADE_ACTIONS = "read:trade:actions"
     WRITE_TRADE_ACTIONS = "write:trade:actions"
