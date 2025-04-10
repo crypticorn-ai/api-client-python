@@ -344,7 +344,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **place_futures_order**
-> object place_futures_order(key, body)
+> object place_futures_order(key, request_body)
 
 Place Order
 
@@ -385,11 +385,11 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.FuturesTradingPanelApi(api_client)
     key = 'key_example' # str | 
-    body = None # object | 
+    request_body = None # Dict[str, object] | 
 
     try:
         # Place Order
-        api_response = await api_instance.place_futures_order(key, body)
+        api_response = await api_instance.place_futures_order(key, request_body)
         print("The response of FuturesTradingPanelApi->place_futures_order:\n")
         pprint(api_response)
     except Exception as e:
@@ -404,7 +404,7 @@ async with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **key** | **str**|  | 
- **body** | **object**|  | 
+ **request_body** | [**Dict[str, object]**](object.md)|  | 
 
 ### Return type
 

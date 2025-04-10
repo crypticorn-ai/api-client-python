@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** | Name of the API key | 
 **scopes** | **List[str]** | Scopes of the API key | 
-**expires_in** | **float** | Expiration time of the API key | [optional] 
+**expires_at** | **datetime** | Expiration time of the API key as a date | [optional] 
 **ip_whitelist** | **List[str]** | IP addresses that can access the API key. If empty, the API key will be accessible from any IP address. | [optional] 
 
 ## Example

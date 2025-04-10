@@ -34,9 +34,9 @@ class GetApiKeys200ResponseInner(BaseModel):
     scopes: List[StrictStr] = Field(description="Scopes of the API key")
     name: StrictStr = Field(description="Name of the API key")
     expires_at: Optional[datetime] = Field(
-        default=None, description="Expiration time of the API key"
+        default=None, description="Expiration time of the API key as a date"
     )
-    created_at: datetime = Field(description="Creation time of the API key")
+    created_at: datetime = Field(description="Creation time of the API key as a date")
     ip_whitelist: Optional[List[StrictStr]] = Field(
         default=None,
         description="IP addresses that can access the API key. If empty, the API key will be accessible from any IP address.",
@@ -62,8 +62,8 @@ class GetApiKeys200ResponseInner(BaseModel):
                     "write:hive:model",
                     "read:trade:bots",
                     "write:trade:bots",
-                    "read:trade:api_keys",
-                    "write:trade:api_keys",
+                    "read:trade:exchangekeys",
+                    "write:trade:exchangekeys",
                     "read:trade:orders",
                     "read:trade:actions",
                     "write:trade:actions",
@@ -83,7 +83,7 @@ class GetApiKeys200ResponseInner(BaseModel):
                 ]
             ):
                 raise ValueError(
-                    "each list item must be one of ('read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:api_keys', 'write:trade:api_keys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'read:pay:now', 'write:pay:now', 'read:predictions')"
+                    "each list item must be one of ('read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:exchangekeys', 'write:trade:exchangekeys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'read:pay:now', 'write:pay:now', 'read:predictions')"
                 )
         return value
 
