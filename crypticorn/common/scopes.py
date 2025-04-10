@@ -40,5 +40,5 @@ class Scope(StrEnum):
     READ_PAY_NOW = "read:pay:now"
     WRITE_PAY_NOW = "write:pay:now"
 
-    # Read projections
+    # Scopes that can be purchased - these actually exist in the jwt token
     READ_PREDICTIONS = "read:predictions"

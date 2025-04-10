@@ -27,6 +27,7 @@ from pydantic import (
     field_validator,
 )
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -37,7 +38,9 @@ class CreateApiKeyRequest(BaseModel):
     """  # noqa: E501
 
     name: StrictStr = Field(description="Name of the API key")
-    scopes: List[StrictStr] = Field(description="Scopes of the API key")
+    scopes: Annotated[List[StrictStr], Field(min_length=1)] = Field(
+        description="Scopes of the API key"
+    )
     expires_in: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None, description="Expiration time of the API key", alias="expiresIn"
     )
