@@ -1,4 +1,6 @@
-from crypticorn.common import BaseUrl
+from crypticorn.auth.client.exceptions import UnauthorizedException
+from crypticorn.auth import CreateApiKeyRequest
+from crypticorn.common import BaseUrl, Scope
 from crypticorn.hive import Configuration as HiveConfig
 from crypticorn.pay import ProductModel
 from crypticorn import ApiClient
@@ -8,11 +10,11 @@ from crypticorn.metrics import Market
 from crypticorn.trade import BotModel, BotStatus
 
 dotenv.load_dotenv()
-jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiZUxVVDJ6QzFnV3A2UDcwTjdVM3UiLCJpYXQiOjE3NDQyMDI3ODEsImV4cCI6MTc0NDIwNjM4MSwic2NvcGVzIjpbInJlYWQ6aGl2ZTptb2RlbCIsInJlYWQ6aGl2ZTpkYXRhIiwicmVhZDp0cmFkZTpib3RzIiwicmVhZDp0cmFkZTpvcmRlcnMiLCJyZWFkOnRyYWRlOmFjdGlvbnMiLCJyZWFkOnRyYWRlOnN0cmF0ZWdpZXMiLCJyZWFkOnRyYWRlOmV4Y2hhbmdlcyIsInJlYWQ6dHJhZGU6ZnV0dXJlcyIsInJlYWQ6dHJhZGU6bm90aWZpY2F0aW9ucyIsInJlYWQ6dHJhZGU6YXBpX2tleXMiLCJyZWFkOnBheTpub3ciLCJyZWFkOnBheTpwcm9kdWN0cyIsInJlYWQ6cGF5OnBheW1lbnRzIiwid3JpdGU6aGl2ZTptb2RlbCIsIndyaXRlOnRyYWRlOmJvdHMiLCJ3cml0ZTp0cmFkZTpmdXR1cmVzIiwid3JpdGU6dHJhZGU6bm90aWZpY2F0aW9ucyIsIndyaXRlOnRyYWRlOmFwaV9rZXlzIiwid3JpdGU6dHJhZGU6c3RyYXRlZ2llcyIsInJlYWQ6cHJlZGljdGlvbnMiLCJ3cml0ZTpwYXk6cHJvZHVjdHMiLCJ3cml0ZTpwYXk6bm93IiwicmVhZDpwcmVkaWN0aW9ucyJdfQ.Pr6kX_Sfi2dU_PT2JEfWEb5Lu3eVIX6mdlvTENEu1l0"
+jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiRDU2NFZjSTFtdjRNRGhVdWVuSHgiLCJpYXQiOjE3NDQyMzkwODUsImV4cCI6MTc0NDI0MjY4NSwic2NvcGVzIjpbInJlYWQ6aGl2ZTptb2RlbCIsInJlYWQ6aGl2ZTpkYXRhIiwicmVhZDp0cmFkZTpib3RzIiwicmVhZDp0cmFkZTpvcmRlcnMiLCJyZWFkOnRyYWRlOmFjdGlvbnMiLCJyZWFkOnRyYWRlOnN0cmF0ZWdpZXMiLCJyZWFkOnRyYWRlOmV4Y2hhbmdlcyIsInJlYWQ6dHJhZGU6ZnV0dXJlcyIsInJlYWQ6dHJhZGU6bm90aWZpY2F0aW9ucyIsInJlYWQ6dHJhZGU6YXBpX2tleXMiLCJyZWFkOnBheTpub3ciLCJyZWFkOnBheTpwcm9kdWN0cyIsInJlYWQ6cGF5OnBheW1lbnRzIiwid3JpdGU6aGl2ZTptb2RlbCIsIndyaXRlOnRyYWRlOmJvdHMiLCJ3cml0ZTp0cmFkZTpmdXR1cmVzIiwid3JpdGU6dHJhZGU6bm90aWZpY2F0aW9ucyIsIndyaXRlOnRyYWRlOmFwaV9rZXlzIiwid3JpdGU6dHJhZGU6c3RyYXRlZ2llcyIsInJlYWQ6cHJlZGljdGlvbnMiLCJ3cml0ZTpwYXk6cHJvZHVjdHMiLCJ3cml0ZTpwYXk6bm93IiwicmVhZDpwcmVkaWN0aW9ucyJdfQ.SCKn6GIjMrtwENbDNE5CiXPHWKLZNc8o6OVNQWO8M0U"
 
 
 async def main():
-    async with ApiClient(base_url="http://localhost", jwt=jwt) as client:
+    async with ApiClient(base_url=BaseUrl.LOCAL, jwt=jwt) as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
         # print(10 * "=" + "This is the raw json response" + 10 * "=")
@@ -60,32 +62,34 @@ async def main():
         # )
         # print(res)
         # res = await client.metrics.tokens.get_tokens_fmt(token_type="wrappes")
-        res = await client.trade.bots.create_bot(
-            BotModel(
-                name="test",
-                strategy_id="123",
-                api_key_id="123",
-                allocation=100,
-                status=BotStatus.RUNNING,
-            )
-        )
-        # try:
-        #     res = await client.auth.login.create_api_key(
-        #         CreateApiKeyRequest(
-        #             name="writes products",
-        #             scopes=[Scope.WRITE_PAY_PRODUCTS],
-        #             expiresIn=60 * 60 * 24 * 30,  # 30 days
-        #         )
+        # res = await client.trade.bots.create_bot(
+        #     BotModel(
+        #         name="test",
+        #         strategy_id="123",
+        #         api_key_id="123",
+        #         allocation=100,
+        #         status=BotStatus.RUNNING,
         #     )
-        #     print(res.api_key)
-        #     res = await client.auth.login.get_api_keys()
-        #     print(res)
-        #     latest = res[-1].id
-        #     await client.auth.login.delete_api_key_with_http_info(latest)
-        #     res = await client.auth.login.get_api_keys()
-        #     print(res)
-        # except UnauthorizedException as e:
-        #     print(e.body)
+        # )
+        try:
+            # res = await client.auth.login.create_api_key(
+            #     CreateApiKeyRequest(
+            #         name="writes products",
+            #         scopes=[Scope.WRITE_PAY_PRODUCTS],
+            #         expiresIn=60 * 60 * 24 * 30,  # 30 days
+            #         ip_whitelist=["192.168.178.106", "127.0.0.1"],
+            #     )
+            # )
+            # print(res.api_key)
+            # ress = await client.auth.login.get_api_keys()
+            # print(ress)
+            res = await client.auth.login.verify_api_key_with_http_info(
+                "TJWWkYMR8214yly3KV8HcTQU5K6xSV"
+            )
+            print(res.headers)
+
+        except UnauthorizedException as e:
+            print(e.body)
 
 
 async def new_client():

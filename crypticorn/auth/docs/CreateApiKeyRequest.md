@@ -5,9 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**name** | **str** |  | 
-**scopes** | **List[str]** |  | 
-**expires_in** | **float** |  | [optional] 
+**name** | **str** | Name of the API key | 
+**scopes** | **List[str]** | Scopes of the API key | 
+**expires_in** | **float** | Expiration time of the API key | [optional] 
+**ip_whitelist** | **List[str]** | IP addresses that can access the API key. If empty, the API key will be accessible from any IP address. | [optional] 
 
 ## Example
 

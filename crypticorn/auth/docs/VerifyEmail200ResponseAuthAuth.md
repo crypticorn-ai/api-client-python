@@ -5,14 +5,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**iss** | **str** |  | [optional] 
-**sub** | **str** |  | [optional] 
-**aud** | **str** |  | [optional] 
-**exp** | **float** |  | [optional] 
-**nbf** | **float** |  | [optional] 
-**iat** | **float** |  | [optional] 
-**jti** | **str** |  | [optional] 
-**scopes** | **List[str]** |  | [optional] 
+**iss** | **str** | Issuer | [optional] 
+**sub** | **str** | Subject | [optional] 
+**aud** | **str** | Audience | [optional] 
+**exp** | **float** | Expiration time | [optional] 
+**nbf** | **float** | Not valid before time | [optional] 
+**iat** | **float** | Issued at time | [optional] 
+**jti** | **str** | JWT ID | [optional] 
+**scopes** | **List[str]** | Scopes | [optional] 
 
 ## Example
 

@@ -29,11 +29,17 @@ class AuthorizeUserRequest(BaseModel):
     AuthorizeUserRequest
     """  # noqa: E501
 
-    email: Annotated[str, Field(min_length=1, strict=True)]
-    password: Annotated[str, Field(min_length=1, strict=True)]
-    admin: Optional[StrictBool] = None
+    email: Annotated[str, Field(min_length=1, strict=True)] = Field(
+        description="Email of the user"
+    )
+    password: Annotated[str, Field(min_length=1, strict=True)] = Field(
+        description="Password of the user"
+    )
+    admin: Optional[StrictBool] = Field(
+        default=None, description="Whether the user is an admin"
+    )
     captcha_token: Annotated[str, Field(min_length=1, strict=True)] = Field(
-        alias="captchaToken"
+        description="Captcha token of the authorization request", alias="captchaToken"
     )
     __properties: ClassVar[List[str]] = ["email", "password", "admin", "captchaToken"]
 

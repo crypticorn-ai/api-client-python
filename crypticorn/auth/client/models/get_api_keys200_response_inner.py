@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,12 +29,18 @@ class GetApiKeys200ResponseInner(BaseModel):
     GetApiKeys200ResponseInner
     """  # noqa: E501
 
-    id: StrictStr
-    user_id: StrictStr
-    scopes: List[StrictStr]
-    name: StrictStr
-    expires_at: Optional[datetime] = None
-    created_at: datetime
+    id: StrictStr = Field(description="ID of the API key")
+    user_id: StrictStr = Field(description="User ID of the API key")
+    scopes: List[StrictStr] = Field(description="Scopes of the API key")
+    name: StrictStr = Field(description="Name of the API key")
+    expires_at: Optional[datetime] = Field(
+        default=None, description="Expiration time of the API key"
+    )
+    created_at: datetime = Field(description="Creation time of the API key")
+    ip_whitelist: Optional[List[StrictStr]] = Field(
+        default=None,
+        description="IP addresses that can access the API key. If empty, the API key will be accessible from any IP address.",
+    )
     __properties: ClassVar[List[str]] = [
         "id",
         "user_id",
@@ -42,6 +48,7 @@ class GetApiKeys200ResponseInner(BaseModel):
         "name",
         "expires_at",
         "created_at",
+        "ip_whitelist",
     ]
 
     @field_validator("scopes")
@@ -136,6 +143,7 @@ class GetApiKeys200ResponseInner(BaseModel):
                 "name": obj.get("name"),
                 "expires_at": obj.get("expires_at"),
                 "created_at": obj.get("created_at"),
+                "ip_whitelist": obj.get("ip_whitelist"),
             }
         )
         return _obj

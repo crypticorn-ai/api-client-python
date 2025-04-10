@@ -27,7 +27,6 @@ from pydantic import (
     field_validator,
 )
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -37,12 +36,16 @@ class CreateApiKeyRequest(BaseModel):
     CreateApiKeyRequest
     """  # noqa: E501
 
-    name: StrictStr
-    scopes: Annotated[List[StrictStr], Field(min_length=1)]
+    name: StrictStr = Field(description="Name of the API key")
+    scopes: List[StrictStr] = Field(description="Scopes of the API key")
     expires_in: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, alias="expiresIn"
+        default=None, description="Expiration time of the API key", alias="expiresIn"
     )
-    __properties: ClassVar[List[str]] = ["name", "scopes", "expiresIn"]
+    ip_whitelist: Optional[List[StrictStr]] = Field(
+        default=None,
+        description="IP addresses that can access the API key. If empty, the API key will be accessible from any IP address.",
+    )
+    __properties: ClassVar[List[str]] = ["name", "scopes", "expiresIn", "ip_whitelist"]
 
     @field_validator("scopes")
     def scopes_validate_enum(cls, value):
@@ -133,6 +136,7 @@ class CreateApiKeyRequest(BaseModel):
                 "name": obj.get("name"),
                 "scopes": obj.get("scopes"),
                 "expiresIn": obj.get("expiresIn"),
+                "ip_whitelist": obj.get("ip_whitelist"),
             }
         )
         return _obj
