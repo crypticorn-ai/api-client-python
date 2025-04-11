@@ -13,6 +13,7 @@ from datetime import datetime, timedelta
 dotenv.load_dotenv()
 jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiRFB0UDZVU3Bkcm96dEFoOTR2RTYiLCJpYXQiOjE3NDQzMTQyODIsImV4cCI6MTc0NDMxNzg4Miwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.UC9p2d2wu5YtOYCwTtRHJFhQnGm0equ9ujjyJMBt9ys"
 
+
 async def main():
     async with ApiClient(base_url=BaseUrl.LOCAL, jwt=jwt) as client:
         # json response

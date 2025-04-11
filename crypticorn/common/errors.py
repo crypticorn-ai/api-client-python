@@ -1,4 +1,16 @@
-from enum import Enum
+from enum import Enum, EnumMeta
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+class Fallback(EnumMeta):
+    def __getattr__(cls, name):
+        """Fallback to UNKNOWN_ERROR for error codes not yet published to PyPI."""
+        logger.warning(
+            f"Unknown error code '{name}' - update crypticorn package or check for typos"
+        )
+        return cls.UNKNOWN_ERROR
 
 
 class ApiErrorType(str, Enum):
@@ -17,7 +29,8 @@ class ApiErrorType(str, Enum):
 class ApiErrorIdentifier(str, Enum):
     """API error identifiers"""
 
-    API_KEY_ALREADY_EXISTS = "api_key_already_exists"
+    ALLOCATION_BELOW_EXPOSURE = "allocation_below_current_exposure"
+    ALLOCATION_BELOW_MINIMUM = "allocation_below_min_amount"
     BLACK_SWAN = "black_swan"
     BOT_ALREADY_DELETED = "bot_already_deleted"
     BOT_DISABLED = "bot_disabled"
@@ -25,18 +38,19 @@ class ApiErrorIdentifier(str, Enum):
     CLIENT_ORDER_ID_REPEATED = "client_order_id_already_exists"
     CONTENT_TYPE_ERROR = "invalid_content_type"
     DELETE_BOT_ERROR = "delete_bot_error"
-    EXCHANGE_API_KEY_IN_USE = "exchange_api_key_in_use"
     EXCHANGE_INVALID_SIGNATURE = "exchange_invalid_signature"
     EXCHANGE_INVALID_TIMESTAMP = "exchange_invalid_timestamp"
     EXCHANGE_IP_RESTRICTED = "exchange_ip_address_is_not_authorized"
+    EXCHANGE_KEY_ALREADY_EXISTS = "exchange_key_already_exists"
+    EXCHANGE_KEY_IN_USE = "exchange_key_in_use"
     EXCHANGE_MAINTENANCE = "exchange_system_under_maintenance"
     EXCHANGE_RATE_LIMIT = "exchange_rate_limit_exceeded"
+    EXCHANGE_PERMISSION_DENIED = "insufficient_permissions_spot_and_futures_required"
     EXCHANGE_SERVICE_UNAVAILABLE = "exchange_service_temporarily_unavailable"
     EXCHANGE_SYSTEM_BUSY = "exchange_system_is_busy"
     EXCHANGE_SYSTEM_CONFIG_ERROR = "exchange_system_configuration_error"
     EXCHANGE_SYSTEM_ERROR = "exchange_internal_system_error"
     EXCHANGE_USER_FROZEN = "exchange_user_account_is_frozen"
-    EXCHANGE_PERMISSION_DENIED = "insufficient_permissions_spot_and_futures_required"
     HEDGE_MODE_NOT_ACTIVE = "hedge_mode_not_active"
     HTTP_ERROR = "http_request_error"
     INSUFFICIENT_BALANCE = "insufficient_balance"
@@ -51,6 +65,7 @@ class ApiErrorIdentifier(str, Enum):
     LEVERAGE_EXCEEDED = "leverage_limit_exceeded"
     LIQUIDATION_PRICE_VIOLATION = "order_violates_liquidation_price_constraints"
     NO_CREDENTIALS = "no_credentials"
+    NOW_API_DOWN = "now_api_down"
     OBJECT_NOT_FOUND = "object_not_found"
     ORDER_ALREADY_FILLED = "order_is_already_filled"
     ORDER_IN_PROCESS = "order_is_being_processed"
@@ -68,11 +83,13 @@ class ApiErrorIdentifier(str, Enum):
     RPC_TIMEOUT = "rpc_timeout"
     SETTLEMENT_IN_PROGRESS = "system_settlement_in_process"
     STRATEGY_DISABLED = "strategy_disabled"
+    STRATEGY_LEVERAGE_MISMATCH = "strategy_leverage_mismatch"
+    STRATEGY_NOT_SUPPORTING_EXCHANGE = "strategy_not_supporting_exchange"
     SUCCESS = "success"
     SYMBOL_NOT_FOUND = "symbol_does_not_exist"
-    TRADING_LOCKED = "trading_has_been_locked"
     TRADING_ACTION_EXPIRED = "trading_action_expired"
     TRADING_ACTION_SKIPPED = "trading_action_skipped"
+    TRADING_LOCKED = "trading_has_been_locked"
     TRADING_SUSPENDED = "trading_is_suspended"
     UNKNOWN_ERROR = "unknown_error_occurred"
     URL_NOT_FOUND = "requested_resource_not_found"
@@ -87,11 +104,16 @@ class ApiErrorLevel(str, Enum):
     WARNING = "warning"
 
 
-class ApiError(Enum):
+class ApiError(Enum, metaclass=Fallback):
     """API error codes"""
 
-    API_KEY_ALREADY_EXISTS = (
-        ApiErrorIdentifier.API_KEY_ALREADY_EXISTS,
+    ALLOCATION_BELOW_EXPOSURE = (
+        ApiErrorIdentifier.ALLOCATION_BELOW_EXPOSURE,
+        ApiErrorType.USER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    ALLOCATION_BELOW_MINIMUM = (
+        ApiErrorIdentifier.ALLOCATION_BELOW_MINIMUM,
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
@@ -145,8 +167,13 @@ class ApiError(Enum):
         ApiErrorType.SERVER_ERROR,
         ApiErrorLevel.ERROR,
     )
-    EXCHANGE_API_KEY_IN_USE = (
-        ApiErrorIdentifier.EXCHANGE_API_KEY_IN_USE,
+    EXCHANGE_KEY_ALREADY_EXISTS = (
+        ApiErrorIdentifier.EXCHANGE_KEY_ALREADY_EXISTS,
+        ApiErrorType.USER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    EXCHANGE_KEY_IN_USE = (
+        ApiErrorIdentifier.EXCHANGE_KEY_IN_USE,
         ApiErrorType.SERVER_ERROR,
         ApiErrorLevel.ERROR,
     )
@@ -155,14 +182,14 @@ class ApiError(Enum):
         ApiErrorType.EXCHANGE_ERROR,
         ApiErrorLevel.ERROR,
     )
-    EXCHANGE_PERMISSION_DENIED = (
-        ApiErrorIdentifier.EXCHANGE_PERMISSION_DENIED,
-        ApiErrorType.USER_ERROR,
-        ApiErrorLevel.ERROR,
-    )
     EXCHANGE_RATE_LIMIT = (
         ApiErrorIdentifier.EXCHANGE_RATE_LIMIT,
         ApiErrorType.EXCHANGE_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    EXCHANGE_PERMISSION_DENIED = (
+        ApiErrorIdentifier.EXCHANGE_PERMISSION_DENIED,
+        ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
     EXCHANGE_SERVICE_UNAVAILABLE = (
@@ -260,6 +287,11 @@ class ApiError(Enum):
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
+    NOW_API_DOWN = (
+        ApiErrorIdentifier.NOW_API_DOWN,
+        ApiErrorType.SERVER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
     OBJECT_NOT_FOUND = (
         ApiErrorIdentifier.OBJECT_NOT_FOUND,
         ApiErrorType.SERVER_ERROR,
@@ -342,7 +374,17 @@ class ApiError(Enum):
     )
     STRATEGY_DISABLED = (
         ApiErrorIdentifier.STRATEGY_DISABLED,
-        ApiErrorType.SERVER_ERROR,
+        ApiErrorType.USER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    STRATEGY_LEVERAGE_MISMATCH = (
+        ApiErrorIdentifier.STRATEGY_LEVERAGE_MISMATCH,
+        ApiErrorType.USER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    STRATEGY_NOT_SUPPORTING_EXCHANGE = (
+        ApiErrorIdentifier.STRATEGY_NOT_SUPPORTING_EXCHANGE,
+        ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
     SUCCESS = (ApiErrorIdentifier.SUCCESS, ApiErrorType.NO_ERROR, ApiErrorLevel.SUCCESS)
@@ -393,3 +435,8 @@ class ApiError(Enum):
     @property
     def level(self) -> ApiErrorLevel:
         return self.value[2]
+
+
+assert len(list(ApiErrorIdentifier)) == len(
+    list(ApiError)
+), f"{len(list(ApiErrorIdentifier))} != {len(list(ApiError))}"

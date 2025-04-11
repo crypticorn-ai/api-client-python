@@ -7,6 +7,7 @@ from pydantic.fields import FieldInfo
 
 def partial_model(model: Type[BaseModel]) -> Type[BaseModel]:
     """Marks all fields of a model as optional. Useful for updating models.
+    Inherits all fields, docstrings, and the model name.
 
     >>> @partial_model
     >>> class Model(BaseModel):
@@ -29,6 +30,7 @@ def partial_model(model: Type[BaseModel]) -> Type[BaseModel]:
         model.__name__,
         __base__=model,
         __module__=model.__module__,
+        __doc__=model.__doc__,
         **{
             field_name: make_field_optional(field_info)
             for field_name, field_info in model.model_fields.items()

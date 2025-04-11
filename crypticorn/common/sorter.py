@@ -2,11 +2,11 @@ import re
 import pyperclip
 
 
-def sort_api_errors(file_content):
+def sort_api_errors(file_content, class_name="ApiErrorIdentifier"):
     # Find the start of the ApiError class definition
-    class_start = file_content.find("class ApiErrorIdentifier(str, Enum):")
+    class_start = file_content.find(f"class {class_name}(str, Enum):")
     if class_start == -1:
-        return "Could not find ApiErrorIdentifier class"
+        return f"Could not find {class_name} class"
 
     # Find all enum definitions
     enum_pattern = r'    ([A-Z_]+)\s*=\s*"([a-z_]+)"'
@@ -23,7 +23,7 @@ def sort_api_errors(file_content):
     sorted_entries = sorted(enum_entries, key=lambda x: x[0])
 
     # Reconstruct the class content
-    class_header = "class ApiErrorIdentifier(str, Enum):\n\n"
+    class_header = f"class {class_name}(str, Enum):\n\n"
     sorted_content = class_header + "\n    ".join(entry[1] for entry in sorted_entries)
 
     return sorted_content
@@ -34,5 +34,7 @@ if __name__ == "__main__":
     with open("python/crypticorn/common/errors.py", "r") as f:
         content = f.read()
 
-    sorted_content = sort_api_errors(content)
-    pyperclip.copy(sorted_content)
+    sorted_content = sort_api_errors(content, "ApiErrorIdentifier")
+    print(sorted_content)
+    sorted_content = sort_api_errors(content, "ApiError")
+    print(sorted_content)
