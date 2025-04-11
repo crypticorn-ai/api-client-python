@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.2.3 (2025-04-11)
+
+### Bug Fixes
+
+- Update error codes
+  ([`3121fb0`](https://github.com/crypticorn-ai/api-client/commit/3121fb0bb4d05a6d62083d806fbc636761254448))
+
+
 ## v2.2.2 (2025-04-09)
 
 ### Bug Fixes
