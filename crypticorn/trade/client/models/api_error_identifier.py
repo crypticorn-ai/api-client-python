@@ -26,7 +26,8 @@ class ApiErrorIdentifier(str, Enum):
     """
     allowed enum values
     """
-    API_KEY_ALREADY_EXISTS = "api_key_already_exists"
+    ALLOCATION_BELOW_CURRENT_EXPOSURE = "allocation_below_current_exposure"
+    ALLOCATION_BELOW_MIN_AMOUNT = "allocation_below_min_amount"
     BLACK_SWAN = "black_swan"
     BOT_ALREADY_DELETED = "bot_already_deleted"
     BOT_DISABLED = "bot_disabled"
@@ -34,12 +35,16 @@ class ApiErrorIdentifier(str, Enum):
     CLIENT_ORDER_ID_ALREADY_EXISTS = "client_order_id_already_exists"
     INVALID_CONTENT_TYPE = "invalid_content_type"
     DELETE_BOT_ERROR = "delete_bot_error"
-    EXCHANGE_API_KEY_IN_USE = "exchange_api_key_in_use"
     EXCHANGE_INVALID_SIGNATURE = "exchange_invalid_signature"
     EXCHANGE_INVALID_TIMESTAMP = "exchange_invalid_timestamp"
     EXCHANGE_IP_ADDRESS_IS_NOT_AUTHORIZED = "exchange_ip_address_is_not_authorized"
+    EXCHANGE_KEY_ALREADY_EXISTS = "exchange_key_already_exists"
+    EXCHANGE_KEY_IN_USE = "exchange_key_in_use"
     EXCHANGE_SYSTEM_UNDER_MAINTENANCE = "exchange_system_under_maintenance"
     EXCHANGE_RATE_LIMIT_EXCEEDED = "exchange_rate_limit_exceeded"
+    INSUFFICIENT_PERMISSIONS_SPOT_AND_FUTURES_REQUIRED = (
+        "insufficient_permissions_spot_and_futures_required"
+    )
     EXCHANGE_SERVICE_TEMPORARILY_UNAVAILABLE = (
         "exchange_service_temporarily_unavailable"
     )
@@ -47,9 +52,6 @@ class ApiErrorIdentifier(str, Enum):
     EXCHANGE_SYSTEM_CONFIGURATION_ERROR = "exchange_system_configuration_error"
     EXCHANGE_INTERNAL_SYSTEM_ERROR = "exchange_internal_system_error"
     EXCHANGE_USER_ACCOUNT_IS_FROZEN = "exchange_user_account_is_frozen"
-    INSUFFICIENT_PERMISSIONS_SPOT_AND_FUTURES_REQUIRED = (
-        "insufficient_permissions_spot_and_futures_required"
-    )
     HEDGE_MODE_NOT_ACTIVE = "hedge_mode_not_active"
     HTTP_REQUEST_ERROR = "http_request_error"
     INSUFFICIENT_BALANCE = "insufficient_balance"
@@ -66,6 +68,7 @@ class ApiErrorIdentifier(str, Enum):
         "order_violates_liquidation_price_constraints"
     )
     NO_CREDENTIALS = "no_credentials"
+    NOW_API_DOWN = "now_api_down"
     OBJECT_NOT_FOUND = "object_not_found"
     ORDER_IS_ALREADY_FILLED = "order_is_already_filled"
     ORDER_IS_BEING_PROCESSED = "order_is_being_processed"
@@ -83,11 +86,13 @@ class ApiErrorIdentifier(str, Enum):
     RPC_TIMEOUT = "rpc_timeout"
     SYSTEM_SETTLEMENT_IN_PROCESS = "system_settlement_in_process"
     STRATEGY_DISABLED = "strategy_disabled"
+    STRATEGY_LEVERAGE_MISMATCH = "strategy_leverage_mismatch"
+    STRATEGY_NOT_SUPPORTING_EXCHANGE = "strategy_not_supporting_exchange"
     SUCCESS = "success"
     SYMBOL_DOES_NOT_EXIST = "symbol_does_not_exist"
-    TRADING_HAS_BEEN_LOCKED = "trading_has_been_locked"
     TRADING_ACTION_EXPIRED = "trading_action_expired"
     TRADING_ACTION_SKIPPED = "trading_action_skipped"
+    TRADING_HAS_BEEN_LOCKED = "trading_has_been_locked"
     TRADING_IS_SUSPENDED = "trading_is_suspended"
     UNKNOWN_ERROR_OCCURRED = "unknown_error_occurred"
     REQUESTED_RESOURCE_NOT_FOUND = "requested_resource_not_found"

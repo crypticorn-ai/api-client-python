@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 
 # **create_exchange_key**
-> object create_exchange_key(api_key_model)
+> object create_exchange_key(exchange_key_model)
 
 Post Exchange Key
 
@@ -23,7 +23,7 @@ Post Exchange Key
 
 ```python
 import client
-from client.models.api_key_model import APIKeyModel
+from client.models.exchange_key_model import ExchangeKeyModel
 from client.rest import ApiException
 from pprint import pprint
 
@@ -53,11 +53,11 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.APIKeysApi(api_client)
-    api_key_model = client.APIKeyModel() # APIKeyModel | 
+    exchange_key_model = client.ExchangeKeyModel() # ExchangeKeyModel | 
 
     try:
         # Post Exchange Key
-        api_response = await api_instance.create_exchange_key(api_key_model)
+        api_response = await api_instance.create_exchange_key(exchange_key_model)
         print("The response of APIKeysApi->create_exchange_key:\n")
         pprint(api_response)
     except Exception as e:
@@ -71,7 +71,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **api_key_model** | [**APIKeyModel**](APIKeyModel.md)|  | 
+ **exchange_key_model** | [**ExchangeKeyModel**](ExchangeKeyModel.md)|  | 
 
 ### Return type
 
@@ -179,7 +179,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_exchange_key_by_id**
-> APIKeyModel get_exchange_key_by_id(id)
+> ExchangeKeyModel get_exchange_key_by_id(id)
 
 Get Exchange Key By Id
 
@@ -190,7 +190,7 @@ Get Exchange Key By Id
 
 ```python
 import client
-from client.models.api_key_model import APIKeyModel
+from client.models.exchange_key_model import ExchangeKeyModel
 from client.rest import ApiException
 from pprint import pprint
 
@@ -242,7 +242,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**APIKeyModel**](APIKeyModel.md)
+[**ExchangeKeyModel**](ExchangeKeyModel.md)
 
 ### Authorization
 
@@ -263,7 +263,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_exchange_keys**
-> List[APIKeyModel] get_exchange_keys(limit=limit, offset=offset)
+> List[ExchangeKeyModel] get_exchange_keys(limit=limit, offset=offset)
 
 Get Exchange Keys
 
@@ -274,7 +274,7 @@ Get Exchange Keys
 
 ```python
 import client
-from client.models.api_key_model import APIKeyModel
+from client.models.exchange_key_model import ExchangeKeyModel
 from client.rest import ApiException
 from pprint import pprint
 
@@ -328,7 +328,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List[APIKeyModel]**](APIKeyModel.md)
+[**List[ExchangeKeyModel]**](ExchangeKeyModel.md)
 
 ### Authorization
 
@@ -349,7 +349,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_exchange_key**
-> object update_exchange_key(id, api_key_model)
+> object update_exchange_key(id, exchange_key_model)
 
 Put Exchange Key
 
@@ -360,7 +360,7 @@ Put Exchange Key
 
 ```python
 import client
-from client.models.api_key_model import APIKeyModel
+from client.models.exchange_key_model import ExchangeKeyModel
 from client.rest import ApiException
 from pprint import pprint
 
@@ -391,11 +391,11 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.APIKeysApi(api_client)
     id = 'id_example' # str | 
-    api_key_model = client.APIKeyModel() # APIKeyModel | 
+    exchange_key_model = client.ExchangeKeyModel() # ExchangeKeyModel | 
 
     try:
         # Put Exchange Key
-        api_response = await api_instance.update_exchange_key(id, api_key_model)
+        api_response = await api_instance.update_exchange_key(id, exchange_key_model)
         print("The response of APIKeysApi->update_exchange_key:\n")
         pprint(api_response)
     except Exception as e:
@@ -410,7 +410,7 @@ async with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**|  | 
- **api_key_model** | [**APIKeyModel**](APIKeyModel.md)|  | 
+ **exchange_key_model** | [**ExchangeKeyModel**](ExchangeKeyModel.md)|  | 
 
 ### Return type
 

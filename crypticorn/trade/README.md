@@ -82,11 +82,11 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.APIKeysApi(api_client)
-    api_key_model = client.APIKeyModel() # APIKeyModel | 
+    exchange_key_model = client.ExchangeKeyModel() # ExchangeKeyModel | 
 
     try:
         # Post Exchange Key
-        api_response = await api_instance.create_exchange_key(api_key_model)
+        api_response = await api_instance.create_exchange_key(exchange_key_model)
         print("The response of APIKeysApi->create_exchange_key:\n")
         pprint(api_response)
     except ApiException as e:
@@ -134,7 +134,6 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
- - [APIKeyModel](docs/APIKeyModel.md)
  - [ActionModel](docs/ActionModel.md)
  - [ApiErrorIdentifier](docs/ApiErrorIdentifier.md)
  - [ApiErrorLevel](docs/ApiErrorLevel.md)
@@ -142,6 +141,7 @@ Class | Method | HTTP request | Description
  - [BotModel](docs/BotModel.md)
  - [BotStatus](docs/BotStatus.md)
  - [Exchange](docs/Exchange.md)
+ - [ExchangeKeyModel](docs/ExchangeKeyModel.md)
  - [ExecutionIds](docs/ExecutionIds.md)
  - [FuturesBalance](docs/FuturesBalance.md)
  - [FuturesTradingAction](docs/FuturesTradingAction.md)

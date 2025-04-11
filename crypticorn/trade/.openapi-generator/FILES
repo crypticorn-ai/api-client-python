@@ -19,10 +19,10 @@ client/models/action_model.py
 client/models/api_error_identifier.py
 client/models/api_error_level.py
 client/models/api_error_type.py
-client/models/api_key_model.py
 client/models/bot_model.py
 client/models/bot_status.py
 client/models/exchange.py
+client/models/exchange_key_model.py
 client/models/execution_ids.py
 client/models/futures_balance.py
 client/models/futures_trading_action.py
@@ -42,7 +42,6 @@ client/models/validation_error.py
 client/models/validation_error_loc_inner.py
 client/py.typed
 client/rest.py
-docs/APIKeyModel.md
 docs/APIKeysApi.md
 docs/ActionModel.md
 docs/ApiErrorIdentifier.md
@@ -52,6 +51,7 @@ docs/BotModel.md
 docs/BotStatus.md
 docs/BotsApi.md
 docs/Exchange.md
+docs/ExchangeKeyModel.md
 docs/ExchangesApi.md
 docs/ExecutionIds.md
 docs/FuturesBalance.md
