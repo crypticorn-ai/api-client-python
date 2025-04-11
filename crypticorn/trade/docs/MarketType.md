@@ -1,6 +1,6 @@
 # MarketType
 
-Type of market
+Market types
 
 ## Enum
 

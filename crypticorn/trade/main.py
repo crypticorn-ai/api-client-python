@@ -33,4 +33,4 @@ class TradeClient:
         self.strategies = StrategiesApi(self.base_client)
         self.actions = TradingActionsApi(self.base_client)
         self.futures = FuturesTradingPanelApi(self.base_client)
-        self.api_keys = APIKeysApi(self.base_client)
+        self.keys = APIKeysApi(self.base_client)

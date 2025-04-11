@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class MarketType(str, Enum):
     """
-    Type of market
+    Market types
     """
 
     """

@@ -1,6 +1,6 @@
 # Exchange
 
-Supported exchanges
+Supported exchanges for trading
 
 ## Enum
 

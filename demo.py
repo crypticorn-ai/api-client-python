@@ -4,6 +4,7 @@ from crypticorn.common import BaseUrl, Scope
 from crypticorn.hive import Configuration as HiveConfig
 from crypticorn.pay import ProductModel
 from crypticorn import ApiClient
+from crypticorn.trade import ExchangeKeyModel
 import dotenv
 import asyncio
 from crypticorn.metrics import Market
@@ -72,23 +73,24 @@ async def main():
         #         status=BotStatus.RUNNING,
         #     )
         # )
-        try:
-            res = await client.auth.login.create_api_key_without_preload_content(
-                CreateApiKeyRequest(
-                    name="writes products",
-                    scopes=[Scope.WRITE_PAY_NOW],
-                    expires_at=datetime.now() + timedelta(days=30),
-                    ip="127.0.0.1",
-                )
-            )
-            print(res.api_key)
-            # ress = await client.auth.login.get_api_keys()
-            # print(ress)
-            # res = await client.auth.login.verify_api_key('asdf')
-            # print(res)
+        # try:
+        #     res = await client.auth.login.create_api_key_without_preload_content(
+        #         CreateApiKeyRequest(
+        #             name="writes products",
+        #             scopes=[Scope.WRITE_PAY_NOW],
+        #             expires_at=datetime.now() + timedelta(days=30),
+        #             ip="127.0.0.1",
+        #         )
+        #     )
+        #     print(res.api_key)
+        #     # ress = await client.auth.login.get_api_keys()
+        #     # print(ress)
+        #     # res = await client.auth.login.verify_api_key('asdf')
+        #     # print(res)
 
-        except UnauthorizedException as e:
-            print(e.body)
+        # except UnauthorizedException as e:
+        #     print(e.body)
+        pass
 
 
 async def new_client():

@@ -18,7 +18,7 @@ from typing_extensions import Annotated
 
 from pydantic import StrictInt, StrictStr
 from typing import Any, List, Optional
-from crypticorn.trade.client.models.api_key_model import APIKeyModel
+from crypticorn.trade.client.models.exchange_key_model import ExchangeKeyModel
 
 from crypticorn.trade.client.api_client import ApiClient, RequestSerialized
 from crypticorn.trade.client.api_response import ApiResponse
@@ -40,7 +40,7 @@ class APIKeysApi:
     @validate_call
     async def create_exchange_key(
         self,
-        api_key_model: APIKeyModel,
+        exchange_key_model: ExchangeKeyModel,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -56,8 +56,8 @@ class APIKeysApi:
         """Post Exchange Key
 
 
-        :param api_key_model: (required)
-        :type api_key_model: APIKeyModel
+        :param exchange_key_model: (required)
+        :type exchange_key_model: ExchangeKeyModel
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -81,7 +81,7 @@ class APIKeysApi:
         """  # noqa: E501
 
         _param = self._create_exchange_key_serialize(
-            api_key_model=api_key_model,
+            exchange_key_model=exchange_key_model,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -104,7 +104,7 @@ class APIKeysApi:
     @validate_call
     async def create_exchange_key_with_http_info(
         self,
-        api_key_model: APIKeyModel,
+        exchange_key_model: ExchangeKeyModel,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -120,8 +120,8 @@ class APIKeysApi:
         """Post Exchange Key
 
 
-        :param api_key_model: (required)
-        :type api_key_model: APIKeyModel
+        :param exchange_key_model: (required)
+        :type exchange_key_model: ExchangeKeyModel
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -145,7 +145,7 @@ class APIKeysApi:
         """  # noqa: E501
 
         _param = self._create_exchange_key_serialize(
-            api_key_model=api_key_model,
+            exchange_key_model=exchange_key_model,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -168,7 +168,7 @@ class APIKeysApi:
     @validate_call
     async def create_exchange_key_without_preload_content(
         self,
-        api_key_model: APIKeyModel,
+        exchange_key_model: ExchangeKeyModel,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -184,8 +184,8 @@ class APIKeysApi:
         """Post Exchange Key
 
 
-        :param api_key_model: (required)
-        :type api_key_model: APIKeyModel
+        :param exchange_key_model: (required)
+        :type exchange_key_model: ExchangeKeyModel
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -209,7 +209,7 @@ class APIKeysApi:
         """  # noqa: E501
 
         _param = self._create_exchange_key_serialize(
-            api_key_model=api_key_model,
+            exchange_key_model=exchange_key_model,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -227,7 +227,7 @@ class APIKeysApi:
 
     def _create_exchange_key_serialize(
         self,
-        api_key_model,
+        exchange_key_model,
         _request_auth,
         _content_type,
         _headers,
@@ -252,8 +252,8 @@ class APIKeysApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if api_key_model is not None:
-            _body_params = api_key_model
+        if exchange_key_model is not None:
+            _body_params = exchange_key_model
 
         # set the HTTP header `Accept`
         if "Accept" not in _header_params:
@@ -546,7 +546,7 @@ class APIKeysApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> APIKeyModel:
+    ) -> ExchangeKeyModel:
         """Get Exchange Key By Id
 
 
@@ -583,7 +583,7 @@ class APIKeysApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "APIKeyModel",
+            "200": "ExchangeKeyModel",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -610,7 +610,7 @@ class APIKeysApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[APIKeyModel]:
+    ) -> ApiResponse[ExchangeKeyModel]:
         """Get Exchange Key By Id
 
 
@@ -647,7 +647,7 @@ class APIKeysApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "APIKeyModel",
+            "200": "ExchangeKeyModel",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -711,7 +711,7 @@ class APIKeysApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "APIKeyModel",
+            "200": "ExchangeKeyModel",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -789,7 +789,7 @@ class APIKeysApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[APIKeyModel]:
+    ) -> List[ExchangeKeyModel]:
         """Get Exchange Keys
 
 
@@ -829,7 +829,7 @@ class APIKeysApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[APIKeyModel]",
+            "200": "List[ExchangeKeyModel]",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -857,7 +857,7 @@ class APIKeysApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[APIKeyModel]]:
+    ) -> ApiResponse[List[ExchangeKeyModel]]:
         """Get Exchange Keys
 
 
@@ -897,7 +897,7 @@ class APIKeysApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[APIKeyModel]",
+            "200": "List[ExchangeKeyModel]",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -965,7 +965,7 @@ class APIKeysApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[APIKeyModel]",
+            "200": "List[ExchangeKeyModel]",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -1038,7 +1038,7 @@ class APIKeysApi:
     async def update_exchange_key(
         self,
         id: StrictStr,
-        api_key_model: APIKeyModel,
+        exchange_key_model: ExchangeKeyModel,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1056,8 +1056,8 @@ class APIKeysApi:
 
         :param id: (required)
         :type id: str
-        :param api_key_model: (required)
-        :type api_key_model: APIKeyModel
+        :param exchange_key_model: (required)
+        :type exchange_key_model: ExchangeKeyModel
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1082,7 +1082,7 @@ class APIKeysApi:
 
         _param = self._update_exchange_key_serialize(
             id=id,
-            api_key_model=api_key_model,
+            exchange_key_model=exchange_key_model,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1106,7 +1106,7 @@ class APIKeysApi:
     async def update_exchange_key_with_http_info(
         self,
         id: StrictStr,
-        api_key_model: APIKeyModel,
+        exchange_key_model: ExchangeKeyModel,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1124,8 +1124,8 @@ class APIKeysApi:
 
         :param id: (required)
         :type id: str
-        :param api_key_model: (required)
-        :type api_key_model: APIKeyModel
+        :param exchange_key_model: (required)
+        :type exchange_key_model: ExchangeKeyModel
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1150,7 +1150,7 @@ class APIKeysApi:
 
         _param = self._update_exchange_key_serialize(
             id=id,
-            api_key_model=api_key_model,
+            exchange_key_model=exchange_key_model,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1174,7 +1174,7 @@ class APIKeysApi:
     async def update_exchange_key_without_preload_content(
         self,
         id: StrictStr,
-        api_key_model: APIKeyModel,
+        exchange_key_model: ExchangeKeyModel,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1192,8 +1192,8 @@ class APIKeysApi:
 
         :param id: (required)
         :type id: str
-        :param api_key_model: (required)
-        :type api_key_model: APIKeyModel
+        :param exchange_key_model: (required)
+        :type exchange_key_model: ExchangeKeyModel
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1218,7 +1218,7 @@ class APIKeysApi:
 
         _param = self._update_exchange_key_serialize(
             id=id,
-            api_key_model=api_key_model,
+            exchange_key_model=exchange_key_model,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1237,7 +1237,7 @@ class APIKeysApi:
     def _update_exchange_key_serialize(
         self,
         id,
-        api_key_model,
+        exchange_key_model,
         _request_auth,
         _content_type,
         _headers,
@@ -1264,8 +1264,8 @@ class APIKeysApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if api_key_model is not None:
-            _body_params = api_key_model
+        if exchange_key_model is not None:
+            _body_params = exchange_key_model
 
         # set the HTTP header `Accept`
         if "Accept" not in _header_params:

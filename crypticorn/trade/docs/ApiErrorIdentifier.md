@@ -4,7 +4,9 @@ API error identifiers
 
 ## Enum
 
-* `API_KEY_ALREADY_EXISTS` (value: `'api_key_already_exists'`)
+* `ALLOCATION_BELOW_CURRENT_EXPOSURE` (value: `'allocation_below_current_exposure'`)
+
+* `ALLOCATION_BELOW_MIN_AMOUNT` (value: `'allocation_below_min_amount'`)
 
 * `BLACK_SWAN` (value: `'black_swan'`)
 
@@ -20,17 +22,21 @@ API error identifiers
 
 * `DELETE_BOT_ERROR` (value: `'delete_bot_error'`)
 
-* `EXCHANGE_API_KEY_IN_USE` (value: `'exchange_api_key_in_use'`)
-
 * `EXCHANGE_INVALID_SIGNATURE` (value: `'exchange_invalid_signature'`)
 
 * `EXCHANGE_INVALID_TIMESTAMP` (value: `'exchange_invalid_timestamp'`)
 
 * `EXCHANGE_IP_ADDRESS_IS_NOT_AUTHORIZED` (value: `'exchange_ip_address_is_not_authorized'`)
 
+* `EXCHANGE_KEY_ALREADY_EXISTS` (value: `'exchange_key_already_exists'`)
+
+* `EXCHANGE_KEY_IN_USE` (value: `'exchange_key_in_use'`)
+
 * `EXCHANGE_SYSTEM_UNDER_MAINTENANCE` (value: `'exchange_system_under_maintenance'`)
 
 * `EXCHANGE_RATE_LIMIT_EXCEEDED` (value: `'exchange_rate_limit_exceeded'`)
+
+* `INSUFFICIENT_PERMISSIONS_SPOT_AND_FUTURES_REQUIRED` (value: `'insufficient_permissions_spot_and_futures_required'`)
 
 * `EXCHANGE_SERVICE_TEMPORARILY_UNAVAILABLE` (value: `'exchange_service_temporarily_unavailable'`)
 
@@ -41,8 +47,6 @@ API error identifiers
 * `EXCHANGE_INTERNAL_SYSTEM_ERROR` (value: `'exchange_internal_system_error'`)
 
 * `EXCHANGE_USER_ACCOUNT_IS_FROZEN` (value: `'exchange_user_account_is_frozen'`)
-
-* `INSUFFICIENT_PERMISSIONS_SPOT_AND_FUTURES_REQUIRED` (value: `'insufficient_permissions_spot_and_futures_required'`)
 
 * `HEDGE_MODE_NOT_ACTIVE` (value: `'hedge_mode_not_active'`)
 
@@ -71,6 +75,8 @@ API error identifiers
 * `ORDER_VIOLATES_LIQUIDATION_PRICE_CONSTRAINTS` (value: `'order_violates_liquidation_price_constraints'`)
 
 * `NO_CREDENTIALS` (value: `'no_credentials'`)
+
+* `NOW_API_DOWN` (value: `'now_api_down'`)
 
 * `OBJECT_NOT_FOUND` (value: `'object_not_found'`)
 
@@ -106,15 +112,19 @@ API error identifiers
 
 * `STRATEGY_DISABLED` (value: `'strategy_disabled'`)
 
+* `STRATEGY_LEVERAGE_MISMATCH` (value: `'strategy_leverage_mismatch'`)
+
+* `STRATEGY_NOT_SUPPORTING_EXCHANGE` (value: `'strategy_not_supporting_exchange'`)
+
 * `SUCCESS` (value: `'success'`)
 
 * `SYMBOL_DOES_NOT_EXIST` (value: `'symbol_does_not_exist'`)
 
-* `TRADING_HAS_BEEN_LOCKED` (value: `'trading_has_been_locked'`)
-
 * `TRADING_ACTION_EXPIRED` (value: `'trading_action_expired'`)
 
 * `TRADING_ACTION_SKIPPED` (value: `'trading_action_skipped'`)
+
+* `TRADING_HAS_BEEN_LOCKED` (value: `'trading_has_been_locked'`)
 
 * `TRADING_IS_SUSPENDED` (value: `'trading_is_suspended'`)
 

@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class Exchange(str, Enum):
     """
-    Supported exchanges
+    Supported exchanges for trading
     """
 
     """
