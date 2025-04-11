@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.3.0 (2025-04-11)
+
+### Features
+
+- Add exchange and market enums
+  ([`8ad2d7d`](https://github.com/crypticorn-ai/api-client/commit/8ad2d7dc982261f3e710c3e61755ea9613d982c3))
+
+
 ## v2.2.3 (2025-04-11)
 
 ### Bug Fixes
