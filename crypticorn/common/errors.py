@@ -1,5 +1,6 @@
 from enum import Enum, EnumMeta
 import logging
+from fastapi import status
 
 logger = logging.getLogger(__name__)
 
@@ -58,7 +59,7 @@ class ApiErrorIdentifier(str, Enum):
     INSUFFICIENT_SCOPES = "insufficient_scopes"
     INVALID_API_KEY = "invalid_api_key"
     INVALID_BEARER = "invalid_bearer"
-    INVALID_EXCHANGE_API_KEY = "invalid_exchange_api_key"
+    INVALID_EXCHANGE_KEY = "invalid_exchange_key"
     INVALID_MARGIN_MODE = "invalid_margin_mode"
     INVALID_PARAMETER = "invalid_parameter_provided"
     JWT_EXPIRED = "jwt_expired"
@@ -67,6 +68,7 @@ class ApiErrorIdentifier(str, Enum):
     NO_CREDENTIALS = "no_credentials"
     NOW_API_DOWN = "now_api_down"
     OBJECT_NOT_FOUND = "object_not_found"
+    OBJECT_ALREADY_EXISTS = "object_already_exists"
     ORDER_ALREADY_FILLED = "order_is_already_filled"
     ORDER_IN_PROCESS = "order_is_being_processed"
     ORDER_LIMIT_EXCEEDED = "order_quantity_limit_exceeded"
@@ -105,7 +107,7 @@ class ApiErrorLevel(str, Enum):
 
 
 class ApiError(Enum, metaclass=Fallback):
-    """API error codes"""
+    """API error codes. Fallback to UNKNOWN_ERROR for error codes not yet published to PyPI."""
 
     ALLOCATION_BELOW_EXPOSURE = (
         ApiErrorIdentifier.ALLOCATION_BELOW_EXPOSURE,
@@ -252,8 +254,8 @@ class ApiError(Enum, metaclass=Fallback):
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
-    INVALID_EXCHANGE_API_KEY = (
-        ApiErrorIdentifier.INVALID_EXCHANGE_API_KEY,
+    INVALID_EXCHANGE_KEY = (
+        ApiErrorIdentifier.INVALID_EXCHANGE_KEY,
         ApiErrorType.SERVER_ERROR,
         ApiErrorLevel.ERROR,
     )
@@ -294,6 +296,11 @@ class ApiError(Enum, metaclass=Fallback):
     )
     OBJECT_NOT_FOUND = (
         ApiErrorIdentifier.OBJECT_NOT_FOUND,
+        ApiErrorType.SERVER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    OBJECT_ALREADY_EXISTS = (
+        ApiErrorIdentifier.OBJECT_ALREADY_EXISTS,
         ApiErrorType.SERVER_ERROR,
         ApiErrorLevel.ERROR,
     )
@@ -426,17 +433,115 @@ class ApiError(Enum, metaclass=Fallback):
 
     @property
     def identifier(self) -> str:
+        """Identifier of the error."""
         return self.value[0]
 
     @property
     def type(self) -> ApiErrorType:
+        """Type of the error."""
         return self.value[1]
 
     @property
     def level(self) -> ApiErrorLevel:
+        """Level of the error."""
         return self.value[2]
+    
+    @property
+    def status_code(self) -> int:
+        """HTTP status code for the error."""
+        return HttpStatusMapper.get_status_code(self)
 
 
-assert len(list(ApiErrorIdentifier)) == len(
-    list(ApiError)
-), f"{len(list(ApiErrorIdentifier))} != {len(list(ApiError))}"
+class HttpStatusMapper:
+    """Map API errors to HTTP status codes."""
+    # TODO: decide if we need all of these mappings, since most errors are not exposed to the client via HTTP
+    # in case we remove some, update the pytest length check
+    _mapping = {
+        # Authentication/Authorization
+        ApiError.JWT_EXPIRED: status.HTTP_401_UNAUTHORIZED,
+        ApiError.INVALID_BEARER: status.HTTP_401_UNAUTHORIZED,
+        ApiError.INVALID_API_KEY: status.HTTP_401_UNAUTHORIZED,
+        ApiError.NO_CREDENTIALS: status.HTTP_401_UNAUTHORIZED,
+        ApiError.INSUFFICIENT_SCOPES: status.HTTP_403_FORBIDDEN,
+        ApiError.EXCHANGE_PERMISSION_DENIED: status.HTTP_403_FORBIDDEN,
+        ApiError.EXCHANGE_USER_FROZEN: status.HTTP_403_FORBIDDEN,
+        ApiError.TRADING_LOCKED: status.HTTP_403_FORBIDDEN,
+
+        # Not Found
+        ApiError.URL_NOT_FOUND: status.HTTP_404_NOT_FOUND,
+        ApiError.OBJECT_NOT_FOUND: status.HTTP_404_NOT_FOUND,
+        ApiError.ORDER_NOT_FOUND: status.HTTP_404_NOT_FOUND,
+        ApiError.POSITION_NOT_FOUND: status.HTTP_404_NOT_FOUND,
+        ApiError.SYMBOL_NOT_FOUND: status.HTTP_404_NOT_FOUND,
+
+        # Conflicts/Duplicates
+        ApiError.CLIENT_ORDER_ID_REPEATED: status.HTTP_409_CONFLICT,
+        ApiError.OBJECT_ALREADY_EXISTS: status.HTTP_409_CONFLICT,
+        ApiError.EXCHANGE_KEY_ALREADY_EXISTS: status.HTTP_409_CONFLICT,
+        ApiError.BOT_ALREADY_DELETED: status.HTTP_409_CONFLICT,
+
+        # Invalid Content
+        ApiError.CONTENT_TYPE_ERROR: status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
+
+        # Rate Limits
+        ApiError.EXCHANGE_RATE_LIMIT: status.HTTP_429_TOO_MANY_REQUESTS,
+        ApiError.REQUEST_SCOPE_EXCEEDED: status.HTTP_429_TOO_MANY_REQUESTS,
+
+        # Server Errors
+        ApiError.UNKNOWN_ERROR: status.HTTP_500_INTERNAL_SERVER_ERROR,
+        ApiError.EXCHANGE_SYSTEM_ERROR: status.HTTP_500_INTERNAL_SERVER_ERROR,
+        ApiError.NOW_API_DOWN: status.HTTP_500_INTERNAL_SERVER_ERROR,
+        ApiError.RPC_TIMEOUT: status.HTTP_500_INTERNAL_SERVER_ERROR,
+
+        # Service Unavailable
+        ApiError.EXCHANGE_SERVICE_UNAVAILABLE: status.HTTP_503_SERVICE_UNAVAILABLE,
+        ApiError.EXCHANGE_MAINTENANCE: status.HTTP_503_SERVICE_UNAVAILABLE,
+        ApiError.EXCHANGE_SYSTEM_BUSY: status.HTTP_503_SERVICE_UNAVAILABLE,
+        ApiError.SETTLEMENT_IN_PROGRESS: status.HTTP_503_SERVICE_UNAVAILABLE,
+        ApiError.POSITION_SUSPENDED: status.HTTP_503_SERVICE_UNAVAILABLE,
+        ApiError.TRADING_SUSPENDED: status.HTTP_503_SERVICE_UNAVAILABLE,
+
+        # Bad Requests (400) - Invalid parameters or states
+        ApiError.ALLOCATION_BELOW_EXPOSURE: status.HTTP_400_BAD_REQUEST,
+        ApiError.ALLOCATION_BELOW_MINIMUM: status.HTTP_400_BAD_REQUEST,
+        ApiError.BLACK_SWAN: status.HTTP_400_BAD_REQUEST,
+        ApiError.BOT_DISABLED: status.HTTP_400_BAD_REQUEST,
+        ApiError.DELETE_BOT_ERROR: status.HTTP_400_BAD_REQUEST,
+        ApiError.EXCHANGE_INVALID_SIGNATURE: status.HTTP_400_BAD_REQUEST,
+        ApiError.EXCHANGE_INVALID_TIMESTAMP: status.HTTP_400_BAD_REQUEST,
+        ApiError.EXCHANGE_IP_RESTRICTED: status.HTTP_400_BAD_REQUEST,
+        ApiError.EXCHANGE_KEY_IN_USE: status.HTTP_400_BAD_REQUEST,
+        ApiError.EXCHANGE_SYSTEM_CONFIG_ERROR: status.HTTP_400_BAD_REQUEST,
+        ApiError.HEDGE_MODE_NOT_ACTIVE: status.HTTP_400_BAD_REQUEST,
+        ApiError.HTTP_ERROR: status.HTTP_400_BAD_REQUEST,
+        ApiError.INSUFFICIENT_BALANCE: status.HTTP_400_BAD_REQUEST,
+        ApiError.INSUFFICIENT_MARGIN: status.HTTP_400_BAD_REQUEST,
+        ApiError.INVALID_EXCHANGE_KEY: status.HTTP_400_BAD_REQUEST,
+        ApiError.INVALID_MARGIN_MODE: status.HTTP_400_BAD_REQUEST,
+        ApiError.INVALID_PARAMETER: status.HTTP_400_BAD_REQUEST,
+        ApiError.LEVERAGE_EXCEEDED: status.HTTP_400_BAD_REQUEST,
+        ApiError.LIQUIDATION_PRICE_VIOLATION: status.HTTP_400_BAD_REQUEST,
+        ApiError.ORDER_ALREADY_FILLED: status.HTTP_400_BAD_REQUEST,
+        ApiError.ORDER_IN_PROCESS: status.HTTP_400_BAD_REQUEST,
+        ApiError.ORDER_LIMIT_EXCEEDED: status.HTTP_400_BAD_REQUEST,
+        ApiError.ORDER_PRICE_INVALID: status.HTTP_400_BAD_REQUEST,
+        ApiError.ORDER_SIZE_TOO_LARGE: status.HTTP_400_BAD_REQUEST,
+        ApiError.ORDER_SIZE_TOO_SMALL: status.HTTP_400_BAD_REQUEST,
+        ApiError.POSITION_LIMIT_EXCEEDED: status.HTTP_400_BAD_REQUEST,
+        ApiError.POST_ONLY_REJECTED: status.HTTP_400_BAD_REQUEST,
+        ApiError.RISK_LIMIT_EXCEEDED: status.HTTP_400_BAD_REQUEST,
+        ApiError.STRATEGY_DISABLED: status.HTTP_400_BAD_REQUEST,
+        ApiError.STRATEGY_LEVERAGE_MISMATCH: status.HTTP_400_BAD_REQUEST,
+        ApiError.STRATEGY_NOT_SUPPORTING_EXCHANGE: status.HTTP_400_BAD_REQUEST,
+        ApiError.TRADING_ACTION_EXPIRED: status.HTTP_400_BAD_REQUEST,
+        ApiError.TRADING_ACTION_SKIPPED: status.HTTP_400_BAD_REQUEST,
+
+        # Success cases
+        ApiError.SUCCESS: status.HTTP_200_OK,
+        ApiError.BOT_STOPPING_COMPLETED: status.HTTP_200_OK,
+    }
+
+    @classmethod
+    def get_status_code(cls, error: ApiError) -> int:
+        """Get the HTTP status code for the error. If the error is not in the mapping, return 500."""
+        return cls._mapping.get(error, status.HTTP_500_INTERNAL_SERVER_ERROR)

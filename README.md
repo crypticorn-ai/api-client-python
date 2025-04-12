@@ -17,11 +17,6 @@ You can install the latest stable version from PyPi:
 pip install crypticorn
 ```
 
-If you want a specific version, run:
-```bash
-pip install crypticorn==2.0.0
-```
-
 If you want the latest version, which could be a pre release, run:
 ```bash
 pip install --pre crypticorn

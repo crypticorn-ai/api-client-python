@@ -62,7 +62,7 @@ API error identifiers
 
 * `INVALID_BEARER` (value: `'invalid_bearer'`)
 
-* `INVALID_EXCHANGE_API_KEY` (value: `'invalid_exchange_api_key'`)
+* `INVALID_EXCHANGE_KEY` (value: `'invalid_exchange_api_key'`)
 
 * `INVALID_MARGIN_MODE` (value: `'invalid_margin_mode'`)
 
