@@ -4,7 +4,7 @@ description = "Maximise Your Crypto Trading Profits with AI Predictions"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "Crypticorn", email = "timon@crypticorn.com"}]
-version = "2.4.1"
+version = "2.4.2"
 keywords = ["machine learning", "data science", "crypto", "modelling"]
 dynamic = ["dependencies", "optional-dependencies"]
 
