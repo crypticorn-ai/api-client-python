@@ -1,7 +1,17 @@
-from enum import StrEnum
+from enum import StrEnum, EnumMeta
+import logging
 
+logger = logging.getLogger('uvicorn')
 
-class Scope(StrEnum):
+class Fallback(EnumMeta):
+    """Fallback to no scope for unknown scopes."""
+    def __getattr__(cls, name):
+        logger.warning(
+            f"Unknown scope '{name}' - falling back to no scope - update crypticorn package or check for typos"
+        )
+        return None
+
+class Scope(StrEnum, metaclass=Fallback):
     """
     The permission scopes for the API.
     """
