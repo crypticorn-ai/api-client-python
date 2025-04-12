@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.4.3 (2025-04-12)
+
+### Bug Fixes
+
+- Fix utils import
+  ([`29cc346`](https://github.com/crypticorn-ai/api-client/commit/29cc346c2ff835f8732644fbe21aadf62153c1d0))
+
+
 ## v2.4.2 (2025-04-12)
 
 ### Bug Fixes
