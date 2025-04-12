@@ -22,6 +22,9 @@ class Scope(StrEnum, metaclass=Fallback):
     def from_str(cls, value: str) -> "Scope":
         return cls(value)
 
+    # Scopes that can be purchased - these actually exist in the jwt token
+    READ_PREDICTIONS = "read:predictions"
+
     # Hive scopes
     READ_HIVE_MODEL = "read:hive:model"
     READ_HIVE_DATA = "read:hive:data"
@@ -50,5 +53,9 @@ class Scope(StrEnum, metaclass=Fallback):
     READ_PAY_NOW = "read:pay:now"
     WRITE_PAY_NOW = "write:pay:now"
 
-    # Scopes that can be purchased - these actually exist in the jwt token
-    READ_PREDICTIONS = "read:predictions"
+    # Metrics scopes
+    READ_METRICS_MARKETCAP = "read:metrics:marketcap"
+    READ_METRICS_INDICATORS = "read:metrics:indicators" 
+    READ_METRICS_EXCHANGES = "read:metrics:exchanges"
+    READ_METRICS_TOKENS = "read:metrics:tokens"
+    READ_METRICS_MARKETS = "read:metrics:markets"
