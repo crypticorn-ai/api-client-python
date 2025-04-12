@@ -107,11 +107,12 @@ The output would look like this:
 
 ## Advanced Usage
 
-You can override some configuration for specific sub clients. If just want to use the API as is you don't need to configure anything.
+You can override some configuration for specific sub clients. If you just want to use the API as is, you don't need to configure anything.
 This might be of use if you are testing a specific API locally.
 
-This will override the host for the Hive client to connect to http://localhost:8000 instead of the default caddy proxy:
+To override e.g. the host for the Hive client to connect to http://localhost:8000 instead of the default caddy proxy, you would do:
 ```python
-async with ApiClient(base_url=BaseUrl.DEV, jwt=jwt) as client:
+from crypticorn.hive import Configuration as Hiveconfig
+async with ApiClient(base_url=BaseUrl.DEV) as client:
         client.configure(config=HiveConfig(host="http://localhost:8000"), sub_client=client.hive)
 ```
