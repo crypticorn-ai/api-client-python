@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v2.4.4 (2025-04-12)
+
+### Bug Fixes
+
+- Auth fixes on auth module
+  ([`7c3ed5d`](https://github.com/crypticorn-ai/api-client/commit/7c3ed5d460e464939716361014514baff50d380d))
+
+### Documentation
+
+- Update advanced usage section
+  ([`1c804bf`](https://github.com/crypticorn-ai/api-client/commit/1c804bf6eddceb19c31a553c1ff98b31fdd8cbc0))
+
+
 ## v2.4.3 (2025-04-12)
 
 ### Bug Fixes
