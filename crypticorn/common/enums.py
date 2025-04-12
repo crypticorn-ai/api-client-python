@@ -1,5 +1,6 @@
 from enum import StrEnum
 
+
 class ValidateEnumMixin:
     """
     Mixin for validating enum values manually.
@@ -18,6 +19,7 @@ class ValidateEnumMixin:
 
     Order of inheritance matters — the mixin must come first.
     """
+
     @classmethod
     def validate(cls, value) -> bool:
         try:
@@ -26,13 +28,17 @@ class ValidateEnumMixin:
         except ValueError:
             return False
 
+
 class Exchange(ValidateEnumMixin, StrEnum):
     """Supported exchanges for trading"""
+
     KUCOIN = "kucoin"
     BINGX = "bingx"
 
+
 class InternalExchange(ValidateEnumMixin, StrEnum):
     """All exchanges we are using, including public (Exchange)"""
+
     KUCOIN = "kucoin"
     BINGX = "bingx"
     BINANCE = "binance"
@@ -40,9 +46,11 @@ class InternalExchange(ValidateEnumMixin, StrEnum):
     HYPERLIQUID = "hyperliquid"
     BITGET = "bitget"
 
+
 class MarketType(ValidateEnumMixin, StrEnum):
     """
     Market types
     """
+
     SPOT = "spot"
     FUTURES = "futures"

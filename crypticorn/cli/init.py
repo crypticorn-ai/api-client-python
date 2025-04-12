@@ -4,16 +4,24 @@ import subprocess
 import importlib.resources as pkg_resources
 import crypticorn.cli.templates as templates
 
+
 def get_git_root() -> Path:
-    '''Get the root directory of the git repository.'''
+    """Get the root directory of the git repository."""
     try:
-        return Path(subprocess.check_output(["git", "rev-parse", "--show-toplevel"], text=True).strip())
+        return Path(
+            subprocess.check_output(
+                ["git", "rev-parse", "--show-toplevel"], text=True
+            ).strip()
+        )
     except Exception:
         return Path.cwd()
 
+
 def copy_template(template_name: str, target_path: Path):
-    '''Copy a template file to the target path.'''
-    with pkg_resources.files(templates).joinpath(template_name).open("r") as template_file:
+    """Copy a template file to the target path."""
+    with pkg_resources.files(templates).joinpath(template_name).open(
+        "r"
+    ) as template_file:
         content = template_file.read()
 
     target_path.parent.mkdir(parents=True, exist_ok=True)
@@ -22,13 +30,15 @@ def copy_template(template_name: str, target_path: Path):
 
     click.secho(f"✅ Created: {target_path}", fg="green")
 
+
 @click.group()
 def init_group():
     """Initialize files like CI configs, linters, etc."""
     pass
 
+
 @init_group.command("ruff")
-@click.option('-f', '--force', is_flag=True, help='Force overwrite the ruff.yml')
+@click.option("-f", "--force", is_flag=True, help="Force overwrite the ruff.yml")
 def init_ruff(force):
     """Add .github/workflows/ruff.yml"""
     root = get_git_root()
@@ -38,9 +48,12 @@ def init_ruff(force):
         return
     copy_template("ruff.yml", target)
 
+
 @init_group.command("docker")
-@click.option('-o', '--output', type=click.Path(), help='Custom output path for the Dockerfile')
-@click.option('-f', '--force', is_flag=True, help='Force overwrite the Dockerfile')
+@click.option(
+    "-o", "--output", type=click.Path(), help="Custom output path for the Dockerfile"
+)
+@click.option("-f", "--force", is_flag=True, help="Force overwrite the Dockerfile")
 def init_docker(output, force):
     """Add Dockerfile"""
     root = get_git_root()
@@ -51,9 +64,12 @@ def init_docker(output, force):
     copy_template("Dockerfile", target)
     click.secho("Make sure to update the Dockerfile", fg="yellow")
 
+
 @init_group.command("auth")
-@click.option('-o', '--output', type=click.Path(), help='Custom output path for the auth handler')
-@click.option('-f', '--force', is_flag=True, help='Force overwrite the auth handler')
+@click.option(
+    "-o", "--output", type=click.Path(), help="Custom output path for the auth handler"
+)
+@click.option("-f", "--force", is_flag=True, help="Force overwrite the auth handler")
 def init_auth(output, force):
     """Add auth.py with auth handler. Everything you need to start using the auth service."""
     root = get_git_root()
@@ -65,17 +81,21 @@ def init_auth(output, force):
         click.secho("File already exists, use --force / -f to overwrite", fg="red")
         return
     copy_template("auth.py", target)
-    click.secho('''
+    click.secho(
+        """
     Make sure to update the .env file with:
         IS_DOCKER=0
         API_ENV=local
     and the docker-compose.yml file with:
         environment:
             - IS_DOCKER=1
-    ''', fg="yellow")
+    """,
+        fg="yellow",
+    )
+
 
 @init_group.command("dependabot")
-@click.option('-f', '--force', is_flag=True, help='Force overwrite the dependabot.yml')
+@click.option("-f", "--force", is_flag=True, help="Force overwrite the dependabot.yml")
 def init_dependabot(force):
     """Add dependabot.yml"""
     root = get_git_root()
