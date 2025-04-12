@@ -14,6 +14,7 @@ from datetime import datetime, timedelta
 dotenv.load_dotenv()
 jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiWVJwUURHMDR4bVVZMXBsaFRERTMiLCJpYXQiOjE3NDQ0NTUyMDIsImV4cCI6MTc0NDQ1ODgwMiwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.XUpzxzS8pK7ON_LVjJI30zXUsl-VUnqFc0onxsXjY34"
 
+
 async def main():
     async with ApiClient(base_url=BaseUrl.LOCAL, jwt=jwt) as client:
         # json response
@@ -76,7 +77,7 @@ async def main():
             res = await client.auth.login.create_api_key(
                 CreateApiKeyRequest(
                     name="writes products",
-                    scopes=['invalid:product'],
+                    scopes=["invalid:product"],
                     expires_at=datetime.now() + timedelta(days=30),
                     ip="127.0.0.1",
                 )

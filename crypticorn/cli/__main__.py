@@ -3,10 +3,12 @@
 import click
 from crypticorn.cli import init_group
 
+
 @click.group()
 def cli():
     """🧙 Crypticorn CLI — magic for our microservices."""
     pass
+
 
 cli.add_command(init_group, name="init")
 

@@ -18,10 +18,14 @@ DOCKER_ENV = os.getenv("IS_DOCKER")
 API_ENV = os.getenv("API_ENV")
 
 if not DOCKER_ENV:
-    raise ValueError("IS_DOCKER is not set. Please set it to '0' in .env and '1' in the docker-compose.yml file.")
+    raise ValueError(
+        "IS_DOCKER is not set. Please set it to '0' in .env and '1' in the docker-compose.yml file."
+    )
 
 if not API_ENV:
-    raise ValueError("API_ENV is not set. Please set it to 'prod', 'dev' or 'local' in .env (of type ApiEnv).")
+    raise ValueError(
+        "API_ENV is not set. Please set it to 'prod', 'dev' or 'local' in .env (of type ApiEnv)."
+    )
 
 if DOCKER_ENV == "0":
     logger.info(f"Using {API_ENV} environment")

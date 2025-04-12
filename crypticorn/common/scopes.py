@@ -1,15 +1,18 @@
 from enum import StrEnum, EnumMeta
 import logging
 
-logger = logging.getLogger('uvicorn')
+logger = logging.getLogger("uvicorn")
+
 
 class Fallback(EnumMeta):
     """Fallback to no scope for unknown scopes."""
+
     def __getattr__(cls, name):
         logger.warning(
             f"Unknown scope '{name}' - falling back to no scope - update crypticorn package or check for typos"
         )
         return None
+
 
 class Scope(StrEnum, metaclass=Fallback):
     """
@@ -55,7 +58,7 @@ class Scope(StrEnum, metaclass=Fallback):
 
     # Metrics scopes
     READ_METRICS_MARKETCAP = "read:metrics:marketcap"
-    READ_METRICS_INDICATORS = "read:metrics:indicators" 
+    READ_METRICS_INDICATORS = "read:metrics:indicators"
     READ_METRICS_EXCHANGES = "read:metrics:exchanges"
     READ_METRICS_TOKENS = "read:metrics:tokens"
     READ_METRICS_MARKETS = "read:metrics:markets"
