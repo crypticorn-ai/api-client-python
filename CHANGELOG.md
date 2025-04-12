@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.4.2 (2025-04-12)
+
+### Bug Fixes
+
+- Add global utils and add http error mapping
+  ([`c3ce565`](https://github.com/crypticorn-ai/api-client/commit/c3ce565446535038f196f65b9fdf276a6ce71563))
+
+
 ## v2.4.1 (2025-04-12)
 
 ### Bug Fixes
