@@ -32,7 +32,8 @@ class UpdateUserRequest(BaseModel):
     name: Optional[StrictStr] = None
     email: Optional[StrictStr] = None
     username: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["id", "name", "email", "username"]
+    picture: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["id", "name", "email", "username", "picture"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -88,6 +89,7 @@ class UpdateUserRequest(BaseModel):
                 "name": obj.get("name"),
                 "email": obj.get("email"),
                 "username": obj.get("username"),
+                "picture": obj.get("picture"),
             }
         )
         return _obj

@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **name** | **str** |  | [optional] 
 **email** | **str** |  | [optional] 
 **username** | **str** |  | [optional] 
+**picture** | **str** |  | [optional] 
 
 ## Example
 
