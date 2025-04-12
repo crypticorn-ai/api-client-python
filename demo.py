@@ -10,11 +10,11 @@ import asyncio
 from crypticorn.trade import BotModel, BotStatus
 from datetime import datetime, timedelta
 
-jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiNE81UFhZTElBbmtveFRBQ3BRY2UiLCJpYXQiOjE3NDQ0OTE5NTksImV4cCI6MTc0NDQ5NTU1OSwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.ycS7KK-5BhXHpiqR_NVJWQDu6pdygYi4YsV1IT11TFc"
+jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiVERuSFg3N3RVb3huQ1BUNkVOWiIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiUzlyOEMzc3hYMjRDZmlTWjlWRFYiLCJpYXQiOjE3NDQ0OTgxODUsImV4cCI6MTc0NDUwMTc4NSwic2NvcGVzIjpbXX0.nZywsgSpwNu8fGAb9_iGeucxcYiwvzoyrsmbrjpnmdc"
 
 
 async def main():
-    async with ApiClient(base_url=BaseUrl.LOCAL, api_key="") as client:
+    async with ApiClient(base_url=BaseUrl.LOCAL, jwt=jwt) as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
         # print(10 * "=" + "This is the raw json response" + 10 * "=")
@@ -87,10 +87,10 @@ async def main():
 
         # except UnauthorizedException as e:
         #     print(e.body)
-        res = await client.metrics.exchanges.get_available_exchanges(
-            market=MarketType.FUTURES, symbol="BTC"
-        )
+        res = await client.auth.user.user_by_id(id="123")
         print(res)
+        # res = await client.auth.login.get_api_keys()
+        # print(res)
         # res = await client.trade.bots.get_bots()
         # print(res)
         # res = await client.auth.login.verify_api_key(api_key='sk6SGlb8rxWZr744FV4zTmDLr5w5Gs')
