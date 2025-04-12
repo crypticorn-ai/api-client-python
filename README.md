@@ -33,6 +33,20 @@ Our API is available as an asynchronous Python SDK. The main entry point you nee
 ```python
 from crypticorn import ApiClient
 ```
+The ApiClient serves as the central interface for API operations. It instantiates multiple API wrappers corresponding to our microservices.
+
+Specific imports, such as request models, should be accessed through the appropriate submodules.
+
+Note: All symbols are re-exported at the first submodule layer for convenience.
+
+```python
+from crypticorn.trade import BotStatus
+```
+
+The `common` submodule contains shared classes not bound to a specific API.
+```python
+from crypticorn.common import Scope, Exchange
+```
 
 ## Usage
 
@@ -83,7 +97,7 @@ On top of that you get some information about the request:
 print(res.status_code)
 print(res.raw_data)
 print(res.headers)
-
+```
 
 ### JSON Response
 You can receive a classical JSON response by suffixing the function name with `_without_preload_content`
