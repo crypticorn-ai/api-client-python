@@ -445,7 +445,7 @@ class ApiError(Enum, metaclass=Fallback):
     def level(self) -> ApiErrorLevel:
         """Level of the error."""
         return self.value[2]
-    
+
     @property
     def status_code(self) -> int:
         """HTTP status code for the error."""
@@ -454,6 +454,7 @@ class ApiError(Enum, metaclass=Fallback):
 
 class HttpStatusMapper:
     """Map API errors to HTTP status codes."""
+
     # TODO: decide if we need all of these mappings, since most errors are not exposed to the client via HTTP
     # in case we remove some, update the pytest length check
     _mapping = {
@@ -466,33 +467,27 @@ class HttpStatusMapper:
         ApiError.EXCHANGE_PERMISSION_DENIED: status.HTTP_403_FORBIDDEN,
         ApiError.EXCHANGE_USER_FROZEN: status.HTTP_403_FORBIDDEN,
         ApiError.TRADING_LOCKED: status.HTTP_403_FORBIDDEN,
-
         # Not Found
         ApiError.URL_NOT_FOUND: status.HTTP_404_NOT_FOUND,
         ApiError.OBJECT_NOT_FOUND: status.HTTP_404_NOT_FOUND,
         ApiError.ORDER_NOT_FOUND: status.HTTP_404_NOT_FOUND,
         ApiError.POSITION_NOT_FOUND: status.HTTP_404_NOT_FOUND,
         ApiError.SYMBOL_NOT_FOUND: status.HTTP_404_NOT_FOUND,
-
         # Conflicts/Duplicates
         ApiError.CLIENT_ORDER_ID_REPEATED: status.HTTP_409_CONFLICT,
         ApiError.OBJECT_ALREADY_EXISTS: status.HTTP_409_CONFLICT,
         ApiError.EXCHANGE_KEY_ALREADY_EXISTS: status.HTTP_409_CONFLICT,
         ApiError.BOT_ALREADY_DELETED: status.HTTP_409_CONFLICT,
-
         # Invalid Content
         ApiError.CONTENT_TYPE_ERROR: status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
-
         # Rate Limits
         ApiError.EXCHANGE_RATE_LIMIT: status.HTTP_429_TOO_MANY_REQUESTS,
         ApiError.REQUEST_SCOPE_EXCEEDED: status.HTTP_429_TOO_MANY_REQUESTS,
-
         # Server Errors
         ApiError.UNKNOWN_ERROR: status.HTTP_500_INTERNAL_SERVER_ERROR,
         ApiError.EXCHANGE_SYSTEM_ERROR: status.HTTP_500_INTERNAL_SERVER_ERROR,
         ApiError.NOW_API_DOWN: status.HTTP_500_INTERNAL_SERVER_ERROR,
         ApiError.RPC_TIMEOUT: status.HTTP_500_INTERNAL_SERVER_ERROR,
-
         # Service Unavailable
         ApiError.EXCHANGE_SERVICE_UNAVAILABLE: status.HTTP_503_SERVICE_UNAVAILABLE,
         ApiError.EXCHANGE_MAINTENANCE: status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -500,7 +495,6 @@ class HttpStatusMapper:
         ApiError.SETTLEMENT_IN_PROGRESS: status.HTTP_503_SERVICE_UNAVAILABLE,
         ApiError.POSITION_SUSPENDED: status.HTTP_503_SERVICE_UNAVAILABLE,
         ApiError.TRADING_SUSPENDED: status.HTTP_503_SERVICE_UNAVAILABLE,
-
         # Bad Requests (400) - Invalid parameters or states
         ApiError.ALLOCATION_BELOW_EXPOSURE: status.HTTP_400_BAD_REQUEST,
         ApiError.ALLOCATION_BELOW_MINIMUM: status.HTTP_400_BAD_REQUEST,
@@ -535,7 +529,6 @@ class HttpStatusMapper:
         ApiError.STRATEGY_NOT_SUPPORTING_EXCHANGE: status.HTTP_400_BAD_REQUEST,
         ApiError.TRADING_ACTION_EXPIRED: status.HTTP_400_BAD_REQUEST,
         ApiError.TRADING_ACTION_SKIPPED: status.HTTP_400_BAD_REQUEST,
-
         # Success cases
         ApiError.SUCCESS: status.HTTP_200_OK,
         ApiError.BOT_STOPPING_COMPLETED: status.HTTP_200_OK,

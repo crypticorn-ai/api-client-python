@@ -1,6 +1,6 @@
 # client.ExchangesApi
 
-All URIs are relative to *https://api.crypticorn.dev/v1/metrics*
+All URIs are relative to *http://localhost/v1/metrics*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -18,32 +18,51 @@ Get available exchanges for a symbol with various filtering options.
 
 ### Example
 
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
 from client.models.base_response_list_dict import BaseResponseListDict
-from client.models.market import Market
+from client.models.market_type import MarketType
+from client.models.time_interval import TimeInterval
+from client.models.trading_status import TradingStatus
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
+# Defining the host is optional and defaults to http://localhost/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/metrics"
+    host = "http://localhost/v1/metrics"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.ExchangesApi(api_client)
-    market = client.Market() # Market | Market type (spot or futures)
+    market = client.MarketType() # MarketType | Market type (spot or futures)
     symbol = 'symbol_example' # str | Symbol to fetch available exchanges for
-    interval = 1d # str | Interval for which to fetch available exchanges (optional) (default to 1d)
-    start_timestamp = 1743292800 # int | Start timestamp for which to fetch available exchanges (defaults to previous 7 day's closing) (optional) (default to 1743292800)
-    end_timestamp = 1743941814 # int | End timestamp for which to fetch available exchanges (optional) (default to 1743941814)
+    interval = client.TimeInterval() # TimeInterval | Interval for which to fetch available exchanges (optional)
+    start_timestamp = 1743811200 # int | Start timestamp for which to fetch available exchanges (defaults to previous 7 day's closing) (optional) (default to 1743811200)
+    end_timestamp = 1744494065 # int | End timestamp for which to fetch available exchanges (optional) (default to 1744494065)
     quote_currency = 'USDT' # str | Quote currency for which to fetch available exchanges (Use quote currencies endpoint to get available quote currencies) (optional) (default to 'USDT')
-    status = ACTIVE # str | Trading pair status for which to fetch available exchanges (optional) (default to ACTIVE)
+    status = client.TradingStatus() # TradingStatus | Trading pair status for which to fetch available exchanges (optional)
 
     try:
         # Get Available Exchanges
@@ -61,13 +80,13 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**Market**](.md)| Market type (spot or futures) | 
+ **market** | [**MarketType**](.md)| Market type (spot or futures) | 
  **symbol** | **str**| Symbol to fetch available exchanges for | 
- **interval** | **str**| Interval for which to fetch available exchanges | [optional] [default to 1d]
- **start_timestamp** | **int**| Start timestamp for which to fetch available exchanges (defaults to previous 7 day&#39;s closing) | [optional] [default to 1743292800]
- **end_timestamp** | **int**| End timestamp for which to fetch available exchanges | [optional] [default to 1743941814]
+ **interval** | [**TimeInterval**](.md)| Interval for which to fetch available exchanges | [optional] 
+ **start_timestamp** | **int**| Start timestamp for which to fetch available exchanges (defaults to previous 7 day&#39;s closing) | [optional] [default to 1743811200]
+ **end_timestamp** | **int**| End timestamp for which to fetch available exchanges | [optional] [default to 1744494065]
  **quote_currency** | **str**| Quote currency for which to fetch available exchanges (Use quote currencies endpoint to get available quote currencies) | [optional] [default to &#39;USDT&#39;]
- **status** | **str**| Trading pair status for which to fetch available exchanges | [optional] [default to ACTIVE]
+ **status** | [**TradingStatus**](.md)| Trading pair status for which to fetch available exchanges | [optional] 
 
 ### Return type
 
@@ -75,7 +94,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -103,26 +122,43 @@ Get list of exchanges for a market.
 
 ### Example
 
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
 from client.models.base_response_list_str import BaseResponseListStr
-from client.models.market import Market
+from client.models.market_type import MarketType
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
+# Defining the host is optional and defaults to http://localhost/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/metrics"
+    host = "http://localhost/v1/metrics"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.ExchangesApi(api_client)
-    market = client.Market() # Market | Market type (spot or futures)
+    market = client.MarketType() # MarketType | Market type (spot or futures)
 
     try:
         # Get Exchange List
@@ -140,7 +176,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**Market**](.md)| Market type (spot or futures) | 
+ **market** | [**MarketType**](.md)| Market type (spot or futures) | 
 
 ### Return type
 
@@ -148,7 +184,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -176,26 +212,43 @@ Get exchange mappings for a market with optional exchange name filter.
 
 ### Example
 
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
 from client.models.base_response_list_exchange_mapping import BaseResponseListExchangeMapping
-from client.models.market import Market
+from client.models.market_type import MarketType
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
+# Defining the host is optional and defaults to http://localhost/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/metrics"
+    host = "http://localhost/v1/metrics"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.ExchangesApi(api_client)
-    market = client.Market() # Market | Market type (spot or futures)
+    market = client.MarketType() # MarketType | Market type (spot or futures)
     exchange_name = 'exchange_name_example' # str | Exchange name for which to fetch exchange mappings (optional)
 
     try:
@@ -214,7 +267,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**Market**](.md)| Market type (spot or futures) | 
+ **market** | [**MarketType**](.md)| Market type (spot or futures) | 
  **exchange_name** | **str**| Exchange name for which to fetch exchange mappings | [optional] 
 
 ### Return type
@@ -223,7 +276,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 

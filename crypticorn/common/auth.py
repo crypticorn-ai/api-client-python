@@ -53,7 +53,7 @@ class AuthHandler:
             detail=ApiError.NO_CREDENTIALS.identifier,
         )
 
-    async def _verify_api_key(self, api_key: str) -> None:
+    async def _verify_api_key(self, api_key: str) -> Verify200Response:
         """
         Verifies the API key.
         """

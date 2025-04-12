@@ -1,22 +1,22 @@
 from crypticorn.auth.client.exceptions import UnauthorizedException
 from crypticorn.auth import CreateApiKeyRequest
 from crypticorn.common import BaseUrl, Scope
+from crypticorn.common import MarketType
 from crypticorn.hive import Configuration as HiveConfig
 from crypticorn.pay import ProductModel
 from crypticorn import ApiClient
 from crypticorn.trade import ExchangeKeyModel
-import dotenv
 import asyncio
-from crypticorn.metrics import Market
 from crypticorn.trade import BotModel, BotStatus
 from datetime import datetime, timedelta
 
-dotenv.load_dotenv()
-jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiWVJwUURHMDR4bVVZMXBsaFRERTMiLCJpYXQiOjE3NDQ0NTUyMDIsImV4cCI6MTc0NDQ1ODgwMiwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.XUpzxzS8pK7ON_LVjJI30zXUsl-VUnqFc0onxsXjY34"
+jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiNE81UFhZTElBbmtveFRBQ3BRY2UiLCJpYXQiOjE3NDQ0OTE5NTksImV4cCI6MTc0NDQ5NTU1OSwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.ycS7KK-5BhXHpiqR_NVJWQDu6pdygYi4YsV1IT11TFc"
 
 
 async def main():
-    async with ApiClient(base_url=BaseUrl.LOCAL, jwt=jwt) as client:
+    async with ApiClient(
+        base_url=BaseUrl.LOCAL, api_key=""
+    ) as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
         # print(10 * "=" + "This is the raw json response" + 10 * "=")
@@ -73,28 +73,34 @@ async def main():
         #         status=BotStatus.RUNNING,
         #     )
         # )
-        try:
-            res = await client.auth.login.create_api_key(
-                CreateApiKeyRequest(
-                    name="writes products",
-                    scopes=["invalid:product"],
-                    expires_at=datetime.now() + timedelta(days=30),
-                    ip="127.0.0.1",
-                )
-            )
-            print(res.api_key)
-            # ress = await client.auth.login.get_api_keys()
-            # print(ress)
-            # res = await client.auth.login.verify_api_key('asdf')
-            # print(res)
+        # try:
+        #     res = await client.auth.login.create_api_key(
+        #         CreateApiKeyRequest(
+        #             name="writes products",
+        #             scopes=[Scope.READ_METRICS_EXCHANGES],
+        #             expires_at=datetime.now() + timedelta(days=30),
+        #         )
+        #     )
+        #     print(res.api_key)
+        #     # ress = await client.auth.login.get_api_keys()
+        #     # print(ress)
+        #     # res = await client.auth.login.verify_api_key('asdf')
+        #     # print(res)
 
-        except UnauthorizedException as e:
-            print(e.body)
-        pass
+        # except UnauthorizedException as e:
+        #     print(e.body)
+        res = await client.metrics.exchanges.get_available_exchanges(
+            market=MarketType.FUTURES, symbol="BTC"
+        )
+        print(res)
+        # res = await client.trade.bots.get_bots()
+        # print(res)
+        # res = await client.auth.login.verify_api_key(api_key='sk6SGlb8rxWZr744FV4zTmDLr5w5Gs')
+        # print(res)
 
 
 async def new_client():
-    async with ApiClient(base_url=BaseUrl.DEV, jwt=jwt) as client:
+    async with ApiClient(base_url=BaseUrl.DEV) as client:
         client.configure(
             config=HiveConfig(host="http://localhost:8000"), sub_client=client.hive
         )

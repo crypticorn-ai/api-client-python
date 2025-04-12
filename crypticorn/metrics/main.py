@@ -8,7 +8,7 @@ from crypticorn.metrics import (
     MarketcapApi,
     MarketsApi,
     TokensApi,
-    Market,
+    MarketType,
 )
 from pydantic import StrictStr, StrictInt, Field
 from typing_extensions import Annotated
@@ -56,7 +56,7 @@ class MarketcapApiWrapper(MarketcapApi):
             Field(description="Interval for which to fetch symbols and marketcap data"),
         ] = None,
         market: Annotated[
-            Optional[Market],
+            Optional[MarketType],
             Field(description="Market for which to fetch symbols and marketcap data"),
         ] = None,
         exchange: Annotated[

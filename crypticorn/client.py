@@ -1,9 +1,11 @@
-from crypticorn.hive import HiveClient, Configuration
-from crypticorn.klines import KlinesClient
-from crypticorn.pay import PayClient
-from crypticorn.trade import TradeClient
-from crypticorn.metrics import MetricsClient
-from crypticorn.auth import AuthClient
+from typing import Union
+
+from crypticorn.hive import HiveClient, Configuration as HiveConfig
+from crypticorn.klines import KlinesClient, Configuration as KlinesConfig
+from crypticorn.pay import PayClient, Configuration as PayConfig
+from crypticorn.trade import TradeClient, Configuration as TradeConfig
+from crypticorn.metrics import MetricsClient, Configuration as MetricsConfig
+from crypticorn.auth import AuthClient, Configuration as AuthConfig
 from crypticorn.common import BaseUrl, ApiVersion, Service, apikey_header as aph
 import warnings
 
@@ -64,16 +66,31 @@ class ApiClient:
         """
         Get the default configuration for a given service.
         """
-        return Configuration(
+        config_class = {
+            Service.HIVE: HiveConfig,
+            Service.TRADE: TradeConfig,
+            Service.KLINES: KlinesConfig,
+            Service.PAY: PayConfig,
+            Service.METRICS: MetricsConfig,
+            Service.AUTH: AuthConfig,
+        }[service]
+        return config_class(
             host=f"{self.base_url}/{version}/{service}",
             access_token=self.jwt,
             api_key={aph.scheme_name: self.api_key} if self.api_key else None,
-            api_key_prefix=(
-                {aph.scheme_name: aph.model.name} if self.api_key else None
-            ),
+            # not necessary
+            # api_key_prefix=(
+            #     {aph.scheme_name: aph.model.name} if self.api_key else None
+            # ),
         )
 
-    def configure(self, config: Configuration, sub_client: any):
+    def configure(
+        self,
+        config: Union[
+            HiveConfig, TradeConfig, KlinesConfig, PayConfig, MetricsConfig, AuthConfig
+        ],
+        sub_client: any,
+    ):
         """
         Update a sub-client's configuration by overriding with the values set in the new config.
         Useful for testing a specific service against a local server instead of the default proxy.
