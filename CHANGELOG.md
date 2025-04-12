@@ -1,6 +1,17 @@
 # CHANGELOG
 
 
+## v2.4.0 (2025-04-12)
+
+### Features
+
+- Add enum fallbacks, enum validation mixin and enum tests
+  ([`63bd61c`](https://github.com/crypticorn-ai/api-client/commit/63bd61cd826f9de1aec40d5f877d82126b59fbf8))
+
+- Start cli support for initializing files from templates
+  ([`5411d12`](https://github.com/crypticorn-ai/api-client/commit/5411d12704605e6d6af46477ff74e1ac44abd259))
+
+
 ## v2.3.0 (2025-04-11)
 
 ### Features
