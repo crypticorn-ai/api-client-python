@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v2.4.1 (2025-04-12)
+
+### Bug Fixes
+
+- Add market metrics scopes
+  ([`2dc0b4f`](https://github.com/crypticorn-ai/api-client/commit/2dc0b4f1761d5bae07c946448a820d1fc9814288))
+
+### Documentation
+
+- Update structure section
+  ([`cc77abc`](https://github.com/crypticorn-ai/api-client/commit/cc77abc19b5813e335356f4539654e04b8ba2014))
+
+
 ## v2.4.0 (2025-04-12)
 
 ### Features
