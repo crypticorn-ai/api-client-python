@@ -12,8 +12,7 @@ from crypticorn.trade import BotModel, BotStatus
 from datetime import datetime, timedelta
 
 dotenv.load_dotenv()
-jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiRFB0UDZVU3Bkcm96dEFoOTR2RTYiLCJpYXQiOjE3NDQzMTQyODIsImV4cCI6MTc0NDMxNzg4Miwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.UC9p2d2wu5YtOYCwTtRHJFhQnGm0equ9ujjyJMBt9ys"
-
+jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiWVJwUURHMDR4bVVZMXBsaFRERTMiLCJpYXQiOjE3NDQ0NTUyMDIsImV4cCI6MTc0NDQ1ODgwMiwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.XUpzxzS8pK7ON_LVjJI30zXUsl-VUnqFc0onxsXjY34"
 
 async def main():
     async with ApiClient(base_url=BaseUrl.LOCAL, jwt=jwt) as client:
@@ -73,23 +72,23 @@ async def main():
         #         status=BotStatus.RUNNING,
         #     )
         # )
-        # try:
-        #     res = await client.auth.login.create_api_key_without_preload_content(
-        #         CreateApiKeyRequest(
-        #             name="writes products",
-        #             scopes=[Scope.WRITE_PAY_NOW],
-        #             expires_at=datetime.now() + timedelta(days=30),
-        #             ip="127.0.0.1",
-        #         )
-        #     )
-        #     print(res.api_key)
-        #     # ress = await client.auth.login.get_api_keys()
-        #     # print(ress)
-        #     # res = await client.auth.login.verify_api_key('asdf')
-        #     # print(res)
+        try:
+            res = await client.auth.login.create_api_key(
+                CreateApiKeyRequest(
+                    name="writes products",
+                    scopes=['invalid:product'],
+                    expires_at=datetime.now() + timedelta(days=30),
+                    ip="127.0.0.1",
+                )
+            )
+            print(res.api_key)
+            # ress = await client.auth.login.get_api_keys()
+            # print(ress)
+            # res = await client.auth.login.verify_api_key('asdf')
+            # print(res)
 
-        # except UnauthorizedException as e:
-        #     print(e.body)
+        except UnauthorizedException as e:
+            print(e.body)
         pass
 
 
