@@ -30,10 +30,10 @@ class ExecutionIds(BaseModel):
 
     main: List[StrictStr] = Field(description="Main execution ID. List with one item.")
     sl: List[StrictStr] = Field(
-        description="Stop loss execution IDs. List with multiple items ordered by the next stop loss."
+        description="Stop loss execution IDs. List with multiple items ordered by the next stop loss, e.g. price = 10000 => SLs: ['900', '700', '500']."
     )
     tp: List[StrictStr] = Field(
-        description="Take profit execution IDs. List with multiple items ordered by the next take profit."
+        description="Take profit execution IDs. List with multiple items ordered by the next take profit, e.g. price = 10000 => TPs: ['1100', '1300', '1500']."
     )
     __properties: ClassVar[List[str]] = ["main", "sl", "tp"]
 

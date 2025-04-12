@@ -62,7 +62,7 @@ API error identifiers
 
 * `INVALID_BEARER` (value: `'invalid_bearer'`)
 
-* `INVALID_EXCHANGE_KEY` (value: `'invalid_exchange_api_key'`)
+* `INVALID_EXCHANGE_KEY` (value: `'invalid_exchange_key'`)
 
 * `INVALID_MARGIN_MODE` (value: `'invalid_margin_mode'`)
 
@@ -79,6 +79,8 @@ API error identifiers
 * `NOW_API_DOWN` (value: `'now_api_down'`)
 
 * `OBJECT_NOT_FOUND` (value: `'object_not_found'`)
+
+* `OBJECT_ALREADY_EXISTS` (value: `'object_already_exists'`)
 
 * `ORDER_IS_ALREADY_FILLED` (value: `'order_is_already_filled'`)
 

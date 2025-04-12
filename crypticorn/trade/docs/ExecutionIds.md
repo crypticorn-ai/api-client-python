@@ -6,8 +6,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **main** | **List[str]** | Main execution ID. List with one item. | 
-**sl** | **List[str]** | Stop loss execution IDs. List with multiple items ordered by the next stop loss. | 
-**tp** | **List[str]** | Take profit execution IDs. List with multiple items ordered by the next take profit. | 
+**sl** | **List[str]** | Stop loss execution IDs. List with multiple items ordered by the next stop loss, e.g. price &#x3D; 10000 &#x3D;&gt; SLs: [&#39;900&#39;, &#39;700&#39;, &#39;500&#39;]. | 
+**tp** | **List[str]** | Take profit execution IDs. List with multiple items ordered by the next take profit, e.g. price &#x3D; 10000 &#x3D;&gt; TPs: [&#39;1100&#39;, &#39;1300&#39;, &#39;1500&#39;]. | 
 
 ## Example
 
