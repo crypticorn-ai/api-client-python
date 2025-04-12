@@ -16,13 +16,15 @@ def throw_if_none(value: Any, message: ApiError) -> None:
             status_code=status.HTTP_404_NOT_FOUND, detail=message.identifier
         )
 
+
 def throw_if_falsy(value: Any, message: ApiError) -> None:
     """Throws an FastAPI HTTPException if the value is False."""
     if not value:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=message.identifier
         )
-    
+
+
 def gen_random_id(length: int = 20) -> str:
     """Generate a random base62 string (a-zA-Z0-9) of specified length.
     Kucoin max 40, bingx max 40"""

@@ -22,8 +22,10 @@ client/models/error_response.py
 client/models/exchange_mapping.py
 client/models/health_check_response.py
 client/models/http_validation_error.py
-client/models/market.py
+client/models/market_type.py
 client/models/severity.py
+client/models/time_interval.py
+client/models/trading_status.py
 client/models/validation_error.py
 client/models/validation_error_loc_inner.py
 client/py.typed
@@ -41,11 +43,13 @@ docs/HealthCheckApi.md
 docs/HealthCheckResponse.md
 docs/IndicatorsApi.md
 docs/LogsApi.md
-docs/Market.md
+docs/MarketType.md
 docs/MarketcapApi.md
 docs/MarketsApi.md
 docs/Severity.md
+docs/TimeInterval.md
 docs/TokensApi.md
+docs/TradingStatus.md
 docs/ValidationError.md
 docs/ValidationErrorLocInner.md
 requirements.txt

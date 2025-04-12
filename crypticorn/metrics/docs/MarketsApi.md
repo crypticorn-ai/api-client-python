@@ -1,6 +1,6 @@
 # client.MarketsApi
 
-All URIs are relative to *https://api.crypticorn.dev/v1/metrics*
+All URIs are relative to *http://localhost/v1/metrics*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -17,29 +17,47 @@ Get markets for a symbol with filtering options.
 
 ### Example
 
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
 from client.models.base_response_list_dict import BaseResponseListDict
-from client.models.market import Market
+from client.models.market_type import MarketType
+from client.models.trading_status import TradingStatus
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
+# Defining the host is optional and defaults to http://localhost/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/metrics"
+    host = "http://localhost/v1/metrics"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.MarketsApi(api_client)
-    market = client.Market() # Market | Market type (spot or futures)
+    market = client.MarketType() # MarketType | Market type (spot or futures)
     symbol = 'symbol_example' # str | Symbol to fetch markets for
     quote_currency = 'USDT' # str | Quote currency for which to fetch markets (optional) (default to 'USDT')
-    status = ACTIVE # str | Trading pair status for which to fetch markets (optional) (default to ACTIVE)
+    status = client.TradingStatus() # TradingStatus | Trading pair status for which to fetch markets (optional)
 
     try:
         # Get Markets For Symbol
@@ -57,10 +75,10 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**Market**](.md)| Market type (spot or futures) | 
+ **market** | [**MarketType**](.md)| Market type (spot or futures) | 
  **symbol** | **str**| Symbol to fetch markets for | 
  **quote_currency** | **str**| Quote currency for which to fetch markets | [optional] [default to &#39;USDT&#39;]
- **status** | **str**| Trading pair status for which to fetch markets | [optional] [default to ACTIVE]
+ **status** | [**TradingStatus**](.md)| Trading pair status for which to fetch markets | [optional] 
 
 ### Return type
 
@@ -68,7 +86,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -96,26 +114,43 @@ Get available quote currencies for a market.
 
 ### Example
 
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
 from client.models.base_response_list_str import BaseResponseListStr
-from client.models.market import Market
+from client.models.market_type import MarketType
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
+# Defining the host is optional and defaults to http://localhost/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/metrics"
+    host = "http://localhost/v1/metrics"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.MarketsApi(api_client)
-    market = client.Market() # Market | Market type (spot or futures)
+    market = client.MarketType() # MarketType | Market type (spot or futures)
 
     try:
         # Get Quote Currencies
@@ -133,7 +168,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**Market**](.md)| Market type (spot or futures) | 
+ **market** | [**MarketType**](.md)| Market type (spot or futures) | 
 
 ### Return type
 
@@ -141,7 +176,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
