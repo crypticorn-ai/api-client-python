@@ -59,7 +59,7 @@ class ApiErrorIdentifier(str, Enum):
     INSUFFICIENT_SCOPES = "insufficient_scopes"
     INVALID_API_KEY = "invalid_api_key"
     INVALID_BEARER = "invalid_bearer"
-    INVALID_EXCHANGE_API_KEY = "invalid_exchange_api_key"
+    INVALID_EXCHANGE_KEY = "invalid_exchange_api_key"
     INVALID_MARGIN_MODE = "invalid_margin_mode"
     INVALID_PARAMETER_PROVIDED = "invalid_parameter_provided"
     JWT_EXPIRED = "jwt_expired"
