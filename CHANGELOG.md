@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v2.4.6 (2025-04-13)
+
+### Bug Fixes
+
+- Fixes config override bug
+  ([`58c096b`](https://github.com/crypticorn-ai/api-client/commit/58c096b98a738c2c318768bae9f28ddb100fe127))
+
+### Documentation
+
+- Extend usage section
+  ([`2887872`](https://github.com/crypticorn-ai/api-client/commit/28878720eeb0ad7461165402c5521258c1c7dc0e))
+
+
 ## v2.4.5 (2025-04-13)
 
 ### Bug Fixes
