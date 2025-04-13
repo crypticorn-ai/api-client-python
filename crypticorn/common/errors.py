@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 class Fallback(EnumMeta):
     """Fallback to UNKNOWN_ERROR for error codes not yet published to PyPI."""
-    
+
     def __getattr__(cls, name):
         # Let Pydantic/internal stuff pass silently ! fragile
         if name.startswith("__"):
