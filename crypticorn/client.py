@@ -106,7 +106,7 @@ class ApiClient:
         new_config = sub_client.config
         for attr in vars(config):
             new_value = getattr(config, attr)
-            if new_value is not None:
+            if new_value:
                 setattr(new_config, attr, new_value)
 
         if sub_client == self.hive:
