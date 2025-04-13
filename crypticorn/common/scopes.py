@@ -6,8 +6,13 @@ logger = logging.getLogger("uvicorn")
 
 class Fallback(EnumMeta):
     """Fallback to no scope for unknown scopes."""
+    # Note: This is a workaround to avoid the AttributeError when an unknown scope is accessed.
+    # As soon as we have stable scopes, we can remove this.
 
     def __getattr__(cls, name):
+        # Let Pydantic/internal stuff pass silently ! fragile
+        if name.startswith("__"):
+            raise AttributeError(name)
         logger.warning(
             f"Unknown scope '{name}' - falling back to no scope - update crypticorn package or check for typos"
         )
