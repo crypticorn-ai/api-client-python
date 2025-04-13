@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.4.5 (2025-04-13)
+
+### Bug Fixes
+
+- Fixes fallback bug with pydantic
+  ([`70d1257`](https://github.com/crypticorn-ai/api-client/commit/70d125723c7e707f765892270e6aa6977b5b25a5))
+
+
 ## v2.4.4 (2025-04-12)
 
 ### Bug Fixes
