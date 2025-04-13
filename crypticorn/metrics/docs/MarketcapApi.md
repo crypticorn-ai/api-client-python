@@ -143,8 +143,8 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.MarketcapApi(api_client)
-    start_timestamp = 1744321265 # int | Start timestamp (optional) (default to 1744321265)
-    end_timestamp = 1744494065 # int | End timestamp (optional) (default to 1744494065)
+    start_timestamp = 1744381723 # int | Start timestamp (optional) (default to 1744381723)
+    end_timestamp = 1744554523 # int | End timestamp (optional) (default to 1744554523)
 
     try:
         # Get Marketcap Between Timestamps
@@ -162,8 +162,8 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **start_timestamp** | **int**| Start timestamp | [optional] [default to 1744321265]
- **end_timestamp** | **int**| End timestamp | [optional] [default to 1744494065]
+ **start_timestamp** | **int**| Start timestamp | [optional] [default to 1744381723]
+ **end_timestamp** | **int**| End timestamp | [optional] [default to 1744554523]
 
 ### Return type
 
@@ -235,8 +235,8 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.MarketcapApi(api_client)
-    start_timestamp = 1744321265 # int | Start timestamp (optional) (default to 1744321265)
-    end_timestamp = 1744494065 # int | End timestamp (optional) (default to 1744494065)
+    start_timestamp = 1744381723 # int | Start timestamp (optional) (default to 1744381723)
+    end_timestamp = 1744554523 # int | End timestamp (optional) (default to 1744554523)
     interval = 1d # str | Interval for which to fetch symbols and marketcap data (optional) (default to 1d)
     market = client.MarketType() # MarketType | Market for which to fetch symbols and marketcap data (optional)
     exchange = 'exchange_example' # str | Exchange for which to fetch symbols and marketcap data (optional)
@@ -257,8 +257,8 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **start_timestamp** | **int**| Start timestamp | [optional] [default to 1744321265]
- **end_timestamp** | **int**| End timestamp | [optional] [default to 1744494065]
+ **start_timestamp** | **int**| Start timestamp | [optional] [default to 1744381723]
+ **end_timestamp** | **int**| End timestamp | [optional] [default to 1744554523]
  **interval** | **str**| Interval for which to fetch symbols and marketcap data | [optional] [default to 1d]
  **market** | [**MarketType**](.md)| Market for which to fetch symbols and marketcap data | [optional] 
  **exchange** | **str**| Exchange for which to fetch symbols and marketcap data | [optional] 
@@ -333,7 +333,7 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.MarketcapApi(api_client)
-    timestamp = 1744494065 # int | Timestamp for which to fetch symbols and OHLCV data (optional) (default to 1744494065)
+    timestamp = 1744554523 # int | Timestamp for which to fetch symbols and OHLCV data (optional) (default to 1744554523)
     timeframe = '1h' # str | Timeframe for OHLCV data (optional) (default to '1h')
     market = client.MarketType() # MarketType | Market for OHLCV data (optional)
     top_n = 10 # int | Number of symbols to fetch (optional) (default to 10)
@@ -355,7 +355,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **timestamp** | **int**| Timestamp for which to fetch symbols and OHLCV data | [optional] [default to 1744494065]
+ **timestamp** | **int**| Timestamp for which to fetch symbols and OHLCV data | [optional] [default to 1744554523]
  **timeframe** | **str**| Timeframe for OHLCV data | [optional] [default to &#39;1h&#39;]
  **market** | [**MarketType**](.md)| Market for OHLCV data | [optional] 
  **top_n** | **int**| Number of symbols to fetch | [optional] [default to 10]

@@ -20,6 +20,8 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from crypticorn.metrics.client.models.market_type import MarketType
+from crypticorn.metrics.client.models.trading_status import TradingStatus
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -35,8 +37,8 @@ class ExchangeMapping(BaseModel):
     pair: StrictStr
     first_trade_timestamp: Optional[datetime]
     last_trade_timestamp: Optional[datetime]
-    status: StrictStr
-    market_type: Optional[StrictStr]
+    status: TradingStatus
+    market_type: Optional[MarketType]
     __properties: ClassVar[List[str]] = [
         "exchange_name",
         "symbol",

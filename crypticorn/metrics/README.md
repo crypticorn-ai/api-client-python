@@ -94,8 +94,8 @@ async with client.ApiClient(configuration) as api_client:
     market = client.MarketType() # MarketType | Market type (spot or futures)
     symbol = 'symbol_example' # str | Symbol to fetch available exchanges for
     interval = client.TimeInterval() # TimeInterval | Interval for which to fetch available exchanges (optional)
-    start_timestamp = 1743811200 # int | Start timestamp for which to fetch available exchanges (defaults to previous 7 day's closing) (optional) (default to 1743811200)
-    end_timestamp = 1744494065 # int | End timestamp for which to fetch available exchanges (optional) (default to 1744494065)
+    start_timestamp = 1743897600 # int | Start timestamp for which to fetch available exchanges (defaults to previous 7 day's closing) (optional) (default to 1743897600)
+    end_timestamp = 1744554523 # int | End timestamp for which to fetch available exchanges (optional) (default to 1744554523)
     quote_currency = 'USDT' # str | Quote currency for which to fetch available exchanges (Use quote currencies endpoint to get available quote currencies) (optional) (default to 'USDT')
     status = client.TradingStatus() # TradingStatus | Trading pair status for which to fetch available exchanges (optional)
 
