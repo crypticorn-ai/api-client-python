@@ -56,7 +56,7 @@ async with client.ApiClient(configuration) as api_client:
     symbol = 'symbol_example' # str | 
     market = client.MarketType() # MarketType | Market (optional)
     period = 15 # int | KER indicator period (optional) (default to 15)
-    timestamp = 1744494065 # int | Timestamp for which to fetch KER indicator (optional) (default to 1744494065)
+    timestamp = 1744554523 # int | Timestamp for which to fetch KER indicator (optional) (default to 1744554523)
 
     try:
         # Get Ker Indicator
@@ -77,7 +77,7 @@ Name | Type | Description  | Notes
  **symbol** | **str**|  | 
  **market** | [**MarketType**](.md)| Market | [optional] 
  **period** | **int**| KER indicator period | [optional] [default to 15]
- **timestamp** | **int**| Timestamp for which to fetch KER indicator | [optional] [default to 1744494065]
+ **timestamp** | **int**| Timestamp for which to fetch KER indicator | [optional] [default to 1744554523]
 
 ### Return type
 
@@ -152,7 +152,7 @@ async with client.ApiClient(configuration) as api_client:
     symbol = 'symbol_example' # str | 
     market = client.MarketType() # MarketType | The market type to use for the SMA indicator (optional)
     period = 15 # int | The period to use for the SMA indicator (optional) (default to 15)
-    timestamp = 1744494065 # int | The timestamp for which to fetch the SMA indicator (optional) (default to 1744494065)
+    timestamp = 1744554523 # int | The timestamp for which to fetch the SMA indicator (optional) (default to 1744554523)
 
     try:
         # Get Sma Indicator
@@ -173,7 +173,7 @@ Name | Type | Description  | Notes
  **symbol** | **str**|  | 
  **market** | [**MarketType**](.md)| The market type to use for the SMA indicator | [optional] 
  **period** | **int**| The period to use for the SMA indicator | [optional] [default to 15]
- **timestamp** | **int**| The timestamp for which to fetch the SMA indicator | [optional] [default to 1744494065]
+ **timestamp** | **int**| The timestamp for which to fetch the SMA indicator | [optional] [default to 1744554523]
 
 ### Return type
 

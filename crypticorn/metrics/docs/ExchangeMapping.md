@@ -11,8 +11,8 @@ Name | Type | Description | Notes
 **pair** | **str** |  | 
 **first_trade_timestamp** | **datetime** |  | 
 **last_trade_timestamp** | **datetime** |  | 
-**status** | **str** |  | 
-**market_type** | **str** |  | 
+**status** | [**TradingStatus**](TradingStatus.md) |  | 
+**market_type** | [**MarketType**](MarketType.md) |  | 
 
 ## Example
 
