@@ -184,7 +184,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_product**
-> object update_product(id, partial_product_update_model)
+> object update_product(id, product_update_model)
 
 Update Product
 
@@ -197,7 +197,7 @@ Update an existing product
 
 ```python
 import client
-from client.models.partial_product_update_model import PartialProductUpdateModel
+from client.models.product_update_model import ProductUpdateModel
 from client.rest import ApiException
 from pprint import pprint
 
@@ -228,11 +228,11 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.ProductsApi(api_client)
     id = 'id_example' # str | The ID of the product to update
-    partial_product_update_model = client.PartialProductUpdateModel() # PartialProductUpdateModel | 
+    product_update_model = client.ProductUpdateModel() # ProductUpdateModel | 
 
     try:
         # Update Product
-        api_response = await api_instance.update_product(id, partial_product_update_model)
+        api_response = await api_instance.update_product(id, product_update_model)
         print("The response of ProductsApi->update_product:\n")
         pprint(api_response)
     except Exception as e:
@@ -247,7 +247,7 @@ async with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| The ID of the product to update | 
- **partial_product_update_model** | [**PartialProductUpdateModel**](PartialProductUpdateModel.md)|  | 
+ **product_update_model** | [**ProductUpdateModel**](ProductUpdateModel.md)|  | 
 
 ### Return type
 

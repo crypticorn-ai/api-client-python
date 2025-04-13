@@ -168,7 +168,8 @@ This endpoint does not need any parameter.
 
 Handle Webhook
 
-Handle NOWPayments webhook notifications (IPN). Validates the signature, updates the payment status and creates a product subscription if the payment is successful.
+Handle NOWPayments webhook notifications (IPN).
+Validates the signature, updates the payment status and creates a product subscription if the payment is successful.
 
 ### Example
 

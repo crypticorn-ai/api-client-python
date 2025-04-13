@@ -3,7 +3,7 @@ from crypticorn.auth import CreateApiKeyRequest
 from crypticorn.common import BaseUrl, Scope
 from crypticorn.common import MarketType
 from crypticorn.hive import Configuration as HiveConfig
-from crypticorn.pay import ProductModel
+from crypticorn.pay import ProductModel, Pr
 from crypticorn import ApiClient
 from crypticorn.trade import ExchangeKeyModel
 import asyncio

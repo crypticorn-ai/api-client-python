@@ -6,12 +6,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** |  | [optional] 
-**name** | **str** |  | 
-**price** | **float** |  | 
-**scopes** | [**List[Scope]**](Scope.md) |  | 
-**duration** | **int** |  | 
-**description** | **str** |  | 
-**is_active** | **bool** |  | 
+**name** | **str** |  | [optional] 
+**price** | **float** |  | [optional] 
+**scopes** | [**List[Scope]**](Scope.md) |  | [optional] 
+**duration** | **int** |  | [optional] 
+**description** | **str** |  | [optional] 
+**is_active** | **bool** |  | [optional] 
 
 ## Example
 

@@ -17,10 +17,10 @@ client/models/now_create_invoice_res.py
 client/models/now_fee_structure.py
 client/models/now_payment_status.py
 client/models/now_webhook_payload.py
-client/models/partial_product_update_model.py
 client/models/payment_status.py
 client/models/product_model.py
 client/models/product_subs_model.py
+client/models/product_update_model.py
 client/models/scope.py
 client/models/services.py
 client/models/unified_payment_model.py
@@ -36,11 +36,11 @@ docs/NowCreateInvoiceRes.md
 docs/NowFeeStructure.md
 docs/NowPaymentStatus.md
 docs/NowWebhookPayload.md
-docs/PartialProductUpdateModel.md
 docs/PaymentStatus.md
 docs/PaymentsApi.md
 docs/ProductModel.md
 docs/ProductSubsModel.md
+docs/ProductUpdateModel.md
 docs/ProductsApi.md
 docs/Scope.md
 docs/Services.md
