@@ -1,4 +1,4 @@
-from enum import Enum, EnumMeta
+from enum import Enum, EnumMeta, StrEnum
 import logging
 from fastapi import status
 
@@ -14,7 +14,7 @@ class Fallback(EnumMeta):
         return cls.UNKNOWN_ERROR
 
 
-class ApiErrorType(str, Enum):
+class ApiErrorType(StrEnum):
     """Type of API error"""
 
     USER_ERROR = "user error"
@@ -27,7 +27,7 @@ class ApiErrorType(str, Enum):
     """error that does not need to be handled or does not affect the program or is a placeholder."""
 
 
-class ApiErrorIdentifier(str, Enum):
+class ApiErrorIdentifier(StrEnum):
     """API error identifiers"""
 
     ALLOCATION_BELOW_EXPOSURE = "allocation_below_current_exposure"
@@ -97,7 +97,7 @@ class ApiErrorIdentifier(str, Enum):
     URL_NOT_FOUND = "requested_resource_not_found"
 
 
-class ApiErrorLevel(str, Enum):
+class ApiErrorLevel(StrEnum):
     """API error levels"""
 
     ERROR = "error"

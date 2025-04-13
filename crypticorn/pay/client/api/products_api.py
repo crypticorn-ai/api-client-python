@@ -19,10 +19,8 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt, StrictStr
 from typing import Any, List, Optional
 from typing_extensions import Annotated
-from crypticorn.pay.client.models.partial_product_update_model import (
-    PartialProductUpdateModel,
-)
 from crypticorn.pay.client.models.product_model import ProductModel
+from crypticorn.pay.client.models.product_update_model import ProductUpdateModel
 
 from crypticorn.pay.client.api_client import ApiClient, RequestSerialized
 from crypticorn.pay.client.api_response import ApiResponse
@@ -594,7 +592,7 @@ class ProductsApi:
     async def update_product(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the product to update")],
-        partial_product_update_model: PartialProductUpdateModel,
+        product_update_model: ProductUpdateModel,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -613,8 +611,8 @@ class ProductsApi:
 
         :param id: The ID of the product to update (required)
         :type id: str
-        :param partial_product_update_model: (required)
-        :type partial_product_update_model: PartialProductUpdateModel
+        :param product_update_model: (required)
+        :type product_update_model: ProductUpdateModel
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -639,7 +637,7 @@ class ProductsApi:
 
         _param = self._update_product_serialize(
             id=id,
-            partial_product_update_model=partial_product_update_model,
+            product_update_model=product_update_model,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -663,7 +661,7 @@ class ProductsApi:
     async def update_product_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the product to update")],
-        partial_product_update_model: PartialProductUpdateModel,
+        product_update_model: ProductUpdateModel,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -682,8 +680,8 @@ class ProductsApi:
 
         :param id: The ID of the product to update (required)
         :type id: str
-        :param partial_product_update_model: (required)
-        :type partial_product_update_model: PartialProductUpdateModel
+        :param product_update_model: (required)
+        :type product_update_model: ProductUpdateModel
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -708,7 +706,7 @@ class ProductsApi:
 
         _param = self._update_product_serialize(
             id=id,
-            partial_product_update_model=partial_product_update_model,
+            product_update_model=product_update_model,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -732,7 +730,7 @@ class ProductsApi:
     async def update_product_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the product to update")],
-        partial_product_update_model: PartialProductUpdateModel,
+        product_update_model: ProductUpdateModel,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -751,8 +749,8 @@ class ProductsApi:
 
         :param id: The ID of the product to update (required)
         :type id: str
-        :param partial_product_update_model: (required)
-        :type partial_product_update_model: PartialProductUpdateModel
+        :param product_update_model: (required)
+        :type product_update_model: ProductUpdateModel
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -777,7 +775,7 @@ class ProductsApi:
 
         _param = self._update_product_serialize(
             id=id,
-            partial_product_update_model=partial_product_update_model,
+            product_update_model=product_update_model,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -796,7 +794,7 @@ class ProductsApi:
     def _update_product_serialize(
         self,
         id,
-        partial_product_update_model,
+        product_update_model,
         _request_auth,
         _content_type,
         _headers,
@@ -823,8 +821,8 @@ class ProductsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if partial_product_update_model is not None:
-            _body_params = partial_product_update_model
+        if product_update_model is not None:
+            _body_params = product_update_model
 
         # set the HTTP header `Accept`
         if "Accept" not in _header_params:

@@ -14,9 +14,9 @@ The permission scopes for the API.
 
 * `WRITE_COLON_TRADE_COLON_BOTS` (value: `'write:trade:bots'`)
 
-* `READ_COLON_TRADE_COLON_API_KEYS` (value: `'read:trade:api_keys'`)
+* `READ_COLON_TRADE_COLON_EXCHANGEKEYS` (value: `'read:trade:exchangekeys'`)
 
-* `WRITE_COLON_TRADE_COLON_API_KEYS` (value: `'write:trade:api_keys'`)
+* `WRITE_COLON_TRADE_COLON_EXCHANGEKEYS` (value: `'write:trade:exchangekeys'`)
 
 * `READ_COLON_TRADE_COLON_ORDERS` (value: `'read:trade:orders'`)
 

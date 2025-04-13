@@ -21,12 +21,10 @@ from crypticorn.pay.client.models.now_create_invoice_res import NowCreateInvoice
 from crypticorn.pay.client.models.now_fee_structure import NowFeeStructure
 from crypticorn.pay.client.models.now_payment_status import NowPaymentStatus
 from crypticorn.pay.client.models.now_webhook_payload import NowWebhookPayload
-from crypticorn.pay.client.models.partial_product_update_model import (
-    PartialProductUpdateModel,
-)
 from crypticorn.pay.client.models.payment_status import PaymentStatus
 from crypticorn.pay.client.models.product_model import ProductModel
 from crypticorn.pay.client.models.product_subs_model import ProductSubsModel
+from crypticorn.pay.client.models.product_update_model import ProductUpdateModel
 from crypticorn.pay.client.models.scope import Scope
 from crypticorn.pay.client.models.services import Services
 from crypticorn.pay.client.models.unified_payment_model import UnifiedPaymentModel

@@ -16,7 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictStr
+from pydantic import Field, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
 from crypticorn.pay.client.models.product_subs_model import ProductSubsModel
@@ -298,6 +298,18 @@ class PaymentsApi:
     @validate_call
     async def get_payment_history(
         self,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Limit the number of payments returned. 0 means no limit."
+            ),
+        ] = None,
+        offset: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Offset the number of payments returned. 0 means no offset."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -314,6 +326,10 @@ class PaymentsApi:
 
         Get the combined payment history for a user across all payment services.
 
+        :param limit: Limit the number of payments returned. 0 means no limit.
+        :type limit: int
+        :param offset: Offset the number of payments returned. 0 means no offset.
+        :type offset: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -337,6 +353,8 @@ class PaymentsApi:
         """  # noqa: E501
 
         _param = self._get_payment_history_serialize(
+            limit=limit,
+            offset=offset,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -345,6 +363,7 @@ class PaymentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[UnifiedPaymentModel]",
+            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -358,6 +377,18 @@ class PaymentsApi:
     @validate_call
     async def get_payment_history_with_http_info(
         self,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Limit the number of payments returned. 0 means no limit."
+            ),
+        ] = None,
+        offset: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Offset the number of payments returned. 0 means no offset."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -374,6 +405,10 @@ class PaymentsApi:
 
         Get the combined payment history for a user across all payment services.
 
+        :param limit: Limit the number of payments returned. 0 means no limit.
+        :type limit: int
+        :param offset: Offset the number of payments returned. 0 means no offset.
+        :type offset: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -397,6 +432,8 @@ class PaymentsApi:
         """  # noqa: E501
 
         _param = self._get_payment_history_serialize(
+            limit=limit,
+            offset=offset,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -405,6 +442,7 @@ class PaymentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[UnifiedPaymentModel]",
+            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -418,6 +456,18 @@ class PaymentsApi:
     @validate_call
     async def get_payment_history_without_preload_content(
         self,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Limit the number of payments returned. 0 means no limit."
+            ),
+        ] = None,
+        offset: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Offset the number of payments returned. 0 means no offset."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -434,6 +484,10 @@ class PaymentsApi:
 
         Get the combined payment history for a user across all payment services.
 
+        :param limit: Limit the number of payments returned. 0 means no limit.
+        :type limit: int
+        :param offset: Offset the number of payments returned. 0 means no offset.
+        :type offset: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -457,6 +511,8 @@ class PaymentsApi:
         """  # noqa: E501
 
         _param = self._get_payment_history_serialize(
+            limit=limit,
+            offset=offset,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -465,6 +521,7 @@ class PaymentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[UnifiedPaymentModel]",
+            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -473,6 +530,8 @@ class PaymentsApi:
 
     def _get_payment_history_serialize(
         self,
+        limit,
+        offset,
         _request_auth,
         _content_type,
         _headers,
@@ -494,6 +553,14 @@ class PaymentsApi:
 
         # process the path parameters
         # process the query parameters
+        if limit is not None:
+
+            _query_params.append(("limit", limit))
+
+        if offset is not None:
+
+            _query_params.append(("offset", offset))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter

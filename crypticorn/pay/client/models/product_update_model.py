@@ -37,12 +37,12 @@ class ProductUpdateModel(BaseModel):
     """  # noqa: E501
 
     id: Optional[StrictStr] = None
-    name: Optional[StrictStr]
-    price: Optional[Union[StrictFloat, StrictInt]]
-    scopes: Optional[List[Scope]]
-    duration: Optional[StrictInt]
-    description: Optional[StrictStr]
-    is_active: Optional[StrictBool]
+    name: Optional[StrictStr] = None
+    price: Optional[Union[StrictFloat, StrictInt]] = None
+    scopes: Optional[List[Scope]] = None
+    duration: Optional[StrictInt] = None
+    description: Optional[StrictStr] = None
+    is_active: Optional[StrictBool] = None
     __properties: ClassVar[List[str]] = [
         "id",
         "name",

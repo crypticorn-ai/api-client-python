@@ -4,7 +4,7 @@ import pyperclip
 
 def sort_api_errors(file_content, class_name="ApiErrorIdentifier"):
     # Find the start of the ApiError class definition
-    class_start = file_content.find(f"class {class_name}(str, Enum):")
+    class_start = file_content.find(f"class {class_name}(StrEnum):")
     if class_start == -1:
         return f"Could not find {class_name} class"
 
@@ -23,7 +23,7 @@ def sort_api_errors(file_content, class_name="ApiErrorIdentifier"):
     sorted_entries = sorted(enum_entries, key=lambda x: x[0])
 
     # Reconstruct the class content
-    class_header = f"class {class_name}(str, Enum):\n\n"
+    class_header = f"class {class_name}(StrEnum):\n\n"
     sorted_content = class_header + "\n    ".join(entry[1] for entry in sorted_entries)
 
     return sorted_content

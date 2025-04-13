@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_payment_history**
-> List[UnifiedPaymentModel] get_payment_history()
+> List[UnifiedPaymentModel] get_payment_history(limit=limit, offset=offset)
 
 Get Payments
 
@@ -125,10 +125,12 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.PaymentsApi(api_client)
+    limit = 0 # int | Limit the number of payments returned. 0 means no limit. (optional) (default to 0)
+    offset = 0 # int | Offset the number of payments returned. 0 means no offset. (optional) (default to 0)
 
     try:
         # Get Payments
-        api_response = await api_instance.get_payment_history()
+        api_response = await api_instance.get_payment_history(limit=limit, offset=offset)
         print("The response of PaymentsApi->get_payment_history:\n")
         pprint(api_response)
     except Exception as e:
@@ -139,7 +141,11 @@ async with client.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int**| Limit the number of payments returned. 0 means no limit. | [optional] [default to 0]
+ **offset** | **int**| Offset the number of payments returned. 0 means no offset. | [optional] [default to 0]
 
 ### Return type
 
@@ -159,6 +165,7 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
+**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
