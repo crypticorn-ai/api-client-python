@@ -58,7 +58,12 @@ client = ApiClient(base_url=BaseUrl.Prod, api_key="your-api-key")
 asyncio.run(client.pay.models.get_products())
 asyncio.run(client.close())
 ```
+...or wrapped in a function
+async def main():
+    await client.pay.products.get_products()
 
+asyncio.run(main())
+asyncio.run(client.close())
 ## Response Types
 
 There are three different available output formats you can choose from:
