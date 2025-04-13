@@ -17,10 +17,11 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictInt, StrictStr
-from typing import Any, List, Optional
+from typing import List, Optional
 from typing_extensions import Annotated
-from crypticorn.pay.client.models.product_model import ProductModel
-from crypticorn.pay.client.models.product_update_model import ProductUpdateModel
+from crypticorn.pay.client.models.product_create import ProductCreate
+from crypticorn.pay.client.models.product_read import ProductRead
+from crypticorn.pay.client.models.product_update import ProductUpdate
 
 from crypticorn.pay.client.api_client import ApiClient, RequestSerialized
 from crypticorn.pay.client.api_response import ApiResponse
@@ -42,7 +43,7 @@ class ProductsApi:
     @validate_call
     async def create_product(
         self,
-        product_model: ProductModel,
+        product_create: ProductCreate,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -54,13 +55,13 @@ class ProductsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> ProductRead:
         """Create Product
 
         Create a new product
 
-        :param product_model: (required)
-        :type product_model: ProductModel
+        :param product_create: (required)
+        :type product_create: ProductCreate
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -84,7 +85,7 @@ class ProductsApi:
         """  # noqa: E501
 
         _param = self._create_product_serialize(
-            product_model=product_model,
+            product_create=product_create,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -92,7 +93,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "201": "ProductRead",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -107,7 +108,7 @@ class ProductsApi:
     @validate_call
     async def create_product_with_http_info(
         self,
-        product_model: ProductModel,
+        product_create: ProductCreate,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -119,13 +120,13 @@ class ProductsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> ApiResponse[ProductRead]:
         """Create Product
 
         Create a new product
 
-        :param product_model: (required)
-        :type product_model: ProductModel
+        :param product_create: (required)
+        :type product_create: ProductCreate
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -149,7 +150,7 @@ class ProductsApi:
         """  # noqa: E501
 
         _param = self._create_product_serialize(
-            product_model=product_model,
+            product_create=product_create,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -157,7 +158,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "201": "ProductRead",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -172,7 +173,7 @@ class ProductsApi:
     @validate_call
     async def create_product_without_preload_content(
         self,
-        product_model: ProductModel,
+        product_create: ProductCreate,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -189,8 +190,8 @@ class ProductsApi:
 
         Create a new product
 
-        :param product_model: (required)
-        :type product_model: ProductModel
+        :param product_create: (required)
+        :type product_create: ProductCreate
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -214,7 +215,7 @@ class ProductsApi:
         """  # noqa: E501
 
         _param = self._create_product_serialize(
-            product_model=product_model,
+            product_create=product_create,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -222,7 +223,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "201": "ProductRead",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -232,7 +233,7 @@ class ProductsApi:
 
     def _create_product_serialize(
         self,
-        product_model,
+        product_create,
         _request_auth,
         _content_type,
         _headers,
@@ -257,8 +258,8 @@ class ProductsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if product_model is not None:
-            _body_params = product_model
+        if product_create is not None:
+            _body_params = product_create
 
         # set the HTTP header `Accept`
         if "Accept" not in _header_params:
@@ -320,7 +321,7 @@ class ProductsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[ProductModel]:
+    ) -> List[ProductRead]:
         """Get Products
 
         Get all software products from Crypticorn
@@ -361,7 +362,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[ProductModel]",
+            "200": "List[ProductRead]",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -399,7 +400,7 @@ class ProductsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[ProductModel]]:
+    ) -> ApiResponse[List[ProductRead]]:
         """Get Products
 
         Get all software products from Crypticorn
@@ -440,7 +441,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[ProductModel]",
+            "200": "List[ProductRead]",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -519,7 +520,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[ProductModel]",
+            "200": "List[ProductRead]",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -592,7 +593,7 @@ class ProductsApi:
     async def update_product(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the product to update")],
-        product_update_model: ProductUpdateModel,
+        product_update: ProductUpdate,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -604,15 +605,15 @@ class ProductsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> ProductRead:
         """Update Product
 
         Update an existing product
 
         :param id: The ID of the product to update (required)
         :type id: str
-        :param product_update_model: (required)
-        :type product_update_model: ProductUpdateModel
+        :param product_update: (required)
+        :type product_update: ProductUpdate
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -637,7 +638,7 @@ class ProductsApi:
 
         _param = self._update_product_serialize(
             id=id,
-            product_update_model=product_update_model,
+            product_update=product_update,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -645,7 +646,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "200": "ProductRead",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -661,7 +662,7 @@ class ProductsApi:
     async def update_product_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the product to update")],
-        product_update_model: ProductUpdateModel,
+        product_update: ProductUpdate,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -673,15 +674,15 @@ class ProductsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> ApiResponse[ProductRead]:
         """Update Product
 
         Update an existing product
 
         :param id: The ID of the product to update (required)
         :type id: str
-        :param product_update_model: (required)
-        :type product_update_model: ProductUpdateModel
+        :param product_update: (required)
+        :type product_update: ProductUpdate
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -706,7 +707,7 @@ class ProductsApi:
 
         _param = self._update_product_serialize(
             id=id,
-            product_update_model=product_update_model,
+            product_update=product_update,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -714,7 +715,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "200": "ProductRead",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -730,7 +731,7 @@ class ProductsApi:
     async def update_product_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the product to update")],
-        product_update_model: ProductUpdateModel,
+        product_update: ProductUpdate,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -749,8 +750,8 @@ class ProductsApi:
 
         :param id: The ID of the product to update (required)
         :type id: str
-        :param product_update_model: (required)
-        :type product_update_model: ProductUpdateModel
+        :param product_update: (required)
+        :type product_update: ProductUpdate
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -775,7 +776,7 @@ class ProductsApi:
 
         _param = self._update_product_serialize(
             id=id,
-            product_update_model=product_update_model,
+            product_update=product_update,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -783,7 +784,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "200": "ProductRead",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -794,7 +795,7 @@ class ProductsApi:
     def _update_product_serialize(
         self,
         id,
-        product_update_model,
+        product_update,
         _request_auth,
         _content_type,
         _headers,
@@ -821,8 +822,8 @@ class ProductsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if product_update_model is not None:
-            _body_params = product_update_model
+        if product_update is not None:
+            _body_params = product_update
 
         # set the HTTP header `Accept`
         if "Accept" not in _header_params:

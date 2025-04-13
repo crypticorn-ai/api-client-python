@@ -1,34 +1,19 @@
 # Payment
 
-Model representing a single payment.
+Combined payment model across all services
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**payment_id** | **int** | Unique payment identifier | 
-**invoice_id** | **int** |  | [optional] 
-**payment_status** | **str** | Current payment status | 
-**pay_address** | **str** | Payment destination address | 
-**payin_extra_id** | **str** |  | [optional] 
-**price_amount** | **float** | Original price amount | 
-**price_currency** | **str** | Original price currency | 
-**pay_amount** | **float** | Amount to pay | 
-**actually_paid** | **float** | Actually paid amount | 
-**pay_currency** | **str** | Payment currency | 
-**order_id** | **str** |  | [optional] 
-**order_description** | **str** |  | [optional] 
-**purchase_id** | **int** |  | [optional] 
-**outcome_amount** | **float** |  | [optional] 
-**outcome_currency** | **str** |  | [optional] 
-**payout_hash** | **str** |  | [optional] 
-**payin_hash** | **str** |  | [optional] 
-**created_at** | **str** | Payment creation timestamp | 
-**updated_at** | **str** | Payment last update timestamp | 
-**type** | **str** | Type of payment (e.g., crypto2crypto) | 
-**payment_extra_ids** | **List[int]** |  | [optional] 
-**parent_payment_id** | **int** |  | [optional] 
-**origin_type** | **str** |  | [optional] 
+**id** | **str** | Payment ID | 
+**product_id** | **str** | Product ID | 
+**var_date** | **int** | Payment date in seconds | 
+**amount** | **float** | Payment amount | 
+**currency** | **str** | Payment currency | 
+**status** | [**PaymentStatus**](PaymentStatus.md) |  | 
+**service** | [**Services**](Services.md) | Payment service | 
+**market** | **str** | Payment market | 
 
 ## Example
 

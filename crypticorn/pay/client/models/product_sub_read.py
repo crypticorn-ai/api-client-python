@@ -17,36 +17,30 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Union
-from crypticorn.pay.client.models.payment_status import PaymentStatus
-from crypticorn.pay.client.models.services import Services
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class Payment(BaseModel):
+class ProductSubRead(BaseModel):
     """
-    Combined payment model across all services
+    Model for reading a product subscription
     """  # noqa: E501
 
-    id: StrictStr = Field(description="Payment ID")
+    user_id: StrictStr = Field(description="User ID")
     product_id: StrictStr = Field(description="Product ID")
-    var_date: StrictInt = Field(description="Payment date in seconds", alias="date")
-    amount: Union[StrictFloat, StrictInt] = Field(description="Payment amount")
-    currency: StrictStr = Field(description="Payment currency")
-    status: PaymentStatus
-    service: Services = Field(description="Payment service")
-    market: StrictStr = Field(description="Payment market")
+    access_from: StrictInt = Field(description="Access from timestamp in milliseconds")
+    access_until: StrictInt = Field(
+        description="Access until timestamp in milliseconds. 0 means unlimited."
+    )
+    id: StrictStr = Field(description="UID of the product subscription")
     __properties: ClassVar[List[str]] = [
-        "id",
+        "user_id",
         "product_id",
-        "date",
-        "amount",
-        "currency",
-        "status",
-        "service",
-        "market",
+        "access_from",
+        "access_until",
+        "id",
     ]
 
     model_config = ConfigDict(
@@ -66,7 +60,7 @@ class Payment(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Payment from a JSON string"""
+        """Create an instance of ProductSubRead from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -90,7 +84,7 @@ class Payment(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Payment from a dict"""
+        """Create an instance of ProductSubRead from a dict"""
         if obj is None:
             return None
 
@@ -99,14 +93,11 @@ class Payment(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "id": obj.get("id"),
+                "user_id": obj.get("user_id"),
                 "product_id": obj.get("product_id"),
-                "date": obj.get("date"),
-                "amount": obj.get("amount"),
-                "currency": obj.get("currency"),
-                "status": obj.get("status"),
-                "service": obj.get("service"),
-                "market": obj.get("market"),
+                "access_from": obj.get("access_from"),
+                "access_until": obj.get("access_until"),
+                "id": obj.get("id"),
             }
         )
         return _obj

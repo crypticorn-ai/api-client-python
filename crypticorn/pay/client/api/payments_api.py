@@ -19,8 +19,8 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
-from crypticorn.pay.client.models.product_subs_model import ProductSubsModel
-from crypticorn.pay.client.models.unified_payment_model import UnifiedPaymentModel
+from crypticorn.pay.client.models.payment import Payment
+from crypticorn.pay.client.models.product_sub_read import ProductSubRead
 
 from crypticorn.pay.client.api_client import ApiClient, RequestSerialized
 from crypticorn.pay.client.api_response import ApiResponse
@@ -57,7 +57,7 @@ class PaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> UnifiedPaymentModel:
+    ) -> Payment:
         """Get Latest Payment From Invoice
 
         Get the latest payment by a user from an invoice
@@ -95,7 +95,7 @@ class PaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "UnifiedPaymentModel",
+            "200": "Payment",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -125,7 +125,7 @@ class PaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[UnifiedPaymentModel]:
+    ) -> ApiResponse[Payment]:
         """Get Latest Payment From Invoice
 
         Get the latest payment by a user from an invoice
@@ -163,7 +163,7 @@ class PaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "UnifiedPaymentModel",
+            "200": "Payment",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -231,7 +231,7 @@ class PaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "UnifiedPaymentModel",
+            "200": "Payment",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -321,7 +321,7 @@ class PaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[UnifiedPaymentModel]:
+    ) -> List[Payment]:
         """Get Payments
 
         Get the combined payment history for a user across all payment services.
@@ -362,7 +362,7 @@ class PaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[UnifiedPaymentModel]",
+            "200": "List[Payment]",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -400,7 +400,7 @@ class PaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[UnifiedPaymentModel]]:
+    ) -> ApiResponse[List[Payment]]:
         """Get Payments
 
         Get the combined payment history for a user across all payment services.
@@ -441,7 +441,7 @@ class PaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[UnifiedPaymentModel]",
+            "200": "List[Payment]",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -520,7 +520,7 @@ class PaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[UnifiedPaymentModel]",
+            "200": "List[Payment]",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -609,7 +609,7 @@ class PaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[ProductSubsModel]:
+    ) -> List[ProductSubRead]:
         """Get Subscriptions
 
         Get all subscriptions for a user. Subscriptions are the products a user has subscribed to. Returns both active and inactive subscriptions.
@@ -647,7 +647,7 @@ class PaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[ProductSubsModel]",
+            "200": "List[ProductSubRead]",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -679,7 +679,7 @@ class PaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[ProductSubsModel]]:
+    ) -> ApiResponse[List[ProductSubRead]]:
         """Get Subscriptions
 
         Get all subscriptions for a user. Subscriptions are the products a user has subscribed to. Returns both active and inactive subscriptions.
@@ -717,7 +717,7 @@ class PaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[ProductSubsModel]",
+            "200": "List[ProductSubRead]",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
@@ -787,7 +787,7 @@ class PaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[ProductSubsModel]",
+            "200": "List[ProductSubRead]",
             "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(

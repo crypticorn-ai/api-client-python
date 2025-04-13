@@ -17,36 +17,43 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Union
-from crypticorn.pay.client.models.payment_status import PaymentStatus
-from crypticorn.pay.client.models.services import Services
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictBool,
+    StrictFloat,
+    StrictInt,
+    StrictStr,
+)
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from crypticorn.pay.client.models.scope import Scope
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class Payment(BaseModel):
+class ProductRead(BaseModel):
     """
-    Combined payment model across all services
+    Model for reading a product
     """  # noqa: E501
 
-    id: StrictStr = Field(description="Payment ID")
-    product_id: StrictStr = Field(description="Product ID")
-    var_date: StrictInt = Field(description="Payment date in seconds", alias="date")
-    amount: Union[StrictFloat, StrictInt] = Field(description="Payment amount")
-    currency: StrictStr = Field(description="Payment currency")
-    status: PaymentStatus
-    service: Services = Field(description="Payment service")
-    market: StrictStr = Field(description="Payment market")
+    name: StrictStr = Field(description="Product name")
+    price: Union[StrictFloat, StrictInt] = Field(description="Product price")
+    scopes: Optional[List[Scope]] = None
+    duration: StrictInt = Field(
+        description="Product duration in days. 0 means unlimited."
+    )
+    description: StrictStr = Field(description="Product description")
+    is_active: StrictBool = Field(description="Product is active")
+    id: StrictStr = Field(description="UID of the product")
     __properties: ClassVar[List[str]] = [
+        "name",
+        "price",
+        "scopes",
+        "duration",
+        "description",
+        "is_active",
         "id",
-        "product_id",
-        "date",
-        "amount",
-        "currency",
-        "status",
-        "service",
-        "market",
     ]
 
     model_config = ConfigDict(
@@ -66,7 +73,7 @@ class Payment(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Payment from a JSON string"""
+        """Create an instance of ProductRead from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -86,11 +93,16 @@ class Payment(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if scopes (nullable) is None
+        # and model_fields_set contains the field
+        if self.scopes is None and "scopes" in self.model_fields_set:
+            _dict["scopes"] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Payment from a dict"""
+        """Create an instance of ProductRead from a dict"""
         if obj is None:
             return None
 
@@ -99,14 +111,13 @@ class Payment(BaseModel):
 
         _obj = cls.model_validate(
             {
+                "name": obj.get("name"),
+                "price": obj.get("price"),
+                "scopes": obj.get("scopes"),
+                "duration": obj.get("duration"),
+                "description": obj.get("description"),
+                "is_active": obj.get("is_active"),
                 "id": obj.get("id"),
-                "product_id": obj.get("product_id"),
-                "date": obj.get("date"),
-                "amount": obj.get("amount"),
-                "currency": obj.get("currency"),
-                "status": obj.get("status"),
-                "service": obj.get("service"),
-                "market": obj.get("market"),
             }
         )
         return _obj

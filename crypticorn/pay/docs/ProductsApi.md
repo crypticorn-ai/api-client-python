@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 
 # **create_product**
-> object create_product(product_model)
+> ProductRead create_product(product_create)
 
 Create Product
 
@@ -23,7 +23,8 @@ Create a new product
 
 ```python
 import client
-from client.models.product_model import ProductModel
+from client.models.product_create import ProductCreate
+from client.models.product_read import ProductRead
 from client.rest import ApiException
 from pprint import pprint
 
@@ -53,11 +54,11 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.ProductsApi(api_client)
-    product_model = client.ProductModel() # ProductModel | 
+    product_create = client.ProductCreate() # ProductCreate | 
 
     try:
         # Create Product
-        api_response = await api_instance.create_product(product_model)
+        api_response = await api_instance.create_product(product_create)
         print("The response of ProductsApi->create_product:\n")
         pprint(api_response)
     except Exception as e:
@@ -71,11 +72,11 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **product_model** | [**ProductModel**](ProductModel.md)|  | 
+ **product_create** | [**ProductCreate**](ProductCreate.md)|  | 
 
 ### Return type
 
-**object**
+[**ProductRead**](ProductRead.md)
 
 ### Authorization
 
@@ -90,13 +91,13 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful Response |  -  |
+**201** | Successful Response |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_products**
-> List[ProductModel] get_products(limit=limit, offset=offset)
+> List[ProductRead] get_products(limit=limit, offset=offset)
 
 Get Products
 
@@ -109,7 +110,7 @@ Get all software products from Crypticorn
 
 ```python
 import client
-from client.models.product_model import ProductModel
+from client.models.product_read import ProductRead
 from client.rest import ApiException
 from pprint import pprint
 
@@ -163,7 +164,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List[ProductModel]**](ProductModel.md)
+[**List[ProductRead]**](ProductRead.md)
 
 ### Authorization
 
@@ -184,7 +185,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_product**
-> object update_product(id, product_update_model)
+> ProductRead update_product(id, product_update)
 
 Update Product
 
@@ -197,7 +198,8 @@ Update an existing product
 
 ```python
 import client
-from client.models.product_update_model import ProductUpdateModel
+from client.models.product_read import ProductRead
+from client.models.product_update import ProductUpdate
 from client.rest import ApiException
 from pprint import pprint
 
@@ -228,11 +230,11 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.ProductsApi(api_client)
     id = 'id_example' # str | The ID of the product to update
-    product_update_model = client.ProductUpdateModel() # ProductUpdateModel | 
+    product_update = client.ProductUpdate() # ProductUpdate | 
 
     try:
         # Update Product
-        api_response = await api_instance.update_product(id, product_update_model)
+        api_response = await api_instance.update_product(id, product_update)
         print("The response of ProductsApi->update_product:\n")
         pprint(api_response)
     except Exception as e:
@@ -247,11 +249,11 @@ async with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **str**| The ID of the product to update | 
- **product_update_model** | [**ProductUpdateModel**](ProductUpdateModel.md)|  | 
+ **product_update** | [**ProductUpdate**](ProductUpdate.md)|  | 
 
 ### Return type
 
-**object**
+[**ProductRead**](ProductRead.md)
 
 ### Authorization
 

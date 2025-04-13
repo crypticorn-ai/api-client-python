@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 
 # **get_latest_payment_from_invoice**
-> UnifiedPaymentModel get_latest_payment_from_invoice(invoice_id)
+> Payment get_latest_payment_from_invoice(invoice_id)
 
 Get Latest Payment From Invoice
 
@@ -22,7 +22,7 @@ Get the latest payment by a user from an invoice
 
 ```python
 import client
-from client.models.unified_payment_model import UnifiedPaymentModel
+from client.models.payment import Payment
 from client.rest import ApiException
 from pprint import pprint
 
@@ -68,7 +68,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**UnifiedPaymentModel**](UnifiedPaymentModel.md)
+[**Payment**](Payment.md)
 
 ### Authorization
 
@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_payment_history**
-> List[UnifiedPaymentModel] get_payment_history(limit=limit, offset=offset)
+> List[Payment] get_payment_history(limit=limit, offset=offset)
 
 Get Payments
 
@@ -101,7 +101,7 @@ Get the combined payment history for a user across all payment services.
 
 ```python
 import client
-from client.models.unified_payment_model import UnifiedPaymentModel
+from client.models.payment import Payment
 from client.rest import ApiException
 from pprint import pprint
 
@@ -149,7 +149,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List[UnifiedPaymentModel]**](UnifiedPaymentModel.md)
+[**List[Payment]**](Payment.md)
 
 ### Authorization
 
@@ -170,7 +170,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_subscriptions**
-> List[ProductSubsModel] get_subscriptions(user_id=user_id)
+> List[ProductSubRead] get_subscriptions(user_id=user_id)
 
 Get Subscriptions
 
@@ -183,7 +183,7 @@ Get all subscriptions for a user. Subscriptions are the products a user has subs
 
 ```python
 import client
-from client.models.product_subs_model import ProductSubsModel
+from client.models.product_sub_read import ProductSubRead
 from client.rest import ApiException
 from pprint import pprint
 
@@ -235,7 +235,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List[ProductSubsModel]**](ProductSubsModel.md)
+[**List[ProductSubRead]**](ProductSubRead.md)
 
 ### Authorization
 

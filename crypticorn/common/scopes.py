@@ -6,6 +6,7 @@ logger = logging.getLogger("uvicorn")
 
 class Fallback(EnumMeta):
     """Fallback to no scope for unknown scopes."""
+
     # Note: This is a workaround to avoid the AttributeError when an unknown scope is accessed.
     # As soon as we have stable scopes, we can remove this.
 
@@ -19,7 +20,7 @@ class Fallback(EnumMeta):
         return None
 
 
-class Scope(StrEnum, metaclass=Fallback):
+class Scope(StrEnum):
     """
     The permission scopes for the API.
     """

@@ -3,14 +3,14 @@ from crypticorn.auth import CreateApiKeyRequest
 from crypticorn.common import BaseUrl, Scope
 from crypticorn.common import MarketType
 from crypticorn.hive import Configuration as HiveConfig
-from crypticorn.pay import ProductModel, Pr
+from crypticorn.pay import ProductUpdate, ProductRead, ProductCreate
 from crypticorn import ApiClient
 from crypticorn.trade import ExchangeKeyModel
 import asyncio
 from crypticorn.trade import BotModel, BotStatus
 from datetime import datetime, timedelta
 
-jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiVERuSFg3N3RVb3huQ1BUNkVOWiIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiUzlyOEMzc3hYMjRDZmlTWjlWRFYiLCJpYXQiOjE3NDQ0OTgxODUsImV4cCI6MTc0NDUwMTc4NSwic2NvcGVzIjpbXX0.nZywsgSpwNu8fGAb9_iGeucxcYiwvzoyrsmbrjpnmdc"
+jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiUm1RcE9BZWNaV0t1djNDemNjd1YiLCJpYXQiOjE3NDQ1NDU1NTQsImV4cCI6MTc0NDU0OTE1NCwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.UVD4-6Z5C6yYAaL6LMDwbGJCrhpk7TkDNo1TbinvDzM"
 
 
 async def main():
@@ -87,8 +87,23 @@ async def main():
 
         # except UnauthorizedException as e:
         #     print(e.body)
-        res = await client.auth.user.user_by_id(id="123")
+        # res = await client.auth.user.user_by_id(id="123")
+        # print(res)
+        res = await client.pay.products.update_product(
+            id="67fba7640d89242bbaf3d4a5",
+            product_update=ProductUpdate(
+                # name="test2",
+                # description="test",
+                # price=100,
+                # duration=30,
+                # scopes=[Scope.READ_PAY_NOW, Scope.WRITE_PAY_PRODUCTS],
+                # is_active=True,
+            ),
+        )
         print(res)
+        assert res.scopes == [Scope.READ_PAY_NOW, Scope.WRITE_PAY_PRODUCTS]
+        res = await client.pay.products.get_products()
+        print([print(p.name) for p in res])
         # res = await client.auth.login.get_api_keys()
         # print(res)
         # res = await client.trade.bots.get_bots()
