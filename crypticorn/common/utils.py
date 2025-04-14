@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Union
 from decimal import Decimal
 import string
 import random
@@ -9,19 +9,19 @@ from fastapi import status
 from crypticorn.common import ApiError
 
 
-def throw_if_none(value: Any, message: ApiError) -> None:
+def throw_if_none(value: Any, message: Union[ApiError, str]) -> None:
     """Throws an FastAPI HTTPException if the value is None."""
     if value is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail=message.identifier
+            status_code=status.HTTP_404_NOT_FOUND, detail=message.identifier if isinstance(message, ApiError) else message
         )
 
 
-def throw_if_falsy(value: Any, message: ApiError) -> None:
+def throw_if_falsy(value: Any, message: Union[ApiError, str]) -> None:
     """Throws an FastAPI HTTPException if the value is False."""
     if not value:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail=message.identifier
+            status_code=status.HTTP_400_BAD_REQUEST, detail=message.identifier if isinstance(message, ApiError) else message
         )
 
 

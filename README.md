@@ -12,6 +12,8 @@ cryptocurrency market.
 
 ## Installation
 
+>Python 3.10+ required
+
 You can install the latest stable version from PyPi:
 ```bash
 pip install crypticorn
