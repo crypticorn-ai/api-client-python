@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **created_at** | **int** |  | [optional] 
 **updated_at** | **int** |  | [optional] 
 **id** | **str** |  | [optional] 
-**exchange** | **str** | Exchange name | 
+**exchange** | [**Exchange**](Exchange.md) | Exchange name | 
 **api_key** | **str** |  | [optional] 
 **secret** | **str** |  | [optional] 
 **passphrase** | **str** |  | [optional] 

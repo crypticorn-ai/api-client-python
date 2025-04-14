@@ -5,7 +5,7 @@ from crypticorn.common import MarketType
 from crypticorn.hive import Configuration as HiveConfig
 from crypticorn.pay import ProductUpdate, ProductRead, ProductCreate
 from crypticorn import ApiClient
-from crypticorn.trade import ExchangeKeyModel
+from crypticorn.trade import ExchangeKeyModel, Configuration as TradeConfig
 import asyncio
 from crypticorn.trade import BotModel, BotStatus
 from datetime import datetime, timedelta
@@ -14,7 +14,9 @@ jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdv
 
 
 async def main():
-    async with ApiClient(base_url=BaseUrl.LOCAL, jwt=jwt) as client:
+    async with ApiClient(
+        base_url=BaseUrl.LOCAL, api_key=""
+    ) as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
         # print(10 * "=" + "This is the raw json response" + 10 * "=")
@@ -89,27 +91,31 @@ async def main():
         #     print(e.body)
         # res = await client.auth.user.user_by_id(id="123")
         # print(res)
-        res = await client.pay.products.update_product(
-            id="67fba7640d89242bbaf3d4a5",
-            product_update=ProductUpdate(
-                # name="test2",
-                # description="test",
-                # price=100,
-                # duration=30,
-                # scopes=[Scope.READ_PAY_NOW, Scope.WRITE_PAY_PRODUCTS],
-                # is_active=True,
-            ),
-        )
-        print(res)
-        assert res.scopes == [Scope.READ_PAY_NOW, Scope.WRITE_PAY_PRODUCTS]
-        res = await client.pay.products.get_products()
-        print([print(p.name) for p in res])
+        # res = await client.pay.products.update_product(
+        #     id="67fba7640d89242bbaf3d4a5",
+        #     product_update=ProductUpdate(
+        #         # name="test2",
+        #         # description="test",
+        #         # price=100,
+        #         # duration=30,
+        #         # scopes=[Scope.READ_PAY_NOW, Scope.WRITE_PAY_PRODUCTS],
+        #         # is_active=True,
+        #     ),
+        # )
+        # print(res)
+        # assert res.scopes == [Scope.READ_PAY_NOW, Scope.WRITE_PAY_PRODUCTS]
+        # res = await client.pay.products.get_products()
+        # print([print(p.name) for p in res])
         # res = await client.auth.login.get_api_keys()
         # print(res)
-        # res = await client.trade.bots.get_bots()
-        # print(res)
+        res = await client.trade.bots.get_bots()
+        print(res)
         # res = await client.auth.login.verify_api_key(api_key='sk6SGlb8rxWZr744FV4zTmDLr5w5Gs')
         # print(res)
+        # res = await client.metrics.exchanges.get_exchange_mappings(
+        #     exchange_name="binance", market=MarketType.FUTURES
+        # )
+        # print(res.data)
 
 
 async def new_client():
@@ -120,11 +126,31 @@ async def new_client():
         res = await client.pay.products.get_products_with_http_info()
         print(res.data)
 
+client = ApiClient(base_url=BaseUrl.LOCAL, api_key="")
+async def main_await():
+    # response = await client.metrics.exchanges.get_exchange_mappings(
+    #     exchange_name="binance", market=MarketType.FUTURES
+    # )
+    # print(response.data)
+    client.configure(
+        config=TradeConfig(host="http://localhost/v1/trade"), sub_client=client.trade
+    )
+    print(client.trade.config.__dict__)
+    res = await client.trade.keys.create_exchange_key(
+        ExchangeKeyModel(
+            name="test",
+            exchange="binance",
+            market=MarketType.FUTURES,
+            label="test",
+        )
+    )
+
 
 if __name__ == "__main__":
     asyncio.run(main())
     # asyncio.run(new_client())
-    # client = ApiClient(base_url="http://localhost", api_key="1234567890")
     # response = asyncio.run(client.hive.models.get_all_models())
     # print(response)
+    # asyncio.run(client.close())
+    # asyncio.run(main_await())
     # asyncio.run(client.close())
