@@ -1,3 +1,4 @@
+from __future__ import annotations
 from crypticorn.metrics import (
     ApiClient,
     Configuration,
@@ -10,12 +11,10 @@ from crypticorn.metrics import (
     TokensApi,
     MarketType,
 )
+from crypticorn.common import optional_import
 from pydantic import StrictStr, StrictInt, Field
 from typing_extensions import Annotated
 from typing import Optional
-
-import pandas as pd
-
 
 class MetricsClient:
     """
@@ -67,7 +66,8 @@ class MarketcapApiWrapper(MarketcapApi):
         """
         Get the marketcap symbols in a pandas dataframe
         """
-        response = await self.get_marketcap_symbols_without_preload_content(
+        pd = optional_import("pandas", "extra")
+        response = await self.get_marketcap_symbols(
             start_timestamp=start_timestamp,
             end_timestamp=end_timestamp,
             interval=interval,
@@ -96,6 +96,7 @@ class TokensApiWrapper(TokensApi):
         """
         Get the tokens in a pandas dataframe
         """
+        pd = optional_import("pandas", "extra")
         response = await self.get_stable_and_wrapped_tokens_without_preload_content(
             token_type=token_type
         )

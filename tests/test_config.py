@@ -4,6 +4,7 @@ from crypticorn import ApiClient
 from crypticorn.common import BaseUrl, apikey_header
 from tests.envs import *
 from crypticorn.hive import Configuration as HiveConfig
+
 @pytest_asyncio.fixture
 async def client():
     async with ApiClient(base_url=BaseUrl.LOCAL, api_key=FULL_SCOPE_API_KEY) as client:
