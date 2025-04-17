@@ -16,6 +16,7 @@ from pydantic import StrictStr, StrictInt, Field
 from typing_extensions import Annotated
 from typing import Optional
 
+
 class MetricsClient:
     """
     A client for interacting with the Crypticorn Metrics API.

@@ -211,7 +211,11 @@ class AuthHandler:
             if bearer
             else None
         )
-        response = await self.combined_auth(bearer=credentials, api_key=api_key, sec=sec)
+        response = await self.combined_auth(
+            bearer=credentials, api_key=api_key, sec=sec
+        )
         if isinstance(response, HTTPException):
-            raise WebSocketException(code=status.WS_1008_POLICY_VIOLATION, reason=response.detail)
+            raise WebSocketException(
+                code=status.WS_1008_POLICY_VIOLATION, reason=response.detail
+            )
         return response

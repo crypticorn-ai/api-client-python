@@ -26,6 +26,7 @@ class Scope(str, Enum):
     """
     allowed enum values
     """
+    READ_COLON_PREDICTIONS = "read:predictions"
     READ_COLON_HIVE_COLON_MODEL = "read:hive:model"
     READ_COLON_HIVE_COLON_DATA = "read:hive:data"
     WRITE_COLON_HIVE_COLON_MODEL = "write:hive:model"
@@ -48,7 +49,11 @@ class Scope(str, Enum):
     WRITE_COLON_PAY_COLON_PRODUCTS = "write:pay:products"
     READ_COLON_PAY_COLON_NOW = "read:pay:now"
     WRITE_COLON_PAY_COLON_NOW = "write:pay:now"
-    READ_COLON_PREDICTIONS = "read:predictions"
+    READ_COLON_METRICS_COLON_MARKETCAP = "read:metrics:marketcap"
+    READ_COLON_METRICS_COLON_INDICATORS = "read:metrics:indicators"
+    READ_COLON_METRICS_COLON_EXCHANGES = "read:metrics:exchanges"
+    READ_COLON_METRICS_COLON_TOKENS = "read:metrics:tokens"
+    READ_COLON_METRICS_COLON_MARKETS = "read:metrics:markets"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

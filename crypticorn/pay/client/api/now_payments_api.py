@@ -16,13 +16,10 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictStr
 from typing import Any
-from typing_extensions import Annotated
 from crypticorn.pay.client.models.now_api_status_res import NowAPIStatusRes
 from crypticorn.pay.client.models.now_create_invoice_req import NowCreateInvoiceReq
 from crypticorn.pay.client.models.now_create_invoice_res import NowCreateInvoiceRes
-from crypticorn.pay.client.models.now_webhook_payload import NowWebhookPayload
 
 from crypticorn.pay.client.api_client import ApiClient, RequestSerialized
 from crypticorn.pay.client.api_response import ApiResponse
@@ -526,10 +523,6 @@ class NOWPaymentsApi:
     @validate_call
     async def handle_now_webhook(
         self,
-        x_nowpayments_sig: Annotated[
-            StrictStr, Field(description="Signature for the webhook")
-        ],
-        now_webhook_payload: NowWebhookPayload,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -546,10 +539,6 @@ class NOWPaymentsApi:
 
         Handle NOWPayments webhook notifications (IPN). Validates the signature, updates the payment status and creates a product subscription if the payment is successful.
 
-        :param x_nowpayments_sig: Signature for the webhook (required)
-        :type x_nowpayments_sig: str
-        :param now_webhook_payload: (required)
-        :type now_webhook_payload: NowWebhookPayload
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -573,8 +562,6 @@ class NOWPaymentsApi:
         """  # noqa: E501
 
         _param = self._handle_now_webhook_serialize(
-            x_nowpayments_sig=x_nowpayments_sig,
-            now_webhook_payload=now_webhook_payload,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -583,7 +570,6 @@ class NOWPaymentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -597,10 +583,6 @@ class NOWPaymentsApi:
     @validate_call
     async def handle_now_webhook_with_http_info(
         self,
-        x_nowpayments_sig: Annotated[
-            StrictStr, Field(description="Signature for the webhook")
-        ],
-        now_webhook_payload: NowWebhookPayload,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -617,10 +599,6 @@ class NOWPaymentsApi:
 
         Handle NOWPayments webhook notifications (IPN). Validates the signature, updates the payment status and creates a product subscription if the payment is successful.
 
-        :param x_nowpayments_sig: Signature for the webhook (required)
-        :type x_nowpayments_sig: str
-        :param now_webhook_payload: (required)
-        :type now_webhook_payload: NowWebhookPayload
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -644,8 +622,6 @@ class NOWPaymentsApi:
         """  # noqa: E501
 
         _param = self._handle_now_webhook_serialize(
-            x_nowpayments_sig=x_nowpayments_sig,
-            now_webhook_payload=now_webhook_payload,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -654,7 +630,6 @@ class NOWPaymentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -668,10 +643,6 @@ class NOWPaymentsApi:
     @validate_call
     async def handle_now_webhook_without_preload_content(
         self,
-        x_nowpayments_sig: Annotated[
-            StrictStr, Field(description="Signature for the webhook")
-        ],
-        now_webhook_payload: NowWebhookPayload,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -688,10 +659,6 @@ class NOWPaymentsApi:
 
         Handle NOWPayments webhook notifications (IPN). Validates the signature, updates the payment status and creates a product subscription if the payment is successful.
 
-        :param x_nowpayments_sig: Signature for the webhook (required)
-        :type x_nowpayments_sig: str
-        :param now_webhook_payload: (required)
-        :type now_webhook_payload: NowWebhookPayload
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -715,8 +682,6 @@ class NOWPaymentsApi:
         """  # noqa: E501
 
         _param = self._handle_now_webhook_serialize(
-            x_nowpayments_sig=x_nowpayments_sig,
-            now_webhook_payload=now_webhook_payload,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -725,7 +690,6 @@ class NOWPaymentsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -734,8 +698,6 @@ class NOWPaymentsApi:
 
     def _handle_now_webhook_serialize(
         self,
-        x_nowpayments_sig,
-        now_webhook_payload,
         _request_auth,
         _content_type,
         _headers,
@@ -758,12 +720,8 @@ class NOWPaymentsApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if x_nowpayments_sig is not None:
-            _header_params["x-nowpayments-sig"] = x_nowpayments_sig
         # process the form parameters
         # process the body parameter
-        if now_webhook_payload is not None:
-            _body_params = now_webhook_payload
 
         # set the HTTP header `Accept`
         if "Accept" not in _header_params:
@@ -771,18 +729,8 @@ class NOWPaymentsApi:
                 ["application/json"]
             )
 
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params["Content-Type"] = _content_type
-        else:
-            _default_content_type = self.api_client.select_header_content_type(
-                ["application/json"]
-            )
-            if _default_content_type is not None:
-                _header_params["Content-Type"] = _default_content_type
-
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
             method="POST",

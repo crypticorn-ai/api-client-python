@@ -18,9 +18,6 @@ from crypticorn.pay.client.models.http_validation_error import HTTPValidationErr
 from crypticorn.pay.client.models.now_api_status_res import NowAPIStatusRes
 from crypticorn.pay.client.models.now_create_invoice_req import NowCreateInvoiceReq
 from crypticorn.pay.client.models.now_create_invoice_res import NowCreateInvoiceRes
-from crypticorn.pay.client.models.now_fee_structure import NowFeeStructure
-from crypticorn.pay.client.models.now_payment_status import NowPaymentStatus
-from crypticorn.pay.client.models.now_webhook_payload import NowWebhookPayload
 from crypticorn.pay.client.models.payment import Payment
 from crypticorn.pay.client.models.payment_status import PaymentStatus
 from crypticorn.pay.client.models.product_create import ProductCreate

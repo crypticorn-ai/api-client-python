@@ -32,7 +32,7 @@ class Payment(BaseModel):
 
     id: StrictStr = Field(description="Payment ID")
     product_id: StrictStr = Field(description="Product ID")
-    var_date: StrictInt = Field(description="Payment date in seconds", alias="date")
+    timestamp: StrictInt = Field(description="Payment timestamp in seconds")
     amount: Union[StrictFloat, StrictInt] = Field(description="Payment amount")
     currency: StrictStr = Field(description="Payment currency")
     status: PaymentStatus
@@ -41,7 +41,7 @@ class Payment(BaseModel):
     __properties: ClassVar[List[str]] = [
         "id",
         "product_id",
-        "date",
+        "timestamp",
         "amount",
         "currency",
         "status",
@@ -101,7 +101,7 @@ class Payment(BaseModel):
             {
                 "id": obj.get("id"),
                 "product_id": obj.get("product_id"),
-                "date": obj.get("date"),
+                "timestamp": obj.get("timestamp"),
                 "amount": obj.get("amount"),
                 "currency": obj.get("currency"),
                 "status": obj.get("status"),

@@ -13,7 +13,8 @@ def throw_if_none(value: Any, message: Union[ApiError, str]) -> None:
     """Throws an FastAPI HTTPException if the value is None."""
     if value is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail=message.identifier if isinstance(message, ApiError) else message
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=message.identifier if isinstance(message, ApiError) else message,
         )
 
 
@@ -21,7 +22,8 @@ def throw_if_falsy(value: Any, message: Union[ApiError, str]) -> None:
     """Throws an FastAPI HTTPException if the value is False."""
     if not value:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail=message.identifier if isinstance(message, ApiError) else message
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=message.identifier if isinstance(message, ApiError) else message,
         )
 
 
@@ -50,6 +52,7 @@ def is_equal(
     return Decimal(abs(a - b)) <= max(
         Decimal(str(rel_tol)) * max(abs(a), abs(b)), Decimal(str(abs_tol))
     )
+
 
 def optional_import(module_name: str, extra_name: str):
     try:
