@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v2.4.7 (2025-04-17)
+
+### Bug Fixes
+
+- Raise custom WebsockeError in ws auth dependencies
+  ([`94f8b62`](https://github.com/crypticorn-ai/api-client/commit/94f8b62593d3f44785b11812102c3a4ab9195073))
+
+### Performance Improvements
+
+- Make pandas an optional dependency to decrease package size
+  ([`cb942c7`](https://github.com/crypticorn-ai/api-client/commit/cb942c74d5d7836f9cab1beb2b1d5ee6a9be4d4e))
+
+
 ## v2.4.6 (2025-04-13)
 
 ### Bug Fixes
