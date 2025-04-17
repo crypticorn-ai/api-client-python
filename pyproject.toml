@@ -24,6 +24,7 @@ crypticorn = "crypticorn.cli.__main__:cli"
 dependencies = { file = ["requirements/main.txt"] }
 optional-dependencies.dev = { file = ["requirements/dev.txt"] }
 optional-dependencies.test = { file = ["requirements/test.txt"] }
+optional-dependencies.extra = { file = ["requirements/extra.txt"] }
 
 [tool.semantic_release]
 version_toml = ["pyproject.toml:project.version:nf",] # https://python-semantic-release.readthedocs.io/en/latest/configuration.html#version-toml

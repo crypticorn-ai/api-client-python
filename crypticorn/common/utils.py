@@ -50,3 +50,13 @@ def is_equal(
     return Decimal(abs(a - b)) <= max(
         Decimal(str(rel_tol)) * max(abs(a), abs(b)), Decimal(str(abs_tol))
     )
+
+def optional_import(module_name: str, extra_name: str):
+    try:
+        return __import__(module_name)
+    except ImportError as e:
+        extra = f"[{extra_name}]"
+        raise ImportError(
+            f"Optional dependency '{module_name}' is required for this feature. "
+            f"Install it with: pip install crypticorn{extra}"
+        ) from e
