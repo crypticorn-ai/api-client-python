@@ -164,7 +164,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **handle_now_webhook**
-> object handle_now_webhook(x_nowpayments_sig, now_webhook_payload)
+> object handle_now_webhook()
 
 Handle Webhook
 
@@ -173,11 +173,9 @@ Validates the signature, updates the payment status and creates a product subscr
 
 ### Example
 
-* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
-from client.models.now_webhook_payload import NowWebhookPayload
 from client.rest import ApiException
 from pprint import pprint
 
@@ -187,26 +185,15 @@ configuration = client.Configuration(
     host = "http://localhost/v1/pay"
 )
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization (JWT): HTTPBearer
-configuration = client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
 
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.NOWPaymentsApi(api_client)
-    x_nowpayments_sig = 'x_nowpayments_sig_example' # str | Signature for the webhook
-    now_webhook_payload = client.NowWebhookPayload() # NowWebhookPayload | 
 
     try:
         # Handle Webhook
-        api_response = await api_instance.handle_now_webhook(x_nowpayments_sig, now_webhook_payload)
+        api_response = await api_instance.handle_now_webhook()
         print("The response of NOWPaymentsApi->handle_now_webhook:\n")
         pprint(api_response)
     except Exception as e:
@@ -217,11 +204,7 @@ async with client.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **x_nowpayments_sig** | **str**| Signature for the webhook | 
- **now_webhook_payload** | [**NowWebhookPayload**](NowWebhookPayload.md)|  | 
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -229,11 +212,11 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 ### HTTP response details
@@ -241,7 +224,6 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

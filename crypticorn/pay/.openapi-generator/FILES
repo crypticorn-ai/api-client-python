@@ -14,9 +14,6 @@ client/models/http_validation_error.py
 client/models/now_api_status_res.py
 client/models/now_create_invoice_req.py
 client/models/now_create_invoice_res.py
-client/models/now_fee_structure.py
-client/models/now_payment_status.py
-client/models/now_webhook_payload.py
 client/models/payment.py
 client/models/payment_status.py
 client/models/product_create.py
@@ -34,9 +31,6 @@ docs/NOWPaymentsApi.md
 docs/NowAPIStatusRes.md
 docs/NowCreateInvoiceReq.md
 docs/NowCreateInvoiceRes.md
-docs/NowFeeStructure.md
-docs/NowPaymentStatus.md
-docs/NowWebhookPayload.md
 docs/Payment.md
 docs/PaymentStatus.md
 docs/PaymentsApi.md

@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** | Payment ID | 
 **product_id** | **str** | Product ID | 
-**var_date** | **int** | Payment date in seconds | 
+**timestamp** | **int** | Payment timestamp in seconds | 
 **amount** | **float** | Payment amount | 
 **currency** | **str** | Payment currency | 
 **status** | [**PaymentStatus**](PaymentStatus.md) |  | 
