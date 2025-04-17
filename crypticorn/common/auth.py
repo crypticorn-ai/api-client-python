@@ -9,7 +9,7 @@ from crypticorn.common import (
     Scope,
     Service,
 )
-from fastapi import Depends, HTTPException, Query, status
+from fastapi import Depends, HTTPException, Query, status, WebSocketException
 from fastapi.security import (
     HTTPAuthorizationCredentials,
     SecurityScopes,
@@ -183,7 +183,7 @@ class AuthHandler:
         Verifies the API key and checks if the user scopes are a subset of the API scopes.
         Use this function if you only want to allow access via the API key.
         """
-        return await self.api_key_auth(api_key=api_key, sec=sec)
+        return await self.ws_combined_auth(bearer=None, api_key=api_key, sec=sec)
 
     async def ws_bearer_auth(
         self,
@@ -194,12 +194,7 @@ class AuthHandler:
         Verifies the bearer token and checks if the user scopes are a subset of the API scopes.
         Use this function if you only want to allow access via the bearer token.
         """
-        credentials = (
-            HTTPAuthorizationCredentials(scheme="Bearer", credentials=bearer)
-            if bearer
-            else None
-        )
-        return await self.bearer_auth(bearer=credentials, sec=sec)
+        return await self.ws_combined_auth(bearer=bearer, api_key=None, sec=sec)
 
     async def ws_combined_auth(
         self,
@@ -216,4 +211,7 @@ class AuthHandler:
             if bearer
             else None
         )
-        return await self.combined_auth(bearer=credentials, api_key=api_key, sec=sec)
+        response = await self.combined_auth(bearer=credentials, api_key=api_key, sec=sec)
+        if isinstance(response, HTTPException):
+            raise WebSocketException(code=status.WS_1008_POLICY_VIOLATION, reason=response.detail)
+        return response
