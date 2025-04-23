@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **success** | **bool** |  | [optional] [default to False]
 **message** | **str** |  | 
 **error_code** | **str** |  | 
-**details** | **object** |  | [optional] 
+**details** | **Dict[str, object]** |  | [optional] 
 **timestamp** | **datetime** |  | [optional] 
 
 ## Example

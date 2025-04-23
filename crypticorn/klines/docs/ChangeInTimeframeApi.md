@@ -1,18 +1,21 @@
-# client.FundingRatesApi
+# client.ChangeInTimeframeApi
 
 All URIs are relative to *http://localhost/v1/klines*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_funding_rates**](FundingRatesApi.md#get_funding_rates) | **GET** /funding_rates/{symbol} | Funding Rate
+[**get_change_in_timeframe**](ChangeInTimeframeApi.md#get_change_in_timeframe) | **GET** /change | Get Change In Timeframe
 
 
-# **get_funding_rates**
-> BaseResponseListFundingRateResponse get_funding_rates(symbol, start=start, end=end, limit=limit)
+# **get_change_in_timeframe**
+> BaseResponseListChangeInTimeframeResponse get_change_in_timeframe(market=market, timeframe=timeframe)
 
-Funding Rate
+Get Change In Timeframe
 
-Retrieve funding rate data for a specific symbol in the futures market.
+Retrieve price change percentage between last two completed timestamps for all pairs.
+
+Valid markets: spot, futures
+Valid timeframes: 15m, 30m, 1h, 4h, 1d
 
 ### Example
 
@@ -21,7 +24,9 @@ Retrieve funding rate data for a specific symbol in the futures market.
 
 ```python
 import client
-from client.models.base_response_list_funding_rate_response import BaseResponseListFundingRateResponse
+from client.models.base_response_list_change_in_timeframe_response import BaseResponseListChangeInTimeframeResponse
+from client.models.market_type import MarketType
+from client.models.timeframe import Timeframe
 from client.rest import ApiException
 from pprint import pprint
 
@@ -50,19 +55,17 @@ configuration = client.Configuration(
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = client.FundingRatesApi(api_client)
-    symbol = 'symbol_example' # str | Trading pair symbol (e.g., BTCUSDT)
-    start = 56 # int | Start timestamp in milliseconds (optional)
-    end = 56 # int | End timestamp in milliseconds (optional)
-    limit = 56 # int | Number of funding rates to return (optional)
+    api_instance = client.ChangeInTimeframeApi(api_client)
+    market = client.MarketType() # MarketType | Market type: 'spot' or 'futures' (optional)
+    timeframe = client.Timeframe() # Timeframe | Timeframe: '15m', '30m', '1h', '4h', '1d' (optional)
 
     try:
-        # Funding Rate
-        api_response = await api_instance.get_funding_rates(symbol, start=start, end=end, limit=limit)
-        print("The response of FundingRatesApi->get_funding_rates:\n")
+        # Get Change In Timeframe
+        api_response = await api_instance.get_change_in_timeframe(market=market, timeframe=timeframe)
+        print("The response of ChangeInTimeframeApi->get_change_in_timeframe:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling FundingRatesApi->get_funding_rates: %s\n" % e)
+        print("Exception when calling ChangeInTimeframeApi->get_change_in_timeframe: %s\n" % e)
 ```
 
 
@@ -72,14 +75,12 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **symbol** | **str**| Trading pair symbol (e.g., BTCUSDT) | 
- **start** | **int**| Start timestamp in milliseconds | [optional] 
- **end** | **int**| End timestamp in milliseconds | [optional] 
- **limit** | **int**| Number of funding rates to return | [optional] 
+ **market** | [**MarketType**](.md)| Market type: &#39;spot&#39; or &#39;futures&#39; | [optional] 
+ **timeframe** | [**Timeframe**](.md)| Timeframe: &#39;15m&#39;, &#39;30m&#39;, &#39;1h&#39;, &#39;4h&#39;, &#39;1d&#39; | [optional] 
 
 ### Return type
 
-[**BaseResponseListFundingRateResponse**](BaseResponseListFundingRateResponse.md)
+[**BaseResponseListChangeInTimeframeResponse**](BaseResponseListChangeInTimeframeResponse.md)
 
 ### Authorization
 
@@ -94,9 +95,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful response with funding rate data |  -  |
-**400** | Invalid request parameters |  -  |
-**404** | No data found |  -  |
+**200** | Successful response with change in timeframe data |  -  |
+**400** | Invalid market or timeframe |  -  |
+**404** | No change in timeframe data found |  -  |
 **500** | Internal server error |  -  |
 **422** | Validation Error |  -  |
 

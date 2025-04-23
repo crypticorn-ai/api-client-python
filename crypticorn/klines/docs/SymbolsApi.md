@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost/v1/klines*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**symbols_symbols_market_get**](SymbolsApi.md#symbols_symbols_market_get) | **GET** /symbols/{market} | Symbols
+[**get_klines_symbols**](SymbolsApi.md#get_klines_symbols) | **GET** /symbols/{market} | Symbols
 
 
-# **symbols_symbols_market_get**
-> BaseResponseListStr symbols_symbols_market_get(market)
+# **get_klines_symbols**
+> BaseResponseListStr get_klines_symbols(market)
 
 Symbols
 
@@ -16,10 +16,13 @@ Retrieve a list of whitelisted symbols for a specific market.
 
 ### Example
 
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
 from client.models.base_response_list_str import BaseResponseListStr
+from client.models.market_type import MarketType
 from client.rest import ApiException
 from pprint import pprint
 
@@ -29,20 +32,35 @@ configuration = client.Configuration(
     host = "http://localhost/v1/klines"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.SymbolsApi(api_client)
-    market = client.Market() # Market | Market type (spot or futures)
+    market = client.MarketType() # MarketType | Market type (spot or futures)
 
     try:
         # Symbols
-        api_response = api_instance.symbols_symbols_market_get(market)
-        print("The response of SymbolsApi->symbols_symbols_market_get:\n")
+        api_response = await api_instance.get_klines_symbols(market)
+        print("The response of SymbolsApi->get_klines_symbols:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling SymbolsApi->symbols_symbols_market_get: %s\n" % e)
+        print("Exception when calling SymbolsApi->get_klines_symbols: %s\n" % e)
 ```
 
 
@@ -52,7 +70,7 @@ with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**Market**](.md)| Market type (spot or futures) | 
+ **market** | [**MarketType**](.md)| Market type (spot or futures) | 
 
 ### Return type
 
@@ -60,7 +78,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 

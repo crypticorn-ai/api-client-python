@@ -1,7 +1,7 @@
-.travis.yml
 README.md
 client/__init__.py
 client/api/__init__.py
+client/api/change_in_timeframe_api.py
 client/api/funding_rates_api.py
 client/api/health_check_api.py
 client/api/ohlcv_data_api.py
@@ -13,9 +13,11 @@ client/configuration.py
 client/exceptions.py
 client/models/__init__.py
 client/models/base_response_health_check_response.py
+client/models/base_response_list_change_in_timeframe_response.py
 client/models/base_response_list_funding_rate_response.py
 client/models/base_response_list_str.py
 client/models/base_response_ohlcv_response.py
+client/models/change_in_timeframe_response.py
 client/models/error_response.py
 client/models/exchange.py
 client/models/funding_rate_response.py
@@ -24,10 +26,10 @@ client/models/history_error_response.py
 client/models/history_no_data_response.py
 client/models/history_success_response.py
 client/models/http_validation_error.py
-client/models/market.py
+client/models/market_type.py
 client/models/ohlcv_response.py
 client/models/resolution.py
-client/models/response_get_history_udf_history_get.py
+client/models/response_get_udf_history.py
 client/models/search_symbol_response.py
 client/models/sort_direction.py
 client/models/symbol_group_response.py
@@ -40,9 +42,12 @@ client/models/validation_error_loc_inner.py
 client/py.typed
 client/rest.py
 docs/BaseResponseHealthCheckResponse.md
+docs/BaseResponseListChangeInTimeframeResponse.md
 docs/BaseResponseListFundingRateResponse.md
 docs/BaseResponseListStr.md
 docs/BaseResponseOHLCVResponse.md
+docs/ChangeInTimeframeApi.md
+docs/ChangeInTimeframeResponse.md
 docs/ErrorResponse.md
 docs/Exchange.md
 docs/FundingRateResponse.md
@@ -53,11 +58,11 @@ docs/HealthCheckResponse.md
 docs/HistoryErrorResponse.md
 docs/HistoryNoDataResponse.md
 docs/HistorySuccessResponse.md
-docs/Market.md
+docs/MarketType.md
 docs/OHLCVDataApi.md
 docs/OHLCVResponse.md
 docs/Resolution.md
-docs/ResponseGetHistoryUdfHistoryGet.md
+docs/ResponseGetUdfHistory.md
 docs/SearchSymbolResponse.md
 docs/SortDirection.md
 docs/SymbolGroupResponse.md
@@ -70,4 +75,3 @@ docs/UDFConfigResponse.md
 docs/ValidationError.md
 docs/ValidationErrorLocInner.md
 requirements.txt
-test-requirements.txt

@@ -4,160 +4,24 @@ All URIs are relative to *http://localhost/v1/klines*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_config_udf_config_get**](UDFApi.md#get_config_udf_config_get) | **GET** /udf/config | Get Config
-[**get_history_udf_history_get**](UDFApi.md#get_history_udf_history_get) | **GET** /udf/history | Get History
-[**get_server_time_udf_time_get**](UDFApi.md#get_server_time_udf_time_get) | **GET** /udf/time | Get Server Time
-[**get_symbol_info_udf_symbol_info_get**](UDFApi.md#get_symbol_info_udf_symbol_info_get) | **GET** /udf/symbol_info | Get Symbol Info
-[**get_symbol_udf_symbols_get**](UDFApi.md#get_symbol_udf_symbols_get) | **GET** /udf/symbols | Get Symbol
-[**options_handler_udf_path_options**](UDFApi.md#options_handler_udf_path_options) | **OPTIONS** /udf/{path} | Options Handler
-[**search_symbols_udf_search_get**](UDFApi.md#search_symbols_udf_search_get) | **GET** /udf/search | Search Symbols
+[**get_server_time**](UDFApi.md#get_server_time) | **GET** /udf/time | Get Server Time
+[**get_symbol**](UDFApi.md#get_symbol) | **GET** /udf/symbols | Get Symbol
+[**get_symbol_info**](UDFApi.md#get_symbol_info) | **GET** /udf/symbol_info | Get Symbol Info
+[**get_udf_config**](UDFApi.md#get_udf_config) | **GET** /udf/config | Get Config
+[**get_udf_history**](UDFApi.md#get_udf_history) | **GET** /udf/history | Get History
+[**options_handler**](UDFApi.md#options_handler) | **OPTIONS** /udf/{path} | Options Handler
+[**search_symbols**](UDFApi.md#search_symbols) | **GET** /udf/search | Search Symbols
 
 
-# **get_config_udf_config_get**
-> UDFConfigResponse get_config_udf_config_get()
-
-Get Config
-
-### Example
-
-
-```python
-import client
-from client.models.udf_config_response import UDFConfigResponse
-from client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost/v1/klines
-# See configuration.py for a list of all supported configuration parameters.
-configuration = client.Configuration(
-    host = "http://localhost/v1/klines"
-)
-
-
-# Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = client.UDFApi(api_client)
-
-    try:
-        # Get Config
-        api_response = api_instance.get_config_udf_config_get()
-        print("The response of UDFApi->get_config_udf_config_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling UDFApi->get_config_udf_config_get: %s\n" % e)
-```
-
-
-
-### Parameters
-
-This endpoint does not need any parameter.
-
-### Return type
-
-[**UDFConfigResponse**](UDFConfigResponse.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful Response |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_history_udf_history_get**
-> ResponseGetHistoryUdfHistoryGet get_history_udf_history_get(symbol, resolution, var_from, to, countback=countback)
-
-Get History
-
-### Example
-
-
-```python
-import client
-from client.models.resolution import Resolution
-from client.models.response_get_history_udf_history_get import ResponseGetHistoryUdfHistoryGet
-from client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost/v1/klines
-# See configuration.py for a list of all supported configuration parameters.
-configuration = client.Configuration(
-    host = "http://localhost/v1/klines"
-)
-
-
-# Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = client.UDFApi(api_client)
-    symbol = 'symbol_example' # str | 
-    resolution = client.Resolution() # Resolution | 
-    var_from = 56 # int | 
-    to = 56 # int | 
-    countback = 56 # int |  (optional)
-
-    try:
-        # Get History
-        api_response = api_instance.get_history_udf_history_get(symbol, resolution, var_from, to, countback=countback)
-        print("The response of UDFApi->get_history_udf_history_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling UDFApi->get_history_udf_history_get: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **symbol** | **str**|  | 
- **resolution** | [**Resolution**](.md)|  | 
- **var_from** | **int**|  | 
- **to** | **int**|  | 
- **countback** | **int**|  | [optional] 
-
-### Return type
-
-[**ResponseGetHistoryUdfHistoryGet**](ResponseGetHistoryUdfHistoryGet.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful Response |  -  |
-**422** | Validation Error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_server_time_udf_time_get**
-> object get_server_time_udf_time_get()
+# **get_server_time**
+> object get_server_time()
 
 Get Server Time
 
 ### Example
 
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -170,19 +34,34 @@ configuration = client.Configuration(
     host = "http://localhost/v1/klines"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.UDFApi(api_client)
 
     try:
         # Get Server Time
-        api_response = api_instance.get_server_time_udf_time_get()
-        print("The response of UDFApi->get_server_time_udf_time_get:\n")
+        api_response = await api_instance.get_server_time()
+        print("The response of UDFApi->get_server_time:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling UDFApi->get_server_time_udf_time_get: %s\n" % e)
+        print("Exception when calling UDFApi->get_server_time: %s\n" % e)
 ```
 
 
@@ -197,7 +76,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -212,82 +91,15 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_symbol_info_udf_symbol_info_get**
-> SymbolGroupResponse get_symbol_info_udf_symbol_info_get(group)
-
-Get Symbol Info
-
-Handle symbol info requests for different groups
-
-### Example
-
-
-```python
-import client
-from client.models.symbol_group_response import SymbolGroupResponse
-from client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost/v1/klines
-# See configuration.py for a list of all supported configuration parameters.
-configuration = client.Configuration(
-    host = "http://localhost/v1/klines"
-)
-
-
-# Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = client.UDFApi(api_client)
-    group = 'group_example' # str | 
-
-    try:
-        # Get Symbol Info
-        api_response = api_instance.get_symbol_info_udf_symbol_info_get(group)
-        print("The response of UDFApi->get_symbol_info_udf_symbol_info_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling UDFApi->get_symbol_info_udf_symbol_info_get: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **group** | **str**|  | 
-
-### Return type
-
-[**SymbolGroupResponse**](SymbolGroupResponse.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful Response |  -  |
-**422** | Validation Error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_symbol_udf_symbols_get**
-> SymbolInfoResponse get_symbol_udf_symbols_get(symbol)
+# **get_symbol**
+> SymbolInfoResponse get_symbol(symbol)
 
 Get Symbol
 
 ### Example
 
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -301,20 +113,35 @@ configuration = client.Configuration(
     host = "http://localhost/v1/klines"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.UDFApi(api_client)
     symbol = 'symbol_example' # str | 
 
     try:
         # Get Symbol
-        api_response = api_instance.get_symbol_udf_symbols_get(symbol)
-        print("The response of UDFApi->get_symbol_udf_symbols_get:\n")
+        api_response = await api_instance.get_symbol(symbol)
+        print("The response of UDFApi->get_symbol:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling UDFApi->get_symbol_udf_symbols_get: %s\n" % e)
+        print("Exception when calling UDFApi->get_symbol: %s\n" % e)
 ```
 
 
@@ -332,7 +159,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -348,8 +175,266 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **options_handler_udf_path_options**
-> object options_handler_udf_path_options(path)
+# **get_symbol_info**
+> SymbolGroupResponse get_symbol_info(group)
+
+Get Symbol Info
+
+Handle symbol info requests for different groups
+
+### Example
+
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
+
+```python
+import client
+from client.models.symbol_group_response import SymbolGroupResponse
+from client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost/v1/klines
+# See configuration.py for a list of all supported configuration parameters.
+configuration = client.Configuration(
+    host = "http://localhost/v1/klines"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = client.UDFApi(api_client)
+    group = 'group_example' # str | 
+
+    try:
+        # Get Symbol Info
+        api_response = await api_instance.get_symbol_info(group)
+        print("The response of UDFApi->get_symbol_info:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling UDFApi->get_symbol_info: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **group** | **str**|  | 
+
+### Return type
+
+[**SymbolGroupResponse**](SymbolGroupResponse.md)
+
+### Authorization
+
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_udf_config**
+> UDFConfigResponse get_udf_config()
+
+Get Config
+
+### Example
+
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
+
+```python
+import client
+from client.models.udf_config_response import UDFConfigResponse
+from client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost/v1/klines
+# See configuration.py for a list of all supported configuration parameters.
+configuration = client.Configuration(
+    host = "http://localhost/v1/klines"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = client.UDFApi(api_client)
+
+    try:
+        # Get Config
+        api_response = await api_instance.get_udf_config()
+        print("The response of UDFApi->get_udf_config:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling UDFApi->get_udf_config: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**UDFConfigResponse**](UDFConfigResponse.md)
+
+### Authorization
+
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_udf_history**
+> ResponseGetUdfHistory get_udf_history(symbol, resolution, var_from, to, countback=countback)
+
+Get History
+
+### Example
+
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
+
+```python
+import client
+from client.models.resolution import Resolution
+from client.models.response_get_udf_history import ResponseGetUdfHistory
+from client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost/v1/klines
+# See configuration.py for a list of all supported configuration parameters.
+configuration = client.Configuration(
+    host = "http://localhost/v1/klines"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = client.UDFApi(api_client)
+    symbol = 'symbol_example' # str | 
+    resolution = client.Resolution() # Resolution | 
+    var_from = 56 # int | 
+    to = 56 # int | 
+    countback = 56 # int |  (optional)
+
+    try:
+        # Get History
+        api_response = await api_instance.get_udf_history(symbol, resolution, var_from, to, countback=countback)
+        print("The response of UDFApi->get_udf_history:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling UDFApi->get_udf_history: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **symbol** | **str**|  | 
+ **resolution** | [**Resolution**](.md)|  | 
+ **var_from** | **int**|  | 
+ **to** | **int**|  | 
+ **countback** | **int**|  | [optional] 
+
+### Return type
+
+[**ResponseGetUdfHistory**](ResponseGetUdfHistory.md)
+
+### Authorization
+
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **options_handler**
+> object options_handler(path)
 
 Options Handler
 
@@ -357,6 +442,8 @@ Handle OPTIONS requests for all UDF endpoints
 
 ### Example
 
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -369,20 +456,35 @@ configuration = client.Configuration(
     host = "http://localhost/v1/klines"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.UDFApi(api_client)
     path = 'path_example' # str | 
 
     try:
         # Options Handler
-        api_response = api_instance.options_handler_udf_path_options(path)
-        print("The response of UDFApi->options_handler_udf_path_options:\n")
+        api_response = await api_instance.options_handler(path)
+        print("The response of UDFApi->options_handler:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling UDFApi->options_handler_udf_path_options: %s\n" % e)
+        print("Exception when calling UDFApi->options_handler: %s\n" % e)
 ```
 
 
@@ -400,7 +502,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -416,8 +518,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **search_symbols_udf_search_get**
-> List[SearchSymbolResponse] search_symbols_udf_search_get(query, limit=limit)
+# **search_symbols**
+> List[SearchSymbolResponse] search_symbols(query, limit=limit)
 
 Search Symbols
 
@@ -425,6 +527,8 @@ Called when a user searches for symbols in TradingView
 
 ### Example
 
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -438,9 +542,24 @@ configuration = client.Configuration(
     host = "http://localhost/v1/klines"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.UDFApi(api_client)
     query = 'query_example' # str | 
@@ -448,11 +567,11 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Search Symbols
-        api_response = api_instance.search_symbols_udf_search_get(query, limit=limit)
-        print("The response of UDFApi->search_symbols_udf_search_get:\n")
+        api_response = await api_instance.search_symbols(query, limit=limit)
+        print("The response of UDFApi->search_symbols:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling UDFApi->search_symbols_udf_search_get: %s\n" % e)
+        print("Exception when calling UDFApi->search_symbols: %s\n" % e)
 ```
 
 
@@ -471,7 +590,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 

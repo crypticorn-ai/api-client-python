@@ -31,13 +31,13 @@ configuration = client.Configuration(
 
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.HealthCheckApi(api_client)
 
     try:
         # Index
-        api_response = api_instance.index_get()
+        api_response = await api_instance.index_get()
         print("The response of HealthCheckApi->index_get:\n")
         pprint(api_response)
     except Exception as e:

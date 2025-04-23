@@ -17,9 +17,9 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field
-from typing import Any
 from typing_extensions import Annotated
 from crypticorn.klines.client.models.base_response_list_str import BaseResponseListStr
+from crypticorn.klines.client.models.market_type import MarketType
 
 from crypticorn.klines.client.api_client import ApiClient, RequestSerialized
 from crypticorn.klines.client.api_response import ApiResponse
@@ -39,9 +39,11 @@ class SymbolsApi:
         self.api_client = api_client
 
     @validate_call
-    def symbols_symbols_market_get(
+    async def get_klines_symbols(
         self,
-        market: Annotated[Any, Field(description="Market type (spot or futures)")],
+        market: Annotated[
+            MarketType, Field(description="Market type (spot or futures)")
+        ],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -59,7 +61,7 @@ class SymbolsApi:
         Retrieve a list of whitelisted symbols for a specific market.
 
         :param market: Market type (spot or futures) (required)
-        :type market: Market
+        :type market: MarketType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -82,7 +84,7 @@ class SymbolsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._symbols_symbols_market_get_serialize(
+        _param = self._get_klines_symbols_serialize(
             market=market,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -96,19 +98,21 @@ class SymbolsApi:
             "500": "ErrorResponse",
             "422": "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def symbols_symbols_market_get_with_http_info(
+    async def get_klines_symbols_with_http_info(
         self,
-        market: Annotated[Any, Field(description="Market type (spot or futures)")],
+        market: Annotated[
+            MarketType, Field(description="Market type (spot or futures)")
+        ],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -126,7 +130,7 @@ class SymbolsApi:
         Retrieve a list of whitelisted symbols for a specific market.
 
         :param market: Market type (spot or futures) (required)
-        :type market: Market
+        :type market: MarketType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -149,7 +153,7 @@ class SymbolsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._symbols_symbols_market_get_serialize(
+        _param = self._get_klines_symbols_serialize(
             market=market,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -163,19 +167,21 @@ class SymbolsApi:
             "500": "ErrorResponse",
             "422": "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def symbols_symbols_market_get_without_preload_content(
+    async def get_klines_symbols_without_preload_content(
         self,
-        market: Annotated[Any, Field(description="Market type (spot or futures)")],
+        market: Annotated[
+            MarketType, Field(description="Market type (spot or futures)")
+        ],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -193,7 +199,7 @@ class SymbolsApi:
         Retrieve a list of whitelisted symbols for a specific market.
 
         :param market: Market type (spot or futures) (required)
-        :type market: Market
+        :type market: MarketType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -216,7 +222,7 @@ class SymbolsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._symbols_symbols_market_get_serialize(
+        _param = self._get_klines_symbols_serialize(
             market=market,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -230,12 +236,12 @@ class SymbolsApi:
             "500": "ErrorResponse",
             "422": "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
 
-    def _symbols_symbols_market_get_serialize(
+    def _get_klines_symbols_serialize(
         self,
         market,
         _request_auth,
@@ -272,7 +278,7 @@ class SymbolsApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",

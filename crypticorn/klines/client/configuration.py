@@ -16,9 +16,8 @@ import copy
 import http.client as httplib
 import logging
 from logging import FileHandler
-import multiprocessing
 import sys
-from typing import Any, ClassVar, Dict, List, Literal, Optional, TypedDict
+from typing import Any, ClassVar, Dict, List, Literal, Optional, TypedDict, Union
 from typing_extensions import NotRequired, Self
 
 import urllib3
@@ -119,7 +118,10 @@ HTTPSignatureAuthSetting = TypedDict(
 
 AuthSettings = TypedDict(
     "AuthSettings",
-    {},
+    {
+        "HTTPBearer": BearerFormatAuthSetting,
+        "APIKeyHeader": APIKeyAuthSetting,
+    },
     total=False,
 )
 
@@ -139,34 +141,56 @@ class HostSetting(TypedDict):
 class Configuration:
     """This class contains various settings of the API client.
 
-    :param host: Base url.
-    :param ignore_operation_servers
-      Boolean to ignore operation servers for the API client.
-      Config will use `host` as the base url regardless of the operation servers.
-    :param api_key: Dict to store API key(s).
-      Each entry in the dict specifies an API key.
-      The dict key is the name of the security scheme in the OAS specification.
-      The dict value is the API key secret.
-    :param api_key_prefix: Dict to store API prefix (e.g. Bearer).
-      The dict key is the name of the security scheme in the OAS specification.
-      The dict value is an API key prefix when generating the auth data.
-    :param username: Username for HTTP basic authentication.
-    :param password: Password for HTTP basic authentication.
-    :param access_token: Access token.
-    :param server_index: Index to servers configuration.
-    :param server_variables: Mapping with string values to replace variables in
-      templated server configuration. The validation of enums is performed for
-      variables with defined enum values before.
-    :param server_operation_index: Mapping from operation ID to an index to server
-      configuration.
-    :param server_operation_variables: Mapping from operation ID to a mapping with
-      string values to replace variables in templated server configuration.
-      The validation of enums is performed for variables with defined enum
-      values before.
-    :param ssl_ca_cert: str - the path to a file of concatenated CA certificates
-      in PEM format.
-    :param retries: Number of retries for API requests.
+        :param host: Base url.
+        :param ignore_operation_servers
+          Boolean to ignore operation servers for the API client.
+          Config will use `host` as the base url regardless of the operation servers.
+        :param api_key: Dict to store API key(s).
+          Each entry in the dict specifies an API key.
+          The dict key is the name of the security scheme in the OAS specification.
+          The dict value is the API key secret.
+        :param api_key_prefix: Dict to store API prefix (e.g. Bearer).
+          The dict key is the name of the security scheme in the OAS specification.
+          The dict value is an API key prefix when generating the auth data.
+        :param username: Username for HTTP basic authentication.
+        :param password: Password for HTTP basic authentication.
+        :param access_token: Access token.
+        :param server_index: Index to servers configuration.
+        :param server_variables: Mapping with string values to replace variables in
+          templated server configuration. The validation of enums is performed for
+          variables with defined enum values before.
+        :param server_operation_index: Mapping from operation ID to an index to server
+          configuration.
+        :param server_operation_variables: Mapping from operation ID to a mapping with
+          string values to replace variables in templated server configuration.
+          The validation of enums is performed for variables with defined enum
+          values before.
+        :param ssl_ca_cert: str - the path to a file of concatenated CA certificates
+          in PEM format.
+        :param retries: Number of retries for API requests.
+        :param ca_cert_data: verify the peer using concatenated CA certificate data
+          in PEM (str) or DER (bytes) format.
 
+        :Example:
+
+        API Key Authentication Example.
+        Given the following security scheme in the OpenAPI specification:
+          components:
+            securitySchemes:
+              cookieAuth:         # name for the security scheme
+                type: apiKey
+                in: cookie
+                name: JSESSIONID  # cookie name
+
+        You can programmatically set the cookie:
+
+    conf = client.Configuration(
+        api_key={'cookieAuth': 'abc123'}
+        api_key_prefix={'cookieAuth': 'JSESSIONID'}
+    )
+
+        The following cookie will be added to the HTTP request:
+           Cookie: JSESSIONID abc123
     """
 
     _default: ClassVar[Optional[Self]] = None
@@ -186,6 +210,7 @@ class Configuration:
         ignore_operation_servers: bool = False,
         ssl_ca_cert: Optional[str] = None,
         retries: Optional[int] = None,
+        ca_cert_data: Optional[Union[str, bytes]] = None,
         *,
         debug: Optional[bool] = None,
     ) -> None:
@@ -262,6 +287,10 @@ class Configuration:
         self.ssl_ca_cert = ssl_ca_cert
         """Set this to customize the certificate file to verify the peer.
         """
+        self.ca_cert_data = ca_cert_data
+        """Set this to verify the peer using PEM (str) or DER (bytes)
+           certificate data.
+        """
         self.cert_file = None
         """client certificate file
         """
@@ -276,12 +305,9 @@ class Configuration:
            Set this to the SNI value expected by the server.
         """
 
-        self.connection_pool_maxsize = multiprocessing.cpu_count() * 5
-        """urllib3 connection pool's maximum number of connections saved
-           per pool. urllib3 uses 1 connection as default value, but this is
-           not the best value when you are making a lot of possibly parallel
-           requests to the same host, which is often the case here.
-           cpu_count * 5 is used as default value to increase performance.
+        self.connection_pool_maxsize = 100
+        """This value is passed to the aiohttp to limit simultaneous connections.
+           Default values is 100, None means no-limit.
         """
 
         self.proxy: Optional[str] = None
@@ -492,6 +518,23 @@ class Configuration:
         :return: The Auth Settings information dict.
         """
         auth: AuthSettings = {}
+        if self.access_token is not None:
+            auth["HTTPBearer"] = {
+                "type": "bearer",
+                "in": "header",
+                "format": "JWT",
+                "key": "Authorization",
+                "value": "Bearer " + self.access_token,
+            }
+        if "APIKeyHeader" in self.api_key:
+            auth["APIKeyHeader"] = {
+                "type": "api_key",
+                "in": "header",
+                "key": "X-API-Key",
+                "value": self.get_api_key_with_prefix(
+                    "APIKeyHeader",
+                ),
+            }
         return auth
 
     def to_debug_report(self) -> str:

@@ -38,7 +38,7 @@ class HealthCheckApi:
         self.api_client = api_client
 
     @validate_call
-    def index_get(
+    async def index_get(
         self,
         _request_timeout: Union[
             None,
@@ -88,17 +88,17 @@ class HealthCheckApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "BaseResponseHealthCheckResponse",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def index_get_with_http_info(
+    async def index_get_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -148,17 +148,17 @@ class HealthCheckApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "BaseResponseHealthCheckResponse",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def index_get_without_preload_content(
+    async def index_get_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -208,7 +208,7 @@ class HealthCheckApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "BaseResponseHealthCheckResponse",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
