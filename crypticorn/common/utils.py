@@ -5,6 +5,7 @@ import random
 
 from fastapi import HTTPException
 from fastapi import status
+from typing_extensions import deprecated
 
 from crypticorn.common import ApiError
 
@@ -34,7 +35,9 @@ def gen_random_id(length: int = 20) -> str:
     return "".join(random.choice(charset) for _ in range(length))
 
 
+@deprecated(reason="Use math.isclose instead. Will be removed in a future version.")
 def is_equal(
+
     a: float | Decimal,
     b: float | Decimal,
     rel_tol: float = 1e-9,
@@ -52,7 +55,6 @@ def is_equal(
     return Decimal(abs(a - b)) <= max(
         Decimal(str(rel_tol)) * max(abs(a), abs(b)), Decimal(str(abs_tol))
     )
-
 
 def optional_import(module_name: str, extra_name: str):
     try:
