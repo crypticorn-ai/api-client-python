@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(dotenv_path=".env.test")
 
 # JWT
 EXPIRED_JWT = os.getenv("EXPIRED_JWT")
