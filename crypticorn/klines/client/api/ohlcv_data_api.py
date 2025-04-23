@@ -17,11 +17,14 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictInt, StrictStr
-from typing import Any, Optional
+from typing import Optional
 from typing_extensions import Annotated
 from crypticorn.klines.client.models.base_response_ohlcv_response import (
     BaseResponseOHLCVResponse,
 )
+from crypticorn.klines.client.models.market_type import MarketType
+from crypticorn.klines.client.models.sort_direction import SortDirection
+from crypticorn.klines.client.models.timeframe import Timeframe
 
 from crypticorn.klines.client.api_client import ApiClient, RequestSerialized
 from crypticorn.klines.client.api_response import ApiResponse
@@ -41,10 +44,12 @@ class OHLCVDataApi:
         self.api_client = api_client
 
     @validate_call
-    def get_ohlcv_market_timeframe_symbol_get(
+    async def get_ohlcv(
         self,
-        market: Annotated[Any, Field(description="Market type (spot or futures)")],
-        timeframe: Annotated[Any, Field(description="Timeframe for the candles")],
+        market: Annotated[
+            MarketType, Field(description="Market type (spot or futures)")
+        ],
+        timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
         symbol: Annotated[
             StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
         ],
@@ -59,7 +64,8 @@ class OHLCVDataApi:
             Field(description="Number of candles to return"),
         ] = None,
         sort_direction: Annotated[
-            Optional[Any], Field(description="Klines sort direction (asc or desc)")
+            Optional[SortDirection],
+            Field(description="Klines sort direction (asc or desc)"),
         ] = None,
         _request_timeout: Union[
             None,
@@ -78,7 +84,7 @@ class OHLCVDataApi:
         Retrieve OHLCV (Open, High, Low, Close, Volume) data for a specific market, timeframe, and symbol.
 
         :param market: Market type (spot or futures) (required)
-        :type market: Market
+        :type market: MarketType
         :param timeframe: Timeframe for the candles (required)
         :type timeframe: Timeframe
         :param symbol: Trading pair symbol (e.g., BTCUSDT) (required)
@@ -113,7 +119,7 @@ class OHLCVDataApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_ohlcv_market_timeframe_symbol_get_serialize(
+        _param = self._get_ohlcv_serialize(
             market=market,
             timeframe=timeframe,
             symbol=symbol,
@@ -134,20 +140,22 @@ class OHLCVDataApi:
             "500": "ErrorResponse",
             "422": "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
 
     @validate_call
-    def get_ohlcv_market_timeframe_symbol_get_with_http_info(
+    async def get_ohlcv_with_http_info(
         self,
-        market: Annotated[Any, Field(description="Market type (spot or futures)")],
-        timeframe: Annotated[Any, Field(description="Timeframe for the candles")],
+        market: Annotated[
+            MarketType, Field(description="Market type (spot or futures)")
+        ],
+        timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
         symbol: Annotated[
             StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
         ],
@@ -162,7 +170,8 @@ class OHLCVDataApi:
             Field(description="Number of candles to return"),
         ] = None,
         sort_direction: Annotated[
-            Optional[Any], Field(description="Klines sort direction (asc or desc)")
+            Optional[SortDirection],
+            Field(description="Klines sort direction (asc or desc)"),
         ] = None,
         _request_timeout: Union[
             None,
@@ -181,7 +190,7 @@ class OHLCVDataApi:
         Retrieve OHLCV (Open, High, Low, Close, Volume) data for a specific market, timeframe, and symbol.
 
         :param market: Market type (spot or futures) (required)
-        :type market: Market
+        :type market: MarketType
         :param timeframe: Timeframe for the candles (required)
         :type timeframe: Timeframe
         :param symbol: Trading pair symbol (e.g., BTCUSDT) (required)
@@ -216,7 +225,7 @@ class OHLCVDataApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_ohlcv_market_timeframe_symbol_get_serialize(
+        _param = self._get_ohlcv_serialize(
             market=market,
             timeframe=timeframe,
             symbol=symbol,
@@ -237,20 +246,22 @@ class OHLCVDataApi:
             "500": "ErrorResponse",
             "422": "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        response_data.read()
+        await response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
 
     @validate_call
-    def get_ohlcv_market_timeframe_symbol_get_without_preload_content(
+    async def get_ohlcv_without_preload_content(
         self,
-        market: Annotated[Any, Field(description="Market type (spot or futures)")],
-        timeframe: Annotated[Any, Field(description="Timeframe for the candles")],
+        market: Annotated[
+            MarketType, Field(description="Market type (spot or futures)")
+        ],
+        timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
         symbol: Annotated[
             StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
         ],
@@ -265,7 +276,8 @@ class OHLCVDataApi:
             Field(description="Number of candles to return"),
         ] = None,
         sort_direction: Annotated[
-            Optional[Any], Field(description="Klines sort direction (asc or desc)")
+            Optional[SortDirection],
+            Field(description="Klines sort direction (asc or desc)"),
         ] = None,
         _request_timeout: Union[
             None,
@@ -284,7 +296,7 @@ class OHLCVDataApi:
         Retrieve OHLCV (Open, High, Low, Close, Volume) data for a specific market, timeframe, and symbol.
 
         :param market: Market type (spot or futures) (required)
-        :type market: Market
+        :type market: MarketType
         :param timeframe: Timeframe for the candles (required)
         :type timeframe: Timeframe
         :param symbol: Trading pair symbol (e.g., BTCUSDT) (required)
@@ -319,7 +331,7 @@ class OHLCVDataApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_ohlcv_market_timeframe_symbol_get_serialize(
+        _param = self._get_ohlcv_serialize(
             market=market,
             timeframe=timeframe,
             symbol=symbol,
@@ -340,12 +352,12 @@ class OHLCVDataApi:
             "500": "ErrorResponse",
             "422": "HTTPValidationError",
         }
-        response_data = self.api_client.call_api(
+        response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
         return response_data.response
 
-    def _get_ohlcv_market_timeframe_symbol_get_serialize(
+    def _get_ohlcv_serialize(
         self,
         market,
         timeframe,
@@ -408,7 +420,7 @@ class OHLCVDataApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",

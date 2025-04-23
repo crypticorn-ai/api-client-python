@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost/v1/klines*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_ohlcv_market_timeframe_symbol_get**](OHLCVDataApi.md#get_ohlcv_market_timeframe_symbol_get) | **GET** /{market}/{timeframe}/{symbol} | Get Ohlcv
+[**get_ohlcv**](OHLCVDataApi.md#get_ohlcv) | **GET** /{market}/{timeframe}/{symbol} | Get Ohlcv
 
 
-# **get_ohlcv_market_timeframe_symbol_get**
-> BaseResponseOHLCVResponse get_ohlcv_market_timeframe_symbol_get(market, timeframe, symbol, start=start, end=end, limit=limit, sort_direction=sort_direction)
+# **get_ohlcv**
+> BaseResponseOHLCVResponse get_ohlcv(market, timeframe, symbol, start=start, end=end, limit=limit, sort_direction=sort_direction)
 
 Get Ohlcv
 
@@ -16,10 +16,15 @@ Retrieve OHLCV (Open, High, Low, Close, Volume) data for a specific market, time
 
 ### Example
 
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
 from client.models.base_response_ohlcv_response import BaseResponseOHLCVResponse
+from client.models.market_type import MarketType
+from client.models.sort_direction import SortDirection
+from client.models.timeframe import Timeframe
 from client.rest import ApiException
 from pprint import pprint
 
@@ -29,12 +34,27 @@ configuration = client.Configuration(
     host = "http://localhost/v1/klines"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
-with client.ApiClient(configuration) as api_client:
+async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.OHLCVDataApi(api_client)
-    market = client.Market() # Market | Market type (spot or futures)
+    market = client.MarketType() # MarketType | Market type (spot or futures)
     timeframe = client.Timeframe() # Timeframe | Timeframe for the candles
     symbol = 'symbol_example' # str | Trading pair symbol (e.g., BTCUSDT)
     start = 56 # int | Start timestamp in milliseconds (optional)
@@ -44,11 +64,11 @@ with client.ApiClient(configuration) as api_client:
 
     try:
         # Get Ohlcv
-        api_response = api_instance.get_ohlcv_market_timeframe_symbol_get(market, timeframe, symbol, start=start, end=end, limit=limit, sort_direction=sort_direction)
-        print("The response of OHLCVDataApi->get_ohlcv_market_timeframe_symbol_get:\n")
+        api_response = await api_instance.get_ohlcv(market, timeframe, symbol, start=start, end=end, limit=limit, sort_direction=sort_direction)
+        print("The response of OHLCVDataApi->get_ohlcv:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling OHLCVDataApi->get_ohlcv_market_timeframe_symbol_get: %s\n" % e)
+        print("Exception when calling OHLCVDataApi->get_ohlcv: %s\n" % e)
 ```
 
 
@@ -58,7 +78,7 @@ with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**Market**](.md)| Market type (spot or futures) | 
+ **market** | [**MarketType**](.md)| Market type (spot or futures) | 
  **timeframe** | [**Timeframe**](.md)| Timeframe for the candles | 
  **symbol** | **str**| Trading pair symbol (e.g., BTCUSDT) | 
  **start** | **int**| Start timestamp in milliseconds | [optional] 
@@ -72,7 +92,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 

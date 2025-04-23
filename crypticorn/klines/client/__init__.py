@@ -17,6 +17,7 @@ Do not edit the class manually.
 __version__ = "1.0.0"
 
 # import apis into sdk package
+from crypticorn.klines.client.api.change_in_timeframe_api import ChangeInTimeframeApi
 from crypticorn.klines.client.api.funding_rates_api import FundingRatesApi
 from crypticorn.klines.client.api.health_check_api import HealthCheckApi
 from crypticorn.klines.client.api.ohlcv_data_api import OHLCVDataApi
@@ -38,12 +39,18 @@ from crypticorn.klines.client.exceptions import ApiException
 from crypticorn.klines.client.models.base_response_health_check_response import (
     BaseResponseHealthCheckResponse,
 )
+from crypticorn.klines.client.models.base_response_list_change_in_timeframe_response import (
+    BaseResponseListChangeInTimeframeResponse,
+)
 from crypticorn.klines.client.models.base_response_list_funding_rate_response import (
     BaseResponseListFundingRateResponse,
 )
 from crypticorn.klines.client.models.base_response_list_str import BaseResponseListStr
 from crypticorn.klines.client.models.base_response_ohlcv_response import (
     BaseResponseOHLCVResponse,
+)
+from crypticorn.klines.client.models.change_in_timeframe_response import (
+    ChangeInTimeframeResponse,
 )
 from crypticorn.klines.client.models.error_response import ErrorResponse
 from crypticorn.klines.client.models.exchange import Exchange
@@ -57,11 +64,11 @@ from crypticorn.klines.client.models.history_no_data_response import (
 from crypticorn.klines.client.models.history_success_response import (
     HistorySuccessResponse,
 )
-from crypticorn.klines.client.models.market import Market
+from crypticorn.klines.client.models.market_type import MarketType
 from crypticorn.klines.client.models.ohlcv_response import OHLCVResponse
 from crypticorn.klines.client.models.resolution import Resolution
-from crypticorn.klines.client.models.response_get_history_udf_history_get import (
-    ResponseGetHistoryUdfHistoryGet,
+from crypticorn.klines.client.models.response_get_udf_history import (
+    ResponseGetUdfHistory,
 )
 from crypticorn.klines.client.models.search_symbol_response import SearchSymbolResponse
 from crypticorn.klines.client.models.sort_direction import SortDirection
