@@ -57,7 +57,10 @@ def init_ruff(force):
 def init_docker(output, force):
     """Add Dockerfile"""
     root = get_git_root()
-    target = Path(output) if output else root / "Dockerfile"
+    if output and Path(output).is_file():
+        click.secho("Output path is a file, please provide a directory path", fg="red")
+        return
+    target = (Path(output) if output else root) / "Dockerfile"
     if target.exists() and not force:
         click.secho("File already exists, use --force / -f to overwrite", fg="red")
         return
@@ -73,10 +76,10 @@ def init_docker(output, force):
 def init_auth(output, force):
     """Add auth.py with auth handler. Everything you need to start using the auth service."""
     root = get_git_root()
-    if Path(output).is_dir():
-        click.secho("Output path is a directory, please provide a file path", fg="red")
+    if output and Path(output).is_file():
+        click.secho("Output path is a file, please provide a directory path", fg="red")
         return
-    target = Path(output) if output else root / "src/auth.py"
+    target = (Path(output) if output else root) / "auth.py"
     if target.exists() and not force:
         click.secho("File already exists, use --force / -f to overwrite", fg="red")
         return
