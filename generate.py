@@ -25,6 +25,13 @@ def main():
     # ping the api to check if it's running
     try:
         response = requests.get(f"{ROOT_URL}/{module_name}/openapi.json")
+        if "cloudflare" in response.headers.get("Server"):
+            print(
+                "It seems the request to localhost fell back to the dev server. Make sure to run the server locally."
+            )
+            inp = input("If you want to use the dev server, hit enter to continue...")
+            if inp != "":
+                sys.exit(1)
         if response.status_code != 200:
             print(f"No openapi.json file found for {module_name} module")
             sys.exit(1)
