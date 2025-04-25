@@ -1,33 +1,27 @@
 from typing import Optional, Dict
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from fastapi import HTTPException as FastAPIHTTPException
 from crypticorn.common import ApiError
 
 
 class ExceptionDetail(BaseModel):
-    message: str
-    error: ApiError
+    message: Optional[str] = Field(None, description="An additional error message")
+    error: ApiError = Field(..., description="The unique error code")
 
 
 class HTTPException(FastAPIHTTPException):
+    """A custom HTTP exception wrapper around FastAPI's HTTPException.
+    It allows for a more structured way to handle errors, with a message and an error code. The status code is being derived from the detail's error.
+        The ApiError class is the source of truth for everything. If the error is not yet implemented, there are fallbacks to avoid errors while testing.
+    """
+
     def __init__(
         self,
-        status_code: int,
-        detail: ExceptionDetail | str,
+        detail: ExceptionDetail,
         headers: Optional[Dict[str, str]] = None,
     ):
-        try:
-            exc = (
-                ExceptionDetail(**detail)
-                if not isinstance(detail, ExceptionDetail)
-                else detail
-            )
-        except Exception as e:
-            exc = ExceptionDetail(
-                message=detail,
-                error=ApiError.UNKNOWN_ERROR,
-            )
-
         super().__init__(
-            status_code=status_code, detail=exc.model_dump(), headers=headers
+            status_code=detail.error.status_code,
+            detail=detail.model_dump(),
+            headers=headers,
         )
