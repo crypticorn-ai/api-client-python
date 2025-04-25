@@ -35,7 +35,7 @@ def gen_random_id(length: int = 20) -> str:
     return "".join(random.choice(charset) for _ in range(length))
 
 
-@deprecated(reason="Use math.isclose instead. Will be removed in a future version.")
+@deprecated("Use math.isclose instead. Will be removed in a future version.")
 def is_equal(
     a: float | Decimal,
     b: float | Decimal,
