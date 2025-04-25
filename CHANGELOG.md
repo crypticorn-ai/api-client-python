@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.5.0-rc.2 (2025-04-25)
+
+### Bug Fixes
+
+- Enforce stricter types on Http Exception and improve descriptions and doc string
+  ([`0941780`](https://github.com/crypticorn-ai/api-client/commit/094178099ca1d01d763f41cce6ac898cbc77a9a3))
+
+
 ## v2.5.0-rc.1 (2025-04-25)
 
 ### Build System
