@@ -1,6 +1,24 @@
 # CHANGELOG
 
 
+## v2.5.0-rc.1 (2025-04-25)
+
+### Build System
+
+- Update generation script to catch fallback if local server is not running
+  ([`b5e9a16`](https://github.com/crypticorn-ai/api-client/commit/b5e9a16092c836bea38657b7ddab252945696848))
+
+### Chores
+
+- Deprecate is_equal function
+  ([`b3b3094`](https://github.com/crypticorn-ai/api-client/commit/b3b309428dc078673a5b1718a7075855bce0c098))
+
+### Features
+
+- Add custom Http Exception class with shared error codes
+  ([`aa0d851`](https://github.com/crypticorn-ai/api-client/commit/aa0d8515936ea65951608a9704f8d840069ac15d))
+
+
 ## v2.4.7 (2025-04-17)
 
 ### Bug Fixes
