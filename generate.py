@@ -5,41 +5,72 @@ import subprocess
 
 # List of possible module names
 MODULES = ["trade", "klines", "hive", "pay", "auth", "metrics"]
-ROOT_URL = "http://localhost/v1"
+ENVIRONMENTS = ["local", "dev", "prod"]
+ENV_MAP = {
+    "local": "http://localhost/v1",
+    "dev": "https://api.crypticorn.dev/v1",
+    "prod": "https://api.crypticorn.com/v1",
+}
 
 
 def main():
+    print(sys.argv)
     # Check if script is run from the root directory
     if not os.path.exists("python/crypticorn"):
         print("Please run the script from the root directory")
         sys.exit(1)
 
-    # Check if valid module name is provided
-    if len(sys.argv) != 2 or sys.argv[1] not in MODULES:
-        print(f"Please provide one of as an arg: {', '.join(MODULES)}")
+    if "-m" in sys.argv:
+        sys.argv.remove("-m")
+
+    # Initialize variables
+    module_name = None
+    environment = None
+
+    # Parse command-line arguments
+    for arg in sys.argv[1:]:
+        if arg.startswith("--service="):
+            module_name = arg.split("=")[1]
+        elif arg.startswith("--env="):
+            environment = arg.split("=")[1]
+
+    # Check if service is provided
+    if not module_name:
+        print("Please provide the service name as an arg")
+        print(f"Valid services: {', '.join(MODULES)}")
+        print(f"Example: python python/generate.py --service=trade")
         sys.exit(1)
 
-    module_name = sys.argv[1]
+    # Validate service name
+    if module_name not in MODULES:
+        print(f"Invalid service: {module_name}")
+        print(f"Valid services: {', '.join(MODULES)}")
+        sys.exit(1)
+
+    if environment is None:
+        environment = "local"
+    # Validate environment
+    if environment not in ENVIRONMENTS:
+        print(f"Invalid environment: {environment}")
+        print(f"Valid environments: {', '.join(ENVIRONMENTS)}")
+        sys.exit(1)
+
+    ROOT_URL = ENV_MAP[environment]
     upper_module_name = module_name[0].upper() + module_name[1:]
 
     # ping the api to check if it's running
     try:
         response = requests.get(f"{ROOT_URL}/{module_name}/openapi.json")
-        if "cloudflare" in response.headers.get("Server"):
-            print(
-                "It seems the request to localhost fell back to the dev server. Make sure to run the server locally."
-            )
-            inp = input("If you want to use the dev server, hit enter to continue...")
-            if inp != "":
-                sys.exit(1)
         if response.status_code != 200:
-            print(f"No openapi.json file found for {module_name} module")
+            print(
+                f"No openapi.json file found for {module_name} module at path {ROOT_URL}/{module_name}/openapi.json"
+            )
             sys.exit(1)
     except requests.RequestException:
         print(f"Failed to connect to API for {module_name} module")
         sys.exit(1)
 
-    print(f"Generating {module_name} client")
+    print(f"Generating {module_name} client using{ROOT_URL}/{module_name}/openapi.json")
 
     # Run the OpenAPI generator
     generator_cmd = [
