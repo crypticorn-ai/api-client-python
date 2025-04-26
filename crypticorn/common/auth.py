@@ -2,14 +2,10 @@ import json
 
 from crypticorn.auth import Verify200Response, AuthClient, Configuration
 from crypticorn.auth.client.exceptions import ApiException
-from crypticorn.common import (
-    ApiError,
-    ApiVersion,
-    BaseUrl,
-    Scope,
-    Service,
-)
-from fastapi import Depends, HTTPException, Query, status, WebSocketException
+from crypticorn.common.scopes import Scope
+from crypticorn.common.exceptions import ApiError, HTTPException, ExceptionContent
+from crypticorn.common.urls import BaseUrl, Service, ApiVersion
+from fastapi import Depends, Query, status, WebSocketException
 from fastapi.security import (
     HTTPAuthorizationCredentials,
     SecurityScopes,
@@ -49,8 +45,10 @@ class AuthHandler:
         self.client = AuthClient(Configuration(host=self.url))
 
         self.no_credentials_exception = HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=ApiError.NO_CREDENTIALS.identifier,
+            content=ExceptionContent(
+                error=ApiError.NO_CREDENTIALS,
+                message="No credentials provided",
+            ),
         )
 
     async def _verify_api_key(self, api_key: str) -> Verify200Response:
@@ -76,8 +74,10 @@ class AuthHandler:
         """
         if not set(api_scopes).issubset(user_scopes):
             raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail=ApiError.INSUFFICIENT_SCOPES.identifier,
+                content=ExceptionContent(
+                    error=ApiError.INSUFFICIENT_SCOPES,
+                    message="Insufficient scopes to access this resource",
+                ),
             )
 
     async def _extract_message(self, e: ApiException) -> str:
@@ -101,15 +101,19 @@ class AuthHandler:
         """
         if isinstance(e, ApiException):
             return HTTPException(
-                status_code=e.status,
-                detail=await self._extract_message(e),
+                content=ExceptionContent(
+                    error=ApiError.UNKNOWN_ERROR,
+                    message=await self._extract_message(e),
+                ),
             )
         elif isinstance(e, HTTPException):
             return e
         else:
             return HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail=str(e),
+                content=ExceptionContent(
+                    error=ApiError.UNKNOWN_ERROR,
+                    message=str(e),
+                ),
             )
 
     async def api_key_auth(
