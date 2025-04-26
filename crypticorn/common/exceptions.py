@@ -7,7 +7,7 @@ from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 from crypticorn.common import ApiError, ApiErrorIdentifier, ApiErrorType, ApiErrorLevel
 
-class EnrichedDetail(BaseModel):
+class ExceptionDetail(BaseModel):
     '''This is the detail of the exception. It is used to enrich the exception with additional information by unwrapping the ApiError into its components.'''
     message: Optional[str] = Field(None, description="An additional error message")
     code: ApiErrorIdentifier = Field(..., description="The unique error code")
@@ -16,13 +16,12 @@ class EnrichedDetail(BaseModel):
     status_code: int = Field(..., description="The HTTP status code")
 
 
-class ExceptionDetail(BaseModel):
+class ExceptionContent(BaseModel):
     '''This is the detail of the exception. Pass an ApiError to the constructor and an optional human readable message.'''
     error: ApiError = Field(..., description="The unique error code")
     message: Optional[str] = Field(None, description="An additional error message")
-
-    def enrich(self) -> EnrichedDetail:
-        return EnrichedDetail(
+    def enrich(self) -> ExceptionDetail:
+        return ExceptionDetail(
             message=self.message,
             code=self.error.identifier,
             type=self.error.type,
@@ -38,11 +37,11 @@ class HTTPException(FastAPIHTTPException):
 
     def __init__(
         self,
-        detail: ExceptionDetail,
+        content: ExceptionContent,
         headers: Optional[Dict[str, str]] = None,
     ):
-        assert isinstance(detail, ExceptionDetail)
-        body = detail.enrich()
+        assert isinstance(content, ExceptionContent)
+        body = content.enrich()
         super().__init__(
             status_code=body.status_code,
             detail=body.model_dump(mode="json"),
@@ -51,18 +50,18 @@ class HTTPException(FastAPIHTTPException):
 
 async def general_handler(request: Request, exc: Exception):
     '''This is the default exception handler for all exceptions.'''
-    body = ExceptionDetail(message=str(exc), error=ApiError.UNKNOWN_ERROR)
-    return JSONResponse(status_code=body.error.status_code, content=HTTPException(detail=body).detail)
+    body = ExceptionContent(message=str(exc), error=ApiError.UNKNOWN_ERROR)
+    return JSONResponse(status_code=body.error.status_code, content=HTTPException(content=body).detail)
 
 async def request_validation_handler(request: Request, exc: RequestValidationError):
     '''This is the exception handler for all request validation errors.'''
-    body = ExceptionDetail(message=str(exc), error=ApiError.INVALID_DATA_REQUEST)
-    return JSONResponse(status_code=body.error.status_code, content=HTTPException(detail=body).detail)
+    body = ExceptionContent(message=str(exc), error=ApiError.INVALID_DATA_REQUEST)
+    return JSONResponse(status_code=body.error.status_code, content=HTTPException(content=body).detail)
 
 async def response_validation_handler(request: Request, exc: ResponseValidationError):
     '''This is the exception handler for all response validation errors.'''
-    body = ExceptionDetail(message=str(exc), error=ApiError.INVALID_DATA_RESPONSE)
-    return JSONResponse(status_code=body.error.status_code, content=HTTPException(detail=body).detail)
+    body = ExceptionContent(message=str(exc), error=ApiError.INVALID_DATA_RESPONSE)
+    return JSONResponse(status_code=body.error.status_code, content=HTTPException(content=body).detail)
 
 async def http_handler(request: Request, exc: HTTPException):
     '''This is the exception handler for HTTPExceptions. It unwraps the HTTPException and returns the detail in a flat JSON response.'''
@@ -76,5 +75,5 @@ def register_exception_handlers(app: FastAPI):
     app.add_exception_handler(ResponseValidationError, response_validation_handler)
 
 exception_response = {
-    "default": {"model": EnrichedDetail, "description": "Error response"}
+    "default": {"model": ExceptionDetail, "description": "Error response"}
 }
