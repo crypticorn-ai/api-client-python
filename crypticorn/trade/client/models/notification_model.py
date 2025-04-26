@@ -19,9 +19,6 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.trade.client.models.api_error_identifier import ApiErrorIdentifier
-from crypticorn.trade.client.models.api_error_level import ApiErrorLevel
-from crypticorn.trade.client.models.api_error_type import ApiErrorType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -34,15 +31,9 @@ class NotificationModel(BaseModel):
     created_at: Optional[StrictInt] = None
     updated_at: Optional[StrictInt] = None
     id: Optional[StrictStr] = None
-    identifier: ApiErrorIdentifier = Field(
-        description="Identifier string. Must match the mapping key in the frontend."
-    )
-    level: ApiErrorLevel = Field(
-        description="Level of the notification. Of type ApiErrorLevel"
-    )
-    type: ApiErrorType = Field(
-        description="Type of the notification. Of type ApiErrorType"
-    )
+    identifier: StrictStr = Field(description="API error identifiers")
+    level: StrictStr = Field(description="API error levels")
+    type: StrictStr = Field(description="Type of API error")
     user_id: Optional[StrictStr] = None
     viewed: Optional[StrictBool] = Field(
         default=False, description="Whether the notification has been marked as seen"

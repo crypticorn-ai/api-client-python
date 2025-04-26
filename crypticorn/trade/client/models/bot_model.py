@@ -19,7 +19,6 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from crypticorn.trade.client.models.api_error_identifier import ApiErrorIdentifier
 from crypticorn.trade.client.models.bot_status import BotStatus
 from typing import Optional, Set
 from typing_extensions import Self
@@ -40,7 +39,9 @@ class BotModel(BaseModel):
     api_key_id: StrictStr = Field(description="UID for the API key")
     allocation: StrictInt = Field(description="Initial allocation for the bot")
     status: BotStatus = Field(description="Status of the bot")
-    status_code: Optional[ApiErrorIdentifier] = None
+    status_code: Optional[StrictStr] = Field(
+        default=None, description="API error identifiers"
+    )
     user_id: Optional[StrictStr] = None
     current_allocation: Optional[Union[StrictFloat, StrictInt]] = None
     current_exposure: Optional[Union[StrictFloat, StrictInt]] = None
@@ -110,11 +111,6 @@ class BotModel(BaseModel):
         # and model_fields_set contains the field
         if self.id is None and "id" in self.model_fields_set:
             _dict["id"] = None
-
-        # set to None if status_code (nullable) is None
-        # and model_fields_set contains the field
-        if self.status_code is None and "status_code" in self.model_fields_set:
-            _dict["status_code"] = None
 
         # set to None if user_id (nullable) is None
         # and model_fields_set contains the field

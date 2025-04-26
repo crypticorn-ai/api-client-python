@@ -1,6 +1,6 @@
 # client.StatusApi
 
-All URIs are relative to *http://localhost/v1/trade*
+All URIs are relative to *http://127.0.0.1:3000/v1/trade*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -20,10 +20,10 @@ import client
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost/v1/trade
+# Defining the host is optional and defaults to http://127.0.0.1:3000/v1/trade
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://localhost/v1/trade"
+    host = "http://127.0.0.1:3000/v1/trade"
 )
 
 

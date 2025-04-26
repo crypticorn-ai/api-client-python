@@ -16,9 +16,6 @@ client/configuration.py
 client/exceptions.py
 client/models/__init__.py
 client/models/action_model.py
-client/models/api_error_identifier.py
-client/models/api_error_level.py
-client/models/api_error_type.py
 client/models/bot_model.py
 client/models/bot_status.py
 client/models/exchange.py
@@ -44,9 +41,6 @@ client/py.typed
 client/rest.py
 docs/APIKeysApi.md
 docs/ActionModel.md
-docs/ApiErrorIdentifier.md
-docs/ApiErrorLevel.md
-docs/ApiErrorType.md
 docs/BotModel.md
 docs/BotStatus.md
 docs/BotsApi.md
