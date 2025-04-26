@@ -76,5 +76,5 @@ def register_exception_handlers(app: FastAPI):
     app.add_exception_handler(ResponseValidationError, response_validation_handler)
 
 exception_response = {
-    "default": {"model": EnrichedDetail, "description": "Error response", "media_type": "application/txt"}
+    "default": {"model": EnrichedDetail, "description": "Error response"}
 }
