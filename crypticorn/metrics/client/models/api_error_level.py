@@ -18,18 +18,20 @@ from enum import Enum
 from typing_extensions import Self
 
 
-class MarketType(str, Enum):
+class ApiErrorLevel(str, Enum):
     """
-    Market types
+    API error levels
     """
 
     """
     allowed enum values
     """
-    SPOT = "spot"
-    FUTURES = "futures"
+    ERROR = "error"
+    INFO = "info"
+    SUCCESS = "success"
+    WARNING = "warning"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of MarketType from a JSON string"""
+        """Create an instance of ApiErrorLevel from a JSON string"""
         return cls(json.loads(json_str))

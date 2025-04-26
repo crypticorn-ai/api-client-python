@@ -48,7 +48,9 @@ class MarketcapApiWrapper(MarketcapApi):
         Get the marketcap symbols in a pandas dataframe
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_marketcap_symbols_without_preload_content(*args, **kwargs)
+        response = await self.get_marketcap_symbols_without_preload_content(
+            *args, **kwargs
+        )
         response.raise_for_status()
         json_response = await response.json()
         df = pd.DataFrame(json_response["data"])
@@ -66,10 +68,13 @@ class TokensApiWrapper(TokensApi):
         Get the tokens in a pandas dataframe
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_stable_and_wrapped_tokens_without_preload_content(*args, **kwargs)
+        response = await self.get_stable_and_wrapped_tokens_without_preload_content(
+            *args, **kwargs
+        )
         response.raise_for_status()
         json_data = await response.json()
         return pd.DataFrame(json_data)
+
 
 class ExchangesApiWrapper(ExchangesApi):
     """
@@ -81,23 +86,30 @@ class ExchangesApiWrapper(ExchangesApi):
         Get the exchanges in a pandas dataframe
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_available_exchanges_without_preload_content(*args, **kwargs)
+        response = await self.get_available_exchanges_without_preload_content(
+            *args, **kwargs
+        )
         response.raise_for_status()
         json_data = await response.json()
         processed_results = []
         for row in json_data:
-            data = {'timestamp': row['timestamp']}
-            data.update(row['exchanges'])
+            data = {"timestamp": row["timestamp"]}
+            data.update(row["exchanges"])
             processed_results.append(data)
-        
+
         # Create DataFrame and sort columns
         df = pd.DataFrame(processed_results)
-        cols = ['timestamp'] + sorted([col for col in df.columns if col != 'timestamp'])
+        cols = ["timestamp"] + sorted([col for col in df.columns if col != "timestamp"])
         df = df[cols]
-        
+
         # Convert timestamp to unix timestamp
-        df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
-        
+        df["timestamp"] = pd.to_datetime(df["timestamp"]).astype("int64") // 10**9
+
         # Convert exchange availability to boolean integers (0/1)
-        df = df.astype({'timestamp': 'int64', **{col: 'int8' for col in df.columns if col != 'timestamp'}})
+        df = df.astype(
+            {
+                "timestamp": "int64",
+                **{col: "int8" for col in df.columns if col != "timestamp"},
+            }
+        )
         return df

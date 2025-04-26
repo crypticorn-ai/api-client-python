@@ -1,6 +1,6 @@
 # client.MarketsApi
 
-All URIs are relative to *http://localhost/v1/metrics*
+All URIs are relative to *https://api.crypticorn.dev/v1/metrics*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **get_available_markets_for_symbol**
-> BaseResponseListDict get_available_markets_for_symbol(market, symbol, quote_currency=quote_currency, status=status)
+> List[str] get_available_markets_for_symbol(market, symbol, quote_currency=quote_currency, status=status)
 
 Get Markets For Symbol
 
@@ -22,16 +22,15 @@ Get markets for a symbol with filtering options.
 
 ```python
 import client
-from client.models.base_response_list_dict import BaseResponseListDict
 from client.models.market_type import MarketType
 from client.models.trading_status import TradingStatus
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost/v1/metrics
+# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://localhost/v1/metrics"
+    host = "https://api.crypticorn.dev/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -82,7 +81,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**BaseResponseListDict**](BaseResponseListDict.md)
+**List[str]**
 
 ### Authorization
 
@@ -97,16 +96,13 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful response with market data |  -  |
-**400** | Invalid request parameters |  -  |
-**404** | No data found |  -  |
-**500** | Internal server error |  -  |
-**422** | Validation Error |  -  |
+**200** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_quote_currencies**
-> BaseResponseListStr get_quote_currencies(market)
+> List[str] get_quote_currencies(market)
 
 Get Quote Currencies
 
@@ -119,15 +115,14 @@ Get available quote currencies for a market.
 
 ```python
 import client
-from client.models.base_response_list_str import BaseResponseListStr
 from client.models.market_type import MarketType
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost/v1/metrics
+# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://localhost/v1/metrics"
+    host = "https://api.crypticorn.dev/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -172,7 +167,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**BaseResponseListStr**](BaseResponseListStr.md)
+**List[str]**
 
 ### Authorization
 
@@ -187,11 +182,8 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful response with quote currencies |  -  |
-**400** | Invalid request parameters |  -  |
-**404** | No data found |  -  |
-**500** | Internal server error |  -  |
-**422** | Validation Error |  -  |
+**200** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

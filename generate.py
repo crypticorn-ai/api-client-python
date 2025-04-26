@@ -60,7 +60,7 @@ def main():
 
     # ping the api to check if it's running
     try:
-        response = requests.get(f"{ROOT_URL}/{module_name}/openapi.json")
+        response = requests.get("http://127.0.0.1:3000/v1/trade/openapi.json")#requests.get(f"{ROOT_URL}/{module_name}/openapi.json")
         if response.status_code != 200:
             print(
                 f"No openapi.json file found for {module_name} module at path {ROOT_URL}/{module_name}/openapi.json"

@@ -1,6 +1,6 @@
 # client.MarketcapApi
 
-All URIs are relative to *http://localhost/v1/metrics*
+All URIs are relative to *https://api.crypticorn.dev/v1/metrics*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 
 # **get_current_marketcap**
-> BaseResponseListDict get_current_marketcap(limit=limit)
+> List[Dict[str, object]] get_current_marketcap(limit=limit)
 
 Get Current Marketcap
 
@@ -24,14 +24,13 @@ Retrieve current marketcap data for all symbols.
 
 ```python
 import client
-from client.models.base_response_list_dict import BaseResponseListDict
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost/v1/metrics
+# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://localhost/v1/metrics"
+    host = "https://api.crypticorn.dev/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -76,7 +75,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**BaseResponseListDict**](BaseResponseListDict.md)
+**List[Dict[str, object]]**
 
 ### Authorization
 
@@ -91,16 +90,13 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful response with current marketcap data |  -  |
-**400** | Invalid request parameters |  -  |
-**404** | No data found |  -  |
-**500** | Internal server error |  -  |
-**422** | Validation Error |  -  |
+**200** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_marketcap_between_timestamps**
-> BaseResponseListDict get_marketcap_between_timestamps(start_timestamp=start_timestamp, end_timestamp=end_timestamp)
+> List[Dict[str, object]] get_marketcap_between_timestamps(start_timestamp=start_timestamp, end_timestamp=end_timestamp)
 
 Get Marketcap Between Timestamps
 
@@ -113,14 +109,13 @@ Retrieve marketcap data between timestamps.
 
 ```python
 import client
-from client.models.base_response_list_dict import BaseResponseListDict
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost/v1/metrics
+# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://localhost/v1/metrics"
+    host = "https://api.crypticorn.dev/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -143,8 +138,8 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.MarketcapApi(api_client)
-    start_timestamp = 1744381723 # int | Start timestamp (optional) (default to 1744381723)
-    end_timestamp = 1744554523 # int | End timestamp (optional) (default to 1744554523)
+    start_timestamp = 1745530274 # int | Start timestamp (optional) (default to 1745530274)
+    end_timestamp = 1745703074 # int | End timestamp (optional) (default to 1745703074)
 
     try:
         # Get Marketcap Between Timestamps
@@ -162,12 +157,12 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **start_timestamp** | **int**| Start timestamp | [optional] [default to 1744381723]
- **end_timestamp** | **int**| End timestamp | [optional] [default to 1744554523]
+ **start_timestamp** | **int**| Start timestamp | [optional] [default to 1745530274]
+ **end_timestamp** | **int**| End timestamp | [optional] [default to 1745703074]
 
 ### Return type
 
-[**BaseResponseListDict**](BaseResponseListDict.md)
+**List[Dict[str, object]]**
 
 ### Authorization
 
@@ -182,16 +177,13 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful response with marketcap data |  -  |
-**400** | Invalid request parameters |  -  |
-**404** | No data found |  -  |
-**500** | Internal server error |  -  |
-**422** | Validation Error |  -  |
+**200** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_marketcap_symbols**
-> BaseResponseListDict get_marketcap_symbols(start_timestamp=start_timestamp, end_timestamp=end_timestamp, interval=interval, market=market, exchange=exchange)
+> List[Dict[str, object]] get_marketcap_symbols(start_timestamp=start_timestamp, end_timestamp=end_timestamp, interval=interval, market=market, exchange=exchange)
 
 Get Symbols Marketcap Between Timestamps
 
@@ -204,15 +196,14 @@ Retrieve marketcap data for symbols between timestamps with optional filtering.
 
 ```python
 import client
-from client.models.base_response_list_dict import BaseResponseListDict
 from client.models.market_type import MarketType
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost/v1/metrics
+# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://localhost/v1/metrics"
+    host = "https://api.crypticorn.dev/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -235,8 +226,8 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.MarketcapApi(api_client)
-    start_timestamp = 1744381723 # int | Start timestamp (optional) (default to 1744381723)
-    end_timestamp = 1744554523 # int | End timestamp (optional) (default to 1744554523)
+    start_timestamp = 1745530274 # int | Start timestamp (optional) (default to 1745530274)
+    end_timestamp = 1745703074 # int | End timestamp (optional) (default to 1745703074)
     interval = 1d # str | Interval for which to fetch symbols and marketcap data (optional) (default to 1d)
     market = client.MarketType() # MarketType | Market for which to fetch symbols and marketcap data (optional)
     exchange = 'exchange_example' # str | Exchange for which to fetch symbols and marketcap data (optional)
@@ -257,15 +248,15 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **start_timestamp** | **int**| Start timestamp | [optional] [default to 1744381723]
- **end_timestamp** | **int**| End timestamp | [optional] [default to 1744554523]
+ **start_timestamp** | **int**| Start timestamp | [optional] [default to 1745530274]
+ **end_timestamp** | **int**| End timestamp | [optional] [default to 1745703074]
  **interval** | **str**| Interval for which to fetch symbols and marketcap data | [optional] [default to 1d]
  **market** | [**MarketType**](.md)| Market for which to fetch symbols and marketcap data | [optional] 
  **exchange** | **str**| Exchange for which to fetch symbols and marketcap data | [optional] 
 
 ### Return type
 
-[**BaseResponseListDict**](BaseResponseListDict.md)
+**List[Dict[str, object]]**
 
 ### Authorization
 
@@ -280,16 +271,13 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful response with marketcap data |  -  |
-**400** | Invalid request parameters |  -  |
-**404** | No data found |  -  |
-**500** | Internal server error |  -  |
-**422** | Validation Error |  -  |
+**200** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_marketcap_symbols_with_ohlcv**
-> BaseResponseListDict get_marketcap_symbols_with_ohlcv(timestamp=timestamp, timeframe=timeframe, market=market, top_n=top_n, ohlcv_limit=ohlcv_limit)
+> List[Dict[str, object]] get_marketcap_symbols_with_ohlcv(timestamp=timestamp, timeframe=timeframe, market=market, top_n=top_n, ohlcv_limit=ohlcv_limit)
 
 Get Symbols Marketcap With Ohlcv
 
@@ -302,15 +290,14 @@ Retrieve OHLCV data with marketcap for symbols at a specific timestamp.
 
 ```python
 import client
-from client.models.base_response_list_dict import BaseResponseListDict
 from client.models.market_type import MarketType
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost/v1/metrics
+# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://localhost/v1/metrics"
+    host = "https://api.crypticorn.dev/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -333,7 +320,7 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.MarketcapApi(api_client)
-    timestamp = 1744554523 # int | Timestamp for which to fetch symbols and OHLCV data (optional) (default to 1744554523)
+    timestamp = 1745703074 # int | Timestamp for which to fetch symbols and OHLCV data (optional) (default to 1745703074)
     timeframe = '1h' # str | Timeframe for OHLCV data (optional) (default to '1h')
     market = client.MarketType() # MarketType | Market for OHLCV data (optional)
     top_n = 10 # int | Number of symbols to fetch (optional) (default to 10)
@@ -355,7 +342,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **timestamp** | **int**| Timestamp for which to fetch symbols and OHLCV data | [optional] [default to 1744554523]
+ **timestamp** | **int**| Timestamp for which to fetch symbols and OHLCV data | [optional] [default to 1745703074]
  **timeframe** | **str**| Timeframe for OHLCV data | [optional] [default to &#39;1h&#39;]
  **market** | [**MarketType**](.md)| Market for OHLCV data | [optional] 
  **top_n** | **int**| Number of symbols to fetch | [optional] [default to 10]
@@ -363,7 +350,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**BaseResponseListDict**](BaseResponseListDict.md)
+**List[Dict[str, object]]**
 
 ### Authorization
 
@@ -378,11 +365,8 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful response with OHLCV and marketcap data |  -  |
-**400** | Invalid request parameters |  -  |
-**404** | No data found |  -  |
-**500** | Internal server error |  -  |
-**422** | Validation Error |  -  |
+**200** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

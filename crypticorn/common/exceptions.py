@@ -7,8 +7,10 @@ from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 from crypticorn.common import ApiError, ApiErrorIdentifier, ApiErrorType, ApiErrorLevel
 
+
 class ExceptionDetail(BaseModel):
-    '''This is the detail of the exception. It is used to enrich the exception with additional information by unwrapping the ApiError into its components.'''
+    """This is the detail of the exception. It is used to enrich the exception with additional information by unwrapping the ApiError into its components."""
+
     message: Optional[str] = Field(None, description="An additional error message")
     code: ApiErrorIdentifier = Field(..., description="The unique error code")
     type: ApiErrorType = Field(..., description="The type of error")
@@ -18,11 +20,12 @@ class ExceptionDetail(BaseModel):
 
 
 class ExceptionContent(BaseModel):
-    '''This is the detail of the exception. Pass an ApiError to the constructor and an optional human readable message.'''
+    """This is the detail of the exception. Pass an ApiError to the constructor and an optional human readable message."""
+
     error: ApiError = Field(..., description="The unique error code")
     message: Optional[str] = Field(None, description="An additional error message")
     details: Any = Field(None, description="Additional details about the error")
-        
+
     def enrich(self) -> ExceptionDetail:
         return ExceptionDetail(
             message=self.message,
@@ -32,6 +35,7 @@ class ExceptionContent(BaseModel):
             status_code=self.error.status_code,
             details=self.details,
         )
+
 
 class HTTPException(FastAPIHTTPException):
     """A custom HTTP exception wrapper around FastAPI's HTTPException.
@@ -52,31 +56,43 @@ class HTTPException(FastAPIHTTPException):
             headers=headers,
         )
 
+
 async def general_handler(request: Request, exc: Exception):
-    '''This is the default exception handler for all exceptions.'''
+    """This is the default exception handler for all exceptions."""
     body = ExceptionContent(message=str(exc), error=ApiError.UNKNOWN_ERROR)
-    return JSONResponse(status_code=body.error.status_code, content=HTTPException(content=body).detail)
+    return JSONResponse(
+        status_code=body.error.status_code, content=HTTPException(content=body).detail
+    )
+
 
 async def request_validation_handler(request: Request, exc: RequestValidationError):
-    '''This is the exception handler for all request validation errors.'''
+    """This is the exception handler for all request validation errors."""
     body = ExceptionContent(message=str(exc), error=ApiError.INVALID_DATA_REQUEST)
-    return JSONResponse(status_code=body.error.status_code, content=HTTPException(content=body).detail)
+    return JSONResponse(
+        status_code=body.error.status_code, content=HTTPException(content=body).detail
+    )
+
 
 async def response_validation_handler(request: Request, exc: ResponseValidationError):
-    '''This is the exception handler for all response validation errors.'''
+    """This is the exception handler for all response validation errors."""
     body = ExceptionContent(message=str(exc), error=ApiError.INVALID_DATA_RESPONSE)
-    return JSONResponse(status_code=body.error.status_code, content=HTTPException(content=body).detail)
+    return JSONResponse(
+        status_code=body.error.status_code, content=HTTPException(content=body).detail
+    )
+
 
 async def http_handler(request: Request, exc: HTTPException):
-    '''This is the exception handler for HTTPExceptions. It unwraps the HTTPException and returns the detail in a flat JSON response.'''
+    """This is the exception handler for HTTPExceptions. It unwraps the HTTPException and returns the detail in a flat JSON response."""
     return JSONResponse(status_code=exc.status_code, content=exc.detail)
 
+
 def register_exception_handlers(app: FastAPI):
-    '''Utility to register serveral exception handlers in one go. Catches Exception, HTTPException and Data Validation errors and responds with a unified json body.'''
+    """Utility to register serveral exception handlers in one go. Catches Exception, HTTPException and Data Validation errors and responds with a unified json body."""
     app.add_exception_handler(Exception, general_handler)
     app.add_exception_handler(FastAPIHTTPException, http_handler)
     app.add_exception_handler(RequestValidationError, request_validation_handler)
     app.add_exception_handler(ResponseValidationError, response_validation_handler)
+
 
 exception_response = {
     "default": {"model": ExceptionDetail, "description": "Error response"}
