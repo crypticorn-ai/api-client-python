@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v2.5.0-rc.5 (2025-04-26)
+
+### Features
+
+- Add details field to `ExceptionContent` to support additional details about the error
+  ([`3ae6bc5`](https://github.com/crypticorn-ai/api-client/commit/3ae6bc57ae4e1e8a23c46511cdc5bf9c1eadc40d))
+
+### Refactoring
+
+- Rename exception class names
+  ([`7f50e11`](https://github.com/crypticorn-ai/api-client/commit/7f50e114ceee596dcf3e25d3decfe78c849ad22e))
+
+
 ## v2.5.0-rc.4 (2025-04-26)
 
 ### Bug Fixes
