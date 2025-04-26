@@ -63,6 +63,8 @@ class ApiErrorIdentifier(StrEnum):
     INSUFFICIENT_SCOPES = "insufficient_scopes"
     INVALID_API_KEY = "invalid_api_key"
     INVALID_BEARER = "invalid_bearer"
+    INVALID_DATA_REQUEST = "invalid_data"
+    INVALID_DATA_RESPONSE = "invalid_data_response"
     INVALID_EXCHANGE_KEY = "invalid_exchange_key"
     INVALID_MARGIN_MODE = "invalid_margin_mode"
     INVALID_PARAMETER = "invalid_parameter_provided"
@@ -260,6 +262,16 @@ class ApiError(Enum, metaclass=Fallback):
     )
     INVALID_BEARER = (
         ApiErrorIdentifier.INVALID_BEARER,
+        ApiErrorType.USER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    INVALID_DATA_REQUEST = (
+        ApiErrorIdentifier.INVALID_DATA_REQUEST,
+        ApiErrorType.USER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    INVALID_DATA_RESPONSE = (
+        ApiErrorIdentifier.INVALID_DATA_RESPONSE,
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
@@ -489,6 +501,8 @@ class HttpStatusMapper:
         ApiError.BOT_ALREADY_DELETED: status.HTTP_409_CONFLICT,
         # Invalid Content
         ApiError.CONTENT_TYPE_ERROR: status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
+        ApiError.INVALID_DATA_REQUEST: status.HTTP_422_UNPROCESSABLE_ENTITY,
+        ApiError.INVALID_DATA_RESPONSE: status.HTTP_422_UNPROCESSABLE_ENTITY,
         # Rate Limits
         ApiError.EXCHANGE_RATE_LIMIT: status.HTTP_429_TOO_MANY_REQUESTS,
         ApiError.REQUEST_SCOPE_EXCEEDED: status.HTTP_429_TOO_MANY_REQUESTS,
