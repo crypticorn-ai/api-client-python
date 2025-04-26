@@ -1,6 +1,6 @@
 # client.TokensApi
 
-All URIs are relative to *http://localhost/v1/metrics*
+All URIs are relative to *https://api.crypticorn.dev/v1/metrics*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **get_stable_and_wrapped_tokens**
-> BaseResponseListDict get_stable_and_wrapped_tokens(token_type)
+> List[Dict[str, object]] get_stable_and_wrapped_tokens(token_type)
 
 Get Stable Wrapped Tokens
 
@@ -21,14 +21,13 @@ Get list of stable or wrapped tokens.
 
 ```python
 import client
-from client.models.base_response_list_dict import BaseResponseListDict
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost/v1/metrics
+# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://localhost/v1/metrics"
+    host = "https://api.crypticorn.dev/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -73,7 +72,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**BaseResponseListDict**](BaseResponseListDict.md)
+**List[Dict[str, object]]**
 
 ### Authorization
 
@@ -88,11 +87,8 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful response with token list |  -  |
-**400** | Invalid request parameters |  -  |
-**404** | No data found |  -  |
-**500** | Internal server error |  -  |
-**422** | Validation Error |  -  |
+**200** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

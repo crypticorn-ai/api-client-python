@@ -1,6 +1,6 @@
 # client.IndicatorsApi
 
-All URIs are relative to *http://localhost/v1/metrics*
+All URIs are relative to *https://api.crypticorn.dev/v1/metrics*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **get_ker_indicator**
-> BaseResponseDict get_ker_indicator(symbol, market=market, period=period, timestamp=timestamp)
+> Dict[str, object] get_ker_indicator(symbol, market=market, period=period, timestamp=timestamp)
 
 Get Ker Indicator
 
@@ -22,15 +22,14 @@ Calculate and retrieve the KER indicator for a symbol.
 
 ```python
 import client
-from client.models.base_response_dict import BaseResponseDict
 from client.models.market_type import MarketType
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost/v1/metrics
+# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://localhost/v1/metrics"
+    host = "https://api.crypticorn.dev/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -56,7 +55,7 @@ async with client.ApiClient(configuration) as api_client:
     symbol = 'symbol_example' # str | 
     market = client.MarketType() # MarketType | Market (optional)
     period = 15 # int | KER indicator period (optional) (default to 15)
-    timestamp = 1744554523 # int | Timestamp for which to fetch KER indicator (optional) (default to 1744554523)
+    timestamp = 1745703074 # int | Timestamp for which to fetch KER indicator (optional) (default to 1745703074)
 
     try:
         # Get Ker Indicator
@@ -77,11 +76,11 @@ Name | Type | Description  | Notes
  **symbol** | **str**|  | 
  **market** | [**MarketType**](.md)| Market | [optional] 
  **period** | **int**| KER indicator period | [optional] [default to 15]
- **timestamp** | **int**| Timestamp for which to fetch KER indicator | [optional] [default to 1744554523]
+ **timestamp** | **int**| Timestamp for which to fetch KER indicator | [optional] [default to 1745703074]
 
 ### Return type
 
-[**BaseResponseDict**](BaseResponseDict.md)
+**Dict[str, object]**
 
 ### Authorization
 
@@ -96,16 +95,13 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful response with KER indicator data |  -  |
-**400** | Invalid request parameters |  -  |
-**404** | No data found |  -  |
-**500** | Internal server error |  -  |
-**422** | Validation Error |  -  |
+**200** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_sma_indicator**
-> BaseResponseDict get_sma_indicator(symbol, market=market, period=period, timestamp=timestamp)
+> Dict[str, object] get_sma_indicator(symbol, market=market, period=period, timestamp=timestamp)
 
 Get Sma Indicator
 
@@ -118,15 +114,14 @@ Calculate and retrieve the Simple Moving Average (SMA) indicator for a symbol.
 
 ```python
 import client
-from client.models.base_response_dict import BaseResponseDict
 from client.models.market_type import MarketType
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost/v1/metrics
+# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://localhost/v1/metrics"
+    host = "https://api.crypticorn.dev/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -152,7 +147,7 @@ async with client.ApiClient(configuration) as api_client:
     symbol = 'symbol_example' # str | 
     market = client.MarketType() # MarketType | The market type to use for the SMA indicator (optional)
     period = 15 # int | The period to use for the SMA indicator (optional) (default to 15)
-    timestamp = 1744554523 # int | The timestamp for which to fetch the SMA indicator (optional) (default to 1744554523)
+    timestamp = 1745703074 # int | The timestamp for which to fetch the SMA indicator (optional) (default to 1745703074)
 
     try:
         # Get Sma Indicator
@@ -173,11 +168,11 @@ Name | Type | Description  | Notes
  **symbol** | **str**|  | 
  **market** | [**MarketType**](.md)| The market type to use for the SMA indicator | [optional] 
  **period** | **int**| The period to use for the SMA indicator | [optional] [default to 15]
- **timestamp** | **int**| The timestamp for which to fetch the SMA indicator | [optional] [default to 1744554523]
+ **timestamp** | **int**| The timestamp for which to fetch the SMA indicator | [optional] [default to 1745703074]
 
 ### Return type
 
-[**BaseResponseDict**](BaseResponseDict.md)
+**Dict[str, object]**
 
 ### Authorization
 
@@ -192,11 +187,8 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful response with SMA indicator data |  -  |
-**400** | Invalid request parameters |  -  |
-**404** | No data found |  -  |
-**500** | Internal server error |  -  |
-**422** | Validation Error |  -  |
+**200** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

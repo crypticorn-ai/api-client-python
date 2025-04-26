@@ -15,6 +15,7 @@ class FundingRatesApiWrapper(FundingRatesApi):
     """
     A wrapper for the FundingRatesApi class.
     """
+
     async def get_funding_rates_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
         """
         Get the funding rates in a pandas DataFrame.
@@ -39,14 +40,16 @@ class OHLCVDataApiWrapper(OHLCVDataApi):
         response = await self.get_ohlcv_without_preload_content(*args, **kwargs)
         response.raise_for_status()
         json_data = await response.json()
-        return pd.DataFrame({
-                    "timestamp": json_data["timestamp"],
-                    "open": json_data["open"],
-                    "high": json_data["high"],
-                    "low": json_data["low"],
-                    "close": json_data["close"],
-                    "volume": json_data["volume"]
-                })
+        return pd.DataFrame(
+            {
+                "timestamp": json_data["timestamp"],
+                "open": json_data["open"],
+                "high": json_data["high"],
+                "low": json_data["low"],
+                "close": json_data["close"],
+                "volume": json_data["volume"],
+            }
+        )
 
 
 class SymbolsApiWrapper(SymbolsApi):
@@ -59,7 +62,9 @@ class SymbolsApiWrapper(SymbolsApi):
         Get the symbols in a pandas DataFrame.
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_klines_symbols_without_preload_content(*args, **kwargs)
+        response = await self.get_klines_symbols_without_preload_content(
+            *args, **kwargs
+        )
         response.raise_for_status()
         json_data = await response.json()
         return pd.DataFrame(json_data["data"], columns=["symbol"])

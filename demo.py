@@ -129,8 +129,6 @@ async def new_client():
         print(res.data)
 
 
-
-
 async def main_await():
     # response = await client.metrics.exchanges.get_exchange_mappings(
     #     exchange="binance", market=MarketType.FUTURES
