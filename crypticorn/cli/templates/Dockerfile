@@ -15,11 +15,12 @@ WORKDIR /code
 #     API_ENV: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
 ARG API_ENV
 
+RUN pip install --no-cache-dir -r requirements.txt
+
 RUN if [ "$API_ENV" != "prod" ]; then \
     pip install --pre crypticorn; \
     fi
 
-RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./src /code/src
 
