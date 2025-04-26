@@ -36,6 +36,7 @@ class ApiErrorIdentifier(StrEnum):
 
     ALLOCATION_BELOW_EXPOSURE = "allocation_below_current_exposure"
     ALLOCATION_BELOW_MINIMUM = "allocation_below_min_amount"
+    ALPHANUMERIC_CHARACTERS_ONLY = "alphanumeric_characters_only"
     BLACK_SWAN = "black_swan"
     BOT_ALREADY_DELETED = "bot_already_deleted"
     BOT_DISABLED = "bot_disabled"
@@ -56,6 +57,7 @@ class ApiErrorIdentifier(StrEnum):
     EXCHANGE_SYSTEM_CONFIG_ERROR = "exchange_system_configuration_error"
     EXCHANGE_SYSTEM_ERROR = "exchange_internal_system_error"
     EXCHANGE_USER_FROZEN = "exchange_user_account_is_frozen"
+    FORBIDDEN = "forbidden"
     HEDGE_MODE_NOT_ACTIVE = "hedge_mode_not_active"
     HTTP_ERROR = "http_request_error"
     INSUFFICIENT_BALANCE = "insufficient_balance"
@@ -127,6 +129,11 @@ class ApiError(Enum, metaclass=Fallback):
     )
     ALLOCATION_BELOW_MINIMUM = (
         ApiErrorIdentifier.ALLOCATION_BELOW_MINIMUM,
+        ApiErrorType.USER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    ALPHANUMERIC_CHARACTERS_ONLY = (
+        ApiErrorIdentifier.ALPHANUMERIC_CHARACTERS_ONLY,
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )

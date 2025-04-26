@@ -15,11 +15,15 @@ class FundingRatesApiWrapper(FundingRatesApi):
     """
     A wrapper for the FundingRatesApi class.
     """
-
-    def get_funding_rates_fmt(self) -> pd.DataFrame:
+    async def get_funding_rates_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+        """
+        Get the funding rates in a pandas DataFrame.
+        """
         pd = optional_import("pandas", "extra")
-        response = self.funding_rate_funding_rates_symbol_get()
-        return pd.DataFrame(response.json())
+        response = await self.get_funding_rates_without_preload_content(*args, **kwargs)
+        response.raise_for_status()
+        json_data = await response.json()
+        return pd.DataFrame(json_data)
 
 
 class OHLCVDataApiWrapper(OHLCVDataApi):
@@ -27,10 +31,22 @@ class OHLCVDataApiWrapper(OHLCVDataApi):
     A wrapper for the OHLCVDataApi class.
     """
 
-    def get_ohlcv_data_fmt(self) -> pd.DataFrame:
+    async def get_ohlcv_data_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+        """
+        Get the OHLCV data in a pandas DataFrame.
+        """
         pd = optional_import("pandas", "extra")
-        response = self.get_ohlcv_market_timeframe_symbol_get()
-        return pd.DataFrame(response.json())
+        response = await self.get_ohlcv_without_preload_content(*args, **kwargs)
+        response.raise_for_status()
+        json_data = await response.json()
+        return pd.DataFrame({
+                    "timestamp": json_data["timestamp"],
+                    "open": json_data["open"],
+                    "high": json_data["high"],
+                    "low": json_data["low"],
+                    "close": json_data["close"],
+                    "volume": json_data["volume"]
+                })
 
 
 class SymbolsApiWrapper(SymbolsApi):
@@ -38,21 +54,15 @@ class SymbolsApiWrapper(SymbolsApi):
     A wrapper for the SymbolsApi class.
     """
 
-    def get_symbols_fmt(self) -> pd.DataFrame:
+    async def get_symbols_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+        """
+        Get the symbols in a pandas DataFrame.
+        """
         pd = optional_import("pandas", "extra")
-        response = self.symbols_symbols_market_get()
-        return pd.DataFrame(response.json())
-
-
-class UDFApiWrapper(UDFApi):
-    """
-    A wrapper for the UDFApi class.
-    """
-
-    def get_udf_fmt(self) -> pd.DataFrame:
-        pd = optional_import("pandas", "extra")
-        response = self.get_history_udf_history_get()
-        return pd.DataFrame(response.json())
+        response = await self.get_klines_symbols_without_preload_content(*args, **kwargs)
+        response.raise_for_status()
+        json_data = await response.json()
+        return pd.DataFrame(json_data["data"], columns=["symbol"])
 
 
 class KlinesClient:
@@ -70,5 +80,5 @@ class KlinesClient:
         self.funding = FundingRatesApiWrapper(self.base_client)
         self.ohlcv = OHLCVDataApiWrapper(self.base_client)
         self.symbols = SymbolsApiWrapper(self.base_client)
-        self.udf = UDFApiWrapper(self.base_client)
+        self.udf = UDFApi(self.base_client)
         self.health = HealthCheckApi(self.base_client)

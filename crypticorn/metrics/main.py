@@ -43,42 +43,16 @@ class MarketcapApiWrapper(MarketcapApi):
     A wrapper for the MarketcapApi class.
     """
 
-    async def get_marketcap_symbols_fmt(
-        self,
-        start_timestamp: Annotated[
-            Optional[StrictInt], Field(description="Start timestamp")
-        ] = None,
-        end_timestamp: Annotated[
-            Optional[StrictInt], Field(description="End timestamp")
-        ] = None,
-        interval: Annotated[
-            Optional[StrictStr],
-            Field(description="Interval for which to fetch symbols and marketcap data"),
-        ] = None,
-        market: Annotated[
-            Optional[MarketType],
-            Field(description="Market for which to fetch symbols and marketcap data"),
-        ] = None,
-        exchange: Annotated[
-            Optional[StrictStr],
-            Field(description="Exchange for which to fetch symbols and marketcap data"),
-        ] = None,
-    ) -> pd.DataFrame:
+    async def get_marketcap_symbols_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
         """
         Get the marketcap symbols in a pandas dataframe
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_marketcap_symbols(
-            start_timestamp=start_timestamp,
-            end_timestamp=end_timestamp,
-            interval=interval,
-            market=market,
-            exchange=exchange,
-        )
+        response = await self.get_marketcap_symbols_without_preload_content(*args, **kwargs)
+        response.raise_for_status()
         json_response = await response.json()
         df = pd.DataFrame(json_response["data"])
         df.rename(columns={df.columns[0]: "timestamp"}, inplace=True)
-        df["timestamp"] = pd.to_datetime(df["timestamp"]).astype("int64") // 10**9
         return df
 
 
@@ -87,19 +61,43 @@ class TokensApiWrapper(TokensApi):
     A wrapper for the TokensApi class.
     """
 
-    async def get_tokens_fmt(
-        self,
-        token_type: Annotated[
-            StrictStr,
-            Field(description="Type of tokens to fetch"),
-        ],
-    ) -> pd.DataFrame:
+    async def get_stable_and_wrapped_tokens_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
         """
         Get the tokens in a pandas dataframe
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_stable_and_wrapped_tokens_without_preload_content(
-            token_type=token_type
-        )
+        response = await self.get_stable_and_wrapped_tokens_without_preload_content(*args, **kwargs)
+        response.raise_for_status()
         json_data = await response.json()
-        return pd.DataFrame(json_data["data"])
+        return pd.DataFrame(json_data)
+
+class ExchangesApiWrapper(ExchangesApi):
+    """
+    A wrapper for the ExchangesApi class.
+    """
+
+    async def get_exchanges_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+        """
+        Get the exchanges in a pandas dataframe
+        """
+        pd = optional_import("pandas", "extra")
+        response = await self.get_available_exchanges_without_preload_content(*args, **kwargs)
+        response.raise_for_status()
+        json_data = await response.json()
+        processed_results = []
+        for row in json_data:
+            data = {'timestamp': row['timestamp']}
+            data.update(row['exchanges'])
+            processed_results.append(data)
+        
+        # Create DataFrame and sort columns
+        df = pd.DataFrame(processed_results)
+        cols = ['timestamp'] + sorted([col for col in df.columns if col != 'timestamp'])
+        df = df[cols]
+        
+        # Convert timestamp to unix timestamp
+        df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
+        
+        # Convert exchange availability to boolean integers (0/1)
+        df = df.astype({'timestamp': 'int64', **{col: 'int8' for col in df.columns if col != 'timestamp'}})
+        return df

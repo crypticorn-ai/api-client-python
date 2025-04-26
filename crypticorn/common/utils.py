@@ -2,7 +2,6 @@ from typing import Any, Union
 from decimal import Decimal
 import string
 import random
-
 from fastapi import HTTPException
 from fastapi import status
 from typing_extensions import deprecated
@@ -56,7 +55,10 @@ def is_equal(
     )
 
 
-def optional_import(module_name: str, extra_name: str):
+def optional_import(module_name: str, extra_name: str) -> Any:
+    """
+    Import a module optionally.
+    """
     try:
         return __import__(module_name)
     except ImportError as e:
