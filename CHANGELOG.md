@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.5.0-rc.4 (2025-04-26)
+
+### Bug Fixes
+
+- Remove wrong media type from `exception_response`
+  ([`34920f0`](https://github.com/crypticorn-ai/api-client/commit/34920f0a51eded25e64324654d711e8716ee707c))
+
+
 ## v2.5.0-rc.3 (2025-04-26)
 
 ### Bug Fixes
