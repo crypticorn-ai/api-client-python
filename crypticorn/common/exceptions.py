@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Optional, Dict, Type
+from typing import Optional, Dict, Type, Any
 from pydantic import BaseModel, Field
 from fastapi import HTTPException as FastAPIHTTPException, Request, FastAPI
 from fastapi.exceptions import RequestValidationError, ResponseValidationError
@@ -14,12 +14,15 @@ class ExceptionDetail(BaseModel):
     type: ApiErrorType = Field(..., description="The type of error")
     level: ApiErrorLevel = Field(..., description="The level of the error")
     status_code: int = Field(..., description="The HTTP status code")
+    details: Any = Field(None, description="Additional details about the error")
 
 
 class ExceptionContent(BaseModel):
     '''This is the detail of the exception. Pass an ApiError to the constructor and an optional human readable message.'''
     error: ApiError = Field(..., description="The unique error code")
     message: Optional[str] = Field(None, description="An additional error message")
+    details: Any = Field(None, description="Additional details about the error")
+        
     def enrich(self) -> ExceptionDetail:
         return ExceptionDetail(
             message=self.message,
@@ -27,6 +30,7 @@ class ExceptionContent(BaseModel):
             type=self.error.type,
             level=self.error.level,
             status_code=self.error.status_code,
+            details=self.details,
         )
 
 class HTTPException(FastAPIHTTPException):
