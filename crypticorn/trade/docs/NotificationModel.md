@@ -8,9 +8,9 @@ Name | Type | Description | Notes
 **created_at** | **int** |  | [optional] 
 **updated_at** | **int** |  | [optional] 
 **id** | **str** |  | [optional] 
-**identifier** | [**ApiErrorIdentifier**](ApiErrorIdentifier.md) | Identifier string. Must match the mapping key in the frontend. | 
-**level** | [**ApiErrorLevel**](ApiErrorLevel.md) | Level of the notification. Of type ApiErrorLevel | 
-**type** | [**ApiErrorType**](ApiErrorType.md) | Type of the notification. Of type ApiErrorType | 
+**identifier** | **str** | API error identifiers | 
+**level** | **str** | API error levels | 
+**type** | **str** | Type of API error | 
 **user_id** | **str** |  | [optional] 
 **viewed** | **bool** | Whether the notification has been marked as seen | [optional] [default to False]
 **sent** | **bool** | Whether the notification has been sent as an email | [optional] [default to False]

@@ -19,7 +19,6 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from crypticorn.trade.client.models.api_error_identifier import ApiErrorIdentifier
 from crypticorn.trade.client.models.exchange import Exchange
 from crypticorn.trade.client.models.margin_mode import MarginMode
 from crypticorn.trade.client.models.market_type import MarketType
@@ -52,7 +51,9 @@ class OrderModel(BaseModel):
     action_type: Optional[TradingActionType] = None
     market_type: Optional[MarketType] = None
     margin_mode: Optional[MarginMode] = None
-    status_code: Optional[ApiErrorIdentifier] = None
+    status_code: Optional[StrictStr] = Field(
+        default=None, description="API error identifiers"
+    )
     status: Optional[OrderStatus] = None
     filled_perc: Optional[Union[StrictFloat, StrictInt]] = None
     filled_qty: Optional[Union[StrictFloat, StrictInt]] = None
@@ -228,11 +229,6 @@ class OrderModel(BaseModel):
         # and model_fields_set contains the field
         if self.margin_mode is None and "margin_mode" in self.model_fields_set:
             _dict["margin_mode"] = None
-
-        # set to None if status_code (nullable) is None
-        # and model_fields_set contains the field
-        if self.status_code is None and "status_code" in self.model_fields_set:
-            _dict["status_code"] = None
 
         # set to None if status (nullable) is None
         # and model_fields_set contains the field

@@ -24,7 +24,7 @@ Name | Type | Description | Notes
 **action_type** | [**TradingActionType**](TradingActionType.md) |  | [optional] 
 **market_type** | [**MarketType**](MarketType.md) |  | [optional] 
 **margin_mode** | [**MarginMode**](MarginMode.md) |  | [optional] 
-**status_code** | [**ApiErrorIdentifier**](ApiErrorIdentifier.md) |  | [optional] 
+**status_code** | **str** | API error identifiers | [optional] 
 **status** | [**OrderStatus**](OrderStatus.md) |  | [optional] 
 **filled_perc** | **float** |  | [optional] 
 **filled_qty** | **float** |  | [optional] 

@@ -28,7 +28,7 @@ class ExecutionIds(BaseModel):
     ExecutionIds
     """  # noqa: E501
 
-    main: List[StrictStr] = Field(description="Main execution ID. List with one item.")
+    main: StrictStr = Field(description="Main execution ID.")
     sl: List[StrictStr] = Field(
         description="Stop loss execution IDs. List with multiple items ordered by the next stop loss, e.g. price = 10000 => SLs: ['900', '700', '500']."
     )

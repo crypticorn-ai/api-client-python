@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **api_key_id** | **str** | UID for the API key | 
 **allocation** | **int** | Initial allocation for the bot | 
 **status** | [**BotStatus**](BotStatus.md) | Status of the bot | 
-**status_code** | [**ApiErrorIdentifier**](ApiErrorIdentifier.md) |  | [optional] 
+**status_code** | **str** | API error identifiers | [optional] 
 **user_id** | **str** |  | [optional] 
 **current_allocation** | **float** |  | [optional] 
 **current_exposure** | **float** |  | [optional] 

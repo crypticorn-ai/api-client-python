@@ -40,9 +40,6 @@ from crypticorn.trade.client.exceptions import ApiException
 
 # import models into sdk package
 from crypticorn.trade.client.models.action_model import ActionModel
-from crypticorn.trade.client.models.api_error_identifier import ApiErrorIdentifier
-from crypticorn.trade.client.models.api_error_level import ApiErrorLevel
-from crypticorn.trade.client.models.api_error_type import ApiErrorType
 from crypticorn.trade.client.models.bot_model import BotModel
 from crypticorn.trade.client.models.bot_status import BotStatus
 from crypticorn.trade.client.models.exchange import Exchange
