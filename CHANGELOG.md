@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v2.5.0-rc.3 (2025-04-26)
+
+### Bug Fixes
+
+- Fixes TypeError bug in deprecated decorator
+  ([`4344581`](https://github.com/crypticorn-ai/api-client/commit/4344581f2737377334d2ab0203c8872e0acdfadb))
+
+### Features
+
+- Add exception handler and improve custom exception
+  ([`64c05ea`](https://github.com/crypticorn-ai/api-client/commit/64c05eafd011556b49786034d58a4de264438bfd))
+
+
 ## v2.5.0-rc.2 (2025-04-25)
 
 ### Bug Fixes
