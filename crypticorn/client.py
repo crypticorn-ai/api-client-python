@@ -1,14 +1,14 @@
-from typing import Union
-
-from crypticorn.hive import HiveClient, Configuration as HiveConfig
-from crypticorn.klines import KlinesClient, Configuration as KlinesConfig
-from crypticorn.pay import PayClient, Configuration as PayConfig
-from crypticorn.trade import TradeClient, Configuration as TradeConfig
-from crypticorn.metrics import MetricsClient, Configuration as MetricsConfig
-from crypticorn.auth import AuthClient, Configuration as AuthConfig
+from typing import TypeVar
+from crypticorn.hive import HiveClient
+from crypticorn.klines import KlinesClient
+from crypticorn.pay import PayClient
+from crypticorn.trade import TradeClient
+from crypticorn.metrics import MetricsClient
+from crypticorn.auth import AuthClient
 from crypticorn.common import BaseUrl, ApiVersion, Service, apikey_header as aph
-import warnings
 
+ConfigT = TypeVar("ConfigT")
+SubClient = TypeVar("SubClient")
 
 class ApiClient:
     """
@@ -30,35 +30,49 @@ class ApiClient:
         self.jwt = jwt
         """The JWT to use for authentication."""
 
-        self.hive = HiveClient(self._get_default_config(Service.HIVE))
-        self.trade = TradeClient(self._get_default_config(Service.TRADE))
-        self.klines = KlinesClient(self._get_default_config(Service.KLINES))
-        self.pay = PayClient(self._get_default_config(Service.PAY))
-        self.metrics = MetricsClient(self._get_default_config(Service.METRICS))
-        self.auth = AuthClient(self._get_default_config(Service.AUTH))
+        self.service_classes: dict[Service, type[SubClient]] = {
+            Service.HIVE: HiveClient,
+            Service.TRADE: TradeClient,
+            Service.KLINES: KlinesClient,
+            Service.PAY: PayClient,
+            Service.METRICS: MetricsClient,
+            Service.AUTH: AuthClient,
+        }
 
-    def __new__(cls, *args, **kwargs):
-        if kwargs.get("api_key") and not kwargs.get("jwt"):
-            # auth-service does not allow api_key
-            warnings.warn(
-                "The auth module does only accept JWT to be used to authenticate. If you use this module, you need to provide a JWT."
-            )
-        return super().__new__(cls)
+        self.services: dict[Service, SubClient] = {
+            service: client_class(self._get_default_config(service))
+            for service, client_class in self.service_classes.items()
+        }
 
+    @property
+    def hive(self) -> HiveClient:
+        return self.services[Service.HIVE]
+
+    @property
+    def trade(self) -> TradeClient:
+        return self.services[Service.TRADE]
+
+    @property
+    def klines(self) -> KlinesClient:
+        return self.services[Service.KLINES]
+
+    @property
+    def metrics(self) -> MetricsClient:
+        return self.services[Service.METRICS]
+
+    @property
+    def pay(self) -> PayClient:
+        return self.services[Service.PAY]
+    
+    @property
+    def auth(self) -> AuthClient:
+        return self.services[Service.AUTH]
+    
     async def close(self):
         """Close all client sessions."""
-        clients = [
-            self.hive.base_client,
-            self.trade.base_client,
-            self.klines.base_client,
-            self.pay.base_client,
-            self.metrics.base_client,
-            self.auth.base_client,
-        ]
-
-        for client in clients:
-            if hasattr(client, "close"):
-                await client.close()
+        for service in self.services.values():
+            if hasattr(service.base_client, "close"):
+                await service.base_client.close()
 
     def _get_default_config(
         self, service: Service, version: ApiVersion = ApiVersion.V1
@@ -66,63 +80,40 @@ class ApiClient:
         """
         Get the default configuration for a given service.
         """
-        config_class = {
-            Service.HIVE: HiveConfig,
-            Service.TRADE: TradeConfig,
-            Service.KLINES: KlinesConfig,
-            Service.PAY: PayConfig,
-            Service.METRICS: MetricsConfig,
-            Service.AUTH: AuthConfig,
-        }[service]
+        config_class = self.service_classes[service].config_class
         return config_class(
             host=f"{self.base_url}/{version}/{service}",
             access_token=self.jwt,
             api_key={aph.scheme_name: self.api_key} if self.api_key else None,
-            # not necessary
-            # api_key_prefix=(
-            #     {aph.scheme_name: aph.model.name} if self.api_key else None
-            # ),
         )
 
+    
     def configure(
         self,
-        config: Union[
-            HiveConfig, TradeConfig, KlinesConfig, PayConfig, MetricsConfig, AuthConfig
-        ],
-        sub_client: any,
+        config: ConfigT,
+        service: Service,
     ):
         """
         Update a sub-client's configuration by overriding with the values set in the new config.
         Useful for testing a specific service against a local server instead of the default proxy.
 
         :param config: The new configuration to use for the sub-client.
-        :param sub_client: The sub-client to configure.
+        :param service: The service to configure.
 
         Example:
-        This will override the host for the Hive client to connect to http://localhost:8000 instead of the default proxy:
         >>> async with ApiClient(base_url=BaseUrl.DEV, jwt=jwt) as client:
-        >>>     client.configure(config=HiveConfig(host="http://localhost:8000"), sub_client=client.hive)
+        >>>     client.configure(config=HiveConfig(host="http://localhost:8000"), client=client.hive)
         """
-        new_config = sub_client.config
+        assert Service.validate(service), f"Invalid service: {service}"
+        client = self.services[service]
+        new_config = client.config
+
         for attr in vars(config):
             new_value = getattr(config, attr)
             if new_value:
                 setattr(new_config, attr, new_value)
 
-        if sub_client == self.hive:
-            self.hive = HiveClient(new_config)
-        elif sub_client == self.trade:
-            self.trade = TradeClient(new_config)
-        elif sub_client == self.klines:
-            self.klines = KlinesClient(new_config)
-        elif sub_client == self.pay:
-            self.pay = PayClient(new_config)
-        elif sub_client == self.metrics:
-            self.metrics = MetricsClient(new_config)
-        elif sub_client == self.auth:
-            self.auth = AuthClient(new_config)
-        else:
-            raise ValueError(f"Unknown sub-client: {sub_client}")
+        self.services[service] = type(client)(new_config)
 
     async def __aenter__(self):
         return self
