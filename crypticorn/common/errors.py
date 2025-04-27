@@ -57,6 +57,8 @@ class ApiErrorIdentifier(StrEnum):
     EXCHANGE_SYSTEM_CONFIG_ERROR = "exchange_system_configuration_error"
     EXCHANGE_SYSTEM_ERROR = "exchange_internal_system_error"
     EXCHANGE_USER_FROZEN = "exchange_user_account_is_frozen"
+    EXPIRED_API_KEY = "api_key_expired"
+    EXPIRED_BEARER = "bearer_token_expired"
     FORBIDDEN = "forbidden"
     HEDGE_MODE_NOT_ACTIVE = "hedge_mode_not_active"
     HTTP_ERROR = "http_request_error"
@@ -70,7 +72,6 @@ class ApiErrorIdentifier(StrEnum):
     INVALID_EXCHANGE_KEY = "invalid_exchange_key"
     INVALID_MARGIN_MODE = "invalid_margin_mode"
     INVALID_PARAMETER = "invalid_parameter_provided"
-    JWT_EXPIRED = "jwt_expired"
     LEVERAGE_EXCEEDED = "leverage_limit_exceeded"
     LIQUIDATION_PRICE_VIOLATION = "order_violates_liquidation_price_constraints"
     NO_CREDENTIALS = "no_credentials"
@@ -237,6 +238,21 @@ class ApiError(Enum, metaclass=Fallback):
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
+    EXPIRED_API_KEY = (
+        ApiErrorIdentifier.EXPIRED_API_KEY,
+        ApiErrorType.USER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    EXPIRED_BEARER = (
+        ApiErrorIdentifier.EXPIRED_BEARER,
+        ApiErrorType.USER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    FORBIDDEN = (
+        ApiErrorIdentifier.FORBIDDEN,
+        ApiErrorType.USER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
     HEDGE_MODE_NOT_ACTIVE = (
         ApiErrorIdentifier.HEDGE_MODE_NOT_ACTIVE,
         ApiErrorType.USER_ERROR,
@@ -294,11 +310,6 @@ class ApiError(Enum, metaclass=Fallback):
     )
     INVALID_PARAMETER = (
         ApiErrorIdentifier.INVALID_PARAMETER,
-        ApiErrorType.SERVER_ERROR,
-        ApiErrorLevel.ERROR,
-    )
-    JWT_EXPIRED = (
-        ApiErrorIdentifier.JWT_EXPIRED,
         ApiErrorType.SERVER_ERROR,
         ApiErrorLevel.ERROR,
     )
@@ -487,14 +498,16 @@ class HttpStatusMapper:
     # in case we remove some, update the pytest length check
     _mapping = {
         # Authentication/Authorization
-        ApiError.JWT_EXPIRED: status.HTTP_401_UNAUTHORIZED,
+        ApiError.EXPIRED_BEARER: status.HTTP_401_UNAUTHORIZED,
         ApiError.INVALID_BEARER: status.HTTP_401_UNAUTHORIZED,
+        ApiError.EXPIRED_API_KEY: status.HTTP_401_UNAUTHORIZED,
         ApiError.INVALID_API_KEY: status.HTTP_401_UNAUTHORIZED,
         ApiError.NO_CREDENTIALS: status.HTTP_401_UNAUTHORIZED,
         ApiError.INSUFFICIENT_SCOPES: status.HTTP_403_FORBIDDEN,
         ApiError.EXCHANGE_PERMISSION_DENIED: status.HTTP_403_FORBIDDEN,
         ApiError.EXCHANGE_USER_FROZEN: status.HTTP_403_FORBIDDEN,
         ApiError.TRADING_LOCKED: status.HTTP_403_FORBIDDEN,
+        ApiError.FORBIDDEN: status.HTTP_403_FORBIDDEN,
         # Not Found
         ApiError.URL_NOT_FOUND: status.HTTP_404_NOT_FOUND,
         ApiError.OBJECT_NOT_FOUND: status.HTTP_404_NOT_FOUND,
@@ -526,6 +539,7 @@ class HttpStatusMapper:
         ApiError.POSITION_SUSPENDED: status.HTTP_503_SERVICE_UNAVAILABLE,
         ApiError.TRADING_SUSPENDED: status.HTTP_503_SERVICE_UNAVAILABLE,
         # Bad Requests (400) - Invalid parameters or states
+        ApiError.ALPHANUMERIC_CHARACTERS_ONLY: status.HTTP_400_BAD_REQUEST,
         ApiError.ALLOCATION_BELOW_EXPOSURE: status.HTTP_400_BAD_REQUEST,
         ApiError.ALLOCATION_BELOW_MINIMUM: status.HTTP_400_BAD_REQUEST,
         ApiError.BLACK_SWAN: status.HTTP_400_BAD_REQUEST,
