@@ -3,24 +3,21 @@ from crypticorn.metrics import (
     ApiClient,
     Configuration,
     ExchangesApi,
-    HealthCheckApi,
+    StatusApi,
     IndicatorsApi,
     LogsApi,
     MarketcapApi,
     MarketsApi,
     TokensApi,
-    MarketType,
 )
 from crypticorn.common import optional_import
-from pydantic import StrictStr, StrictInt, Field
-from typing_extensions import Annotated
-from typing import Optional
 
 
 class MetricsClient:
     """
     A client for interacting with the Crypticorn Metrics API.
     """
+    config_class = Configuration
 
     def __init__(
         self,
@@ -29,7 +26,7 @@ class MetricsClient:
         self.config = config
         self.base_client = ApiClient(configuration=self.config)
         # Instantiate all the endpoint clients
-        self.status = HealthCheckApi(self.base_client)
+        self.status = StatusApi(self.base_client)
         self.indicators = IndicatorsApi(self.base_client)
         self.logs = LogsApi(self.base_client)
         self.marketcap = MarketcapApiWrapper(self.base_client)

@@ -74,6 +74,7 @@ class KlinesClient:
     """
     A client for interacting with the Crypticorn Klines API.
     """
+    config_class = Configuration
 
     def __init__(
         self,
