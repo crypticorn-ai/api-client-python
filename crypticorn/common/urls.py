@@ -1,4 +1,5 @@
 from enum import StrEnum
+from crypticorn.common.enums import ValidateEnumMixin
 
 
 class ApiEnv(StrEnum):
@@ -30,7 +31,7 @@ class ApiVersion(StrEnum):
     V1 = "v1"
 
 
-class Service(StrEnum):
+class Service(ValidateEnumMixin, StrEnum):
     HIVE = "hive"
     KLINES = "klines"
     PAY = "pay"

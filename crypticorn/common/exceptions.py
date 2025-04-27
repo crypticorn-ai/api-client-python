@@ -1,9 +1,7 @@
-from enum import Enum
-from typing import Optional, Dict, Type, Any
+from typing import Optional, Dict, Any
 from pydantic import BaseModel, Field
 from fastapi import HTTPException as FastAPIHTTPException, Request, FastAPI
 from fastapi.exceptions import RequestValidationError, ResponseValidationError
-from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 from crypticorn.common import ApiError, ApiErrorIdentifier, ApiErrorType, ApiErrorLevel
 

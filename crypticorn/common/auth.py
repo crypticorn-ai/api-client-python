@@ -44,13 +44,6 @@ class AuthHandler:
         self.url = f"{base_url}/{ApiVersion.V1}/{Service.AUTH}"
         self.client = AuthClient(Configuration(host=self.url))
 
-        self.no_credentials_exception = HTTPException(
-            content=ExceptionContent(
-                error=ApiError.NO_CREDENTIALS,
-                message="No credentials provided",
-            ),
-        )
-
     async def _verify_api_key(self, api_key: str) -> Verify200Response:
         """
         Verifies the API key.
@@ -100,10 +93,21 @@ class AuthHandler:
         Handles exceptions and returns a HTTPException with the appropriate status code and detail.
         """
         if isinstance(e, ApiException):
+            # handle the TRPC Zod errors from auth-service
+            # Unfortunately, we cannot share the error messages defined in python/crypticorn/common/errors.py with the typescript client
+            message = await self._extract_message(e)
+            if message == "Invalid API key":
+                error = ApiError.INVALID_API_KEY
+            elif message == "API key expired":
+                error = ApiError.EXPIRED_API_KEY
+            elif message == "jwt expired":
+                error = ApiError.EXPIRED_BEARER
+            else:
+                error = ApiError.INVALID_BEARER  # jwt malformed, jwt not active (https://www.npmjs.com/package/jsonwebtoken#errors--codes)
             return HTTPException(
                 content=ExceptionContent(
-                    error=ApiError.UNKNOWN_ERROR,
-                    message=await self._extract_message(e),
+                    error=error,
+                    message=message,
                 ),
             )
         elif isinstance(e, HTTPException):
@@ -176,7 +180,15 @@ class AuthHandler:
                 last_error = await self._handle_exception(e)
                 continue
 
-        raise last_error or self.no_credentials_exception
+        if last_error:
+            raise last_error
+        else:
+            raise HTTPException(
+                content=ExceptionContent(
+                    error=ApiError.NO_CREDENTIALS,
+                    message="No credentials provided",
+                ),
+            )
 
     async def ws_api_key_auth(
         self,
