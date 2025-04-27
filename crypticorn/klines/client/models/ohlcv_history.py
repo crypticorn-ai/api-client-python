@@ -17,20 +17,32 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List
+from datetime import datetime
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
+from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class SymbolType(BaseModel):
+class OHLCVHistory(BaseModel):
     """
-    SymbolType
+    OHLCVHistory
     """  # noqa: E501
 
-    name: StrictStr
-    value: StrictStr
-    __properties: ClassVar[List[str]] = ["name", "value"]
+    timestamps: List[datetime] = Field(description="Timestamps in seconds")
+    open: List[Union[StrictFloat, StrictInt]] = Field(description="Open prices")
+    high: List[Union[StrictFloat, StrictInt]] = Field(description="High prices")
+    low: List[Union[StrictFloat, StrictInt]] = Field(description="Low prices")
+    close: List[Union[StrictFloat, StrictInt]] = Field(description="Close prices")
+    volume: List[Union[StrictFloat, StrictInt]] = Field(description="Volume")
+    __properties: ClassVar[List[str]] = [
+        "timestamps",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +61,7 @@ class SymbolType(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SymbolType from a JSON string"""
+        """Create an instance of OHLCVHistory from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,12 +85,21 @@ class SymbolType(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SymbolType from a dict"""
+        """Create an instance of OHLCVHistory from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({"name": obj.get("name"), "value": obj.get("value")})
+        _obj = cls.model_validate(
+            {
+                "timestamps": obj.get("timestamps"),
+                "open": obj.get("open"),
+                "high": obj.get("high"),
+                "low": obj.get("low"),
+                "close": obj.get("close"),
+                "volume": obj.get("volume"),
+            }
+        )
         return _obj

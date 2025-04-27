@@ -3,7 +3,7 @@ from crypticorn.klines import (
     ApiClient,
     Configuration,
     FundingRatesApi,
-    HealthCheckApi,
+    StatusApi,
     OHLCVDataApi,
     SymbolsApi,
     UDFApi,
@@ -74,6 +74,7 @@ class KlinesClient:
     """
     A client for interacting with the Crypticorn Klines API.
     """
+
     config_class = Configuration
 
     def __init__(
@@ -87,4 +88,4 @@ class KlinesClient:
         self.ohlcv = OHLCVDataApiWrapper(self.base_client)
         self.symbols = SymbolsApiWrapper(self.base_client)
         self.udf = UDFApi(self.base_client)
-        self.health = HealthCheckApi(self.base_client)
+        self.status = StatusApi(self.base_client)

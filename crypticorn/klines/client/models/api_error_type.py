@@ -18,21 +18,20 @@ from enum import Enum
 from typing_extensions import Self
 
 
-class Resolution(str, Enum):
+class ApiErrorType(str, Enum):
     """
-    Resolution
+    Type of API error
     """
 
     """
     allowed enum values
     """
-    ENUM_15 = "15"
-    ENUM_30 = "30"
-    ENUM_60 = "60"
-    ENUM_240 = "240"
-    ENUM_1D = "1D"
+    USER_ERROR = "user error"
+    EXCHANGE_ERROR = "exchange error"
+    SERVER_ERROR = "server error"
+    NO_ERROR = "no error"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of Resolution from a JSON string"""
+        """Create an instance of ApiErrorType from a JSON string"""
         return cls(json.loads(json_str))

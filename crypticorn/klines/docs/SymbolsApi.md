@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **get_klines_symbols**
-> BaseResponseListStr get_klines_symbols(market)
+> List[str] get_klines_symbols(market)
 
 Symbols
 
@@ -21,7 +21,6 @@ Retrieve a list of whitelisted symbols for a specific market.
 
 ```python
 import client
-from client.models.base_response_list_str import BaseResponseListStr
 from client.models.market_type import MarketType
 from client.rest import ApiException
 from pprint import pprint
@@ -52,7 +51,7 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.SymbolsApi(api_client)
-    market = client.MarketType() # MarketType | Market type (spot or futures)
+    market = client.MarketType() # MarketType | Market type
 
     try:
         # Symbols
@@ -70,11 +69,11 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**MarketType**](.md)| Market type (spot or futures) | 
+ **market** | [**MarketType**](.md)| Market type | 
 
 ### Return type
 
-[**BaseResponseListStr**](BaseResponseListStr.md)
+**List[str]**
 
 ### Authorization
 
@@ -89,10 +88,8 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful response with symbol list |  -  |
-**404** | No symbols found |  -  |
-**500** | Internal server error |  -  |
-**422** | Validation Error |  -  |
+**200** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

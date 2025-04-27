@@ -22,7 +22,7 @@ class ValidateEnumMixin:
 
     @classmethod
     def validate(cls, value) -> bool:
-        '''Validate if a value is in the enum. True if so, False otherwise.'''
+        """Validate if a value is in the enum. True if so, False otherwise."""
         try:
             cls(value)
             return True

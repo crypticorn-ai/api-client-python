@@ -13,6 +13,7 @@ class AuthClient:
     """
     A client for interacting with the Crypticorn Auth API.
     """
+
     config_class = Configuration
 
     def __init__(

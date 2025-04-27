@@ -17,6 +17,7 @@ class TradeClient:
     """
     A client for interacting with the Crypticorn Trade API.
     """
+
     config_class = Configuration
 
     def __init__(

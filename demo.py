@@ -14,7 +14,7 @@ jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdv
 
 
 async def main():
-    async with ApiClient(base_url=BaseUrl.DEV, api_key="") as client:
+    async with ApiClient(base_url=BaseUrl.DEV, api_key="zeB1Dw3IC4xMJO9vLrgSOJu0oZFIa9") as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
         # print(10 * "=" + "This is the raw json response" + 10 * "=")
@@ -106,7 +106,9 @@ async def main():
         # print([print(p.name) for p in res])
         # res = await client.auth.login.get_api_keys()
         # print(res)
-        res = await client.trade.bots.get_bots()
+        res = await client.klines.funding.get_funding_rates_fmt(
+            symbol="BTCUSDT",
+        )
         print(res)
         # res = await client.klines.funding.get_funding_rates_fmt(
         #     symbol="BTC-USDT",
@@ -120,7 +122,7 @@ async def main():
         # print(res.data)
 
 
-async def new_client():
+async def configure_client():
     async with ApiClient(base_url=BaseUrl.DEV) as client:
         client.configure(
             config=HiveConfig(host="http://localhost:8000"), client=client.hive
@@ -129,24 +131,10 @@ async def new_client():
         print(res.data)
 
 
-async def main_await():
-    # response = await client.metrics.exchanges.get_exchange_mappings(
-    #     exchange="binance", market=MarketType.FUTURES
-    # )
-    # print(response.data)
-    client = ApiClient(
-        base_url=BaseUrl.LOCAL, api_key=""
-    )
-    data = await client.trade.exchanges.get_exchanges_without_preload_content()
-    print(await data.json())
-    await client.close()
-
-
 if __name__ == "__main__":
-    # asyncio.run(main())
-    # asyncio.run(new_client())
+    asyncio.run(main())
+    # asyncio.run(configure_client())
     # response = asyncio.run(client.hive.models.get_all_models())
     # print(response)
     # asyncio.run(client.close())
-    asyncio.run(main_await())
     # asyncio.run(client.close())

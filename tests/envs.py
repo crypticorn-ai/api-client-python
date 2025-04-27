@@ -6,6 +6,7 @@ import time
 
 load_dotenv(dotenv_path=".env.test")
 
+
 def generate_valid_jwt():
     now = int(time.time())
     payload = {
@@ -19,6 +20,7 @@ def generate_valid_jwt():
     }
     token = jwt.encode(payload, JWT_SECRET, algorithm="HS256")
     return token
+
 
 # JWT
 JWT_SECRET = os.getenv("JWT_SECRET")

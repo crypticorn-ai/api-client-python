@@ -40,6 +40,7 @@ async def test_combined_auth_with_invalid_bearer_token(auth_handler: AuthHandler
     assert e.value.status_code == 401
     assert e.value.detail.get("code") == ApiError.INVALID_BEARER.identifier
 
+
 @pytest.mark.asyncio
 async def test_combined_auth_with_expired_bearer_token(auth_handler: AuthHandler):
     """With expired bearer token"""
@@ -73,6 +74,7 @@ async def test_combined_auth_with_invalid_api_key(auth_handler: AuthHandler):
     assert e.value.status_code == 401
     assert e.value.detail.get("code") == ApiError.INVALID_API_KEY.identifier
 
+
 @pytest.mark.asyncio
 async def test_combined_auth_with_full_scope_valid_api_key(auth_handler: AuthHandler):
     """With full scope valid api key"""
@@ -105,13 +107,15 @@ async def test_api_key_auth_without_api_key(auth_handler: AuthHandler):
     assert e.value.status_code == 401
     assert e.value.detail.get("code") == ApiError.NO_CREDENTIALS.identifier
 
+
 @pytest.mark.asyncio
 async def test_api_key_auth_with_invalid_api_key(auth_handler: AuthHandler):
     """With invalid api key"""
     with pytest.raises(HTTPException) as e:
         return await auth_handler.api_key_auth(api_key="123")
     assert e.value.status_code == 401
-    assert e.value.detail.get("code") == ApiError.INVALID_API_KEY.identifier    
+    assert e.value.detail.get("code") == ApiError.INVALID_API_KEY.identifier
+
 
 @pytest.mark.asyncio
 async def test_api_key_auth_with_full_scope_valid_api_key(auth_handler: AuthHandler):

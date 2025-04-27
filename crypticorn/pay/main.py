@@ -12,6 +12,7 @@ class PayClient:
     """
     A client for interacting with the Crypticorn Pay API.
     """
+
     config_class = Configuration
 
     def __init__(

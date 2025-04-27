@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **get_change_in_timeframe**
-> BaseResponseListChangeInTimeframeResponse get_change_in_timeframe(market=market, timeframe=timeframe)
+> List[ChangeInTimeframe] get_change_in_timeframe(market=market, timeframe=timeframe)
 
 Get Change In Timeframe
 
@@ -24,7 +24,7 @@ Valid timeframes: 15m, 30m, 1h, 4h, 1d
 
 ```python
 import client
-from client.models.base_response_list_change_in_timeframe_response import BaseResponseListChangeInTimeframeResponse
+from client.models.change_in_timeframe import ChangeInTimeframe
 from client.models.market_type import MarketType
 from client.models.timeframe import Timeframe
 from client.rest import ApiException
@@ -80,7 +80,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**BaseResponseListChangeInTimeframeResponse**](BaseResponseListChangeInTimeframeResponse.md)
+[**List[ChangeInTimeframe]**](ChangeInTimeframe.md)
 
 ### Authorization
 
@@ -95,11 +95,8 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful response with change in timeframe data |  -  |
-**400** | Invalid market or timeframe |  -  |
-**404** | No change in timeframe data found |  -  |
-**500** | Internal server error |  -  |
-**422** | Validation Error |  -  |
+**200** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
