@@ -106,12 +106,12 @@ async def main():
         # print([print(p.name) for p in res])
         # res = await client.auth.login.get_api_keys()
         # print(res)
-        # res = await client.trade.bots.get_bots()
-        # print(res)
-        res = await client.klines.funding.get_funding_rates_fmt(
-            symbol="BTC-USDT",
-        )
+        res = await client.trade.bots.get_bots()
         print(res)
+        # res = await client.klines.funding.get_funding_rates_fmt(
+        #     symbol="BTC-USDT",
+        # )
+        # print(res)
         # res = await client.auth.login.verify_api_key(api_key='sk6SGlb8rxWZr744FV4zTmDLr5w5Gs')
         # print(res)
         # res = await client.metrics.exchanges.get_exchange_mappings(
@@ -123,7 +123,7 @@ async def main():
 async def new_client():
     async with ApiClient(base_url=BaseUrl.DEV) as client:
         client.configure(
-            config=HiveConfig(host="http://localhost:8000"), sub_client=client.hive
+            config=HiveConfig(host="http://localhost:8000"), client=client.hive
         )
         res = await client.pay.products.get_products_with_http_info()
         print(res.data)
@@ -135,28 +135,18 @@ async def main_await():
     # )
     # print(response.data)
     client = ApiClient(
-        base_url=BaseUrl.LOCAL, api_key="Kod7siO60LfFpHsylHUzuh3ovqyIky"
-    ).hive
-    print(asyncio.run(client.data.get_data_info()))
-    client.configure(
-        config=TradeConfig(host="http://localhost/v1/trade"), sub_client=client.trade
+        base_url=BaseUrl.LOCAL, api_key=""
     )
-    print(client.trade.config.__dict__)
-    res = await client.trade.keys.create_exchange_key(
-        ExchangeKeyModel(
-            name="test",
-            exchange="binance",
-            market=MarketType.FUTURES,
-            label="test",
-        )
-    )
+    data = await client.trade.exchanges.get_exchanges_without_preload_content()
+    print(await data.json())
+    await client.close()
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    # asyncio.run(main())
     # asyncio.run(new_client())
     # response = asyncio.run(client.hive.models.get_all_models())
     # print(response)
     # asyncio.run(client.close())
-    # asyncio.run(main_await())
+    asyncio.run(main_await())
     # asyncio.run(client.close())

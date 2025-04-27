@@ -60,7 +60,7 @@ def main():
 
     # ping the api to check if it's running
     try:
-        response = requests.get("http://127.0.0.1:3000/v1/trade/openapi.json")#requests.get(f"{ROOT_URL}/{module_name}/openapi.json")
+        response = requests.get(f"{ROOT_URL}/{module_name}/openapi.json")
         if response.status_code != 200:
             print(
                 f"No openapi.json file found for {module_name} module at path {ROOT_URL}/{module_name}/openapi.json"
@@ -70,7 +70,9 @@ def main():
         print(f"Failed to connect to API for {module_name} module")
         sys.exit(1)
 
-    print(f"Generating {module_name} client using{ROOT_URL}/{module_name}/openapi.json")
+    print(
+        f"Generating {module_name} client using {ROOT_URL}/{module_name}/openapi.json"
+    )
 
     # Run the OpenAPI generator
     generator_cmd = [

@@ -45,7 +45,7 @@ The `common` submodule contains shared classes not bound to a specific API.
 from crypticorn.common import Scope, Exchange
 ```
 
-## Usage
+## Basic Usage
 
 ### With Async Context Protocol
 ```python
@@ -66,6 +66,7 @@ async def main():
 
 asyncio.run(main())
 asyncio.run(client.close())
+
 ## Response Types
 
 There are three different available output formats you can choose from:
@@ -114,12 +115,12 @@ The output would look like this:
 
 ## Advanced Usage
 
-You can override some configuration for specific sub clients. If you just want to use the API as is, you don't need to configure anything.
+You can override some configuration for specific services. If you just want to use the API as is, you don't need to configure anything.
 This might be of use if you are testing a specific API locally.
 
-To override e.g. the host for the Hive client to connect to http://localhost:8000 instead of the default caddy proxy, you would do:
+To override e.g. the host for the Hive client to connect to http://localhost:8000 instead of the default proxy, you would do:
 ```python
 from crypticorn.hive import Configuration as Hiveconfig
 async with ApiClient(base_url=BaseUrl.DEV) as client:
-        client.configure(config=HiveConfig(host="http://localhost:8000"), sub_client=client.hive)
+        client.configure(config=HiveConfig(host="http://localhost:8000"), client=client.hive)
 ```
