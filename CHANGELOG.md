@@ -1,6 +1,40 @@
 # CHANGELOG
 
 
+## v2.5.1 (2025-04-27)
+
+### Bug Fixes
+
+- Integrate exception handling in auth handler
+  ([`b7835ef`](https://github.com/crypticorn-ai/api-client/commit/b7835efef54adbd021ecce27c002c5e5501cb99c))
+
+### Build System
+
+- Exclude shared classes and enums from openapi to reduce duplication upon client generation
+  ([`1987864`](https://github.com/crypticorn-ai/api-client/commit/1987864392397d7ee74ddb9ecbfb61c6d83134dc))
+
+### Continuous Integration
+
+- Run codecov workflow on push and pull request
+  ([`cf2bc16`](https://github.com/crypticorn-ai/api-client/commit/cf2bc165d04b855839812ea626a3647b17a91458))
+
+### Refactoring
+
+- Improve sub package registration in ApiClient to reduce redundance
+  ([`bdea044`](https://github.com/crypticorn-ai/api-client/commit/bdea044a6bc5180daed59b9a504866d2f519ae05))
+
+- Integrate custom exception handling in auth handler
+  ([`3f997e2`](https://github.com/crypticorn-ai/api-client/commit/3f997e23c1493296deaab23063b709d08702d5af))
+
+### Testing
+
+- Add jwt generation function
+  ([`c2bc90f`](https://github.com/crypticorn-ai/api-client/commit/c2bc90fb878656642787755330a99c6b9056f14c))
+
+- Update exception assertions with latest changes auth handler
+  ([`4c220e5`](https://github.com/crypticorn-ai/api-client/commit/4c220e5bd31d1a7fd64d0f302044acfd4d4927e9))
+
+
 ## v2.5.0 (2025-04-26)
 
 
