@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **get_funding_rates**
-> BaseResponseListFundingRateResponse get_funding_rates(symbol, start=start, end=end, limit=limit)
+> List[FundingRate] get_funding_rates(symbol, start=start, end=end, limit=limit)
 
 Funding Rate
 
@@ -21,7 +21,7 @@ Retrieve funding rate data for a specific symbol in the futures market.
 
 ```python
 import client
-from client.models.base_response_list_funding_rate_response import BaseResponseListFundingRateResponse
+from client.models.funding_rate import FundingRate
 from client.rest import ApiException
 from pprint import pprint
 
@@ -79,7 +79,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**BaseResponseListFundingRateResponse**](BaseResponseListFundingRateResponse.md)
+[**List[FundingRate]**](FundingRate.md)
 
 ### Authorization
 
@@ -94,11 +94,8 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful response with funding rate data |  -  |
-**400** | Invalid request parameters |  -  |
-**404** | No data found |  -  |
-**500** | Internal server error |  -  |
-**422** | Validation Error |  -  |
+**200** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

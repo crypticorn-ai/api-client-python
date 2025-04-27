@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 
 # **get_server_time**
-> object get_server_time()
+> int get_server_time()
 
 Get Server Time
 
@@ -72,7 +72,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**object**
+**int**
 
 ### Authorization
 
@@ -88,11 +88,12 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_symbol**
-> SymbolInfoResponse get_symbol(symbol)
+> SymbolInfo get_symbol(symbol)
 
 Get Symbol
 
@@ -103,7 +104,7 @@ Get Symbol
 
 ```python
 import client
-from client.models.symbol_info_response import SymbolInfoResponse
+from client.models.symbol_info import SymbolInfo
 from client.rest import ApiException
 from pprint import pprint
 
@@ -155,7 +156,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**SymbolInfoResponse**](SymbolInfoResponse.md)
+[**SymbolInfo**](SymbolInfo.md)
 
 ### Authorization
 
@@ -171,12 +172,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**422** | Validation Error |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_symbol_info**
-> SymbolGroupResponse get_symbol_info(group)
+> SymbolGroup get_symbol_info(group)
 
 Get Symbol Info
 
@@ -189,7 +190,7 @@ Handle symbol info requests for different groups
 
 ```python
 import client
-from client.models.symbol_group_response import SymbolGroupResponse
+from client.models.symbol_group import SymbolGroup
 from client.rest import ApiException
 from pprint import pprint
 
@@ -241,7 +242,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**SymbolGroupResponse**](SymbolGroupResponse.md)
+[**SymbolGroup**](SymbolGroup.md)
 
 ### Authorization
 
@@ -257,12 +258,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**422** | Validation Error |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_udf_config**
-> UDFConfigResponse get_udf_config()
+> UDFConfig get_udf_config()
 
 Get Config
 
@@ -273,7 +274,7 @@ Get Config
 
 ```python
 import client
-from client.models.udf_config_response import UDFConfigResponse
+from client.models.udf_config import UDFConfig
 from client.rest import ApiException
 from pprint import pprint
 
@@ -321,7 +322,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**UDFConfigResponse**](UDFConfigResponse.md)
+[**UDFConfig**](UDFConfig.md)
 
 ### Authorization
 
@@ -337,11 +338,12 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_udf_history**
-> ResponseGetUdfHistory get_udf_history(symbol, resolution, var_from, to, countback=countback)
+> OHLCVHistory get_udf_history(symbol, resolution, var_from, to, countback=countback)
 
 Get History
 
@@ -352,8 +354,8 @@ Get History
 
 ```python
 import client
+from client.models.ohlcv_history import OHLCVHistory
 from client.models.resolution import Resolution
-from client.models.response_get_udf_history import ResponseGetUdfHistory
 from client.rest import ApiException
 from pprint import pprint
 
@@ -413,7 +415,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ResponseGetUdfHistory**](ResponseGetUdfHistory.md)
+[**OHLCVHistory**](OHLCVHistory.md)
 
 ### Authorization
 
@@ -429,7 +431,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**422** | Validation Error |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -514,12 +516,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**422** | Validation Error |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **search_symbols**
-> List[SearchSymbolResponse] search_symbols(query, limit=limit)
+> List[SearchSymbol] search_symbols(query, limit=limit)
 
 Search Symbols
 
@@ -532,7 +534,7 @@ Called when a user searches for symbols in TradingView
 
 ```python
 import client
-from client.models.search_symbol_response import SearchSymbolResponse
+from client.models.search_symbol import SearchSymbol
 from client.rest import ApiException
 from pprint import pprint
 
@@ -586,7 +588,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List[SearchSymbolResponse]**](SearchSymbolResponse.md)
+[**List[SearchSymbol]**](SearchSymbol.md)
 
 ### Authorization
 
@@ -602,7 +604,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**422** | Validation Error |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

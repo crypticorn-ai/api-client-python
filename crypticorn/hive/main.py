@@ -13,8 +13,9 @@ class HiveClient:
     """
     A client for interacting with the Crypticorn Hive API.
     """
+
     config_class = Configuration
-    
+
     def __init__(
         self,
         config: Configuration,

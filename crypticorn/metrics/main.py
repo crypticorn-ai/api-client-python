@@ -17,6 +17,7 @@ class MetricsClient:
     """
     A client for interacting with the Crypticorn Metrics API.
     """
+
     config_class = Configuration
 
     def __init__(

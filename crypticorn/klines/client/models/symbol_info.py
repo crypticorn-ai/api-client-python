@@ -17,20 +17,49 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class SymbolType(BaseModel):
+class SymbolInfo(BaseModel):
     """
-    SymbolType
+    SymbolInfo
     """  # noqa: E501
 
     name: StrictStr
-    value: StrictStr
-    __properties: ClassVar[List[str]] = ["name", "value"]
+    exchange_traded: StrictStr = Field(alias="exchange-traded")
+    exchange_listed: StrictStr = Field(alias="exchange-listed")
+    timezone: StrictStr
+    minmov: StrictInt
+    minmov2: StrictInt
+    pointvalue: StrictInt
+    session: StrictStr
+    has_intraday: StrictBool
+    has_no_volume: StrictBool
+    description: StrictStr
+    type: StrictStr
+    supported_resolutions: List[StrictStr]
+    pricescale: StrictInt
+    ticker: StrictStr
+    __properties: ClassVar[List[str]] = [
+        "name",
+        "exchange-traded",
+        "exchange-listed",
+        "timezone",
+        "minmov",
+        "minmov2",
+        "pointvalue",
+        "session",
+        "has_intraday",
+        "has_no_volume",
+        "description",
+        "type",
+        "supported_resolutions",
+        "pricescale",
+        "ticker",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +78,7 @@ class SymbolType(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SymbolType from a JSON string"""
+        """Create an instance of SymbolInfo from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,12 +102,30 @@ class SymbolType(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SymbolType from a dict"""
+        """Create an instance of SymbolInfo from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({"name": obj.get("name"), "value": obj.get("value")})
+        _obj = cls.model_validate(
+            {
+                "name": obj.get("name"),
+                "exchange-traded": obj.get("exchange-traded"),
+                "exchange-listed": obj.get("exchange-listed"),
+                "timezone": obj.get("timezone"),
+                "minmov": obj.get("minmov"),
+                "minmov2": obj.get("minmov2"),
+                "pointvalue": obj.get("pointvalue"),
+                "session": obj.get("session"),
+                "has_intraday": obj.get("has_intraday"),
+                "has_no_volume": obj.get("has_no_volume"),
+                "description": obj.get("description"),
+                "type": obj.get("type"),
+                "supported_resolutions": obj.get("supported_resolutions"),
+                "pricescale": obj.get("pricescale"),
+                "ticker": obj.get("ticker"),
+            }
+        )
         return _obj

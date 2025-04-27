@@ -19,18 +19,21 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List
+from crypticorn.klines.client.models.internal_exchange import InternalExchange
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class SymbolType(BaseModel):
+class SearchSymbol(BaseModel):
     """
-    SymbolType
+    SearchSymbol
     """  # noqa: E501
 
-    name: StrictStr
-    value: StrictStr
-    __properties: ClassVar[List[str]] = ["name", "value"]
+    symbol: StrictStr
+    description: StrictStr
+    exchange: InternalExchange
+    type: StrictStr
+    __properties: ClassVar[List[str]] = ["symbol", "description", "exchange", "type"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +52,7 @@ class SymbolType(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SymbolType from a JSON string"""
+        """Create an instance of SearchSymbol from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,12 +76,19 @@ class SymbolType(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SymbolType from a dict"""
+        """Create an instance of SearchSymbol from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({"name": obj.get("name"), "value": obj.get("value")})
+        _obj = cls.model_validate(
+            {
+                "symbol": obj.get("symbol"),
+                "description": obj.get("description"),
+                "exchange": obj.get("exchange"),
+                "type": obj.get("type"),
+            }
+        )
         return _obj

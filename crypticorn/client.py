@@ -10,6 +10,7 @@ from crypticorn.common import BaseUrl, ApiVersion, Service, apikey_header as aph
 ConfigT = TypeVar("ConfigT")
 SubClient = TypeVar("SubClient")
 
+
 class ApiClient:
     """
     The official client for interacting with the Crypticorn API.
@@ -63,11 +64,11 @@ class ApiClient:
     @property
     def pay(self) -> PayClient:
         return self.services[Service.PAY]
-    
+
     @property
     def auth(self) -> AuthClient:
         return self.services[Service.AUTH]
-    
+
     async def close(self):
         """Close all client sessions."""
         for service in self.services.values():
@@ -87,7 +88,6 @@ class ApiClient:
             api_key={aph.scheme_name: self.api_key} if self.api_key else None,
         )
 
-    
     def configure(
         self,
         config: ConfigT,

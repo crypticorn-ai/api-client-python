@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **get_ohlcv**
-> BaseResponseOHLCVResponse get_ohlcv(market, timeframe, symbol, start=start, end=end, limit=limit, sort_direction=sort_direction)
+> OHLCVHistory get_ohlcv(market, timeframe, symbol, start=start, end=end, limit=limit, sort_direction=sort_direction)
 
 Get Ohlcv
 
@@ -21,8 +21,8 @@ Retrieve OHLCV (Open, High, Low, Close, Volume) data for a specific market, time
 
 ```python
 import client
-from client.models.base_response_ohlcv_response import BaseResponseOHLCVResponse
 from client.models.market_type import MarketType
+from client.models.ohlcv_history import OHLCVHistory
 from client.models.sort_direction import SortDirection
 from client.models.timeframe import Timeframe
 from client.rest import ApiException
@@ -54,7 +54,7 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.OHLCVDataApi(api_client)
-    market = client.MarketType() # MarketType | Market type (spot or futures)
+    market = client.MarketType() # MarketType | Market type
     timeframe = client.Timeframe() # Timeframe | Timeframe for the candles
     symbol = 'symbol_example' # str | Trading pair symbol (e.g., BTCUSDT)
     start = 56 # int | Start timestamp in milliseconds (optional)
@@ -78,7 +78,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**MarketType**](.md)| Market type (spot or futures) | 
+ **market** | [**MarketType**](.md)| Market type | 
  **timeframe** | [**Timeframe**](.md)| Timeframe for the candles | 
  **symbol** | **str**| Trading pair symbol (e.g., BTCUSDT) | 
  **start** | **int**| Start timestamp in milliseconds | [optional] 
@@ -88,7 +88,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**BaseResponseOHLCVResponse**](BaseResponseOHLCVResponse.md)
+[**OHLCVHistory**](OHLCVHistory.md)
 
 ### Authorization
 
@@ -103,11 +103,8 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful response with OHLCV data |  -  |
-**400** | Invalid request parameters |  -  |
-**404** | No data found |  -  |
-**500** | Internal server error |  -  |
-**422** | Validation Error |  -  |
+**200** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

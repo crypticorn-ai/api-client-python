@@ -103,7 +103,9 @@ class AuthHandler:
             elif message == "jwt expired":
                 error = ApiError.EXPIRED_BEARER
             else:
-                error = ApiError.INVALID_BEARER  # jwt malformed, jwt not active (https://www.npmjs.com/package/jsonwebtoken#errors--codes)
+                error = (
+                    ApiError.INVALID_BEARER
+                )  # jwt malformed, jwt not active (https://www.npmjs.com/package/jsonwebtoken#errors--codes)
             return HTTPException(
                 content=ExceptionContent(
                     error=error,
