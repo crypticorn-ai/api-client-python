@@ -1,6 +1,7 @@
 from enum import Enum, EnumMeta, StrEnum
 import logging
 from fastapi import status
+from crypticorn.common.mixins import ExcludeEnumMixin
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +19,7 @@ class Fallback(EnumMeta):
         return cls.UNKNOWN_ERROR
 
 
-class ApiErrorType(StrEnum):
+class ApiErrorType(ExcludeEnumMixin, StrEnum):
     """Type of API error"""
 
     USER_ERROR = "user error"
@@ -31,7 +32,7 @@ class ApiErrorType(StrEnum):
     """error that does not need to be handled or does not affect the program or is a placeholder."""
 
 
-class ApiErrorIdentifier(StrEnum):
+class ApiErrorIdentifier(ExcludeEnumMixin, StrEnum):
     """API error identifiers"""
 
     ALLOCATION_BELOW_EXPOSURE = "allocation_below_current_exposure"
@@ -111,7 +112,7 @@ class ApiErrorIdentifier(StrEnum):
         return ApiError[self.value]
 
 
-class ApiErrorLevel(StrEnum):
+class ApiErrorLevel(ExcludeEnumMixin, StrEnum):
     """API error levels"""
 
     ERROR = "error"
@@ -120,7 +121,7 @@ class ApiErrorLevel(StrEnum):
     WARNING = "warning"
 
 
-class ApiError(Enum, metaclass=Fallback):
+class ApiError(ExcludeEnumMixin, Enum, metaclass=Fallback):
     """API error codes. Fallback to UNKNOWN_ERROR for error codes not yet published to PyPI."""
 
     ALLOCATION_BELOW_EXPOSURE = (
@@ -493,9 +494,6 @@ class ApiError(Enum, metaclass=Fallback):
 
 class HttpStatusMapper:
     """Map API errors to HTTP status codes."""
-
-    # TODO: decide if we need all of these mappings, since most errors are not exposed to the client via HTTP
-    # in case we remove some, update the pytest length check
     _mapping = {
         # Authentication/Authorization
         ApiError.EXPIRED_BEARER: status.HTTP_401_UNAUTHORIZED,

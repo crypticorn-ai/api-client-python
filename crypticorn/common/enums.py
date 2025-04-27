@@ -1,43 +1,13 @@
 from enum import StrEnum
-
-
-class ValidateEnumMixin:
-    """
-    Mixin for validating enum values manually.
-
-    ⚠️ Note:
-    This does NOT enforce validation automatically on enum creation.
-    It's up to the developer to call `Class.validate(value)` where needed.
-
-    Usage:
-        >>> class Color(ValidateEnumMixin, StrEnum):
-        >>>     RED = "red"
-        >>>     GREEN = "green"
-
-        >>> Color.validate("red")     # True
-        >>> Color.validate("yellow")  # False
-
-    Order of inheritance matters — the mixin must come first.
-    """
-
-    @classmethod
-    def validate(cls, value) -> bool:
-        """Validate if a value is in the enum. True if so, False otherwise."""
-        try:
-            cls(value)
-            return True
-        except ValueError:
-            return False
-
-
-class Exchange(ValidateEnumMixin, StrEnum):
+from crypticorn.common.mixins import ValidateEnumMixin, ExcludeEnumMixin
+class Exchange(ValidateEnumMixin, ExcludeEnumMixin, StrEnum):
     """Supported exchanges for trading"""
 
     KUCOIN = "kucoin"
     BINGX = "bingx"
 
 
-class InternalExchange(ValidateEnumMixin, StrEnum):
+class InternalExchange(ValidateEnumMixin, ExcludeEnumMixin, StrEnum):
     """All exchanges we are using, including public (Exchange)"""
 
     KUCOIN = "kucoin"
@@ -48,7 +18,7 @@ class InternalExchange(ValidateEnumMixin, StrEnum):
     BITGET = "bitget"
 
 
-class MarketType(ValidateEnumMixin, StrEnum):
+class MarketType(ValidateEnumMixin, ExcludeEnumMixin, StrEnum):
     """
     Market types
     """
