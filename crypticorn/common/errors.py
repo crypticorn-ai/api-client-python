@@ -42,6 +42,7 @@ class ApiErrorIdentifier(ExcludeEnumMixin, StrEnum):
     BOT_ALREADY_DELETED = "bot_already_deleted"
     BOT_DISABLED = "bot_disabled"
     BOT_STOPPING_COMPLETED = "bot_stopping_completed"
+    BOT_STOPPING_STARTED = "bot_stopping_started"
     CLIENT_ORDER_ID_REPEATED = "client_order_id_already_exists"
     CONTENT_TYPE_ERROR = "invalid_content_type"
     DELETE_BOT_ERROR = "delete_bot_error"
@@ -77,8 +78,11 @@ class ApiErrorIdentifier(ExcludeEnumMixin, StrEnum):
     LIQUIDATION_PRICE_VIOLATION = "order_violates_liquidation_price_constraints"
     NO_CREDENTIALS = "no_credentials"
     NOW_API_DOWN = "now_api_down"
-    OBJECT_NOT_FOUND = "object_not_found"
     OBJECT_ALREADY_EXISTS = "object_already_exists"
+    OBJECT_CREATED = "object_created"
+    OBJECT_DELETED = "object_deleted"
+    OBJECT_NOT_FOUND = "object_not_found"
+    OBJECT_UPDATED = "object_updated"
     ORDER_ALREADY_FILLED = "order_is_already_filled"
     ORDER_IN_PROCESS = "order_is_being_processed"
     ORDER_LIMIT_EXCEEDED = "order_quantity_limit_exceeded"
@@ -156,6 +160,11 @@ class ApiError(ExcludeEnumMixin, Enum, metaclass=Fallback):
     )
     BOT_STOPPING_COMPLETED = (
         ApiErrorIdentifier.BOT_STOPPING_COMPLETED,
+        ApiErrorType.NO_ERROR,
+        ApiErrorLevel.INFO,
+    )
+    BOT_STOPPING_STARTED = (
+        ApiErrorIdentifier.BOT_STOPPING_STARTED,
         ApiErrorType.NO_ERROR,
         ApiErrorLevel.INFO,
     )
@@ -334,15 +343,30 @@ class ApiError(ExcludeEnumMixin, Enum, metaclass=Fallback):
         ApiErrorType.SERVER_ERROR,
         ApiErrorLevel.ERROR,
     )
+    OBJECT_ALREADY_EXISTS = (
+        ApiErrorIdentifier.OBJECT_ALREADY_EXISTS,
+        ApiErrorType.SERVER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    OBJECT_CREATED = (
+        ApiErrorIdentifier.OBJECT_CREATED,
+        ApiErrorType.SERVER_ERROR,
+        ApiErrorLevel.INFO,
+    )
+    OBJECT_DELETED = (
+        ApiErrorIdentifier.OBJECT_DELETED,
+        ApiErrorType.SERVER_ERROR,
+        ApiErrorLevel.INFO,
+    )
     OBJECT_NOT_FOUND = (
         ApiErrorIdentifier.OBJECT_NOT_FOUND,
         ApiErrorType.SERVER_ERROR,
         ApiErrorLevel.ERROR,
     )
-    OBJECT_ALREADY_EXISTS = (
-        ApiErrorIdentifier.OBJECT_ALREADY_EXISTS,
+    OBJECT_UPDATED = (
+        ApiErrorIdentifier.OBJECT_UPDATED,
         ApiErrorType.SERVER_ERROR,
-        ApiErrorLevel.ERROR,
+        ApiErrorLevel.INFO,
     )
     ORDER_ALREADY_FILLED = (
         ApiErrorIdentifier.ORDER_ALREADY_FILLED,
@@ -575,6 +599,10 @@ class HttpStatusMapper:
         # Success cases
         ApiError.SUCCESS: status.HTTP_200_OK,
         ApiError.BOT_STOPPING_COMPLETED: status.HTTP_200_OK,
+        ApiError.BOT_STOPPING_STARTED: status.HTTP_200_OK,
+        ApiError.OBJECT_CREATED: status.HTTP_201_CREATED,
+        ApiError.OBJECT_UPDATED: status.HTTP_200_OK,
+        ApiError.OBJECT_DELETED: status.HTTP_204_NO_CONTENT,
     }
 
     @classmethod
