@@ -1,6 +1,6 @@
 # client.LogsApi
 
-All URIs are relative to *https://api.crypticorn.dev/v1/metrics*
+All URIs are relative to *http://localhost/v1/metrics*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -25,10 +25,10 @@ from client.models.severity import Severity
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
+# Defining the host is optional and defaults to http://localhost/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/metrics"
+    host = "http://localhost/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -52,8 +52,8 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.LogsApi(api_client)
     severity = client.Severity() # Severity | Severity level of errors to fetch (optional)
-    start_timestamp = 1745616674 # int | Start timestamp for which to fetch error logs (optional) (default to 1745616674)
-    end_timestamp = 1745703074 # int | End timestamp for which to fetch error logs (optional) (default to 1745703074)
+    start_timestamp = 1745746434 # int | Start timestamp for which to fetch error logs (optional) (default to 1745746434)
+    end_timestamp = 1745832834 # int | End timestamp for which to fetch error logs (optional) (default to 1745832834)
 
     try:
         # Get Error Logs
@@ -72,8 +72,8 @@ async with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **severity** | [**Severity**](.md)| Severity level of errors to fetch | [optional] 
- **start_timestamp** | **int**| Start timestamp for which to fetch error logs | [optional] [default to 1745616674]
- **end_timestamp** | **int**| End timestamp for which to fetch error logs | [optional] [default to 1745703074]
+ **start_timestamp** | **int**| Start timestamp for which to fetch error logs | [optional] [default to 1745746434]
+ **end_timestamp** | **int**| End timestamp for which to fetch error logs | [optional] [default to 1745832834]
 
 ### Return type
 

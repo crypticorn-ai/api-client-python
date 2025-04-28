@@ -1,6 +1,6 @@
 # client.IndicatorsApi
 
-All URIs are relative to *https://api.crypticorn.dev/v1/metrics*
+All URIs are relative to *http://localhost/v1/metrics*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -22,14 +22,13 @@ Calculate and retrieve the KER indicator for a symbol.
 
 ```python
 import client
-from client.models.market_type import MarketType
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
+# Defining the host is optional and defaults to http://localhost/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/metrics"
+    host = "http://localhost/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -53,9 +52,9 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.IndicatorsApi(api_client)
     symbol = 'symbol_example' # str | 
-    market = client.MarketType() # MarketType | Market (optional)
+    market = 'market_example' # str | Market (optional)
     period = 15 # int | KER indicator period (optional) (default to 15)
-    timestamp = 1745703074 # int | Timestamp for which to fetch KER indicator (optional) (default to 1745703074)
+    timestamp = 1745832834 # int | Timestamp for which to fetch KER indicator (optional) (default to 1745832834)
 
     try:
         # Get Ker Indicator
@@ -74,9 +73,9 @@ async with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **symbol** | **str**|  | 
- **market** | [**MarketType**](.md)| Market | [optional] 
+ **market** | **str**| Market | [optional] 
  **period** | **int**| KER indicator period | [optional] [default to 15]
- **timestamp** | **int**| Timestamp for which to fetch KER indicator | [optional] [default to 1745703074]
+ **timestamp** | **int**| Timestamp for which to fetch KER indicator | [optional] [default to 1745832834]
 
 ### Return type
 
@@ -114,14 +113,13 @@ Calculate and retrieve the Simple Moving Average (SMA) indicator for a symbol.
 
 ```python
 import client
-from client.models.market_type import MarketType
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
+# Defining the host is optional and defaults to http://localhost/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/metrics"
+    host = "http://localhost/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -145,9 +143,9 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.IndicatorsApi(api_client)
     symbol = 'symbol_example' # str | 
-    market = client.MarketType() # MarketType | The market type to use for the SMA indicator (optional)
+    market = 'market_example' # str | The market type to use for the SMA indicator (optional)
     period = 15 # int | The period to use for the SMA indicator (optional) (default to 15)
-    timestamp = 1745703074 # int | The timestamp for which to fetch the SMA indicator (optional) (default to 1745703074)
+    timestamp = 1745832834 # int | The timestamp for which to fetch the SMA indicator (optional) (default to 1745832834)
 
     try:
         # Get Sma Indicator
@@ -166,9 +164,9 @@ async with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **symbol** | **str**|  | 
- **market** | [**MarketType**](.md)| The market type to use for the SMA indicator | [optional] 
+ **market** | **str**| The market type to use for the SMA indicator | [optional] 
  **period** | **int**| The period to use for the SMA indicator | [optional] [default to 15]
- **timestamp** | **int**| The timestamp for which to fetch the SMA indicator | [optional] [default to 1745703074]
+ **timestamp** | **int**| The timestamp for which to fetch the SMA indicator | [optional] [default to 1745832834]
 
 ### Return type
 
