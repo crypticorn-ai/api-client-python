@@ -26,6 +26,7 @@ class ValidateEnumMixin:
         except ValueError:
             return False
 
+
 class ExcludeEnumMixin:
     """Mixin to exclude enum from OpenAPI schema. We use this to avoid duplicating enums when generating client code from the openapi spec."""
 

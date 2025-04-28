@@ -21,7 +21,6 @@ Retrieve a list of whitelisted symbols for a specific market.
 
 ```python
 import client
-from client.models.market_type import MarketType
 from client.rest import ApiException
 from pprint import pprint
 
@@ -51,7 +50,7 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.SymbolsApi(api_client)
-    market = client.MarketType() # MarketType | Market type
+    market = 'market_example' # str | Market type
 
     try:
         # Symbols
@@ -69,7 +68,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**MarketType**](.md)| Market type | 
+ **market** | **str**| Market type | 
 
 ### Return type
 

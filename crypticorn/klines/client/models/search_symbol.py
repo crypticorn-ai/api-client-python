@@ -17,9 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
-from crypticorn.klines.client.models.internal_exchange import InternalExchange
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -31,7 +30,9 @@ class SearchSymbol(BaseModel):
 
     symbol: StrictStr
     description: StrictStr
-    exchange: InternalExchange
+    exchange: StrictStr = Field(
+        description="All exchanges we are using, including public (Exchange)"
+    )
     type: StrictStr
     __properties: ClassVar[List[str]] = ["symbol", "description", "exchange", "type"]
 

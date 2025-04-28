@@ -7,9 +7,9 @@ This is the detail of the exception. It is used to enrich the exception with add
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **message** | **str** |  | [optional] 
-**code** | [**ApiErrorIdentifier**](ApiErrorIdentifier.md) | The unique error code | 
-**type** | [**ApiErrorType**](ApiErrorType.md) | The type of error | 
-**level** | [**ApiErrorLevel**](ApiErrorLevel.md) | The level of the error | 
+**code** | **str** | API error identifiers | 
+**type** | **str** | Type of API error | 
+**level** | **str** | API error levels | 
 **status_code** | **int** | The HTTP status code | 
 **details** | **object** |  | [optional] 
 

@@ -21,7 +21,6 @@ Retrieve OHLCV (Open, High, Low, Close, Volume) data for a specific market, time
 
 ```python
 import client
-from client.models.market_type import MarketType
 from client.models.ohlcv_history import OHLCVHistory
 from client.models.sort_direction import SortDirection
 from client.models.timeframe import Timeframe
@@ -54,7 +53,7 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.OHLCVDataApi(api_client)
-    market = client.MarketType() # MarketType | Market type
+    market = 'market_example' # str | Market type
     timeframe = client.Timeframe() # Timeframe | Timeframe for the candles
     symbol = 'symbol_example' # str | Trading pair symbol (e.g., BTCUSDT)
     start = 56 # int | Start timestamp in milliseconds (optional)
@@ -78,7 +77,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**MarketType**](.md)| Market type | 
+ **market** | **str**| Market type | 
  **timeframe** | [**Timeframe**](.md)| Timeframe for the candles | 
  **symbol** | **str**| Trading pair symbol (e.g., BTCUSDT) | 
  **start** | **int**| Start timestamp in milliseconds | [optional] 

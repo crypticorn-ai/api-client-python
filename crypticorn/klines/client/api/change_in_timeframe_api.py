@@ -16,11 +16,10 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field
+from pydantic import Field, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
 from crypticorn.klines.client.models.change_in_timeframe import ChangeInTimeframe
-from crypticorn.klines.client.models.market_type import MarketType
 from crypticorn.klines.client.models.timeframe import Timeframe
 
 from crypticorn.klines.client.api_client import ApiClient, RequestSerialized
@@ -44,7 +43,7 @@ class ChangeInTimeframeApi:
     async def get_change_in_timeframe(
         self,
         market: Annotated[
-            Optional[MarketType], Field(description="Market type: 'spot' or 'futures'")
+            Optional[StrictStr], Field(description="Market type: 'spot' or 'futures'")
         ] = None,
         timeframe: Annotated[
             Optional[Timeframe],
@@ -67,7 +66,7 @@ class ChangeInTimeframeApi:
         Retrieve price change percentage between last two completed timestamps for all pairs.  Valid markets: spot, futures Valid timeframes: 15m, 30m, 1h, 4h, 1d
 
         :param market: Market type: 'spot' or 'futures'
-        :type market: MarketType
+        :type market: str
         :param timeframe: Timeframe: '15m', '30m', '1h', '4h', '1d'
         :type timeframe: Timeframe
         :param _request_timeout: timeout setting for this request. If one
@@ -117,7 +116,7 @@ class ChangeInTimeframeApi:
     async def get_change_in_timeframe_with_http_info(
         self,
         market: Annotated[
-            Optional[MarketType], Field(description="Market type: 'spot' or 'futures'")
+            Optional[StrictStr], Field(description="Market type: 'spot' or 'futures'")
         ] = None,
         timeframe: Annotated[
             Optional[Timeframe],
@@ -140,7 +139,7 @@ class ChangeInTimeframeApi:
         Retrieve price change percentage between last two completed timestamps for all pairs.  Valid markets: spot, futures Valid timeframes: 15m, 30m, 1h, 4h, 1d
 
         :param market: Market type: 'spot' or 'futures'
-        :type market: MarketType
+        :type market: str
         :param timeframe: Timeframe: '15m', '30m', '1h', '4h', '1d'
         :type timeframe: Timeframe
         :param _request_timeout: timeout setting for this request. If one
@@ -190,7 +189,7 @@ class ChangeInTimeframeApi:
     async def get_change_in_timeframe_without_preload_content(
         self,
         market: Annotated[
-            Optional[MarketType], Field(description="Market type: 'spot' or 'futures'")
+            Optional[StrictStr], Field(description="Market type: 'spot' or 'futures'")
         ] = None,
         timeframe: Annotated[
             Optional[Timeframe],
@@ -213,7 +212,7 @@ class ChangeInTimeframeApi:
         Retrieve price change percentage between last two completed timestamps for all pairs.  Valid markets: spot, futures Valid timeframes: 15m, 30m, 1h, 4h, 1d
 
         :param market: Market type: 'spot' or 'futures'
-        :type market: MarketType
+        :type market: str
         :param timeframe: Timeframe: '15m', '30m', '1h', '4h', '1d'
         :type timeframe: Timeframe
         :param _request_timeout: timeout setting for this request. If one
@@ -282,7 +281,7 @@ class ChangeInTimeframeApi:
         # process the query parameters
         if market is not None:
 
-            _query_params.append(("market", market.value))
+            _query_params.append(("market", market))
 
         if timeframe is not None:
 

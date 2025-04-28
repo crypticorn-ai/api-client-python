@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **symbol** | **str** |  | 
 **description** | **str** |  | 
-**exchange** | [**InternalExchange**](InternalExchange.md) |  | 
+**exchange** | **str** | All exchanges we are using, including public (Exchange) | 
 **type** | **str** |  | 
 
 ## Example

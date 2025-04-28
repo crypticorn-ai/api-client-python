@@ -19,7 +19,6 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
-from crypticorn.klines.client.models.market_type import MarketType
 from crypticorn.klines.client.models.ohlcv_history import OHLCVHistory
 from crypticorn.klines.client.models.sort_direction import SortDirection
 from crypticorn.klines.client.models.timeframe import Timeframe
@@ -44,7 +43,7 @@ class OHLCVDataApi:
     @validate_call
     async def get_ohlcv(
         self,
-        market: Annotated[MarketType, Field(description="Market type")],
+        market: Annotated[StrictStr, Field(description="Market type")],
         timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
         symbol: Annotated[
             StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
@@ -80,7 +79,7 @@ class OHLCVDataApi:
         Retrieve OHLCV (Open, High, Low, Close, Volume) data for a specific market, timeframe, and symbol.
 
         :param market: Market type (required)
-        :type market: MarketType
+        :type market: str
         :param timeframe: Timeframe for the candles (required)
         :type timeframe: Timeframe
         :param symbol: Trading pair symbol (e.g., BTCUSDT) (required)
@@ -144,7 +143,7 @@ class OHLCVDataApi:
     @validate_call
     async def get_ohlcv_with_http_info(
         self,
-        market: Annotated[MarketType, Field(description="Market type")],
+        market: Annotated[StrictStr, Field(description="Market type")],
         timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
         symbol: Annotated[
             StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
@@ -180,7 +179,7 @@ class OHLCVDataApi:
         Retrieve OHLCV (Open, High, Low, Close, Volume) data for a specific market, timeframe, and symbol.
 
         :param market: Market type (required)
-        :type market: MarketType
+        :type market: str
         :param timeframe: Timeframe for the candles (required)
         :type timeframe: Timeframe
         :param symbol: Trading pair symbol (e.g., BTCUSDT) (required)
@@ -244,7 +243,7 @@ class OHLCVDataApi:
     @validate_call
     async def get_ohlcv_without_preload_content(
         self,
-        market: Annotated[MarketType, Field(description="Market type")],
+        market: Annotated[StrictStr, Field(description="Market type")],
         timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
         symbol: Annotated[
             StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
@@ -280,7 +279,7 @@ class OHLCVDataApi:
         Retrieve OHLCV (Open, High, Low, Close, Volume) data for a specific market, timeframe, and symbol.
 
         :param market: Market type (required)
-        :type market: MarketType
+        :type market: str
         :param timeframe: Timeframe for the candles (required)
         :type timeframe: Timeframe
         :param symbol: Trading pair symbol (e.g., BTCUSDT) (required)
@@ -367,7 +366,7 @@ class OHLCVDataApi:
 
         # process the path parameters
         if market is not None:
-            _path_params["market"] = market.value
+            _path_params["market"] = market
         if timeframe is not None:
             _path_params["timeframe"] = timeframe.value
         if symbol is not None:

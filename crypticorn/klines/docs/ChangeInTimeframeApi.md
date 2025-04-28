@@ -25,7 +25,6 @@ Valid timeframes: 15m, 30m, 1h, 4h, 1d
 ```python
 import client
 from client.models.change_in_timeframe import ChangeInTimeframe
-from client.models.market_type import MarketType
 from client.models.timeframe import Timeframe
 from client.rest import ApiException
 from pprint import pprint
@@ -56,7 +55,7 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.ChangeInTimeframeApi(api_client)
-    market = client.MarketType() # MarketType | Market type: 'spot' or 'futures' (optional)
+    market = 'futures' # str | Market type: 'spot' or 'futures' (optional)
     timeframe = client.Timeframe() # Timeframe | Timeframe: '15m', '30m', '1h', '4h', '1d' (optional)
 
     try:
@@ -75,7 +74,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**MarketType**](.md)| Market type: &#39;spot&#39; or &#39;futures&#39; | [optional] 
+ **market** | **str**| Market type: &#39;spot&#39; or &#39;futures&#39; | [optional] 
  **timeframe** | [**Timeframe**](.md)| Timeframe: &#39;15m&#39;, &#39;30m&#39;, &#39;1h&#39;, &#39;4h&#39;, &#39;1d&#39; | [optional] 
 
 ### Return type

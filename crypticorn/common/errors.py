@@ -494,6 +494,7 @@ class ApiError(ExcludeEnumMixin, Enum, metaclass=Fallback):
 
 class HttpStatusMapper:
     """Map API errors to HTTP status codes."""
+
     _mapping = {
         # Authentication/Authorization
         ApiError.EXPIRED_BEARER: status.HTTP_401_UNAUTHORIZED,

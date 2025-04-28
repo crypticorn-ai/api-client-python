@@ -14,14 +14,9 @@ Do not edit the class manually.
 
 
 # import models into model package
-from crypticorn.klines.client.models.api_error_identifier import ApiErrorIdentifier
-from crypticorn.klines.client.models.api_error_level import ApiErrorLevel
-from crypticorn.klines.client.models.api_error_type import ApiErrorType
 from crypticorn.klines.client.models.change_in_timeframe import ChangeInTimeframe
 from crypticorn.klines.client.models.exception_detail import ExceptionDetail
 from crypticorn.klines.client.models.funding_rate import FundingRate
-from crypticorn.klines.client.models.internal_exchange import InternalExchange
-from crypticorn.klines.client.models.market_type import MarketType
 from crypticorn.klines.client.models.ohlcv_history import OHLCVHistory
 from crypticorn.klines.client.models.resolution import Resolution
 from crypticorn.klines.client.models.search_symbol import SearchSymbol

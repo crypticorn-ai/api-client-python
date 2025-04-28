@@ -1,5 +1,7 @@
 from enum import StrEnum
 from crypticorn.common.mixins import ValidateEnumMixin, ExcludeEnumMixin
+
+
 class Exchange(ValidateEnumMixin, ExcludeEnumMixin, StrEnum):
     """Supported exchanges for trading"""
 
