@@ -17,9 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.trade.client.models.exchange import Exchange
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -32,12 +31,11 @@ class ExchangeKeyModel(BaseModel):
     created_at: Optional[StrictInt] = None
     updated_at: Optional[StrictInt] = None
     id: Optional[StrictStr] = None
-    exchange: Exchange = Field(description="Exchange name")
+    exchange: StrictStr = Field(description="Supported exchanges for trading")
     api_key: Optional[StrictStr] = None
     secret: Optional[StrictStr] = None
     passphrase: Optional[StrictStr] = None
     label: StrictStr = Field(description="Label for the API key")
-    enabled: Optional[StrictBool] = None
     user_id: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = [
         "created_at",
@@ -48,7 +46,6 @@ class ExchangeKeyModel(BaseModel):
         "secret",
         "passphrase",
         "label",
-        "enabled",
         "user_id",
     ]
 
@@ -119,11 +116,6 @@ class ExchangeKeyModel(BaseModel):
         if self.passphrase is None and "passphrase" in self.model_fields_set:
             _dict["passphrase"] = None
 
-        # set to None if enabled (nullable) is None
-        # and model_fields_set contains the field
-        if self.enabled is None and "enabled" in self.model_fields_set:
-            _dict["enabled"] = None
-
         # set to None if user_id (nullable) is None
         # and model_fields_set contains the field
         if self.user_id is None and "user_id" in self.model_fields_set:
@@ -150,7 +142,6 @@ class ExchangeKeyModel(BaseModel):
                 "secret": obj.get("secret"),
                 "passphrase": obj.get("passphrase"),
                 "label": obj.get("label"),
-                "enabled": obj.get("enabled"),
                 "user_id": obj.get("user_id"),
             }
         )

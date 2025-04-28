@@ -19,9 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from crypticorn.trade.client.models.exchange import Exchange
 from crypticorn.trade.client.models.margin_mode import MarginMode
-from crypticorn.trade.client.models.market_type import MarketType
 from crypticorn.trade.client.models.order_status import OrderStatus
 from crypticorn.trade.client.models.trading_action_type import TradingActionType
 from typing import Optional, Set
@@ -44,12 +42,14 @@ class OrderModel(BaseModel):
     user_id: Optional[StrictStr] = None
     bot_id: Optional[StrictStr] = None
     client_order_id: Optional[StrictStr] = None
-    exchange: Optional[Exchange] = None
+    exchange: Optional[StrictStr] = Field(
+        default=None, description="Supported exchanges for trading"
+    )
     symbol: Optional[StrictStr] = None
     common_symbol: Optional[StrictStr] = None
     price: Optional[Union[StrictFloat, StrictInt]] = None
     action_type: Optional[TradingActionType] = None
-    market_type: Optional[MarketType] = None
+    market_type: Optional[StrictStr] = Field(default=None, description="Market types")
     margin_mode: Optional[MarginMode] = None
     status_code: Optional[StrictStr] = Field(
         default=None, description="API error identifiers"
@@ -195,11 +195,6 @@ class OrderModel(BaseModel):
         if self.client_order_id is None and "client_order_id" in self.model_fields_set:
             _dict["client_order_id"] = None
 
-        # set to None if exchange (nullable) is None
-        # and model_fields_set contains the field
-        if self.exchange is None and "exchange" in self.model_fields_set:
-            _dict["exchange"] = None
-
         # set to None if symbol (nullable) is None
         # and model_fields_set contains the field
         if self.symbol is None and "symbol" in self.model_fields_set:
@@ -219,11 +214,6 @@ class OrderModel(BaseModel):
         # and model_fields_set contains the field
         if self.action_type is None and "action_type" in self.model_fields_set:
             _dict["action_type"] = None
-
-        # set to None if market_type (nullable) is None
-        # and model_fields_set contains the field
-        if self.market_type is None and "market_type" in self.model_fields_set:
-            _dict["market_type"] = None
 
         # set to None if margin_mode (nullable) is None
         # and model_fields_set contains the field

@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **open_order_execution_id** | **str** |  | [optional] 
 **client_order_id** | **str** |  | [optional] 
 **action_type** | [**TradingActionType**](TradingActionType.md) | The type of action. | 
-**market_type** | [**MarketType**](MarketType.md) | The type of market the action is for. | 
+**market_type** | **str** | Market types | 
 **strategy_id** | **str** | UID for the strategy. | 
 **symbol** | **str** | Trading symbol or asset pair in format: &#39;symbol/quote_currency&#39; (see market service for valid symbols) | 
 **is_limit** | **bool** |  | [optional] 

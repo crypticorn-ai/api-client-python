@@ -28,7 +28,6 @@ from pydantic import (
 )
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
-from crypticorn.trade.client.models.market_type import MarketType
 from crypticorn.trade.client.models.tpsl import TPSL
 from crypticorn.trade.client.models.trading_action_type import TradingActionType
 from typing import Optional, Set
@@ -45,7 +44,7 @@ class SpotTradingAction(BaseModel):
     open_order_execution_id: Optional[StrictStr] = None
     client_order_id: Optional[StrictStr] = None
     action_type: TradingActionType = Field(description="The type of action.")
-    market_type: MarketType = Field(description="The type of market the action is for.")
+    market_type: StrictStr = Field(description="Market types")
     strategy_id: StrictStr = Field(description="UID for the strategy.")
     symbol: StrictStr = Field(
         description="Trading symbol or asset pair in format: 'symbol/quote_currency' (see market service for valid symbols)"

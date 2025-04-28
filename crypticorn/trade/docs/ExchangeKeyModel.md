@@ -8,12 +8,11 @@ Name | Type | Description | Notes
 **created_at** | **int** |  | [optional] 
 **updated_at** | **int** |  | [optional] 
 **id** | **str** |  | [optional] 
-**exchange** | [**Exchange**](Exchange.md) | Exchange name | 
+**exchange** | **str** | Supported exchanges for trading | 
 **api_key** | **str** |  | [optional] 
 **secret** | **str** |  | [optional] 
 **passphrase** | **str** |  | [optional] 
 **label** | **str** | Label for the API key | 
-**enabled** | **bool** |  | [optional] 
 **user_id** | **str** |  | [optional] 
 
 ## Example
