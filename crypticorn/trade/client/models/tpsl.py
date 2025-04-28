@@ -39,7 +39,9 @@ class TPSL(BaseModel):
     allocation: Union[
         Annotated[float, Field(le=1.0, strict=True, ge=0.0)],
         Annotated[int, Field(le=1, strict=True, ge=0)],
-    ] = Field(description="Percentage of the order to sell")
+    ] = Field(
+        description="Percentage of the open order to sell. All allocations must sum up to 1."
+    )
     execution_id: Optional[StrictStr] = None
     client_order_id: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = [

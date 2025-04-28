@@ -17,9 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Union
-from crypticorn.trade.client.models.exchange import Exchange
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,7 +28,7 @@ class StrategyExchangeInfo(BaseModel):
     StrategyExchangeInfo
     """  # noqa: E501
 
-    exchange: Exchange = Field(description="Exchange name. Of type Exchange")
+    exchange: StrictStr = Field(description="Supported exchanges for trading")
     min_amount: Union[StrictFloat, StrictInt] = Field(
         description="Minimum amount for the strategy on the exchange"
     )

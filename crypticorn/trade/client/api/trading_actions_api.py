@@ -21,6 +21,7 @@ from typing import Any, List, Optional
 from crypticorn.trade.client.models.action_model import ActionModel
 from crypticorn.trade.client.models.futures_trading_action import FuturesTradingAction
 from crypticorn.trade.client.models.post_futures_action import PostFuturesAction
+from crypticorn.trade.client.models.spot_trading_action import SpotTradingAction
 
 from crypticorn.trade.client.api_client import ApiClient, RequestSerialized
 from crypticorn.trade.client.api_response import ApiResponse
@@ -558,7 +559,7 @@ class TradingActionsApi:
     @validate_call
     async def post_spot_action(
         self,
-        futures_trading_action: FuturesTradingAction,
+        spot_trading_action: SpotTradingAction,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -574,8 +575,8 @@ class TradingActionsApi:
         """Post Spot Action
 
 
-        :param futures_trading_action: (required)
-        :type futures_trading_action: FuturesTradingAction
+        :param spot_trading_action: (required)
+        :type spot_trading_action: SpotTradingAction
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -599,7 +600,7 @@ class TradingActionsApi:
         """  # noqa: E501
 
         _param = self._post_spot_action_serialize(
-            futures_trading_action=futures_trading_action,
+            spot_trading_action=spot_trading_action,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -622,7 +623,7 @@ class TradingActionsApi:
     @validate_call
     async def post_spot_action_with_http_info(
         self,
-        futures_trading_action: FuturesTradingAction,
+        spot_trading_action: SpotTradingAction,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -638,8 +639,8 @@ class TradingActionsApi:
         """Post Spot Action
 
 
-        :param futures_trading_action: (required)
-        :type futures_trading_action: FuturesTradingAction
+        :param spot_trading_action: (required)
+        :type spot_trading_action: SpotTradingAction
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -663,7 +664,7 @@ class TradingActionsApi:
         """  # noqa: E501
 
         _param = self._post_spot_action_serialize(
-            futures_trading_action=futures_trading_action,
+            spot_trading_action=spot_trading_action,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -686,7 +687,7 @@ class TradingActionsApi:
     @validate_call
     async def post_spot_action_without_preload_content(
         self,
-        futures_trading_action: FuturesTradingAction,
+        spot_trading_action: SpotTradingAction,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -702,8 +703,8 @@ class TradingActionsApi:
         """Post Spot Action
 
 
-        :param futures_trading_action: (required)
-        :type futures_trading_action: FuturesTradingAction
+        :param spot_trading_action: (required)
+        :type spot_trading_action: SpotTradingAction
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -727,7 +728,7 @@ class TradingActionsApi:
         """  # noqa: E501
 
         _param = self._post_spot_action_serialize(
-            futures_trading_action=futures_trading_action,
+            spot_trading_action=spot_trading_action,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -745,7 +746,7 @@ class TradingActionsApi:
 
     def _post_spot_action_serialize(
         self,
-        futures_trading_action,
+        spot_trading_action,
         _request_auth,
         _content_type,
         _headers,
@@ -770,8 +771,8 @@ class TradingActionsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if futures_trading_action is not None:
-            _body_params = futures_trading_action
+        if spot_trading_action is not None:
+            _body_params = spot_trading_action
 
         # set the HTTP header `Accept`
         if "Accept" not in _header_params:

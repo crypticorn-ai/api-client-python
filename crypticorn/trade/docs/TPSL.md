@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **price_delta** | **float** |  | [optional] 
 **price** | **float** |  | [optional] 
-**allocation** | **float** | Percentage of the order to sell | 
+**allocation** | **float** | Percentage of the open order to sell. All allocations must sum up to 1. | 
 **execution_id** | **str** |  | [optional] 
 **client_order_id** | **str** |  | [optional] 
 

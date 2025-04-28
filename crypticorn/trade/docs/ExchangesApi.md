@@ -1,6 +1,6 @@
 # client.ExchangesApi
 
-All URIs are relative to *http://127.0.0.1:3000/v1/trade*
+All URIs are relative to *http://localhost/v1/trade*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **get_exchanges**
-> List[Exchange] get_exchanges()
+> List[str] get_exchanges()
 
 Get Exchanges
 
@@ -19,14 +19,13 @@ Get Exchanges
 
 ```python
 import client
-from client.models.exchange import Exchange
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:3000/v1/trade
+# Defining the host is optional and defaults to http://localhost/v1/trade
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://127.0.0.1:3000/v1/trade"
+    host = "http://localhost/v1/trade"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -67,7 +66,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List[Exchange]**](Exchange.md)
+**List[str]**
 
 ### Authorization
 

@@ -16,8 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
+from pydantic import StrictStr
 from typing import List
-from crypticorn.trade.client.models.exchange import Exchange
 
 from crypticorn.trade.client.api_client import ApiClient, RequestSerialized
 from crypticorn.trade.client.api_response import ApiResponse
@@ -50,7 +50,7 @@ class ExchangesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Exchange]:
+    ) -> List[str]:
         """Get Exchanges
 
 
@@ -84,7 +84,7 @@ class ExchangesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Exchange]",
+            "200": "List[str]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -109,7 +109,7 @@ class ExchangesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Exchange]]:
+    ) -> ApiResponse[List[str]]:
         """Get Exchanges
 
 
@@ -143,7 +143,7 @@ class ExchangesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Exchange]",
+            "200": "List[str]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -202,7 +202,7 @@ class ExchangesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Exchange]",
+            "200": "List[str]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout

@@ -20,7 +20,6 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
-from crypticorn.trade.client.models.market_type import MarketType
 from crypticorn.trade.client.models.strategy_exchange_info import StrategyExchangeInfo
 from typing import Optional, Set
 from typing_extensions import Self
@@ -50,7 +49,7 @@ class StrategyModelInput(BaseModel):
         Annotated[float, Field(le=1.0, strict=True)],
         Annotated[int, Field(le=1, strict=True)],
     ] = Field(description="Performance fee for the strategy")
-    market_type: MarketType = Field(description="Market of operation of the strategy")
+    market_type: StrictStr = Field(description="Market types")
     __properties: ClassVar[List[str]] = [
         "created_at",
         "updated_at",

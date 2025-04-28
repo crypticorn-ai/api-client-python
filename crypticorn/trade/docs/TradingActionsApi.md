@@ -1,6 +1,6 @@
 # client.TradingActionsApi
 
-All URIs are relative to *http://127.0.0.1:3000/v1/trade*
+All URIs are relative to *http://localhost/v1/trade*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -25,10 +25,10 @@ from client.models.action_model import ActionModel
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:3000/v1/trade
+# Defining the host is optional and defaults to http://localhost/v1/trade
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://127.0.0.1:3000/v1/trade"
+    host = "http://localhost/v1/trade"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -113,10 +113,10 @@ from client.models.post_futures_action import PostFuturesAction
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:3000/v1/trade
+# Defining the host is optional and defaults to http://localhost/v1/trade
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://127.0.0.1:3000/v1/trade"
+    host = "http://localhost/v1/trade"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -177,7 +177,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_spot_action**
-> object post_spot_action(futures_trading_action)
+> object post_spot_action(spot_trading_action)
 
 Post Spot Action
 
@@ -187,14 +187,14 @@ Post Spot Action
 
 ```python
 import client
-from client.models.futures_trading_action import FuturesTradingAction
+from client.models.spot_trading_action import SpotTradingAction
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://127.0.0.1:3000/v1/trade
+# Defining the host is optional and defaults to http://localhost/v1/trade
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://127.0.0.1:3000/v1/trade"
+    host = "http://localhost/v1/trade"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -212,11 +212,11 @@ configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.TradingActionsApi(api_client)
-    futures_trading_action = client.FuturesTradingAction() # FuturesTradingAction | 
+    spot_trading_action = client.SpotTradingAction() # SpotTradingAction | 
 
     try:
         # Post Spot Action
-        api_response = await api_instance.post_spot_action(futures_trading_action)
+        api_response = await api_instance.post_spot_action(spot_trading_action)
         print("The response of TradingActionsApi->post_spot_action:\n")
         pprint(api_response)
     except Exception as e:
@@ -230,7 +230,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **futures_trading_action** | [**FuturesTradingAction**](FuturesTradingAction.md)|  | 
+ **spot_trading_action** | [**SpotTradingAction**](SpotTradingAction.md)|  | 
 
 ### Return type
 

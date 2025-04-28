@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**exchange** | [**Exchange**](Exchange.md) | Exchange name. Of type Exchange | 
+**exchange** | **str** | Supported exchanges for trading | 
 **min_amount** | **float** | Minimum amount for the strategy on the exchange | 
 
 ## Example

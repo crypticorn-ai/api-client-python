@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **enabled** | **bool** | Whether the strategy is enabled. If false, no bots will be created or updated for this strategy, open trades will be rejected. Existing bots will be marked as stopping. | 
 **leverage** | **int** | Leverage for the strategy | 
 **performance_fee** | **float** | Performance fee for the strategy | 
-**market_type** | [**MarketType**](MarketType.md) | Market of operation of the strategy | 
+**market_type** | **str** | Market types | 
 
 ## Example
 

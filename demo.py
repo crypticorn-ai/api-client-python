@@ -108,8 +108,10 @@ async def main():
         # print([print(p.name) for p in res])
         # res = await client.auth.login.get_api_keys()
         # print(res)
-        res = await client.metrics.exchanges.get_exchange_mappings(market="spot")
-        print(res)
+        res = await client.metrics.exchanges.get_exchange_mappings_without_preload_content(
+            market="spot", exchange="lol"
+        )
+        print(await res.json())
         # res = await client.klines.funding.get_funding_rates_fmt(
         #     symbol="BTC-USDT",
         # )
