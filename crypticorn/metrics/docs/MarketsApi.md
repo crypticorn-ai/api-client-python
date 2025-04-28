@@ -1,6 +1,6 @@
 # client.MarketsApi
 
-All URIs are relative to *https://api.crypticorn.dev/v1/metrics*
+All URIs are relative to *http://localhost/v1/metrics*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -22,15 +22,14 @@ Get markets for a symbol with filtering options.
 
 ```python
 import client
-from client.models.market_type import MarketType
 from client.models.trading_status import TradingStatus
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
+# Defining the host is optional and defaults to http://localhost/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/metrics"
+    host = "http://localhost/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -53,7 +52,7 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.MarketsApi(api_client)
-    market = client.MarketType() # MarketType | Market type (spot or futures)
+    market = 'market_example' # str | Market type (spot or futures)
     symbol = 'symbol_example' # str | Symbol to fetch markets for
     quote_currency = 'USDT' # str | Quote currency for which to fetch markets (optional) (default to 'USDT')
     status = client.TradingStatus() # TradingStatus | Trading pair status for which to fetch markets (optional)
@@ -74,7 +73,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**MarketType**](.md)| Market type (spot or futures) | 
+ **market** | **str**| Market type (spot or futures) | 
  **symbol** | **str**| Symbol to fetch markets for | 
  **quote_currency** | **str**| Quote currency for which to fetch markets | [optional] [default to &#39;USDT&#39;]
  **status** | [**TradingStatus**](.md)| Trading pair status for which to fetch markets | [optional] 
@@ -115,14 +114,13 @@ Get available quote currencies for a market.
 
 ```python
 import client
-from client.models.market_type import MarketType
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
+# Defining the host is optional and defaults to http://localhost/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/metrics"
+    host = "http://localhost/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -145,7 +143,7 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.MarketsApi(api_client)
-    market = client.MarketType() # MarketType | Market type (spot or futures)
+    market = 'market_example' # str | Market type (spot or futures)
 
     try:
         # Get Quote Currencies
@@ -163,7 +161,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**MarketType**](.md)| Market type (spot or futures) | 
+ **market** | **str**| Market type (spot or futures) | 
 
 ### Return type
 

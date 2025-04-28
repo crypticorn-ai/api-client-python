@@ -1,6 +1,6 @@
 # client.ExchangesApi
 
-All URIs are relative to *https://api.crypticorn.dev/v1/metrics*
+All URIs are relative to *http://localhost/v1/metrics*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -23,16 +23,15 @@ Get available exchanges for a symbol with various filtering options.
 
 ```python
 import client
-from client.models.market_type import MarketType
 from client.models.time_interval import TimeInterval
 from client.models.trading_status import TradingStatus
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
+# Defining the host is optional and defaults to http://localhost/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/metrics"
+    host = "http://localhost/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -55,11 +54,11 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.ExchangesApi(api_client)
-    market = client.MarketType() # MarketType | Market type (spot or futures)
+    market = 'market_example' # str | Market type (spot or futures)
     symbol = 'symbol_example' # str | Symbol to fetch available exchanges for
     interval = client.TimeInterval() # TimeInterval | Interval for which to fetch available exchanges (optional)
-    start_timestamp = 1745020800 # int | Start timestamp for which to fetch available exchanges (defaults to previous 7 day's closing) (optional) (default to 1745020800)
-    end_timestamp = 1745703074 # int | End timestamp for which to fetch available exchanges (optional) (default to 1745703074)
+    start_timestamp = 1745193600 # int | Start timestamp for which to fetch available exchanges (defaults to previous 7 day's closing) (optional) (default to 1745193600)
+    end_timestamp = 1745832834 # int | End timestamp for which to fetch available exchanges (optional) (default to 1745832834)
     quote_currency = 'USDT' # str | Quote currency for which to fetch available exchanges (Use quote currencies endpoint to get available quote currencies) (optional) (default to 'USDT')
     status = client.TradingStatus() # TradingStatus | Trading pair status for which to fetch available exchanges (optional)
 
@@ -79,11 +78,11 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**MarketType**](.md)| Market type (spot or futures) | 
+ **market** | **str**| Market type (spot or futures) | 
  **symbol** | **str**| Symbol to fetch available exchanges for | 
  **interval** | [**TimeInterval**](.md)| Interval for which to fetch available exchanges | [optional] 
- **start_timestamp** | **int**| Start timestamp for which to fetch available exchanges (defaults to previous 7 day&#39;s closing) | [optional] [default to 1745020800]
- **end_timestamp** | **int**| End timestamp for which to fetch available exchanges | [optional] [default to 1745703074]
+ **start_timestamp** | **int**| Start timestamp for which to fetch available exchanges (defaults to previous 7 day&#39;s closing) | [optional] [default to 1745193600]
+ **end_timestamp** | **int**| End timestamp for which to fetch available exchanges | [optional] [default to 1745832834]
  **quote_currency** | **str**| Quote currency for which to fetch available exchanges (Use quote currencies endpoint to get available quote currencies) | [optional] [default to &#39;USDT&#39;]
  **status** | [**TradingStatus**](.md)| Trading pair status for which to fetch available exchanges | [optional] 
 
@@ -123,14 +122,13 @@ Get list of exchanges for a market.
 
 ```python
 import client
-from client.models.market_type import MarketType
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
+# Defining the host is optional and defaults to http://localhost/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/metrics"
+    host = "http://localhost/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -153,7 +151,7 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.ExchangesApi(api_client)
-    market = client.MarketType() # MarketType | Market type (spot or futures)
+    market = 'market_example' # str | Market type (spot or futures)
 
     try:
         # Get Exchange List
@@ -171,7 +169,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**MarketType**](.md)| Market type (spot or futures) | 
+ **market** | **str**| Market type (spot or futures) | 
 
 ### Return type
 
@@ -209,15 +207,13 @@ Get exchange mappings for a market with optional exchange name filter.
 
 ```python
 import client
-from client.models.internal_exchange import InternalExchange
-from client.models.market_type import MarketType
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
+# Defining the host is optional and defaults to http://localhost/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/metrics"
+    host = "http://localhost/v1/metrics"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -240,8 +236,8 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.ExchangesApi(api_client)
-    market = client.MarketType() # MarketType | Market type (spot or futures)
-    exchange = client.InternalExchange() # InternalExchange | Exchange name for which to fetch exchange mappings (optional)
+    market = 'market_example' # str | Market type (spot or futures)
+    exchange = 'exchange_example' # str | Exchange name for which to fetch exchange mappings (optional)
 
     try:
         # Get Exchange Mappings
@@ -259,8 +255,8 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **market** | [**MarketType**](.md)| Market type (spot or futures) | 
- **exchange** | [**InternalExchange**](.md)| Exchange name for which to fetch exchange mappings | [optional] 
+ **market** | **str**| Market type (spot or futures) | 
+ **exchange** | **str**| Exchange name for which to fetch exchange mappings | [optional] 
 
 ### Return type
 

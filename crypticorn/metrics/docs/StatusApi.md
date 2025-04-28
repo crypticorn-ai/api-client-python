@@ -1,6 +1,6 @@
 # client.StatusApi
 
-All URIs are relative to *https://api.crypticorn.dev/v1/metrics*
+All URIs are relative to *http://localhost/v1/metrics*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -20,10 +20,10 @@ import client
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to https://api.crypticorn.dev/v1/metrics
+# Defining the host is optional and defaults to http://localhost/v1/metrics
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "https://api.crypticorn.dev/v1/metrics"
+    host = "http://localhost/v1/metrics"
 )
 
 
