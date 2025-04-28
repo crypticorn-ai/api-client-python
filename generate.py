@@ -70,6 +70,10 @@ def main():
         print(f"Failed to connect to API for {module_name} module")
         sys.exit(1)
 
+    print("Deleting existing packages's client and docs folders")
+    subprocess.run(["rm", "-rf", f"python/crypticorn/{module_name}/client"], check=True)
+    subprocess.run(["rm", "-rf", f"python/crypticorn/{module_name}/docs"], check=True)
+
     print(
         f"Generating {module_name} client using {ROOT_URL}/{module_name}/openapi.json"
     )
