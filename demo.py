@@ -14,7 +14,9 @@ jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdv
 
 
 async def main():
-    async with ApiClient(base_url=BaseUrl.DEV, api_key="zeB1Dw3IC4xMJO9vLrgSOJu0oZFIa9") as client:
+    async with ApiClient(
+        base_url=BaseUrl.DEV, api_key="zeB1Dw3IC4xMJO9vLrgSOJu0oZFIa9"
+    ) as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
         # print(10 * "=" + "This is the raw json response" + 10 * "=")
@@ -106,7 +108,7 @@ async def main():
         # print([print(p.name) for p in res])
         # res = await client.auth.login.get_api_keys()
         # print(res)
-        res = await client.klines.funding.get_funding_rates_fmt(
+        res = await client.klines.funding.get_funding_rates(
             symbol="BTCUSDT",
         )
         print(res)

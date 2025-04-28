@@ -82,7 +82,7 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.ChangeInTimeframeApi(api_client)
-    market = client.MarketType() # MarketType | Market type: 'spot' or 'futures' (optional)
+    market = 'futures' # str | Market type: 'spot' or 'futures' (optional)
     timeframe = client.Timeframe() # Timeframe | Timeframe: '15m', '30m', '1h', '4h', '1d' (optional)
 
     try:
@@ -117,14 +117,9 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
- - [ApiErrorIdentifier](docs/ApiErrorIdentifier.md)
- - [ApiErrorLevel](docs/ApiErrorLevel.md)
- - [ApiErrorType](docs/ApiErrorType.md)
  - [ChangeInTimeframe](docs/ChangeInTimeframe.md)
  - [ExceptionDetail](docs/ExceptionDetail.md)
  - [FundingRate](docs/FundingRate.md)
- - [InternalExchange](docs/InternalExchange.md)
- - [MarketType](docs/MarketType.md)
  - [OHLCVHistory](docs/OHLCVHistory.md)
  - [Resolution](docs/Resolution.md)
  - [SearchSymbol](docs/SearchSymbol.md)

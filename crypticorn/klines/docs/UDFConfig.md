@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **supports_search** | **bool** |  | [optional] [default to True]
 **supports_timescale_marks** | **bool** |  | [optional] [default to False]
 **supports_time** | **bool** |  | [optional] [default to True]
-**exchanges** | [**List[InternalExchange]**](InternalExchange.md) |  | 
+**exchanges** | **List[str]** |  | 
 **symbols_types** | [**List[SymbolType]**](SymbolType.md) |  | 
 **currency_codes** | **List[str]** |  | 
 **supported_markets** | **List[str]** |  | 

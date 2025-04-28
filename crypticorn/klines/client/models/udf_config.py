@@ -19,7 +19,6 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.klines.client.models.internal_exchange import InternalExchange
 from crypticorn.klines.client.models.symbol_type import SymbolType
 from typing import Optional, Set
 from typing_extensions import Self
@@ -36,7 +35,7 @@ class UDFConfig(BaseModel):
     supports_search: Optional[StrictBool] = True
     supports_timescale_marks: Optional[StrictBool] = False
     supports_time: Optional[StrictBool] = True
-    exchanges: List[InternalExchange]
+    exchanges: List[StrictStr]
     symbols_types: List[SymbolType]
     currency_codes: List[StrictStr]
     supported_markets: List[StrictStr]
