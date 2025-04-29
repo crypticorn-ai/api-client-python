@@ -46,7 +46,6 @@ class ModelsApi:
     async def create_model(
         self,
         model_create: ModelCreate,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -65,8 +64,6 @@ class ModelsApi:
 
         :param model_create: (required)
         :type model_create: ModelCreate
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -91,7 +88,6 @@ class ModelsApi:
 
         _param = self._create_model_serialize(
             model_create=model_create,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -99,8 +95,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Model",
-            "422": "HTTPValidationError",
+            "201": "Model",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -115,7 +110,6 @@ class ModelsApi:
     async def create_model_with_http_info(
         self,
         model_create: ModelCreate,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -134,8 +128,6 @@ class ModelsApi:
 
         :param model_create: (required)
         :type model_create: ModelCreate
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -160,7 +152,6 @@ class ModelsApi:
 
         _param = self._create_model_serialize(
             model_create=model_create,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -168,8 +159,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Model",
-            "422": "HTTPValidationError",
+            "201": "Model",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -184,7 +174,6 @@ class ModelsApi:
     async def create_model_without_preload_content(
         self,
         model_create: ModelCreate,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -203,8 +192,6 @@ class ModelsApi:
 
         :param model_create: (required)
         :type model_create: ModelCreate
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -229,7 +216,6 @@ class ModelsApi:
 
         _param = self._create_model_serialize(
             model_create=model_create,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -237,8 +223,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Model",
-            "422": "HTTPValidationError",
+            "201": "Model",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -248,7 +233,6 @@ class ModelsApi:
     def _create_model_serialize(
         self,
         model_create,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -314,7 +298,6 @@ class ModelsApi:
     async def delete_model(
         self,
         id: Annotated[StrictInt, Field(description="Model ID to delete")],
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -326,15 +309,13 @@ class ModelsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> None:
         """Delete Model
 
         Delete a model
 
         :param id: Model ID to delete (required)
         :type id: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -359,7 +340,6 @@ class ModelsApi:
 
         _param = self._delete_model_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -367,8 +347,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
-            "422": "HTTPValidationError",
+            "204": None,
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -383,7 +362,6 @@ class ModelsApi:
     async def delete_model_with_http_info(
         self,
         id: Annotated[StrictInt, Field(description="Model ID to delete")],
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -395,15 +373,13 @@ class ModelsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> ApiResponse[None]:
         """Delete Model
 
         Delete a model
 
         :param id: Model ID to delete (required)
         :type id: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -428,7 +404,6 @@ class ModelsApi:
 
         _param = self._delete_model_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -436,8 +411,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
-            "422": "HTTPValidationError",
+            "204": None,
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -452,7 +426,6 @@ class ModelsApi:
     async def delete_model_without_preload_content(
         self,
         id: Annotated[StrictInt, Field(description="Model ID to delete")],
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -471,8 +444,6 @@ class ModelsApi:
 
         :param id: Model ID to delete (required)
         :type id: int
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -497,7 +468,6 @@ class ModelsApi:
 
         _param = self._delete_model_serialize(
             id=id,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -505,8 +475,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
-            "422": "HTTPValidationError",
+            "204": None,
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -516,7 +485,6 @@ class ModelsApi:
     def _delete_model_serialize(
         self,
         id,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -576,7 +544,6 @@ class ModelsApi:
         version: Annotated[
             Optional[DataVersion], Field(description="Data version to evaluate against")
         ] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -599,8 +566,6 @@ class ModelsApi:
         :type request_body: List[object]
         :param version: Data version to evaluate against
         :type version: DataVersion
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -627,7 +592,6 @@ class ModelsApi:
             id=id,
             request_body=request_body,
             version=version,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -636,7 +600,6 @@ class ModelsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "EvaluationResponse",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -655,7 +618,6 @@ class ModelsApi:
         version: Annotated[
             Optional[DataVersion], Field(description="Data version to evaluate against")
         ] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -678,8 +640,6 @@ class ModelsApi:
         :type request_body: List[object]
         :param version: Data version to evaluate against
         :type version: DataVersion
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -706,7 +666,6 @@ class ModelsApi:
             id=id,
             request_body=request_body,
             version=version,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -715,7 +674,6 @@ class ModelsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "EvaluationResponse",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -734,7 +692,6 @@ class ModelsApi:
         version: Annotated[
             Optional[DataVersion], Field(description="Data version to evaluate against")
         ] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -757,8 +714,6 @@ class ModelsApi:
         :type request_body: List[object]
         :param version: Data version to evaluate against
         :type version: DataVersion
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -785,7 +740,6 @@ class ModelsApi:
             id=id,
             request_body=request_body,
             version=version,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -794,7 +748,6 @@ class ModelsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "EvaluationResponse",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -806,7 +759,6 @@ class ModelsApi:
         id,
         request_body,
         version,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -879,7 +831,6 @@ class ModelsApi:
     @validate_call
     async def get_all_models(
         self,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -896,8 +847,6 @@ class ModelsApi:
 
         List all models
 
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -921,7 +870,6 @@ class ModelsApi:
         """  # noqa: E501
 
         _param = self._get_all_models_serialize(
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -930,7 +878,6 @@ class ModelsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Model]",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -944,7 +891,6 @@ class ModelsApi:
     @validate_call
     async def get_all_models_with_http_info(
         self,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -961,8 +907,6 @@ class ModelsApi:
 
         List all models
 
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -986,7 +930,6 @@ class ModelsApi:
         """  # noqa: E501
 
         _param = self._get_all_models_serialize(
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -995,7 +938,6 @@ class ModelsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Model]",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1009,7 +951,6 @@ class ModelsApi:
     @validate_call
     async def get_all_models_without_preload_content(
         self,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1026,8 +967,6 @@ class ModelsApi:
 
         List all models
 
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1051,7 +990,6 @@ class ModelsApi:
         """  # noqa: E501
 
         _param = self._get_all_models_serialize(
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1060,7 +998,6 @@ class ModelsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Model]",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1069,7 +1006,6 @@ class ModelsApi:
 
     def _get_all_models_serialize(
         self,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -1124,7 +1060,6 @@ class ModelsApi:
         self,
         id: Optional[StrictInt] = None,
         name: Optional[StrictStr] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1145,8 +1080,6 @@ class ModelsApi:
         :type id: int
         :param name:
         :type name: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1172,7 +1105,6 @@ class ModelsApi:
         _param = self._get_model_serialize(
             id=id,
             name=name,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1181,7 +1113,6 @@ class ModelsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Model",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1197,7 +1128,6 @@ class ModelsApi:
         self,
         id: Optional[StrictInt] = None,
         name: Optional[StrictStr] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1218,8 +1148,6 @@ class ModelsApi:
         :type id: int
         :param name:
         :type name: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1245,7 +1173,6 @@ class ModelsApi:
         _param = self._get_model_serialize(
             id=id,
             name=name,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1254,7 +1181,6 @@ class ModelsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Model",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1270,7 +1196,6 @@ class ModelsApi:
         self,
         id: Optional[StrictInt] = None,
         name: Optional[StrictStr] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1291,8 +1216,6 @@ class ModelsApi:
         :type id: int
         :param name:
         :type name: str
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1318,7 +1241,6 @@ class ModelsApi:
         _param = self._get_model_serialize(
             id=id,
             name=name,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1327,7 +1249,6 @@ class ModelsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Model",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1338,7 +1259,6 @@ class ModelsApi:
         self,
         id,
         name,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -1401,7 +1321,6 @@ class ModelsApi:
         self,
         id: Annotated[StrictInt, Field(description="Model ID to update")],
         model_update: ModelUpdate,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1422,8 +1341,6 @@ class ModelsApi:
         :type id: int
         :param model_update: (required)
         :type model_update: ModelUpdate
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1449,7 +1366,6 @@ class ModelsApi:
         _param = self._update_model_serialize(
             id=id,
             model_update=model_update,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1458,7 +1374,6 @@ class ModelsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1474,7 +1389,6 @@ class ModelsApi:
         self,
         id: Annotated[StrictInt, Field(description="Model ID to update")],
         model_update: ModelUpdate,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1495,8 +1409,6 @@ class ModelsApi:
         :type id: int
         :param model_update: (required)
         :type model_update: ModelUpdate
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1522,7 +1434,6 @@ class ModelsApi:
         _param = self._update_model_serialize(
             id=id,
             model_update=model_update,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1531,7 +1442,6 @@ class ModelsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1547,7 +1457,6 @@ class ModelsApi:
         self,
         id: Annotated[StrictInt, Field(description="Model ID to update")],
         model_update: ModelUpdate,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1568,8 +1477,6 @@ class ModelsApi:
         :type id: int
         :param model_update: (required)
         :type model_update: ModelUpdate
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1595,7 +1502,6 @@ class ModelsApi:
         _param = self._update_model_serialize(
             id=id,
             model_update=model_update,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1604,7 +1510,6 @@ class ModelsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1615,7 +1520,6 @@ class ModelsApi:
         self,
         id,
         model_update,
-        access_token,
         _request_auth,
         _content_type,
         _headers,

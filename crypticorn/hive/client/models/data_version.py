@@ -27,7 +27,6 @@ class DataVersion(str, Enum):
     allowed enum values
     """
     ENUM_1_DOT_0 = "1.0"
-    ENUM_1_DOT_1 = "1.1"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

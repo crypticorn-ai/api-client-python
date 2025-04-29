@@ -36,7 +36,6 @@ class Coins(str, Enum):
     ENUM_8 = "8"
     ENUM_9 = "9"
     ENUM_10 = "10"
-    ENUM_11 = "11"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
