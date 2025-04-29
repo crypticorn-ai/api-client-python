@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v2.5.2 (2025-04-29)
+
+### Bug Fixes
+
+- Only allow type ApiError in throw utility functions
+  ([`7604342`](https://github.com/crypticorn-ai/api-client/commit/7604342baa6dd2bee816ae446dfcc08edb298ddb))
+
+### Build System
+
+- Clean generated code before regenerating
+  ([`b563024`](https://github.com/crypticorn-ai/api-client/commit/b56302497e79e2a64e7403d15a0f3d3bd3233b63))
+
+
 ## v2.5.1 (2025-04-27)
 
 ### Bug Fixes
