@@ -4,7 +4,6 @@ All URIs are relative to *http://localhost/v1/klines*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_server_time**](UDFApi.md#get_server_time) | **GET** /udf/time | Get Server Time
 [**get_symbol**](UDFApi.md#get_symbol) | **GET** /udf/symbols | Get Symbol
 [**get_symbol_info**](UDFApi.md#get_symbol_info) | **GET** /udf/symbol_info | Get Symbol Info
 [**get_udf_config**](UDFApi.md#get_udf_config) | **GET** /udf/config | Get Config
@@ -12,85 +11,6 @@ Method | HTTP request | Description
 [**options_handler**](UDFApi.md#options_handler) | **OPTIONS** /udf/{path} | Options Handler
 [**search_symbols**](UDFApi.md#search_symbols) | **GET** /udf/search | Search Symbols
 
-
-# **get_server_time**
-> int get_server_time()
-
-Get Server Time
-
-### Example
-
-* Api Key Authentication (APIKeyHeader):
-* Bearer (JWT) Authentication (HTTPBearer):
-
-```python
-import client
-from client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost/v1/klines
-# See configuration.py for a list of all supported configuration parameters.
-configuration = client.Configuration(
-    host = "http://localhost/v1/klines"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: APIKeyHeader
-configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
-
-# Configure Bearer authorization (JWT): HTTPBearer
-configuration = client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-async with client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = client.UDFApi(api_client)
-
-    try:
-        # Get Server Time
-        api_response = await api_instance.get_server_time()
-        print("The response of UDFApi->get_server_time:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling UDFApi->get_server_time: %s\n" % e)
-```
-
-
-
-### Parameters
-
-This endpoint does not need any parameter.
-
-### Return type
-
-**int**
-
-### Authorization
-
-[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful Response |  -  |
-**0** | Error response |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_symbol**
 > SymbolInfo get_symbol(symbol)

@@ -3,6 +3,7 @@ import logging
 
 logger = logging.getLogger("uvicorn")
 
+
 class ValidateEnumMixin:
     """
     Mixin for validating enum values manually.
@@ -41,6 +42,7 @@ class ExcludeEnumMixin:
         schema.pop("enum", None)
         return schema
 
+
 class ScopeFallback(EnumMeta):
     """Fallback to no scope for unknown scopes."""
 
@@ -55,6 +57,7 @@ class ScopeFallback(EnumMeta):
             f"Unknown scope '{name}' - falling back to no scope - update crypticorn package or check for typos"
         )
         return None
+
 
 class ApiErrorFallback(EnumMeta):
     """Fallback for enum members that are not yet published to PyPI."""
