@@ -24,15 +24,11 @@ from crypticorn.hive.client.models.data_version import DataVersion
 from crypticorn.hive.client.models.download_links import DownloadLinks
 from crypticorn.hive.client.models.evaluation import Evaluation
 from crypticorn.hive.client.models.evaluation_response import EvaluationResponse
+from crypticorn.hive.client.models.exception_detail import ExceptionDetail
 from crypticorn.hive.client.models.feature_size import FeatureSize
-from crypticorn.hive.client.models.http_validation_error import HTTPValidationError
 from crypticorn.hive.client.models.model import Model
 from crypticorn.hive.client.models.model_create import ModelCreate
 from crypticorn.hive.client.models.model_status import ModelStatus
 from crypticorn.hive.client.models.model_update import ModelUpdate
 from crypticorn.hive.client.models.target import Target
 from crypticorn.hive.client.models.target_type import TargetType
-from crypticorn.hive.client.models.validation_error import ValidationError
-from crypticorn.hive.client.models.validation_error_loc_inner import (
-    ValidationErrorLocInner,
-)

@@ -17,24 +17,31 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List
-from crypticorn.hive.client.models.validation_error_loc_inner import (
-    ValidationErrorLocInner,
-)
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class ValidationError(BaseModel):
+class ExceptionDetail(BaseModel):
     """
-    ValidationError
+    This is the detail of the exception. It is used to enrich the exception with additional information by unwrapping the ApiError into its components.
     """  # noqa: E501
 
-    loc: List[ValidationErrorLocInner]
-    msg: StrictStr
-    type: StrictStr
-    __properties: ClassVar[List[str]] = ["loc", "msg", "type"]
+    message: Optional[StrictStr] = None
+    code: StrictStr = Field(description="API error identifiers")
+    type: StrictStr = Field(description="Type of API error")
+    level: StrictStr = Field(description="API error levels")
+    status_code: StrictInt = Field(description="The HTTP status code")
+    details: Optional[Any] = None
+    __properties: ClassVar[List[str]] = [
+        "message",
+        "code",
+        "type",
+        "level",
+        "status_code",
+        "details",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +60,7 @@ class ValidationError(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ValidationError from a JSON string"""
+        """Create an instance of ExceptionDetail from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,18 +80,21 @@ class ValidationError(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in loc (list)
-        _items = []
-        if self.loc:
-            for _item_loc in self.loc:
-                if _item_loc:
-                    _items.append(_item_loc.to_dict())
-            _dict["loc"] = _items
+        # set to None if message (nullable) is None
+        # and model_fields_set contains the field
+        if self.message is None and "message" in self.model_fields_set:
+            _dict["message"] = None
+
+        # set to None if details (nullable) is None
+        # and model_fields_set contains the field
+        if self.details is None and "details" in self.model_fields_set:
+            _dict["details"] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ValidationError from a dict"""
+        """Create an instance of ExceptionDetail from a dict"""
         if obj is None:
             return None
 
@@ -93,13 +103,12 @@ class ValidationError(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "loc": (
-                    [ValidationErrorLocInner.from_dict(_item) for _item in obj["loc"]]
-                    if obj.get("loc") is not None
-                    else None
-                ),
-                "msg": obj.get("msg"),
+                "message": obj.get("message"),
+                "code": obj.get("code"),
                 "type": obj.get("type"),
+                "level": obj.get("level"),
+                "status_code": obj.get("status_code"),
+                "details": obj.get("details"),
             }
         )
         return _obj

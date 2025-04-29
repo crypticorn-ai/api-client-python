@@ -24,8 +24,6 @@ All ever existing coins
 
 * `ENUM_10` (value: `'10'`)
 
-* `ENUM_11` (value: `'11'`)
-
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

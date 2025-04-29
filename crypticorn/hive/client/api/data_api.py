@@ -16,7 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictInt, StrictStr
+from pydantic import Field, StrictInt
 from typing import Optional
 from typing_extensions import Annotated
 from crypticorn.hive.client.models.data_download_response import DataDownloadResponse
@@ -52,7 +52,6 @@ class DataApi:
         feature_size: Annotated[
             Optional[FeatureSize], Field(description="Feature size")
         ] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -75,8 +74,6 @@ class DataApi:
         :type version: DataVersion
         :param feature_size: Feature size
         :type feature_size: FeatureSize
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -103,7 +100,6 @@ class DataApi:
             model_id=model_id,
             version=version,
             feature_size=feature_size,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -112,7 +108,6 @@ class DataApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "DataDownloadResponse",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -134,7 +129,6 @@ class DataApi:
         feature_size: Annotated[
             Optional[FeatureSize], Field(description="Feature size")
         ] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -157,8 +151,6 @@ class DataApi:
         :type version: DataVersion
         :param feature_size: Feature size
         :type feature_size: FeatureSize
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -185,7 +177,6 @@ class DataApi:
             model_id=model_id,
             version=version,
             feature_size=feature_size,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -194,7 +185,6 @@ class DataApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "DataDownloadResponse",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -216,7 +206,6 @@ class DataApi:
         feature_size: Annotated[
             Optional[FeatureSize], Field(description="Feature size")
         ] = None,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -239,8 +228,6 @@ class DataApi:
         :type version: DataVersion
         :param feature_size: Feature size
         :type feature_size: FeatureSize
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -267,7 +254,6 @@ class DataApi:
             model_id=model_id,
             version=version,
             feature_size=feature_size,
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -276,7 +262,6 @@ class DataApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "DataDownloadResponse",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -288,7 +273,6 @@ class DataApi:
         model_id,
         version,
         feature_size,
-        access_token,
         _request_auth,
         _content_type,
         _headers,
@@ -353,7 +337,6 @@ class DataApi:
     @validate_call
     async def get_data_info(
         self,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -370,8 +353,6 @@ class DataApi:
 
         Get information about available data and options for the latest data version
 
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -395,7 +376,6 @@ class DataApi:
         """  # noqa: E501
 
         _param = self._get_data_info_serialize(
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -404,7 +384,6 @@ class DataApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "DataInfo",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -418,7 +397,6 @@ class DataApi:
     @validate_call
     async def get_data_info_with_http_info(
         self,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -435,8 +413,6 @@ class DataApi:
 
         Get information about available data and options for the latest data version
 
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -460,7 +436,6 @@ class DataApi:
         """  # noqa: E501
 
         _param = self._get_data_info_serialize(
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -469,7 +444,6 @@ class DataApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "DataInfo",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -483,7 +457,6 @@ class DataApi:
     @validate_call
     async def get_data_info_without_preload_content(
         self,
-        access_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -500,8 +473,6 @@ class DataApi:
 
         Get information about available data and options for the latest data version
 
-        :param access_token:
-        :type access_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -525,7 +496,6 @@ class DataApi:
         """  # noqa: E501
 
         _param = self._get_data_info_serialize(
-            access_token=access_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -534,7 +504,6 @@ class DataApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "DataInfo",
-            "422": "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -543,7 +512,6 @@ class DataApi:
 
     def _get_data_info_serialize(
         self,
-        access_token,
         _request_auth,
         _content_type,
         _headers,

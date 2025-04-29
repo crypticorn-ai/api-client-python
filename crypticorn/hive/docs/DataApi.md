@@ -1,6 +1,6 @@
 # client.DataApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *http://localhost/v1/hive*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **download_data**
-> DataDownloadResponse download_data(model_id, version, feature_size=feature_size, access_token=access_token)
+> DataDownloadResponse download_data(model_id, version, feature_size=feature_size)
 
 Download Data
 
@@ -18,7 +18,7 @@ Get download links for model training data
 ### Example
 
 * Api Key Authentication (APIKeyHeader):
-* Bearer Authentication (HTTPBearer):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -28,10 +28,10 @@ from client.models.feature_size import FeatureSize
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to http://localhost/v1/hive
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://localhost"
+    host = "http://localhost/v1/hive"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -45,7 +45,7 @@ configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
 
-# Configure Bearer authorization: HTTPBearer
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -57,11 +57,10 @@ async with client.ApiClient(configuration) as api_client:
     model_id = 56 # int | Model ID
     version = client.DataVersion() # DataVersion | Data version. Default is the latest public version.
     feature_size = client.FeatureSize() # FeatureSize | Feature size (optional)
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Download Data
-        api_response = await api_instance.download_data(model_id, version, feature_size=feature_size, access_token=access_token)
+        api_response = await api_instance.download_data(model_id, version, feature_size=feature_size)
         print("The response of DataApi->download_data:\n")
         pprint(api_response)
     except Exception as e:
@@ -78,7 +77,6 @@ Name | Type | Description  | Notes
  **model_id** | **int**| Model ID | 
  **version** | [**DataVersion**](.md)| Data version. Default is the latest public version. | 
  **feature_size** | [**FeatureSize**](.md)| Feature size | [optional] 
- **access_token** | **str**|  | [optional] 
 
 ### Return type
 
@@ -98,12 +96,12 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**422** | Validation Error |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_data_info**
-> DataInfo get_data_info(access_token=access_token)
+> DataInfo get_data_info()
 
 Get Data Info
 
@@ -112,7 +110,7 @@ Get information about available data and options for the latest data version
 ### Example
 
 * Api Key Authentication (APIKeyHeader):
-* Bearer Authentication (HTTPBearer):
+* Bearer (JWT) Authentication (HTTPBearer):
 
 ```python
 import client
@@ -120,10 +118,10 @@ from client.models.data_info import DataInfo
 from client.rest import ApiException
 from pprint import pprint
 
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to http://localhost/v1/hive
 # See configuration.py for a list of all supported configuration parameters.
 configuration = client.Configuration(
-    host = "http://localhost"
+    host = "http://localhost/v1/hive"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -137,7 +135,7 @@ configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 # configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
 
-# Configure Bearer authorization: HTTPBearer
+# Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
 )
@@ -146,11 +144,10 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.DataApi(api_client)
-    access_token = 'access_token_example' # str |  (optional)
 
     try:
         # Get Data Info
-        api_response = await api_instance.get_data_info(access_token=access_token)
+        api_response = await api_instance.get_data_info()
         print("The response of DataApi->get_data_info:\n")
         pprint(api_response)
     except Exception as e:
@@ -161,10 +158,7 @@ async with client.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **access_token** | **str**|  | [optional] 
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -184,7 +178,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**422** | Validation Error |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
