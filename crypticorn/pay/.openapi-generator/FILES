@@ -10,8 +10,7 @@ client/api_response.py
 client/configuration.py
 client/exceptions.py
 client/models/__init__.py
-client/models/http_validation_error.py
-client/models/now_api_status_res.py
+client/models/exception_detail.py
 client/models/now_create_invoice_req.py
 client/models/now_create_invoice_res.py
 client/models/payment.py
@@ -22,13 +21,10 @@ client/models/product_sub_read.py
 client/models/product_update.py
 client/models/scope.py
 client/models/services.py
-client/models/validation_error.py
-client/models/validation_error_loc_inner.py
 client/py.typed
 client/rest.py
-docs/HTTPValidationError.md
+docs/ExceptionDetail.md
 docs/NOWPaymentsApi.md
-docs/NowAPIStatusRes.md
 docs/NowCreateInvoiceReq.md
 docs/NowCreateInvoiceRes.md
 docs/Payment.md
@@ -42,6 +38,4 @@ docs/ProductsApi.md
 docs/Scope.md
 docs/Services.md
 docs/StatusApi.md
-docs/ValidationError.md
-docs/ValidationErrorLocInner.md
 requirements.txt
