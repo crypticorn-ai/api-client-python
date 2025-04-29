@@ -54,7 +54,7 @@ async with client.ApiClient(configuration) as api_client:
     symbol = 'symbol_example' # str | 
     market = 'market_example' # str | Market (optional)
     period = 15 # int | KER indicator period (optional) (default to 15)
-    timestamp = 1745832834 # int | Timestamp for which to fetch KER indicator (optional) (default to 1745832834)
+    timestamp = 1745930223 # int | Timestamp for which to fetch KER indicator (optional) (default to 1745930223)
 
     try:
         # Get Ker Indicator
@@ -75,7 +75,7 @@ Name | Type | Description  | Notes
  **symbol** | **str**|  | 
  **market** | **str**| Market | [optional] 
  **period** | **int**| KER indicator period | [optional] [default to 15]
- **timestamp** | **int**| Timestamp for which to fetch KER indicator | [optional] [default to 1745832834]
+ **timestamp** | **int**| Timestamp for which to fetch KER indicator | [optional] [default to 1745930223]
 
 ### Return type
 
@@ -145,7 +145,7 @@ async with client.ApiClient(configuration) as api_client:
     symbol = 'symbol_example' # str | 
     market = 'market_example' # str | The market type to use for the SMA indicator (optional)
     period = 15 # int | The period to use for the SMA indicator (optional) (default to 15)
-    timestamp = 1745832834 # int | The timestamp for which to fetch the SMA indicator (optional) (default to 1745832834)
+    timestamp = 1745930223 # int | The timestamp for which to fetch the SMA indicator (optional) (default to 1745930223)
 
     try:
         # Get Sma Indicator
@@ -166,7 +166,7 @@ Name | Type | Description  | Notes
  **symbol** | **str**|  | 
  **market** | **str**| The market type to use for the SMA indicator | [optional] 
  **period** | **int**| The period to use for the SMA indicator | [optional] [default to 15]
- **timestamp** | **int**| The timestamp for which to fetch the SMA indicator | [optional] [default to 1745832834]
+ **timestamp** | **int**| The timestamp for which to fetch the SMA indicator | [optional] [default to 1745930223]
 
 ### Return type
 
