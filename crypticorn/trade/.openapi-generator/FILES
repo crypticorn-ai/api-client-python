@@ -18,11 +18,11 @@ client/models/__init__.py
 client/models/action_model.py
 client/models/bot_model.py
 client/models/bot_status.py
+client/models/exception_detail.py
 client/models/exchange_key_model.py
 client/models/execution_ids.py
 client/models/futures_balance.py
 client/models/futures_trading_action.py
-client/models/http_validation_error.py
 client/models/margin_mode.py
 client/models/notification_model.py
 client/models/order_model.py
@@ -34,8 +34,6 @@ client/models/strategy_model_input.py
 client/models/strategy_model_output.py
 client/models/tpsl.py
 client/models/trading_action_type.py
-client/models/validation_error.py
-client/models/validation_error_loc_inner.py
 client/py.typed
 client/rest.py
 docs/APIKeysApi.md
@@ -43,13 +41,13 @@ docs/ActionModel.md
 docs/BotModel.md
 docs/BotStatus.md
 docs/BotsApi.md
+docs/ExceptionDetail.md
 docs/ExchangeKeyModel.md
 docs/ExchangesApi.md
 docs/ExecutionIds.md
 docs/FuturesBalance.md
 docs/FuturesTradingAction.md
 docs/FuturesTradingPanelApi.md
-docs/HTTPValidationError.md
 docs/MarginMode.md
 docs/NotificationModel.md
 docs/NotificationsApi.md
@@ -66,6 +64,4 @@ docs/StrategyModelOutput.md
 docs/TPSL.md
 docs/TradingActionType.md
 docs/TradingActionsApi.md
-docs/ValidationError.md
-docs/ValidationErrorLocInner.md
 requirements.txt
