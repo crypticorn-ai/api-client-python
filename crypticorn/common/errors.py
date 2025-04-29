@@ -98,6 +98,7 @@ class ApiErrorIdentifier(ExcludeEnumMixin, StrEnum):
     RISK_LIMIT_EXCEEDED = "risk_limit_exceeded"
     RPC_TIMEOUT = "rpc_timeout"
     SETTLEMENT_IN_PROGRESS = "system_settlement_in_process"
+    STRATEGY_ALREADY_EXISTS = "strategy_already_exists"
     STRATEGY_DISABLED = "strategy_disabled"
     STRATEGY_LEVERAGE_MISMATCH = "strategy_leverage_mismatch"
     STRATEGY_NOT_SUPPORTING_EXCHANGE = "strategy_not_supporting_exchange"
@@ -443,6 +444,11 @@ class ApiError(ExcludeEnumMixin, Enum, metaclass=Fallback):
         ApiErrorType.EXCHANGE_ERROR,
         ApiErrorLevel.ERROR,
     )
+    STRATEGY_ALREADY_EXISTS = (
+        ApiErrorIdentifier.STRATEGY_ALREADY_EXISTS,
+        ApiErrorType.USER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
     STRATEGY_DISABLED = (
         ApiErrorIdentifier.STRATEGY_DISABLED,
         ApiErrorType.USER_ERROR,
@@ -542,6 +548,7 @@ class HttpStatusMapper:
         ApiError.OBJECT_ALREADY_EXISTS: status.HTTP_409_CONFLICT,
         ApiError.EXCHANGE_KEY_ALREADY_EXISTS: status.HTTP_409_CONFLICT,
         ApiError.BOT_ALREADY_DELETED: status.HTTP_409_CONFLICT,
+        ApiError.STRATEGY_ALREADY_EXISTS: status.HTTP_409_CONFLICT,
         # Invalid Content
         ApiError.CONTENT_TYPE_ERROR: status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
         ApiError.INVALID_DATA_REQUEST: status.HTTP_422_UNPROCESSABLE_ENTITY,

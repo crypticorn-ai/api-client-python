@@ -2,29 +2,22 @@ from typing import Any, Union
 from decimal import Decimal
 import string
 import random
-from fastapi import HTTPException
 from fastapi import status
 from typing_extensions import deprecated
 
-from crypticorn.common import ApiError
+from crypticorn.common import ApiError, HTTPException, ExceptionContent
 
 
-def throw_if_none(value: Any, message: Union[ApiError, str]) -> None:
+def throw_if_none(value: Any, error: ApiError = ApiError.OBJECT_NOT_FOUND) -> None:
     """Throws an FastAPI HTTPException if the value is None."""
     if value is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=message.identifier if isinstance(message, ApiError) else message,
-        )
+        raise HTTPException(content=ExceptionContent(error=error))
 
 
-def throw_if_falsy(value: Any, message: Union[ApiError, str]) -> None:
+def throw_if_falsy(value: Any, error: ApiError = ApiError.OBJECT_NOT_FOUND) -> None:
     """Throws an FastAPI HTTPException if the value is False."""
     if not value:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=message.identifier if isinstance(message, ApiError) else message,
-        )
+        raise HTTPException(content=ExceptionContent(error=error))
 
 
 def gen_random_id(length: int = 20) -> str:
