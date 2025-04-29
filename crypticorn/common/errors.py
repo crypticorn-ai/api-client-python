@@ -1,22 +1,7 @@
 from enum import Enum, EnumMeta, StrEnum
 import logging
 from fastapi import status
-from crypticorn.common.mixins import ExcludeEnumMixin
-
-logger = logging.getLogger(__name__)
-
-
-class Fallback(EnumMeta):
-    """Fallback to UNKNOWN_ERROR for error codes not yet published to PyPI."""
-
-    def __getattr__(cls, name):
-        # Let Pydantic/internal stuff pass silently ! fragile
-        if name.startswith("__"):
-            raise AttributeError(name)
-        logger.warning(
-            f"Unknown error code '{name}' - update crypticorn package or check for typos"
-        )
-        return cls.UNKNOWN_ERROR
+from crypticorn.common.mixins import ExcludeEnumMixin, ApiErrorFallback
 
 
 class ApiErrorType(ExcludeEnumMixin, StrEnum):
@@ -126,7 +111,7 @@ class ApiErrorLevel(ExcludeEnumMixin, StrEnum):
     WARNING = "warning"
 
 
-class ApiError(ExcludeEnumMixin, Enum, metaclass=Fallback):
+class ApiError(ExcludeEnumMixin, Enum, metaclass=ApiErrorFallback):
     """API error codes. Fallback to UNKNOWN_ERROR for error codes not yet published to PyPI."""
 
     ALLOCATION_BELOW_EXPOSURE = (

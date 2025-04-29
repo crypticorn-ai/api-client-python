@@ -92,6 +92,9 @@ def init_auth(output, force):
     and the docker-compose.yml file with:
         environment:
             - IS_DOCKER=1
+    and the .github/workflows/main.yaml file with:
+        env:
+            API_ENV: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
     """,
         fg="yellow",
     )

@@ -1,24 +1,8 @@
 from enum import StrEnum, EnumMeta
 import logging
+from crypticorn.common.mixins import ScopeFallback
 
 logger = logging.getLogger("uvicorn")
-
-
-class Fallback(EnumMeta):
-    """Fallback to no scope for unknown scopes."""
-
-    # Note: This is a workaround to avoid the AttributeError when an unknown scope is accessed.
-    # As soon as we have stable scopes, we can remove this.
-
-    def __getattr__(cls, name):
-        # Let Pydantic/internal stuff pass silently ! fragile
-        if name.startswith("__"):
-            raise AttributeError(name)
-        logger.warning(
-            f"Unknown scope '{name}' - falling back to no scope - update crypticorn package or check for typos"
-        )
-        return None
-
 
 class Scope(StrEnum):
     """
@@ -68,3 +52,6 @@ class Scope(StrEnum):
     READ_METRICS_EXCHANGES = "read:metrics:exchanges"
     READ_METRICS_TOKENS = "read:metrics:tokens"
     READ_METRICS_MARKETS = "read:metrics:markets"
+
+    # Sentiment scopes
+    READ_SENTIMENT = "read:sentiment"
