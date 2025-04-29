@@ -57,8 +57,8 @@ async with client.ApiClient(configuration) as api_client:
     market = 'market_example' # str | Market type (spot or futures)
     symbol = 'symbol_example' # str | Symbol to fetch available exchanges for
     interval = client.TimeInterval() # TimeInterval | Interval for which to fetch available exchanges (optional)
-    start_timestamp = 1745193600 # int | Start timestamp for which to fetch available exchanges (defaults to previous 7 day's closing) (optional) (default to 1745193600)
-    end_timestamp = 1745832834 # int | End timestamp for which to fetch available exchanges (optional) (default to 1745832834)
+    start_timestamp = 1745280000 # int | Start timestamp for which to fetch available exchanges (defaults to previous 7 day's closing) (optional) (default to 1745280000)
+    end_timestamp = 1745930223 # int | End timestamp for which to fetch available exchanges (optional) (default to 1745930223)
     quote_currency = 'USDT' # str | Quote currency for which to fetch available exchanges (Use quote currencies endpoint to get available quote currencies) (optional) (default to 'USDT')
     status = client.TradingStatus() # TradingStatus | Trading pair status for which to fetch available exchanges (optional)
 
@@ -81,8 +81,8 @@ Name | Type | Description  | Notes
  **market** | **str**| Market type (spot or futures) | 
  **symbol** | **str**| Symbol to fetch available exchanges for | 
  **interval** | [**TimeInterval**](.md)| Interval for which to fetch available exchanges | [optional] 
- **start_timestamp** | **int**| Start timestamp for which to fetch available exchanges (defaults to previous 7 day&#39;s closing) | [optional] [default to 1745193600]
- **end_timestamp** | **int**| End timestamp for which to fetch available exchanges | [optional] [default to 1745832834]
+ **start_timestamp** | **int**| Start timestamp for which to fetch available exchanges (defaults to previous 7 day&#39;s closing) | [optional] [default to 1745280000]
+ **end_timestamp** | **int**| End timestamp for which to fetch available exchanges | [optional] [default to 1745930223]
  **quote_currency** | **str**| Quote currency for which to fetch available exchanges (Use quote currencies endpoint to get available quote currencies) | [optional] [default to &#39;USDT&#39;]
  **status** | [**TradingStatus**](.md)| Trading pair status for which to fetch available exchanges | [optional] 
 

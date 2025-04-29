@@ -52,8 +52,8 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.LogsApi(api_client)
     severity = client.Severity() # Severity | Severity level of errors to fetch (optional)
-    start_timestamp = 1745746434 # int | Start timestamp for which to fetch error logs (optional) (default to 1745746434)
-    end_timestamp = 1745832834 # int | End timestamp for which to fetch error logs (optional) (default to 1745832834)
+    start_timestamp = 1745843823 # int | Start timestamp for which to fetch error logs (optional) (default to 1745843823)
+    end_timestamp = 1745930223 # int | End timestamp for which to fetch error logs (optional) (default to 1745930223)
 
     try:
         # Get Error Logs
@@ -72,8 +72,8 @@ async with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **severity** | [**Severity**](.md)| Severity level of errors to fetch | [optional] 
- **start_timestamp** | **int**| Start timestamp for which to fetch error logs | [optional] [default to 1745746434]
- **end_timestamp** | **int**| End timestamp for which to fetch error logs | [optional] [default to 1745832834]
+ **start_timestamp** | **int**| Start timestamp for which to fetch error logs | [optional] [default to 1745843823]
+ **end_timestamp** | **int**| End timestamp for which to fetch error logs | [optional] [default to 1745930223]
 
 ### Return type
 

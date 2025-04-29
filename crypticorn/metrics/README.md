@@ -85,8 +85,8 @@ async with client.ApiClient(configuration) as api_client:
     market = 'market_example' # str | Market type (spot or futures)
     symbol = 'symbol_example' # str | Symbol to fetch available exchanges for
     interval = client.TimeInterval() # TimeInterval | Interval for which to fetch available exchanges (optional)
-    start_timestamp = 1745193600 # int | Start timestamp for which to fetch available exchanges (defaults to previous 7 day's closing) (optional) (default to 1745193600)
-    end_timestamp = 1745832834 # int | End timestamp for which to fetch available exchanges (optional) (default to 1745832834)
+    start_timestamp = 1745280000 # int | Start timestamp for which to fetch available exchanges (defaults to previous 7 day's closing) (optional) (default to 1745280000)
+    end_timestamp = 1745930223 # int | End timestamp for which to fetch available exchanges (optional) (default to 1745930223)
     quote_currency = 'USDT' # str | Quote currency for which to fetch available exchanges (Use quote currencies endpoint to get available quote currencies) (optional) (default to 'USDT')
     status = client.TradingStatus() # TradingStatus | Trading pair status for which to fetch available exchanges (optional)
 
@@ -118,6 +118,8 @@ Class | Method | HTTP request | Description
 *MarketcapApi* | [**get_marketcap_symbols_with_ohlcv**](docs/MarketcapApi.md#get_marketcap_symbols_with_ohlcv) | **GET** /marketcap/symbols/ohlcv | Get Symbols Marketcap With Ohlcv
 *MarketsApi* | [**get_available_markets_for_symbol**](docs/MarketsApi.md#get_available_markets_for_symbol) | **GET** /markets/{market}/{symbol} | Get Markets For Symbol
 *MarketsApi* | [**get_quote_currencies**](docs/MarketsApi.md#get_quote_currencies) | **GET** /quote_currencies/{market} | Get Quote Currencies
+*StatusApi* | [**get_config**](docs/StatusApi.md#get_config) | **GET** /config | Config
+*StatusApi* | [**get_time**](docs/StatusApi.md#get_time) | **GET** /time | Time
 *StatusApi* | [**ping**](docs/StatusApi.md#ping) | **GET** / | Ping
 *TokensApi* | [**get_stable_and_wrapped_tokens**](docs/TokensApi.md#get_stable_and_wrapped_tokens) | **GET** /tokens/{token_type} | Get Stable Wrapped Tokens
 

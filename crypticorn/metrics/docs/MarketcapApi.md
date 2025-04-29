@@ -138,8 +138,8 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.MarketcapApi(api_client)
-    start_timestamp = 1745660034 # int | Start timestamp (optional) (default to 1745660034)
-    end_timestamp = 1745832834 # int | End timestamp (optional) (default to 1745832834)
+    start_timestamp = 1745757423 # int | Start timestamp (optional) (default to 1745757423)
+    end_timestamp = 1745930223 # int | End timestamp (optional) (default to 1745930223)
 
     try:
         # Get Marketcap Between Timestamps
@@ -157,8 +157,8 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **start_timestamp** | **int**| Start timestamp | [optional] [default to 1745660034]
- **end_timestamp** | **int**| End timestamp | [optional] [default to 1745832834]
+ **start_timestamp** | **int**| Start timestamp | [optional] [default to 1745757423]
+ **end_timestamp** | **int**| End timestamp | [optional] [default to 1745930223]
 
 ### Return type
 
@@ -225,8 +225,8 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.MarketcapApi(api_client)
-    start_timestamp = 1745660034 # int | Start timestamp (optional) (default to 1745660034)
-    end_timestamp = 1745832834 # int | End timestamp (optional) (default to 1745832834)
+    start_timestamp = 1745757423 # int | Start timestamp (optional) (default to 1745757423)
+    end_timestamp = 1745930223 # int | End timestamp (optional) (default to 1745930223)
     interval = 1d # str | Interval for which to fetch symbols and marketcap data (optional) (default to 1d)
     market = 'market_example' # str | Market for which to fetch symbols and marketcap data (optional)
     exchange = 'exchange_example' # str | Exchange for which to fetch symbols and marketcap data (optional)
@@ -247,8 +247,8 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **start_timestamp** | **int**| Start timestamp | [optional] [default to 1745660034]
- **end_timestamp** | **int**| End timestamp | [optional] [default to 1745832834]
+ **start_timestamp** | **int**| Start timestamp | [optional] [default to 1745757423]
+ **end_timestamp** | **int**| End timestamp | [optional] [default to 1745930223]
  **interval** | **str**| Interval for which to fetch symbols and marketcap data | [optional] [default to 1d]
  **market** | **str**| Market for which to fetch symbols and marketcap data | [optional] 
  **exchange** | **str**| Exchange for which to fetch symbols and marketcap data | [optional] 
@@ -318,7 +318,7 @@ configuration = client.Configuration(
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.MarketcapApi(api_client)
-    timestamp = 1745832834 # int | Timestamp for which to fetch symbols and OHLCV data (optional) (default to 1745832834)
+    timestamp = 1745930223 # int | Timestamp for which to fetch symbols and OHLCV data (optional) (default to 1745930223)
     timeframe = '1h' # str | Timeframe for OHLCV data (optional) (default to '1h')
     market = 'market_example' # str | Market for OHLCV data (optional)
     top_n = 10 # int | Number of symbols to fetch (optional) (default to 10)
@@ -340,7 +340,7 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **timestamp** | **int**| Timestamp for which to fetch symbols and OHLCV data | [optional] [default to 1745832834]
+ **timestamp** | **int**| Timestamp for which to fetch symbols and OHLCV data | [optional] [default to 1745930223]
  **timeframe** | **str**| Timeframe for OHLCV data | [optional] [default to &#39;1h&#39;]
  **market** | **str**| Market for OHLCV data | [optional] 
  **top_n** | **int**| Number of symbols to fetch | [optional] [default to 10]
