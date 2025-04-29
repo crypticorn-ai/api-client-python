@@ -84,13 +84,13 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful Response |  -  |
-**422** | Validation Error |  -  |
+**201** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_now_api_status**
-> NowAPIStatusRes get_now_api_status()
+> str get_now_api_status()
 
 Get Status
 
@@ -102,7 +102,6 @@ Get the status of the NOWPayments API
 
 ```python
 import client
-from client.models.now_api_status_res import NowAPIStatusRes
 from client.rest import ApiException
 from pprint import pprint
 
@@ -144,7 +143,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**NowAPIStatusRes**](NowAPIStatusRes.md)
+**str**
 
 ### Authorization
 
@@ -160,6 +159,7 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -223,7 +223,8 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Successful Response |  -  |
+**201** | Successful Response |  -  |
+**0** | Error response |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
