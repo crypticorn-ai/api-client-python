@@ -1,9 +1,5 @@
-from enum import StrEnum, EnumMeta
+from enum import StrEnum
 import logging
-from crypticorn.common.mixins import ScopeFallback
-
-logger = logging.getLogger("uvicorn")
-
 
 class Scope(StrEnum):
     """
