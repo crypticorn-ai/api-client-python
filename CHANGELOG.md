@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.5.3 (2025-04-29)
+
+### Bug Fixes
+
+- Use ExceptionContent in throw utilities
+  ([`b38ebf1`](https://github.com/crypticorn-ai/api-client/commit/b38ebf1443d1df126f7e1014b5c25f1e17f56fdc))
+
+
 ## v2.5.2 (2025-04-29)
 
 ### Bug Fixes
