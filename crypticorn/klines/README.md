@@ -104,9 +104,10 @@ Class | Method | HTTP request | Description
 *ChangeInTimeframeApi* | [**get_change_in_timeframe**](docs/ChangeInTimeframeApi.md#get_change_in_timeframe) | **GET** /change | Get Change In Timeframe
 *FundingRatesApi* | [**get_funding_rates**](docs/FundingRatesApi.md#get_funding_rates) | **GET** /funding_rates/{symbol} | Funding Rate
 *OHLCVDataApi* | [**get_ohlcv**](docs/OHLCVDataApi.md#get_ohlcv) | **GET** /{market}/{timeframe}/{symbol} | Get Ohlcv
+*StatusApi* | [**get_config**](docs/StatusApi.md#get_config) | **GET** /config | Config
+*StatusApi* | [**get_time**](docs/StatusApi.md#get_time) | **GET** /time | Time
 *StatusApi* | [**ping**](docs/StatusApi.md#ping) | **GET** / | Ping
 *SymbolsApi* | [**get_klines_symbols**](docs/SymbolsApi.md#get_klines_symbols) | **GET** /symbols/{market} | Symbols
-*UDFApi* | [**get_server_time**](docs/UDFApi.md#get_server_time) | **GET** /udf/time | Get Server Time
 *UDFApi* | [**get_symbol**](docs/UDFApi.md#get_symbol) | **GET** /udf/symbols | Get Symbol
 *UDFApi* | [**get_symbol_info**](docs/UDFApi.md#get_symbol_info) | **GET** /udf/symbol_info | Get Symbol Info
 *UDFApi* | [**get_udf_config**](docs/UDFApi.md#get_udf_config) | **GET** /udf/config | Get Config

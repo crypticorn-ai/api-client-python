@@ -4,6 +4,7 @@ from crypticorn.common.mixins import ScopeFallback
 
 logger = logging.getLogger("uvicorn")
 
+
 class Scope(StrEnum):
     """
     The permission scopes for the API.
