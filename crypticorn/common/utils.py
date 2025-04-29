@@ -8,16 +8,16 @@ from typing_extensions import deprecated
 from crypticorn.common import ApiError, HTTPException, ExceptionContent
 
 
-def throw_if_none(value: Any, error: ApiError = ApiError.OBJECT_NOT_FOUND) -> None:
-    """Throws an FastAPI HTTPException if the value is None."""
+def throw_if_none(value: Any, exception: ExceptionContent = ExceptionContent(error=ApiError.OBJECT_NOT_FOUND)) -> None:
+    """Throws an FastAPI HTTPException if the value is None. https://docs.python.org/3/library/stdtypes.html#truth-value-testing"""
     if value is None:
-        raise HTTPException(content=ExceptionContent(error=error))
+        raise HTTPException(content=exception)
 
 
-def throw_if_falsy(value: Any, error: ApiError = ApiError.OBJECT_NOT_FOUND) -> None:
-    """Throws an FastAPI HTTPException if the value is False."""
+def throw_if_falsy(value: Any, exception: ExceptionContent = ExceptionContent(error=ApiError.OBJECT_NOT_FOUND)) -> None:
+    """Throws an FastAPI HTTPException if the value is False. https://docs.python.org/3/library/stdtypes.html#truth-value-testing"""
     if not value:
-        raise HTTPException(content=ExceptionContent(error=error))
+        raise HTTPException(content=exception)
 
 
 def gen_random_id(length: int = 20) -> str:
