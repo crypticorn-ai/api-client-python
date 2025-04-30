@@ -8,10 +8,6 @@ class Scope(StrEnum):
 
     # If you update anything here, also update the scopes in the auth-service repository
 
-    @classmethod
-    def from_str(cls, value: str) -> "Scope":
-        return cls(value)
-
     # Scopes that can be purchased - these actually exist in the jwt token
     READ_PREDICTIONS = "read:predictions"
 
@@ -52,3 +48,27 @@ class Scope(StrEnum):
 
     # Sentiment scopes
     READ_SENTIMENT = "read:sentiment"
+
+    @classmethod
+    def admin_scopes(cls) -> list['Scope']:
+        '''Scopes that are only available to admins'''
+        return [
+            cls.WRITE_TRADE_STRATEGIES,
+            cls.WRITE_PAY_PRODUCTS,
+            cls.WRITE_PAY_NOW,
+        ]
+    
+    @classmethod
+    def internal_scopes(cls) -> list['Scope']:
+        '''Scopes that are only available to internal services'''
+        return [
+            cls.WRITE_TRADE_ACTIONS,
+        ]
+    
+    @classmethod
+    def purchaseable_scopes(cls) -> list['Scope']:
+        '''Scopes that can be purchased'''
+        return [
+            cls.READ_PREDICTIONS,
+        ]
+        
