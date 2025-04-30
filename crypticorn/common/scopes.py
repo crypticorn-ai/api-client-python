@@ -1,5 +1,5 @@
 from enum import StrEnum
-import logging
+
 
 class Scope(StrEnum):
     """

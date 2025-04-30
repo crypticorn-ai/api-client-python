@@ -1,22 +1,23 @@
 import os
 from dotenv import load_dotenv
-from crypticorn.common import gen_random_id
+from crypticorn.common import gen_random_id, Scope
 import jwt
 import time
 
 load_dotenv(dotenv_path=".env.test")
 
 
-def generate_valid_jwt():
+def generate_valid_jwt(user_id: str, scopes: list[Scope] = [], is_admin=False):
     now = int(time.time())
     payload = {
-        "sub": USER_ID,
+        "sub": user_id,
         "aud": JWT_AUDIENCE,
         "iss": JWT_ISSUER,
         "jti": gen_random_id(),
         "iat": now,
         "exp": now + JWT_EXPIRES_IN,
-        "scopes": [],
+        "scopes": scopes,
+        "admin": is_admin,
     }
     token = jwt.encode(payload, JWT_SECRET, algorithm="HS256")
     return token
@@ -29,7 +30,9 @@ JWT_AUDIENCE = os.getenv("JWT_AUDIENCE")
 JWT_EXPIRES_IN = 60 * 60  # 1 hour
 USER_ID = os.getenv("USER_ID")
 EXPIRED_JWT = os.getenv("EXPIRED_JWT")
-VALID_JWT = generate_valid_jwt()
+VALID_JWT = generate_valid_jwt(user_id="user-without-read-predictions")
+VALID_PREDICTION_JWT = generate_valid_jwt(user_id=USER_ID, scopes=[Scope.READ_PREDICTIONS])
+VALID_ADMIN_JWT = generate_valid_jwt(user_id=USER_ID, scopes=[Scope.READ_PREDICTIONS], is_admin=True)
 # API KEY
 FULL_SCOPE_API_KEY = os.getenv("FULL_SCOPE_API_KEY")
 ONE_SCOPE_API_KEY = os.getenv("ONE_SCOPE_API_KEY")
