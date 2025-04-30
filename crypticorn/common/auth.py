@@ -3,9 +3,9 @@ import json
 from crypticorn.auth import Verify200Response, AuthClient, Configuration
 from crypticorn.auth.client.exceptions import ApiException
 from crypticorn.common.scopes import Scope
-from crypticorn.common.exceptions import ApiError, HTTPException, ExceptionContent
+from crypticorn.common.exceptions import ApiError, HTTPException, ExceptionContent, WebSocketException
 from crypticorn.common.urls import BaseUrl, Service, ApiVersion
-from fastapi import Depends, Query, status, WebSocketException
+from fastapi import Depends, Query
 from fastapi.security import (
     HTTPAuthorizationCredentials,
     SecurityScopes,
@@ -48,6 +48,7 @@ class AuthHandler:
         """
         Verifies the API key.
         """
+        # self.client.config.api_key = {apikey_header.scheme_name: api_key}
         return await self.client.login.verify_api_key(api_key)
 
     async def _verify_bearer(
@@ -229,11 +230,9 @@ class AuthHandler:
             if bearer
             else None
         )
-        response = await self.combined_auth(
-            bearer=credentials, api_key=api_key, sec=sec
-        )
-        if isinstance(response, HTTPException):
-            raise WebSocketException(
-                code=status.WS_1008_POLICY_VIOLATION, reason=response.detail
+        try:
+            return await self.combined_auth(
+                bearer=credentials, api_key=api_key, sec=sec
             )
-        return response
+        except HTTPException as e:
+            raise WebSocketException.from_http_exception(e)
