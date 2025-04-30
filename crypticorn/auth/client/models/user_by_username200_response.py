@@ -17,53 +17,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    StrictBool,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
-)
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class Verify200Response(BaseModel):
+class UserByUsername200Response(BaseModel):
     """
-    Verify200Response
+    UserByUsername200Response
     """  # noqa: E501
 
-    iss: Optional[StrictStr] = Field(default=None, description="Issuer")
-    sub: Optional[StrictStr] = Field(default=None, description="Subject")
-    aud: Optional[StrictStr] = Field(default=None, description="Audience")
-    exp: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, description="Expiration time"
-    )
-    nbf: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, description="Not valid before time"
-    )
-    iat: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, description="Issued at time"
-    )
-    jti: Optional[StrictStr] = Field(default=None, description="JWT ID")
-    admin: Optional[StrictBool] = Field(
-        default=None, description="Whether the user is an admin"
-    )
-    scopes: Optional[List[StrictStr]] = Field(default=None, description="Scopes")
-    __properties: ClassVar[List[str]] = [
-        "iss",
-        "sub",
-        "aud",
-        "exp",
-        "nbf",
-        "iat",
-        "jti",
-        "admin",
-        "scopes",
-    ]
+    user_id: StrictStr = Field(alias="userId")
+    username: Optional[StrictStr] = None
+    name: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["userId", "username", "name"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -82,7 +50,7 @@ class Verify200Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Verify200Response from a JSON string"""
+        """Create an instance of UserByUsername200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -106,7 +74,7 @@ class Verify200Response(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Verify200Response from a dict"""
+        """Create an instance of UserByUsername200Response from a dict"""
         if obj is None:
             return None
 
@@ -115,15 +83,9 @@ class Verify200Response(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "iss": obj.get("iss"),
-                "sub": obj.get("sub"),
-                "aud": obj.get("aud"),
-                "exp": obj.get("exp"),
-                "nbf": obj.get("nbf"),
-                "iat": obj.get("iat"),
-                "jti": obj.get("jti"),
-                "admin": obj.get("admin"),
-                "scopes": obj.get("scopes"),
+                "userId": obj.get("userId"),
+                "username": obj.get("username"),
+                "name": obj.get("name"),
             }
         )
         return _obj

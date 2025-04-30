@@ -1,5 +1,11 @@
 import pytest
-from crypticorn.common import AuthHandler, Scope, HTTPException, ApiError, WebSocketException
+from crypticorn.common import (
+    AuthHandler,
+    Scope,
+    HTTPException,
+    ApiError,
+    WebSocketException,
+)
 from fastapi.security import HTTPAuthorizationCredentials
 
 from .envs import *
@@ -71,6 +77,7 @@ async def test_combined_auth_with_valid_bearer_token(auth_handler: AuthHandler):
     ), "non admin should not have access to any of the internal keys"
     assert not res.admin, "non admin should not be admin"
 
+
 @pytest.mark.asyncio
 async def test_combined_auth_with_valid_prediction_bearer_token(
     auth_handler: AuthHandler,
@@ -92,6 +99,7 @@ async def test_combined_auth_with_valid_prediction_bearer_token(
         [key not in res.scopes for key in INTERNAL_SCOPES]
     ), "non admin should not have access to any of the internal keys"
     assert not res.admin, "non admin should not be admin"
+
 
 @pytest.mark.asyncio
 async def test_combined_auth_with_valid_admin_bearer_token(auth_handler: AuthHandler):
@@ -128,7 +136,9 @@ async def test_combined_auth_with_invalid_api_key(auth_handler: AuthHandler):
 async def test_combined_auth_with_full_scope_valid_api_key(auth_handler: AuthHandler):
     """With full scope valid api key"""
     res = await auth_handler.combined_auth(bearer=None, api_key=FULL_SCOPE_API_KEY)
-    assert res.scopes == [x for x in Scope if x not in Scope.internal_scopes()], UPDATE_SCOPES
+    assert res.scopes == [
+        x for x in Scope if x not in Scope.internal_scopes()
+    ], UPDATE_SCOPES
 
 
 @pytest.mark.asyncio

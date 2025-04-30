@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**send_password_reset_email**](UserApi.md#send_password_reset_email) | **POST** /send-password-reset-email | Send Password Reset Email
 [**update_user**](UserApi.md#update_user) | **POST** /update-user | Update User
 [**user_by_id**](UserApi.md#user_by_id) | **GET** /user-by-id | User By Id
+[**user_by_username**](UserApi.md#user_by_username) | **GET** /user-by-username | User By Username
 [**user_reset_password**](UserApi.md#user_reset_password) | **POST** /user-reset-password | User Reset Password
 [**user_set_password**](UserApi.md#user_set_password) | **POST** /user-set-password | User Set Password
 [**verify_email**](UserApi.md#verify_email) | **POST** /verify-email | Verify Email
@@ -440,6 +441,75 @@ Name | Type | Description  | Notes
 ### Authorization
 
 [HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful response |  -  |
+**0** | Error response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **user_by_username**
+> UserByUsername200Response user_by_username(username)
+
+User By Username
+
+Returns the user by username.
+
+### Example
+
+
+```python
+import client
+from client.models.user_by_username200_response import UserByUsername200Response
+from client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost/v1/auth
+# See configuration.py for a list of all supported configuration parameters.
+configuration = client.Configuration(
+    host = "http://localhost/v1/auth"
+)
+
+
+# Enter a context with an instance of the API client
+async with client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = client.UserApi(api_client)
+    username = 'username_example' # str | 
+
+    try:
+        # User By Username
+        api_response = await api_instance.user_by_username(username)
+        print("The response of UserApi->user_by_username:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling UserApi->user_by_username: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **username** | **str**|  | 
+
+### Return type
+
+[**UserByUsername200Response**](UserByUsername200Response.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 

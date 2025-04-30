@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -34,6 +34,7 @@ class Whoami200Response(BaseModel):
     picture: Optional[StrictStr] = None
     username: Optional[StrictStr] = None
     phone: Optional[StrictStr] = None
+    is_admin: Optional[StrictBool] = Field(default=False, alias="isAdmin")
     __properties: ClassVar[List[str]] = [
         "email",
         "id",
@@ -41,6 +42,7 @@ class Whoami200Response(BaseModel):
         "picture",
         "username",
         "phone",
+        "isAdmin",
     ]
 
     model_config = ConfigDict(
@@ -99,6 +101,9 @@ class Whoami200Response(BaseModel):
                 "picture": obj.get("picture"),
                 "username": obj.get("username"),
                 "phone": obj.get("phone"),
+                "isAdmin": (
+                    obj.get("isAdmin") if obj.get("isAdmin") is not None else False
+                ),
             }
         )
         return _obj

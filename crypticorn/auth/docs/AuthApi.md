@@ -390,7 +390,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **oauth_callback**
-> AuthorizeUser200Response oauth_callback(code, scope, authuser, prompt, origin)
+> OauthCallback200Response oauth_callback(code, scope, authuser, prompt, origin)
 
 OAuth Callback
 
@@ -401,7 +401,7 @@ Handles the OAuth callback from Google.
 
 ```python
 import client
-from client.models.authorize_user200_response import AuthorizeUser200Response
+from client.models.oauth_callback200_response import OauthCallback200Response
 from client.rest import ApiException
 from pprint import pprint
 
@@ -446,7 +446,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AuthorizeUser200Response**](AuthorizeUser200Response.md)
+[**OauthCallback200Response**](OauthCallback200Response.md)
 
 ### Authorization
 

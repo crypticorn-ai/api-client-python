@@ -6,9 +6,11 @@ from fastapi.exceptions import RequestValidationError, ResponseValidationError
 from fastapi.responses import JSONResponse
 from crypticorn.common import ApiError, ApiErrorIdentifier, ApiErrorType, ApiErrorLevel
 
+
 class ExceptionType(StrEnum):
     HTTP = "http"
     WEBSOCKET = "websocket"
+
 
 class ExceptionDetail(BaseModel):
     """This is the detail of the exception. It is used to enrich the exception with additional information by unwrapping the ApiError into its components."""
@@ -28,13 +30,19 @@ class ExceptionContent(BaseModel):
     message: Optional[str] = Field(None, description="An additional error message")
     details: Any = Field(None, description="Additional details about the error")
 
-    def enrich(self, _type: Optional[ExceptionType] = ExceptionType.HTTP) -> ExceptionDetail:
+    def enrich(
+        self, _type: Optional[ExceptionType] = ExceptionType.HTTP
+    ) -> ExceptionDetail:
         return ExceptionDetail(
             message=self.message,
             code=self.error.identifier,
             type=self.error.type,
             level=self.error.level,
-            status_code=self.error.http_code if _type == ExceptionType.HTTP else self.error.websocket_code,
+            status_code=(
+                self.error.http_code
+                if _type == ExceptionType.HTTP
+                else self.error.websocket_code
+            ),
             details=self.details,
         )
 
@@ -61,12 +69,15 @@ class HTTPException(FastAPIHTTPException):
             headers=headers,
         )
 
+
 class WebSocketException(HTTPException):
     """A WebSocketException is to be used for WebSocket connections. It is a wrapper around the HTTPException class to maintain the same structure, but using a different status code.
     To be used in the same way as the HTTPException.
     """
 
-    def __init__(self, content: ExceptionContent, headers: Optional[Dict[str, str]] = None):
+    def __init__(
+        self, content: ExceptionContent, headers: Optional[Dict[str, str]] = None
+    ):
         super().__init__(content, headers, _type=ExceptionType.WEBSOCKET)
 
     @classmethod
@@ -76,6 +87,7 @@ class WebSocketException(HTTPException):
             content=http_exception.content,
             headers=http_exception.headers,
         )
+
 
 async def general_handler(request: Request, exc: Exception):
     """This is the default exception handler for all exceptions."""

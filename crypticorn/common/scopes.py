@@ -50,25 +50,24 @@ class Scope(StrEnum):
     READ_SENTIMENT = "read:sentiment"
 
     @classmethod
-    def admin_scopes(cls) -> list['Scope']:
-        '''Scopes that are only available to admins'''
+    def admin_scopes(cls) -> list["Scope"]:
+        """Scopes that are only available to admins"""
         return [
             cls.WRITE_TRADE_STRATEGIES,
             cls.WRITE_PAY_PRODUCTS,
             cls.WRITE_PAY_NOW,
         ]
-    
+
     @classmethod
-    def internal_scopes(cls) -> list['Scope']:
-        '''Scopes that are only available to internal services'''
+    def internal_scopes(cls) -> list["Scope"]:
+        """Scopes that are only available to internal services"""
         return [
             cls.WRITE_TRADE_ACTIONS,
         ]
-    
+
     @classmethod
-    def purchaseable_scopes(cls) -> list['Scope']:
-        '''Scopes that can be purchased'''
+    def purchaseable_scopes(cls) -> list["Scope"]:
+        """Scopes that can be purchased"""
         return [
             cls.READ_PREDICTIONS,
         ]
-        

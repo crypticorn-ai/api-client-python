@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **picture** | **str** |  | [optional] 
 **username** | **str** |  | [optional] 
 **phone** | **str** |  | [optional] 
+**is_admin** | **bool** |  | [optional] [default to False]
 
 ## Example
 

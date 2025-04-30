@@ -15,7 +15,7 @@ jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdv
 
 async def main():
     async with ApiClient(
-        base_url=BaseUrl.DEV, api_key="zeB1Dw3IC4xMJO9vLrgSOJu0oZFIa9"
+        base_url=BaseUrl.LOCAL, api_key="zeB1Dw3IC4xMJO9vLrgSOJu0oZFIa9"
     ) as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
@@ -108,20 +108,20 @@ async def main():
         # print([print(p.name) for p in res])
         # res = await client.auth.login.get_api_keys()
         # print(res)
-        res = await client.metrics.exchanges.get_exchange_mappings_without_preload_content(
-            market="spot", exchange="lol"
-        )
-        print(await res.json())
+        # res = await client.metrics.exchanges.get_exchange_mappings_without_preload_content(
+        #     market="spot", exchange="lol"
+        # )
+        # print(await res.json())
         # res = await client.klines.funding.get_funding_rates_fmt(
         #     symbol="BTC-USDT",
         # )
         # print(res)
-        # res = await client.auth.login.verify_api_key(api_key='sk6SGlb8rxWZr744FV4zTmDLr5w5Gs')
-        # print(res)
-        # res = await client.metrics.exchanges.get_exchange_mappings(
-        #     exchange="binance", market=MarketType.FUTURES
-        # )
-        # print(res.data)
+        res = await client.auth.login.verify()
+        print(res)
+    # res = await client.metrics.exchanges.get_exchange_mappings(
+    #     exchange="binance", market=MarketType.FUTURES
+    # )
+    # print(res.data)
 
 
 async def configure_client():

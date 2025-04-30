@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **nbf** | **float** | Not valid before time | [optional] 
 **iat** | **float** | Issued at time | [optional] 
 **jti** | **str** | JWT ID | [optional] 
+**admin** | **bool** | Whether the user is an admin | [optional] 
 **scopes** | **List[str]** | Scopes | [optional] 
 
 ## Example

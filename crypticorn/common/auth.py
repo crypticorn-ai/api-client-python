@@ -3,7 +3,12 @@ import json
 from crypticorn.auth import Verify200Response, AuthClient, Configuration
 from crypticorn.auth.client.exceptions import ApiException
 from crypticorn.common.scopes import Scope
-from crypticorn.common.exceptions import ApiError, HTTPException, ExceptionContent, WebSocketException
+from crypticorn.common.exceptions import (
+    ApiError,
+    HTTPException,
+    ExceptionContent,
+    WebSocketException,
+)
 from crypticorn.common.urls import BaseUrl, Service, ApiVersion
 from fastapi import Depends, Query
 from fastapi.security import (
