@@ -14,6 +14,7 @@ client/models/data_download_response.py
 client/models/data_info.py
 client/models/data_value_value_value_inner.py
 client/models/data_version.py
+client/models/data_version_info.py
 client/models/download_links.py
 client/models/evaluation.py
 client/models/evaluation_response.py
@@ -24,6 +25,7 @@ client/models/model_create.py
 client/models/model_status.py
 client/models/model_update.py
 client/models/target.py
+client/models/target_info.py
 client/models/target_type.py
 client/py.typed
 client/rest.py
@@ -33,6 +35,7 @@ docs/DataDownloadResponse.md
 docs/DataInfo.md
 docs/DataValueValueValueInner.md
 docs/DataVersion.md
+docs/DataVersionInfo.md
 docs/DownloadLinks.md
 docs/Evaluation.md
 docs/EvaluationResponse.md
@@ -45,5 +48,6 @@ docs/ModelUpdate.md
 docs/ModelsApi.md
 docs/StatusApi.md
 docs/Target.md
+docs/TargetInfo.md
 docs/TargetType.md
 requirements.txt

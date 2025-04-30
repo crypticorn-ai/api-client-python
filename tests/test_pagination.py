@@ -2,9 +2,11 @@ import pytest
 from pydantic import BaseModel
 from crypticorn.common import PaginationParams
 
+
 class Item(BaseModel):
     name: str
     value: int
+
 
 @pytest.mark.asyncio
 async def test_pagination():

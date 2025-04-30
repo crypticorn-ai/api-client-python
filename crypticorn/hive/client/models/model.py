@@ -17,7 +17,6 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List
 from crypticorn.hive.client.models.coins import Coins
@@ -42,8 +41,8 @@ class Model(BaseModel):
     target_type: TargetType = Field(description="Target type")
     evaluations: List[Evaluation] = Field(description="Model evaluations")
     user_id: StrictStr = Field(description="Developer user ID")
-    created_at: datetime = Field(description="Model creation timestamp")
-    updated_at: datetime = Field(description="Model update timestamp")
+    created_at: StrictInt = Field(description="Model creation unix timestamp")
+    updated_at: StrictInt = Field(description="Model update unix timestamp")
     __properties: ClassVar[List[str]] = [
         "model_id",
         "name",
