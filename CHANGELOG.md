@@ -1,6 +1,25 @@
 # CHANGELOG
 
 
+## v2.6.0 (2025-04-30)
+
+### Features
+
+- Add admin flag on auth verify response and user by username endpoint
+  ([`3f27fba`](https://github.com/crypticorn-ai/api-client/commit/3f27fba655e15a42a947ad1c67bcf4319c3daed6))
+
+- Add common pagination query parameters
+  ([`4157137`](https://github.com/crypticorn-ai/api-client/commit/415713725541bb4a180f11de12fea2c3071c5f55))
+
+- Add common webscoket error handling
+  ([`334a450`](https://github.com/crypticorn-ai/api-client/commit/334a45054797616fdd8bb917381e189bb64e4678))
+
+### Testing
+
+- Add api key generation and remove duplicate tests
+  ([`d60a890`](https://github.com/crypticorn-ai/api-client/commit/d60a89071fe7bc25025fbdf2298cb560d9fbdfb8))
+
+
 ## v2.5.3 (2025-04-29)
 
 ### Bug Fixes
