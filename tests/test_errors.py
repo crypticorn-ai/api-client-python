@@ -1,5 +1,5 @@
 import pytest
-from crypticorn.common import ApiError, ApiErrorIdentifier, HttpStatusMapper
+from crypticorn.common import ApiError, ApiErrorIdentifier, StatusCodeMapper
 
 
 @pytest.mark.asyncio
@@ -10,21 +10,21 @@ async def test_lengths():
             list(ApiErrorIdentifier)
         ), f"ApiError ({len(list(ApiError))}) and ApiErrorIdentifier ({len(list(ApiErrorIdentifier))}) do not have the same number of elements. Check above for missing members."
         assert len(list(ApiError)) == len(
-            list(HttpStatusMapper._mapping.keys())
-        ), f"ApiError ({len(list(ApiError))}) and HttpStatusMapper ({len(list(HttpStatusMapper._mapping.keys()))}) do not have the same number of elements. Check above for missing members."
+            list(StatusCodeMapper._mapping.keys())
+        ), f"ApiError ({len(list(ApiError))}) and StatusCodeMapper ({len(list(StatusCodeMapper._mapping.keys()))}) do not have the same number of elements. Check above for missing members."
     except AssertionError as e:
         # Helper for identifying missing members
         api_error_set = set(e.name for e in ApiError)
         api_error_identifier_set = set(e.name for e in ApiErrorIdentifier)
         http_status_mapper_set = set(
-            h.name for h in list(HttpStatusMapper._mapping.keys())
+            h.name for h in list(StatusCodeMapper._mapping.keys())
         )
 
         print(
             "Missing in ApiErrorIdentifier:", api_error_set - api_error_identifier_set
         )
         print("Missing in ApiError:", api_error_identifier_set - api_error_set)
-        print("Missing in HttpStatusMapper:", http_status_mapper_set - api_error_set)
+        print("Missing in StatusCodeMapper:", http_status_mapper_set - api_error_set)
         raise e
 
 
