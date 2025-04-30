@@ -14,8 +14,8 @@ Name | Type | Description | Notes
 **target_type** | [**TargetType**](TargetType.md) | Target type | 
 **evaluations** | [**List[Evaluation]**](Evaluation.md) | Model evaluations | 
 **user_id** | **str** | Developer user ID | 
-**created_at** | **datetime** | Model creation timestamp | 
-**updated_at** | **datetime** | Model update timestamp | 
+**created_at** | **int** | Model creation unix timestamp | 
+**updated_at** | **int** | Model update unix timestamp | 
 
 ## Example
 

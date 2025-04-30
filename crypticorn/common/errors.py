@@ -21,7 +21,6 @@ class ApiErrorIdentifier(ExcludeEnumMixin, StrEnum):
 
     ALLOCATION_BELOW_EXPOSURE = "allocation_below_current_exposure"
     ALLOCATION_BELOW_MINIMUM = "allocation_below_min_amount"
-    ALPHANUMERIC_CHARACTERS_ONLY = "alphanumeric_characters_only"
     BLACK_SWAN = "black_swan"
     BOT_ALREADY_DELETED = "bot_already_deleted"
     BOT_DISABLED = "bot_disabled"
@@ -57,6 +56,7 @@ class ApiErrorIdentifier(ExcludeEnumMixin, StrEnum):
     INVALID_DATA_RESPONSE = "invalid_data_response"
     INVALID_EXCHANGE_KEY = "invalid_exchange_key"
     INVALID_MARGIN_MODE = "invalid_margin_mode"
+    INVALID_MODEL_NAME = "invalid_model_name"
     INVALID_PARAMETER = "invalid_parameter_provided"
     LEVERAGE_EXCEEDED = "leverage_limit_exceeded"
     LIQUIDATION_PRICE_VIOLATION = "order_violates_liquidation_price_constraints"
@@ -120,11 +120,6 @@ class ApiError(ExcludeEnumMixin, Enum, metaclass=ApiErrorFallback):
     )
     ALLOCATION_BELOW_MINIMUM = (
         ApiErrorIdentifier.ALLOCATION_BELOW_MINIMUM,
-        ApiErrorType.USER_ERROR,
-        ApiErrorLevel.ERROR,
-    )
-    ALPHANUMERIC_CHARACTERS_ONLY = (
-        ApiErrorIdentifier.ALPHANUMERIC_CHARACTERS_ONLY,
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
@@ -265,6 +260,11 @@ class ApiError(ExcludeEnumMixin, Enum, metaclass=ApiErrorFallback):
     )
     INSUFFICIENT_MARGIN = (
         ApiErrorIdentifier.INSUFFICIENT_MARGIN,
+        ApiErrorType.USER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    INVALID_MODEL_NAME = (
+        ApiErrorIdentifier.INVALID_MODEL_NAME,
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
@@ -663,7 +663,7 @@ class StatusCodeMapper:
             status.WS_1011_INTERNAL_ERROR,
         ),
         # Bad Requests (400) - Invalid parameters or states
-        ApiError.ALPHANUMERIC_CHARACTERS_ONLY: (
+        ApiError.INVALID_MODEL_NAME: (
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
         ),

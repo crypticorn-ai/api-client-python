@@ -8,9 +8,9 @@ Name | Type | Description | Notes
 **data** | **Dict[str, Dict[str, Dict[str, List[DataValueValueValueInner]]]]** |  | 
 **coins** | [**List[Coins]**](Coins.md) |  | 
 **feature_sizes** | [**List[FeatureSize]**](FeatureSize.md) |  | 
-**targets** | [**Dict[str, TargetType]**](TargetType.md) |  | 
-**versions** | **Dict[str, float]** |  | 
-**latest_version** | [**DataVersion**](DataVersion.md) |  | 
+**targets** | [**List[TargetInfo]**](TargetInfo.md) |  | 
+**all_versions** | [**List[DataVersionInfo]**](DataVersionInfo.md) |  | 
+**available_versions** | [**List[DataVersionInfo]**](DataVersionInfo.md) |  | 
 
 ## Example
 

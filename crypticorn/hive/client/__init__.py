@@ -40,6 +40,7 @@ from crypticorn.hive.client.models.data_value_value_value_inner import (
     DataValueValueValueInner,
 )
 from crypticorn.hive.client.models.data_version import DataVersion
+from crypticorn.hive.client.models.data_version_info import DataVersionInfo
 from crypticorn.hive.client.models.download_links import DownloadLinks
 from crypticorn.hive.client.models.evaluation import Evaluation
 from crypticorn.hive.client.models.evaluation_response import EvaluationResponse
@@ -50,4 +51,5 @@ from crypticorn.hive.client.models.model_create import ModelCreate
 from crypticorn.hive.client.models.model_status import ModelStatus
 from crypticorn.hive.client.models.model_update import ModelUpdate
 from crypticorn.hive.client.models.target import Target
+from crypticorn.hive.client.models.target_info import TargetInfo
 from crypticorn.hive.client.models.target_type import TargetType

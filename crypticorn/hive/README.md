@@ -107,8 +107,9 @@ Class | Method | HTTP request | Description
 *ModelsApi* | [**create_model**](docs/ModelsApi.md#create_model) | **POST** /model/creation | Create Model
 *ModelsApi* | [**delete_model**](docs/ModelsApi.md#delete_model) | **DELETE** /model/{id} | Delete Model
 *ModelsApi* | [**evaluate_model**](docs/ModelsApi.md#evaluate_model) | **POST** /model/evaluation/{id} | Evaluate Model
-*ModelsApi* | [**get_all_models**](docs/ModelsApi.md#get_all_models) | **GET** /model/all | Get All Models
-*ModelsApi* | [**get_model**](docs/ModelsApi.md#get_model) | **GET** /model | Get Model
+*ModelsApi* | [**get_model**](docs/ModelsApi.md#get_model) | **GET** /model/{id} | Get Model
+*ModelsApi* | [**get_model_by_name**](docs/ModelsApi.md#get_model_by_name) | **GET** /model/by-name/{name} | Get Model By Name
+*ModelsApi* | [**get_models**](docs/ModelsApi.md#get_models) | **GET** /model | Get All Models
 *ModelsApi* | [**update_model**](docs/ModelsApi.md#update_model) | **PUT** /model/{id} | Update Model
 *StatusApi* | [**get_config**](docs/StatusApi.md#get_config) | **GET** /config | Config
 *StatusApi* | [**get_time**](docs/StatusApi.md#get_time) | **GET** /time | Time
@@ -122,6 +123,7 @@ Class | Method | HTTP request | Description
  - [DataInfo](docs/DataInfo.md)
  - [DataValueValueValueInner](docs/DataValueValueValueInner.md)
  - [DataVersion](docs/DataVersion.md)
+ - [DataVersionInfo](docs/DataVersionInfo.md)
  - [DownloadLinks](docs/DownloadLinks.md)
  - [Evaluation](docs/Evaluation.md)
  - [EvaluationResponse](docs/EvaluationResponse.md)
@@ -132,6 +134,7 @@ Class | Method | HTTP request | Description
  - [ModelStatus](docs/ModelStatus.md)
  - [ModelUpdate](docs/ModelUpdate.md)
  - [Target](docs/Target.md)
+ - [TargetInfo](docs/TargetInfo.md)
  - [TargetType](docs/TargetType.md)
 
 
