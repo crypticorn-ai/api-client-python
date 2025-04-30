@@ -96,7 +96,7 @@ class ApiErrorIdentifier(ExcludeEnumMixin, StrEnum):
     URL_NOT_FOUND = "requested_resource_not_found"
 
     @property
-    def get_error(self) -> 'ApiError':
+    def get_error(self) -> "ApiError":
         """Get the corresponding ApiError."""
         return ApiError[self.value]
 
@@ -516,96 +516,309 @@ class StatusCodeMapper:
 
     _mapping = {
         # Authentication/Authorization
-        ApiError.EXPIRED_BEARER: (status.HTTP_401_UNAUTHORIZED, status.WS_1008_POLICY_VIOLATION),
-        ApiError.INVALID_BEARER: (status.HTTP_401_UNAUTHORIZED, status.WS_1008_POLICY_VIOLATION),
-        ApiError.EXPIRED_API_KEY: (status.HTTP_401_UNAUTHORIZED, status.WS_1008_POLICY_VIOLATION),
-        ApiError.INVALID_API_KEY: (status.HTTP_401_UNAUTHORIZED, status.WS_1008_POLICY_VIOLATION),
-        ApiError.NO_CREDENTIALS: (status.HTTP_401_UNAUTHORIZED, status.WS_1008_POLICY_VIOLATION),
-        ApiError.INSUFFICIENT_SCOPES: (status.HTTP_403_FORBIDDEN, status.WS_1008_POLICY_VIOLATION),
-        ApiError.EXCHANGE_PERMISSION_DENIED: (status.HTTP_403_FORBIDDEN, status.WS_1008_POLICY_VIOLATION),
-        ApiError.EXCHANGE_USER_FROZEN: (status.HTTP_403_FORBIDDEN, status.WS_1008_POLICY_VIOLATION),
-        ApiError.TRADING_LOCKED: (status.HTTP_403_FORBIDDEN, status.WS_1008_POLICY_VIOLATION),
-        ApiError.FORBIDDEN: (status.HTTP_403_FORBIDDEN, status.WS_1008_POLICY_VIOLATION),
+        ApiError.EXPIRED_BEARER: (
+            status.HTTP_401_UNAUTHORIZED,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.INVALID_BEARER: (
+            status.HTTP_401_UNAUTHORIZED,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.EXPIRED_API_KEY: (
+            status.HTTP_401_UNAUTHORIZED,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.INVALID_API_KEY: (
+            status.HTTP_401_UNAUTHORIZED,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.NO_CREDENTIALS: (
+            status.HTTP_401_UNAUTHORIZED,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.INSUFFICIENT_SCOPES: (
+            status.HTTP_403_FORBIDDEN,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.EXCHANGE_PERMISSION_DENIED: (
+            status.HTTP_403_FORBIDDEN,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.EXCHANGE_USER_FROZEN: (
+            status.HTTP_403_FORBIDDEN,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.TRADING_LOCKED: (
+            status.HTTP_403_FORBIDDEN,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.FORBIDDEN: (
+            status.HTTP_403_FORBIDDEN,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
         # Not Found
-        ApiError.URL_NOT_FOUND: (status.HTTP_404_NOT_FOUND, status.WS_1008_POLICY_VIOLATION),
-        ApiError.OBJECT_NOT_FOUND: (status.HTTP_404_NOT_FOUND, status.WS_1008_POLICY_VIOLATION),
-        ApiError.ORDER_NOT_FOUND: (status.HTTP_404_NOT_FOUND, status.WS_1008_POLICY_VIOLATION),
-        ApiError.POSITION_NOT_FOUND: (status.HTTP_404_NOT_FOUND, status.WS_1008_POLICY_VIOLATION),
-        ApiError.SYMBOL_NOT_FOUND: (status.HTTP_404_NOT_FOUND, status.WS_1008_POLICY_VIOLATION),
+        ApiError.URL_NOT_FOUND: (
+            status.HTTP_404_NOT_FOUND,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.OBJECT_NOT_FOUND: (
+            status.HTTP_404_NOT_FOUND,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.ORDER_NOT_FOUND: (
+            status.HTTP_404_NOT_FOUND,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.POSITION_NOT_FOUND: (
+            status.HTTP_404_NOT_FOUND,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.SYMBOL_NOT_FOUND: (
+            status.HTTP_404_NOT_FOUND,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
         # Conflicts/Duplicates
-        ApiError.CLIENT_ORDER_ID_REPEATED: (status.HTTP_409_CONFLICT, status.WS_1008_POLICY_VIOLATION),
-        ApiError.OBJECT_ALREADY_EXISTS: (status.HTTP_409_CONFLICT, status.WS_1008_POLICY_VIOLATION),
-        ApiError.EXCHANGE_KEY_ALREADY_EXISTS: (status.HTTP_409_CONFLICT, status.WS_1008_POLICY_VIOLATION),
-        ApiError.BOT_ALREADY_DELETED: (status.HTTP_409_CONFLICT, status.WS_1008_POLICY_VIOLATION),  
-        ApiError.STRATEGY_ALREADY_EXISTS: (status.HTTP_409_CONFLICT, status.WS_1008_POLICY_VIOLATION),
+        ApiError.CLIENT_ORDER_ID_REPEATED: (
+            status.HTTP_409_CONFLICT,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.OBJECT_ALREADY_EXISTS: (
+            status.HTTP_409_CONFLICT,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.EXCHANGE_KEY_ALREADY_EXISTS: (
+            status.HTTP_409_CONFLICT,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.BOT_ALREADY_DELETED: (
+            status.HTTP_409_CONFLICT,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.STRATEGY_ALREADY_EXISTS: (
+            status.HTTP_409_CONFLICT,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
         # Invalid Content
-        ApiError.CONTENT_TYPE_ERROR: (status.HTTP_415_UNSUPPORTED_MEDIA_TYPE, status.WS_1003_UNSUPPORTED_DATA),
-        ApiError.INVALID_DATA_REQUEST: (status.HTTP_422_UNPROCESSABLE_ENTITY, status.WS_1007_INVALID_FRAME_PAYLOAD_DATA),
-        ApiError.INVALID_DATA_RESPONSE: (status.HTTP_422_UNPROCESSABLE_ENTITY, status.WS_1007_INVALID_FRAME_PAYLOAD_DATA),
+        ApiError.CONTENT_TYPE_ERROR: (
+            status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
+            status.WS_1003_UNSUPPORTED_DATA,
+        ),
+        ApiError.INVALID_DATA_REQUEST: (
+            status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status.WS_1007_INVALID_FRAME_PAYLOAD_DATA,
+        ),
+        ApiError.INVALID_DATA_RESPONSE: (
+            status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status.WS_1007_INVALID_FRAME_PAYLOAD_DATA,
+        ),
         # Rate Limits
-        ApiError.EXCHANGE_RATE_LIMIT: (status.HTTP_429_TOO_MANY_REQUESTS, status.WS_1013_TRY_AGAIN_LATER),
-        ApiError.REQUEST_SCOPE_EXCEEDED: (status.HTTP_429_TOO_MANY_REQUESTS, status.WS_1013_TRY_AGAIN_LATER),
+        ApiError.EXCHANGE_RATE_LIMIT: (
+            status.HTTP_429_TOO_MANY_REQUESTS,
+            status.WS_1013_TRY_AGAIN_LATER,
+        ),
+        ApiError.REQUEST_SCOPE_EXCEEDED: (
+            status.HTTP_429_TOO_MANY_REQUESTS,
+            status.WS_1013_TRY_AGAIN_LATER,
+        ),
         # Server Errors
-        ApiError.UNKNOWN_ERROR: (status.HTTP_500_INTERNAL_SERVER_ERROR, status.WS_1011_INTERNAL_ERROR),
-        ApiError.EXCHANGE_SYSTEM_ERROR: (status.HTTP_500_INTERNAL_SERVER_ERROR, status.WS_1011_INTERNAL_ERROR),
-        ApiError.NOW_API_DOWN: (status.HTTP_500_INTERNAL_SERVER_ERROR, status.WS_1011_INTERNAL_ERROR),
-        ApiError.RPC_TIMEOUT: (status.HTTP_500_INTERNAL_SERVER_ERROR, status.WS_1011_INTERNAL_ERROR),
+        ApiError.UNKNOWN_ERROR: (
+            status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status.WS_1011_INTERNAL_ERROR,
+        ),
+        ApiError.EXCHANGE_SYSTEM_ERROR: (
+            status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status.WS_1011_INTERNAL_ERROR,
+        ),
+        ApiError.NOW_API_DOWN: (
+            status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status.WS_1011_INTERNAL_ERROR,
+        ),
+        ApiError.RPC_TIMEOUT: (
+            status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status.WS_1011_INTERNAL_ERROR,
+        ),
         # Service Unavailable
-        ApiError.EXCHANGE_SERVICE_UNAVAILABLE: (status.HTTP_503_SERVICE_UNAVAILABLE, status.WS_1011_INTERNAL_ERROR),
-        ApiError.EXCHANGE_MAINTENANCE: (status.HTTP_503_SERVICE_UNAVAILABLE, status.WS_1011_INTERNAL_ERROR),
-        ApiError.EXCHANGE_SYSTEM_BUSY: (status.HTTP_503_SERVICE_UNAVAILABLE, status.WS_1011_INTERNAL_ERROR),
-        ApiError.SETTLEMENT_IN_PROGRESS: (status.HTTP_503_SERVICE_UNAVAILABLE, status.WS_1011_INTERNAL_ERROR),
-        ApiError.POSITION_SUSPENDED: (status.HTTP_503_SERVICE_UNAVAILABLE, status.WS_1011_INTERNAL_ERROR),
-        ApiError.TRADING_SUSPENDED: (status.HTTP_503_SERVICE_UNAVAILABLE, status.WS_1011_INTERNAL_ERROR),
+        ApiError.EXCHANGE_SERVICE_UNAVAILABLE: (
+            status.HTTP_503_SERVICE_UNAVAILABLE,
+            status.WS_1011_INTERNAL_ERROR,
+        ),
+        ApiError.EXCHANGE_MAINTENANCE: (
+            status.HTTP_503_SERVICE_UNAVAILABLE,
+            status.WS_1011_INTERNAL_ERROR,
+        ),
+        ApiError.EXCHANGE_SYSTEM_BUSY: (
+            status.HTTP_503_SERVICE_UNAVAILABLE,
+            status.WS_1011_INTERNAL_ERROR,
+        ),
+        ApiError.SETTLEMENT_IN_PROGRESS: (
+            status.HTTP_503_SERVICE_UNAVAILABLE,
+            status.WS_1011_INTERNAL_ERROR,
+        ),
+        ApiError.POSITION_SUSPENDED: (
+            status.HTTP_503_SERVICE_UNAVAILABLE,
+            status.WS_1011_INTERNAL_ERROR,
+        ),
+        ApiError.TRADING_SUSPENDED: (
+            status.HTTP_503_SERVICE_UNAVAILABLE,
+            status.WS_1011_INTERNAL_ERROR,
+        ),
         # Bad Requests (400) - Invalid parameters or states
-        ApiError.ALPHANUMERIC_CHARACTERS_ONLY: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.ALLOCATION_BELOW_EXPOSURE: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.ALLOCATION_BELOW_MINIMUM: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.BLACK_SWAN: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.BOT_DISABLED: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.DELETE_BOT_ERROR: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.EXCHANGE_INVALID_SIGNATURE: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.EXCHANGE_INVALID_TIMESTAMP: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.EXCHANGE_IP_RESTRICTED: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.EXCHANGE_KEY_IN_USE: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.EXCHANGE_SYSTEM_CONFIG_ERROR: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.HEDGE_MODE_NOT_ACTIVE: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.HTTP_ERROR: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.INSUFFICIENT_BALANCE: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
+        ApiError.ALPHANUMERIC_CHARACTERS_ONLY: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.ALLOCATION_BELOW_EXPOSURE: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.ALLOCATION_BELOW_MINIMUM: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.BLACK_SWAN: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.BOT_DISABLED: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.DELETE_BOT_ERROR: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.EXCHANGE_INVALID_SIGNATURE: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.EXCHANGE_INVALID_TIMESTAMP: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.EXCHANGE_IP_RESTRICTED: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.EXCHANGE_KEY_IN_USE: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.EXCHANGE_SYSTEM_CONFIG_ERROR: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.HEDGE_MODE_NOT_ACTIVE: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.HTTP_ERROR: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.INSUFFICIENT_BALANCE: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
         ApiError.INSUFFICIENT_MARGIN: status.HTTP_400_BAD_REQUEST,
-        ApiError.INVALID_EXCHANGE_KEY: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.INVALID_MARGIN_MODE: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.INVALID_PARAMETER: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.LEVERAGE_EXCEEDED: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
+        ApiError.INVALID_EXCHANGE_KEY: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.INVALID_MARGIN_MODE: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.INVALID_PARAMETER: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.LEVERAGE_EXCEEDED: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
         ApiError.LIQUIDATION_PRICE_VIOLATION: status.HTTP_400_BAD_REQUEST,
-        ApiError.ORDER_ALREADY_FILLED: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.ORDER_IN_PROCESS: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.ORDER_LIMIT_EXCEEDED: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.ORDER_PRICE_INVALID: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.ORDER_SIZE_TOO_LARGE: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.ORDER_SIZE_TOO_SMALL: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.POSITION_LIMIT_EXCEEDED: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.POST_ONLY_REJECTED: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.RISK_LIMIT_EXCEEDED: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.STRATEGY_DISABLED: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.STRATEGY_LEVERAGE_MISMATCH: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.STRATEGY_NOT_SUPPORTING_EXCHANGE: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.TRADING_ACTION_EXPIRED: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
-        ApiError.TRADING_ACTION_SKIPPED: (status.HTTP_400_BAD_REQUEST, status.WS_1008_POLICY_VIOLATION),
+        ApiError.ORDER_ALREADY_FILLED: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.ORDER_IN_PROCESS: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.ORDER_LIMIT_EXCEEDED: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.ORDER_PRICE_INVALID: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.ORDER_SIZE_TOO_LARGE: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.ORDER_SIZE_TOO_SMALL: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.POSITION_LIMIT_EXCEEDED: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.POST_ONLY_REJECTED: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.RISK_LIMIT_EXCEEDED: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.STRATEGY_DISABLED: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.STRATEGY_LEVERAGE_MISMATCH: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.STRATEGY_NOT_SUPPORTING_EXCHANGE: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.TRADING_ACTION_EXPIRED: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.TRADING_ACTION_SKIPPED: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
         # Success cases
         ApiError.SUCCESS: (status.HTTP_200_OK, status.WS_1000_NORMAL_CLOSURE),
-        ApiError.BOT_STOPPING_COMPLETED: (status.HTTP_200_OK, status.WS_1000_NORMAL_CLOSURE),
-        ApiError.BOT_STOPPING_STARTED: (status.HTTP_200_OK, status.WS_1000_NORMAL_CLOSURE),
-        ApiError.OBJECT_CREATED: (status.HTTP_201_CREATED, status.WS_1000_NORMAL_CLOSURE),
+        ApiError.BOT_STOPPING_COMPLETED: (
+            status.HTTP_200_OK,
+            status.WS_1000_NORMAL_CLOSURE,
+        ),
+        ApiError.BOT_STOPPING_STARTED: (
+            status.HTTP_200_OK,
+            status.WS_1000_NORMAL_CLOSURE,
+        ),
+        ApiError.OBJECT_CREATED: (
+            status.HTTP_201_CREATED,
+            status.WS_1000_NORMAL_CLOSURE,
+        ),
         ApiError.OBJECT_UPDATED: (status.HTTP_200_OK, status.WS_1000_NORMAL_CLOSURE),
-        ApiError.OBJECT_DELETED: (status.HTTP_204_NO_CONTENT, status.WS_1000_NORMAL_CLOSURE),
+        ApiError.OBJECT_DELETED: (
+            status.HTTP_204_NO_CONTENT,
+            status.WS_1000_NORMAL_CLOSURE,
+        ),
     }
 
     @classmethod
     def get_http_code(cls, error: ApiError) -> int:
         """Get the HTTP status code for the error. If the error is not in the mapping, return 500."""
         return cls._mapping.get(error, cls._mapping[ApiError.UNKNOWN_ERROR])[0]
-    
+
     @classmethod
     def get_websocket_code(cls, error: ApiError) -> int:
         """Get the WebSocket status code for the error. If the error is not in the mapping, return 1008."""

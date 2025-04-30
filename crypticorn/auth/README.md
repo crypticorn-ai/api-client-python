@@ -106,6 +106,7 @@ Class | Method | HTTP request | Description
 *UserApi* | [**send_password_reset_email**](docs/UserApi.md#send_password_reset_email) | **POST** /send-password-reset-email | Send Password Reset Email
 *UserApi* | [**update_user**](docs/UserApi.md#update_user) | **POST** /update-user | Update User
 *UserApi* | [**user_by_id**](docs/UserApi.md#user_by_id) | **GET** /user-by-id | User By Id
+*UserApi* | [**user_by_username**](docs/UserApi.md#user_by_username) | **GET** /user-by-username | User By Username
 *UserApi* | [**user_reset_password**](docs/UserApi.md#user_reset_password) | **POST** /user-reset-password | User Reset Password
 *UserApi* | [**user_set_password**](docs/UserApi.md#user_set_password) | **POST** /user-set-password | User Set Password
 *UserApi* | [**verify_email**](docs/UserApi.md#verify_email) | **POST** /verify-email | Verify Email
@@ -138,6 +139,8 @@ Class | Method | HTTP request | Description
  - [ListWallets200ResponseUserValue](docs/ListWallets200ResponseUserValue.md)
  - [LogoutDefaultResponse](docs/LogoutDefaultResponse.md)
  - [LogoutDefaultResponseIssuesInner](docs/LogoutDefaultResponseIssuesInner.md)
+ - [OauthCallback200Response](docs/OauthCallback200Response.md)
+ - [OauthCallback200ResponseUser](docs/OauthCallback200ResponseUser.md)
  - [RefreshTokenInfo200Response](docs/RefreshTokenInfo200Response.md)
  - [RefreshTokenInfo200ResponseUserSession](docs/RefreshTokenInfo200ResponseUserSession.md)
  - [ResendVerificationEmailRequest](docs/ResendVerificationEmailRequest.md)
@@ -146,6 +149,7 @@ Class | Method | HTTP request | Description
  - [TokenInfo200Response](docs/TokenInfo200Response.md)
  - [UnlinkWalletRequest](docs/UnlinkWalletRequest.md)
  - [UpdateUserRequest](docs/UpdateUserRequest.md)
+ - [UserByUsername200Response](docs/UserByUsername200Response.md)
  - [UserResetPasswordRequest](docs/UserResetPasswordRequest.md)
  - [UserSetPasswordRequest](docs/UserSetPasswordRequest.md)
  - [Verify200Response](docs/Verify200Response.md)

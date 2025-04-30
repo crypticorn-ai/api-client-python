@@ -56,6 +56,12 @@ from crypticorn.auth.client.models.logout_default_response import LogoutDefaultR
 from crypticorn.auth.client.models.logout_default_response_issues_inner import (
     LogoutDefaultResponseIssuesInner,
 )
+from crypticorn.auth.client.models.oauth_callback200_response import (
+    OauthCallback200Response,
+)
+from crypticorn.auth.client.models.oauth_callback200_response_user import (
+    OauthCallback200ResponseUser,
+)
 from crypticorn.auth.client.models.refresh_token_info200_response import (
     RefreshTokenInfo200Response,
 )
@@ -74,6 +80,9 @@ from crypticorn.auth.client.models.rotate_tokens200_response import (
 from crypticorn.auth.client.models.token_info200_response import TokenInfo200Response
 from crypticorn.auth.client.models.unlink_wallet_request import UnlinkWalletRequest
 from crypticorn.auth.client.models.update_user_request import UpdateUserRequest
+from crypticorn.auth.client.models.user_by_username200_response import (
+    UserByUsername200Response,
+)
 from crypticorn.auth.client.models.user_reset_password_request import (
     UserResetPasswordRequest,
 )

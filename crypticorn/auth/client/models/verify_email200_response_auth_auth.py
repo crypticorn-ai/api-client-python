@@ -17,7 +17,15 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictBool,
+    StrictFloat,
+    StrictInt,
+    StrictStr,
+)
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
@@ -41,6 +49,9 @@ class VerifyEmail200ResponseAuthAuth(BaseModel):
         default=None, description="Issued at time"
     )
     jti: Optional[StrictStr] = Field(default=None, description="JWT ID")
+    admin: Optional[StrictBool] = Field(
+        default=None, description="Whether the user is an admin"
+    )
     scopes: Optional[List[StrictStr]] = Field(default=None, description="Scopes")
     __properties: ClassVar[List[str]] = [
         "iss",
@@ -50,6 +61,7 @@ class VerifyEmail200ResponseAuthAuth(BaseModel):
         "nbf",
         "iat",
         "jti",
+        "admin",
         "scopes",
     ]
 
@@ -110,6 +122,7 @@ class VerifyEmail200ResponseAuthAuth(BaseModel):
                 "nbf": obj.get("nbf"),
                 "iat": obj.get("iat"),
                 "jti": obj.get("jti"),
+                "admin": obj.get("admin"),
                 "scopes": obj.get("scopes"),
             }
         )
