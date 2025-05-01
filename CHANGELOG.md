@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.7.0 (2025-05-01)
+
+### Features
+
+- Add download functionality for hive download data endpoint
+  ([`ee09d17`](https://github.com/crypticorn-ai/api-client/commit/ee09d177a28f3879e549eb3044c24b5e6197a528))
+
+
 ## v2.6.0 (2025-04-30)
 
 ### Features
