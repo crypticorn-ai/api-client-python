@@ -60,6 +60,7 @@ class ApiErrorIdentifier(ExcludeEnumMixin, StrEnum):
     INVALID_PARAMETER = "invalid_parameter_provided"
     LEVERAGE_EXCEEDED = "leverage_limit_exceeded"
     LIQUIDATION_PRICE_VIOLATION = "order_violates_liquidation_price_constraints"
+    MODEL_NAME_NOT_UNIQUE = "model_name_not_unique"
     NO_CREDENTIALS = "no_credentials"
     NOW_API_DOWN = "now_api_down"
     OBJECT_ALREADY_EXISTS = "object_already_exists"
@@ -316,6 +317,11 @@ class ApiError(ExcludeEnumMixin, Enum, metaclass=ApiErrorFallback):
     LIQUIDATION_PRICE_VIOLATION = (
         ApiErrorIdentifier.LIQUIDATION_PRICE_VIOLATION,
         ApiErrorType.SERVER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    MODEL_NAME_NOT_UNIQUE = (
+        ApiErrorIdentifier.MODEL_NAME_NOT_UNIQUE,
+        ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
     NO_CREDENTIALS = (
@@ -595,6 +601,10 @@ class StatusCodeMapper:
             status.WS_1008_POLICY_VIOLATION,
         ),
         ApiError.STRATEGY_ALREADY_EXISTS: (
+            status.HTTP_409_CONFLICT,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.MODEL_NAME_NOT_UNIQUE: (
             status.HTTP_409_CONFLICT,
             status.WS_1008_POLICY_VIOLATION,
         ),

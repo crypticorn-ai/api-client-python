@@ -48,9 +48,10 @@ class DataApi:
         version: Annotated[
             Optional[DataVersion],
             Field(description="Data version. Default is the latest public version."),
-        ],
+        ] = None,
         feature_size: Annotated[
-            Optional[FeatureSize], Field(description="Feature size")
+            Optional[FeatureSize],
+            Field(description="The number of features in the data. Default is LARGE."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -70,9 +71,9 @@ class DataApi:
 
         :param model_id: Model ID (required)
         :type model_id: int
-        :param version: Data version. Default is the latest public version. (required)
+        :param version: Data version. Default is the latest public version.
         :type version: DataVersion
-        :param feature_size: Feature size
+        :param feature_size: The number of features in the data. Default is LARGE.
         :type feature_size: FeatureSize
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -125,9 +126,10 @@ class DataApi:
         version: Annotated[
             Optional[DataVersion],
             Field(description="Data version. Default is the latest public version."),
-        ],
+        ] = None,
         feature_size: Annotated[
-            Optional[FeatureSize], Field(description="Feature size")
+            Optional[FeatureSize],
+            Field(description="The number of features in the data. Default is LARGE."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -147,9 +149,9 @@ class DataApi:
 
         :param model_id: Model ID (required)
         :type model_id: int
-        :param version: Data version. Default is the latest public version. (required)
+        :param version: Data version. Default is the latest public version.
         :type version: DataVersion
-        :param feature_size: Feature size
+        :param feature_size: The number of features in the data. Default is LARGE.
         :type feature_size: FeatureSize
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -202,9 +204,10 @@ class DataApi:
         version: Annotated[
             Optional[DataVersion],
             Field(description="Data version. Default is the latest public version."),
-        ],
+        ] = None,
         feature_size: Annotated[
-            Optional[FeatureSize], Field(description="Feature size")
+            Optional[FeatureSize],
+            Field(description="The number of features in the data. Default is LARGE."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -224,9 +227,9 @@ class DataApi:
 
         :param model_id: Model ID (required)
         :type model_id: int
-        :param version: Data version. Default is the latest public version. (required)
+        :param version: Data version. Default is the latest public version.
         :type version: DataVersion
-        :param feature_size: Feature size
+        :param feature_size: The number of features in the data. Default is LARGE.
         :type feature_size: FeatureSize
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

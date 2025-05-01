@@ -83,12 +83,12 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.DataApi(api_client)
     model_id = 56 # int | Model ID
-    version = client.DataVersion() # DataVersion | Data version. Default is the latest public version.
-    feature_size = client.FeatureSize() # FeatureSize | Feature size (optional)
+    version = client.DataVersion() # DataVersion | Data version. Default is the latest public version. (optional)
+    feature_size = client.FeatureSize() # FeatureSize | The number of features in the data. Default is LARGE. (optional)
 
     try:
         # Download Data
-        api_response = await api_instance.download_data(model_id, version, feature_size=feature_size)
+        api_response = await api_instance.download_data(model_id, version=version, feature_size=feature_size)
         print("The response of DataApi->download_data:\n")
         pprint(api_response)
     except ApiException as e:
