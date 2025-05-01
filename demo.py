@@ -15,7 +15,7 @@ jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdv
 
 async def main():
     async with ApiClient(
-        base_url=BaseUrl.LOCAL, api_key="zeB1Dw3IC4xMJO9vLrgSOJu0oZFIa9"
+        base_url=BaseUrl.LOCAL, api_key="6aY2sstA5i5GJ0zZl9PmsNbaRtOvLs"
     ) as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
@@ -116,7 +116,11 @@ async def main():
         #     symbol="BTC-USDT",
         # )
         # print(res)
-        res = await client.auth.login.verify()
+        # res = await client.auth.login.verify()
+        # print(res)
+        res = await client.hive.data.download_data(
+            model_id=1, version="1.0", feature_size="small"
+        )
         print(res)
     # res = await client.metrics.exchanges.get_exchange_mappings(
     #     exchange="binance", market=MarketType.FUTURES

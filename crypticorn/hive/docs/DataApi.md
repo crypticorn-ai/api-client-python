@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **download_data**
-> DataDownloadResponse download_data(model_id, version, feature_size=feature_size)
+> DataDownloadResponse download_data(model_id, version=version, feature_size=feature_size)
 
 Download Data
 
@@ -55,12 +55,12 @@ async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = client.DataApi(api_client)
     model_id = 56 # int | Model ID
-    version = client.DataVersion() # DataVersion | Data version. Default is the latest public version.
-    feature_size = client.FeatureSize() # FeatureSize | Feature size (optional)
+    version = client.DataVersion() # DataVersion | Data version. Default is the latest public version. (optional)
+    feature_size = client.FeatureSize() # FeatureSize | The number of features in the data. Default is LARGE. (optional)
 
     try:
         # Download Data
-        api_response = await api_instance.download_data(model_id, version, feature_size=feature_size)
+        api_response = await api_instance.download_data(model_id, version=version, feature_size=feature_size)
         print("The response of DataApi->download_data:\n")
         pprint(api_response)
     except Exception as e:
@@ -75,8 +75,8 @@ async with client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **model_id** | **int**| Model ID | 
- **version** | [**DataVersion**](.md)| Data version. Default is the latest public version. | 
- **feature_size** | [**FeatureSize**](.md)| Feature size | [optional] 
+ **version** | [**DataVersion**](.md)| Data version. Default is the latest public version. | [optional] 
+ **feature_size** | [**FeatureSize**](.md)| The number of features in the data. Default is LARGE. | [optional] 
 
 ### Return type
 
