@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.7.1 (2025-05-02)
+
+### Bug Fixes
+
+- Use pydantic instead of json response in api wrappers
+  ([`ddd623b`](https://github.com/crypticorn-ai/api-client/commit/ddd623b28cb542ae6dd1bab02044c682cac206af))
+
+
 ## v2.7.0 (2025-05-01)
 
 ### Features
