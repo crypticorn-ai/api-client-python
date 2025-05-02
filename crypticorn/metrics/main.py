@@ -33,7 +33,7 @@ class MetricsClient:
         self.marketcap = MarketcapApiWrapper(self.base_client)
         self.markets = MarketsApi(self.base_client)
         self.tokens = TokensApiWrapper(self.base_client)
-        self.exchanges = ExchangesApi(self.base_client)
+        self.exchanges = ExchangesApiWrapper(self.base_client)
 
 
 class MarketcapApiWrapper(MarketcapApi):
@@ -46,12 +46,8 @@ class MarketcapApiWrapper(MarketcapApi):
         Get the marketcap symbols in a pandas dataframe
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_marketcap_symbols_without_preload_content(
-            *args, **kwargs
-        )
-        response.raise_for_status()
-        json_response = await response.json()
-        df = pd.DataFrame(json_response["data"])
+        response = await self.get_marketcap_symbols(*args, **kwargs)
+        df = pd.DataFrame(response)
         df.rename(columns={df.columns[0]: "timestamp"}, inplace=True)
         return df
 
@@ -66,12 +62,8 @@ class TokensApiWrapper(TokensApi):
         Get the tokens in a pandas dataframe
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_stable_and_wrapped_tokens_without_preload_content(
-            *args, **kwargs
-        )
-        response.raise_for_status()
-        json_data = await response.json()
-        return pd.DataFrame(json_data)
+        response = await self.get_stable_and_wrapped_tokens(*args, **kwargs)
+        return pd.DataFrame(response)
 
 
 class ExchangesApiWrapper(ExchangesApi):
@@ -79,18 +71,14 @@ class ExchangesApiWrapper(ExchangesApi):
     A wrapper for the ExchangesApi class.
     """
 
-    async def get_exchanges_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    async def get_available_exchanges_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
         """
         Get the exchanges in a pandas dataframe
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_available_exchanges_without_preload_content(
-            *args, **kwargs
-        )
-        response.raise_for_status()
-        json_data = await response.json()
+        response = await self.get_available_exchanges(*args, **kwargs)
         processed_results = []
-        for row in json_data:
+        for row in response:
             data = {"timestamp": row["timestamp"]}
             data.update(row["exchanges"])
             processed_results.append(data)
