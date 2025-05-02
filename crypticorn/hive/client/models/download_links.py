@@ -25,12 +25,16 @@ from typing_extensions import Self
 
 class DownloadLinks(BaseModel):
     """
-    DownloadLinks
+    The download links for the data
     """  # noqa: E501
 
-    y_train: StrictStr
-    x_test: StrictStr = Field(alias="X_test")
-    x_train: StrictStr = Field(alias="X_train")
+    y_train: StrictStr = Field(description="The download link for the y_train data")
+    x_test: StrictStr = Field(
+        description="The download link for the X_test data", alias="X_test"
+    )
+    x_train: StrictStr = Field(
+        description="The download link for the X_train data", alias="X_train"
+    )
     __properties: ClassVar[List[str]] = ["y_train", "X_test", "X_train"]
 
     model_config = ConfigDict(

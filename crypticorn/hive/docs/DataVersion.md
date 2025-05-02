@@ -1,6 +1,6 @@
 # DataVersion
 
-All ever existing data versions
+All existing data versions
 
 ## Enum
 

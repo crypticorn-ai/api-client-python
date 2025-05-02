@@ -7,7 +7,9 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-async def download_file(url: str, dest_path: str, show_progress_bars: bool = True) -> str:
+async def download_file(
+    url: str, dest_path: str, show_progress_bars: bool = True
+) -> str:
     """downloads a file and shows a progress bar. allow resuming a download"""
     file_size = 0
     req = requests.get(url, stream=True, timeout=600)

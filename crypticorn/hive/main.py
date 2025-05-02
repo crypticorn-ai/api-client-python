@@ -40,11 +40,17 @@ class DataApiWrapper(DataApi):
                 ),
                 download_file(
                     url=response.links.x_test,
-                    dest_path=base_path + "x_test_" + response.feature_size + ".feather",
+                    dest_path=base_path
+                    + "x_test_"
+                    + response.feature_size
+                    + ".feather",
                 ),
                 download_file(
                     url=response.links.x_train,
-                    dest_path=base_path + "x_train_" + response.feature_size + ".feather",
+                    dest_path=base_path
+                    + "x_train_"
+                    + response.feature_size
+                    + ".feather",
                 ),
             ]
         )
