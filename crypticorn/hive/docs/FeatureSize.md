@@ -1,6 +1,6 @@
 # FeatureSize
 
-All ever existing feature sizes
+All existing feature sizes. Some might no be available in the latest data version, but kept for older versions.
 
 ## Enum
 

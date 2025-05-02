@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class Target(str, Enum):
     """
-    All ever existing targets
+    All existing targets. Some might no be available in the latest data version, but kept for older versions.
     """
 
     """

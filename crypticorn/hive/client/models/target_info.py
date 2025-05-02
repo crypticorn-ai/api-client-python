@@ -28,7 +28,7 @@ from typing_extensions import Self
 
 class TargetInfo(BaseModel):
     """
-    TargetInfo
+    Information about a target
     """  # noqa: E501
 
     name: Target = Field(description="Target name")

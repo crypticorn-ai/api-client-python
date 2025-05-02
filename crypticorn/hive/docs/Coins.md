@@ -1,6 +1,6 @@
 # Coins
 
-All ever existing coins
+All existing coins. Some might no be available in the latest data version, but kept for older versions.
 
 ## Enum
 

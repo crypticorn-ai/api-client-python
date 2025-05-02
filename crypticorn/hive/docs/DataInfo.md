@@ -1,16 +1,17 @@
 # DataInfo
 
+The complete data information for all versions, coins, feature sizes and targets
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | **Dict[str, Dict[str, Dict[str, List[DataValueValueValueInner]]]]** |  | 
-**coins** | [**List[Coins]**](Coins.md) |  | 
-**feature_sizes** | [**List[FeatureSize]**](FeatureSize.md) |  | 
-**targets** | [**List[TargetInfo]**](TargetInfo.md) |  | 
-**all_versions** | [**List[DataVersionInfo]**](DataVersionInfo.md) |  | 
-**available_versions** | [**List[DataVersionInfo]**](DataVersionInfo.md) |  | 
+**data** | **Dict[str, Dict[str, Dict[str, List[DataValueValueValueInner]]]]** | The complete data information for all versions, coins, feature sizes and targets. | 
+**coins** | [**List[Coins]**](Coins.md) | The coins available on the latest data version. | 
+**feature_sizes** | [**List[FeatureSize]**](FeatureSize.md) | The feature sizes available on the latest data version. | 
+**targets** | [**List[TargetInfo]**](TargetInfo.md) | The targets available on the latest data version. | 
+**all_versions** | [**List[DataVersionInfo]**](DataVersionInfo.md) | All ever existing data versions. Some may not be publicly available yet. | 
+**available_versions** | [**List[DataVersionInfo]**](DataVersionInfo.md) | All publicly available data versions. | 
 
 ## Example
 

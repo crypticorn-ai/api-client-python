@@ -1,5 +1,6 @@
 # TargetType
 
+The type of the target
 
 ## Enum
 

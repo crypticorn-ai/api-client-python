@@ -1,13 +1,14 @@
 # DownloadLinks
 
+The download links for the data
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**y_train** | **str** |  | 
-**x_test** | **str** |  | 
-**x_train** | **str** |  | 
+**y_train** | **str** | The download link for the y_train data | 
+**x_test** | **str** | The download link for the X_test data | 
+**x_train** | **str** | The download link for the X_train data | 
 
 ## Example
 

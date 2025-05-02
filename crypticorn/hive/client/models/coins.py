@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class Coins(str, Enum):
     """
-    All ever existing coins
+    All existing coins. Some might no be available in the latest data version, but kept for older versions.
     """
 
     """

@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class DataVersion(str, Enum):
     """
-    All ever existing data versions
+    All existing data versions
     """
 
     """

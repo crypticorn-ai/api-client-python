@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
 from crypticorn.hive.client.models.coins import Coins
 from crypticorn.hive.client.models.data_version import DataVersion
@@ -30,13 +30,13 @@ from typing_extensions import Self
 
 class DataDownloadResponse(BaseModel):
     """
-    DataDownloadResponse
+    The response for a data download request
     """  # noqa: E501
 
-    coin: Coins
-    feature_size: FeatureSize
-    version: DataVersion
-    target: Target
+    coin: Coins = Field(description="The coin the data is for")
+    feature_size: FeatureSize = Field(description="The feature size the data is for")
+    version: DataVersion = Field(description="The version of the data")
+    target: Target = Field(description="The target of the data")
     links: DownloadLinks
     __properties: ClassVar[List[str]] = [
         "coin",

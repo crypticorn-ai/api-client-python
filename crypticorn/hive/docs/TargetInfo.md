@@ -1,5 +1,6 @@
 # TargetInfo
 
+Information about a target
 
 ## Properties
 

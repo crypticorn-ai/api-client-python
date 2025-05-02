@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class TargetType(str, Enum):
     """
-    TargetType
+    The type of the target
     """
 
     """

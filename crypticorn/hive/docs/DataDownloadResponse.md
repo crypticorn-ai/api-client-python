@@ -1,14 +1,15 @@
 # DataDownloadResponse
 
+The response for a data download request
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**coin** | [**Coins**](Coins.md) |  | 
-**feature_size** | [**FeatureSize**](FeatureSize.md) |  | 
-**version** | [**DataVersion**](DataVersion.md) |  | 
-**target** | [**Target**](Target.md) |  | 
+**coin** | [**Coins**](Coins.md) | The coin the data is for | 
+**feature_size** | [**FeatureSize**](FeatureSize.md) | The feature size the data is for | 
+**version** | [**DataVersion**](DataVersion.md) | The version of the data | 
+**target** | [**Target**](Target.md) | The target of the data | 
 **links** | [**DownloadLinks**](DownloadLinks.md) |  | 
 
 ## Example

@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
 from crypticorn.hive.client.models.coins import Coins
 from crypticorn.hive.client.models.data_value_value_value_inner import (
@@ -32,15 +32,27 @@ from typing_extensions import Self
 
 class DataInfo(BaseModel):
     """
-    DataInfo
+    The complete data information for all versions, coins, feature sizes and targets
     """  # noqa: E501
 
-    data: Dict[str, Dict[str, Dict[str, List[DataValueValueValueInner]]]]
-    coins: List[Coins]
-    feature_sizes: List[FeatureSize]
-    targets: List[TargetInfo]
-    all_versions: List[DataVersionInfo]
-    available_versions: List[DataVersionInfo]
+    data: Dict[str, Dict[str, Dict[str, List[DataValueValueValueInner]]]] = Field(
+        description="The complete data information for all versions, coins, feature sizes and targets."
+    )
+    coins: List[Coins] = Field(
+        description="The coins available on the latest data version."
+    )
+    feature_sizes: List[FeatureSize] = Field(
+        description="The feature sizes available on the latest data version."
+    )
+    targets: List[TargetInfo] = Field(
+        description="The targets available on the latest data version."
+    )
+    all_versions: List[DataVersionInfo] = Field(
+        description="All ever existing data versions. Some may not be publicly available yet."
+    )
+    available_versions: List[DataVersionInfo] = Field(
+        description="All publicly available data versions."
+    )
     __properties: ClassVar[List[str]] = [
         "data",
         "coins",
