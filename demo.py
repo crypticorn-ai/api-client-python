@@ -8,14 +8,15 @@ from crypticorn import ApiClient
 from crypticorn.trade import ExchangeKeyModel, Configuration as TradeConfig
 import asyncio
 from crypticorn.trade import BotModel, BotStatus
+from crypticorn.klines import Timeframe
 from datetime import datetime, timedelta
-
+import time
 jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiUm1RcE9BZWNaV0t1djNDemNjd1YiLCJpYXQiOjE3NDQ1NDU1NTQsImV4cCI6MTc0NDU0OTE1NCwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.UVD4-6Z5C6yYAaL6LMDwbGJCrhpk7TkDNo1TbinvDzM"
 
 
 async def main():
     async with ApiClient(
-        base_url=BaseUrl.LOCAL, api_key="6aY2sstA5i5GJ0zZl9PmsNbaRtOvLs"
+        base_url=BaseUrl.DEV, api_key=""
     ) as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
@@ -118,9 +119,7 @@ async def main():
         # print(res)
         # res = await client.auth.login.verify()
         # print(res)
-        res = await client.hive.data.download_data(
-            model_id=1, version="1.0", feature_size="small"
-        )
+        res = await client.klines.funding.get_funding_rates_fmt(symbol="BTCUSDT")
         print(res)
     # res = await client.metrics.exchanges.get_exchange_mappings(
     #     exchange="binance", market=MarketType.FUTURES
