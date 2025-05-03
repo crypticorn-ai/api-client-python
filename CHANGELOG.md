@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.7.3 (2025-05-03)
+
+### Bug Fixes
+
+- Fixes attribute bug in http exception handling
+  ([`a90b593`](https://github.com/crypticorn-ai/api-client/commit/a90b593bfa3e08a1703a7e2e1fc8a7bb8ac456e3))
+
+
 ## v2.7.2 (2025-05-03)
 
 ### Bug Fixes
