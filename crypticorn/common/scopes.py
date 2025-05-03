@@ -55,7 +55,6 @@ class Scope(StrEnum):
         return [
             cls.WRITE_TRADE_STRATEGIES,
             cls.WRITE_PAY_PRODUCTS,
-            cls.WRITE_PAY_NOW,
         ]
 
     @classmethod
