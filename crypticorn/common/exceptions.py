@@ -93,7 +93,7 @@ async def general_handler(request: Request, exc: Exception):
     """This is the default exception handler for all exceptions."""
     body = ExceptionContent(message=str(exc), error=ApiError.UNKNOWN_ERROR)
     return JSONResponse(
-        status_code=body.error.status_code, content=HTTPException(content=body).detail
+        status_code=body.enrich().status_code, content=HTTPException(content=body).detail
     )
 
 
@@ -101,7 +101,7 @@ async def request_validation_handler(request: Request, exc: RequestValidationErr
     """This is the exception handler for all request validation errors."""
     body = ExceptionContent(message=str(exc), error=ApiError.INVALID_DATA_REQUEST)
     return JSONResponse(
-        status_code=body.error.status_code, content=HTTPException(content=body).detail
+        status_code=body.enrich().status_code, content=HTTPException(content=body).detail
     )
 
 
@@ -109,7 +109,7 @@ async def response_validation_handler(request: Request, exc: ResponseValidationE
     """This is the exception handler for all response validation errors."""
     body = ExceptionContent(message=str(exc), error=ApiError.INVALID_DATA_RESPONSE)
     return JSONResponse(
-        status_code=body.error.status_code, content=HTTPException(content=body).detail
+        status_code=body.enrich().status_code, content=HTTPException(content=body).detail
     )
 
 
