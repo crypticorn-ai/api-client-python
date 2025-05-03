@@ -60,6 +60,8 @@ The permission scopes for the API.
 
 * `READ_COLON_METRICS_COLON_MARKETS` (value: `'read:metrics:markets'`)
 
+* `READ_COLON_SENTIMENT` (value: `'read:sentiment'`)
+
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

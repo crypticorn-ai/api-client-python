@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **amount** | **float** | Payment amount | 
 **currency** | **str** | Payment currency | 
 **status** | [**PaymentStatus**](PaymentStatus.md) |  | 
-**service** | [**Services**](Services.md) | Payment service | 
+**provider** | [**Provider**](Provider.md) | Payment provider | 
 **market** | **str** | Payment market | 
 
 ## Example

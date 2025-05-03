@@ -119,8 +119,8 @@ Class | Method | HTTP request | Description
  - [ProductRead](docs/ProductRead.md)
  - [ProductSubRead](docs/ProductSubRead.md)
  - [ProductUpdate](docs/ProductUpdate.md)
+ - [Provider](docs/Provider.md)
  - [Scope](docs/Scope.md)
- - [Services](docs/Services.md)
 
 
 <a id="documentation-for-authorization"></a>

@@ -11,13 +11,12 @@ from crypticorn.trade import BotModel, BotStatus
 from crypticorn.klines import Timeframe
 from datetime import datetime, timedelta
 import time
+
 jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiUm1RcE9BZWNaV0t1djNDemNjd1YiLCJpYXQiOjE3NDQ1NDU1NTQsImV4cCI6MTc0NDU0OTE1NCwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.UVD4-6Z5C6yYAaL6LMDwbGJCrhpk7TkDNo1TbinvDzM"
 
 
 async def main():
-    async with ApiClient(
-        base_url=BaseUrl.DEV, api_key=""
-    ) as client:
+    async with ApiClient(base_url=BaseUrl.DEV, api_key="") as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
         # print(10 * "=" + "This is the raw json response" + 10 * "=")

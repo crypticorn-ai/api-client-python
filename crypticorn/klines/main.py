@@ -10,6 +10,7 @@ from crypticorn.klines import (
 )
 from crypticorn.common import optional_import
 
+
 class KlinesClient:
     """
     A client for interacting with the Crypticorn Klines API.
@@ -29,6 +30,7 @@ class KlinesClient:
         self.symbols = SymbolsApiWrapper(self.base_client)
         self.udf = UDFApi(self.base_client)
         self.status = StatusApi(self.base_client)
+
 
 class FundingRatesApiWrapper(FundingRatesApi):
     """
@@ -50,6 +52,7 @@ class FundingRatesApiWrapper(FundingRatesApi):
             for m in response
         ]
         return pd.DataFrame(response)
+
 
 class OHLCVDataApiWrapper(OHLCVDataApi):
     """
@@ -89,5 +92,3 @@ class SymbolsApiWrapper(SymbolsApi):
         pd = optional_import("pandas", "extra")
         response = await self.get_klines_symbols(*args, **kwargs)
         return pd.DataFrame(response, columns=["symbol"])
-
-
