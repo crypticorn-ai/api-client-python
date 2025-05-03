@@ -4,7 +4,7 @@ description = "Maximise Your Crypto Trading Profits with Machine Learning"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "Crypticorn", email = "timon@crypticorn.com"}]
-version = "2.7.2"
+version = "2.7.3"
 keywords = ["machine learning", "data science", "crypto", "modelling"]
 dynamic = ["dependencies", "optional-dependencies"]
 
