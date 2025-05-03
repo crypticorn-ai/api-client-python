@@ -20,7 +20,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Union
 from crypticorn.pay.client.models.payment_status import PaymentStatus
-from crypticorn.pay.client.models.services import Services
+from crypticorn.pay.client.models.provider import Provider
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -36,7 +36,7 @@ class Payment(BaseModel):
     amount: Union[StrictFloat, StrictInt] = Field(description="Payment amount")
     currency: StrictStr = Field(description="Payment currency")
     status: PaymentStatus
-    service: Services = Field(description="Payment service")
+    provider: Provider = Field(description="Payment provider")
     market: StrictStr = Field(description="Payment market")
     __properties: ClassVar[List[str]] = [
         "id",
@@ -45,7 +45,7 @@ class Payment(BaseModel):
         "amount",
         "currency",
         "status",
-        "service",
+        "provider",
         "market",
     ]
 
@@ -105,7 +105,7 @@ class Payment(BaseModel):
                 "amount": obj.get("amount"),
                 "currency": obj.get("currency"),
                 "status": obj.get("status"),
-                "service": obj.get("service"),
+                "provider": obj.get("provider"),
                 "market": obj.get("market"),
             }
         )

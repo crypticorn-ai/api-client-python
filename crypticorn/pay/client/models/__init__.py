@@ -23,5 +23,5 @@ from crypticorn.pay.client.models.product_create import ProductCreate
 from crypticorn.pay.client.models.product_read import ProductRead
 from crypticorn.pay.client.models.product_sub_read import ProductSubRead
 from crypticorn.pay.client.models.product_update import ProductUpdate
+from crypticorn.pay.client.models.provider import Provider
 from crypticorn.pay.client.models.scope import Scope
-from crypticorn.pay.client.models.services import Services

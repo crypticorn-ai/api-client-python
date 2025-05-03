@@ -1,6 +1,6 @@
-# Services
+# Provider
 
-Available payment services
+Available payment providers
 
 ## Enum
 

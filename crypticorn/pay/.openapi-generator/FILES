@@ -19,8 +19,8 @@ client/models/product_create.py
 client/models/product_read.py
 client/models/product_sub_read.py
 client/models/product_update.py
+client/models/provider.py
 client/models/scope.py
-client/models/services.py
 client/py.typed
 client/rest.py
 docs/ExceptionDetail.md
@@ -35,7 +35,7 @@ docs/ProductRead.md
 docs/ProductSubRead.md
 docs/ProductUpdate.md
 docs/ProductsApi.md
+docs/Provider.md
 docs/Scope.md
-docs/Services.md
 docs/StatusApi.md
 requirements.txt
