@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.7.2 (2025-05-03)
+
+### Bug Fixes
+
+- Add write:pay:now to default scopes
+  ([`8375248`](https://github.com/crypticorn-ai/api-client/commit/83752484e3570a1f39eacda4223100d7f3fbadd0))
+
+
 ## v2.7.1 (2025-05-02)
 
 ### Bug Fixes
