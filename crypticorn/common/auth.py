@@ -75,7 +75,7 @@ class AuthHandler:
             raise HTTPException(
                 content=ExceptionContent(
                     error=ApiError.INSUFFICIENT_SCOPES,
-                    message="Insufficient scopes to access this resource",
+                    message="Insufficient scopes to access this resource (required: " + ", ".join(api_scopes) + ")",
                 ),
             )
 

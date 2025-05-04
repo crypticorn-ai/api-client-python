@@ -8,6 +8,9 @@ class Scope(StrEnum):
 
     # If you update anything here, also update the scopes in the auth-service repository
 
+    WRITE_ADMIN = "write:admin"
+    READ_ADMIN = "read:admin"
+
     # Scopes that can be purchased - these actually exist in the jwt token
     READ_PREDICTIONS = "read:predictions"
 
@@ -55,6 +58,8 @@ class Scope(StrEnum):
         return [
             cls.WRITE_TRADE_STRATEGIES,
             cls.WRITE_PAY_PRODUCTS,
+            cls.WRITE_ADMIN,
+            cls.READ_ADMIN,
         ]
 
     @classmethod
