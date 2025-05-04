@@ -22,6 +22,7 @@ router = APIRouter(tags=["Admin"], prefix="/admin")
 
 START_TIME = time.time()
 
+
 @router.get("/log-level", status_code=200, operation_id="getLogLevel")
 async def get_logging_level() -> LogLevel:
     """
@@ -29,10 +30,9 @@ async def get_logging_level() -> LogLevel:
     """
     return LogLevel.get_name(logging.getLogger().level)
 
+
 @router.get("/uptime", operation_id="getUptime", status_code=200)
-def get_uptime(
-    type: Literal["seconds", "human"] = "seconds"
-) -> Union[int, str]:
+def get_uptime(type: Literal["seconds", "human"] = "seconds") -> Union[int, str]:
     """Return the server uptime in seconds or human-readable form."""
     uptime_seconds = int(time.time() - START_TIME)
     if type == "seconds":
@@ -73,7 +73,9 @@ def get_container_limits() -> dict:
         limits["memory_limit_MB"] = "N/A"
 
     try:
-        with open("/sys/fs/cgroup/cpu/cpu.cfs_quota_us") as f1, open("/sys/fs/cgroup/cpu/cpu.cfs_period_us") as f2:
+        with open("/sys/fs/cgroup/cpu/cpu.cfs_quota_us") as f1, open(
+            "/sys/fs/cgroup/cpu/cpu.cfs_period_us"
+        ) as f2:
             quota = int(f1.read().strip())
             period = int(f2.read().strip())
             limits["cpu_limit_cores"] = quota / period if quota > 0 else "N/A"
@@ -86,11 +88,16 @@ def get_container_limits() -> dict:
 @router.get("/dependencies", operation_id="getDependencies", status_code=200)
 def list_installed_packages(
     include: list[str] = Query(
-        default=None, description="List of dependencies to include in the response. If not provided, all installed packages will be returned."
+        default=None,
+        description="List of dependencies to include in the response. If not provided, all installed packages will be returned.",
     )
 ) -> list:
     """Return a list of installed packages and versions."""
     return sorted(
-        [{dist.project_name: dist.version} for dist in pkg_resources.working_set if include is None or dist.project_name in include],
+        [
+            {dist.project_name: dist.version}
+            for dist in pkg_resources.working_set
+            if include is None or dist.project_name in include
+        ],
         key=lambda x: next(iter(x)),
     )
