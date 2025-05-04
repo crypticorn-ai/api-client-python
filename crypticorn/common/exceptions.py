@@ -95,28 +95,35 @@ class WebSocketException(HTTPException):
 async def general_handler(request: Request, exc: Exception) -> JSONResponse:
     """This is the default exception handler for all exceptions."""
     body = ExceptionContent(message=str(exc), error=ApiError.UNKNOWN_ERROR)
-    res =  JSONResponse(
-        status_code=body.enrich().status_code, content=HTTPException(content=body).detail
+    res = JSONResponse(
+        status_code=body.enrich().status_code,
+        content=HTTPException(content=body).detail,
     )
     logger.error(f"Response validation error: {res}")
     return res
 
 
-async def request_validation_handler(request: Request, exc: RequestValidationError) -> JSONResponse:
+async def request_validation_handler(
+    request: Request, exc: RequestValidationError
+) -> JSONResponse:
     """This is the exception handler for all request validation errors."""
     body = ExceptionContent(message=str(exc), error=ApiError.INVALID_DATA_REQUEST)
     res = JSONResponse(
-        status_code=body.enrich().status_code, content=HTTPException(content=body).detail
+        status_code=body.enrich().status_code,
+        content=HTTPException(content=body).detail,
     )
     logger.error(f"Response validation error: {res}")
     return res
 
 
-async def response_validation_handler(request: Request, exc: ResponseValidationError) -> JSONResponse:
+async def response_validation_handler(
+    request: Request, exc: ResponseValidationError
+) -> JSONResponse:
     """This is the exception handler for all response validation errors."""
     body = ExceptionContent(message=str(exc), error=ApiError.INVALID_DATA_RESPONSE)
     res = JSONResponse(
-        status_code=body.enrich().status_code, content=HTTPException(content=body).detail
+        status_code=body.enrich().status_code,
+        content=HTTPException(content=body).detail,
     )
     logger.error(f"Response validation error: {res}")
     return res

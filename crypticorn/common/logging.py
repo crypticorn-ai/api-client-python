@@ -10,6 +10,7 @@ from crypticorn.common.mixins import ValidateEnumMixin
 from crypticorn.common.ansi_colors import AnsiColors as C
 from datetime import datetime
 
+
 class LogLevel(ValidateEnumMixin, StrEnum):
     DEBUG = "DEBUG"
     INFO = "INFO"
@@ -47,9 +48,7 @@ _LOGFORMAT = (
     f"%(levelcolor)s%(levelname)s{C.RESET} - "
     f"%(message)s"
 )
-_PLAIN_LOGFORMAT = (
-    "%(asctime)s - " "%(name)s - " "%(levelname)s - " "%(message)s"
-)
+_PLAIN_LOGFORMAT = "%(asctime)s - " "%(name)s - " "%(levelname)s - " "%(message)s"
 _DATEFMT = "%Y-%m-%d %H:%M:%S.%f:"
 
 
@@ -67,8 +66,11 @@ class CustomFormatter(logging.Formatter):
         s = dt.strftime(datefmt)
         return s[:-3]  # Trim last 3 digits to get milliseconds
 
+
 def get_logger(
-    name: str, fmt: str = _LOGFORMAT, datefmt: str = _DATEFMT,
+    name: str,
+    fmt: str = _LOGFORMAT,
+    datefmt: str = _DATEFMT,
     stdout_level: int = logging.INFO,
     file_level: int = logging.INFO,
     log_file: str = None,
@@ -77,10 +79,10 @@ def get_logger(
     """Returns crypticorn logger instance."""
     logger = logging.getLogger(name)
 
-    if logger.handlers: # clear existing handlers to avoid duplicates
+    if logger.handlers:  # clear existing handlers to avoid duplicates
         logger.handlers.clear()
 
-    logger.setLevel(min(stdout_level, file_level)) # set to most verbose level
+    logger.setLevel(min(stdout_level, file_level))  # set to most verbose level
 
     # Configure stdout handler
     stdout_handler = logging.StreamHandler(sys.stdout)
@@ -93,7 +95,9 @@ def get_logger(
     # Configure file handler
     if log_file:
         os.makedirs(os.path.dirname(log_file), exist_ok=True)
-        file_handler = logging.RotatingFileHandler(log_file, maxBytes=10*1024*1024, backupCount=5)
+        file_handler = logging.RotatingFileHandler(
+            log_file, maxBytes=10 * 1024 * 1024, backupCount=5
+        )
         file_handler.setLevel(file_level)
         file_handler.setFormatter(CustomFormatter(fmt=fmt, datefmt=datefmt))
         for filter in filters:
