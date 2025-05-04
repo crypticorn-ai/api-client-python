@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v2.7.4 (2025-05-04)
+
+### Bug Fixes
+
+- Include cli templates in build
+  ([`8d46b4c`](https://github.com/crypticorn-ai/api-client/commit/8d46b4c6bc6bd413a86d1661a4ae9647ed66755c))
+
+### Documentation
+
+- Update README and add license
+  ([`1876008`](https://github.com/crypticorn-ai/api-client/commit/187600869b9248aef2b66e881711ddfb96a01538))
+
+
 ## v2.7.3 (2025-05-03)
 
 ### Bug Fixes
