@@ -1,3 +1,4 @@
+from .envs import *
 import pytest
 from crypticorn.common import (
     AuthHandler,
@@ -8,7 +9,6 @@ from crypticorn.common import (
 )
 from fastapi.security import HTTPAuthorizationCredentials
 
-from .envs import *
 
 # ASSERT SCOPE
 PURCHASEABLE_SCOPES = Scope.purchaseable_scopes()

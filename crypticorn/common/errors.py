@@ -264,11 +264,6 @@ class ApiError(ExcludeEnumMixin, Enum, metaclass=ApiErrorFallback):
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
-    INVALID_MODEL_NAME = (
-        ApiErrorIdentifier.INVALID_MODEL_NAME,
-        ApiErrorType.USER_ERROR,
-        ApiErrorLevel.ERROR,
-    )
     INSUFFICIENT_SCOPES = (
         ApiErrorIdentifier.INSUFFICIENT_SCOPES,
         ApiErrorType.USER_ERROR,
@@ -302,6 +297,11 @@ class ApiError(ExcludeEnumMixin, Enum, metaclass=ApiErrorFallback):
     INVALID_MARGIN_MODE = (
         ApiErrorIdentifier.INVALID_MARGIN_MODE,
         ApiErrorType.SERVER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    INVALID_MODEL_NAME = (
+        ApiErrorIdentifier.INVALID_MODEL_NAME,
+        ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
     INVALID_PARAMETER = (
