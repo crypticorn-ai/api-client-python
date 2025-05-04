@@ -16,9 +16,9 @@ async def ping() -> str:
 @router.get("/time", operation_id="getTime")
 async def time(type: Literal["iso", "unix"] = "iso") -> str:
     """
-    Returns the current time in the specified format.
+    Returns the current time in either ISO or Unix timestamp (seconds) format.
     """
     if type == "iso":
         return datetime.now().isoformat()
-    else:
+    elif type == "unix":
         return str(int(datetime.now().timestamp()))
