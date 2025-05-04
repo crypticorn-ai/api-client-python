@@ -1,6 +1,17 @@
 # CHANGELOG
 
 
+## v2.8.0-rc.1 (2025-05-04)
+
+### Features
+
+- Add router with admin endpoints
+  ([`0d38178`](https://github.com/crypticorn-ai/api-client/commit/0d381784f91cab776ca1ee3b8407433dae4421c3))
+
+- Configure formatted logging
+  ([`f8c35e9`](https://github.com/crypticorn-ai/api-client/commit/f8c35e900bcf4a279cc8e046e58935ec5c5c62ee))
+
+
 ## v2.7.5 (2025-05-04)
 
 ### Bug Fixes
