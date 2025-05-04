@@ -1,6 +1,5 @@
 # shared_logger.py
 import logging
-from logging import _nameToLevel, _levelToName
 import sys
 from contextvars import ContextVar
 import json
@@ -35,11 +34,11 @@ class LogLevel(ValidateEnumMixin, StrEnum):
 
     @staticmethod
     def get_level(level: "LogLevel") -> int:
-        return _nameToLevel.get(level, logging.INFO)
+        return logging._nameToLevel.get(level, logging.INFO)
 
     @staticmethod
     def get_name(level: int) -> "LogLevel":
-        return LogLevel(_levelToName.get(level, "INFO"))
+        return LogLevel(logging._levelToName.get(level, "INFO"))
 
 
 _LOGFORMAT = (
@@ -67,7 +66,7 @@ class CustomFormatter(logging.Formatter):
         return s[:-3]  # Trim last 3 digits to get milliseconds
 
 
-def get_logger(
+def configure_logging(
     name: str,
     fmt: str = _LOGFORMAT,
     datefmt: str = _DATEFMT,
@@ -75,8 +74,11 @@ def get_logger(
     file_level: int = logging.INFO,
     log_file: str = None,
     filters: list[logging.Filter] = [],
-) -> logging.Logger:
-    """Returns crypticorn logger instance."""
+) -> None:
+    """Configures the logging for the application.
+    Run this function as early as possible in the application (for example using the `lifespan` parameter in FastAPI).
+    Then use can use the default `logging.getLogger(__name__)` method to get the logger.
+    """
     logger = logging.getLogger(name)
 
     if logger.handlers:  # clear existing handlers to avoid duplicates
