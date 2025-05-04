@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v2.7.5 (2025-05-04)
+
+### Bug Fixes
+
+- Log errors and exceptions
+  ([`578d6d3`](https://github.com/crypticorn-ai/api-client/commit/578d6d3176e07a7d4cb87e79617d67ab2e1d62de))
+
+### Build System
+
+- Include changelog in build
+  ([`a78acb7`](https://github.com/crypticorn-ai/api-client/commit/a78acb7a18a957cfefa8e64ce593b13ddcd4fae7))
+
+
 ## v2.7.4 (2025-05-04)
 
 ### Bug Fixes
