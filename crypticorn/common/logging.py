@@ -1,7 +1,9 @@
+from __future__ import annotations
 # shared_logger.py
 import logging
 import sys
 from contextvars import ContextVar
+from contextlib import asynccontextmanager
 import json
 from pydantic import BaseModel
 from enum import StrEnum
@@ -106,4 +108,18 @@ def configure_logging(
             file_handler.addFilter(filter)
         logger.addHandler(file_handler)
 
-    return logger
+
+async def default_lifespan(app: FastAPI):
+    """Default lifespan for the applications.
+    This is used to configure the logging for the application.
+    To override this, pass a different lifespan to the FastAPI constructor or call this lifespan within a custom lifespan.
+    """
+    configure_logging(__name__) # for the consuming app
+    logger = logging.getLogger(__name__)
+    yield
+
+def disable_logging():
+    """Disable logging for the crypticorn logger.
+    """
+    logger = logging.getLogger("crypticorn")
+    logger.disabled = True
