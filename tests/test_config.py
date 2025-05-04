@@ -2,7 +2,7 @@ import pytest
 import pytest_asyncio
 from crypticorn import ApiClient
 from crypticorn.common import BaseUrl, apikey_header, Service
-from tests.envs import *
+from tests.envs import FULL_SCOPE_API_KEY
 from crypticorn.hive import Configuration as HiveConfig
 
 

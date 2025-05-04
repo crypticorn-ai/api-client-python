@@ -1,14 +1,9 @@
-# What is Crypticorn?
+## What is Crypticorn?
 
-Crypticorn is at the forefront of cutting-edge artificial intelligence cryptocurrency trading.
-Crypticorn offers AI-based solutions for both active and passive investors, including:
- - Prediction Dashboard with trading terminal,
- - AI Agents with different strategies,
- - DEX AI Signals for newly launched tokens,
- - DEX AI Bots
+Crypticorn is at the forefront of cutting-edge crypto trading with Machine Learning.
 
-Use this API Client to contribute to the so-called Hive AI, a community driven AI Meta Model for predicting the
-cryptocurrency market.
+Use this API Client to access valuable data sources, contribute to the Hive AI - a community driven AI Meta Model for predicting the
+crypto market - and programmatically interact with the entire Crypticorn ecosystem.
 
 ## Installation
 
@@ -24,17 +19,19 @@ If you want the latest version, which could be a pre release, run:
 pip install --pre crypticorn
 ```
 
+You can install extra dependencies grouped in the extras `extra` (heavy dependencies that do not come with the default version) `dev` (development) and `test` (testing). The `extra` dependencies include heavy libraries like `pandas`, which is only used in a few custom API operations (suffixed with `_fmt`), which preprocess the response data as a pandas Dataframe for convenience.
+
 ## Structure
 
 Our API is available as an asynchronous Python SDK. The main entry point you need is the `ApiClient` class, which you would import like this:
 ```python
 from crypticorn import ApiClient
 ```
-The ApiClient serves as the central interface for API operations. It instantiates multiple API wrappers corresponding to our microservices.
+The ApiClient serves as the central interface for API operations. It instantiates multiple API wrappers corresponding to our micro services.
 
-Specific imports, such as request models, should be accessed through the appropriate submodules.
+Request and response models for API operations should be accessed through the appropriate sub package.
 
-Note: All symbols are re-exported at the first submodule layer for convenience.
+Note: All symbols are re-exported at the sub package level for convenience.
 
 ```python
 from crypticorn.trade import BotStatus
@@ -44,6 +41,10 @@ The `common` submodule contains shared classes not bound to a specific API.
 ```python
 from crypticorn.common import Scope, Exchange
 ```
+
+## Authentication
+
+To get started, [create an API key in your dashboard](https://app.crypticorn.com/account/developer). Then instantiate the `ApiClient` class with your copied key.
 
 ## Basic Usage
 
@@ -89,16 +90,16 @@ print(res)
 ```
 The output would look like this:
 ```python
-status_code=200 headers={'Date': 'Wed, 09 Apr 2025 19:15:19 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Alt-Svc': 'h3=":443"; ma=86400', 'Server': 'cloudflare', 'Cf-Cache-Status': 'DYNAMIC', 'Content-Encoding': 'gzip', 'CF-RAY': '92dc551a687bbe5e-ZRH'} data=[ProductModel(id='67e8146e7bae32f3838fe36a', name='Awesome Product', price=5.0, scopes=None, duration=30, description='You need to buy this', is_active=True)] raw_data=b'[{"id":"67e8146e7bae32f3838fe36a","name":"Awesome Product","price":5.0,"duration":30,"description":"You need to buy this","is_active":true}]'
+status_code=200 headers={'Date': 'Wed, 09 Apr 2025 19:15:19 GMT', 'Content-Type': 'application/json'} data=[ProductModel(id='67e8146e7bae32f3838fe36a', name='Awesome Product', price=5.0, scopes=None, duration=30, description='You need to buy this', is_active=True)] raw_data=b'[{"id":"67e8146e7bae32f3838fe36a","name":"Awesome Product","price":5.0,"duration":30,"description":"You need to buy this","is_active":true}]'
 ```
-You can then access the data of the response (as serialized output) with:
+You can then access the data of the response (as serialized output (1) or as JSON string in bytes (2)) with:
 ```python
 print(res.data)
+print(res.raw_data)
 ```
 On top of that you get some information about the request:
 ```python
 print(res.status_code)
-print(res.raw_data)
 print(res.headers)
 ```
 
@@ -121,6 +122,7 @@ This might be of use if you are testing a specific API locally.
 To override e.g. the host for the Hive client to connect to http://localhost:8000 instead of the default proxy, you would do:
 ```python
 from crypticorn.hive import Configuration as Hiveconfig
+from crypticorn.common import Service
 async with ApiClient(base_url=BaseUrl.DEV) as client:
-        client.configure(config=HiveConfig(host="http://localhost:8000"), client=client.hive)
+        client.configure(config=HiveConfig(host="http://localhost:8000"), client=Service.HIVE)
 ```
