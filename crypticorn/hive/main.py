@@ -8,9 +8,9 @@ from crypticorn.hive import (
     DataApi,
     StatusApi,
     Configuration,
+    AdminApi
 )
 from crypticorn.hive.utils import download_file
-import logging
 
 
 class DataApiWrapper(DataApi):
@@ -73,3 +73,4 @@ class HiveClient:
         self.models = ModelsApi(self.base_client)
         self.data = DataApiWrapper(self.base_client)
         self.status = StatusApi(self.base_client)
+        self.admin = AdminApi(self.base_client)

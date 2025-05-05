@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 # shared_logger.py
 import logging
 import sys
@@ -110,7 +111,6 @@ def configure_logging(
 
 
 def disable_logging():
-    """Disable logging for the crypticorn logger.
-    """
+    """Disable logging for the crypticorn logger."""
     logger = logging.getLogger("crypticorn")
     logger.disabled = True

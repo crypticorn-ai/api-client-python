@@ -81,18 +81,15 @@ configuration = client.Configuration(
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = client.DataApi(api_client)
-    model_id = 56 # int | Model ID
-    version = client.DataVersion() # DataVersion | Data version. Default is the latest public version. (optional)
-    feature_size = client.FeatureSize() # FeatureSize | The number of features in the data. Default is LARGE. (optional)
+    api_instance = client.AdminApi(api_client)
 
     try:
-        # Download Data
-        api_response = await api_instance.download_data(model_id, version=version, feature_size=feature_size)
-        print("The response of DataApi->download_data:\n")
+        # Get Container Limits
+        api_response = await api_instance.get_container_limits()
+        print("The response of AdminApi->get_container_limits:\n")
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling DataApi->download_data: %s\n" % e)
+        print("Exception when calling AdminApi->get_container_limits: %s\n" % e)
 
 ```
 
@@ -102,16 +99,21 @@ All URIs are relative to *http://localhost/v1/hive*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*AdminApi* | [**get_container_limits**](docs/AdminApi.md#get_container_limits) | **GET** /admin/limits | Get Container Limits
+*AdminApi* | [**get_dependencies**](docs/AdminApi.md#get_dependencies) | **GET** /admin/dependencies | List Installed Packages
+*AdminApi* | [**get_log_level**](docs/AdminApi.md#get_log_level) | **GET** /admin/log-level | Get Logging Level
+*AdminApi* | [**get_memory_usage**](docs/AdminApi.md#get_memory_usage) | **GET** /admin/memory | Get Memory Usage
+*AdminApi* | [**get_threads**](docs/AdminApi.md#get_threads) | **GET** /admin/threads | Get Threads
+*AdminApi* | [**get_uptime**](docs/AdminApi.md#get_uptime) | **GET** /admin/uptime | Get Uptime
 *DataApi* | [**download_data**](docs/DataApi.md#download_data) | **GET** /data | Download Data
 *DataApi* | [**get_data_info**](docs/DataApi.md#get_data_info) | **GET** /data/info | Get Data Info
-*ModelsApi* | [**create_model**](docs/ModelsApi.md#create_model) | **POST** /model/creation | Create Model
-*ModelsApi* | [**delete_model**](docs/ModelsApi.md#delete_model) | **DELETE** /model/{id} | Delete Model
-*ModelsApi* | [**evaluate_model**](docs/ModelsApi.md#evaluate_model) | **POST** /model/evaluation/{id} | Evaluate Model
-*ModelsApi* | [**get_model**](docs/ModelsApi.md#get_model) | **GET** /model/{id} | Get Model
-*ModelsApi* | [**get_model_by_name**](docs/ModelsApi.md#get_model_by_name) | **GET** /model/by-name/{name} | Get Model By Name
-*ModelsApi* | [**get_models**](docs/ModelsApi.md#get_models) | **GET** /model | Get All Models
-*ModelsApi* | [**update_model**](docs/ModelsApi.md#update_model) | **PUT** /model/{id} | Update Model
-*StatusApi* | [**get_config**](docs/StatusApi.md#get_config) | **GET** /config | Config
+*ModelsApi* | [**create_model**](docs/ModelsApi.md#create_model) | **POST** /models/creation | Create Model
+*ModelsApi* | [**delete_model**](docs/ModelsApi.md#delete_model) | **DELETE** /models/{id} | Delete Model
+*ModelsApi* | [**evaluate_model**](docs/ModelsApi.md#evaluate_model) | **POST** /models/evaluation/{id} | Evaluate Model
+*ModelsApi* | [**get_model**](docs/ModelsApi.md#get_model) | **GET** /models/{id} | Get Model
+*ModelsApi* | [**get_model_by_name**](docs/ModelsApi.md#get_model_by_name) | **GET** /models/by-name/{name} | Get Model By Name
+*ModelsApi* | [**get_models**](docs/ModelsApi.md#get_models) | **GET** /models | Get All Models
+*ModelsApi* | [**update_model**](docs/ModelsApi.md#update_model) | **PUT** /models/{id} | Update Model
 *StatusApi* | [**get_time**](docs/StatusApi.md#get_time) | **GET** /time | Time
 *StatusApi* | [**ping**](docs/StatusApi.md#ping) | **GET** / | Ping
 
@@ -129,10 +131,12 @@ Class | Method | HTTP request | Description
  - [EvaluationResponse](docs/EvaluationResponse.md)
  - [ExceptionDetail](docs/ExceptionDetail.md)
  - [FeatureSize](docs/FeatureSize.md)
+ - [LogLevel](docs/LogLevel.md)
  - [Model](docs/Model.md)
  - [ModelCreate](docs/ModelCreate.md)
  - [ModelStatus](docs/ModelStatus.md)
  - [ModelUpdate](docs/ModelUpdate.md)
+ - [ResponseGetuptime](docs/ResponseGetuptime.md)
  - [Target](docs/Target.md)
  - [TargetInfo](docs/TargetInfo.md)
  - [TargetType](docs/TargetType.md)
