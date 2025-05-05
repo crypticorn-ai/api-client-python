@@ -2,7 +2,7 @@
 This module contains the admin router for the API.
 It provides endpoints for monitoring the server and getting information about the environment.
 ONLY ALLOW ACCESS TO THIS ROUTER WITH ADMIN SCOPES.
->>> app.include_router(admin_router, dependencies=[Security(auth_handler.combined_auth, scopes=[Scope.WRITE_LOGS])])
+>>> app.include_router(admin_router, dependencies=[Security(auth_handler.combined_auth, scopes=[Scope.READ_ADMIN, Scope.WRITE_ADMIN])])
 """
 
 import os

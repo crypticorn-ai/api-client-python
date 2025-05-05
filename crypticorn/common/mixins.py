@@ -1,6 +1,5 @@
 from enum import EnumMeta
 import logging
-from typing_extensions import deprecated
 
 logger = logging.getLogger("uvicorn")
 
@@ -33,7 +32,7 @@ class ValidateEnumMixin:
         except ValueError:
             return False
 
-@deprecated("This Mixin will be removed in a future version. And has no effect from now on")
+#This Mixin will be removed in a future version. And has no effect from now on
 class ExcludeEnumMixin:
     """Mixin to exclude enum from OpenAPI schema. We use this to avoid duplicating enums when generating client code from the openapi spec."""
 
