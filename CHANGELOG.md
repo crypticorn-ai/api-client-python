@@ -1,6 +1,25 @@
 # CHANGELOG
 
 
+## v2.8.0-rc.2 (2025-05-05)
+
+### Bug Fixes
+
+- Add psutil as dependency
+  ([`23cf77e`](https://github.com/crypticorn-ai/api-client/commit/23cf77ea002a2d6f8e31cd858a2dcc1890b8d8c1))
+
+- Centralize cors middleware
+  ([`e5aa2d6`](https://github.com/crypticorn-ai/api-client/commit/e5aa2d60254076848530a6d5b9a349058ee45ac7))
+
+- Run logging configuration in init of the library
+  ([`8b725e1`](https://github.com/crypticorn-ai/api-client/commit/8b725e18154d184c8593b8de086b0a789b6e180c))
+
+### Features
+
+- Provide lifespan event for fastapi apps to configure logging on startup
+  ([`9a2e1c4`](https://github.com/crypticorn-ai/api-client/commit/9a2e1c45d87ad1581c0e1646689eba6ca0876564))
+
+
 ## v2.8.0-rc.1 (2025-05-04)
 
 ### Features
