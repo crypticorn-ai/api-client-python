@@ -66,6 +66,12 @@ configuration = client.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
 # Configure Bearer authorization (JWT): HTTPBearer
 configuration = client.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
@@ -75,16 +81,15 @@ configuration = client.Configuration(
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = client.NOWPaymentsApi(api_client)
-    now_create_invoice_req = client.NowCreateInvoiceReq() # NowCreateInvoiceReq | 
+    api_instance = client.AdminApi(api_client)
 
     try:
-        # Create Invoice
-        api_response = await api_instance.create_now_invoice(now_create_invoice_req)
-        print("The response of NOWPaymentsApi->create_now_invoice:\n")
+        # Get Container Limits
+        api_response = await api_instance.get_container_limits()
+        print("The response of AdminApi->get_container_limits:\n")
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling NOWPaymentsApi->create_now_invoice: %s\n" % e)
+        print("Exception when calling AdminApi->get_container_limits: %s\n" % e)
 
 ```
 
@@ -94,6 +99,12 @@ All URIs are relative to *http://localhost/v1/pay*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*AdminApi* | [**get_container_limits**](docs/AdminApi.md#get_container_limits) | **GET** /admin/limits | Get Container Limits
+*AdminApi* | [**get_dependencies**](docs/AdminApi.md#get_dependencies) | **GET** /admin/dependencies | List Installed Packages
+*AdminApi* | [**get_log_level**](docs/AdminApi.md#get_log_level) | **GET** /admin/log-level | Get Logging Level
+*AdminApi* | [**get_memory_usage**](docs/AdminApi.md#get_memory_usage) | **GET** /admin/memory | Get Memory Usage
+*AdminApi* | [**get_threads**](docs/AdminApi.md#get_threads) | **GET** /admin/threads | Get Threads
+*AdminApi* | [**get_uptime**](docs/AdminApi.md#get_uptime) | **GET** /admin/uptime | Get Uptime
 *NOWPaymentsApi* | [**create_now_invoice**](docs/NOWPaymentsApi.md#create_now_invoice) | **POST** /now/invoice | Create Invoice
 *NOWPaymentsApi* | [**get_now_api_status**](docs/NOWPaymentsApi.md#get_now_api_status) | **GET** /now/status | Get Status
 *NOWPaymentsApi* | [**handle_now_webhook**](docs/NOWPaymentsApi.md#handle_now_webhook) | **POST** /now/webhook | Handle Webhook
@@ -103,7 +114,6 @@ Class | Method | HTTP request | Description
 *ProductsApi* | [**create_product**](docs/ProductsApi.md#create_product) | **POST** /products | Create Product
 *ProductsApi* | [**get_products**](docs/ProductsApi.md#get_products) | **GET** /products | Get Products
 *ProductsApi* | [**update_product**](docs/ProductsApi.md#update_product) | **PUT** /products/{id} | Update Product
-*StatusApi* | [**get_config**](docs/StatusApi.md#get_config) | **GET** /config | Config
 *StatusApi* | [**get_time**](docs/StatusApi.md#get_time) | **GET** /time | Time
 *StatusApi* | [**ping**](docs/StatusApi.md#ping) | **GET** / | Ping
 
@@ -111,6 +121,7 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [ExceptionDetail](docs/ExceptionDetail.md)
+ - [LogLevel](docs/LogLevel.md)
  - [NowCreateInvoiceReq](docs/NowCreateInvoiceReq.md)
  - [NowCreateInvoiceRes](docs/NowCreateInvoiceRes.md)
  - [Payment](docs/Payment.md)
@@ -120,6 +131,7 @@ Class | Method | HTTP request | Description
  - [ProductSubRead](docs/ProductSubRead.md)
  - [ProductUpdate](docs/ProductUpdate.md)
  - [Provider](docs/Provider.md)
+ - [ResponseGetuptime](docs/ResponseGetuptime.md)
  - [Scope](docs/Scope.md)
 
 

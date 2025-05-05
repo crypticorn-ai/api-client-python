@@ -1,6 +1,7 @@
 README.md
 client/__init__.py
 client/api/__init__.py
+client/api/admin_api.py
 client/api/now_payments_api.py
 client/api/payments_api.py
 client/api/products_api.py
@@ -11,6 +12,7 @@ client/configuration.py
 client/exceptions.py
 client/models/__init__.py
 client/models/exception_detail.py
+client/models/log_level.py
 client/models/now_create_invoice_req.py
 client/models/now_create_invoice_res.py
 client/models/payment.py
@@ -20,10 +22,13 @@ client/models/product_read.py
 client/models/product_sub_read.py
 client/models/product_update.py
 client/models/provider.py
+client/models/response_getuptime.py
 client/models/scope.py
 client/py.typed
 client/rest.py
+docs/AdminApi.md
 docs/ExceptionDetail.md
+docs/LogLevel.md
 docs/NOWPaymentsApi.md
 docs/NowCreateInvoiceReq.md
 docs/NowCreateInvoiceRes.md
@@ -36,6 +41,7 @@ docs/ProductSubRead.md
 docs/ProductUpdate.md
 docs/ProductsApi.md
 docs/Provider.md
+docs/ResponseGetuptime.md
 docs/Scope.md
 docs/StatusApi.md
 requirements.txt

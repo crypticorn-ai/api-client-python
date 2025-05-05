@@ -8,7 +8,7 @@ from crypticorn.hive import (
     DataApi,
     StatusApi,
     Configuration,
-    AdminApi
+    AdminApi,
 )
 from crypticorn.hive.utils import download_file
 

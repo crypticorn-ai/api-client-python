@@ -4,6 +4,10 @@ The permission scopes for the API.
 
 ## Enum
 
+* `WRITE_COLON_ADMIN` (value: `'write:admin'`)
+
+* `READ_COLON_ADMIN` (value: `'read:admin'`)
+
 * `READ_COLON_PREDICTIONS` (value: `'read:predictions'`)
 
 * `READ_COLON_HIVE_COLON_MODEL` (value: `'read:hive:model'`)
