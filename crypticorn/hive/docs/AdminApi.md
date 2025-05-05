@@ -1,24 +1,23 @@
-# client.ModelsApi
+# client.AdminApi
 
 All URIs are relative to *http://localhost/v1/hive*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_model**](ModelsApi.md#create_model) | **POST** /models/creation | Create Model
-[**delete_model**](ModelsApi.md#delete_model) | **DELETE** /models/{id} | Delete Model
-[**evaluate_model**](ModelsApi.md#evaluate_model) | **POST** /models/evaluation/{id} | Evaluate Model
-[**get_model**](ModelsApi.md#get_model) | **GET** /models/{id} | Get Model
-[**get_model_by_name**](ModelsApi.md#get_model_by_name) | **GET** /models/by-name/{name} | Get Model By Name
-[**get_models**](ModelsApi.md#get_models) | **GET** /models | Get All Models
-[**update_model**](ModelsApi.md#update_model) | **PUT** /models/{id} | Update Model
+[**get_container_limits**](AdminApi.md#get_container_limits) | **GET** /admin/limits | Get Container Limits
+[**get_dependencies**](AdminApi.md#get_dependencies) | **GET** /admin/dependencies | List Installed Packages
+[**get_log_level**](AdminApi.md#get_log_level) | **GET** /admin/log-level | Get Logging Level
+[**get_memory_usage**](AdminApi.md#get_memory_usage) | **GET** /admin/memory | Get Memory Usage
+[**get_threads**](AdminApi.md#get_threads) | **GET** /admin/threads | Get Threads
+[**get_uptime**](AdminApi.md#get_uptime) | **GET** /admin/uptime | Get Uptime
 
 
-# **create_model**
-> Model create_model(model_create)
+# **get_container_limits**
+> Dict[str, object] get_container_limits()
 
-Create Model
+Get Container Limits
 
-Create a new model
+Return container resource limits from cgroup.
 
 ### Example
 
@@ -27,8 +26,6 @@ Create a new model
 
 ```python
 import client
-from client.models.model import Model
-from client.models.model_create import ModelCreate
 from client.rest import ApiException
 from pprint import pprint
 
@@ -57,290 +54,26 @@ configuration = client.Configuration(
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = client.ModelsApi(api_client)
-    model_create = client.ModelCreate() # ModelCreate | 
+    api_instance = client.AdminApi(api_client)
 
     try:
-        # Create Model
-        api_response = await api_instance.create_model(model_create)
-        print("The response of ModelsApi->create_model:\n")
+        # Get Container Limits
+        api_response = await api_instance.get_container_limits()
+        print("The response of AdminApi->get_container_limits:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling ModelsApi->create_model: %s\n" % e)
+        print("Exception when calling AdminApi->get_container_limits: %s\n" % e)
 ```
 
 
 
 ### Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **model_create** | [**ModelCreate**](ModelCreate.md)|  | 
+This endpoint does not need any parameter.
 
 ### Return type
 
-[**Model**](Model.md)
-
-### Authorization
-
-[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**201** | Successful Response |  -  |
-**0** | Error response |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **delete_model**
-> delete_model(id)
-
-Delete Model
-
-Delete a model
-
-### Example
-
-* Api Key Authentication (APIKeyHeader):
-* Bearer (JWT) Authentication (HTTPBearer):
-
-```python
-import client
-from client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost/v1/hive
-# See configuration.py for a list of all supported configuration parameters.
-configuration = client.Configuration(
-    host = "http://localhost/v1/hive"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: APIKeyHeader
-configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
-
-# Configure Bearer authorization (JWT): HTTPBearer
-configuration = client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-async with client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = client.ModelsApi(api_client)
-    id = 56 # int | Model ID to delete
-
-    try:
-        # Delete Model
-        await api_instance.delete_model(id)
-    except Exception as e:
-        print("Exception when calling ModelsApi->delete_model: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| Model ID to delete | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**204** | Successful Response |  -  |
-**0** | Error response |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **evaluate_model**
-> EvaluationResponse evaluate_model(id, request_body, version=version)
-
-Evaluate Model
-
-Evaluate a model's predictions
-
-### Example
-
-* Api Key Authentication (APIKeyHeader):
-* Bearer (JWT) Authentication (HTTPBearer):
-
-```python
-import client
-from client.models.data_version import DataVersion
-from client.models.evaluation_response import EvaluationResponse
-from client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost/v1/hive
-# See configuration.py for a list of all supported configuration parameters.
-configuration = client.Configuration(
-    host = "http://localhost/v1/hive"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: APIKeyHeader
-configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
-
-# Configure Bearer authorization (JWT): HTTPBearer
-configuration = client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-async with client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = client.ModelsApi(api_client)
-    id = 56 # int | Model ID to evaluate
-    request_body = None # List[object] | 
-    version = client.DataVersion() # DataVersion | Data version to evaluate against (optional)
-
-    try:
-        # Evaluate Model
-        api_response = await api_instance.evaluate_model(id, request_body, version=version)
-        print("The response of ModelsApi->evaluate_model:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ModelsApi->evaluate_model: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| Model ID to evaluate | 
- **request_body** | [**List[object]**](object.md)|  | 
- **version** | [**DataVersion**](.md)| Data version to evaluate against | [optional] 
-
-### Return type
-
-[**EvaluationResponse**](EvaluationResponse.md)
-
-### Authorization
-
-[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Successful Response |  -  |
-**0** | Error response |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **get_model**
-> Model get_model(id)
-
-Get Model
-
-Get a model by ID
-
-### Example
-
-* Api Key Authentication (APIKeyHeader):
-* Bearer (JWT) Authentication (HTTPBearer):
-
-```python
-import client
-from client.models.model import Model
-from client.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost/v1/hive
-# See configuration.py for a list of all supported configuration parameters.
-configuration = client.Configuration(
-    host = "http://localhost/v1/hive"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: APIKeyHeader
-configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
-
-# Configure Bearer authorization (JWT): HTTPBearer
-configuration = client.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-async with client.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = client.ModelsApi(api_client)
-    id = 56 # int | Model ID to get
-
-    try:
-        # Get Model
-        api_response = await api_instance.get_model(id)
-        print("The response of ModelsApi->get_model:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling ModelsApi->get_model: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **int**| Model ID to get | 
-
-### Return type
-
-[**Model**](Model.md)
+**Dict[str, object]**
 
 ### Authorization
 
@@ -360,12 +93,12 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_model_by_name**
-> Model get_model_by_name(name)
+# **get_dependencies**
+> List[object] get_dependencies(include=include)
 
-Get Model By Name
+List Installed Packages
 
-Get a model by name
+Return a list of installed packages and versions.
 
 ### Example
 
@@ -374,7 +107,6 @@ Get a model by name
 
 ```python
 import client
-from client.models.model import Model
 from client.rest import ApiException
 from pprint import pprint
 
@@ -403,16 +135,16 @@ configuration = client.Configuration(
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = client.ModelsApi(api_client)
-    name = 'name_example' # str | Model name to get
+    api_instance = client.AdminApi(api_client)
+    include = ['include_example'] # List[str] | List of dependencies to include in the response. If not provided, all installed packages will be returned. (optional)
 
     try:
-        # Get Model By Name
-        api_response = await api_instance.get_model_by_name(name)
-        print("The response of ModelsApi->get_model_by_name:\n")
+        # List Installed Packages
+        api_response = await api_instance.get_dependencies(include=include)
+        print("The response of AdminApi->get_dependencies:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling ModelsApi->get_model_by_name: %s\n" % e)
+        print("Exception when calling AdminApi->get_dependencies: %s\n" % e)
 ```
 
 
@@ -422,11 +154,11 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **name** | **str**| Model name to get | 
+ **include** | [**List[str]**](str.md)| List of dependencies to include in the response. If not provided, all installed packages will be returned. | [optional] 
 
 ### Return type
 
-[**Model**](Model.md)
+**List[object]**
 
 ### Authorization
 
@@ -446,12 +178,12 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_models**
-> List[Model] get_models(by_user=by_user, user_id=user_id)
+# **get_log_level**
+> LogLevel get_log_level()
 
-Get All Models
+Get Logging Level
 
-List all models
+Get the log level of the server logger.
 
 ### Example
 
@@ -460,7 +192,7 @@ List all models
 
 ```python
 import client
-from client.models.model import Model
+from client.models.log_level import LogLevel
 from client.rest import ApiException
 from pprint import pprint
 
@@ -489,32 +221,26 @@ configuration = client.Configuration(
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = client.ModelsApi(api_client)
-    by_user = False # bool | Whether to get models by user. Else all models are returned. (optional) (default to False)
-    user_id = 'user_id_example' # str | User ID to get models for. Only used if by_user is true. Default is current user. (optional)
+    api_instance = client.AdminApi(api_client)
 
     try:
-        # Get All Models
-        api_response = await api_instance.get_models(by_user=by_user, user_id=user_id)
-        print("The response of ModelsApi->get_models:\n")
+        # Get Logging Level
+        api_response = await api_instance.get_log_level()
+        print("The response of AdminApi->get_log_level:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling ModelsApi->get_models: %s\n" % e)
+        print("Exception when calling AdminApi->get_log_level: %s\n" % e)
 ```
 
 
 
 ### Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **by_user** | **bool**| Whether to get models by user. Else all models are returned. | [optional] [default to False]
- **user_id** | **str**| User ID to get models for. Only used if by_user is true. Default is current user. | [optional] 
+This endpoint does not need any parameter.
 
 ### Return type
 
-[**List[Model]**](Model.md)
+[**LogLevel**](LogLevel.md)
 
 ### Authorization
 
@@ -534,12 +260,13 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_model**
-> object update_model(id, model_update)
+# **get_memory_usage**
+> int get_memory_usage()
 
-Update Model
+Get Memory Usage
 
-Update a model's information
+Resident Set Size (RSS) in MB — the actual memory used by the process in RAM.
+Represents the physical memory footprint. Important for monitoring real usage.
 
 ### Example
 
@@ -548,7 +275,6 @@ Update a model's information
 
 ```python
 import client
-from client.models.model_update import ModelUpdate
 from client.rest import ApiException
 from pprint import pprint
 
@@ -577,17 +303,179 @@ configuration = client.Configuration(
 # Enter a context with an instance of the API client
 async with client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = client.ModelsApi(api_client)
-    id = 56 # int | Model ID to update
-    model_update = client.ModelUpdate() # ModelUpdate | 
+    api_instance = client.AdminApi(api_client)
 
     try:
-        # Update Model
-        api_response = await api_instance.update_model(id, model_update)
-        print("The response of ModelsApi->update_model:\n")
+        # Get Memory Usage
+        api_response = await api_instance.get_memory_usage()
+        print("The response of AdminApi->get_memory_usage:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling ModelsApi->update_model: %s\n" % e)
+        print("Exception when calling AdminApi->get_memory_usage: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**int**
+
+### Authorization
+
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**0** | Error response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_threads**
+> Dict[str, object] get_threads()
+
+Get Threads
+
+Return count and names of active threads.
+
+### Example
+
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
+
+```python
+import client
+from client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost/v1/hive
+# See configuration.py for a list of all supported configuration parameters.
+configuration = client.Configuration(
+    host = "http://localhost/v1/hive"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = client.AdminApi(api_client)
+
+    try:
+        # Get Threads
+        api_response = await api_instance.get_threads()
+        print("The response of AdminApi->get_threads:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->get_threads: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**Dict[str, object]**
+
+### Authorization
+
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**0** | Error response |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_uptime**
+> ResponseGetuptime get_uptime(type=type)
+
+Get Uptime
+
+Return the server uptime in seconds or human-readable form.
+
+### Example
+
+* Api Key Authentication (APIKeyHeader):
+* Bearer (JWT) Authentication (HTTPBearer):
+
+```python
+import client
+from client.models.response_getuptime import ResponseGetuptime
+from client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost/v1/hive
+# See configuration.py for a list of all supported configuration parameters.
+configuration = client.Configuration(
+    host = "http://localhost/v1/hive"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): HTTPBearer
+configuration = client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = client.AdminApi(api_client)
+    type = seconds # str |  (optional) (default to seconds)
+
+    try:
+        # Get Uptime
+        api_response = await api_instance.get_uptime(type=type)
+        print("The response of AdminApi->get_uptime:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AdminApi->get_uptime: %s\n" % e)
 ```
 
 
@@ -597,12 +485,11 @@ async with client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **int**| Model ID to update | 
- **model_update** | [**ModelUpdate**](ModelUpdate.md)|  | 
+ **type** | **str**|  | [optional] [default to seconds]
 
 ### Return type
 
-**object**
+[**ResponseGetuptime**](ResponseGetuptime.md)
 
 ### Authorization
 
@@ -610,7 +497,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 ### HTTP response details

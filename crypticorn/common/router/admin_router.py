@@ -29,11 +29,11 @@ async def get_logging_level() -> LogLevel:
 
 
 @router.get("/uptime", operation_id="getUptime", status_code=200)
-def get_uptime(type: Literal["seconds", "human"] = "seconds") -> Union[int, str]:
+def get_uptime(type: Literal["seconds", "human"] = "seconds") -> str:
     """Return the server uptime in seconds or human-readable form."""
     uptime_seconds = int(time.time() - START_TIME)
     if type == "seconds":
-        return uptime_seconds
+        return str(uptime_seconds)
     elif type == "human":
         return time.strftime("%H:%M:%S", time.gmtime(uptime_seconds))
 

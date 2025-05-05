@@ -1,6 +1,7 @@
 from enum import StrEnum
 from typing import TYPE_CHECKING
 
+
 class AnsiColors(StrEnum):
     # Regular Text Colors
     BLACK = "\033[30m"  # black
