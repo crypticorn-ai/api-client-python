@@ -5,6 +5,7 @@ from crypticorn.pay import (
     StatusApi,
     PaymentsApi,
     ProductsApi,
+    AdminApi,
 )
 
 
@@ -25,3 +26,4 @@ class PayClient:
         self.status = StatusApi(self.base_client)
         self.payments = PaymentsApi(self.base_client)
         self.products = ProductsApi(self.base_client)
+        self.admin = AdminApi(self.base_client)
