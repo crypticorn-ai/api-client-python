@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.8.0-rc.4 (2025-05-05)
+
+### Bug Fixes
+
+- Remove @deprecated decorator from ExcludeEnumMixin to avoid enum inheritance error
+  ([`3d8b63d`](https://github.com/crypticorn-ai/api-client/commit/3d8b63d638fa77045d2189fe099a6c2ca740c105))
+
+
 ## v2.8.0-rc.3 (2025-05-05)
 
 ### Bug Fixes
