@@ -109,15 +109,6 @@ def configure_logging(
         logger.addHandler(file_handler)
 
 
-async def default_lifespan(app: FastAPI):
-    """Default lifespan for the applications.
-    This is used to configure the logging for the application.
-    To override this, pass a different lifespan to the FastAPI constructor or call this lifespan within a custom lifespan.
-    """
-    configure_logging(__name__) # for the consuming app
-    logger = logging.getLogger(__name__)
-    yield
-
 def disable_logging():
     """Disable logging for the crypticorn logger.
     """
