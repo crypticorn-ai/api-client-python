@@ -6,15 +6,12 @@ ONLY ALLOW ACCESS TO THIS ROUTER WITH ADMIN SCOPES.
 """
 
 import os
-import sys
 import pkg_resources
 import threading
 import time
-import json
 import psutil
-from fastapi import APIRouter, HTTPException, Body, Query
+from fastapi import APIRouter, Query
 from typing import Literal, Union
-from dotenv import dotenv_values
 from crypticorn.common.logging import LogLevel
 import logging
 
