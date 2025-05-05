@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.8.0-rc.3 (2025-05-05)
+
+### Bug Fixes
+
+- Deprecate ExcludeEnumMixin
+  ([`ae57fb2`](https://github.com/crypticorn-ai/api-client/commit/ae57fb22ff410432ce28a9c0af3a02fa9f51104f))
+
+
 ## v2.8.0-rc.2 (2025-05-05)
 
 ### Bug Fixes
