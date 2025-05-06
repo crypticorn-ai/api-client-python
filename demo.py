@@ -118,8 +118,7 @@ async def main():
         # print(res)
         # res = await client.auth.login.verify()
         # print(res)
-        res = await client.klines.funding.get_funding_rates_fmt(symbol="BTCUSDT")
-        print(res)
+        res = await client.hive.data.download_data()
     # res = await client.metrics.exchanges.get_exchange_mappings(
     #     exchange="binance", market=MarketType.FUTURES
     # )
