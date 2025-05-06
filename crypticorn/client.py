@@ -13,7 +13,7 @@ SubClient = TypeVar("SubClient")
 
 class ApiClient:
     """
-    The official client for interacting with the Crypticorn API.
+    The official Python client for interacting with the Crypticorn API.
 
     It is consisting of multiple microservices covering the whole stack of the Crypticorn project.
     """
@@ -27,11 +27,11 @@ class ApiClient:
         self.base_url = base_url
         """The base URL the client will use to connect to the API."""
         self.api_key = api_key
-        """The API key to use for authentication."""
+        """The API key to use for authentication (recommended)."""
         self.jwt = jwt
-        """The JWT to use for authentication."""
+        """The JWT to use for authentication (not recommended)."""
 
-        self.service_classes: dict[Service, type[SubClient]] = {
+        self._service_classes: dict[Service, type[SubClient]] = {
             Service.HIVE: HiveClient,
             Service.TRADE: TradeClient,
             Service.KLINES: KlinesClient,
@@ -40,38 +40,56 @@ class ApiClient:
             Service.AUTH: AuthClient,
         }
 
-        self.services: dict[Service, SubClient] = {
+        self._services: dict[Service, SubClient] = {
             service: client_class(self._get_default_config(service))
-            for service, client_class in self.service_classes.items()
+            for service, client_class in self._service_classes.items()
         }
 
     @property
     def hive(self) -> HiveClient:
-        return self.services[Service.HIVE]
+        """
+        Entry point for the Hive AI API ([Docs](https://docs.crypticorn.com/api/?api=hive-ai-api)).
+        """
+        return self._services[Service.HIVE]
 
     @property
     def trade(self) -> TradeClient:
-        return self.services[Service.TRADE]
+        """
+        Entry point for the Trading API ([Docs](https://docs.crypticorn.com/api/?api=trading-api)).
+        """
+        return self._services[Service.TRADE]
 
     @property
     def klines(self) -> KlinesClient:
-        return self.services[Service.KLINES]
+        """
+        Entry point for the Klines API ([Docs](https://docs.crypticorn.com/api/?api=klines-api)).
+        """ 
+        return self._services[Service.KLINES]
 
     @property
     def metrics(self) -> MetricsClient:
-        return self.services[Service.METRICS]
+        """
+        Entry point for the Metrics API ([Docs](https://docs.crypticorn.com/api/?api=metrics-api)).
+        """
+        return self._services[Service.METRICS]
 
     @property
     def pay(self) -> PayClient:
-        return self.services[Service.PAY]
+        """
+        Entry point for the Payment API ([Docs](https://docs.crypticorn.com/api/?api=payment-api)).
+        """
+        return self._services[Service.PAY]
 
     @property
     def auth(self) -> AuthClient:
-        return self.services[Service.AUTH]
+        """
+        Entry point for the Auth API ([Docs](https://docs.crypticorn.com/api/?api=auth-api)).
+        """
+        return self._services[Service.AUTH]
 
     async def close(self):
         """Close all client sessions."""
-        for service in self.services.values():
+        for service in self._services.values():
             if hasattr(service.base_client, "close"):
                 await service.base_client.close()
 
@@ -81,7 +99,7 @@ class ApiClient:
         """
         Get the default configuration for a given service.
         """
-        config_class = self.service_classes[service].config_class
+        config_class = self._service_classes[service].config_class
         return config_class(
             host=f"{self.base_url}/{version}/{service}",
             access_token=self.jwt,
@@ -105,7 +123,7 @@ class ApiClient:
         >>>     client.configure(config=HiveConfig(host="http://localhost:8000"), client=client.hive)
         """
         assert Service.validate(service), f"Invalid service: {service}"
-        client = self.services[service]
+        client = self._services[service]
         new_config = client.config
 
         for attr in vars(config):
@@ -113,7 +131,7 @@ class ApiClient:
             if new_value:
                 setattr(new_config, attr, new_value)
 
-        self.services[service] = type(client)(new_config)
+        self._services[service] = type(client)(new_config)
 
     async def __aenter__(self):
         return self

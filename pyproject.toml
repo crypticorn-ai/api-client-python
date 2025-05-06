@@ -14,7 +14,10 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Typing :: Typed",
 ]
 
@@ -48,6 +51,8 @@ prerelease_token = "rc"
 
 [project.urls]
 Homepage = "https://crypticorn.com"
+Documentation = "https://docs.crypticorn.com"
+Dashboard = "https://app.crypticorn.com"
 
 [build-system]
 requires = ["setuptools>=61.0"]
