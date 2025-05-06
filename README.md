@@ -7,9 +7,9 @@ crypto market - and programmatically interact with the entire Crypticorn ecosyst
 
 ## Installation
 
->Python 3.10+ required
+You need Python 3.10+ installed to be able to use this library.
 
-You can install the latest stable version from PyPi:
+You can install the latest stable version from [PyPi](https://pypi.org/project/crypticorn/):
 ```bash
 pip install crypticorn
 ```
@@ -19,7 +19,7 @@ If you want the latest version, which could be a pre release, run:
 pip install --pre crypticorn
 ```
 
-You can install extra dependencies grouped in the extras `extra` (heavy dependencies that do not come with the default version) `dev` (development) and `test` (testing). The `extra` dependencies include heavy libraries like `pandas`, which is only used in a few custom API operations (suffixed with `_fmt`), which preprocess the response data as a pandas Dataframe for convenience.
+You can install extra dependencies grouped in the extras `extra`, `dev` (development) and `test` (testing). The `extra` dependencies include heavy libraries like `pandas`, which is only used in a few custom API operations (see [data processing](#data-preprocessing)), which preprocess the response data as a pandas Dataframe for convenience.
 
 ## Structure
 
@@ -27,11 +27,13 @@ Our API is available as an asynchronous Python SDK. The main entry point you nee
 ```python
 from crypticorn import ApiClient
 ```
-The ApiClient serves as the central interface for API operations. It instantiates multiple API wrappers corresponding to our micro services.
+The ApiClient serves as the central interface for API operations. It instantiates multiple API wrappers corresponding to our micro services. These are structured the following:
 
-Request and response models for API operations should be accessed through the appropriate sub package.
+<img src="../static/pip-structure.svg" alt="pip package structure" />
 
-Note: All symbols are re-exported at the sub package level for convenience.
+You can either explore each API by clicking through the library or checkout the [API Documentation](https://docs.crypticorn.dev/api).
+
+Request and response models for API operations should be accessed through the sub package you are using for an operation. All symbols are re-exported at the sub package level for convenience.
 
 ```python
 from crypticorn.trade import BotStatus
@@ -48,25 +50,27 @@ To get started, [create an API key in your dashboard](https://app.crypticorn.com
 
 ## Basic Usage
 
-### With Async Context Protocol
+You can use the client with the async context protocol...
 ```python
-async with ApiClient(base_url=BaseUrl.Prod, api_key="your-api-key") as client:
+async with ApiClient(api_key="your-api-key") as client:
         await client.pay.products.get_products()
 ```
-
-### Without Async Context Protocol
-Without the context you need to close the session manually.
+...or without it like this...
 ```python
-client = ApiClient(base_url=BaseUrl.Prod, api_key="your-api-key")
+client = ApiClient(api_key="your-api-key")
 asyncio.run(client.pay.models.get_products())
 asyncio.run(client.close())
 ```
-...or wrapped in a function
+...or this.
+```python
+client = ApiClient(api_key="your-api-key")
+
 async def main():
     await client.pay.products.get_products()
 
 asyncio.run(main())
 asyncio.run(client.close())
+```
 
 ## Response Types
 
@@ -75,8 +79,8 @@ There are three different available output formats you can choose from:
 ### Serialized Response
 You can get fully serialized responses as pydantic models. Using this, you get the full benefits of pydantic's type checking.
 ```python
-response = await client.pay.products.get_products()
-print(response)
+res = await client.pay.products.get_products()
+print(res)
 ```
 The output would look like this:
 ```python
@@ -85,7 +89,7 @@ The output would look like this:
 
 ### Serialized Response with HTTP Info
 ```python
-await client.pay.products.get_products_with_http_info()
+res = await client.pay.products.get_products_with_http_info()
 print(res)
 ```
 The output would look like this:
@@ -114,15 +118,27 @@ The output would look like this:
 [{'id': '67e8146e7bae32f3838fe36a', 'name': 'Awesome Product', 'price': 5.0, 'duration': 30, 'description': 'You need to buy this', 'is_active': True}]
 ```
 
+## Wrapper Utilities
+
+Our SDK provides a collection of wrapper utilities designed to make interacting with the API more efficient and user-friendly.
+
+### Data Preprocessing
+Some API operations allow to get the returned data formatted as a pandas Dataframe. These operations are suffixed with `_fmt` and take the same inputs as the non-formatted function. They live alongside the other functions with the default [response types](#response-types). To use this functionality you have to install `pandas`, which is available in the [`extra` dependency group](#installation).
+
+### Data Downloads
+This utility allows direct data streaming to your local disk, instead of only returning download links. It is being used in the following functions:
+- `client.hive.data.download_data()` (overrides the [default response](https://docs.crypticorn.dev/api/?api=hive-ai-api#tag/data/GET/data))
+
 ## Advanced Usage
 
 You can override some configuration for specific services. If you just want to use the API as is, you don't need to configure anything.
 This might be of use if you are testing a specific API locally.
 
-To override e.g. the host for the Hive client to connect to http://localhost:8000 instead of the default proxy, you would do:
+To override e.g. the host for the Hive client to connect to localhost:8000 instead of the default proxy, you would do:
 ```python
 from crypticorn.hive import Configuration as Hiveconfig
 from crypticorn.common import Service
-async with ApiClient(base_url=BaseUrl.DEV) as client:
+
+async with ApiClient() as client:
         client.configure(config=HiveConfig(host="http://localhost:8000"), client=Service.HIVE)
 ```
