@@ -10,7 +10,7 @@ async def ping(request: Request) -> dict:
     """
     Returns 'OK' if the API is running.
     """
-    return {"origin": request.headers.get("x-forwarded-for")}
+    return "OK"
 
 
 @router.get("/time", operation_id="getTime")
