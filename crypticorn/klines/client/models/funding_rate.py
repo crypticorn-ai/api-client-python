@@ -17,8 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
 from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
 from typing_extensions import Self
@@ -26,13 +25,12 @@ from typing_extensions import Self
 
 class FundingRate(BaseModel):
     """
-    FundingRate
+    Model for a single funding rate
     """  # noqa: E501
 
-    symbol: StrictStr
-    timestamp: datetime
-    funding_rate: Union[StrictFloat, StrictInt]
-    __properties: ClassVar[List[str]] = ["symbol", "timestamp", "funding_rate"]
+    timestamp: StrictInt = Field(description="The timestamp of the funding rate")
+    funding_rate: Union[StrictFloat, StrictInt] = Field(description="The funding rate")
+    __properties: ClassVar[List[str]] = ["timestamp", "funding_rate"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -83,10 +81,6 @@ class FundingRate(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {
-                "symbol": obj.get("symbol"),
-                "timestamp": obj.get("timestamp"),
-                "funding_rate": obj.get("funding_rate"),
-            }
+            {"timestamp": obj.get("timestamp"), "funding_rate": obj.get("funding_rate")}
         )
         return _obj
