@@ -6,7 +6,7 @@ from fastapi.exceptions import RequestValidationError, ResponseValidationError
 from fastapi.responses import JSONResponse
 from crypticorn.common import ApiError, ApiErrorIdentifier, ApiErrorType, ApiErrorLevel
 import logging
-
+import json
 logger = logging.getLogger(__name__)
 
 
@@ -99,7 +99,7 @@ async def general_handler(request: Request, exc: Exception) -> JSONResponse:
         status_code=body.enrich().status_code,
         content=HTTPException(content=body).detail,
     )
-    logger.error(f"Response validation error: {res}")
+    logger.error(f"Response validation error: {json.loads(res.__dict__.get('body'))}")
     return res
 
 
@@ -112,7 +112,7 @@ async def request_validation_handler(
         status_code=body.enrich().status_code,
         content=HTTPException(content=body).detail,
     )
-    logger.error(f"Response validation error: {res}")
+    logger.error(f"Response validation error: {json.loads(res.__dict__.get('body'))}")
     return res
 
 
@@ -125,7 +125,7 @@ async def response_validation_handler(
         status_code=body.enrich().status_code,
         content=HTTPException(content=body).detail,
     )
-    logger.error(f"Response validation error: {res}")
+    logger.error(f"Response validation error: {json.loads(res.__dict__.get('body'))}")
     return res
 
 
