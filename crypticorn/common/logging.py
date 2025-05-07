@@ -101,7 +101,7 @@ def configure_logging(
     # Configure file handler
     if log_file:
         os.makedirs(os.path.dirname(log_file), exist_ok=True)
-        file_handler = logging.RotatingFileHandler(
+        file_handler = logging.handlers.RotatingFileHandler(
             log_file, maxBytes=10 * 1024 * 1024, backupCount=5
         )
         file_handler.setLevel(file_level)
