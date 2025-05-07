@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.8.1 (2025-05-07)
+
+### Bug Fixes
+
+- Replace deprecatet pkg_resource with native importlib.metadata
+  ([`e9c49e7`](https://github.com/crypticorn-ai/api-client/commit/e9c49e75a29fd4d5657772c091fa918776e7c480))
+
+
 ## v2.8.0 (2025-05-07)
 
 
