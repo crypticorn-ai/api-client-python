@@ -6,7 +6,7 @@ ONLY ALLOW ACCESS TO THIS ROUTER WITH ADMIN SCOPES.
 """
 
 import os
-import pkg_resources
+import importlib.metadata
 import threading
 import time
 import psutil
@@ -90,11 +90,9 @@ def list_installed_packages(
     )
 ) -> list:
     """Return a list of installed packages and versions."""
-    return sorted(
-        [
-            {dist.project_name: dist.version}
-            for dist in pkg_resources.working_set
-            if include is None or dist.project_name in include
-        ],
-        key=lambda x: next(iter(x)),
-    )
+    packages = {
+        dist.metadata["Name"]: dist.version
+        for dist in importlib.metadata.distributions()
+        if include is None or dist.metadata["Name"] in include
+    }
+    return dict(sorted(packages.items()))
