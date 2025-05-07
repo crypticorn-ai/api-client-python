@@ -11,6 +11,7 @@ from enum import StrEnum
 from crypticorn.common.mixins import ValidateEnumMixin
 from crypticorn.common.ansi_colors import AnsiColors as C
 from datetime import datetime
+import os
 
 
 class LogLevel(ValidateEnumMixin, StrEnum):
