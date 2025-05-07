@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.8.0-rc.7 (2025-05-07)
+
+### Bug Fixes
+
+- Pass args to the override function in hive data download
+  ([`7bb3e29`](https://github.com/crypticorn-ai/api-client/commit/7bb3e2997f79da8e4e55b42a1a699a75fe1f985f))
+
+
 ## v2.8.0-rc.6 (2025-05-07)
 
 ### Bug Fixes
