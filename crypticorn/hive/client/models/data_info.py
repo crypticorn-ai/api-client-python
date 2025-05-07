@@ -20,9 +20,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
 from crypticorn.hive.client.models.coins import Coins
-from crypticorn.hive.client.models.data_value_value_value_inner import (
-    DataValueValueValueInner,
-)
+from crypticorn.hive.client.models.data_options import DataOptions
 from crypticorn.hive.client.models.data_version_info import DataVersionInfo
 from crypticorn.hive.client.models.feature_size import FeatureSize
 from crypticorn.hive.client.models.target_info import TargetInfo
@@ -35,7 +33,7 @@ class DataInfo(BaseModel):
     The complete data information for all versions, coins, feature sizes and targets
     """  # noqa: E501
 
-    data: Dict[str, Dict[str, Dict[str, List[DataValueValueValueInner]]]] = Field(
+    data: Dict[str, Dict[str, DataOptions]] = Field(
         description="The complete data information for all versions, coins, feature sizes and targets."
     )
     coins: List[Coins] = Field(
@@ -99,6 +97,13 @@ class DataInfo(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each value in data (dict)
+        _field_dict = {}
+        if self.data:
+            for _key_data in self.data:
+                if self.data[_key_data]:
+                    _field_dict[_key_data] = self.data[_key_data].to_dict()
+            _dict["data"] = _field_dict
         # override the default output from pydantic by calling `to_dict()` of each item in targets (list)
         _items = []
         if self.targets:
@@ -133,7 +138,24 @@ class DataInfo(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "data": obj.get("data"),
+                "data": (
+                    dict(
+                        (
+                            _k,
+                            (
+                                dict(
+                                    (_ik, DataOptions.from_dict(_iv))
+                                    for _ik, _iv in _v.items()
+                                )
+                                if _v is not None
+                                else None
+                            ),
+                        )
+                        for _k, _v in obj.get("data").items()
+                    )
+                    if obj.get("data") is not None
+                    else None
+                ),
                 "coins": obj.get("coins"),
                 "feature_sizes": obj.get("feature_sizes"),
                 "targets": (

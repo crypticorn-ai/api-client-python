@@ -120,10 +120,13 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [ApiErrorIdentifier](docs/ApiErrorIdentifier.md)
+ - [ApiErrorLevel](docs/ApiErrorLevel.md)
+ - [ApiErrorType](docs/ApiErrorType.md)
  - [Coins](docs/Coins.md)
  - [DataDownloadResponse](docs/DataDownloadResponse.md)
  - [DataInfo](docs/DataInfo.md)
- - [DataValueValueValueInner](docs/DataValueValueValueInner.md)
+ - [DataOptions](docs/DataOptions.md)
  - [DataVersion](docs/DataVersion.md)
  - [DataVersionInfo](docs/DataVersionInfo.md)
  - [DownloadLinks](docs/DownloadLinks.md)
@@ -136,7 +139,6 @@ Class | Method | HTTP request | Description
  - [ModelCreate](docs/ModelCreate.md)
  - [ModelStatus](docs/ModelStatus.md)
  - [ModelUpdate](docs/ModelUpdate.md)
- - [ResponseGetuptime](docs/ResponseGetuptime.md)
  - [Target](docs/Target.md)
  - [TargetInfo](docs/TargetInfo.md)
  - [TargetType](docs/TargetType.md)

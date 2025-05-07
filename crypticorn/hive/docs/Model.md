@@ -6,7 +6,7 @@ Pydantic model for model response
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**model_id** | **int** | Unique model identifier | 
+**id** | **int** | Unique model identifier | 
 **name** | **str** | Model name | 
 **coin_id** | [**Coins**](Coins.md) | Coin ID | 
 **target** | [**Target**](Target.md) | Target variable | 

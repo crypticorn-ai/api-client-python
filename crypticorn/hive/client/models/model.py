@@ -33,7 +33,7 @@ class Model(BaseModel):
     Pydantic model for model response
     """  # noqa: E501
 
-    model_id: StrictInt = Field(description="Unique model identifier")
+    id: StrictInt = Field(description="Unique model identifier")
     name: StrictStr = Field(description="Model name")
     coin_id: Coins = Field(description="Coin ID")
     target: Target = Field(description="Target variable")
@@ -44,7 +44,7 @@ class Model(BaseModel):
     created_at: StrictInt = Field(description="Model creation unix timestamp")
     updated_at: StrictInt = Field(description="Model update unix timestamp")
     __properties: ClassVar[List[str]] = [
-        "model_id",
+        "id",
         "name",
         "coin_id",
         "target",
@@ -113,7 +113,7 @@ class Model(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "model_id": obj.get("model_id"),
+                "id": obj.get("id"),
                 "name": obj.get("name"),
                 "coin_id": obj.get("coin_id"),
                 "target": obj.get("target"),

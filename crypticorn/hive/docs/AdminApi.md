@@ -424,7 +424,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_uptime**
-> ResponseGetuptime get_uptime(type=type)
+> str get_uptime(type=type)
 
 Get Uptime
 
@@ -437,7 +437,6 @@ Return the server uptime in seconds or human-readable form.
 
 ```python
 import client
-from client.models.response_getuptime import ResponseGetuptime
 from client.rest import ApiException
 from pprint import pprint
 
@@ -489,7 +488,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ResponseGetuptime**](ResponseGetuptime.md)
+**str**
 
 ### Authorization
 

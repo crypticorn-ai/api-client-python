@@ -63,7 +63,7 @@ class ApiClient:
     def klines(self) -> KlinesClient:
         """
         Entry point for the Klines API ([Docs](https://docs.crypticorn.com/api/?api=klines-api)).
-        """ 
+        """
         return self._services[Service.KLINES]
 
     @property

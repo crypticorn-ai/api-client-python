@@ -32,14 +32,15 @@ class ValidateEnumMixin:
         except ValueError:
             return False
 
-#This Mixin will be removed in a future version. And has no effect from now on
+
+# This Mixin will be removed in a future version. And has no effect from now on
 class ExcludeEnumMixin:
     """Mixin to exclude enum from OpenAPI schema. We use this to avoid duplicating enums when generating client code from the openapi spec."""
 
     @classmethod
     def __get_pydantic_json_schema__(cls, core_schema, handler):
         schema = handler(core_schema)
-        #schema.pop("enum", None)
+        # schema.pop("enum", None)
         return schema
 
 
