@@ -20,10 +20,10 @@ router = APIRouter(tags=["Admin"], prefix="/admin")
 START_TIME = time.time()
 
 
-@router.get("/log-level", status_code=200, operation_id="getLogLevel")
+@router.get("/log-level", status_code=200, operation_id="getLogLevel", deprecated=True)
 async def get_logging_level() -> LogLevel:
     """
-    Get the log level of the server logger.
+    Get the log level of the server logger. Will be removed in a future release.
     """
     return LogLevel.get_name(logging.getLogger().level)
 
@@ -39,7 +39,7 @@ def get_uptime(type: Literal["seconds", "human"] = "seconds") -> str:
 
 
 @router.get("/memory", operation_id="getMemoryUsage", status_code=200)
-def get_memory_usage() -> int:
+def get_memory_usage() -> float:
     """
     Resident Set Size (RSS) in MB — the actual memory used by the process in RAM.
     Represents the physical memory footprint. Important for monitoring real usage.

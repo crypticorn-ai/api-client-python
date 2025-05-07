@@ -12,7 +12,8 @@ from crypticorn.common.mixins import ValidateEnumMixin
 from crypticorn.common.ansi_colors import AnsiColors as C
 from datetime import datetime
 import os
-    
+
+
 class LogLevel(ValidateEnumMixin, StrEnum):
     DEBUG = "DEBUG"
     INFO = "INFO"
@@ -114,7 +115,7 @@ def configure_logging(
         for filter in filters:
             file_handler.addFilter(filter)
         logger.addHandler(file_handler)
-    
+
     if name:
         logger.propagate = False
 

@@ -19,6 +19,7 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt, StrictStr
 from typing import Any, Dict, Optional
 from typing_extensions import Annotated
+from crypticorn.metrics.client.models.market_type import MarketType
 
 from crypticorn.metrics.client.api_client import ApiClient, RequestSerialized
 from crypticorn.metrics.client.api_response import ApiResponse
@@ -40,8 +41,10 @@ class IndicatorsApi:
     @validate_call
     async def get_ker_indicator(
         self,
-        symbol: StrictStr,
-        market: Annotated[Optional[StrictStr], Field(description="Market")] = None,
+        symbol: Annotated[
+            StrictStr, Field(description="Symbol to fetch KER indicator for")
+        ],
+        market: Annotated[Optional[MarketType], Field(description="Market")] = None,
         period: Annotated[
             Optional[StrictInt], Field(description="KER indicator period")
         ] = None,
@@ -65,10 +68,10 @@ class IndicatorsApi:
 
         Calculate and retrieve the KER indicator for a symbol.
 
-        :param symbol: (required)
+        :param symbol: Symbol to fetch KER indicator for (required)
         :type symbol: str
         :param market: Market
-        :type market: str
+        :type market: MarketType
         :param period: KER indicator period
         :type period: int
         :param timestamp: Timestamp for which to fetch KER indicator
@@ -121,8 +124,10 @@ class IndicatorsApi:
     @validate_call
     async def get_ker_indicator_with_http_info(
         self,
-        symbol: StrictStr,
-        market: Annotated[Optional[StrictStr], Field(description="Market")] = None,
+        symbol: Annotated[
+            StrictStr, Field(description="Symbol to fetch KER indicator for")
+        ],
+        market: Annotated[Optional[MarketType], Field(description="Market")] = None,
         period: Annotated[
             Optional[StrictInt], Field(description="KER indicator period")
         ] = None,
@@ -146,10 +151,10 @@ class IndicatorsApi:
 
         Calculate and retrieve the KER indicator for a symbol.
 
-        :param symbol: (required)
+        :param symbol: Symbol to fetch KER indicator for (required)
         :type symbol: str
         :param market: Market
-        :type market: str
+        :type market: MarketType
         :param period: KER indicator period
         :type period: int
         :param timestamp: Timestamp for which to fetch KER indicator
@@ -202,8 +207,10 @@ class IndicatorsApi:
     @validate_call
     async def get_ker_indicator_without_preload_content(
         self,
-        symbol: StrictStr,
-        market: Annotated[Optional[StrictStr], Field(description="Market")] = None,
+        symbol: Annotated[
+            StrictStr, Field(description="Symbol to fetch KER indicator for")
+        ],
+        market: Annotated[Optional[MarketType], Field(description="Market")] = None,
         period: Annotated[
             Optional[StrictInt], Field(description="KER indicator period")
         ] = None,
@@ -227,10 +234,10 @@ class IndicatorsApi:
 
         Calculate and retrieve the KER indicator for a symbol.
 
-        :param symbol: (required)
+        :param symbol: Symbol to fetch KER indicator for (required)
         :type symbol: str
         :param market: Market
-        :type market: str
+        :type market: MarketType
         :param period: KER indicator period
         :type period: int
         :param timestamp: Timestamp for which to fetch KER indicator
@@ -302,12 +309,14 @@ class IndicatorsApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if symbol is not None:
-            _path_params["symbol"] = symbol
         # process the query parameters
+        if symbol is not None:
+
+            _query_params.append(("symbol", symbol))
+
         if market is not None:
 
-            _query_params.append(("market", market))
+            _query_params.append(("market", market.value))
 
         if period is not None:
 
@@ -332,7 +341,7 @@ class IndicatorsApi:
 
         return self.api_client.param_serialize(
             method="GET",
-            resource_path="/ker/{symbol}",
+            resource_path="/indicators/ker",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -348,9 +357,11 @@ class IndicatorsApi:
     @validate_call
     async def get_sma_indicator(
         self,
-        symbol: StrictStr,
+        symbol: Annotated[
+            StrictStr, Field(description="Symbol to fetch SMA indicator for")
+        ],
         market: Annotated[
-            Optional[StrictStr],
+            Optional[MarketType],
             Field(description="The market type to use for the SMA indicator"),
         ] = None,
         period: Annotated[
@@ -377,10 +388,10 @@ class IndicatorsApi:
 
         Calculate and retrieve the Simple Moving Average (SMA) indicator for a symbol.
 
-        :param symbol: (required)
+        :param symbol: Symbol to fetch SMA indicator for (required)
         :type symbol: str
         :param market: The market type to use for the SMA indicator
-        :type market: str
+        :type market: MarketType
         :param period: The period to use for the SMA indicator
         :type period: int
         :param timestamp: The timestamp for which to fetch the SMA indicator
@@ -433,9 +444,11 @@ class IndicatorsApi:
     @validate_call
     async def get_sma_indicator_with_http_info(
         self,
-        symbol: StrictStr,
+        symbol: Annotated[
+            StrictStr, Field(description="Symbol to fetch SMA indicator for")
+        ],
         market: Annotated[
-            Optional[StrictStr],
+            Optional[MarketType],
             Field(description="The market type to use for the SMA indicator"),
         ] = None,
         period: Annotated[
@@ -462,10 +475,10 @@ class IndicatorsApi:
 
         Calculate and retrieve the Simple Moving Average (SMA) indicator for a symbol.
 
-        :param symbol: (required)
+        :param symbol: Symbol to fetch SMA indicator for (required)
         :type symbol: str
         :param market: The market type to use for the SMA indicator
-        :type market: str
+        :type market: MarketType
         :param period: The period to use for the SMA indicator
         :type period: int
         :param timestamp: The timestamp for which to fetch the SMA indicator
@@ -518,9 +531,11 @@ class IndicatorsApi:
     @validate_call
     async def get_sma_indicator_without_preload_content(
         self,
-        symbol: StrictStr,
+        symbol: Annotated[
+            StrictStr, Field(description="Symbol to fetch SMA indicator for")
+        ],
         market: Annotated[
-            Optional[StrictStr],
+            Optional[MarketType],
             Field(description="The market type to use for the SMA indicator"),
         ] = None,
         period: Annotated[
@@ -547,10 +562,10 @@ class IndicatorsApi:
 
         Calculate and retrieve the Simple Moving Average (SMA) indicator for a symbol.
 
-        :param symbol: (required)
+        :param symbol: Symbol to fetch SMA indicator for (required)
         :type symbol: str
         :param market: The market type to use for the SMA indicator
-        :type market: str
+        :type market: MarketType
         :param period: The period to use for the SMA indicator
         :type period: int
         :param timestamp: The timestamp for which to fetch the SMA indicator
@@ -622,12 +637,14 @@ class IndicatorsApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if symbol is not None:
-            _path_params["symbol"] = symbol
         # process the query parameters
+        if symbol is not None:
+
+            _query_params.append(("symbol", symbol))
+
         if market is not None:
 
-            _query_params.append(("market", market))
+            _query_params.append(("market", market.value))
 
         if period is not None:
 
@@ -652,7 +669,7 @@ class IndicatorsApi:
 
         return self.api_client.param_serialize(
             method="GET",
-            resource_path="/sma/{symbol}",
+            resource_path="/indicators/sma",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

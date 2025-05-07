@@ -17,11 +17,13 @@ Do not edit the class manually.
 __version__ = "1.0.0"
 
 # import apis into sdk package
+from crypticorn.metrics.client.api.admin_api import AdminApi
 from crypticorn.metrics.client.api.exchanges_api import ExchangesApi
 from crypticorn.metrics.client.api.indicators_api import IndicatorsApi
 from crypticorn.metrics.client.api.logs_api import LogsApi
 from crypticorn.metrics.client.api.marketcap_api import MarketcapApi
 from crypticorn.metrics.client.api.markets_api import MarketsApi
+from crypticorn.metrics.client.api.quote_currencies_api import QuoteCurrenciesApi
 from crypticorn.metrics.client.api.status_api import StatusApi
 from crypticorn.metrics.client.api.tokens_api import TokensApi
 
@@ -37,7 +39,16 @@ from crypticorn.metrics.client.exceptions import ApiAttributeError
 from crypticorn.metrics.client.exceptions import ApiException
 
 # import models into sdk package
+from crypticorn.metrics.client.models.api_error_identifier import ApiErrorIdentifier
+from crypticorn.metrics.client.models.api_error_level import ApiErrorLevel
+from crypticorn.metrics.client.models.api_error_type import ApiErrorType
 from crypticorn.metrics.client.models.exception_detail import ExceptionDetail
+from crypticorn.metrics.client.models.exchange_mapping import ExchangeMapping
+from crypticorn.metrics.client.models.internal_exchange import InternalExchange
+from crypticorn.metrics.client.models.log_level import LogLevel
+from crypticorn.metrics.client.models.market_type import MarketType
+from crypticorn.metrics.client.models.marketcap_ranking import MarketcapRanking
+from crypticorn.metrics.client.models.ohlcv import OHLCV
 from crypticorn.metrics.client.models.severity import Severity
 from crypticorn.metrics.client.models.time_interval import TimeInterval
 from crypticorn.metrics.client.models.trading_status import TradingStatus
