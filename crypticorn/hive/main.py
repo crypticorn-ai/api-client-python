@@ -9,8 +9,12 @@ from crypticorn.hive import (
     StatusApi,
     Configuration,
     AdminApi,
+    DataVersion,
+    FeatureSize,
 )
 from crypticorn.hive.utils import download_file
+from typing import Optional
+from pydantic import StrictInt
 
 
 class DataApiWrapper(DataApi):
@@ -18,7 +22,15 @@ class DataApiWrapper(DataApi):
     A wrapper for the DataApi class.
     """
 
-    async def download_data(self, folder: Path = "data", *args, **kwargs) -> list[Path]:
+    async def download_data(
+        self,
+        model_id: StrictInt,
+        folder: Path = Path("data"),
+        version: Optional[DataVersion] = None,
+        feature_size: Optional[FeatureSize] = None,
+        *args,
+        **kwargs,
+    ) -> list[Path]:
         """
         Download data for model training. All three files (y_train, x_test, x_train) are downloaded and saved under e.g. FOLDER/v1/coin_1/*.feather.
         The folder will be created if it doesn't exist.
@@ -28,7 +40,13 @@ class DataApiWrapper(DataApi):
         :param feature_size: The number of features in the data. Default is LARGE. (optional) (type: FeatureSize)
         :return: A list of paths to the downloaded files.
         """
-        response = await super().download_data(*args, **kwargs)
+        response = await super().download_data(
+            model_id=model_id,
+            version=version,
+            feature_size=feature_size,
+            *args,
+            **kwargs,
+        )
         base_path = f"{folder}/v{response.version.value}/coin_{response.coin.value}/"
         os.makedirs(base_path, exist_ok=True)
 
