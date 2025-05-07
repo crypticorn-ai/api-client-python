@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v2.8.0-rc.5 (2025-05-07)
+
+### Bug Fixes
+
+- Fixes missing os import in logging
+  ([`1670c9f`](https://github.com/crypticorn-ai/api-client/commit/1670c9f1afec1e772fdfaea0c6178c782c209889))
+
+### Documentation
+
+- Update documentation
+  ([`0eba005`](https://github.com/crypticorn-ai/api-client/commit/0eba0058cf8cdd813d3b80eef8c72ca12a181399))
+
+
 ## v2.8.0-rc.4 (2025-05-05)
 
 ### Bug Fixes
