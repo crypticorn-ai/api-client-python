@@ -50,7 +50,6 @@ _LOGFORMAT = (
     f"%(levelcolor)s%(levelname)s{C.RESET} - "
     f"%(message)s"
 )
-_PLAIN_LOGFORMAT = "%(asctime)s - " "%(name)s - " "%(levelname)s - " "%(message)s"
 _DATEFMT = "%Y-%m-%d %H:%M:%S.%f:"
 
 
@@ -80,8 +79,8 @@ def configure_logging(
 ) -> None:
     """Configures the logging for the application.
     Run this function as early as possible in the application (for example using the `lifespan` parameter in FastAPI).
-    Then use can use the default `logging.getLogger(__name__)` method to get the logger.
-    :param name: The name of the logger. If not provided, the root logger will be used. Use a name if use multiple loggers in the same application.
+    Then use can use the default `logging.getLogger(__name__)` method to get the logger (or <name> if you set the name parameter).
+    :param name: The name of the logger. If not provided, the root logger will be used. Use a name if you use multiple loggers in the same application.
     :param fmt: The format of the log message.
     :param datefmt: The date format of the log message.
     :param stdout_level: The level of the log message to be printed to the console.

@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 from crypticorn.common import ApiError, ApiErrorIdentifier, ApiErrorType, ApiErrorLevel
 import logging
 import json
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("crypticorn")
 
 
 class ExceptionType(StrEnum):

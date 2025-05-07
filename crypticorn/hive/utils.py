@@ -3,8 +3,7 @@ import os
 import tqdm
 import logging
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger = logging.getLogger("crypticorn")
 
 
 async def download_file(
