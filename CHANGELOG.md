@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.8.0-rc.8 (2025-05-07)
+
+### Bug Fixes
+
+- Use root logger of the client with specific child logger as option
+  ([`2f8cde2`](https://github.com/crypticorn-ai/api-client/commit/2f8cde2659f22704c5c4310f3ec9a07cbd1d4cef))
+
+
 ## v2.8.0-rc.7 (2025-05-07)
 
 ### Bug Fixes
