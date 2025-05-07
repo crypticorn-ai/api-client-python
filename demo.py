@@ -2,7 +2,9 @@ from crypticorn.auth.client.exceptions import UnauthorizedException
 from crypticorn.auth import CreateApiKeyRequest
 from crypticorn.common import BaseUrl, Scope
 from crypticorn.common import MarketType
-from crypticorn.hive import Configuration as HiveConfig
+from crypticorn.hive import Configuration as HiveConfig, DataInfo, ModelCreate
+from crypticorn.hive.client.models.coins import Coins
+from crypticorn.hive.client.models.target import Target
 from crypticorn.pay import ProductUpdate, ProductRead, ProductCreate
 from crypticorn import ApiClient
 from crypticorn.trade import ExchangeKeyModel, Configuration as TradeConfig
@@ -16,7 +18,9 @@ jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdv
 
 
 async def main():
-    async with ApiClient(base_url=BaseUrl.DEV, api_key="") as client:
+    async with ApiClient(
+        base_url=BaseUrl.LOCAL, api_key=""
+    ) as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
         # print(10 * "=" + "This is the raw json response" + 10 * "=")
@@ -118,7 +122,18 @@ async def main():
         # print(res)
         # res = await client.auth.login.verify()
         # print(res)
-        res = await client.hive.data.download_data()
+        model = await client.hive.models.create_model(
+            ModelCreate(
+                name="test_187",
+                coin_id=Coins.ENUM_1,
+                target=Target.TATOOINE,
+            )
+        )
+        await client.hive.data.download_data(
+            version="1.0",
+            model_id=model.id,
+            feature_size="small",
+        )
     # res = await client.metrics.exchanges.get_exchange_mappings(
     #     exchange="binance", market=MarketType.FUTURES
     # )

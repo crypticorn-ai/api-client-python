@@ -6,7 +6,7 @@ The complete data information for all versions, coins, feature sizes and targets
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | **Dict[str, Dict[str, Dict[str, List[DataValueValueValueInner]]]]** | The complete data information for all versions, coins, feature sizes and targets. | 
+**data** | **Dict[str, Dict[str, DataOptions]]** | The complete data information for all versions, coins, feature sizes and targets. | 
 **coins** | [**List[Coins]**](Coins.md) | The coins available on the latest data version. | 
 **feature_sizes** | [**List[FeatureSize]**](FeatureSize.md) | The feature sizes available on the latest data version. | 
 **targets** | [**List[TargetInfo]**](TargetInfo.md) | The targets available on the latest data version. | 

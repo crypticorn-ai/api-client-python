@@ -34,12 +34,13 @@ from crypticorn.hive.client.exceptions import ApiAttributeError
 from crypticorn.hive.client.exceptions import ApiException
 
 # import models into sdk package
+from crypticorn.hive.client.models.api_error_identifier import ApiErrorIdentifier
+from crypticorn.hive.client.models.api_error_level import ApiErrorLevel
+from crypticorn.hive.client.models.api_error_type import ApiErrorType
 from crypticorn.hive.client.models.coins import Coins
 from crypticorn.hive.client.models.data_download_response import DataDownloadResponse
 from crypticorn.hive.client.models.data_info import DataInfo
-from crypticorn.hive.client.models.data_value_value_value_inner import (
-    DataValueValueValueInner,
-)
+from crypticorn.hive.client.models.data_options import DataOptions
 from crypticorn.hive.client.models.data_version import DataVersion
 from crypticorn.hive.client.models.data_version_info import DataVersionInfo
 from crypticorn.hive.client.models.download_links import DownloadLinks
@@ -52,7 +53,6 @@ from crypticorn.hive.client.models.model import Model
 from crypticorn.hive.client.models.model_create import ModelCreate
 from crypticorn.hive.client.models.model_status import ModelStatus
 from crypticorn.hive.client.models.model_update import ModelUpdate
-from crypticorn.hive.client.models.response_getuptime import ResponseGetuptime
 from crypticorn.hive.client.models.target import Target
 from crypticorn.hive.client.models.target_info import TargetInfo
 from crypticorn.hive.client.models.target_type import TargetType

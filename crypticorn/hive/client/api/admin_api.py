@@ -20,7 +20,6 @@ from pydantic import Field, StrictInt, StrictStr, field_validator
 from typing import Any, Dict, List, Optional
 from typing_extensions import Annotated
 from crypticorn.hive.client.models.log_level import LogLevel
-from crypticorn.hive.client.models.response_getuptime import ResponseGetuptime
 
 from crypticorn.hive.client.api_client import ApiClient, RequestSerialized
 from crypticorn.hive.client.api_response import ApiResponse
@@ -1223,7 +1222,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ResponseGetuptime:
+    ) -> str:
         """Get Uptime
 
         Return the server uptime in seconds or human-readable form.
@@ -1261,7 +1260,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "ResponseGetuptime",
+            "200": "str",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1287,7 +1286,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ResponseGetuptime]:
+    ) -> ApiResponse[str]:
         """Get Uptime
 
         Return the server uptime in seconds or human-readable form.
@@ -1325,7 +1324,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "ResponseGetuptime",
+            "200": "str",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1389,7 +1388,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "ResponseGetuptime",
+            "200": "str",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
