@@ -8,7 +8,7 @@ You can find the full Changelog [below](#changelog).
 
 from crypticorn.common.logging import configure_logging
 
-configure_logging("crypticorn")
+configure_logging()
 
 from crypticorn.client import ApiClient
 

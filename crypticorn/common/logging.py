@@ -12,8 +12,7 @@ from crypticorn.common.mixins import ValidateEnumMixin
 from crypticorn.common.ansi_colors import AnsiColors as C
 from datetime import datetime
 import os
-
-
+    
 class LogLevel(ValidateEnumMixin, StrEnum):
     DEBUG = "DEBUG"
     INFO = "INFO"
@@ -71,7 +70,7 @@ class CustomFormatter(logging.Formatter):
 
 
 def configure_logging(
-    name: str,
+    name: str = None,
     fmt: str = _LOGFORMAT,
     datefmt: str = _DATEFMT,
     stdout_level: int = logging.INFO,
@@ -82,8 +81,15 @@ def configure_logging(
     """Configures the logging for the application.
     Run this function as early as possible in the application (for example using the `lifespan` parameter in FastAPI).
     Then use can use the default `logging.getLogger(__name__)` method to get the logger.
+    :param name: The name of the logger. If not provided, the root logger will be used. Use a name if use multiple loggers in the same application.
+    :param fmt: The format of the log message.
+    :param datefmt: The date format of the log message.
+    :param stdout_level: The level of the log message to be printed to the console.
+    :param file_level: The level of the log message to be written to the file. Only used if `log_file` is provided.
+    :param log_file: The file to write the log messages to.
+    :param filters: A list of filters to apply to the log handlers.
     """
-    logger = logging.getLogger(name)
+    logger = logging.getLogger(name) if name else logging.getLogger()
 
     if logger.handlers:  # clear existing handlers to avoid duplicates
         logger.handlers.clear()
@@ -109,6 +115,9 @@ def configure_logging(
         for filter in filters:
             file_handler.addFilter(filter)
         logger.addHandler(file_handler)
+    
+    if name:
+        logger.propagate = False
 
 
 def disable_logging():
