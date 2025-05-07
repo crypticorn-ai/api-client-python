@@ -31,7 +31,7 @@ The ApiClient serves as the central interface for API operations. It instantiate
 
 <img src="../static/pip-structure.svg" alt="pip package structure" />
 
-You can either explore each API by clicking through the library or checkout the [API Documentation](https://docs.crypticorn.dev/api).
+You can either explore each API by clicking through the library or checkout the [API Documentation](https://docs.crypticorn.com/api).
 
 Request and response models for API operations should be accessed through the sub package you are using for an operation. All symbols are re-exported at the sub package level for convenience.
 
@@ -127,7 +127,7 @@ Some API operations allow to get the returned data formatted as a pandas Datafra
 
 ### Data Downloads
 This utility allows direct data streaming to your local disk, instead of only returning download links. It is being used in the following functions:
-- `client.hive.data.download_data()` (overrides the [default response](https://docs.crypticorn.dev/api/?api=hive-ai-api#tag/data/GET/data))
+- `client.hive.data.download_data()` (overrides the [default response](https://docs.crypticorn.com/api/?api=hive-ai-api#tag/data/GET/data))
 
 ## Advanced Usage
 
