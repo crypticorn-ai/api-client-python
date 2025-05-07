@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.8.0-rc.6 (2025-05-07)
+
+### Bug Fixes
+
+- Fixes logging file handler import error
+  ([`0a9edb1`](https://github.com/crypticorn-ai/api-client/commit/0a9edb1ee3083ec98edc9529efa3158e69c4541c))
+
+
 ## v2.8.0-rc.5 (2025-05-07)
 
 ### Bug Fixes
