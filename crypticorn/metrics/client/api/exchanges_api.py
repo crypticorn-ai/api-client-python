@@ -19,6 +19,9 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt, StrictStr
 from typing import Any, Dict, List, Optional
 from typing_extensions import Annotated
+from crypticorn.metrics.client.models.exchange_mapping import ExchangeMapping
+from crypticorn.metrics.client.models.internal_exchange import InternalExchange
+from crypticorn.metrics.client.models.market_type import MarketType
 from crypticorn.metrics.client.models.time_interval import TimeInterval
 from crypticorn.metrics.client.models.trading_status import TradingStatus
 
@@ -43,7 +46,7 @@ class ExchangesApi:
     async def get_available_exchanges(
         self,
         market: Annotated[
-            StrictStr, Field(description="Market type (spot or futures)")
+            MarketType, Field(description="Market type (spot or futures)")
         ],
         symbol: Annotated[
             StrictStr, Field(description="Symbol to fetch available exchanges for")
@@ -91,7 +94,7 @@ class ExchangesApi:
         Get available exchanges for a symbol with various filtering options.
 
         :param market: Market type (spot or futures) (required)
-        :type market: str
+        :type market: MarketType
         :param symbol: Symbol to fetch available exchanges for (required)
         :type symbol: str
         :param interval: Interval for which to fetch available exchanges
@@ -156,7 +159,7 @@ class ExchangesApi:
     async def get_available_exchanges_with_http_info(
         self,
         market: Annotated[
-            StrictStr, Field(description="Market type (spot or futures)")
+            MarketType, Field(description="Market type (spot or futures)")
         ],
         symbol: Annotated[
             StrictStr, Field(description="Symbol to fetch available exchanges for")
@@ -204,7 +207,7 @@ class ExchangesApi:
         Get available exchanges for a symbol with various filtering options.
 
         :param market: Market type (spot or futures) (required)
-        :type market: str
+        :type market: MarketType
         :param symbol: Symbol to fetch available exchanges for (required)
         :type symbol: str
         :param interval: Interval for which to fetch available exchanges
@@ -269,7 +272,7 @@ class ExchangesApi:
     async def get_available_exchanges_without_preload_content(
         self,
         market: Annotated[
-            StrictStr, Field(description="Market type (spot or futures)")
+            MarketType, Field(description="Market type (spot or futures)")
         ],
         symbol: Annotated[
             StrictStr, Field(description="Symbol to fetch available exchanges for")
@@ -317,7 +320,7 @@ class ExchangesApi:
         Get available exchanges for a symbol with various filtering options.
 
         :param market: Market type (spot or futures) (required)
-        :type market: str
+        :type market: MarketType
         :param symbol: Symbol to fetch available exchanges for (required)
         :type symbol: str
         :param interval: Interval for which to fetch available exchanges
@@ -403,11 +406,15 @@ class ExchangesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if market is not None:
-            _path_params["market"] = market
-        if symbol is not None:
-            _path_params["symbol"] = symbol
         # process the query parameters
+        if market is not None:
+
+            _query_params.append(("market", market.value))
+
+        if symbol is not None:
+
+            _query_params.append(("symbol", symbol))
+
         if interval is not None:
 
             _query_params.append(("interval", interval.value))
@@ -443,7 +450,7 @@ class ExchangesApi:
 
         return self.api_client.param_serialize(
             method="GET",
-            resource_path="/available_exchanges/{market}/{symbol}",
+            resource_path="/exchanges/available",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -460,7 +467,7 @@ class ExchangesApi:
     async def get_available_exchanges_for_market(
         self,
         market: Annotated[
-            StrictStr, Field(description="Market type (spot or futures)")
+            MarketType, Field(description="Market type (spot or futures)")
         ],
         _request_timeout: Union[
             None,
@@ -479,7 +486,7 @@ class ExchangesApi:
         Get list of exchanges for a market.
 
         :param market: Market type (spot or futures) (required)
-        :type market: str
+        :type market: MarketType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -526,7 +533,7 @@ class ExchangesApi:
     async def get_available_exchanges_for_market_with_http_info(
         self,
         market: Annotated[
-            StrictStr, Field(description="Market type (spot or futures)")
+            MarketType, Field(description="Market type (spot or futures)")
         ],
         _request_timeout: Union[
             None,
@@ -545,7 +552,7 @@ class ExchangesApi:
         Get list of exchanges for a market.
 
         :param market: Market type (spot or futures) (required)
-        :type market: str
+        :type market: MarketType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -592,7 +599,7 @@ class ExchangesApi:
     async def get_available_exchanges_for_market_without_preload_content(
         self,
         market: Annotated[
-            StrictStr, Field(description="Market type (spot or futures)")
+            MarketType, Field(description="Market type (spot or futures)")
         ],
         _request_timeout: Union[
             None,
@@ -611,7 +618,7 @@ class ExchangesApi:
         Get list of exchanges for a market.
 
         :param market: Market type (spot or futures) (required)
-        :type market: str
+        :type market: MarketType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -673,9 +680,11 @@ class ExchangesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if market is not None:
-            _path_params["market"] = market
         # process the query parameters
+        if market is not None:
+
+            _query_params.append(("market", market.value))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -691,7 +700,7 @@ class ExchangesApi:
 
         return self.api_client.param_serialize(
             method="GET",
-            resource_path="/exchange_list/{market}",
+            resource_path="/exchanges/list",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -708,10 +717,10 @@ class ExchangesApi:
     async def get_exchange_mappings(
         self,
         market: Annotated[
-            StrictStr, Field(description="Market type (spot or futures)")
+            MarketType, Field(description="Market type (spot or futures)")
         ],
         exchange: Annotated[
-            Optional[StrictStr],
+            Optional[InternalExchange],
             Field(description="Exchange name for which to fetch exchange mappings"),
         ] = None,
         _request_timeout: Union[
@@ -725,15 +734,15 @@ class ExchangesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[str]:
+    ) -> List[ExchangeMapping]:
         """Get Exchange Mappings
 
         Get exchange mappings for a market with optional exchange name filter.
 
         :param market: Market type (spot or futures) (required)
-        :type market: str
+        :type market: MarketType
         :param exchange: Exchange name for which to fetch exchange mappings
-        :type exchange: str
+        :type exchange: InternalExchange
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -766,7 +775,7 @@ class ExchangesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[str]",
+            "200": "List[ExchangeMapping]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -781,10 +790,10 @@ class ExchangesApi:
     async def get_exchange_mappings_with_http_info(
         self,
         market: Annotated[
-            StrictStr, Field(description="Market type (spot or futures)")
+            MarketType, Field(description="Market type (spot or futures)")
         ],
         exchange: Annotated[
-            Optional[StrictStr],
+            Optional[InternalExchange],
             Field(description="Exchange name for which to fetch exchange mappings"),
         ] = None,
         _request_timeout: Union[
@@ -798,15 +807,15 @@ class ExchangesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[str]]:
+    ) -> ApiResponse[List[ExchangeMapping]]:
         """Get Exchange Mappings
 
         Get exchange mappings for a market with optional exchange name filter.
 
         :param market: Market type (spot or futures) (required)
-        :type market: str
+        :type market: MarketType
         :param exchange: Exchange name for which to fetch exchange mappings
-        :type exchange: str
+        :type exchange: InternalExchange
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -839,7 +848,7 @@ class ExchangesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[str]",
+            "200": "List[ExchangeMapping]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -854,10 +863,10 @@ class ExchangesApi:
     async def get_exchange_mappings_without_preload_content(
         self,
         market: Annotated[
-            StrictStr, Field(description="Market type (spot or futures)")
+            MarketType, Field(description="Market type (spot or futures)")
         ],
         exchange: Annotated[
-            Optional[StrictStr],
+            Optional[InternalExchange],
             Field(description="Exchange name for which to fetch exchange mappings"),
         ] = None,
         _request_timeout: Union[
@@ -877,9 +886,9 @@ class ExchangesApi:
         Get exchange mappings for a market with optional exchange name filter.
 
         :param market: Market type (spot or futures) (required)
-        :type market: str
+        :type market: MarketType
         :param exchange: Exchange name for which to fetch exchange mappings
-        :type exchange: str
+        :type exchange: InternalExchange
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -912,7 +921,7 @@ class ExchangesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[str]",
+            "200": "List[ExchangeMapping]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -943,12 +952,14 @@ class ExchangesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if market is not None:
-            _path_params["market"] = market
         # process the query parameters
+        if market is not None:
+
+            _query_params.append(("market", market.value))
+
         if exchange is not None:
 
-            _query_params.append(("exchange", exchange))
+            _query_params.append(("exchange", exchange.value))
 
         # process the header parameters
         # process the form parameters
@@ -965,7 +976,7 @@ class ExchangesApi:
 
         return self.api_client.param_serialize(
             method="GET",
-            resource_path="/exchange_mappings/{market}",
+            resource_path="/exchanges/mappings",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

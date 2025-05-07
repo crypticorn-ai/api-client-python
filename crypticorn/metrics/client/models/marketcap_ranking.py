@@ -17,34 +17,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.metrics.client.models.api_error_identifier import ApiErrorIdentifier
-from crypticorn.metrics.client.models.api_error_level import ApiErrorLevel
-from crypticorn.metrics.client.models.api_error_type import ApiErrorType
+from datetime import datetime
+from pydantic import BaseModel, ConfigDict, StrictStr
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class ExceptionDetail(BaseModel):
+class MarketcapRanking(BaseModel):
     """
-    This is the detail of the exception. It is used to enrich the exception with additional information by unwrapping the ApiError into its components.
+    MarketcapRanking
     """  # noqa: E501
 
-    message: Optional[StrictStr] = None
-    code: ApiErrorIdentifier = Field(description="The unique error code")
-    type: ApiErrorType = Field(description="The type of error")
-    level: ApiErrorLevel = Field(description="The level of the error")
-    status_code: StrictInt = Field(description="The HTTP status code")
-    details: Optional[Any] = None
-    __properties: ClassVar[List[str]] = [
-        "message",
-        "code",
-        "type",
-        "level",
-        "status_code",
-        "details",
-    ]
+    timestamp: datetime
+    symbols: List[StrictStr]
+    __properties: ClassVar[List[str]] = ["timestamp", "symbols"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -63,7 +50,7 @@ class ExceptionDetail(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ExceptionDetail from a JSON string"""
+        """Create an instance of MarketcapRanking from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -83,21 +70,11 @@ class ExceptionDetail(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if message (nullable) is None
-        # and model_fields_set contains the field
-        if self.message is None and "message" in self.model_fields_set:
-            _dict["message"] = None
-
-        # set to None if details (nullable) is None
-        # and model_fields_set contains the field
-        if self.details is None and "details" in self.model_fields_set:
-            _dict["details"] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ExceptionDetail from a dict"""
+        """Create an instance of MarketcapRanking from a dict"""
         if obj is None:
             return None
 
@@ -105,13 +82,6 @@ class ExceptionDetail(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {
-                "message": obj.get("message"),
-                "code": obj.get("code"),
-                "type": obj.get("type"),
-                "level": obj.get("level"),
-                "status_code": obj.get("status_code"),
-                "details": obj.get("details"),
-            }
+            {"timestamp": obj.get("timestamp"), "symbols": obj.get("symbols")}
         )
         return _obj

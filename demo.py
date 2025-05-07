@@ -122,22 +122,31 @@ async def main():
         # print(res)
         # res = await client.auth.login.verify()
         # print(res)
-        model = await client.hive.models.create_model(
-            ModelCreate(
-                name="test_187",
-                coin_id=Coins.ENUM_1,
-                target=Target.TATOOINE,
-            )
+        # model = await client.hive.models.create_model(
+        #     ModelCreate(
+        #         name="test_187",
+        #         coin_id=Coins.ENUM_1,
+        #         target=Target.TATOOINE,
+        #     )
+        # )
+        # await client.hive.data.download_data(
+        #     version="1.0",
+        #     model_id=model.id,
+        #     feature_size="small",
+        # )
+        # from crypticorn.common import Service
+        # client.configure(config=HiveConfig(host="http://localhost:8000"), service=Service.HIVE)
+        # res = await client.hive.status.ping()
+        # print(res)
+        # res = await client.metrics.exchanges.get_exchange_mappings(
+        #     exchange="binance", market=MarketType.FUTURES
+        # )
+        # print(res.data)
+        result = await client.metrics.exchanges.get_exchange_mappings(
+            market=MarketType.FUTURES
         )
-        await client.hive.data.download_data(
-            version="1.0",
-            model_id=model.id,
-            feature_size="small",
-        )
-    # res = await client.metrics.exchanges.get_exchange_mappings(
-    #     exchange="binance", market=MarketType.FUTURES
-    # )
-    # print(res.data)
+        exchanges = set([r.exchange_name for r in result])
+        print(exchanges)
 
 
 async def configure_client():

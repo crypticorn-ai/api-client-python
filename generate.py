@@ -95,7 +95,7 @@ def main():
         "-o",
         f"python/crypticorn/{module_name}",
         "--openapi-generator-ignore-list",
-        "setup.py,setup.cfg,pyproject.toml,tox.ini,py.typed,.gitignore,.gitlab-ci.yml,.github/,git_push.sh,test/,.travis.yml,test-requirements.txt",
+        "setup.py,setup.cfg,pyproject.toml,tox.ini,py.typed,.gitignore,.gitlab-ci.yml,.github/,git_push.sh,test/,docs/,.travis.yml,test-requirements.txt,requirements.txt,README.md,.openapi-generator-ignore",
         "--minimal-update",
         "--library",
         "asyncio",
@@ -151,9 +151,7 @@ __all__ = ["{upper_module_name}Client", ]
 
     print("========================IMPORTANT========================")
     print("If you are adding a new module, you need to do the following:")
-    print(
-        f"- Add the dependencies in crypticorn/{module_name}/requirements.txt to the requirements/main.txt file."
-    )
+    print(f"- Edit the generated crypticorn/client.py file.")
     print(f"- Edit the generated crypticorn/{module_name}/main.py file.")
     print(f"- Edit the crypticorn/common/urls.py file to add the new module.")
     print("=========================================================")

@@ -9,6 +9,8 @@ from crypticorn.metrics import (
     MarketcapApi,
     MarketsApi,
     TokensApi,
+    AdminApi,
+    QuoteCurrenciesApi,
 )
 from crypticorn.common import optional_import
 
@@ -34,6 +36,8 @@ class MetricsClient:
         self.markets = MarketsApi(self.base_client)
         self.tokens = TokensApiWrapper(self.base_client)
         self.exchanges = ExchangesApiWrapper(self.base_client)
+        self.quote_currencies = QuoteCurrenciesApi(self.base_client)
+        self.admin = AdminApi(self.base_client)
 
 
 class MarketcapApiWrapper(MarketcapApi):
@@ -57,12 +61,20 @@ class TokensApiWrapper(TokensApi):
     A wrapper for the TokensApi class.
     """
 
-    async def get_stable_and_wrapped_tokens_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    async def get_stable_tokens_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
         """
         Get the tokens in a pandas dataframe
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_stable_and_wrapped_tokens(*args, **kwargs)
+        response = await self.get_stable_tokens(*args, **kwargs)
+        return pd.DataFrame(response)
+
+    async def get_wrapped_tokens_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+        """
+        Get the wrapped tokens in a pandas dataframe
+        """
+        pd = optional_import("pandas", "extra")
+        response = await self.get_wrapped_tokens(*args, **kwargs)
         return pd.DataFrame(response)
 
 

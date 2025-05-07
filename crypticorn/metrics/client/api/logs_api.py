@@ -16,8 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictInt, StrictStr
-from typing import List, Optional
+from pydantic import Field, StrictInt
+from typing import Any, Dict, List, Optional
 from typing_extensions import Annotated
 from crypticorn.metrics.client.models.severity import Severity
 
@@ -63,7 +63,7 @@ class LogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[str]:
+    ) -> List[Dict[str, object]]:
         """Get Error Logs
 
         Get error logs with filtering options.
@@ -107,7 +107,7 @@ class LogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[str]",
+            "200": "List[Dict[str, object]]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -143,7 +143,7 @@ class LogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[str]]:
+    ) -> ApiResponse[List[Dict[str, object]]]:
         """Get Error Logs
 
         Get error logs with filtering options.
@@ -187,7 +187,7 @@ class LogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[str]",
+            "200": "List[Dict[str, object]]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -267,7 +267,7 @@ class LogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[str]",
+            "200": "List[Dict[str, object]]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout

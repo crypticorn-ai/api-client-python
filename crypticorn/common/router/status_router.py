@@ -1,16 +1,16 @@
 from datetime import datetime
 from typing import Literal
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 
 router = APIRouter(tags=["Status"], prefix="")
 
 
 @router.get("/", operation_id="ping")
-async def ping() -> str:
+async def ping(request: Request) -> dict:
     """
     Returns 'OK' if the API is running.
     """
-    return "OK"
+    return {"origin": request.headers.get("x-forwarded-for")}
 
 
 @router.get("/time", operation_id="getTime")
