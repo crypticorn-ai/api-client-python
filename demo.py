@@ -142,11 +142,18 @@ async def main():
         #     exchange="binance", market=MarketType.FUTURES
         # )
         # print(res.data)
-        result = await client.metrics.exchanges.get_exchange_mappings(
-            market=MarketType.FUTURES
+        # result = await client.metrics.exchanges.get_exchange_mappings(
+        #     market=MarketType.FUTURES
+        # )
+        # exchanges = set([r.exchange_name for r in result])
+        # print(exchanges)
+        res = await client.klines.ohlcv.get_ohlcv_data_fmt(
+            symbol="BTCUSDT",
+            timeframe=Timeframe.ENUM_1D,
+            market=MarketType.FUTURES,
+            limit=100,
         )
-        exchanges = set([r.exchange_name for r in result])
-        print(exchanges)
+        print(res)
 
 
 async def configure_client():

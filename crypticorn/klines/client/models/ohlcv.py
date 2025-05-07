@@ -17,23 +17,31 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List
-from crypticorn.klines.client.models.internal_exchange import InternalExchange
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
+from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class SearchSymbol(BaseModel):
+class OHLCV(BaseModel):
     """
-    SearchSymbol
+    OHLCV
     """  # noqa: E501
 
-    symbol: StrictStr
-    description: StrictStr
-    exchange: InternalExchange
-    type: StrictStr
-    __properties: ClassVar[List[str]] = ["symbol", "description", "exchange", "type"]
+    timestamp: StrictInt = Field(description="Timestamp in seconds")
+    open: Union[StrictFloat, StrictInt] = Field(description="Open prices")
+    high: Union[StrictFloat, StrictInt] = Field(description="High prices")
+    low: Union[StrictFloat, StrictInt] = Field(description="Low prices")
+    close: Union[StrictFloat, StrictInt] = Field(description="Close prices")
+    volume: Union[StrictFloat, StrictInt] = Field(description="Volume")
+    __properties: ClassVar[List[str]] = [
+        "timestamp",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +60,7 @@ class SearchSymbol(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SearchSymbol from a JSON string"""
+        """Create an instance of OHLCV from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,7 +84,7 @@ class SearchSymbol(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SearchSymbol from a dict"""
+        """Create an instance of OHLCV from a dict"""
         if obj is None:
             return None
 
@@ -85,10 +93,12 @@ class SearchSymbol(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "symbol": obj.get("symbol"),
-                "description": obj.get("description"),
-                "exchange": obj.get("exchange"),
-                "type": obj.get("type"),
+                "timestamp": obj.get("timestamp"),
+                "open": obj.get("open"),
+                "high": obj.get("high"),
+                "low": obj.get("low"),
+                "close": obj.get("close"),
+                "volume": obj.get("volume"),
             }
         )
         return _obj

@@ -17,9 +17,10 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictInt, StrictStr
-from typing import Optional
+from typing import List, Optional
 from typing_extensions import Annotated
-from crypticorn.klines.client.models.ohlcv_history import OHLCVHistory
+from crypticorn.klines.client.models.market_type import MarketType
+from crypticorn.klines.client.models.ohlcv import OHLCV
 from crypticorn.klines.client.models.sort_direction import SortDirection
 from crypticorn.klines.client.models.timeframe import Timeframe
 
@@ -43,7 +44,7 @@ class OHLCVDataApi:
     @validate_call
     async def get_ohlcv(
         self,
-        market: Annotated[StrictStr, Field(description="Market type")],
+        market: Annotated[MarketType, Field(description="Market type")],
         timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
         symbol: Annotated[
             StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
@@ -60,7 +61,9 @@ class OHLCVDataApi:
         ] = None,
         sort_direction: Annotated[
             Optional[SortDirection],
-            Field(description="Klines sort direction (asc or desc)"),
+            Field(
+                description="Sort by timestamp in ascending or descending order. Default is descending."
+            ),
         ] = None,
         _request_timeout: Union[
             None,
@@ -73,13 +76,13 @@ class OHLCVDataApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> OHLCVHistory:
+    ) -> List[OHLCV]:
         """Get Ohlcv
 
         Retrieve OHLCV (Open, High, Low, Close, Volume) data for a specific market, timeframe, and symbol.
 
         :param market: Market type (required)
-        :type market: str
+        :type market: MarketType
         :param timeframe: Timeframe for the candles (required)
         :type timeframe: Timeframe
         :param symbol: Trading pair symbol (e.g., BTCUSDT) (required)
@@ -90,7 +93,7 @@ class OHLCVDataApi:
         :type end: int
         :param limit: Number of candles to return
         :type limit: int
-        :param sort_direction: Klines sort direction (asc or desc)
+        :param sort_direction: Sort by timestamp in ascending or descending order. Default is descending.
         :type sort_direction: SortDirection
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -129,7 +132,7 @@ class OHLCVDataApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "OHLCVHistory",
+            "200": "List[OHLCV]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -143,7 +146,7 @@ class OHLCVDataApi:
     @validate_call
     async def get_ohlcv_with_http_info(
         self,
-        market: Annotated[StrictStr, Field(description="Market type")],
+        market: Annotated[MarketType, Field(description="Market type")],
         timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
         symbol: Annotated[
             StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
@@ -160,7 +163,9 @@ class OHLCVDataApi:
         ] = None,
         sort_direction: Annotated[
             Optional[SortDirection],
-            Field(description="Klines sort direction (asc or desc)"),
+            Field(
+                description="Sort by timestamp in ascending or descending order. Default is descending."
+            ),
         ] = None,
         _request_timeout: Union[
             None,
@@ -173,13 +178,13 @@ class OHLCVDataApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[OHLCVHistory]:
+    ) -> ApiResponse[List[OHLCV]]:
         """Get Ohlcv
 
         Retrieve OHLCV (Open, High, Low, Close, Volume) data for a specific market, timeframe, and symbol.
 
         :param market: Market type (required)
-        :type market: str
+        :type market: MarketType
         :param timeframe: Timeframe for the candles (required)
         :type timeframe: Timeframe
         :param symbol: Trading pair symbol (e.g., BTCUSDT) (required)
@@ -190,7 +195,7 @@ class OHLCVDataApi:
         :type end: int
         :param limit: Number of candles to return
         :type limit: int
-        :param sort_direction: Klines sort direction (asc or desc)
+        :param sort_direction: Sort by timestamp in ascending or descending order. Default is descending.
         :type sort_direction: SortDirection
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -229,7 +234,7 @@ class OHLCVDataApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "OHLCVHistory",
+            "200": "List[OHLCV]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -243,7 +248,7 @@ class OHLCVDataApi:
     @validate_call
     async def get_ohlcv_without_preload_content(
         self,
-        market: Annotated[StrictStr, Field(description="Market type")],
+        market: Annotated[MarketType, Field(description="Market type")],
         timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
         symbol: Annotated[
             StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
@@ -260,7 +265,9 @@ class OHLCVDataApi:
         ] = None,
         sort_direction: Annotated[
             Optional[SortDirection],
-            Field(description="Klines sort direction (asc or desc)"),
+            Field(
+                description="Sort by timestamp in ascending or descending order. Default is descending."
+            ),
         ] = None,
         _request_timeout: Union[
             None,
@@ -279,7 +286,7 @@ class OHLCVDataApi:
         Retrieve OHLCV (Open, High, Low, Close, Volume) data for a specific market, timeframe, and symbol.
 
         :param market: Market type (required)
-        :type market: str
+        :type market: MarketType
         :param timeframe: Timeframe for the candles (required)
         :type timeframe: Timeframe
         :param symbol: Trading pair symbol (e.g., BTCUSDT) (required)
@@ -290,7 +297,7 @@ class OHLCVDataApi:
         :type end: int
         :param limit: Number of candles to return
         :type limit: int
-        :param sort_direction: Klines sort direction (asc or desc)
+        :param sort_direction: Sort by timestamp in ascending or descending order. Default is descending.
         :type sort_direction: SortDirection
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -329,7 +336,7 @@ class OHLCVDataApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "OHLCVHistory",
+            "200": "List[OHLCV]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -365,13 +372,19 @@ class OHLCVDataApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if market is not None:
-            _path_params["market"] = market
-        if timeframe is not None:
-            _path_params["timeframe"] = timeframe.value
-        if symbol is not None:
-            _path_params["symbol"] = symbol
         # process the query parameters
+        if market is not None:
+
+            _query_params.append(("market", market.value))
+
+        if timeframe is not None:
+
+            _query_params.append(("timeframe", timeframe.value))
+
+        if symbol is not None:
+
+            _query_params.append(("symbol", symbol))
+
         if start is not None:
 
             _query_params.append(("start", start))
@@ -403,7 +416,7 @@ class OHLCVDataApi:
 
         return self.api_client.param_serialize(
             method="GET",
-            resource_path="/{market}/{timeframe}/{symbol}",
+            resource_path="/ohlcv",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

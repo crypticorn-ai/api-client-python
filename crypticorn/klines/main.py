@@ -65,19 +65,7 @@ class OHLCVDataApiWrapper(OHLCVDataApi):
         """
         pd = optional_import("pandas", "extra")
         response = await self.get_ohlcv(*args, **kwargs)
-        df = pd.DataFrame(
-            {
-                "timestamp": [int(d.timestamp()) for d in response.timestamps],
-                "open": response.open,
-                "high": response.high,
-                "low": response.low,
-                "close": response.close,
-                "volume": response.volume,
-            }
-        )
-        df.sort_values(by="timestamp", ascending=False, inplace=True)
-        df.reset_index(drop=True, inplace=True)
-        return df
+        return pd.DataFrame(response)
 
 
 class SymbolsApiWrapper(SymbolsApi):

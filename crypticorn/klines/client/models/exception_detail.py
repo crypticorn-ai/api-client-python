@@ -19,6 +19,9 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from crypticorn.klines.client.models.api_error_identifier import ApiErrorIdentifier
+from crypticorn.klines.client.models.api_error_level import ApiErrorLevel
+from crypticorn.klines.client.models.api_error_type import ApiErrorType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,9 +32,9 @@ class ExceptionDetail(BaseModel):
     """  # noqa: E501
 
     message: Optional[StrictStr] = None
-    code: StrictStr = Field(description="API error identifiers")
-    type: StrictStr = Field(description="Type of API error")
-    level: StrictStr = Field(description="API error levels")
+    code: ApiErrorIdentifier = Field(description="The unique error code")
+    type: ApiErrorType = Field(description="The type of error")
+    level: ApiErrorLevel = Field(description="The level of the error")
     status_code: StrictInt = Field(description="The HTTP status code")
     details: Optional[Any] = None
     __properties: ClassVar[List[str]] = [

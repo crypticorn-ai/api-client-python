@@ -17,32 +17,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List
+from crypticorn.klines.client.models.funding_rate import FundingRate
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class OHLCVHistory(BaseModel):
+class FundingRateResponse(BaseModel):
     """
-    OHLCVHistory
+    Response model for fetching funding rates
     """  # noqa: E501
 
-    timestamps: List[datetime] = Field(description="Timestamps in seconds")
-    open: List[Union[StrictFloat, StrictInt]] = Field(description="Open prices")
-    high: List[Union[StrictFloat, StrictInt]] = Field(description="High prices")
-    low: List[Union[StrictFloat, StrictInt]] = Field(description="Low prices")
-    close: List[Union[StrictFloat, StrictInt]] = Field(description="Close prices")
-    volume: List[Union[StrictFloat, StrictInt]] = Field(description="Volume")
-    __properties: ClassVar[List[str]] = [
-        "timestamps",
-        "open",
-        "high",
-        "low",
-        "close",
-        "volume",
-    ]
+    symbol: StrictStr = Field(description="The symbol of the funding rate")
+    funding_interval: StrictStr = Field(description="The funding interval")
+    funding_rates: List[FundingRate] = Field(description="The funding rates")
+    __properties: ClassVar[List[str]] = ["symbol", "funding_interval", "funding_rates"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -61,7 +51,7 @@ class OHLCVHistory(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of OHLCVHistory from a JSON string"""
+        """Create an instance of FundingRateResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -81,11 +71,18 @@ class OHLCVHistory(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in funding_rates (list)
+        _items = []
+        if self.funding_rates:
+            for _item_funding_rates in self.funding_rates:
+                if _item_funding_rates:
+                    _items.append(_item_funding_rates.to_dict())
+            _dict["funding_rates"] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of OHLCVHistory from a dict"""
+        """Create an instance of FundingRateResponse from a dict"""
         if obj is None:
             return None
 
@@ -94,12 +91,13 @@ class OHLCVHistory(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "timestamps": obj.get("timestamps"),
-                "open": obj.get("open"),
-                "high": obj.get("high"),
-                "low": obj.get("low"),
-                "close": obj.get("close"),
-                "volume": obj.get("volume"),
+                "symbol": obj.get("symbol"),
+                "funding_interval": obj.get("funding_interval"),
+                "funding_rates": (
+                    [FundingRate.from_dict(_item) for _item in obj["funding_rates"]]
+                    if obj.get("funding_rates") is not None
+                    else None
+                ),
             }
         )
         return _obj

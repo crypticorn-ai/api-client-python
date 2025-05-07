@@ -17,9 +17,9 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictInt, StrictStr
-from typing import List, Optional
+from typing import Optional
 from typing_extensions import Annotated
-from crypticorn.klines.client.models.funding_rate import FundingRate
+from crypticorn.klines.client.models.funding_rate_response import FundingRateResponse
 
 from crypticorn.klines.client.api_client import ApiClient, RequestSerialized
 from crypticorn.klines.client.api_response import ApiResponse
@@ -65,7 +65,7 @@ class FundingRatesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[FundingRate]:
+    ) -> FundingRateResponse:
         """Funding Rate
 
         Retrieve funding rate data for a specific symbol in the futures market.
@@ -112,7 +112,7 @@ class FundingRatesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[FundingRate]",
+            "200": "FundingRateResponse",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -150,7 +150,7 @@ class FundingRatesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[FundingRate]]:
+    ) -> ApiResponse[FundingRateResponse]:
         """Funding Rate
 
         Retrieve funding rate data for a specific symbol in the futures market.
@@ -197,7 +197,7 @@ class FundingRatesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[FundingRate]",
+            "200": "FundingRateResponse",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -282,7 +282,7 @@ class FundingRatesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[FundingRate]",
+            "200": "FundingRateResponse",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -315,9 +315,11 @@ class FundingRatesApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if symbol is not None:
-            _path_params["symbol"] = symbol
         # process the query parameters
+        if symbol is not None:
+
+            _query_params.append(("symbol", symbol))
+
         if start is not None:
 
             _query_params.append(("start", start))
@@ -345,7 +347,7 @@ class FundingRatesApi:
 
         return self.api_client.param_serialize(
             method="GET",
-            resource_path="/funding_rates/{symbol}",
+            resource_path="/funding",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

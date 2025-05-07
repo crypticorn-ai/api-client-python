@@ -17,6 +17,7 @@ Do not edit the class manually.
 __version__ = "1.0.0"
 
 # import apis into sdk package
+from crypticorn.klines.client.api.admin_api import AdminApi
 from crypticorn.klines.client.api.change_in_timeframe_api import ChangeInTimeframeApi
 from crypticorn.klines.client.api.funding_rates_api import FundingRatesApi
 from crypticorn.klines.client.api.ohlcv_data_api import OHLCVDataApi
@@ -36,10 +37,17 @@ from crypticorn.klines.client.exceptions import ApiAttributeError
 from crypticorn.klines.client.exceptions import ApiException
 
 # import models into sdk package
+from crypticorn.klines.client.models.api_error_identifier import ApiErrorIdentifier
+from crypticorn.klines.client.models.api_error_level import ApiErrorLevel
+from crypticorn.klines.client.models.api_error_type import ApiErrorType
 from crypticorn.klines.client.models.change_in_timeframe import ChangeInTimeframe
 from crypticorn.klines.client.models.exception_detail import ExceptionDetail
 from crypticorn.klines.client.models.funding_rate import FundingRate
-from crypticorn.klines.client.models.ohlcv_history import OHLCVHistory
+from crypticorn.klines.client.models.funding_rate_response import FundingRateResponse
+from crypticorn.klines.client.models.internal_exchange import InternalExchange
+from crypticorn.klines.client.models.log_level import LogLevel
+from crypticorn.klines.client.models.market_type import MarketType
+from crypticorn.klines.client.models.ohlcv import OHLCV
 from crypticorn.klines.client.models.resolution import Resolution
 from crypticorn.klines.client.models.search_symbol import SearchSymbol
 from crypticorn.klines.client.models.sort_direction import SortDirection

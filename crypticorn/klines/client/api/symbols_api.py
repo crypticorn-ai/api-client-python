@@ -19,6 +19,7 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictStr
 from typing import List
 from typing_extensions import Annotated
+from crypticorn.klines.client.models.market_type import MarketType
 
 from crypticorn.klines.client.api_client import ApiClient, RequestSerialized
 from crypticorn.klines.client.api_response import ApiResponse
@@ -40,7 +41,7 @@ class SymbolsApi:
     @validate_call
     async def get_klines_symbols(
         self,
-        market: Annotated[StrictStr, Field(description="Market type")],
+        market: Annotated[MarketType, Field(description="Market type")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -58,7 +59,7 @@ class SymbolsApi:
         Retrieve a list of whitelisted symbols for a specific market.
 
         :param market: Market type (required)
-        :type market: str
+        :type market: MarketType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -104,7 +105,7 @@ class SymbolsApi:
     @validate_call
     async def get_klines_symbols_with_http_info(
         self,
-        market: Annotated[StrictStr, Field(description="Market type")],
+        market: Annotated[MarketType, Field(description="Market type")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -122,7 +123,7 @@ class SymbolsApi:
         Retrieve a list of whitelisted symbols for a specific market.
 
         :param market: Market type (required)
-        :type market: str
+        :type market: MarketType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -168,7 +169,7 @@ class SymbolsApi:
     @validate_call
     async def get_klines_symbols_without_preload_content(
         self,
-        market: Annotated[StrictStr, Field(description="Market type")],
+        market: Annotated[MarketType, Field(description="Market type")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -186,7 +187,7 @@ class SymbolsApi:
         Retrieve a list of whitelisted symbols for a specific market.
 
         :param market: Market type (required)
-        :type market: str
+        :type market: MarketType
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -248,9 +249,11 @@ class SymbolsApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if market is not None:
-            _path_params["market"] = market
         # process the query parameters
+        if market is not None:
+
+            _query_params.append(("market", market.value))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -266,7 +269,7 @@ class SymbolsApi:
 
         return self.api_client.param_serialize(
             method="GET",
-            resource_path="/symbols/{market}",
+            resource_path="/symbols",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
