@@ -43,4 +43,4 @@ jobs:
       uses: MishaKav/pytest-coverage-comment@main
       with:
         pytest-xml-coverage-path: ./coverage.xml
-        hide-report: true
+        report-only-changed-files: true
