@@ -6,7 +6,7 @@ router = APIRouter(tags=["Status"], prefix="")
 
 
 @router.get("/", operation_id="ping")
-async def ping(request: Request) -> dict:
+async def ping(request: Request) -> str:
     """
     Returns 'OK' if the API is running.
     """
