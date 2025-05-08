@@ -10,7 +10,6 @@ import datetime
 
 load_dotenv(dotenv_path=".env.test")
 
-
 async def generate_valid_jwt(
     user_id: str, scopes: list[Scope] = [], is_admin=False, expires_at: int = None
 ):
@@ -33,7 +32,7 @@ async def generate_api_key(
     user_id: str, scopes: list[Scope] = [], expires_at: datetime.datetime = None
 ):
     async with ApiClient(
-        base_url=BaseUrl.LOCAL,
+        base_url=BaseUrl.from_env(API_ENV),
         jwt=await generate_valid_jwt(user_id=user_id, scopes=scopes),
     ) as api_client:
         res = await api_client.auth.login.create_api_key(
@@ -45,13 +44,24 @@ async def generate_api_key(
         )
         return res.api_key
 
+API_ENV = os.getenv("API_ENV")
+if not API_ENV:
+    raise ValueError("API_ENV is not set")
 
 # JWT
 JWT_SECRET = os.getenv("JWT_SECRET")
+if not JWT_SECRET:
+    raise ValueError("JWT_SECRET is not set")
 JWT_ISSUER = os.getenv("JWT_ISSUER")
+if not JWT_ISSUER:
+    raise ValueError("JWT_ISSUER is not set")
 JWT_AUDIENCE = os.getenv("JWT_AUDIENCE")
+if not JWT_AUDIENCE:
+    raise ValueError("JWT_AUDIENCE is not set")
 JWT_EXPIRES_IN = 60 * 60  # 1 hour
 USER_ID = os.getenv("USER_ID")
+if not USER_ID:
+    raise ValueError("USER_ID is not set")
 EXPIRED_JWT = asyncio.run(
     generate_valid_jwt(
         user_id=USER_ID, expires_at=datetime.datetime.now() - datetime.timedelta(days=1)

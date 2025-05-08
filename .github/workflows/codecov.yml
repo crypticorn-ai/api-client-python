@@ -1,5 +1,5 @@
 # https://github.com/marketplace/actions/pytest-coverage-comment
-name: Pytest Coverage Comment
+name: Test and Coverage
 on:
   pull_request:
   push:
@@ -9,15 +9,21 @@ permissions:
   checks: write
   pull-requests: write
 
+env:
+  API_ENV: 'dev'
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
+  # for now, we are using dev. later once prod is up to date, we use:
+  # ${{ github.event.workflow_run.head_branch == 'main' && 'prod' || 'dev' }}
+
 jobs:
   ci:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Set up Python 3.12
+    - name: Set up Python 3.11.5
       uses: actions/setup-python@v2
       with:
-        python-version: 3.12
+        python-version: 3.11.5
 
     - name: Check-out repository
       uses: actions/checkout@v2
@@ -28,15 +34,12 @@ jobs:
     - name: Test with pytest
       run: pytest python/tests/ --cov=crypticorn --cov-branch --cov-report=xml
 
-    # - name: Use Codecov to track coverage
-    #   uses: codecov/codecov-action@v2
-    #   with:
-    #     files: ./coverage.xml
+    - name: Use Codecov to track coverage
+      uses: codecov/codecov-action@v2
+      with:
+        files: ./coverage.xml
 
     - name: Pytest coverage comment
       uses: MishaKav/pytest-coverage-comment@main
       with:
         pytest-xml-coverage-path: ./coverage.xml
-
-    # - name: Build documentation
-    #   run: poetry run make html --directory docs/
