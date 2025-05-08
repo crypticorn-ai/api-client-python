@@ -1,5 +1,7 @@
 from enum import EnumMeta
 import logging
+import warnings
+from crypticorn.common.warnings import CrypticornDeprecatedSince28
 
 logger = logging.getLogger("uvicorn")
 
@@ -35,8 +37,8 @@ class ValidateEnumMixin:
 
 # This Mixin will be removed in a future version. And has no effect from now on
 class ExcludeEnumMixin:
-    """Mixin to exclude enum from OpenAPI schema. We use this to avoid duplicating enums when generating client code from the openapi spec."""
-
+    """(deprecated) Mixin to exclude enum from OpenAPI schema. We use this to avoid duplicating enums when generating client code from the openapi spec."""
+    warnings.warn("The `ExcludeEnumMixin` class is deprecated. Should be removed from enums inheriting this class.", category=CrypticornDeprecatedSince28)
     @classmethod
     def __get_pydantic_json_schema__(cls, core_schema, handler):
         schema = handler(core_schema)
