@@ -44,14 +44,20 @@ class DataApi:
     @validate_call
     async def download_data(
         self,
-        model_id: Annotated[StrictInt, Field(description="Model ID")],
+        model_id: Annotated[
+            StrictInt, Field(description="The ID of the model to download data for.")
+        ],
         version: Annotated[
             Optional[DataVersion],
-            Field(description="Data version. Default is the latest public version."),
+            Field(
+                description="The version of the data to download. Default is the latest public version."
+            ),
         ] = None,
         feature_size: Annotated[
             Optional[FeatureSize],
-            Field(description="The number of features in the data. Default is LARGE."),
+            Field(
+                description="The number of features in the data. Default is `LARGE`."
+            ),
         ] = None,
         _request_timeout: Union[
             None,
@@ -69,11 +75,11 @@ class DataApi:
 
         Get download links for model training data
 
-        :param model_id: Model ID (required)
+        :param model_id: The ID of the model to download data for. (required)
         :type model_id: int
-        :param version: Data version. Default is the latest public version.
+        :param version: The version of the data to download. Default is the latest public version.
         :type version: DataVersion
-        :param feature_size: The number of features in the data. Default is LARGE.
+        :param feature_size: The number of features in the data. Default is `LARGE`.
         :type feature_size: FeatureSize
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -122,14 +128,20 @@ class DataApi:
     @validate_call
     async def download_data_with_http_info(
         self,
-        model_id: Annotated[StrictInt, Field(description="Model ID")],
+        model_id: Annotated[
+            StrictInt, Field(description="The ID of the model to download data for.")
+        ],
         version: Annotated[
             Optional[DataVersion],
-            Field(description="Data version. Default is the latest public version."),
+            Field(
+                description="The version of the data to download. Default is the latest public version."
+            ),
         ] = None,
         feature_size: Annotated[
             Optional[FeatureSize],
-            Field(description="The number of features in the data. Default is LARGE."),
+            Field(
+                description="The number of features in the data. Default is `LARGE`."
+            ),
         ] = None,
         _request_timeout: Union[
             None,
@@ -147,11 +159,11 @@ class DataApi:
 
         Get download links for model training data
 
-        :param model_id: Model ID (required)
+        :param model_id: The ID of the model to download data for. (required)
         :type model_id: int
-        :param version: Data version. Default is the latest public version.
+        :param version: The version of the data to download. Default is the latest public version.
         :type version: DataVersion
-        :param feature_size: The number of features in the data. Default is LARGE.
+        :param feature_size: The number of features in the data. Default is `LARGE`.
         :type feature_size: FeatureSize
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -200,14 +212,20 @@ class DataApi:
     @validate_call
     async def download_data_without_preload_content(
         self,
-        model_id: Annotated[StrictInt, Field(description="Model ID")],
+        model_id: Annotated[
+            StrictInt, Field(description="The ID of the model to download data for.")
+        ],
         version: Annotated[
             Optional[DataVersion],
-            Field(description="Data version. Default is the latest public version."),
+            Field(
+                description="The version of the data to download. Default is the latest public version."
+            ),
         ] = None,
         feature_size: Annotated[
             Optional[FeatureSize],
-            Field(description="The number of features in the data. Default is LARGE."),
+            Field(
+                description="The number of features in the data. Default is `LARGE`."
+            ),
         ] = None,
         _request_timeout: Union[
             None,
@@ -225,11 +243,11 @@ class DataApi:
 
         Get download links for model training data
 
-        :param model_id: Model ID (required)
+        :param model_id: The ID of the model to download data for. (required)
         :type model_id: int
-        :param version: Data version. Default is the latest public version.
+        :param version: The version of the data to download. Default is the latest public version.
         :type version: DataVersion
-        :param feature_size: The number of features in the data. Default is LARGE.
+        :param feature_size: The number of features in the data. Default is `LARGE`.
         :type feature_size: FeatureSize
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

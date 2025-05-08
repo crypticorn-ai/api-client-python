@@ -21,8 +21,8 @@ from typing import Any, List, Optional
 from typing_extensions import Annotated
 from crypticorn.hive.client.models.data_version import DataVersion
 from crypticorn.hive.client.models.evaluation_response import EvaluationResponse
-from crypticorn.hive.client.models.model import Model
 from crypticorn.hive.client.models.model_create import ModelCreate
+from crypticorn.hive.client.models.model_read import ModelRead
 from crypticorn.hive.client.models.model_update import ModelUpdate
 
 from crypticorn.hive.client.api_client import ApiClient, RequestSerialized
@@ -57,7 +57,7 @@ class ModelsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Model:
+    ) -> ModelRead:
         """Create Model
 
         Create a new model
@@ -95,7 +95,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "201": "Model",
+            "201": "ModelRead",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -121,7 +121,7 @@ class ModelsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Model]:
+    ) -> ApiResponse[ModelRead]:
         """Create Model
 
         Create a new model
@@ -159,7 +159,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "201": "Model",
+            "201": "ModelRead",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -223,7 +223,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "201": "Model",
+            "201": "ModelRead",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -297,7 +297,7 @@ class ModelsApi:
     @validate_call
     async def delete_model(
         self,
-        id: Annotated[StrictInt, Field(description="Model ID to delete")],
+        id: Annotated[StrictInt, Field(description="The ID of the model to delete.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -314,7 +314,7 @@ class ModelsApi:
 
         Delete a model
 
-        :param id: Model ID to delete (required)
+        :param id: The ID of the model to delete. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -361,7 +361,7 @@ class ModelsApi:
     @validate_call
     async def delete_model_with_http_info(
         self,
-        id: Annotated[StrictInt, Field(description="Model ID to delete")],
+        id: Annotated[StrictInt, Field(description="The ID of the model to delete.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -378,7 +378,7 @@ class ModelsApi:
 
         Delete a model
 
-        :param id: Model ID to delete (required)
+        :param id: The ID of the model to delete. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -425,7 +425,7 @@ class ModelsApi:
     @validate_call
     async def delete_model_without_preload_content(
         self,
-        id: Annotated[StrictInt, Field(description="Model ID to delete")],
+        id: Annotated[StrictInt, Field(description="The ID of the model to delete.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -442,7 +442,7 @@ class ModelsApi:
 
         Delete a model
 
-        :param id: Model ID to delete (required)
+        :param id: The ID of the model to delete. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -539,10 +539,15 @@ class ModelsApi:
     @validate_call
     async def evaluate_model(
         self,
-        id: Annotated[StrictInt, Field(description="Model ID to evaluate")],
+        id: Annotated[
+            StrictInt, Field(description="The ID of the model you want to evaluate.")
+        ],
         request_body: List[Any],
         version: Annotated[
-            Optional[DataVersion], Field(description="Data version to evaluate against")
+            Optional[DataVersion],
+            Field(
+                description="Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing."
+            ),
         ] = None,
         _request_timeout: Union[
             None,
@@ -558,13 +563,13 @@ class ModelsApi:
     ) -> EvaluationResponse:
         """Evaluate Model
 
-        Evaluate a model's predictions
+        Evaluate a model's predictions against the internal `y_test` data. Returns metrics based on the type of the model.
 
-        :param id: Model ID to evaluate (required)
+        :param id: The ID of the model you want to evaluate. (required)
         :type id: int
         :param request_body: (required)
         :type request_body: List[object]
-        :param version: Data version to evaluate against
+        :param version: Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing.
         :type version: DataVersion
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -613,10 +618,15 @@ class ModelsApi:
     @validate_call
     async def evaluate_model_with_http_info(
         self,
-        id: Annotated[StrictInt, Field(description="Model ID to evaluate")],
+        id: Annotated[
+            StrictInt, Field(description="The ID of the model you want to evaluate.")
+        ],
         request_body: List[Any],
         version: Annotated[
-            Optional[DataVersion], Field(description="Data version to evaluate against")
+            Optional[DataVersion],
+            Field(
+                description="Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing."
+            ),
         ] = None,
         _request_timeout: Union[
             None,
@@ -632,13 +642,13 @@ class ModelsApi:
     ) -> ApiResponse[EvaluationResponse]:
         """Evaluate Model
 
-        Evaluate a model's predictions
+        Evaluate a model's predictions against the internal `y_test` data. Returns metrics based on the type of the model.
 
-        :param id: Model ID to evaluate (required)
+        :param id: The ID of the model you want to evaluate. (required)
         :type id: int
         :param request_body: (required)
         :type request_body: List[object]
-        :param version: Data version to evaluate against
+        :param version: Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing.
         :type version: DataVersion
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -687,10 +697,15 @@ class ModelsApi:
     @validate_call
     async def evaluate_model_without_preload_content(
         self,
-        id: Annotated[StrictInt, Field(description="Model ID to evaluate")],
+        id: Annotated[
+            StrictInt, Field(description="The ID of the model you want to evaluate.")
+        ],
         request_body: List[Any],
         version: Annotated[
-            Optional[DataVersion], Field(description="Data version to evaluate against")
+            Optional[DataVersion],
+            Field(
+                description="Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing."
+            ),
         ] = None,
         _request_timeout: Union[
             None,
@@ -706,13 +721,13 @@ class ModelsApi:
     ) -> RESTResponseType:
         """Evaluate Model
 
-        Evaluate a model's predictions
+        Evaluate a model's predictions against the internal `y_test` data. Returns metrics based on the type of the model.
 
-        :param id: Model ID to evaluate (required)
+        :param id: The ID of the model you want to evaluate. (required)
         :type id: int
         :param request_body: (required)
         :type request_body: List[object]
-        :param version: Data version to evaluate against
+        :param version: Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing.
         :type version: DataVersion
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -831,7 +846,7 @@ class ModelsApi:
     @validate_call
     async def get_model(
         self,
-        id: Annotated[StrictInt, Field(description="Model ID to get")],
+        id: Annotated[StrictInt, Field(description="The ID of the model to retrieve.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -843,12 +858,12 @@ class ModelsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Model:
+    ) -> ModelRead:
         """Get Model
 
         Get a model by ID
 
-        :param id: Model ID to get (required)
+        :param id: The ID of the model to retrieve. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -881,7 +896,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Model",
+            "200": "ModelRead",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -895,7 +910,7 @@ class ModelsApi:
     @validate_call
     async def get_model_with_http_info(
         self,
-        id: Annotated[StrictInt, Field(description="Model ID to get")],
+        id: Annotated[StrictInt, Field(description="The ID of the model to retrieve.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -907,12 +922,12 @@ class ModelsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Model]:
+    ) -> ApiResponse[ModelRead]:
         """Get Model
 
         Get a model by ID
 
-        :param id: Model ID to get (required)
+        :param id: The ID of the model to retrieve. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -945,7 +960,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Model",
+            "200": "ModelRead",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -959,7 +974,7 @@ class ModelsApi:
     @validate_call
     async def get_model_without_preload_content(
         self,
-        id: Annotated[StrictInt, Field(description="Model ID to get")],
+        id: Annotated[StrictInt, Field(description="The ID of the model to retrieve.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -976,7 +991,7 @@ class ModelsApi:
 
         Get a model by ID
 
-        :param id: Model ID to get (required)
+        :param id: The ID of the model to retrieve. (required)
         :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1009,7 +1024,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Model",
+            "200": "ModelRead",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1073,7 +1088,7 @@ class ModelsApi:
     @validate_call
     async def get_model_by_name(
         self,
-        name: Annotated[StrictStr, Field(description="Model name to get")],
+        name: Annotated[StrictStr, Field(description="The name of the model to get.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1085,12 +1100,12 @@ class ModelsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Model:
+    ) -> ModelRead:
         """Get Model By Name
 
         Get a model by name
 
-        :param name: Model name to get (required)
+        :param name: The name of the model to get. (required)
         :type name: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1123,7 +1138,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Model",
+            "200": "ModelRead",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1137,7 +1152,7 @@ class ModelsApi:
     @validate_call
     async def get_model_by_name_with_http_info(
         self,
-        name: Annotated[StrictStr, Field(description="Model name to get")],
+        name: Annotated[StrictStr, Field(description="The name of the model to get.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1149,12 +1164,12 @@ class ModelsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Model]:
+    ) -> ApiResponse[ModelRead]:
         """Get Model By Name
 
         Get a model by name
 
-        :param name: Model name to get (required)
+        :param name: The name of the model to get. (required)
         :type name: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1187,7 +1202,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Model",
+            "200": "ModelRead",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1201,7 +1216,7 @@ class ModelsApi:
     @validate_call
     async def get_model_by_name_without_preload_content(
         self,
-        name: Annotated[StrictStr, Field(description="Model name to get")],
+        name: Annotated[StrictStr, Field(description="The name of the model to get.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1218,7 +1233,7 @@ class ModelsApi:
 
         Get a model by name
 
-        :param name: Model name to get (required)
+        :param name: The name of the model to get. (required)
         :type name: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1251,7 +1266,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Model",
+            "200": "ModelRead",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1318,13 +1333,13 @@ class ModelsApi:
         by_user: Annotated[
             Optional[StrictBool],
             Field(
-                description="Whether to get models by user. Else all models are returned."
+                description="Whether to get models by a specific user. Else all models are returned."
             ),
         ] = None,
         user_id: Annotated[
             Optional[StrictStr],
             Field(
-                description="User ID to get models for. Only used if by_user is true. Default is current user."
+                description="The ID of the user to get models for. Only used if `by_user` is true. Default is current user."
             ),
         ] = None,
         _request_timeout: Union[
@@ -1338,14 +1353,14 @@ class ModelsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Model]:
+    ) -> List[ModelRead]:
         """Get All Models
 
         List all models
 
-        :param by_user: Whether to get models by user. Else all models are returned.
+        :param by_user: Whether to get models by a specific user. Else all models are returned.
         :type by_user: bool
-        :param user_id: User ID to get models for. Only used if by_user is true. Default is current user.
+        :param user_id: The ID of the user to get models for. Only used if `by_user` is true. Default is current user.
         :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1379,7 +1394,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Model]",
+            "200": "List[ModelRead]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1396,13 +1411,13 @@ class ModelsApi:
         by_user: Annotated[
             Optional[StrictBool],
             Field(
-                description="Whether to get models by user. Else all models are returned."
+                description="Whether to get models by a specific user. Else all models are returned."
             ),
         ] = None,
         user_id: Annotated[
             Optional[StrictStr],
             Field(
-                description="User ID to get models for. Only used if by_user is true. Default is current user."
+                description="The ID of the user to get models for. Only used if `by_user` is true. Default is current user."
             ),
         ] = None,
         _request_timeout: Union[
@@ -1416,14 +1431,14 @@ class ModelsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Model]]:
+    ) -> ApiResponse[List[ModelRead]]:
         """Get All Models
 
         List all models
 
-        :param by_user: Whether to get models by user. Else all models are returned.
+        :param by_user: Whether to get models by a specific user. Else all models are returned.
         :type by_user: bool
-        :param user_id: User ID to get models for. Only used if by_user is true. Default is current user.
+        :param user_id: The ID of the user to get models for. Only used if `by_user` is true. Default is current user.
         :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1457,7 +1472,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Model]",
+            "200": "List[ModelRead]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1474,13 +1489,13 @@ class ModelsApi:
         by_user: Annotated[
             Optional[StrictBool],
             Field(
-                description="Whether to get models by user. Else all models are returned."
+                description="Whether to get models by a specific user. Else all models are returned."
             ),
         ] = None,
         user_id: Annotated[
             Optional[StrictStr],
             Field(
-                description="User ID to get models for. Only used if by_user is true. Default is current user."
+                description="The ID of the user to get models for. Only used if `by_user` is true. Default is current user."
             ),
         ] = None,
         _request_timeout: Union[
@@ -1499,9 +1514,9 @@ class ModelsApi:
 
         List all models
 
-        :param by_user: Whether to get models by user. Else all models are returned.
+        :param by_user: Whether to get models by a specific user. Else all models are returned.
         :type by_user: bool
-        :param user_id: User ID to get models for. Only used if by_user is true. Default is current user.
+        :param user_id: The ID of the user to get models for. Only used if `by_user` is true. Default is current user.
         :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1535,7 +1550,7 @@ class ModelsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Model]",
+            "200": "List[ModelRead]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1606,7 +1621,7 @@ class ModelsApi:
     @validate_call
     async def update_model(
         self,
-        id: Annotated[StrictInt, Field(description="Model ID to update")],
+        id: Annotated[StrictInt, Field(description="The ID of the model to update.")],
         model_update: ModelUpdate,
         _request_timeout: Union[
             None,
@@ -1624,7 +1639,7 @@ class ModelsApi:
 
         Update a model's information
 
-        :param id: Model ID to update (required)
+        :param id: The ID of the model to update. (required)
         :type id: int
         :param model_update: (required)
         :type model_update: ModelUpdate
@@ -1674,7 +1689,7 @@ class ModelsApi:
     @validate_call
     async def update_model_with_http_info(
         self,
-        id: Annotated[StrictInt, Field(description="Model ID to update")],
+        id: Annotated[StrictInt, Field(description="The ID of the model to update.")],
         model_update: ModelUpdate,
         _request_timeout: Union[
             None,
@@ -1692,7 +1707,7 @@ class ModelsApi:
 
         Update a model's information
 
-        :param id: Model ID to update (required)
+        :param id: The ID of the model to update. (required)
         :type id: int
         :param model_update: (required)
         :type model_update: ModelUpdate
@@ -1742,7 +1757,7 @@ class ModelsApi:
     @validate_call
     async def update_model_without_preload_content(
         self,
-        id: Annotated[StrictInt, Field(description="Model ID to update")],
+        id: Annotated[StrictInt, Field(description="The ID of the model to update.")],
         model_update: ModelUpdate,
         _request_timeout: Union[
             None,
@@ -1760,7 +1775,7 @@ class ModelsApi:
 
         Update a model's information
 
-        :param id: Model ID to update (required)
+        :param id: The ID of the model to update. (required)
         :type id: int
         :param model_update: (required)
         :type model_update: ModelUpdate

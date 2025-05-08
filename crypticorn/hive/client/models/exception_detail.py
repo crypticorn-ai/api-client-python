@@ -28,7 +28,7 @@ from typing_extensions import Self
 
 class ExceptionDetail(BaseModel):
     """
-    This is the detail of the exception. It is used to enrich the exception with additional information by unwrapping the ApiError into its components.
+    Exception details returned to the client.
     """  # noqa: E501
 
     message: Optional[StrictStr] = None

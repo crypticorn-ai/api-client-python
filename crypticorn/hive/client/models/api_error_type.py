@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class ApiErrorType(str, Enum):
     """
-    Type of API error
+    Type of the API error.
     """
 
     """
