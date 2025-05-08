@@ -16,8 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictInt, StrictStr, field_validator
-from typing import Any, Dict, List, Optional
+from pydantic import Field, StrictFloat, StrictInt, StrictStr, field_validator
+from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from crypticorn.metrics.client.models.log_level import LogLevel
 
@@ -248,7 +248,7 @@ class AdminApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -509,7 +509,7 @@ class AdminApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -541,9 +541,9 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> LogLevel:
-        """Get Logging Level
+        """(Deprecated) Get Logging Level
 
-        Get the log level of the server logger.
+        Get the log level of the server logger. Will be removed in a future release.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -566,6 +566,7 @@ class AdminApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /admin/log-level is deprecated.", DeprecationWarning)
 
         _param = self._get_log_level_serialize(
             _request_auth=_request_auth,
@@ -601,9 +602,9 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[LogLevel]:
-        """Get Logging Level
+        """(Deprecated) Get Logging Level
 
-        Get the log level of the server logger.
+        Get the log level of the server logger. Will be removed in a future release.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -626,6 +627,7 @@ class AdminApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /admin/log-level is deprecated.", DeprecationWarning)
 
         _param = self._get_log_level_serialize(
             _request_auth=_request_auth,
@@ -661,9 +663,9 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Logging Level
+        """(Deprecated) Get Logging Level
 
-        Get the log level of the server logger.
+        Get the log level of the server logger. Will be removed in a future release.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -686,6 +688,7 @@ class AdminApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /admin/log-level is deprecated.", DeprecationWarning)
 
         _param = self._get_log_level_serialize(
             _request_auth=_request_auth,
@@ -736,7 +739,7 @@ class AdminApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -767,7 +770,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> int:
+    ) -> float:
         """Get Memory Usage
 
         Resident Set Size (RSS) in MB — the actual memory used by the process in RAM. Represents the physical memory footprint. Important for monitoring real usage.
@@ -802,7 +805,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "int",
+            "200": "float",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -827,7 +830,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[int]:
+    ) -> ApiResponse[float]:
         """Get Memory Usage
 
         Resident Set Size (RSS) in MB — the actual memory used by the process in RAM. Represents the physical memory footprint. Important for monitoring real usage.
@@ -862,7 +865,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "int",
+            "200": "float",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -922,7 +925,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "int",
+            "200": "float",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -963,7 +966,7 @@ class AdminApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -1190,7 +1193,7 @@ class AdminApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -1434,7 +1437,7 @@ class AdminApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
