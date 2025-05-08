@@ -18,7 +18,7 @@ class LogLevel(ValidateEnumMixin, StrEnum):
 
     @classmethod
     def get_color(cls, level: str) -> str:
-        '''Get the ansi color based on the log level.'''
+        """Get the ansi color based on the log level."""
         if level == cls.DEBUG:
             return C.GREEN_BRIGHT
         elif level == cls.INFO:
@@ -34,12 +34,12 @@ class LogLevel(ValidateEnumMixin, StrEnum):
 
     @staticmethod
     def get_level(level: "LogLevel") -> int:
-        '''Get the integer value from a log level name.'''
+        """Get the integer value from a log level name."""
         return logging._nameToLevel.get(level, logging.INFO)
 
     @staticmethod
     def get_name(level: int) -> "LogLevel":
-        '''Get the level name from the integer value of a log level.'''
+        """Get the level name from the integer value of a log level."""
         return LogLevel(logging._levelToName.get(level, "INFO"))
 
 

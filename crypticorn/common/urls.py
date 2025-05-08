@@ -3,7 +3,8 @@ from crypticorn.common.enums import ValidateEnumMixin
 
 
 class ApiEnv(StrEnum):
-    '''The environment the API is being used with.'''
+    """The environment the API is being used with."""
+
     PROD = "prod"
     DEV = "dev"
     LOCAL = "local"
@@ -11,7 +12,8 @@ class ApiEnv(StrEnum):
 
 
 class BaseUrl(StrEnum):
-    '''The base URL to connect to the API.'''
+    """The base URL to connect to the API."""
+
     PROD = "https://api.crypticorn.com"
     DEV = "https://api.crypticorn.dev"
     LOCAL = "http://localhost"
@@ -19,7 +21,7 @@ class BaseUrl(StrEnum):
 
     @classmethod
     def from_env(cls, env: ApiEnv) -> "BaseUrl":
-        '''Load the base URL from the API environment.'''
+        """Load the base URL from the API environment."""
         if env == ApiEnv.PROD:
             return cls.PROD
         elif env == ApiEnv.DEV:
@@ -31,12 +33,14 @@ class BaseUrl(StrEnum):
 
 
 class ApiVersion(StrEnum):
-    '''Versions to use for the microservice APIs.'''
+    """Versions to use for the microservice APIs."""
+
     V1 = "v1"
 
 
 class Service(ValidateEnumMixin, StrEnum):
-    '''The microservices available to connect to through the API'''
+    """The microservices available to connect to through the API"""
+
     HIVE = "hive"
     KLINES = "klines"
     PAY = "pay"

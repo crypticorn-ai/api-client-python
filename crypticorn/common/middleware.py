@@ -17,6 +17,7 @@ def add_cors_middleware(app: "FastAPI"):
         allow_headers=["*"],
     )
 
+
 @asynccontextmanager
 async def default_lifespan(app: FastAPI):
     """Default lifespan for the applications.

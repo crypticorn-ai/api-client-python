@@ -10,8 +10,10 @@ import json
 
 _logger = logging.getLogger("crypticorn")
 
+
 class _ExceptionType(StrEnum):
     """The protocol the exception is called from"""
+
     HTTP = "http"
     WEBSOCKET = "websocket"
 
