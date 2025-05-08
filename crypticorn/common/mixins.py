@@ -3,7 +3,7 @@ import logging
 import warnings
 from crypticorn.common.warnings import CrypticornDeprecatedSince28
 
-logger = logging.getLogger("uvicorn")
+_logger = logging.getLogger("crypticorn")
 
 
 class ValidateEnumMixin:
@@ -53,7 +53,7 @@ class ApiErrorFallback(EnumMeta):
         # Let Pydantic/internal stuff pass silently ! fragile
         if name.startswith("__"):
             raise AttributeError(name)
-        logger.warning(
+        _logger.warning(
             f"Unknown enum member '{name}' - update crypticorn package or check for typos"
         )
         return cls.UNKNOWN_ERROR

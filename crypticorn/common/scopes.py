@@ -54,7 +54,7 @@ class Scope(StrEnum):
 
     @classmethod
     def admin_scopes(cls) -> list["Scope"]:
-        """Scopes that are only available to admins"""
+        """Scopes that are only available to admins."""
         return [
             cls.WRITE_TRADE_STRATEGIES,
             cls.WRITE_PAY_PRODUCTS,
@@ -64,14 +64,14 @@ class Scope(StrEnum):
 
     @classmethod
     def internal_scopes(cls) -> list["Scope"]:
-        """Scopes that are only available to internal services"""
+        """Scopes that are only available to internal services."""
         return [
             cls.WRITE_TRADE_ACTIONS,
         ]
 
     @classmethod
     def purchaseable_scopes(cls) -> list["Scope"]:
-        """Scopes that can be purchased"""
+        """Scopes that can be purchased."""
         return [
             cls.READ_PREDICTIONS,
         ]

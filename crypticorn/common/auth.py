@@ -38,8 +38,8 @@ class AuthHandler:
     """
     Middleware for verifying API requests. Verifies the validity of the authentication token, scopes, etc.
 
-    @param base_url: The base URL of the API.
-    @param api_version: The version of the API.
+    :param base_url: The base URL of the API.
+    :param api_version: The version of the API.
     """
 
     def __init__(
