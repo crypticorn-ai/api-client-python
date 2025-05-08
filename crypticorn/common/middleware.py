@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from crypticorn.common.logging import configure_logging
-import logging
+from contextlib import asynccontextmanager
 
 
 def add_cors_middleware(app: "FastAPI"):
@@ -17,7 +17,7 @@ def add_cors_middleware(app: "FastAPI"):
         allow_headers=["*"],
     )
 
-
+@asynccontextmanager
 async def default_lifespan(app: FastAPI):
     """Default lifespan for the applications.
     This is used to configure the logging for the application.
