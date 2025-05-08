@@ -10,8 +10,9 @@ import importlib.metadata
 import threading
 import time
 import psutil
+import re
 from fastapi import APIRouter, Query
-from typing import Literal, Union
+from typing import Literal
 from crypticorn.common.logging import LogLevel
 import logging
 
@@ -86,13 +87,19 @@ def get_container_limits() -> dict:
 def list_installed_packages(
     include: list[str] = Query(
         default=None,
-        description="List of dependencies to include in the response. If not provided, all installed packages will be returned.",
+        description="List of regex patterns to match against package names. If not provided, all installed packages will be returned.",
     )
-) -> list:
-    """Return a list of installed packages and versions."""
+) -> dict[str, str]:
+    """Return a list of installed packages and versions.
+    
+    The include parameter accepts regex patterns to match against package names.
+    For example:
+    - crypticorn.* will match all packages starting with 'crypticorn'
+    - .*tic.* will match all packages containing 'tic' in their name
+    """
     packages = {
         dist.metadata["Name"]: dist.version
         for dist in importlib.metadata.distributions()
-        if include is None or dist.metadata["Name"] in include
+        if include is None or any(re.match(pattern, dist.metadata["Name"]) for pattern in include)
     }
     return dict(sorted(packages.items()))
