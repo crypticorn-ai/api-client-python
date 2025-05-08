@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class ApiErrorIdentifier(str, Enum):
     """
-    API error identifiers
+    Unique identifier of the API error.
     """
 
     """

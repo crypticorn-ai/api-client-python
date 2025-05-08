@@ -91,7 +91,7 @@ def list_installed_packages(
     )
 ) -> dict[str, str]:
     """Return a list of installed packages and versions.
-    
+
     The include parameter accepts regex patterns to match against package names.
     For example:
     - crypticorn.* will match all packages starting with 'crypticorn'
@@ -100,6 +100,7 @@ def list_installed_packages(
     packages = {
         dist.metadata["Name"]: dist.version
         for dist in importlib.metadata.distributions()
-        if include is None or any(re.match(pattern, dist.metadata["Name"]) for pattern in include)
+        if include is None
+        or any(re.match(pattern, dist.metadata["Name"]) for pattern in include)
     }
     return dict(sorted(packages.items()))
