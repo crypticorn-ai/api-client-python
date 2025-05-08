@@ -2,10 +2,11 @@ from typing import Any, Union
 from decimal import Decimal
 import string
 import random
-from fastapi import status
-from typing_extensions import deprecated
+import typing_extensions
+import warnings
 
-from crypticorn.common import ApiError, HTTPException, ExceptionContent
+from crypticorn.common.exceptions import ApiError, HTTPException, ExceptionContent
+from crypticorn.common.warnings import CrypticornDeprecatedSince25
 
 
 def throw_if_none(
@@ -33,7 +34,7 @@ def gen_random_id(length: int = 20) -> str:
     return "".join(random.choice(charset) for _ in range(length))
 
 
-@deprecated("Use math.isclose instead. Will be removed in a future version.")
+@typing_extensions.deprecated("The `is_equal` method is deprecated; use `math.is_close` instead.", category=None)
 def is_equal(
     a: float | Decimal,
     b: float | Decimal,
@@ -43,6 +44,7 @@ def is_equal(
     """
     Compare two Decimal numbers for approximate equality.
     """
+    warnings.warn("The `is_equal` method is deprecated; use `math.is_close` instead.", category=CrypticornDeprecatedSince25)
     if not isinstance(a, Decimal):
         a = Decimal(str(a))
     if not isinstance(b, Decimal):
