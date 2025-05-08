@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.8.2 (2025-05-08)
+
+### Bug Fixes
+
+- Hotfix response type error
+  ([`7cc14fc`](https://github.com/crypticorn-ai/api-client/commit/7cc14fcced66441d9e320ad754a164ca016cda26))
+
+
 ## v2.8.1 (2025-05-07)
 
 ### Bug Fixes
