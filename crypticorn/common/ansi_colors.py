@@ -1,8 +1,7 @@
 from enum import StrEnum
-from typing import TYPE_CHECKING
-
 
 class AnsiColors(StrEnum):
+    '''Provides a collection of ANSI color codes for terminal text formatting, including regular, bright, and bold text colors. Useful for creating colorful and readable console output.'''
     # Regular Text Colors
     BLACK = "\033[30m"  # black
     RED = "\033[31m"  # red

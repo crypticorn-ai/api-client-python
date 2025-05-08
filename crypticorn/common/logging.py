@@ -1,12 +1,7 @@
 from __future__ import annotations
 
-# shared_logger.py
 import logging
 import sys
-from contextvars import ContextVar
-from contextlib import asynccontextmanager
-import json
-from pydantic import BaseModel
 from enum import StrEnum
 from crypticorn.common.mixins import ValidateEnumMixin
 from crypticorn.common.ansi_colors import AnsiColors as C
@@ -23,6 +18,7 @@ class LogLevel(ValidateEnumMixin, StrEnum):
 
     @classmethod
     def get_color(cls, level: str) -> str:
+        '''Get the ansi color based on the log level.'''
         if level == cls.DEBUG:
             return C.GREEN_BRIGHT
         elif level == cls.INFO:
@@ -38,10 +34,12 @@ class LogLevel(ValidateEnumMixin, StrEnum):
 
     @staticmethod
     def get_level(level: "LogLevel") -> int:
+        '''Get the integer value from a log level name.'''
         return logging._nameToLevel.get(level, logging.INFO)
 
     @staticmethod
     def get_name(level: int) -> "LogLevel":
+        '''Get the level name from the integer value of a log level.'''
         return LogLevel(logging._levelToName.get(level, "INFO"))
 
 
@@ -54,7 +52,7 @@ _LOGFORMAT = (
 _DATEFMT = "%Y-%m-%d %H:%M:%S.%f:"
 
 
-class CustomFormatter(logging.Formatter):
+class _CustomFormatter(logging.Formatter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -99,7 +97,7 @@ def configure_logging(
     # Configure stdout handler
     stdout_handler = logging.StreamHandler(sys.stdout)
     stdout_handler.setLevel(stdout_level)
-    stdout_handler.setFormatter(CustomFormatter(fmt=fmt, datefmt=datefmt))
+    stdout_handler.setFormatter(_CustomFormatter(fmt=fmt, datefmt=datefmt))
     for filter in filters:
         stdout_handler.addFilter(filter)
     logger.addHandler(stdout_handler)
@@ -111,7 +109,7 @@ def configure_logging(
             log_file, maxBytes=10 * 1024 * 1024, backupCount=5
         )
         file_handler.setLevel(file_level)
-        file_handler.setFormatter(CustomFormatter(fmt=fmt, datefmt=datefmt))
+        file_handler.setFormatter(_CustomFormatter(fmt=fmt, datefmt=datefmt))
         for filter in filters:
             file_handler.addFilter(filter)
         logger.addHandler(file_handler)

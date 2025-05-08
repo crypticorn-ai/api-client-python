@@ -1,3 +1,5 @@
+"""Utilities for handling paginated API responses and cursor-based pagination."""
+
 from typing import Generic, Type, TypeVar, List, Optional, Literal
 from pydantic import BaseModel, Field, model_validator
 

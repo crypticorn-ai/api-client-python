@@ -1,10 +1,12 @@
+"""Comprehensive error handling system defining various API error types, HTTP exceptions, and error content structures."""
+
 from enum import Enum, StrEnum
 from fastapi import status
 from crypticorn.common.mixins import ExcludeEnumMixin, ApiErrorFallback
 
 
 class ApiErrorType(ExcludeEnumMixin, StrEnum):
-    """Type of API error"""
+    """Type of the API error."""
 
     USER_ERROR = "user error"
     """user error by people using our services"""
@@ -17,7 +19,7 @@ class ApiErrorType(ExcludeEnumMixin, StrEnum):
 
 
 class ApiErrorIdentifier(ExcludeEnumMixin, StrEnum):
-    """API error identifiers"""
+    """Unique identifier of the API error."""
 
     ALLOCATION_BELOW_EXPOSURE = "allocation_below_current_exposure"
     ALLOCATION_BELOW_MINIMUM = "allocation_below_min_amount"
@@ -103,7 +105,7 @@ class ApiErrorIdentifier(ExcludeEnumMixin, StrEnum):
 
 
 class ApiErrorLevel(ExcludeEnumMixin, StrEnum):
-    """API error levels"""
+    """Level of the API error."""
 
     ERROR = "error"
     INFO = "info"
@@ -112,7 +114,8 @@ class ApiErrorLevel(ExcludeEnumMixin, StrEnum):
 
 
 class ApiError(ExcludeEnumMixin, Enum, metaclass=ApiErrorFallback):
-    """API error codes. Fallback to UNKNOWN_ERROR for error codes not yet published to PyPI."""
+    # Fallback to UNKNOWN_ERROR for error codes not yet published to PyPI.
+    """Crypticorn API error enumeration."""
 
     ALLOCATION_BELOW_EXPOSURE = (
         ApiErrorIdentifier.ALLOCATION_BELOW_EXPOSURE,
@@ -518,7 +521,7 @@ class ApiError(ExcludeEnumMixin, Enum, metaclass=ApiErrorFallback):
 
 
 class StatusCodeMapper:
-    """Map API errors to HTTP status codes."""
+    """Mapping of API errors to HTTP/Websocket status codes."""
 
     _mapping = {
         # Authentication/Authorization
