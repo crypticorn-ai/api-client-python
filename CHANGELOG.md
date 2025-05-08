@@ -1,12 +1,34 @@
 # CHANGELOG
 
-
 ## v2.8.2 (2025-05-08)
 
 ### Bug Fixes
 
 - Hotfix response type error
   ([`7cc14fc`](https://github.com/crypticorn-ai/api-client/commit/7cc14fcced66441d9e320ad754a164ca016cda26))
+  
+## v2.9.0-rc.1 (2025-05-08)
+
+### Bug Fixes
+
+- Capture and format warnings in logging output
+  ([`6eabac6`](https://github.com/crypticorn-ai/api-client/commit/6eabac6fc6f9565b214ba354947c25c8b37bac36))
+
+- Use `contextlib.asynccontextmanager` for starlette lifespan
+  ([`1778b85`](https://github.com/crypticorn-ai/api-client/commit/1778b85da213fa5e6b8b26b462aad73ea9f0a330))
+
+### Documentation
+
+- Update docstrings and module descriptions
+  ([`34a1b44`](https://github.com/crypticorn-ai/api-client/commit/34a1b44db18a987c5a741a9b829b7a79597558bc))
+
+### Features
+
+- Add deprecation warnings in call and in-code support
+  ([`0f5acee`](https://github.com/crypticorn-ai/api-client/commit/0f5aceeb53b34f1d7676d9bb0d3667d69f1b43b2))
+
+- Provide default openapi tags from the status and admin router
+  ([`dc23701`](https://github.com/crypticorn-ai/api-client/commit/dc23701f0b3493dab677608d8ce80c59fcf15269))
 
 
 ## v2.8.1 (2025-05-07)
