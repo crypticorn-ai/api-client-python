@@ -1,34 +1,49 @@
 # CHANGELOG
 
+
+## v2.9.0 (2025-05-08)
+
+### Build System
+
+- Add python-semantic-release as an dev dependency
+  ([`72dfc09`](https://github.com/crypticorn-ai/api-client/commit/72dfc092b7b4fde231e6c62d3bcca33ec270bf30))
+
+### Features
+
+- Use regex pattern in /dependencies endpoint
+  ([`7a7792f`](https://github.com/crypticorn-ai/api-client/commit/7a7792f33460b5fe4404d6f46ab680cca204a8f5))
+
+
+## v2.9.0-rc.1 (2025-05-08)
+
+### Bug Fixes
+
+- Capture and format warnings in logging output
+  ([`5a1d317`](https://github.com/crypticorn-ai/api-client/commit/5a1d31721507dae015e9d9568579e91b12906ee4))
+
+- Use `contextlib.asynccontextmanager` for starlette lifespan
+  ([`c253dd1`](https://github.com/crypticorn-ai/api-client/commit/c253dd133dff5073f355ed8f93c0be1814b739f2))
+
+### Documentation
+
+- Update docstrings and module descriptions
+  ([`c80f306`](https://github.com/crypticorn-ai/api-client/commit/c80f30614641f09366ca3566295e9bce8eee828d))
+
+### Features
+
+- Add deprecation warnings in call and in-code support
+  ([`b3100e6`](https://github.com/crypticorn-ai/api-client/commit/b3100e69874b8fca439778351c2834b5ae2b91b6))
+
+- Provide default openapi tags from the status and admin router
+  ([`e8ef966`](https://github.com/crypticorn-ai/api-client/commit/e8ef966bc9ee60a17ef8842a041d5e1800c32d93))
+
+
 ## v2.8.2 (2025-05-08)
 
 ### Bug Fixes
 
 - Hotfix response type error
   ([`7cc14fc`](https://github.com/crypticorn-ai/api-client/commit/7cc14fcced66441d9e320ad754a164ca016cda26))
-  
-## v2.9.0-rc.1 (2025-05-08)
-
-### Bug Fixes
-
-- Capture and format warnings in logging output
-  ([`6eabac6`](https://github.com/crypticorn-ai/api-client/commit/6eabac6fc6f9565b214ba354947c25c8b37bac36))
-
-- Use `contextlib.asynccontextmanager` for starlette lifespan
-  ([`1778b85`](https://github.com/crypticorn-ai/api-client/commit/1778b85da213fa5e6b8b26b462aad73ea9f0a330))
-
-### Documentation
-
-- Update docstrings and module descriptions
-  ([`34a1b44`](https://github.com/crypticorn-ai/api-client/commit/34a1b44db18a987c5a741a9b829b7a79597558bc))
-
-### Features
-
-- Add deprecation warnings in call and in-code support
-  ([`0f5acee`](https://github.com/crypticorn-ai/api-client/commit/0f5aceeb53b34f1d7676d9bb0d3667d69f1b43b2))
-
-- Provide default openapi tags from the status and admin router
-  ([`dc23701`](https://github.com/crypticorn-ai/api-client/commit/dc23701f0b3493dab677608d8ce80c59fcf15269))
 
 
 ## v2.8.1 (2025-05-07)
