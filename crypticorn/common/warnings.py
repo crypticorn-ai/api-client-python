@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+
 class CrypticornDeprecationWarning(DeprecationWarning):
     """A Crypticorn specific deprecation warning.
 
@@ -19,17 +20,23 @@ class CrypticornDeprecationWarning(DeprecationWarning):
     expected_removal: tuple[int, int]
 
     def __init__(
-        self, message: str, *args: object, since: tuple[int, int], expected_removal: tuple[int, int] | None = None
+        self,
+        message: str,
+        *args: object,
+        since: tuple[int, int],
+        expected_removal: tuple[int, int] | None = None,
     ) -> None:
         super().__init__(message, *args)
-        self.message = message.rstrip('.')
+        self.message = message.rstrip(".")
         self.since = since
-        self.expected_removal = expected_removal if expected_removal is not None else (since[0] + 1, 0)
+        self.expected_removal = (
+            expected_removal if expected_removal is not None else (since[0] + 1, 0)
+        )
 
     def __str__(self) -> str:
         message = (
-            f'{self.message}. Deprecated in Crypticorn v{self.since[0]}.{self.since[1]}'
-            f' to be removed in v{self.expected_removal[0]}.{self.expected_removal[1]}.'
+            f"{self.message}. Deprecated in Crypticorn v{self.since[0]}.{self.since[1]}"
+            f" to be removed in v{self.expected_removal[0]}.{self.expected_removal[1]}."
         )
         return message
 
@@ -39,6 +46,7 @@ class CrypticornDeprecatedSince25(CrypticornDeprecationWarning):
 
     def __init__(self, message: str, *args: object) -> None:
         super().__init__(message, *args, since=(2, 5), expected_removal=(3, 0))
+
 
 class CrypticornDeprecatedSince28(CrypticornDeprecationWarning):
     """A specific `CrypticornDeprecationWarning` subclass defining functionality deprecated since Crypticorn 2.8."""

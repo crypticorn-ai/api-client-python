@@ -36,7 +36,9 @@ def gen_random_id(length: int = 20) -> str:
     return "".join(random.choice(charset) for _ in range(length))
 
 
-@typing_extensions.deprecated("The `is_equal` method is deprecated; use `math.is_close` instead.", category=None)
+@typing_extensions.deprecated(
+    "The `is_equal` method is deprecated; use `math.is_close` instead.", category=None
+)
 def is_equal(
     a: float | Decimal,
     b: float | Decimal,
@@ -46,7 +48,10 @@ def is_equal(
     """
     Compare two Decimal numbers for approximate equality.
     """
-    warnings.warn("The `is_equal` method is deprecated; use `math.is_close` instead.", category=CrypticornDeprecatedSince25)
+    warnings.warn(
+        "The `is_equal` method is deprecated; use `math.is_close` instead.",
+        category=CrypticornDeprecatedSince25,
+    )
     if not isinstance(a, Decimal):
         a = Decimal(str(a))
     if not isinstance(b, Decimal):
