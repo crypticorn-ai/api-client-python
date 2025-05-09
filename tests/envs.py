@@ -7,12 +7,11 @@ from crypticorn.auth import CreateApiKeyRequest
 import jwt
 import time
 import datetime
-import warnings
-if not os.path.exists(".env.test"):
-    warnings.warn("No .env.test file found, using .env.test.example. Copy this file to .env.test and set the correct values. This is expected behavior if you are running tests in the CI pipeline.")
-    load_dotenv(dotenv_path=".env.test.example")
-else:
-    load_dotenv(dotenv_path=".env.test")
+
+if not os.path.exists(".env"):
+    raise ValueError("No .env file found. Please create a .env file and set the correct values. See .env.example for reference.")
+
+load_dotenv()
 
 async def generate_valid_jwt(
     user_id: str, scopes: list[Scope] = [], is_admin=False, expires_at: int = None
