@@ -116,7 +116,7 @@ def init_dependabot(force):
 @init_group.command("merge-env")
 @click.option("-f", "--force", is_flag=True, help="Force overwrite the .env file")
 def init_merge_env(force):
-    """Add a script to merge the env variables from the environment and the .env.example file into the .env file"""
+    """Add script to merge environment and file variables into .env"""
     root = get_git_root()
     target = root / "scripts/merge-env.sh"
     if not check_file_exists(target, force):
