@@ -4,7 +4,6 @@ import subprocess
 import importlib.resources
 import crypticorn.cli.templates as templates
 
-
 def get_git_root() -> Path:
     """Get the root directory of the git repository."""
     try:
