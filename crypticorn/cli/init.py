@@ -30,6 +30,12 @@ def copy_template(template_name: str, target_path: Path):
 
     click.secho(f"✅ Created: {target_path}", fg="green")
 
+def check_file_exists(path: Path, force: bool):
+    if path.exists() and not force:
+        click.secho(f"File already exists, use --force / -f to overwrite", fg="red")
+        return False
+    return True
+
 
 @click.group()
 def init_group():
@@ -61,8 +67,7 @@ def init_docker(output, force):
         click.secho("Output path is a file, please provide a directory path", fg="red")
         return
     target = (Path(output) if output else root) / "Dockerfile"
-    if target.exists() and not force:
-        click.secho("File already exists, use --force / -f to overwrite", fg="red")
+    if not check_file_exists(target, force):
         return
     copy_template("Dockerfile", target)
     click.secho("Make sure to update the Dockerfile", fg="yellow")
@@ -80,13 +85,12 @@ def init_auth(output, force):
         click.secho("Output path is a file, please provide a directory path", fg="red")
         return
     target = (Path(output) if output else root) / "auth.py"
-    if target.exists() and not force:
-        click.secho("File already exists, use --force / -f to overwrite", fg="red")
+    if not check_file_exists(target, force):
         return
     copy_template("auth.py", target)
     click.secho(
         """
-    Make sure to update the .env file with:
+    Make sure to update the .env and .env.example files with:
         IS_DOCKER=0
         API_ENV=local
     and the docker-compose.yml file with:
@@ -106,7 +110,16 @@ def init_dependabot(force):
     """Add dependabot.yml"""
     root = get_git_root()
     target = root / ".github/dependabot.yml"
-    if target.exists() and not force:
-        click.secho("File already exists, use --force / -f to overwrite", fg="red")
+    if not check_file_exists(target, force):
         return
     copy_template("dependabot.yml", target)
+
+@init_group.command("merge-env")
+@click.option("-f", "--force", is_flag=True, help="Force overwrite the .env file")
+def init_merge_env(force):
+    """Add a script to merge the env variables from the environment and the .env.example file into the .env file"""
+    root = get_git_root()
+    target = root / "scripts/merge-env.sh"
+    if not check_file_exists(target, force):
+        return
+    copy_template("merge-env.sh", target)
