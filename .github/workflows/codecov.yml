@@ -28,8 +28,14 @@ jobs:
     - name: Check-out repository
       uses: actions/checkout@v2
 
+    - name: Fill .env with env variables
+      run: |
+        cp .env.example .env
+        echo >> .env # add newline
+        printenv | sed 's/=/="/; s/$/"/' >> .env
+
     - name: Install package
-      run: pip install -e python/[test]
+      run: pip install -e python[test]
 
     - name: Test with pytest
       run: pytest python/tests/ --cov=crypticorn --cov-branch --cov-report=xml
