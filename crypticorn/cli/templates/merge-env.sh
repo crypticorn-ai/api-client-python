@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
+
 # this script merges the env variables from the environment and the .env.example file into the .env file
 # the appended variables take precedence over the .env.example variables (if both are set)
+
+# Make executable before running in github actions
+# chmod +x scripts/merge-env.sh
 
 # Usage in a github action:
 # - name: Generate .env

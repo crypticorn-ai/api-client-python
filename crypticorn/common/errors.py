@@ -2,10 +2,10 @@
 
 from enum import Enum, StrEnum
 from fastapi import status
-from crypticorn.common.mixins import ExcludeEnumMixin, ApiErrorFallback
+from crypticorn.common.mixins import ApiErrorFallback
 
 
-class ApiErrorType(ExcludeEnumMixin, StrEnum):
+class ApiErrorType(StrEnum):
     """Type of the API error."""
 
     USER_ERROR = "user error"
@@ -18,7 +18,7 @@ class ApiErrorType(ExcludeEnumMixin, StrEnum):
     """error that does not need to be handled or does not affect the program or is a placeholder."""
 
 
-class ApiErrorIdentifier(ExcludeEnumMixin, StrEnum):
+class ApiErrorIdentifier(StrEnum):
     """Unique identifier of the API error."""
 
     ALLOCATION_BELOW_EXPOSURE = "allocation_below_current_exposure"
@@ -104,7 +104,7 @@ class ApiErrorIdentifier(ExcludeEnumMixin, StrEnum):
         return ApiError[self.value]
 
 
-class ApiErrorLevel(ExcludeEnumMixin, StrEnum):
+class ApiErrorLevel(StrEnum):
     """Level of the API error."""
 
     ERROR = "error"
@@ -113,7 +113,7 @@ class ApiErrorLevel(ExcludeEnumMixin, StrEnum):
     WARNING = "warning"
 
 
-class ApiError(ExcludeEnumMixin, Enum, metaclass=ApiErrorFallback):
+class ApiError(Enum, metaclass=ApiErrorFallback):
     # Fallback to UNKNOWN_ERROR for error codes not yet published to PyPI.
     """Crypticorn API error enumeration."""
 
