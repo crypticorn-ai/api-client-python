@@ -28,11 +28,8 @@ jobs:
     - name: Check-out repository
       uses: actions/checkout@v2
 
-    - name: Fill .env with env variables
-      run: |
-        cp .env.example .env
-        echo >> .env # add newline
-        printenv | sed 's/=/="/; s/$/"/' >> .env
+    - name: Generate .env
+      run: ./python/scripts/merge-env.sh
 
     - name: Install package
       run: pip install -e python[test]
