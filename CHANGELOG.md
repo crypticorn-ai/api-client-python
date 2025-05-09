@@ -1,6 +1,33 @@
 # CHANGELOG
 
 
+## v2.10.0 (2025-05-09)
+
+### Build System
+
+- Include info .md files and license in distribution
+  ([`3c3d065`](https://github.com/crypticorn-ai/api-client/commit/3c3d0655b67478f98d970e7ad218e8947b8a9ec0))
+
+### Continuous Integration
+
+- Fix typo in testing workflow
+  ([`e0fd734`](https://github.com/crypticorn-ai/api-client/commit/e0fd73450efda0c41ed583a771e0b6774e6a8dbd))
+
+- Properly read env vars
+  ([`6d25286`](https://github.com/crypticorn-ai/api-client/commit/6d252865986b974789831e91cedd45e9a594ebbc))
+
+- Update test workflow
+  ([`97b7b8b`](https://github.com/crypticorn-ai/api-client/commit/97b7b8b76691e91d788030e603e2fc65ac7ba8c8))
+
+### Features
+
+- Add new init template to the CLI for generating a env merging script
+  ([`7e3a71a`](https://github.com/crypticorn-ai/api-client/commit/7e3a71a0f67eceb1ab1f8545eeba0a390736e129))
+
+- Add version command in the CLI (crypticorn version)
+  ([`289eef4`](https://github.com/crypticorn-ai/api-client/commit/289eef48fa51f771c9b461206a93470f35ce2369))
+
+
 ## v2.9.0 (2025-05-08)
 
 ### Build System
