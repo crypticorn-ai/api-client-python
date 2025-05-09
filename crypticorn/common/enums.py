@@ -1,17 +1,17 @@
 """Defines common enumerations used throughout the codebase for type safety and consistency."""
 
 from enum import StrEnum
-from crypticorn.common.mixins import ValidateEnumMixin, ExcludeEnumMixin
+from crypticorn.common.mixins import ValidateEnumMixin
 
 
-class Exchange(ValidateEnumMixin, ExcludeEnumMixin, StrEnum):
+class Exchange(ValidateEnumMixin, StrEnum):
     """Supported exchanges for trading"""
 
     KUCOIN = "kucoin"
     BINGX = "bingx"
 
 
-class InternalExchange(ValidateEnumMixin, ExcludeEnumMixin, StrEnum):
+class InternalExchange(ValidateEnumMixin, StrEnum):
     """All exchanges we are using, including public (Exchange)"""
 
     KUCOIN = "kucoin"
@@ -22,7 +22,7 @@ class InternalExchange(ValidateEnumMixin, ExcludeEnumMixin, StrEnum):
     BITGET = "bitget"
 
 
-class MarketType(ValidateEnumMixin, ExcludeEnumMixin, StrEnum):
+class MarketType(ValidateEnumMixin, StrEnum):
     """
     Market types
     """
