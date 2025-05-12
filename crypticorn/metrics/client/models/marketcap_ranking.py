@@ -17,8 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,7 +28,7 @@ class MarketcapRanking(BaseModel):
     MarketcapRanking
     """  # noqa: E501
 
-    timestamp: datetime
+    timestamp: StrictInt
     symbols: List[Optional[StrictStr]]
     __properties: ClassVar[List[str]] = ["timestamp", "symbols"]
 
