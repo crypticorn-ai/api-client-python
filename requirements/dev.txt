@@ -1,7 +1,5 @@
 build
 twine
-streamlit
-httpx
 black
 ruff
 isort
