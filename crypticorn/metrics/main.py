@@ -51,8 +51,12 @@ class MarketcapApiWrapper(MarketcapApi):
         """
         pd = optional_import("pandas", "extra")
         response = await self.get_marketcap_symbols(*args, **kwargs)
-        df = pd.DataFrame(response)
-        df.rename(columns={df.columns[0]: "timestamp"}, inplace=True)
+        rows = []
+        for item in response:
+            row = {"timestamp": item.timestamp}
+            row.update({i+1: sym for i, sym in enumerate(item.symbols)})
+            rows.append(row)
+        df = pd.DataFrame(rows)
         return df
 
 
@@ -99,9 +103,6 @@ class ExchangesApiWrapper(ExchangesApi):
         df = pd.DataFrame(processed_results)
         cols = ["timestamp"] + sorted([col for col in df.columns if col != "timestamp"])
         df = df[cols]
-
-        # Convert timestamp to unix timestamp
-        df["timestamp"] = pd.to_datetime(df["timestamp"]).astype("int64") // 10**9
 
         # Convert exchange availability to boolean integers (0/1)
         df = df.astype(
