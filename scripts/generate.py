@@ -26,13 +26,15 @@ def main():
     # Initialize variables
     module_name = None
     environment = None
-
+    url = None  # overrides the environment variable
     # Parse command-line arguments
     for arg in sys.argv[1:]:
         if arg.startswith("--service="):
             module_name = arg.split("=")[1]
         elif arg.startswith("--env="):
             environment = arg.split("=")[1]
+        elif arg.startswith("--url="):
+            url = arg.split("=")[1]
 
     # Check if service is provided
     if not module_name:
@@ -83,7 +85,7 @@ def main():
         "openapi-generator-cli",
         "generate",
         "-i",
-        f"{ROOT_URL}/{module_name}/openapi.json",
+        f"{url or f'{ROOT_URL}/{module_name}/openapi.json'}",
         "-g",
         "python",
         "--package-name",
