@@ -1,5 +1,6 @@
 """General utility functions and helper methods used across the codebase."""
 
+from datetime import datetime
 from typing import Any
 from decimal import Decimal
 import string
@@ -74,3 +75,19 @@ def optional_import(module_name: str, extra_name: str) -> Any:
             f"Optional dependency '{module_name}' is required for this feature. "
             f"Install it with: pip install crypticorn[{extra_name}]"
         ) from e
+
+
+def datetime_to_timestamp(v: Any):
+    """Converts a datetime to a timestamp.
+    Can be used as a pydantic validator.
+    >>> from pydantic import BeforeValidator, BaseModel
+    >>> class MyModel(BaseModel):
+    ...     timestamp: Annotated[int, BeforeValidator(datetime_to_timestamp)]
+    """
+    if isinstance(v, list):
+        return [
+            int(item.timestamp()) if isinstance(item, datetime) else item for item in v
+        ]
+    elif isinstance(v, datetime):
+        return int(v.timestamp())
+    return v

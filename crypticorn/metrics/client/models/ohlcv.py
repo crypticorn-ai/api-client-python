@@ -17,7 +17,6 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
 from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
@@ -29,7 +28,7 @@ class OHLCV(BaseModel):
     OHLCV
     """  # noqa: E501
 
-    timestamp: datetime
+    timestamp: StrictInt
     open: Union[StrictFloat, StrictInt]
     high: Union[StrictFloat, StrictInt]
     low: Union[StrictFloat, StrictInt]
