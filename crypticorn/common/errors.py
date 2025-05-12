@@ -98,10 +98,9 @@ class ApiErrorIdentifier(StrEnum):
     UNKNOWN_ERROR = "unknown_error_occurred"
     URL_NOT_FOUND = "requested_resource_not_found"
 
-    @property
     def get_error(self) -> "ApiError":
         """Get the corresponding ApiError."""
-        return ApiError[self.value]
+        return getattr(ApiError, self.name)
 
 
 class ApiErrorLevel(StrEnum):
