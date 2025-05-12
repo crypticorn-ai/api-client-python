@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.10.3 (2025-05-12)
+
+### Bug Fixes
+
+- Improve market cap symbols df response
+  ([`23fac22`](https://github.com/crypticorn-ai/api-client/commit/23fac222e0af61bb8663f99d058ef5f37a7a675a))
+
+
 ## v2.10.2 (2025-05-12)
 
 ### Bug Fixes
