@@ -1,6 +1,24 @@
 # CHANGELOG
 
 
+## v2.10.1 (2025-05-12)
+
+### Bug Fixes
+
+- Fixes optional symbol in get_marketcap_symbols function
+  ([`3522a09`](https://github.com/crypticorn-ai/api-client/commit/3522a097cb159d638c717b26f9d607e813d210a9))
+
+### Build System
+
+- Include static files in the structure in the distribution
+  ([`eb87ab4`](https://github.com/crypticorn-ai/api-client/commit/eb87ab44edb7558b09835ffe092d4a4d9517b79d))
+
+### Refactoring
+
+- Remove usage of deprecated `ExcludeEnumMixin`
+  ([`bf4f4fb`](https://github.com/crypticorn-ai/api-client/commit/bf4f4fb4dc092a9909a6e536c5e5455244e13aac))
+
+
 ## v2.10.0 (2025-05-09)
 
 ### Build System
