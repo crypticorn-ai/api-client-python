@@ -271,7 +271,7 @@ class AdminApi:
         include: Annotated[
             Optional[List[StrictStr]],
             Field(
-                description="List of dependencies to include in the response. If not provided, all installed packages will be returned."
+                description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
             ),
         ] = None,
         _request_timeout: Union[
@@ -285,12 +285,12 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[object]:
+    ) -> Dict[str, str]:
         """List Installed Packages
 
-        Return a list of installed packages and versions.
+        Return a list of installed packages and versions.  The include parameter accepts regex patterns to match against package names. For example: - crypticorn.* will match all packages starting with 'crypticorn' - .*tic.* will match all packages containing 'tic' in their name
 
-        :param include: List of dependencies to include in the response. If not provided, all installed packages will be returned.
+        :param include: List of regex patterns to match against package names. If not provided, all installed packages will be returned.
         :type include: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -323,7 +323,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[object]",
+            "200": "Dict[str, str]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -340,7 +340,7 @@ class AdminApi:
         include: Annotated[
             Optional[List[StrictStr]],
             Field(
-                description="List of dependencies to include in the response. If not provided, all installed packages will be returned."
+                description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
             ),
         ] = None,
         _request_timeout: Union[
@@ -354,12 +354,12 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[object]]:
+    ) -> ApiResponse[Dict[str, str]]:
         """List Installed Packages
 
-        Return a list of installed packages and versions.
+        Return a list of installed packages and versions.  The include parameter accepts regex patterns to match against package names. For example: - crypticorn.* will match all packages starting with 'crypticorn' - .*tic.* will match all packages containing 'tic' in their name
 
-        :param include: List of dependencies to include in the response. If not provided, all installed packages will be returned.
+        :param include: List of regex patterns to match against package names. If not provided, all installed packages will be returned.
         :type include: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -392,7 +392,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[object]",
+            "200": "Dict[str, str]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -409,7 +409,7 @@ class AdminApi:
         include: Annotated[
             Optional[List[StrictStr]],
             Field(
-                description="List of dependencies to include in the response. If not provided, all installed packages will be returned."
+                description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
             ),
         ] = None,
         _request_timeout: Union[
@@ -426,9 +426,9 @@ class AdminApi:
     ) -> RESTResponseType:
         """List Installed Packages
 
-        Return a list of installed packages and versions.
+        Return a list of installed packages and versions.  The include parameter accepts regex patterns to match against package names. For example: - crypticorn.* will match all packages starting with 'crypticorn' - .*tic.* will match all packages containing 'tic' in their name
 
-        :param include: List of dependencies to include in the response. If not provided, all installed packages will be returned.
+        :param include: List of regex patterns to match against package names. If not provided, all installed packages will be returned.
         :type include: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -461,7 +461,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[object]",
+            "200": "Dict[str, str]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout

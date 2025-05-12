@@ -4,6 +4,7 @@ import subprocess
 import importlib.resources
 import crypticorn.cli.templates as templates
 
+
 def get_git_root() -> Path:
     """Get the root directory of the git repository."""
     try:
@@ -28,6 +29,7 @@ def copy_template(template_name: str, target_path: Path):
         f.write(content)
 
     click.secho(f"✅ Created: {target_path}", fg="green")
+
 
 def check_file_exists(path: Path, force: bool):
     if path.exists() and not force:
@@ -112,6 +114,7 @@ def init_dependabot(force):
     if not check_file_exists(target, force):
         return
     copy_template("dependabot.yml", target)
+
 
 @init_group.command("merge-env")
 @click.option("-f", "--force", is_flag=True, help="Force overwrite the .env file")

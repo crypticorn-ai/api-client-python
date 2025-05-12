@@ -53,7 +53,11 @@ async def test_fallback():
         ApiError.NOT_EXISTING_ERROR == ApiError.UNKNOWN_ERROR
     ), "Fallback error is not used"
 
+
 @pytest.mark.asyncio
 async def test_error_from_identifier():
     """Checks that the error can be retrieved from the identifier"""
-    assert ApiErrorIdentifier.ALLOCATION_BELOW_EXPOSURE.get_error() == ApiError.ALLOCATION_BELOW_EXPOSURE
+    assert (
+        ApiErrorIdentifier.ALLOCATION_BELOW_EXPOSURE.get_error()
+        == ApiError.ALLOCATION_BELOW_EXPOSURE
+    )
