@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v2.10.2 (2025-05-12)
+
+### Bug Fixes
+
+- Convert market metrics service models to use unix ts
+  ([`d6c9564`](https://github.com/crypticorn-ai/api-client/commit/d6c95644aea7a239a8ffc91afb3d48db3f56b03c))
+
+### Chores
+
+- Add --url flag to client generation scripts
+  ([`a8ebed2`](https://github.com/crypticorn-ai/api-client/commit/a8ebed2ded196ea132db236417c6c6962f4dbeb2))
+
+
 ## v2.10.1 (2025-05-12)
 
 ### Bug Fixes
