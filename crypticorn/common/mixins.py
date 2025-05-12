@@ -39,10 +39,13 @@ class ValidateEnumMixin:
 class ExcludeEnumMixin:
     """(deprecated) Mixin to exclude enum from OpenAPI schema. We use this to avoid duplicating enums when generating client code from the openapi spec."""
 
-    warnings.warn(
-        "The `ExcludeEnumMixin` class is deprecated. Should be removed from enums inheriting this class.",
-        category=CrypticornDeprecatedSince28,
-    )
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        if cls.__name__.startswith("ExcludeEnumMixin"):
+            warnings.warn(
+                "The `ExcludeEnumMixin` class is deprecated. Should be removed from enums inheriting this class.",
+                category=CrypticornDeprecatedSince28,
+            )
 
     @classmethod
     def __get_pydantic_json_schema__(cls, core_schema, handler):
@@ -56,7 +59,7 @@ class ApiErrorFallback(EnumMeta):
 
     def __getattr__(cls, name):
         # Let Pydantic/internal stuff pass silently ! fragile
-        if name.startswith("__"):
+        if name.startswith("__") or name.startswith("_pytest"):
             raise AttributeError(name)
         _logger.warning(
             f"Unknown enum member '{name}' - update crypticorn package or check for typos"
