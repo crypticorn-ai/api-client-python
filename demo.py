@@ -1,7 +1,7 @@
 from crypticorn.auth.client.exceptions import UnauthorizedException
 from crypticorn.auth import CreateApiKeyRequest
 from crypticorn.common import BaseUrl, Scope
-from crypticorn.common import MarketType
+from crypticorn.common import MarketType, InternalExchange
 from crypticorn.hive import Configuration as HiveConfig, DataInfo, ModelCreate
 from crypticorn.hive.client.models.coins import Coins
 from crypticorn.hive.client.models.target import Target
@@ -18,7 +18,9 @@ jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdv
 
 
 async def main():
-    async with ApiClient(base_url=BaseUrl.LOCAL, api_key="") as client:
+    async with ApiClient(
+        base_url=BaseUrl.DEV, api_key="GbUAFktNCrUqfFN7FZLHSJfgxCYpjD"
+    ) as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
         # print(10 * "=" + "This is the raw json response" + 10 * "=")
@@ -152,7 +154,13 @@ async def main():
         #     limit=100,
         # )
         # print(res)
-        res = await client.metrics.admin.get_log_level()
+        res = await client.metrics.marketcap.get_marketcap_symbols_fmt(
+            int(time.time()) - 60 * 60 * 24 * 5,
+            int(time.time()),
+            interval=None,
+            market=MarketType.FUTURES,
+            exchange=InternalExchange.BINANCE,
+        )
         print(res)
 
 

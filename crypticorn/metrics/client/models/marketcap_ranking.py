@@ -19,7 +19,7 @@ import json
 
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,7 +30,7 @@ class MarketcapRanking(BaseModel):
     """  # noqa: E501
 
     timestamp: datetime
-    symbols: List[StrictStr]
+    symbols: List[Optional[StrictStr]]
     __properties: ClassVar[List[str]] = ["timestamp", "symbols"]
 
     model_config = ConfigDict(

@@ -10,6 +10,7 @@ import datetime
 
 load_dotenv()
 
+
 async def generate_valid_jwt(
     user_id: str, scopes: list[Scope] = [], is_admin=False, expires_at: int = None
 ):
@@ -43,6 +44,7 @@ async def generate_api_key(
             )
         )
         return res.api_key
+
 
 API_ENV = os.getenv("API_ENV")
 if not API_ENV:
