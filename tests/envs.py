@@ -8,9 +8,6 @@ import jwt
 import time
 import datetime
 
-if not os.path.exists(".env"):
-    raise ValueError("No .env file found. Please create a .env file and set the correct values. See .env.example for reference.")
-
 load_dotenv()
 
 async def generate_valid_jwt(
