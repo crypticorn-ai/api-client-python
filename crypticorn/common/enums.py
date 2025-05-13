@@ -1,6 +1,10 @@
 """Defines common enumerations used throughout the codebase for type safety and consistency."""
 
-from enum import StrEnum
+try:
+    from enum import StrEnum
+except ImportError:
+    from strenum import StrEnum
+
 from crypticorn.common.mixins import ValidateEnumMixin
 
 

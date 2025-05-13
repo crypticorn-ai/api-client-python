@@ -1,5 +1,9 @@
-from enum import StrEnum
 from crypticorn.common.enums import ValidateEnumMixin
+
+try:
+    from enum import StrEnum
+except ImportError:
+    from strenum import StrEnum
 
 
 class ApiEnv(StrEnum):
