@@ -119,8 +119,8 @@ class ApiClient:
         :param service: The service to configure.
 
         Example:
-        >>> async with ApiClient(base_url=BaseUrl.DEV, jwt=jwt) as client:
-        >>>     client.configure(config=HiveConfig(host="http://localhost:8000"), client=client.hive)
+        >>> async with ApiClient() as client:
+        ...     client.configure(config=HiveConfig(host="http://localhost:8000"), service=Service.HIVE)
         """
         assert Service.validate(service), f"Invalid service: {service}"
         client = self._services[service]
