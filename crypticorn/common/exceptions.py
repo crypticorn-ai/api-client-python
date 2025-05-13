@@ -1,5 +1,4 @@
 from typing import Optional, Dict, Any
-from enum import StrEnum
 from pydantic import BaseModel, Field
 from fastapi import HTTPException as FastAPIHTTPException, Request, FastAPI
 from fastapi.exceptions import RequestValidationError, ResponseValidationError
@@ -7,6 +6,10 @@ from fastapi.responses import JSONResponse
 from crypticorn.common import ApiError, ApiErrorIdentifier, ApiErrorType, ApiErrorLevel
 import logging
 import json
+try:
+    from enum import StrEnum
+except ImportError:
+    from strenum import StrEnum
 
 _logger = logging.getLogger("crypticorn")
 

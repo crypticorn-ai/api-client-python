@@ -2,11 +2,15 @@ from __future__ import annotations
 
 import logging
 import sys
-from enum import StrEnum
 from crypticorn.common.mixins import ValidateEnumMixin
 from crypticorn.common.ansi_colors import AnsiColors as C
 from datetime import datetime
 import os
+
+try:
+    from enum import StrEnum
+except ImportError:
+    from strenum import StrEnum
 
 
 class LogLevel(ValidateEnumMixin, StrEnum):

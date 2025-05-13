@@ -1,8 +1,12 @@
 """Comprehensive error handling system defining various API error types, HTTP exceptions, and error content structures."""
 
-from enum import Enum, StrEnum
+from enum import Enum
 from fastapi import status
 from crypticorn.common.mixins import ApiErrorFallback
+try:
+    from enum import StrEnum
+except ImportError:
+    from strenum import StrEnum
 
 
 class ApiErrorType(StrEnum):

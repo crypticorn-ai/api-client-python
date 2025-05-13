@@ -1,5 +1,7 @@
-from enum import StrEnum
-
+try:
+    from enum import StrEnum
+except ImportError:
+    from strenum import StrEnum
 
 class AnsiColors(StrEnum):
     """Provides a collection of ANSI color codes for terminal text formatting, including regular, bright, and bold text colors. Useful for creating colorful and readable console output."""
