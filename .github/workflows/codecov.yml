@@ -49,5 +49,6 @@ jobs:
     - name: Pytest coverage comment
       uses: MishaKav/pytest-coverage-comment@main
       with:
+        title: Coverage Report ${{ matrix.python-version }}
         pytest-xml-coverage-path: ./coverage.xml
         report-only-changed-files: true
