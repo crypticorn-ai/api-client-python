@@ -18,7 +18,7 @@ from fastapi.security import (
     APIKeyHeader,
 )
 from typing_extensions import Annotated
-
+from typing import Union
 # Auth Schemes
 http_bearer = HTTPBearer(
     bearerFormat="JWT",
@@ -132,7 +132,7 @@ class AuthHandler:
 
     async def api_key_auth(
         self,
-        api_key: Annotated[str | None, Depends(apikey_header)] = None,
+        api_key: Annotated[Union[str, None], Depends(apikey_header)] = None,
         sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """
@@ -144,7 +144,7 @@ class AuthHandler:
     async def bearer_auth(
         self,
         bearer: Annotated[
-            HTTPAuthorizationCredentials | None,
+            Union[HTTPAuthorizationCredentials, None],
             Depends(http_bearer),
         ] = None,
         sec: SecurityScopes = SecurityScopes(),
@@ -158,9 +158,11 @@ class AuthHandler:
     async def combined_auth(
         self,
         bearer: Annotated[
-            HTTPAuthorizationCredentials | None, Depends(http_bearer)
+            Union[HTTPAuthorizationCredentials, None], Depends(http_bearer)
         ] = None,
-        api_key: Annotated[str | None, Depends(apikey_header)] = None,
+        api_key: Annotated[
+            Union[str, None], Depends(apikey_header)
+        ] = None,
         sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """
@@ -202,7 +204,7 @@ class AuthHandler:
 
     async def ws_api_key_auth(
         self,
-        api_key: Annotated[str | None, Query()] = None,
+        api_key: Annotated[Union[str, None], Query()] = None,
         sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """
@@ -213,7 +215,7 @@ class AuthHandler:
 
     async def ws_bearer_auth(
         self,
-        bearer: Annotated[str | None, Query()] = None,
+        bearer: Annotated[Union[str, None], Query()] = None,
         sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """
@@ -224,8 +226,8 @@ class AuthHandler:
 
     async def ws_combined_auth(
         self,
-        bearer: Annotated[str | None, Query()] = None,
-        api_key: Annotated[str | None, Query()] = None,
+        bearer: Annotated[Union[str, None], Query()] = None,
+        api_key: Annotated[Union[str, None], Query()] = None,
         sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """

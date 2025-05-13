@@ -1,7 +1,7 @@
 """General utility functions and helper methods used across the codebase."""
 
 from datetime import datetime
-from typing import Any
+from typing import Any, Union
 from decimal import Decimal
 import string
 import random
@@ -41,8 +41,8 @@ def gen_random_id(length: int = 20) -> str:
     "The `is_equal` method is deprecated; use `math.is_close` instead.", category=None
 )
 def is_equal(
-    a: float | Decimal,
-    b: float | Decimal,
+    a: Union[float, Decimal],
+    b: Union[float, Decimal],
     rel_tol: float = 1e-9,
     abs_tol: float = 0.0,
 ) -> bool:
