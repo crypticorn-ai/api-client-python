@@ -1,7 +1,7 @@
 """Crypticorn-specific warnings."""
 
 from __future__ import annotations
-
+from typing import Union
 
 class CrypticornDeprecationWarning(DeprecationWarning):
     """A Crypticorn specific deprecation warning.
@@ -24,7 +24,7 @@ class CrypticornDeprecationWarning(DeprecationWarning):
         message: str,
         *args: object,
         since: tuple[int, int],
-        expected_removal: tuple[int, int] | None = None,
+        expected_removal: Union[tuple[int, int], None] = None,
     ) -> None:
         super().__init__(message, *args)
         self.message = message.rstrip(".")
