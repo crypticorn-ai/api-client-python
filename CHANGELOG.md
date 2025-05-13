@@ -1,6 +1,29 @@
 # CHANGELOG
 
 
+## v2.11.0 (2025-05-13)
+
+### Bug Fixes
+
+- Use strenum as backport for python < 3.11
+  ([`a14589b`](https://github.com/crypticorn-ai/api-client/commit/a14589b7c70a07b2a896526ee373d1136e07c675))
+
+### Continuous Integration
+
+- Test on all supported python versions
+  ([`63e8006`](https://github.com/crypticorn-ai/api-client/commit/63e8006d2e226ddcf139f5ce25bd7edfc9a99ca3))
+
+### Features
+
+- Add support for python 3.9
+  ([`d4ca2d2`](https://github.com/crypticorn-ai/api-client/commit/d4ca2d2723091756b31a70c1d851c0ab746b9bde))
+
+### Refactoring
+
+- Update type annotations to use Union for compatibility
+  ([`4476864`](https://github.com/crypticorn-ai/api-client/commit/4476864fc52be5516e2d187254669b28da6d9202))
+
+
 ## v2.10.3 (2025-05-12)
 
 ### Bug Fixes
