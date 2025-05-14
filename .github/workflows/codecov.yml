@@ -5,10 +5,13 @@ on:
     branches:
       - main
       - dev
+    paths: python/** # only run if python client code is touched
   push:
     branches:
       - main
       - dev
+    paths: python/** # only run if python client code is touched
+      
 
 permissions:
   contents: write
@@ -18,7 +21,7 @@ permissions:
 env:
   API_ENV: 'dev'
   JWT_SECRET: ${{ secrets.JWT_SECRET }}
-  # for now, we are using dev. later once prod is up to date, we use:
+  # for now, we are using dev. later once prod backends are up to date, we use:
   # ${{ github.event.workflow_run.head_branch == 'main' && 'prod' || 'dev' }}
 
 jobs:
