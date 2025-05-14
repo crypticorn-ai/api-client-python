@@ -1,10 +1,8 @@
 from crypticorn.auth.client.exceptions import UnauthorizedException
 from crypticorn.auth import CreateApiKeyRequest
-from crypticorn.common import BaseUrl, Scope
-from crypticorn.common import MarketType, InternalExchange
+from crypticorn.common import BaseUrl, Scope, Service, MarketType, InternalExchange
 from crypticorn.hive import Configuration as HiveConfig, DataInfo, ModelCreate
-from crypticorn.hive.client.models.coins import Coins
-from crypticorn.hive.client.models.target import Target
+from crypticorn.hive import Coins, Target
 from crypticorn.pay import ProductUpdate, ProductRead, ProductCreate
 from crypticorn import ApiClient
 from crypticorn.trade import ExchangeKeyModel, Configuration as TradeConfig
@@ -19,7 +17,7 @@ jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdv
 
 async def main():
     async with ApiClient(
-        base_url=BaseUrl.DEV, api_key="GbUAFktNCrUqfFN7FZLHSJfgxCYpjD"
+        base_url=BaseUrl.DEV, api_key=""
     ) as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
@@ -167,10 +165,10 @@ async def main():
 async def configure_client():
     async with ApiClient(base_url=BaseUrl.DEV) as client:
         client.configure(
-            config=HiveConfig(host="http://localhost:8000"), client=client.hive
+            config=HiveConfig(host="http://localhost:8000"), service=Service.HIVE
         )
-        res = await client.pay.products.get_products_with_http_info()
-        print(res.data)
+        res = await client.hive.status.ping()
+        print(res)
 
 
 if __name__ == "__main__":
