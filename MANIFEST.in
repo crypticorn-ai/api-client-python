@@ -2,4 +2,3 @@ graft crypticorn/cli/templates
 include CHANGELOG.md
 include README.md
 include LICENSE
-include static
