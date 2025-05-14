@@ -55,6 +55,9 @@ class Scope(StrEnum):
     # Sentiment scopes
     READ_SENTIMENT = "read:sentiment"
 
+    # Klines scopes
+    READ_KLINES = "read:klines"
+
     @classmethod
     def admin_scopes(cls) -> list["Scope"]:
         """Scopes that are only available to admins."""
@@ -77,4 +80,11 @@ class Scope(StrEnum):
         """Scopes that can be purchased."""
         return [
             cls.READ_PREDICTIONS,
+            cls.READ_METRICS_MARKETCAP,
+            cls.READ_METRICS_INDICATORS,
+            cls.READ_METRICS_EXCHANGES,
+            cls.READ_METRICS_TOKENS,
+            cls.READ_METRICS_MARKETS,
+            cls.READ_KLINES,
+            cls.READ_SENTIMENT,
         ]
