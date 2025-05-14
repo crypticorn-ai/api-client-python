@@ -29,7 +29,7 @@ from crypticorn import ApiClient
 ```
 The ApiClient serves as the central interface for API operations. It instantiates multiple API wrappers corresponding to our micro services. These are structured the following:
 
-<img src="pip-structure.svg" alt="pip package structure" />
+<img src="static/pip-structure.svg" alt="pip package structure" />
 
 You can either explore each API by clicking through the library or checkout the [API Documentation](https://docs.crypticorn.com/api).
 
