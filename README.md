@@ -46,7 +46,12 @@ from crypticorn.common import Scope, Exchange
 
 ## Authentication
 
-To get started, [create an API key in your dashboard](https://app.crypticorn.com/account/developer). Then instantiate the `ApiClient` class with your copied key.
+To get started, [create an API key in your dashboard](https://app.crypticorn.com/account/developer). 
+
+The scopes you can assign, resemble the [package structure](#structure). The first part defines if the scopes is for reading or writing a ressource, the second matches the API, the third the ROUTER being used. `read` scopes gives access to GET, `write` to PUT, PATCH, POST, DELETE endpoints. 
+
+There are scopes which don't follow this structure. Those are either scopes that must be purchased (e.g. `read:predictions`), give access to endpoints existing in all APIs (e.g. `read:admin`) or provide access to an entire service (e.g. `read:sentiment`).
+
 
 ## Basic Usage
 
