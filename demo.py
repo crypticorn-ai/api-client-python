@@ -152,13 +152,7 @@ async def main():
         #     limit=100,
         # )
         # print(res)
-        res = await client.metrics.marketcap.get_marketcap_symbols_fmt(
-            int(time.time()) - 60 * 60 * 24 * 5,
-            int(time.time()),
-            interval=None,
-            market=MarketType.FUTURES,
-            exchange=InternalExchange.BINANCE,
-        )
+        res = await client.metrics.tokens.get_stable_tokens()
         print(res)
 
 
