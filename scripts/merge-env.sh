@@ -10,4 +10,5 @@ set -e
 
 cp .env.example .env
 echo >> .env
-printenv | awk -F= '{print $1"=\""substr($0, index($0,$2))"\""}' >> .env
+echo "# Environment variables" >> .env
+printenv | awk -F= '/^[a-zA-Z_][a-zA-Z0-9_]*=/{print $1"=\""substr($0, index($0,$2))"\""}' | sort | uniq >> .env
