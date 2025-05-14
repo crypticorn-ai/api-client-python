@@ -54,7 +54,7 @@ class MarketcapApiWrapper(MarketcapApi):
         rows = []
         for item in response:
             row = {"timestamp": item.timestamp}
-            row.update({i+1: sym for i, sym in enumerate(item.symbols)})
+            row.update({i + 1: sym for i, sym in enumerate(item.symbols)})
             rows.append(row)
         df = pd.DataFrame(rows)
         return df

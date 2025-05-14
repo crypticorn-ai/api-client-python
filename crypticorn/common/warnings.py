@@ -3,6 +3,7 @@
 from __future__ import annotations
 from typing import Union
 
+
 class CrypticornDeprecationWarning(DeprecationWarning):
     """A Crypticorn specific deprecation warning.
 

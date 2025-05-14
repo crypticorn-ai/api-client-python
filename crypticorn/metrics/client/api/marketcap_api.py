@@ -21,6 +21,9 @@ from typing import Any, Dict, List, Optional
 from typing_extensions import Annotated
 from crypticorn.metrics.client.models.market_type import MarketType
 from crypticorn.metrics.client.models.marketcap_ranking import MarketcapRanking
+from crypticorn.metrics.client.models.marketcap_symbol_ranking import (
+    MarketcapSymbolRanking,
+)
 from crypticorn.metrics.client.models.ohlcv import OHLCV
 
 from crypticorn.metrics.client.api_client import ApiClient, RequestSerialized
@@ -313,7 +316,7 @@ class MarketcapApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Dict[str, object]]:
+    ) -> List[MarketcapRanking]:
         """Get Marketcap Between Timestamps
 
         Retrieve marketcap data between timestamps.
@@ -354,7 +357,7 @@ class MarketcapApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Dict[str, object]]",
+            "200": "List[MarketcapRanking]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -385,7 +388,7 @@ class MarketcapApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Dict[str, object]]]:
+    ) -> ApiResponse[List[MarketcapRanking]]:
         """Get Marketcap Between Timestamps
 
         Retrieve marketcap data between timestamps.
@@ -426,7 +429,7 @@ class MarketcapApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Dict[str, object]]",
+            "200": "List[MarketcapRanking]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -498,7 +501,7 @@ class MarketcapApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Dict[str, object]]",
+            "200": "List[MarketcapRanking]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -581,11 +584,15 @@ class MarketcapApi:
         ] = None,
         market: Annotated[
             Optional[MarketType],
-            Field(description="Market for which to fetch symbols and marketcap data"),
+            Field(
+                description="Market for which to fetch symbols and marketcap data. Defaults to futures."
+            ),
         ] = None,
         exchange: Annotated[
             Optional[StrictStr],
-            Field(description="Exchange for which to fetch symbols and marketcap data"),
+            Field(
+                description="Exchange for which to fetch symbols and marketcap data. If not provided, all exchanges will be returned."
+            ),
         ] = None,
         _request_timeout: Union[
             None,
@@ -598,10 +605,10 @@ class MarketcapApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[MarketcapRanking]:
+    ) -> List[MarketcapSymbolRanking]:
         """Get Symbols Marketcap Between Timestamps
 
-        Retrieve marketcap data for symbols between timestamps with optional filtering.
+        Retrieve a ranking of symbols by marketcap between timestamps.
 
         :param start_timestamp: Start timestamp
         :type start_timestamp: int
@@ -609,9 +616,9 @@ class MarketcapApi:
         :type end_timestamp: int
         :param interval: Interval for which to fetch symbols and marketcap data
         :type interval: str
-        :param market: Market for which to fetch symbols and marketcap data
+        :param market: Market for which to fetch symbols and marketcap data. Defaults to futures.
         :type market: MarketType
-        :param exchange: Exchange for which to fetch symbols and marketcap data
+        :param exchange: Exchange for which to fetch symbols and marketcap data. If not provided, all exchanges will be returned.
         :type exchange: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -648,7 +655,7 @@ class MarketcapApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[MarketcapRanking]",
+            "200": "List[MarketcapSymbolRanking]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -674,11 +681,15 @@ class MarketcapApi:
         ] = None,
         market: Annotated[
             Optional[MarketType],
-            Field(description="Market for which to fetch symbols and marketcap data"),
+            Field(
+                description="Market for which to fetch symbols and marketcap data. Defaults to futures."
+            ),
         ] = None,
         exchange: Annotated[
             Optional[StrictStr],
-            Field(description="Exchange for which to fetch symbols and marketcap data"),
+            Field(
+                description="Exchange for which to fetch symbols and marketcap data. If not provided, all exchanges will be returned."
+            ),
         ] = None,
         _request_timeout: Union[
             None,
@@ -691,10 +702,10 @@ class MarketcapApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[MarketcapRanking]]:
+    ) -> ApiResponse[List[MarketcapSymbolRanking]]:
         """Get Symbols Marketcap Between Timestamps
 
-        Retrieve marketcap data for symbols between timestamps with optional filtering.
+        Retrieve a ranking of symbols by marketcap between timestamps.
 
         :param start_timestamp: Start timestamp
         :type start_timestamp: int
@@ -702,9 +713,9 @@ class MarketcapApi:
         :type end_timestamp: int
         :param interval: Interval for which to fetch symbols and marketcap data
         :type interval: str
-        :param market: Market for which to fetch symbols and marketcap data
+        :param market: Market for which to fetch symbols and marketcap data. Defaults to futures.
         :type market: MarketType
-        :param exchange: Exchange for which to fetch symbols and marketcap data
+        :param exchange: Exchange for which to fetch symbols and marketcap data. If not provided, all exchanges will be returned.
         :type exchange: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -741,7 +752,7 @@ class MarketcapApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[MarketcapRanking]",
+            "200": "List[MarketcapSymbolRanking]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -767,11 +778,15 @@ class MarketcapApi:
         ] = None,
         market: Annotated[
             Optional[MarketType],
-            Field(description="Market for which to fetch symbols and marketcap data"),
+            Field(
+                description="Market for which to fetch symbols and marketcap data. Defaults to futures."
+            ),
         ] = None,
         exchange: Annotated[
             Optional[StrictStr],
-            Field(description="Exchange for which to fetch symbols and marketcap data"),
+            Field(
+                description="Exchange for which to fetch symbols and marketcap data. If not provided, all exchanges will be returned."
+            ),
         ] = None,
         _request_timeout: Union[
             None,
@@ -787,7 +802,7 @@ class MarketcapApi:
     ) -> RESTResponseType:
         """Get Symbols Marketcap Between Timestamps
 
-        Retrieve marketcap data for symbols between timestamps with optional filtering.
+        Retrieve a ranking of symbols by marketcap between timestamps.
 
         :param start_timestamp: Start timestamp
         :type start_timestamp: int
@@ -795,9 +810,9 @@ class MarketcapApi:
         :type end_timestamp: int
         :param interval: Interval for which to fetch symbols and marketcap data
         :type interval: str
-        :param market: Market for which to fetch symbols and marketcap data
+        :param market: Market for which to fetch symbols and marketcap data. Defaults to futures.
         :type market: MarketType
-        :param exchange: Exchange for which to fetch symbols and marketcap data
+        :param exchange: Exchange for which to fetch symbols and marketcap data. If not provided, all exchanges will be returned.
         :type exchange: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -834,7 +849,7 @@ class MarketcapApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[MarketcapRanking]",
+            "200": "List[MarketcapSymbolRanking]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -928,7 +943,8 @@ class MarketcapApi:
             Optional[StrictStr], Field(description="Timeframe for OHLCV data")
         ] = None,
         market: Annotated[
-            Optional[MarketType], Field(description="Market for OHLCV data")
+            Optional[MarketType],
+            Field(description="Market for OHLCV data. Defaults to futures."),
         ] = None,
         top_n: Annotated[
             Optional[StrictInt], Field(description="Number of symbols to fetch")
@@ -957,7 +973,7 @@ class MarketcapApi:
         :type timestamp: int
         :param timeframe: Timeframe for OHLCV data
         :type timeframe: str
-        :param market: Market for OHLCV data
+        :param market: Market for OHLCV data. Defaults to futures.
         :type market: MarketType
         :param top_n: Number of symbols to fetch
         :type top_n: int
@@ -1020,7 +1036,8 @@ class MarketcapApi:
             Optional[StrictStr], Field(description="Timeframe for OHLCV data")
         ] = None,
         market: Annotated[
-            Optional[MarketType], Field(description="Market for OHLCV data")
+            Optional[MarketType],
+            Field(description="Market for OHLCV data. Defaults to futures."),
         ] = None,
         top_n: Annotated[
             Optional[StrictInt], Field(description="Number of symbols to fetch")
@@ -1049,7 +1066,7 @@ class MarketcapApi:
         :type timestamp: int
         :param timeframe: Timeframe for OHLCV data
         :type timeframe: str
-        :param market: Market for OHLCV data
+        :param market: Market for OHLCV data. Defaults to futures.
         :type market: MarketType
         :param top_n: Number of symbols to fetch
         :type top_n: int
@@ -1112,7 +1129,8 @@ class MarketcapApi:
             Optional[StrictStr], Field(description="Timeframe for OHLCV data")
         ] = None,
         market: Annotated[
-            Optional[MarketType], Field(description="Market for OHLCV data")
+            Optional[MarketType],
+            Field(description="Market for OHLCV data. Defaults to futures."),
         ] = None,
         top_n: Annotated[
             Optional[StrictInt], Field(description="Number of symbols to fetch")
@@ -1141,7 +1159,7 @@ class MarketcapApi:
         :type timestamp: int
         :param timeframe: Timeframe for OHLCV data
         :type timeframe: str
-        :param market: Market for OHLCV data
+        :param market: Market for OHLCV data. Defaults to futures.
         :type market: MarketType
         :param top_n: Number of symbols to fetch
         :type top_n: int

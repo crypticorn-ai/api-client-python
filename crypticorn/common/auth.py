@@ -19,6 +19,7 @@ from fastapi.security import (
 )
 from typing_extensions import Annotated
 from typing import Union
+
 # Auth Schemes
 http_bearer = HTTPBearer(
     bearerFormat="JWT",
@@ -160,9 +161,7 @@ class AuthHandler:
         bearer: Annotated[
             Union[HTTPAuthorizationCredentials, None], Depends(http_bearer)
         ] = None,
-        api_key: Annotated[
-            Union[str, None], Depends(apikey_header)
-        ] = None,
+        api_key: Annotated[Union[str, None], Depends(apikey_header)] = None,
         sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """

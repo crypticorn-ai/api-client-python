@@ -44,7 +44,9 @@ class IndicatorsApi:
         symbol: Annotated[
             StrictStr, Field(description="Symbol to fetch KER indicator for")
         ],
-        market: Annotated[Optional[MarketType], Field(description="Market")] = None,
+        market: Annotated[
+            Optional[MarketType], Field(description="Market. Defaults to futures.")
+        ] = None,
         period: Annotated[
             Optional[StrictInt], Field(description="KER indicator period")
         ] = None,
@@ -70,7 +72,7 @@ class IndicatorsApi:
 
         :param symbol: Symbol to fetch KER indicator for (required)
         :type symbol: str
-        :param market: Market
+        :param market: Market. Defaults to futures.
         :type market: MarketType
         :param period: KER indicator period
         :type period: int
@@ -127,7 +129,9 @@ class IndicatorsApi:
         symbol: Annotated[
             StrictStr, Field(description="Symbol to fetch KER indicator for")
         ],
-        market: Annotated[Optional[MarketType], Field(description="Market")] = None,
+        market: Annotated[
+            Optional[MarketType], Field(description="Market. Defaults to futures.")
+        ] = None,
         period: Annotated[
             Optional[StrictInt], Field(description="KER indicator period")
         ] = None,
@@ -153,7 +157,7 @@ class IndicatorsApi:
 
         :param symbol: Symbol to fetch KER indicator for (required)
         :type symbol: str
-        :param market: Market
+        :param market: Market. Defaults to futures.
         :type market: MarketType
         :param period: KER indicator period
         :type period: int
@@ -210,7 +214,9 @@ class IndicatorsApi:
         symbol: Annotated[
             StrictStr, Field(description="Symbol to fetch KER indicator for")
         ],
-        market: Annotated[Optional[MarketType], Field(description="Market")] = None,
+        market: Annotated[
+            Optional[MarketType], Field(description="Market. Defaults to futures.")
+        ] = None,
         period: Annotated[
             Optional[StrictInt], Field(description="KER indicator period")
         ] = None,
@@ -236,7 +242,7 @@ class IndicatorsApi:
 
         :param symbol: Symbol to fetch KER indicator for (required)
         :type symbol: str
-        :param market: Market
+        :param market: Market. Defaults to futures.
         :type market: MarketType
         :param period: KER indicator period
         :type period: int

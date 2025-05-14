@@ -3,6 +3,7 @@
 from enum import Enum
 from fastapi import status
 from crypticorn.common.mixins import ApiErrorFallback
+
 try:
     from enum import StrEnum
 except ImportError:

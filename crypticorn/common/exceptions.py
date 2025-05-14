@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 from crypticorn.common import ApiError, ApiErrorIdentifier, ApiErrorType, ApiErrorLevel
 import logging
 import json
+
 try:
     from enum import StrEnum
 except ImportError:
