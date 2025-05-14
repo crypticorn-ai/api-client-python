@@ -23,6 +23,7 @@ client/models/internal_exchange.py
 client/models/log_level.py
 client/models/market_type.py
 client/models/marketcap_ranking.py
+client/models/marketcap_symbol_ranking.py
 client/models/ohlcv.py
 client/models/severity.py
 client/models/time_interval.py

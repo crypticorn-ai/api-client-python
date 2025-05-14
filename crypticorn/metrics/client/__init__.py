@@ -48,6 +48,9 @@ from crypticorn.metrics.client.models.internal_exchange import InternalExchange
 from crypticorn.metrics.client.models.log_level import LogLevel
 from crypticorn.metrics.client.models.market_type import MarketType
 from crypticorn.metrics.client.models.marketcap_ranking import MarketcapRanking
+from crypticorn.metrics.client.models.marketcap_symbol_ranking import (
+    MarketcapSymbolRanking,
+)
 from crypticorn.metrics.client.models.ohlcv import OHLCV
 from crypticorn.metrics.client.models.severity import Severity
 from crypticorn.metrics.client.models.time_interval import TimeInterval
