@@ -18,6 +18,7 @@ client/models/api_error_identifier.py
 client/models/api_error_level.py
 client/models/api_error_type.py
 client/models/exception_detail.py
+client/models/exchange_availability.py
 client/models/exchange_mapping.py
 client/models/internal_exchange.py
 client/models/log_level.py

@@ -93,22 +93,13 @@ class ExchangesApiWrapper(ExchangesApi):
         """
         pd = optional_import("pandas", "extra")
         response = await self.get_available_exchanges(*args, **kwargs)
-        processed_results = []
-        for row in response:
-            data = {"timestamp": row["timestamp"]}
-            data.update(row["exchanges"])
-            processed_results.append(data)
-
-        # Create DataFrame and sort columns
-        df = pd.DataFrame(processed_results)
-        cols = ["timestamp"] + sorted([col for col in df.columns if col != "timestamp"])
-        df = df[cols]
-
-        # Convert exchange availability to boolean integers (0/1)
-        df = df.astype(
-            {
-                "timestamp": "int64",
-                **{col: "int8" for col in df.columns if col != "timestamp"},
-            }
-        )
+        
+        # Create list of dictionaries with timestamp and flattened exchange data
+        rows = []
+        for item in response:
+            row = {"timestamp": item.timestamp}
+            row.update(item.exchanges)  # This spreads the exchanges dict into individual columns
+            rows.append(row)
+            
+        df = pd.DataFrame(rows)
         return df
