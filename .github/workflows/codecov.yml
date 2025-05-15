@@ -5,12 +5,10 @@ on:
     branches:
       - main
       - dev
-    paths: python/** # only run if python client code is touched
   push:
     branches:
       - main
       - dev
-    paths: python/** # only run if python client code is touched
       
 
 permissions:
