@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.11.2 (2025-05-15)
+
+### Bug Fixes
+
+- Fixes ohlc dataframe response
+  ([`a334782`](https://github.com/crypticorn-ai/api-client/commit/a33478251a80e6255a9d4c0a2c43d701403c3399))
+
+
 ## v2.11.1 (2025-05-15)
 
 ### Bug Fixes
