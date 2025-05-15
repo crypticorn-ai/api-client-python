@@ -1,6 +1,42 @@
 # CHANGELOG
 
 
+## v2.11.1 (2025-05-15)
+
+### Bug Fixes
+
+- Fixes dataframe conversion for get_available_exchanges_fmt
+  ([`4c85d67`](https://github.com/crypticorn-ai/api-client/commit/4c85d67386fbda1b50a237df10a10a8eb2fb3531))
+
+### Build System
+
+- Include static files in dist
+  ([`1b07130`](https://github.com/crypticorn-ai/api-client/commit/1b071302cb2f15f086b7812152cde8d425c2de9d))
+
+### Continuous Integration
+
+- Run test only on dev/main
+  ([`dcc59e1`](https://github.com/crypticorn-ai/api-client/commit/dcc59e16e8138761c76da0cc936db7738058ac19))
+
+### Documentation
+
+- Document scope structure
+  ([`fe0dca0`](https://github.com/crypticorn-ai/api-client/commit/fe0dca0d41ce79d0c1809a3d457a52a182cf37c4))
+
+- Update docstring example `configure` method
+  ([`30f59b3`](https://github.com/crypticorn-ai/api-client/commit/30f59b37b5fe3ae8f22ee0a5e72e9a7274dee23c))
+
+### Refactoring
+
+- Make merge-env script template more robust
+  ([`1314f71`](https://github.com/crypticorn-ai/api-client/commit/1314f718fd4299a37e55424b3ea14c573f746aeb))
+
+### Testing
+
+- Add expiration to test api keys
+  ([`2e4044f`](https://github.com/crypticorn-ai/api-client/commit/2e4044f05caa2ae35fe9cadc05eeed8f65d0049b))
+
+
 ## v2.11.0 (2025-05-13)
 
 ### Bug Fixes
