@@ -5,7 +5,7 @@ readme = "README.md"
 license = {file = 'LICENSE'}
 requires-python = ">=3.9"
 authors = [{name = "Crypticorn", email = "timon@crypticorn.com"}]
-version = "2.11.1"
+version = "2.11.2"
 keywords = ["machine learning", "data science", "crypto", "modelling"]
 dynamic = ["dependencies", "optional-dependencies"]
 
