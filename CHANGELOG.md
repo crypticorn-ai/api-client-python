@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.11.4 (2025-05-15)
+
+### Bug Fixes
+
+- Fixes dist build
+  ([`3913bd7`](https://github.com/crypticorn-ai/api-client/commit/3913bd74a12d50727197efe72a68f36c9165c068))
+
+
 ## v2.11.3 (2025-05-15)
 
 ### Bug Fixes
