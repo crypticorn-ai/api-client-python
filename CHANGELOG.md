@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.11.3 (2025-05-15)
+
+### Bug Fixes
+
+- Fixes ci permission error copying static folder to dist
+  ([`10f801b`](https://github.com/crypticorn-ai/api-client/commit/10f801b6f760c3f7de12fe830f9d3dc6895dde67))
+
+
 ## v2.11.2 (2025-05-15)
 
 ### Bug Fixes
