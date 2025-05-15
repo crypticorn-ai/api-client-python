@@ -93,13 +93,15 @@ class ExchangesApiWrapper(ExchangesApi):
         """
         pd = optional_import("pandas", "extra")
         response = await self.get_available_exchanges(*args, **kwargs)
-        
+
         # Create list of dictionaries with timestamp and flattened exchange data
         rows = []
         for item in response:
             row = {"timestamp": item.timestamp}
-            row.update(item.exchanges)  # This spreads the exchanges dict into individual columns
+            row.update(
+                item.exchanges
+            )  # This spreads the exchanges dict into individual columns
             rows.append(row)
-            
+
         df = pd.DataFrame(rows)
         return df
