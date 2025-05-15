@@ -67,6 +67,7 @@ class ApiErrorIdentifier(StrEnum):
     INVALID_PARAMETER = "invalid_parameter_provided"
     LEVERAGE_EXCEEDED = "leverage_limit_exceeded"
     LIQUIDATION_PRICE_VIOLATION = "order_violates_liquidation_price_constraints"
+    MARGIN_MODE_CLASH = "margin_mode_clash"
     MODEL_NAME_NOT_UNIQUE = "model_name_not_unique"
     NO_CREDENTIALS = "no_credentials"
     NOW_API_DOWN = "now_api_down"
@@ -324,6 +325,11 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
     LIQUIDATION_PRICE_VIOLATION = (
         ApiErrorIdentifier.LIQUIDATION_PRICE_VIOLATION,
         ApiErrorType.SERVER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    MARGIN_MODE_CLASH = (
+        ApiErrorIdentifier.MARGIN_MODE_CLASH,
+        ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
     MODEL_NAME_NOT_UNIQUE = (
@@ -680,6 +686,10 @@ class StatusCodeMapper:
             status.WS_1011_INTERNAL_ERROR,
         ),
         # Bad Requests (400) - Invalid parameters or states
+        ApiError.MARGIN_MODE_CLASH: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
         ApiError.INVALID_MODEL_NAME: (
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
@@ -753,7 +763,10 @@ class StatusCodeMapper:
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
         ),
-        ApiError.LIQUIDATION_PRICE_VIOLATION: status.HTTP_400_BAD_REQUEST,
+        ApiError.LIQUIDATION_PRICE_VIOLATION: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
         ApiError.ORDER_ALREADY_FILLED: (
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
