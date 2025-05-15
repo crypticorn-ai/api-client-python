@@ -17,8 +17,9 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictInt, StrictStr
-from typing import Any, Dict, List, Optional
+from typing import List, Optional
 from typing_extensions import Annotated
+from crypticorn.metrics.client.models.exchange_availability import ExchangeAvailability
 from crypticorn.metrics.client.models.exchange_mapping import ExchangeMapping
 from crypticorn.metrics.client.models.internal_exchange import InternalExchange
 from crypticorn.metrics.client.models.market_type import MarketType
@@ -88,7 +89,7 @@ class ExchangesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Dict[str, object]]:
+    ) -> List[ExchangeAvailability]:
         """Get Available Exchanges
 
         Get available exchanges for a symbol with various filtering options.
@@ -144,7 +145,7 @@ class ExchangesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Dict[str, object]]",
+            "200": "List[ExchangeAvailability]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -201,7 +202,7 @@ class ExchangesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Dict[str, object]]]:
+    ) -> ApiResponse[List[ExchangeAvailability]]:
         """Get Available Exchanges
 
         Get available exchanges for a symbol with various filtering options.
@@ -257,7 +258,7 @@ class ExchangesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Dict[str, object]]",
+            "200": "List[ExchangeAvailability]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -370,7 +371,7 @@ class ExchangesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Dict[str, object]]",
+            "200": "List[ExchangeAvailability]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout

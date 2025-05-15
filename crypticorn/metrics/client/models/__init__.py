@@ -18,6 +18,7 @@ from crypticorn.metrics.client.models.api_error_identifier import ApiErrorIdenti
 from crypticorn.metrics.client.models.api_error_level import ApiErrorLevel
 from crypticorn.metrics.client.models.api_error_type import ApiErrorType
 from crypticorn.metrics.client.models.exception_detail import ExceptionDetail
+from crypticorn.metrics.client.models.exchange_availability import ExchangeAvailability
 from crypticorn.metrics.client.models.exchange_mapping import ExchangeMapping
 from crypticorn.metrics.client.models.internal_exchange import InternalExchange
 from crypticorn.metrics.client.models.log_level import LogLevel
