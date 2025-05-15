@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.11.5 (2025-05-15)
+
+### Bug Fixes
+
+- Klines OHLCV response fields can be None
+  ([`2c10e38`](https://github.com/crypticorn-ai/api-client/commit/2c10e38b4cd1f5304f276978b658a619e4cec171))
+
+
 ## v2.11.4 (2025-05-15)
 
 ### Bug Fixes
