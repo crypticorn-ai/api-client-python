@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr, field_validator
-from typing import Any, Dict, Optional
+from typing import Optional
 
 from crypticorn.klines.client.api_client import ApiClient, RequestSerialized
 from crypticorn.klines.client.api_response import ApiResponse
@@ -294,7 +294,7 @@ class StatusApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, object]:
+    ) -> str:
         """Ping
 
         Returns 'OK' if the API is running.
@@ -329,7 +329,7 @@ class StatusApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Dict[str, object]",
+            "200": "str",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -354,7 +354,7 @@ class StatusApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, object]]:
+    ) -> ApiResponse[str]:
         """Ping
 
         Returns 'OK' if the API is running.
@@ -389,7 +389,7 @@ class StatusApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Dict[str, object]",
+            "200": "str",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -449,7 +449,7 @@ class StatusApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Dict[str, object]",
+            "200": "str",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout

@@ -68,14 +68,14 @@ class OHLCVDataApiWrapper(OHLCVDataApi):
         rows = []
         for item in response:
             row = {
-                'timestamp': item.timestamp,
-                'open': item.open,
-                'high': item.high,
-                'low': item.low,
-                'close': item.close,
-                'volume': item.volume
+                "timestamp": item.timestamp,
+                "open": item.open,
+                "high": item.high,
+                "low": item.low,
+                "close": item.close,
+                "volume": item.volume,
             }
-            rows.append(row)  
+            rows.append(row)
         df = pd.DataFrame(rows)
         return df
 

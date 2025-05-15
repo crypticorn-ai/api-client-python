@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Union
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,11 +29,11 @@ class OHLCV(BaseModel):
     """  # noqa: E501
 
     timestamp: StrictInt = Field(description="Timestamp in seconds")
-    open: Union[StrictFloat, StrictInt] = Field(description="Open prices")
-    high: Union[StrictFloat, StrictInt] = Field(description="High prices")
-    low: Union[StrictFloat, StrictInt] = Field(description="Low prices")
-    close: Union[StrictFloat, StrictInt] = Field(description="Close prices")
-    volume: Union[StrictFloat, StrictInt] = Field(description="Volume")
+    open: Optional[Union[StrictFloat, StrictInt]]
+    high: Optional[Union[StrictFloat, StrictInt]]
+    low: Optional[Union[StrictFloat, StrictInt]]
+    close: Optional[Union[StrictFloat, StrictInt]]
+    volume: Optional[Union[StrictFloat, StrictInt]]
     __properties: ClassVar[List[str]] = [
         "timestamp",
         "open",
@@ -80,6 +80,31 @@ class OHLCV(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if open (nullable) is None
+        # and model_fields_set contains the field
+        if self.open is None and "open" in self.model_fields_set:
+            _dict["open"] = None
+
+        # set to None if high (nullable) is None
+        # and model_fields_set contains the field
+        if self.high is None and "high" in self.model_fields_set:
+            _dict["high"] = None
+
+        # set to None if low (nullable) is None
+        # and model_fields_set contains the field
+        if self.low is None and "low" in self.model_fields_set:
+            _dict["low"] = None
+
+        # set to None if close (nullable) is None
+        # and model_fields_set contains the field
+        if self.close is None and "close" in self.model_fields_set:
+            _dict["close"] = None
+
+        # set to None if volume (nullable) is None
+        # and model_fields_set contains the field
+        if self.volume is None and "volume" in self.model_fields_set:
+            _dict["volume"] = None
+
         return _dict
 
     @classmethod
