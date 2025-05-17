@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.11.6 (2025-05-17)
+
+### Bug Fixes
+
+- Add hyperliquid to trading exchange
+  ([`2ed06bc`](https://github.com/crypticorn-ai/api-client/commit/2ed06bc2ff4b07eda022af06954bd817975214be))
+
+
 ## v2.11.5 (2025-05-15)
 
 ### Bug Fixes
