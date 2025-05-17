@@ -13,6 +13,7 @@ class Exchange(ValidateEnumMixin, StrEnum):
 
     KUCOIN = "kucoin"
     BINGX = "bingx"
+    HYPERLIQUID = "hyperliquid"
 
 
 class InternalExchange(ValidateEnumMixin, StrEnum):
