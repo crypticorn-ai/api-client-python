@@ -320,7 +320,7 @@ class TradingActionsApi:
     ) -> PostFuturesAction:
         """Post Futures Action
 
-        Endpoint to receive futures trading actions from the trading strategy
+        Endpoint to receive futures trading actions. The action is queued for processing and the response is returned immediately.
 
         :param futures_trading_action_create: (required)
         :type futures_trading_action_create: FuturesTradingActionCreate
@@ -355,7 +355,7 @@ class TradingActionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PostFuturesAction",
+            "202": "PostFuturesAction",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -384,7 +384,7 @@ class TradingActionsApi:
     ) -> ApiResponse[PostFuturesAction]:
         """Post Futures Action
 
-        Endpoint to receive futures trading actions from the trading strategy
+        Endpoint to receive futures trading actions. The action is queued for processing and the response is returned immediately.
 
         :param futures_trading_action_create: (required)
         :type futures_trading_action_create: FuturesTradingActionCreate
@@ -419,7 +419,7 @@ class TradingActionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PostFuturesAction",
+            "202": "PostFuturesAction",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -448,7 +448,7 @@ class TradingActionsApi:
     ) -> RESTResponseType:
         """Post Futures Action
 
-        Endpoint to receive futures trading actions from the trading strategy
+        Endpoint to receive futures trading actions. The action is queued for processing and the response is returned immediately.
 
         :param futures_trading_action_create: (required)
         :type futures_trading_action_create: FuturesTradingActionCreate
@@ -483,7 +483,7 @@ class TradingActionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PostFuturesAction",
+            "202": "PostFuturesAction",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -606,7 +606,7 @@ class TradingActionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "202": "object",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -669,7 +669,7 @@ class TradingActionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "202": "object",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -732,7 +732,7 @@ class TradingActionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "202": "object",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
