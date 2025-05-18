@@ -19,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
 from crypticorn.trade.client.models.api_error_identifier import ApiErrorIdentifier
 from crypticorn.trade.client.models.exchange import Exchange
 from crypticorn.trade.client.models.margin_mode import MarginMode
@@ -60,14 +61,31 @@ class Order(BaseModel):
     margin_mode: Optional[MarginMode] = None
     status_code: Optional[ApiErrorIdentifier] = None
     status: Optional[OrderStatus] = None
-    filled_perc: Optional[Union[StrictFloat, StrictInt]] = None
-    filled_qty: Optional[Union[StrictFloat, StrictInt]] = None
-    fee: Optional[Union[StrictFloat, StrictInt]] = None
+    filled_perc: Optional[
+        Union[
+            Annotated[float, Field(le=1.0, strict=True, ge=0.0)],
+            Annotated[int, Field(le=1, strict=True, ge=0)],
+        ]
+    ] = Field(default=0, description="Percentage of the order filled")
+    filled_qty: Optional[
+        Union[
+            Annotated[float, Field(strict=True, ge=0.0)],
+            Annotated[int, Field(strict=True, ge=0)],
+        ]
+    ] = Field(
+        default=0,
+        description="Quantity filled. Needed for pnl calculation. In the symbol's base currency.",
+    )
+    fee: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=0, description="Fees for the order"
+    )
     leverage: Optional[Union[StrictFloat, StrictInt]] = None
     order_details: Optional[Any] = Field(
         default=None, description="Exchange specific details of the order"
     )
-    pnl: Optional[Union[StrictFloat, StrictInt]] = None
+    pnl: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=0, description="Profit and loss for the order"
+    )
     order_time: Optional[StrictInt] = None
     __properties: ClassVar[List[str]] = [
         "id",
@@ -230,21 +248,6 @@ class Order(BaseModel):
         if self.status is None and "status" in self.model_fields_set:
             _dict["status"] = None
 
-        # set to None if filled_perc (nullable) is None
-        # and model_fields_set contains the field
-        if self.filled_perc is None and "filled_perc" in self.model_fields_set:
-            _dict["filled_perc"] = None
-
-        # set to None if filled_qty (nullable) is None
-        # and model_fields_set contains the field
-        if self.filled_qty is None and "filled_qty" in self.model_fields_set:
-            _dict["filled_qty"] = None
-
-        # set to None if fee (nullable) is None
-        # and model_fields_set contains the field
-        if self.fee is None and "fee" in self.model_fields_set:
-            _dict["fee"] = None
-
         # set to None if leverage (nullable) is None
         # and model_fields_set contains the field
         if self.leverage is None and "leverage" in self.model_fields_set:
@@ -254,11 +257,6 @@ class Order(BaseModel):
         # and model_fields_set contains the field
         if self.order_details is None and "order_details" in self.model_fields_set:
             _dict["order_details"] = None
-
-        # set to None if pnl (nullable) is None
-        # and model_fields_set contains the field
-        if self.pnl is None and "pnl" in self.model_fields_set:
-            _dict["pnl"] = None
 
         # set to None if order_time (nullable) is None
         # and model_fields_set contains the field
@@ -298,16 +296,20 @@ class Order(BaseModel):
                 "margin_mode": obj.get("margin_mode"),
                 "status_code": obj.get("status_code"),
                 "status": obj.get("status"),
-                "filled_perc": obj.get("filled_perc"),
-                "filled_qty": obj.get("filled_qty"),
-                "fee": obj.get("fee"),
+                "filled_perc": (
+                    obj.get("filled_perc") if obj.get("filled_perc") is not None else 0
+                ),
+                "filled_qty": (
+                    obj.get("filled_qty") if obj.get("filled_qty") is not None else 0
+                ),
+                "fee": obj.get("fee") if obj.get("fee") is not None else 0,
                 "leverage": obj.get("leverage"),
                 "order_details": (
                     AnyOf.from_dict(obj["order_details"])
                     if obj.get("order_details") is not None
                     else None
                 ),
-                "pnl": obj.get("pnl"),
+                "pnl": obj.get("pnl") if obj.get("pnl") is not None else 0,
                 "order_time": obj.get("order_time"),
             }
         )
