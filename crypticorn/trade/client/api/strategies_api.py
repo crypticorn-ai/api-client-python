@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictInt, StrictStr
-from typing import Any, List, Optional
+from typing import List, Optional
 from crypticorn.trade.client.models.strategy import Strategy
 from crypticorn.trade.client.models.strategy_create import StrategyCreate
 from crypticorn.trade.client.models.strategy_update import StrategyUpdate
@@ -561,7 +561,7 @@ class StrategiesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> None:
         """Kill Strategy
 
         Kills a strategy by disabling it and deleting all bots associated with it.
@@ -599,7 +599,7 @@ class StrategiesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "204": None,
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -625,7 +625,7 @@ class StrategiesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> ApiResponse[None]:
         """Kill Strategy
 
         Kills a strategy by disabling it and deleting all bots associated with it.
@@ -663,7 +663,7 @@ class StrategiesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "204": None,
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -727,7 +727,7 @@ class StrategiesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "204": None,
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout

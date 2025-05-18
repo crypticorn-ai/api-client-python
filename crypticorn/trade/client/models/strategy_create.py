@@ -18,8 +18,9 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Union
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
+from crypticorn.trade.client.models.margin_mode import MarginMode
 from crypticorn.trade.client.models.market_type import MarketType
 from crypticorn.trade.client.models.strategy_exchange_info import StrategyExchangeInfo
 from typing import Optional, Set
@@ -46,6 +47,7 @@ class StrategyCreate(BaseModel):
     identifier: StrictStr = Field(
         description="Unique human readable identifier for the strategy e.g. 'daily_trend_momentum'"
     )
+    margin_mode: Optional[MarginMode] = None
     leverage: StrictInt = Field(description="Leverage for the strategy")
     market_type: MarketType = Field(description="Market of operation of the strategy")
     __properties: ClassVar[List[str]] = [
@@ -55,6 +57,7 @@ class StrategyCreate(BaseModel):
         "enabled",
         "performance_fee",
         "identifier",
+        "margin_mode",
         "leverage",
         "market_type",
     ]
@@ -103,6 +106,11 @@ class StrategyCreate(BaseModel):
                 if _item_exchanges:
                     _items.append(_item_exchanges.to_dict())
             _dict["exchanges"] = _items
+        # set to None if margin_mode (nullable) is None
+        # and model_fields_set contains the field
+        if self.margin_mode is None and "margin_mode" in self.model_fields_set:
+            _dict["margin_mode"] = None
+
         return _dict
 
     @classmethod
@@ -129,6 +137,7 @@ class StrategyCreate(BaseModel):
                 "enabled": obj.get("enabled"),
                 "performance_fee": obj.get("performance_fee"),
                 "identifier": obj.get("identifier"),
+                "margin_mode": obj.get("margin_mode"),
                 "leverage": obj.get("leverage"),
                 "market_type": obj.get("market_type"),
             }
