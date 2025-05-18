@@ -5,9 +5,9 @@ from crypticorn.hive import Configuration as HiveConfig, DataInfo, ModelCreate
 from crypticorn.hive import Coins, Target
 from crypticorn.pay import ProductUpdate, ProductRead, ProductCreate
 from crypticorn import ApiClient
-from crypticorn.trade import ExchangeKeyModel, Configuration as TradeConfig
+from crypticorn.trade import ExchangeKey, Configuration as TradeConfig
 import asyncio
-from crypticorn.trade import BotModel, BotStatus
+from crypticorn.trade import Bot, BotStatus
 from crypticorn.klines import Timeframe
 from datetime import datetime, timedelta
 import time
@@ -65,7 +65,7 @@ async def main():
         # print(res)
         # res = await client.metrics.tokens.get_tokens_fmt(token_type="wrappes")
         # res = await client.trade.bots.create_bot(
-        #     BotModel(
+        #     Bot(
         #         name="test",
         #         strategy_id="123",
         #         api_key_id="123",

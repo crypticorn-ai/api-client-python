@@ -17,23 +17,20 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Union
-from crypticorn.trade.client.models.exchange import Exchange
+from pydantic import BaseModel, ConfigDict, StrictBool
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class StrategyExchangeInfo(BaseModel):
+class NotificationUpdate(BaseModel):
     """
-    StrategyExchangeInfo
+    Notification model for API update operations.
     """  # noqa: E501
 
-    exchange: Exchange = Field(description="Exchange name. Of type Exchange")
-    min_amount: Union[StrictFloat, StrictInt] = Field(
-        description="Minimum amount for the strategy on the exchange"
-    )
-    __properties: ClassVar[List[str]] = ["exchange", "min_amount"]
+    viewed: Optional[StrictBool] = None
+    sent: Optional[StrictBool] = None
+    __properties: ClassVar[List[str]] = ["viewed", "sent"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +49,7 @@ class StrategyExchangeInfo(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of StrategyExchangeInfo from a JSON string"""
+        """Create an instance of NotificationUpdate from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,11 +69,21 @@ class StrategyExchangeInfo(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if viewed (nullable) is None
+        # and model_fields_set contains the field
+        if self.viewed is None and "viewed" in self.model_fields_set:
+            _dict["viewed"] = None
+
+        # set to None if sent (nullable) is None
+        # and model_fields_set contains the field
+        if self.sent is None and "sent" in self.model_fields_set:
+            _dict["sent"] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of StrategyExchangeInfo from a dict"""
+        """Create an instance of NotificationUpdate from a dict"""
         if obj is None:
             return None
 
@@ -84,6 +91,6 @@ class StrategyExchangeInfo(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {"exchange": obj.get("exchange"), "min_amount": obj.get("min_amount")}
+            {"viewed": obj.get("viewed"), "sent": obj.get("sent")}
         )
         return _obj

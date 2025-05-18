@@ -17,23 +17,32 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Union
-from crypticorn.trade.client.models.exchange import Exchange
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List
+from crypticorn.trade.client.models.bot_status import BotStatus
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class StrategyExchangeInfo(BaseModel):
+class BotCreate(BaseModel):
     """
-    StrategyExchangeInfo
+    Trading bot model for API create operations.
     """  # noqa: E501
 
-    exchange: Exchange = Field(description="Exchange name. Of type Exchange")
-    min_amount: Union[StrictFloat, StrictInt] = Field(
-        description="Minimum amount for the strategy on the exchange"
+    name: StrictStr = Field(description="Name of the bot")
+    allocation: StrictInt = Field(description="Initial allocation for the bot")
+    status: BotStatus = Field(description="Status of the bot")
+    strategy_id: StrictStr = Field(
+        description="UID for the trading strategy used by the bot"
     )
-    __properties: ClassVar[List[str]] = ["exchange", "min_amount"]
+    api_key_id: StrictStr = Field(description="UID for the API key")
+    __properties: ClassVar[List[str]] = [
+        "name",
+        "allocation",
+        "status",
+        "strategy_id",
+        "api_key_id",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +61,7 @@ class StrategyExchangeInfo(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of StrategyExchangeInfo from a JSON string"""
+        """Create an instance of BotCreate from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,7 +85,7 @@ class StrategyExchangeInfo(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of StrategyExchangeInfo from a dict"""
+        """Create an instance of BotCreate from a dict"""
         if obj is None:
             return None
 
@@ -84,6 +93,12 @@ class StrategyExchangeInfo(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {"exchange": obj.get("exchange"), "min_amount": obj.get("min_amount")}
+            {
+                "name": obj.get("name"),
+                "allocation": obj.get("allocation"),
+                "status": obj.get("status"),
+                "strategy_id": obj.get("strategy_id"),
+                "api_key_id": obj.get("api_key_id"),
+            }
         )
         return _obj

@@ -139,8 +139,8 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
     )
     BOT_ALREADY_DELETED = (
         ApiErrorIdentifier.BOT_ALREADY_DELETED,
-        ApiErrorType.SERVER_ERROR,
-        ApiErrorLevel.ERROR,
+        ApiErrorType.USER_ERROR,
+        ApiErrorLevel.INFO,
     )
     BOT_DISABLED = (
         ApiErrorIdentifier.BOT_DISABLED,
@@ -299,7 +299,7 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
     )
     INVALID_EXCHANGE_KEY = (
         ApiErrorIdentifier.INVALID_EXCHANGE_KEY,
-        ApiErrorType.SERVER_ERROR,
+        ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
     INVALID_MARGIN_MODE = (
