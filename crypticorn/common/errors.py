@@ -74,6 +74,7 @@ class ApiErrorIdentifier(StrEnum):
     OBJECT_ALREADY_EXISTS = "object_already_exists"
     OBJECT_CREATED = "object_created"
     OBJECT_DELETED = "object_deleted"
+    OBJECT_LOCKED = "object_locked"
     OBJECT_NOT_FOUND = "object_not_found"
     OBJECT_UPDATED = "object_updated"
     ORDER_ALREADY_FILLED = "order_is_already_filled"
@@ -360,6 +361,11 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
     OBJECT_DELETED = (
         ApiErrorIdentifier.OBJECT_DELETED,
         ApiErrorType.SERVER_ERROR,
+        ApiErrorLevel.INFO,
+    )
+    OBJECT_LOCKED = (
+        ApiErrorIdentifier.OBJECT_LOCKED,
+        ApiErrorType.NO_ERROR,
         ApiErrorLevel.INFO,
     )
     OBJECT_NOT_FOUND = (
@@ -841,6 +847,11 @@ class StatusCodeMapper:
         ApiError.OBJECT_DELETED: (
             status.HTTP_204_NO_CONTENT,
             status.WS_1000_NORMAL_CLOSURE,
+        ),
+        # Miscellaneous
+        ApiError.OBJECT_LOCKED: (
+            status.HTTP_423_LOCKED,
+            status.WS_1013_TRY_AGAIN_LATER,
         ),
     }
 
