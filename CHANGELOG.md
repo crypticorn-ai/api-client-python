@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.11.8 (2025-05-18)
+
+### Bug Fixes
+
+- New error code `object_locked`
+  ([`d2c79a1`](https://github.com/crypticorn-ai/api-client/commit/d2c79a1c8e77c5801981b5fe2c4f0c99d9ef0943))
+
+
 ## v2.11.7 (2025-05-18)
 
 ### Bug Fixes
