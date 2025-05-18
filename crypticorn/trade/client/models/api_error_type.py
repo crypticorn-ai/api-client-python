@@ -18,18 +18,20 @@ from enum import Enum
 from typing_extensions import Self
 
 
-class MarginMode(str, Enum):
+class ApiErrorType(str, Enum):
     """
-    Margin mode for futures trades
+    Type of the API error.
     """
 
     """
     allowed enum values
     """
-    ISOLATED = "isolated"
-    CROSS = "cross"
+    USER_ERROR = "user error"
+    EXCHANGE_ERROR = "exchange error"
+    SERVER_ERROR = "server error"
+    NO_ERROR = "no error"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of MarginMode from a JSON string"""
+        """Create an instance of ApiErrorType from a JSON string"""
         return cls(json.loads(json_str))

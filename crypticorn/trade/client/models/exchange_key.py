@@ -17,23 +17,38 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.trade.client.models.exchange import Exchange
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class StrategyExchangeInfo(BaseModel):
+class ExchangeKey(BaseModel):
     """
-    StrategyExchangeInfo
+    Exchange key model not containing sensitive information for read operations.
     """  # noqa: E501
 
-    exchange: Exchange = Field(description="Exchange name. Of type Exchange")
-    min_amount: Union[StrictFloat, StrictInt] = Field(
-        description="Minimum amount for the strategy on the exchange"
+    user_id: StrictStr = Field(description="UID for the user")
+    id: Optional[StrictStr] = Field(
+        default=None, description="Unique identifier for the resource"
     )
-    __properties: ClassVar[List[str]] = ["exchange", "min_amount"]
+    created_at: Optional[StrictInt] = Field(
+        default=None, description="Timestamp of creation"
+    )
+    updated_at: Optional[StrictInt] = Field(
+        default=None, description="Timestamp of last update"
+    )
+    label: StrictStr = Field(description="Label for the API key")
+    exchange: Exchange = Field(description="The exchange the API key is for.")
+    __properties: ClassVar[List[str]] = [
+        "user_id",
+        "id",
+        "created_at",
+        "updated_at",
+        "label",
+        "exchange",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +67,7 @@ class StrategyExchangeInfo(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of StrategyExchangeInfo from a JSON string"""
+        """Create an instance of ExchangeKey from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,7 +91,7 @@ class StrategyExchangeInfo(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of StrategyExchangeInfo from a dict"""
+        """Create an instance of ExchangeKey from a dict"""
         if obj is None:
             return None
 
@@ -84,6 +99,13 @@ class StrategyExchangeInfo(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {"exchange": obj.get("exchange"), "min_amount": obj.get("min_amount")}
+            {
+                "user_id": obj.get("user_id"),
+                "id": obj.get("id"),
+                "created_at": obj.get("created_at"),
+                "updated_at": obj.get("updated_at"),
+                "label": obj.get("label"),
+                "exchange": obj.get("exchange"),
+            }
         )
         return _obj

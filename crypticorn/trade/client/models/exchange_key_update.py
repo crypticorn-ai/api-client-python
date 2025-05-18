@@ -17,23 +17,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Union
-from crypticorn.trade.client.models.exchange import Exchange
+from pydantic import BaseModel, ConfigDict, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class StrategyExchangeInfo(BaseModel):
+class ExchangeKeyUpdate(BaseModel):
     """
-    StrategyExchangeInfo
+    Exchange key model for API update operations.
     """  # noqa: E501
 
-    exchange: Exchange = Field(description="Exchange name. Of type Exchange")
-    min_amount: Union[StrictFloat, StrictInt] = Field(
-        description="Minimum amount for the strategy on the exchange"
-    )
-    __properties: ClassVar[List[str]] = ["exchange", "min_amount"]
+    label: Optional[StrictStr] = None
+    api_key: Optional[StrictStr] = None
+    secret: Optional[StrictStr] = None
+    passphrase: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["label", "api_key", "secret", "passphrase"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +51,7 @@ class StrategyExchangeInfo(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of StrategyExchangeInfo from a JSON string"""
+        """Create an instance of ExchangeKeyUpdate from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,11 +71,31 @@ class StrategyExchangeInfo(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if label (nullable) is None
+        # and model_fields_set contains the field
+        if self.label is None and "label" in self.model_fields_set:
+            _dict["label"] = None
+
+        # set to None if api_key (nullable) is None
+        # and model_fields_set contains the field
+        if self.api_key is None and "api_key" in self.model_fields_set:
+            _dict["api_key"] = None
+
+        # set to None if secret (nullable) is None
+        # and model_fields_set contains the field
+        if self.secret is None and "secret" in self.model_fields_set:
+            _dict["secret"] = None
+
+        # set to None if passphrase (nullable) is None
+        # and model_fields_set contains the field
+        if self.passphrase is None and "passphrase" in self.model_fields_set:
+            _dict["passphrase"] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of StrategyExchangeInfo from a dict"""
+        """Create an instance of ExchangeKeyUpdate from a dict"""
         if obj is None:
             return None
 
@@ -84,6 +103,11 @@ class StrategyExchangeInfo(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {"exchange": obj.get("exchange"), "min_amount": obj.get("min_amount")}
+            {
+                "label": obj.get("label"),
+                "api_key": obj.get("api_key"),
+                "secret": obj.get("secret"),
+                "passphrase": obj.get("passphrase"),
+            }
         )
         return _obj

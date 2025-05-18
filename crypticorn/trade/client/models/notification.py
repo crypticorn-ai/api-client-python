@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.trade.client.models.api_error_identifier import ApiErrorIdentifier
 from crypticorn.trade.client.models.api_error_level import ApiErrorLevel
@@ -26,24 +26,46 @@ from typing import Optional, Set
 from typing_extensions import Self
 
 
-class ExceptionDetail(BaseModel):
+class Notification(BaseModel):
     """
-    Exception details returned to the client.
+    Notification model for read operations.
     """  # noqa: E501
 
-    message: Optional[StrictStr] = None
-    code: ApiErrorIdentifier = Field(description="The unique error code")
-    type: ApiErrorType = Field(description="The type of error")
-    level: ApiErrorLevel = Field(description="The level of the error")
-    status_code: StrictInt = Field(description="The HTTP status code")
-    details: Optional[Any] = None
+    user_id: StrictStr = Field(description="UID for the user")
+    id: Optional[StrictStr] = Field(
+        default=None, description="Unique identifier for the resource"
+    )
+    created_at: Optional[StrictInt] = Field(
+        default=None, description="Timestamp of creation"
+    )
+    updated_at: Optional[StrictInt] = Field(
+        default=None, description="Timestamp of last update"
+    )
+    viewed: Optional[StrictBool] = Field(
+        default=False, description="Whether the notification has been marked as seen"
+    )
+    sent: Optional[StrictBool] = Field(
+        default=False, description="Whether the notification has been sent as an email"
+    )
+    identifier: ApiErrorIdentifier = Field(
+        description="Identifier string. Must match the mapping key in the frontend."
+    )
+    level: ApiErrorLevel = Field(
+        description="Level of the notification. Of type ApiErrorLevel"
+    )
+    type: ApiErrorType = Field(
+        description="Type of the notification. Of type ApiErrorType"
+    )
     __properties: ClassVar[List[str]] = [
-        "message",
-        "code",
-        "type",
+        "user_id",
+        "id",
+        "created_at",
+        "updated_at",
+        "viewed",
+        "sent",
+        "identifier",
         "level",
-        "status_code",
-        "details",
+        "type",
     ]
 
     model_config = ConfigDict(
@@ -63,7 +85,7 @@ class ExceptionDetail(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ExceptionDetail from a JSON string"""
+        """Create an instance of Notification from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -83,21 +105,11 @@ class ExceptionDetail(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if message (nullable) is None
-        # and model_fields_set contains the field
-        if self.message is None and "message" in self.model_fields_set:
-            _dict["message"] = None
-
-        # set to None if details (nullable) is None
-        # and model_fields_set contains the field
-        if self.details is None and "details" in self.model_fields_set:
-            _dict["details"] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ExceptionDetail from a dict"""
+        """Create an instance of Notification from a dict"""
         if obj is None:
             return None
 
@@ -106,12 +118,15 @@ class ExceptionDetail(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "message": obj.get("message"),
-                "code": obj.get("code"),
-                "type": obj.get("type"),
+                "user_id": obj.get("user_id"),
+                "id": obj.get("id"),
+                "created_at": obj.get("created_at"),
+                "updated_at": obj.get("updated_at"),
+                "viewed": obj.get("viewed") if obj.get("viewed") is not None else False,
+                "sent": obj.get("sent") if obj.get("sent") is not None else False,
+                "identifier": obj.get("identifier"),
                 "level": obj.get("level"),
-                "status_code": obj.get("status_code"),
-                "details": obj.get("details"),
+                "type": obj.get("type"),
             }
         )
         return _obj
