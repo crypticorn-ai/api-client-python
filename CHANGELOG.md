@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.11.9 (2025-05-18)
+
+### Bug Fixes
+
+- Update status code on actions endpoints
+  ([`0c1ff41`](https://github.com/crypticorn-ai/api-client/commit/0c1ff417c1bc976cb63537c5ab0ba127585e46d4))
+
+
 ## v2.11.8 (2025-05-18)
 
 ### Bug Fixes
