@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.11.7 (2025-05-18)
+
+### Bug Fixes
+
+- Add stricter data validation on trade api
+  ([`e174a85`](https://github.com/crypticorn-ai/api-client/commit/e174a85e023634c0fc23679c1778e5e074c2ed07))
+
+
 ## v2.11.6 (2025-05-17)
 
 ### Bug Fixes
