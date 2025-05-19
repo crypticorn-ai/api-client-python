@@ -17,29 +17,42 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictBool,
+    StrictFloat,
+    StrictInt,
+    StrictStr,
+)
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from crypticorn.pay.client.models.scope import Scope
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class ProductSubRead(BaseModel):
+class Product(BaseModel):
     """
-    Model for reading a product subscription
+    Model for reading a product
     """  # noqa: E501
 
-    user_id: StrictStr = Field(description="User ID")
-    product_id: StrictStr = Field(description="Product ID")
-    access_from: StrictInt = Field(description="Access from timestamp in milliseconds")
-    access_until: StrictInt = Field(
-        description="Access until timestamp in milliseconds. 0 means unlimited."
+    name: StrictStr = Field(description="Product name")
+    price: Union[StrictFloat, StrictInt] = Field(description="Product price")
+    scopes: Optional[List[Scope]] = None
+    duration: StrictInt = Field(
+        description="Product duration in days. 0 means forever."
     )
-    id: StrictStr = Field(description="UID of the product subscription")
+    description: StrictStr = Field(description="Product description")
+    is_active: StrictBool = Field(description="Product is active")
+    id: StrictStr = Field(description="UID of the product")
     __properties: ClassVar[List[str]] = [
-        "user_id",
-        "product_id",
-        "access_from",
-        "access_until",
+        "name",
+        "price",
+        "scopes",
+        "duration",
+        "description",
+        "is_active",
         "id",
     ]
 
@@ -60,7 +73,7 @@ class ProductSubRead(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ProductSubRead from a JSON string"""
+        """Create an instance of Product from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -80,11 +93,16 @@ class ProductSubRead(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if scopes (nullable) is None
+        # and model_fields_set contains the field
+        if self.scopes is None and "scopes" in self.model_fields_set:
+            _dict["scopes"] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ProductSubRead from a dict"""
+        """Create an instance of Product from a dict"""
         if obj is None:
             return None
 
@@ -93,10 +111,12 @@ class ProductSubRead(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "user_id": obj.get("user_id"),
-                "product_id": obj.get("product_id"),
-                "access_from": obj.get("access_from"),
-                "access_until": obj.get("access_until"),
+                "name": obj.get("name"),
+                "price": obj.get("price"),
+                "scopes": obj.get("scopes"),
+                "duration": obj.get("duration"),
+                "description": obj.get("description"),
+                "is_active": obj.get("is_active"),
                 "id": obj.get("id"),
             }
         )
