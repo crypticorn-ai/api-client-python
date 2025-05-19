@@ -57,6 +57,7 @@ class Scope(str, Enum):
     READ_COLON_METRICS_COLON_TOKENS = "read:metrics:tokens"
     READ_COLON_METRICS_COLON_MARKETS = "read:metrics:markets"
     READ_COLON_SENTIMENT = "read:sentiment"
+    READ_COLON_KLINES = "read:klines"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

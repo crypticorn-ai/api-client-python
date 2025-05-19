@@ -41,7 +41,7 @@ class ProductCreate(BaseModel):
     price: Union[StrictFloat, StrictInt] = Field(description="Product price")
     scopes: Optional[List[Scope]] = None
     duration: StrictInt = Field(
-        description="Product duration in days. 0 means unlimited."
+        description="Product duration in days. 0 means forever."
     )
     description: StrictStr = Field(description="Product description")
     is_active: StrictBool = Field(description="Product is active")

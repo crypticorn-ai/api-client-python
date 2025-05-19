@@ -19,8 +19,8 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
+from crypticorn.pay.client.models.product import Product
 from crypticorn.pay.client.models.product_create import ProductCreate
-from crypticorn.pay.client.models.product_read import ProductRead
 from crypticorn.pay.client.models.product_update import ProductUpdate
 
 from crypticorn.pay.client.api_client import ApiClient, RequestSerialized
@@ -55,7 +55,7 @@ class ProductsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ProductRead:
+    ) -> Product:
         """Create Product
 
         Create a new product
@@ -93,7 +93,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "201": "ProductRead",
+            "201": "Product",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -119,7 +119,7 @@ class ProductsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ProductRead]:
+    ) -> ApiResponse[Product]:
         """Create Product
 
         Create a new product
@@ -157,7 +157,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "201": "ProductRead",
+            "201": "Product",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -221,7 +221,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "201": "ProductRead",
+            "201": "Product",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -318,7 +318,7 @@ class ProductsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[ProductRead]:
+    ) -> List[Product]:
         """Get Products
 
         Get all software products from Crypticorn
@@ -359,7 +359,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[ProductRead]",
+            "200": "List[Product]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -396,7 +396,7 @@ class ProductsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[ProductRead]]:
+    ) -> ApiResponse[List[Product]]:
         """Get Products
 
         Get all software products from Crypticorn
@@ -437,7 +437,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[ProductRead]",
+            "200": "List[Product]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -515,7 +515,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[ProductRead]",
+            "200": "List[Product]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -599,7 +599,7 @@ class ProductsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ProductRead:
+    ) -> Product:
         """Update Product
 
         Update an existing product
@@ -640,7 +640,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "ProductRead",
+            "200": "Product",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -667,7 +667,7 @@ class ProductsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ProductRead]:
+    ) -> ApiResponse[Product]:
         """Update Product
 
         Update an existing product
@@ -708,7 +708,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "ProductRead",
+            "200": "Product",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -776,7 +776,7 @@ class ProductsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "ProductRead",
+            "200": "Product",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout

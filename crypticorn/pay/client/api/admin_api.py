@@ -16,11 +16,10 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictInt, StrictStr, field_validator
-from typing import Any, Dict, List, Optional
+from pydantic import Field, StrictFloat, StrictInt, StrictStr, field_validator
+from typing import Any, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from crypticorn.pay.client.models.log_level import LogLevel
-from crypticorn.pay.client.models.response_getuptime import ResponseGetuptime
 
 from crypticorn.pay.client.api_client import ApiClient, RequestSerialized
 from crypticorn.pay.client.api_response import ApiResponse
@@ -272,7 +271,7 @@ class AdminApi:
         include: Annotated[
             Optional[List[Optional[StrictStr]]],
             Field(
-                description="List of dependencies to include in the response. If not provided, all installed packages will be returned."
+                description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
             ),
         ] = None,
         _request_timeout: Union[
@@ -286,12 +285,12 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[object]:
+    ) -> Dict[str, Optional[str]]:
         """List Installed Packages
 
-        Return a list of installed packages and versions.
+        Return a list of installed packages and versions.  The include parameter accepts regex patterns to match against package names. For example: - crypticorn.* will match all packages starting with 'crypticorn' - .*tic.* will match all packages containing 'tic' in their name
 
-        :param include: List of dependencies to include in the response. If not provided, all installed packages will be returned.
+        :param include: List of regex patterns to match against package names. If not provided, all installed packages will be returned.
         :type include: List[Optional[str]]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -324,7 +323,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[object]",
+            "200": "Dict[str, Optional[str]]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -341,7 +340,7 @@ class AdminApi:
         include: Annotated[
             Optional[List[Optional[StrictStr]]],
             Field(
-                description="List of dependencies to include in the response. If not provided, all installed packages will be returned."
+                description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
             ),
         ] = None,
         _request_timeout: Union[
@@ -355,12 +354,12 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[object]]:
+    ) -> ApiResponse[Dict[str, Optional[str]]]:
         """List Installed Packages
 
-        Return a list of installed packages and versions.
+        Return a list of installed packages and versions.  The include parameter accepts regex patterns to match against package names. For example: - crypticorn.* will match all packages starting with 'crypticorn' - .*tic.* will match all packages containing 'tic' in their name
 
-        :param include: List of dependencies to include in the response. If not provided, all installed packages will be returned.
+        :param include: List of regex patterns to match against package names. If not provided, all installed packages will be returned.
         :type include: List[Optional[str]]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -393,7 +392,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[object]",
+            "200": "Dict[str, Optional[str]]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -410,7 +409,7 @@ class AdminApi:
         include: Annotated[
             Optional[List[Optional[StrictStr]]],
             Field(
-                description="List of dependencies to include in the response. If not provided, all installed packages will be returned."
+                description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
             ),
         ] = None,
         _request_timeout: Union[
@@ -427,9 +426,9 @@ class AdminApi:
     ) -> RESTResponseType:
         """List Installed Packages
 
-        Return a list of installed packages and versions.
+        Return a list of installed packages and versions.  The include parameter accepts regex patterns to match against package names. For example: - crypticorn.* will match all packages starting with 'crypticorn' - .*tic.* will match all packages containing 'tic' in their name
 
-        :param include: List of dependencies to include in the response. If not provided, all installed packages will be returned.
+        :param include: List of regex patterns to match against package names. If not provided, all installed packages will be returned.
         :type include: List[Optional[str]]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -462,7 +461,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[object]",
+            "200": "Dict[str, Optional[str]]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -542,9 +541,9 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> LogLevel:
-        """Get Logging Level
+        """(Deprecated) Get Logging Level
 
-        Get the log level of the server logger.
+        Get the log level of the server logger. Will be removed in a future release.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -567,6 +566,7 @@ class AdminApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /admin/log-level is deprecated.", DeprecationWarning)
 
         _param = self._get_log_level_serialize(
             _request_auth=_request_auth,
@@ -602,9 +602,9 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[LogLevel]:
-        """Get Logging Level
+        """(Deprecated) Get Logging Level
 
-        Get the log level of the server logger.
+        Get the log level of the server logger. Will be removed in a future release.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -627,6 +627,7 @@ class AdminApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /admin/log-level is deprecated.", DeprecationWarning)
 
         _param = self._get_log_level_serialize(
             _request_auth=_request_auth,
@@ -662,9 +663,9 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Logging Level
+        """(Deprecated) Get Logging Level
 
-        Get the log level of the server logger.
+        Get the log level of the server logger. Will be removed in a future release.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -687,6 +688,7 @@ class AdminApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /admin/log-level is deprecated.", DeprecationWarning)
 
         _param = self._get_log_level_serialize(
             _request_auth=_request_auth,
@@ -768,7 +770,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> int:
+    ) -> float:
         """Get Memory Usage
 
         Resident Set Size (RSS) in MB — the actual memory used by the process in RAM. Represents the physical memory footprint. Important for monitoring real usage.
@@ -803,7 +805,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "int",
+            "200": "float",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -828,7 +830,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[int]:
+    ) -> ApiResponse[float]:
         """Get Memory Usage
 
         Resident Set Size (RSS) in MB — the actual memory used by the process in RAM. Represents the physical memory footprint. Important for monitoring real usage.
@@ -863,7 +865,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "int",
+            "200": "float",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -923,7 +925,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "int",
+            "200": "float",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1223,7 +1225,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ResponseGetuptime:
+    ) -> str:
         """Get Uptime
 
         Return the server uptime in seconds or human-readable form.
@@ -1261,7 +1263,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "ResponseGetuptime",
+            "200": "str",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1287,7 +1289,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ResponseGetuptime]:
+    ) -> ApiResponse[str]:
         """Get Uptime
 
         Return the server uptime in seconds or human-readable form.
@@ -1325,7 +1327,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "ResponseGetuptime",
+            "200": "str",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1389,7 +1391,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "ResponseGetuptime",
+            "200": "str",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
