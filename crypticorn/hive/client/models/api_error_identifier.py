@@ -73,12 +73,14 @@ class ApiErrorIdentifier(str, Enum):
     ORDER_VIOLATES_LIQUIDATION_PRICE_CONSTRAINTS = (
         "order_violates_liquidation_price_constraints"
     )
+    MARGIN_MODE_CLASH = "margin_mode_clash"
     MODEL_NAME_NOT_UNIQUE = "model_name_not_unique"
     NO_CREDENTIALS = "no_credentials"
     NOW_API_DOWN = "now_api_down"
     OBJECT_ALREADY_EXISTS = "object_already_exists"
     OBJECT_CREATED = "object_created"
     OBJECT_DELETED = "object_deleted"
+    OBJECT_LOCKED = "object_locked"
     OBJECT_NOT_FOUND = "object_not_found"
     OBJECT_UPDATED = "object_updated"
     ORDER_IS_ALREADY_FILLED = "order_is_already_filled"

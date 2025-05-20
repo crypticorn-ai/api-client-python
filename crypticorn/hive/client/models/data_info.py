@@ -19,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
-from crypticorn.hive.client.models.coins import Coins
+from crypticorn.hive.client.models.coin_info import CoinInfo
 from crypticorn.hive.client.models.data_options import DataOptions
 from crypticorn.hive.client.models.data_version_info import DataVersionInfo
 from crypticorn.hive.client.models.feature_size import FeatureSize
@@ -36,14 +36,14 @@ class DataInfo(BaseModel):
     data: Dict[str, Dict[str, DataOptions]] = Field(
         description="The complete data information for all versions, coins, feature sizes and targets."
     )
-    coins: List[Coins] = Field(
-        description="The coins available on the latest data version."
+    coins: List[CoinInfo] = Field(
+        description="The coins available for all data versions."
     )
     feature_sizes: List[FeatureSize] = Field(
-        description="The feature sizes available on the latest data version."
+        description="The feature sizes available for all data versions."
     )
     targets: List[TargetInfo] = Field(
-        description="The targets available on the latest data version."
+        description="The targets available for all data versions."
     )
     all_versions: List[DataVersionInfo] = Field(
         description="All ever existing data versions. Some may not be publicly available yet."
@@ -104,6 +104,13 @@ class DataInfo(BaseModel):
                 if self.data[_key_data]:
                     _field_dict[_key_data] = self.data[_key_data].to_dict()
             _dict["data"] = _field_dict
+        # override the default output from pydantic by calling `to_dict()` of each item in coins (list)
+        _items = []
+        if self.coins:
+            for _item_coins in self.coins:
+                if _item_coins:
+                    _items.append(_item_coins.to_dict())
+            _dict["coins"] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in targets (list)
         _items = []
         if self.targets:
@@ -156,7 +163,11 @@ class DataInfo(BaseModel):
                     if obj.get("data") is not None
                     else None
                 ),
-                "coins": obj.get("coins"),
+                "coins": (
+                    [CoinInfo.from_dict(_item) for _item in obj["coins"]]
+                    if obj.get("coins") is not None
+                    else None
+                ),
                 "feature_sizes": obj.get("feature_sizes"),
                 "targets": (
                     [TargetInfo.from_dict(_item) for _item in obj["targets"]]
