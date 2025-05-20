@@ -19,27 +19,26 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
+from crypticorn.hive.client.models.coins import Coins
 from crypticorn.hive.client.models.data_version import DataVersion
-from crypticorn.hive.client.models.target import Target
-from crypticorn.hive.client.models.target_type import TargetType
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class TargetInfo(BaseModel):
+class CoinInfo(BaseModel):
     """
-    Information about a target
+    Information about a coin
     """  # noqa: E501
 
-    name: Target = Field(description="The name of the target.")
-    type: TargetType = Field(description="The type of the target.")
+    identifier: Coins = Field(
+        description="The identifier of the coin. Obfuscated for public use."
+    )
     version_added: DataVersion = Field(
-        description="The data version the target got introduced in."
+        description="The data version the coin got introduced in"
     )
     version_removed: Optional[DataVersion] = None
     __properties: ClassVar[List[str]] = [
-        "name",
-        "type",
+        "identifier",
         "version_added",
         "version_removed",
     ]
@@ -61,7 +60,7 @@ class TargetInfo(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of TargetInfo from a JSON string"""
+        """Create an instance of CoinInfo from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -90,7 +89,7 @@ class TargetInfo(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of TargetInfo from a dict"""
+        """Create an instance of CoinInfo from a dict"""
         if obj is None:
             return None
 
@@ -99,8 +98,7 @@ class TargetInfo(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "name": obj.get("name"),
-                "type": obj.get("type"),
+                "identifier": obj.get("identifier"),
                 "version_added": obj.get("version_added"),
                 "version_removed": obj.get("version_removed"),
             }

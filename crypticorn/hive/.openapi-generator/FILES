@@ -12,6 +12,7 @@ client/models/__init__.py
 client/models/api_error_identifier.py
 client/models/api_error_level.py
 client/models/api_error_type.py
+client/models/coin_info.py
 client/models/coins.py
 client/models/data_download_response.py
 client/models/data_info.py

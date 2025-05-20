@@ -17,6 +17,7 @@ Do not edit the class manually.
 from crypticorn.hive.client.models.api_error_identifier import ApiErrorIdentifier
 from crypticorn.hive.client.models.api_error_level import ApiErrorLevel
 from crypticorn.hive.client.models.api_error_type import ApiErrorType
+from crypticorn.hive.client.models.coin_info import CoinInfo
 from crypticorn.hive.client.models.coins import Coins
 from crypticorn.hive.client.models.data_download_response import DataDownloadResponse
 from crypticorn.hive.client.models.data_info import DataInfo
