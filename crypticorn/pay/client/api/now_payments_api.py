@@ -16,7 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictStr
+from pydantic import Field, StrictInt, StrictStr
 from typing import Any, List
 from typing_extensions import Annotated
 from crypticorn.pay.client.models.now_create_invoice_req import NowCreateInvoiceReq
@@ -522,7 +522,7 @@ class NOWPaymentsApi:
     @validate_call
     async def get_now_payment_by_invoice(
         self,
-        id: Annotated[StrictStr, Field(description="The invoice ID")],
+        id: Annotated[StrictInt, Field(description="The invoice ID")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -540,7 +540,7 @@ class NOWPaymentsApi:
         Get a NOW payment by invoice ID
 
         :param id: The invoice ID (required)
-        :type id: str
+        :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -586,7 +586,7 @@ class NOWPaymentsApi:
     @validate_call
     async def get_now_payment_by_invoice_with_http_info(
         self,
-        id: Annotated[StrictStr, Field(description="The invoice ID")],
+        id: Annotated[StrictInt, Field(description="The invoice ID")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -604,7 +604,7 @@ class NOWPaymentsApi:
         Get a NOW payment by invoice ID
 
         :param id: The invoice ID (required)
-        :type id: str
+        :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -650,7 +650,7 @@ class NOWPaymentsApi:
     @validate_call
     async def get_now_payment_by_invoice_without_preload_content(
         self,
-        id: Annotated[StrictStr, Field(description="The invoice ID")],
+        id: Annotated[StrictInt, Field(description="The invoice ID")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -668,7 +668,7 @@ class NOWPaymentsApi:
         Get a NOW payment by invoice ID
 
         :param id: The invoice ID (required)
-        :type id: str
+        :type id: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
