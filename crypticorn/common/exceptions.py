@@ -154,3 +154,13 @@ def register_exception_handlers(app: FastAPI):
 exception_response = {
     "default": {"model": ExceptionDetail, "description": "Error response"}
 }
+
+class CrypticornException(Exception):
+    """A custom exception class for Crypticorn."""
+
+    def __init__(self, error: ApiError, message: str = None):
+        self.message = message
+        self.error = error
+
+    def __str__(self):
+        return f"{self.error.identifier}: {self.message}"
