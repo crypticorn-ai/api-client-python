@@ -3,7 +3,7 @@ from crypticorn.auth import CreateApiKeyRequest
 from crypticorn.common import BaseUrl, Scope, Service, MarketType, InternalExchange
 from crypticorn.hive import Configuration as HiveConfig, DataInfo, ModelCreate
 from crypticorn.hive import Coins, Target
-from crypticorn.pay import ProductUpdate, ProductRead, ProductCreate
+from crypticorn.pay import ProductUpdate, ProductCreate
 from crypticorn import ApiClient
 from crypticorn.trade import (
     ExchangeKey,
@@ -21,9 +21,7 @@ jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdv
 
 
 async def main():
-    async with ApiClient(
-        base_url=BaseUrl.LOCAL, api_key="GbUAFktNCrUqfFN7FZLHSJfgxCYpjD"
-    ) as client:
+    async with ApiClient(base_url=BaseUrl.LOCAL, api_key="") as client:
         # json response
         # response = await client.pay.products.get_products_without_preload_content()
         # print(10 * "=" + "This is the raw json response" + 10 * "=")
@@ -161,15 +159,7 @@ async def main():
         # print(res)
         # res = await client.metrics.marketcap.get_marketcap_symbols_fmt()
         # print(res)
-        trade_action = FuturesTradingActionCreate(
-            action_type=TradingActionType.OPEN_LONG,
-            market_type=MarketType.FUTURES,
-            strategy_id="682a4a3d193fd4e68c9fe5e0",
-            symbol="BTC/USDT",
-            leverage=1,
-            allocation=1,
-        )
-        res = await client.trade.actions.post_futures_action(trade_action)
+        res = await client.trade.orders.get_orders()
         print(res)
 
 

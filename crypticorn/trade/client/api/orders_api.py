@@ -56,6 +56,7 @@ class OrdersApi:
     ) -> List[Order]:
         """Get Orders
 
+        Get all orders for a user
 
         :param limit:
         :type limit: int
@@ -123,6 +124,7 @@ class OrdersApi:
     ) -> ApiResponse[List[Order]]:
         """Get Orders
 
+        Get all orders for a user
 
         :param limit:
         :type limit: int
@@ -190,6 +192,7 @@ class OrdersApi:
     ) -> RESTResponseType:
         """Get Orders
 
+        Get all orders for a user
 
         :param limit:
         :type limit: int

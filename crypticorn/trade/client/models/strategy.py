@@ -32,14 +32,14 @@ class Strategy(BaseModel):
     Strategy model for read operations.
     """  # noqa: E501
 
-    id: Optional[StrictStr] = Field(
-        default=None, description="Unique identifier for the resource"
-    )
     created_at: Optional[StrictInt] = Field(
         default=None, description="Timestamp of creation"
     )
     updated_at: Optional[StrictInt] = Field(
         default=None, description="Timestamp of last update"
+    )
+    id: Optional[StrictStr] = Field(
+        default=None, description="Unique identifier for the resource"
     )
     name: StrictStr = Field(description="Name of the strategy")
     description: StrictStr = Field(description="Description of the strategy")
@@ -60,9 +60,9 @@ class Strategy(BaseModel):
     leverage: StrictInt = Field(description="Leverage for the strategy")
     market_type: MarketType = Field(description="Market of operation of the strategy")
     __properties: ClassVar[List[str]] = [
-        "id",
         "created_at",
         "updated_at",
+        "id",
         "name",
         "description",
         "exchanges",
@@ -136,9 +136,9 @@ class Strategy(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "id": obj.get("id"),
                 "created_at": obj.get("created_at"),
                 "updated_at": obj.get("updated_at"),
+                "id": obj.get("id"),
                 "name": obj.get("name"),
                 "description": obj.get("description"),
                 "exchanges": (

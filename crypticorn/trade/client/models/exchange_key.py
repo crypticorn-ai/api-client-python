@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.trade.client.models.exchange import Exchange
 from typing import Optional, Set
@@ -30,23 +30,27 @@ class ExchangeKey(BaseModel):
     """  # noqa: E501
 
     user_id: StrictStr = Field(description="UID for the user")
-    id: Optional[StrictStr] = Field(
-        default=None, description="Unique identifier for the resource"
-    )
     created_at: Optional[StrictInt] = Field(
         default=None, description="Timestamp of creation"
     )
     updated_at: Optional[StrictInt] = Field(
         default=None, description="Timestamp of last update"
     )
+    id: Optional[StrictStr] = Field(
+        default=None, description="Unique identifier for the resource"
+    )
     label: StrictStr = Field(description="Label for the API key")
+    deleted: Optional[StrictBool] = Field(
+        default=False, description="Whether the API key has been deleted."
+    )
     exchange: Exchange = Field(description="The exchange the API key is for.")
     __properties: ClassVar[List[str]] = [
         "user_id",
-        "id",
         "created_at",
         "updated_at",
+        "id",
         "label",
+        "deleted",
         "exchange",
     ]
 
@@ -101,10 +105,13 @@ class ExchangeKey(BaseModel):
         _obj = cls.model_validate(
             {
                 "user_id": obj.get("user_id"),
-                "id": obj.get("id"),
                 "created_at": obj.get("created_at"),
                 "updated_at": obj.get("updated_at"),
+                "id": obj.get("id"),
                 "label": obj.get("label"),
+                "deleted": (
+                    obj.get("deleted") if obj.get("deleted") is not None else False
+                ),
                 "exchange": obj.get("exchange"),
             }
         )

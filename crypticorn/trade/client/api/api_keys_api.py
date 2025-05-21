@@ -16,8 +16,9 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictInt, StrictStr
+from pydantic import Field, StrictBool, StrictInt, StrictStr
 from typing import List, Optional
+from typing_extensions import Annotated
 from crypticorn.trade.client.models.exchange_key import ExchangeKey
 from crypticorn.trade.client.models.exchange_key_create import ExchangeKeyCreate
 from crypticorn.trade.client.models.exchange_key_update import ExchangeKeyUpdate
@@ -57,6 +58,7 @@ class APIKeysApi:
     ) -> ExchangeKey:
         """Post Exchange Key
 
+        Create a new exchange key.
 
         :param exchange_key_create: (required)
         :type exchange_key_create: ExchangeKeyCreate
@@ -120,6 +122,7 @@ class APIKeysApi:
     ) -> ApiResponse[ExchangeKey]:
         """Post Exchange Key
 
+        Create a new exchange key.
 
         :param exchange_key_create: (required)
         :type exchange_key_create: ExchangeKeyCreate
@@ -183,6 +186,7 @@ class APIKeysApi:
     ) -> RESTResponseType:
         """Post Exchange Key
 
+        Create a new exchange key.
 
         :param exchange_key_create: (required)
         :type exchange_key_create: ExchangeKeyCreate
@@ -291,7 +295,7 @@ class APIKeysApi:
     @validate_call
     async def delete_exchange_key(
         self,
-        id: StrictStr,
+        id: Annotated[StrictStr, Field(description="The ID of the API key to delete.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -306,8 +310,9 @@ class APIKeysApi:
     ) -> None:
         """Delete Exchange Key
 
+        Delete an API key. This will set the deleted field to true.
 
-        :param id: (required)
+        :param id: The ID of the API key to delete. (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -354,7 +359,7 @@ class APIKeysApi:
     @validate_call
     async def delete_exchange_key_with_http_info(
         self,
-        id: StrictStr,
+        id: Annotated[StrictStr, Field(description="The ID of the API key to delete.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -369,8 +374,9 @@ class APIKeysApi:
     ) -> ApiResponse[None]:
         """Delete Exchange Key
 
+        Delete an API key. This will set the deleted field to true.
 
-        :param id: (required)
+        :param id: The ID of the API key to delete. (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -417,7 +423,7 @@ class APIKeysApi:
     @validate_call
     async def delete_exchange_key_without_preload_content(
         self,
-        id: StrictStr,
+        id: Annotated[StrictStr, Field(description="The ID of the API key to delete.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -432,8 +438,9 @@ class APIKeysApi:
     ) -> RESTResponseType:
         """Delete Exchange Key
 
+        Delete an API key. This will set the deleted field to true.
 
-        :param id: (required)
+        :param id: The ID of the API key to delete. (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -530,7 +537,7 @@ class APIKeysApi:
     @validate_call
     async def get_exchange_key_by_id(
         self,
-        id: StrictStr,
+        id: Annotated[StrictStr, Field(description="The ID of the API key to get.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -545,8 +552,9 @@ class APIKeysApi:
     ) -> ExchangeKey:
         """Get Exchange Key By Id
 
+        Get an exchange key by ID.
 
-        :param id: (required)
+        :param id: The ID of the API key to get. (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -593,7 +601,7 @@ class APIKeysApi:
     @validate_call
     async def get_exchange_key_by_id_with_http_info(
         self,
-        id: StrictStr,
+        id: Annotated[StrictStr, Field(description="The ID of the API key to get.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -608,8 +616,9 @@ class APIKeysApi:
     ) -> ApiResponse[ExchangeKey]:
         """Get Exchange Key By Id
 
+        Get an exchange key by ID.
 
-        :param id: (required)
+        :param id: The ID of the API key to get. (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -656,7 +665,7 @@ class APIKeysApi:
     @validate_call
     async def get_exchange_key_by_id_without_preload_content(
         self,
-        id: StrictStr,
+        id: Annotated[StrictStr, Field(description="The ID of the API key to get.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -671,8 +680,9 @@ class APIKeysApi:
     ) -> RESTResponseType:
         """Get Exchange Key By Id
 
+        Get an exchange key by ID.
 
-        :param id: (required)
+        :param id: The ID of the API key to get. (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -771,6 +781,10 @@ class APIKeysApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
+        include_deleted: Annotated[
+            Optional[StrictBool],
+            Field(description="Whether to include deleted API keys."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -785,11 +799,14 @@ class APIKeysApi:
     ) -> List[ExchangeKey]:
         """Get Exchange Keys
 
+        Get all exchange keys. If include_deleted is true, all API keys will be returned, including deleted ones.
 
         :param limit:
         :type limit: int
         :param offset:
         :type offset: int
+        :param include_deleted: Whether to include deleted API keys.
+        :type include_deleted: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -815,6 +832,7 @@ class APIKeysApi:
         _param = self._get_exchange_keys_serialize(
             limit=limit,
             offset=offset,
+            include_deleted=include_deleted,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -838,6 +856,10 @@ class APIKeysApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
+        include_deleted: Annotated[
+            Optional[StrictBool],
+            Field(description="Whether to include deleted API keys."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -852,11 +874,14 @@ class APIKeysApi:
     ) -> ApiResponse[List[ExchangeKey]]:
         """Get Exchange Keys
 
+        Get all exchange keys. If include_deleted is true, all API keys will be returned, including deleted ones.
 
         :param limit:
         :type limit: int
         :param offset:
         :type offset: int
+        :param include_deleted: Whether to include deleted API keys.
+        :type include_deleted: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -882,6 +907,7 @@ class APIKeysApi:
         _param = self._get_exchange_keys_serialize(
             limit=limit,
             offset=offset,
+            include_deleted=include_deleted,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -905,6 +931,10 @@ class APIKeysApi:
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
+        include_deleted: Annotated[
+            Optional[StrictBool],
+            Field(description="Whether to include deleted API keys."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -919,11 +949,14 @@ class APIKeysApi:
     ) -> RESTResponseType:
         """Get Exchange Keys
 
+        Get all exchange keys. If include_deleted is true, all API keys will be returned, including deleted ones.
 
         :param limit:
         :type limit: int
         :param offset:
         :type offset: int
+        :param include_deleted: Whether to include deleted API keys.
+        :type include_deleted: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -949,6 +982,7 @@ class APIKeysApi:
         _param = self._get_exchange_keys_serialize(
             limit=limit,
             offset=offset,
+            include_deleted=include_deleted,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -967,6 +1001,7 @@ class APIKeysApi:
         self,
         limit,
         offset,
+        include_deleted,
         _request_auth,
         _content_type,
         _headers,
@@ -995,6 +1030,10 @@ class APIKeysApi:
         if offset is not None:
 
             _query_params.append(("offset", offset))
+
+        if include_deleted is not None:
+
+            _query_params.append(("include_deleted", include_deleted))
 
         # process the header parameters
         # process the form parameters
@@ -1027,7 +1066,7 @@ class APIKeysApi:
     @validate_call
     async def update_exchange_key(
         self,
-        id: StrictStr,
+        id: Annotated[StrictStr, Field(description="The ID of the API key to update.")],
         exchange_key_update: ExchangeKeyUpdate,
         _request_timeout: Union[
             None,
@@ -1043,8 +1082,9 @@ class APIKeysApi:
     ) -> ExchangeKey:
         """Put Exchange Key
 
+        Update an exchange key.
 
-        :param id: (required)
+        :param id: The ID of the API key to update. (required)
         :type id: str
         :param exchange_key_update: (required)
         :type exchange_key_update: ExchangeKeyUpdate
@@ -1094,7 +1134,7 @@ class APIKeysApi:
     @validate_call
     async def update_exchange_key_with_http_info(
         self,
-        id: StrictStr,
+        id: Annotated[StrictStr, Field(description="The ID of the API key to update.")],
         exchange_key_update: ExchangeKeyUpdate,
         _request_timeout: Union[
             None,
@@ -1110,8 +1150,9 @@ class APIKeysApi:
     ) -> ApiResponse[ExchangeKey]:
         """Put Exchange Key
 
+        Update an exchange key.
 
-        :param id: (required)
+        :param id: The ID of the API key to update. (required)
         :type id: str
         :param exchange_key_update: (required)
         :type exchange_key_update: ExchangeKeyUpdate
@@ -1161,7 +1202,7 @@ class APIKeysApi:
     @validate_call
     async def update_exchange_key_without_preload_content(
         self,
-        id: StrictStr,
+        id: Annotated[StrictStr, Field(description="The ID of the API key to update.")],
         exchange_key_update: ExchangeKeyUpdate,
         _request_timeout: Union[
             None,
@@ -1177,8 +1218,9 @@ class APIKeysApi:
     ) -> RESTResponseType:
         """Put Exchange Key
 
+        Update an exchange key.
 
-        :param id: (required)
+        :param id: The ID of the API key to update. (required)
         :type id: str
         :param exchange_key_update: (required)
         :type exchange_key_update: ExchangeKeyUpdate

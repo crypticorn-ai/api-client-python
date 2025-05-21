@@ -74,7 +74,7 @@ class ApiErrorIdentifier(str, Enum):
         "order_violates_liquidation_price_constraints"
     )
     MARGIN_MODE_CLASH = "margin_mode_clash"
-    MODEL_NAME_NOT_UNIQUE = "model_name_not_unique"
+    NAME_NOT_UNIQUE = "name_not_unique"
     NO_CREDENTIALS = "no_credentials"
     NOW_API_DOWN = "now_api_down"
     OBJECT_ALREADY_EXISTS = "object_already_exists"
