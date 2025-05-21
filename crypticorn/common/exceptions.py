@@ -155,6 +155,7 @@ exception_response = {
     "default": {"model": ExceptionDetail, "description": "Error response"}
 }
 
+
 class CrypticornException(Exception):
     """A custom exception class for Crypticorn."""
 

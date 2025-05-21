@@ -35,14 +35,14 @@ class Order(BaseModel):
     Response model for orders. All optional as the model is built step by step.
     """  # noqa: E501
 
-    id: Optional[StrictStr] = Field(
-        default=None, description="Unique identifier for the resource"
-    )
     created_at: Optional[StrictInt] = Field(
         default=None, description="Timestamp of creation"
     )
     updated_at: Optional[StrictInt] = Field(
         default=None, description="Timestamp of last update"
+    )
+    id: Optional[StrictStr] = Field(
+        default=None, description="Unique identifier for the resource"
     )
     trading_action_id: Optional[StrictStr] = None
     execution_id: Optional[StrictStr] = None
@@ -88,9 +88,9 @@ class Order(BaseModel):
     )
     order_time: Optional[StrictInt] = None
     __properties: ClassVar[List[str]] = [
-        "id",
         "created_at",
         "updated_at",
+        "id",
         "trading_action_id",
         "execution_id",
         "exchange_order_id",
@@ -276,9 +276,9 @@ class Order(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "id": obj.get("id"),
                 "created_at": obj.get("created_at"),
                 "updated_at": obj.get("updated_at"),
+                "id": obj.get("id"),
                 "trading_action_id": obj.get("trading_action_id"),
                 "execution_id": obj.get("execution_id"),
                 "exchange_order_id": obj.get("exchange_order_id"),
