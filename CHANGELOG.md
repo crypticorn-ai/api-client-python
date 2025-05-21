@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.12.0 (2025-05-21)
+
+### Features
+
+- Adding custom crypticorn exception for internal usage
+  ([`d63e166`](https://github.com/crypticorn-ai/api-client/commit/d63e16615b656128ac41ba921edf4d92aba1390f))
+
+
 ## v2.11.9 (2025-05-18)
 
 ### Bug Fixes
