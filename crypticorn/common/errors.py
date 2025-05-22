@@ -33,6 +33,7 @@ class ApiErrorIdentifier(StrEnum):
     BOT_DISABLED = "bot_disabled"
     BOT_STOPPING_COMPLETED = "bot_stopping_completed"
     BOT_STOPPING_STARTED = "bot_stopping_started"
+    CANCELLED_OPEN_ORDER = "cancelled_open_order"
     CLIENT_ORDER_ID_REPEATED = "client_order_id_already_exists"
     CONTENT_TYPE_ERROR = "invalid_content_type"
     DELETE_BOT_ERROR = "delete_bot_error"
@@ -51,6 +52,7 @@ class ApiErrorIdentifier(StrEnum):
     EXCHANGE_USER_FROZEN = "exchange_user_account_is_frozen"
     EXPIRED_API_KEY = "api_key_expired"
     EXPIRED_BEARER = "bearer_token_expired"
+    FAILED_OPEN_ORDER = "open_order_expired"
     FORBIDDEN = "forbidden"
     HEDGE_MODE_NOT_ACTIVE = "hedge_mode_not_active"
     HTTP_ERROR = "http_request_error"
@@ -84,6 +86,8 @@ class ApiErrorIdentifier(StrEnum):
     ORDER_PRICE_INVALID = "order_price_is_invalid"
     ORDER_SIZE_TOO_LARGE = "order_size_too_large"
     ORDER_SIZE_TOO_SMALL = "order_size_too_small"
+    ORPHAN_OPEN_ORDER = "orphan_open_order"
+    ORPHAN_CLOSE_ORDER = "orphan_close_order"
     POSITION_LIMIT_EXCEEDED = "position_limit_exceeded"
     POSITION_NOT_FOUND = "position_does_not_exist"
     POSITION_SUSPENDED = "position_opening_temporarily_suspended"
@@ -99,7 +103,7 @@ class ApiErrorIdentifier(StrEnum):
     SUCCESS = "success"
     SYMBOL_NOT_FOUND = "symbol_does_not_exist"
     TRADING_ACTION_EXPIRED = "trading_action_expired"
-    TRADING_ACTION_SKIPPED = "trading_action_skipped"
+    TRADING_ACTION_SKIPPED_BOT_STOPPING = "TRADING_ACTION_SKIPPED_BOT_STOPPING"
     TRADING_LOCKED = "trading_has_been_locked"
     TRADING_SUSPENDED = "trading_is_suspended"
     UNKNOWN_ERROR = "unknown_error_occurred"
@@ -155,6 +159,11 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
     )
     BOT_STOPPING_STARTED = (
         ApiErrorIdentifier.BOT_STOPPING_STARTED,
+        ApiErrorType.NO_ERROR,
+        ApiErrorLevel.INFO,
+    )
+    CANCELLED_OPEN_ORDER = (
+        ApiErrorIdentifier.CANCELLED_OPEN_ORDER,
         ApiErrorType.NO_ERROR,
         ApiErrorLevel.INFO,
     )
@@ -247,6 +256,11 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
         ApiErrorIdentifier.EXPIRED_BEARER,
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
+    )
+    FAILED_OPEN_ORDER = (
+        ApiErrorIdentifier.FAILED_OPEN_ORDER,
+        ApiErrorType.NO_ERROR,
+        ApiErrorLevel.INFO,
     )
     FORBIDDEN = (
         ApiErrorIdentifier.FORBIDDEN,
@@ -413,6 +427,16 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.WARNING,
     )
+    ORPHAN_OPEN_ORDER = (
+        ApiErrorIdentifier.ORPHAN_OPEN_ORDER,
+        ApiErrorType.SERVER_ERROR,
+        ApiErrorLevel.INFO,
+    )
+    ORPHAN_CLOSE_ORDER = (  
+        ApiErrorIdentifier.ORPHAN_CLOSE_ORDER,
+        ApiErrorType.NO_ERROR,
+        ApiErrorLevel.INFO,
+    )
     POSITION_LIMIT_EXCEEDED = (
         ApiErrorIdentifier.POSITION_LIMIT_EXCEEDED,
         ApiErrorType.USER_ERROR,
@@ -484,8 +508,8 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
         ApiErrorType.NO_ERROR,
         ApiErrorLevel.INFO,
     )
-    TRADING_ACTION_SKIPPED = (
-        ApiErrorIdentifier.TRADING_ACTION_SKIPPED,
+    TRADING_ACTION_SKIPPED_BOT_STOPPING = (
+        ApiErrorIdentifier.TRADING_ACTION_SKIPPED_BOT_STOPPING,
         ApiErrorType.NO_ERROR,
         ApiErrorLevel.INFO,
     )
@@ -797,6 +821,14 @@ class StatusCodeMapper:
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
         ),
+        ApiError.ORPHAN_OPEN_ORDER: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.ORPHAN_CLOSE_ORDER: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
         ApiError.POSITION_LIMIT_EXCEEDED: (
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
@@ -825,7 +857,7 @@ class StatusCodeMapper:
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
         ),
-        ApiError.TRADING_ACTION_SKIPPED: (
+        ApiError.TRADING_ACTION_SKIPPED_BOT_STOPPING: (
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
         ),
@@ -847,6 +879,14 @@ class StatusCodeMapper:
         ApiError.OBJECT_DELETED: (
             status.HTTP_204_NO_CONTENT,
             status.WS_1000_NORMAL_CLOSURE,
+        ),
+        ApiError.CANCELLED_OPEN_ORDER: (
+            status.HTTP_200_OK,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.FAILED_OPEN_ORDER: (
+            status.HTTP_200_OK,
+            status.WS_1008_POLICY_VIOLATION,
         ),
         # Miscellaneous
         ApiError.OBJECT_LOCKED: (
