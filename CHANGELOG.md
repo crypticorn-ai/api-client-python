@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.13.0 (2025-05-23)
+
+### Features
+
+- New endpoint in metrics client (get symbol mappings for any pair)
+  ([`a1f3b6a`](https://github.com/crypticorn-ai/api-client/commit/a1f3b6a31df3d8e6c148fa087d6ab158842c82dc))
+
+
 ## v2.12.1 (2025-05-22)
 
 ### Bug Fixes
