@@ -16,8 +16,9 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictInt, StrictStr
-from typing import List, Optional
+from pydantic import Field, StrictInt, StrictStr
+from typing import Any, List, Optional
+from typing_extensions import Annotated
 from crypticorn.trade.client.models.strategy import Strategy
 from crypticorn.trade.client.models.strategy_create import StrategyCreate
 from crypticorn.trade.client.models.strategy_update import StrategyUpdate
@@ -57,6 +58,7 @@ class StrategiesApi:
     ) -> Strategy:
         """Create Strategy
 
+        Creates a new strategy.
 
         :param strategy_create: (required)
         :type strategy_create: StrategyCreate
@@ -120,6 +122,7 @@ class StrategiesApi:
     ) -> ApiResponse[Strategy]:
         """Create Strategy
 
+        Creates a new strategy.
 
         :param strategy_create: (required)
         :type strategy_create: StrategyCreate
@@ -183,6 +186,7 @@ class StrategiesApi:
     ) -> RESTResponseType:
         """Create Strategy
 
+        Creates a new strategy.
 
         :param strategy_create: (required)
         :type strategy_create: StrategyCreate
@@ -291,8 +295,18 @@ class StrategiesApi:
     @validate_call
     async def get_strategies(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Limit the number of strategies returned. 0 means no limit."
+            ),
+        ] = None,
+        offset: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Offset the number of strategies returned. 0 means no offset."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -307,10 +321,11 @@ class StrategiesApi:
     ) -> List[Strategy]:
         """Get Strategies
 
+        Get all strategies.
 
-        :param limit:
+        :param limit: Limit the number of strategies returned. 0 means no limit.
         :type limit: int
-        :param offset:
+        :param offset: Offset the number of strategies returned. 0 means no offset.
         :type offset: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -358,8 +373,18 @@ class StrategiesApi:
     @validate_call
     async def get_strategies_with_http_info(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Limit the number of strategies returned. 0 means no limit."
+            ),
+        ] = None,
+        offset: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Offset the number of strategies returned. 0 means no offset."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -374,10 +399,11 @@ class StrategiesApi:
     ) -> ApiResponse[List[Strategy]]:
         """Get Strategies
 
+        Get all strategies.
 
-        :param limit:
+        :param limit: Limit the number of strategies returned. 0 means no limit.
         :type limit: int
-        :param offset:
+        :param offset: Offset the number of strategies returned. 0 means no offset.
         :type offset: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -425,8 +451,18 @@ class StrategiesApi:
     @validate_call
     async def get_strategies_without_preload_content(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Limit the number of strategies returned. 0 means no limit."
+            ),
+        ] = None,
+        offset: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Offset the number of strategies returned. 0 means no offset."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -441,10 +477,11 @@ class StrategiesApi:
     ) -> RESTResponseType:
         """Get Strategies
 
+        Get all strategies.
 
-        :param limit:
+        :param limit: Limit the number of strategies returned. 0 means no limit.
         :type limit: int
-        :param offset:
+        :param offset: Offset the number of strategies returned. 0 means no offset.
         :type offset: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -547,9 +584,236 @@ class StrategiesApi:
         )
 
     @validate_call
+    async def get_strategy_usage(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[List[object]]:
+        """Get Strategy Usage
+
+        Get the usage count of each strategy.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_strategy_usage_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "List[List[object]]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    async def get_strategy_usage_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[List[object]]]:
+        """Get Strategy Usage
+
+        Get the usage count of each strategy.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_strategy_usage_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "List[List[object]]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+    @validate_call
+    async def get_strategy_usage_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Strategy Usage
+
+        Get the usage count of each strategy.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_strategy_usage_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "List[List[object]]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+    def _get_strategy_usage_serialize(
+        self,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+        # set the HTTP header `Accept`
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
+            )
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
+
+        return self.api_client.param_serialize(
+            method="GET",
+            resource_path="/strategies/usage",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
     async def kill_strategy(
         self,
-        id: StrictStr,
+        id: Annotated[StrictStr, Field(description="The ID of the strategy to kill.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -566,7 +830,7 @@ class StrategiesApi:
 
         Kills a strategy by disabling it and deleting all bots associated with it.
 
-        :param id: (required)
+        :param id: The ID of the strategy to kill. (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -613,7 +877,7 @@ class StrategiesApi:
     @validate_call
     async def kill_strategy_with_http_info(
         self,
-        id: StrictStr,
+        id: Annotated[StrictStr, Field(description="The ID of the strategy to kill.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -630,7 +894,7 @@ class StrategiesApi:
 
         Kills a strategy by disabling it and deleting all bots associated with it.
 
-        :param id: (required)
+        :param id: The ID of the strategy to kill. (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -677,7 +941,7 @@ class StrategiesApi:
     @validate_call
     async def kill_strategy_without_preload_content(
         self,
-        id: StrictStr,
+        id: Annotated[StrictStr, Field(description="The ID of the strategy to kill.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -694,7 +958,7 @@ class StrategiesApi:
 
         Kills a strategy by disabling it and deleting all bots associated with it.
 
-        :param id: (required)
+        :param id: The ID of the strategy to kill. (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -791,7 +1055,9 @@ class StrategiesApi:
     @validate_call
     async def update_strategy(
         self,
-        id: StrictStr,
+        id: Annotated[
+            StrictStr, Field(description="The ID of the strategy to update.")
+        ],
         strategy_update: StrategyUpdate,
         _request_timeout: Union[
             None,
@@ -809,7 +1075,7 @@ class StrategiesApi:
 
         Updates a strategy. If the strategy is being disabled, all bots associated with it will be set to stopping.
 
-        :param id: (required)
+        :param id: The ID of the strategy to update. (required)
         :type id: str
         :param strategy_update: (required)
         :type strategy_update: StrategyUpdate
@@ -859,7 +1125,9 @@ class StrategiesApi:
     @validate_call
     async def update_strategy_with_http_info(
         self,
-        id: StrictStr,
+        id: Annotated[
+            StrictStr, Field(description="The ID of the strategy to update.")
+        ],
         strategy_update: StrategyUpdate,
         _request_timeout: Union[
             None,
@@ -877,7 +1145,7 @@ class StrategiesApi:
 
         Updates a strategy. If the strategy is being disabled, all bots associated with it will be set to stopping.
 
-        :param id: (required)
+        :param id: The ID of the strategy to update. (required)
         :type id: str
         :param strategy_update: (required)
         :type strategy_update: StrategyUpdate
@@ -927,7 +1195,9 @@ class StrategiesApi:
     @validate_call
     async def update_strategy_without_preload_content(
         self,
-        id: StrictStr,
+        id: Annotated[
+            StrictStr, Field(description="The ID of the strategy to update.")
+        ],
         strategy_update: StrategyUpdate,
         _request_timeout: Union[
             None,
@@ -945,7 +1215,7 @@ class StrategiesApi:
 
         Updates a strategy. If the strategy is being disabled, all bots associated with it will be set to stopping.
 
-        :param id: (required)
+        :param id: The ID of the strategy to update. (required)
         :type id: str
         :param strategy_update: (required)
         :type strategy_update: StrategyUpdate
