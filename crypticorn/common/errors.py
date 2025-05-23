@@ -432,7 +432,7 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
         ApiErrorType.SERVER_ERROR,
         ApiErrorLevel.INFO,
     )
-    ORPHAN_CLOSE_ORDER = (  
+    ORPHAN_CLOSE_ORDER = (
         ApiErrorIdentifier.ORPHAN_CLOSE_ORDER,
         ApiErrorType.NO_ERROR,
         ApiErrorLevel.INFO,
