@@ -76,6 +76,15 @@ class Order(BaseModel):
         default=0,
         description="Quantity filled. Needed for pnl calculation. In the symbol's base currency.",
     )
+    sent_qty: Optional[
+        Union[
+            Annotated[float, Field(strict=True, ge=0.0)],
+            Annotated[int, Field(strict=True, ge=0)],
+        ]
+    ] = Field(
+        default=0,
+        description="Quantity sent to the exchange. In the symbol's base currency.",
+    )
     fee: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=0, description="Fees for the order"
     )
@@ -110,6 +119,7 @@ class Order(BaseModel):
         "status",
         "filled_perc",
         "filled_qty",
+        "sent_qty",
         "fee",
         "leverage",
         "order_details",
@@ -301,6 +311,9 @@ class Order(BaseModel):
                 ),
                 "filled_qty": (
                     obj.get("filled_qty") if obj.get("filled_qty") is not None else 0
+                ),
+                "sent_qty": (
+                    obj.get("sent_qty") if obj.get("sent_qty") is not None else 0
                 ),
                 "fee": obj.get("fee") if obj.get("fee") is not None else 0,
                 "leverage": obj.get("leverage"),
