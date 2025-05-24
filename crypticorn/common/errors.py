@@ -22,6 +22,14 @@ class ApiErrorType(StrEnum):
     NO_ERROR = "no error"
     """error that does not need to be handled or does not affect the program or is a placeholder."""
 
+class ApiErrorLevel(StrEnum):
+    """Level of the API error."""
+
+    ERROR = "error"
+    INFO = "info"
+    SUCCESS = "success"
+    WARNING = "warning"
+
 
 class ApiErrorIdentifier(StrEnum):
     """Unique identifier of the API error."""
@@ -114,15 +122,6 @@ class ApiErrorIdentifier(StrEnum):
     def get_error(self) -> "ApiError":
         """Get the corresponding ApiError."""
         return getattr(ApiError, self.name)
-
-
-class ApiErrorLevel(StrEnum):
-    """Level of the API error."""
-
-    ERROR = "error"
-    INFO = "info"
-    SUCCESS = "success"
-    WARNING = "warning"
 
 
 class ApiError(Enum, metaclass=ApiErrorFallback):
