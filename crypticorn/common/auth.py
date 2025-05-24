@@ -70,7 +70,7 @@ class AuthHandler:
         self, api_scopes: list[Scope], user_scopes: list[Scope]
     ) -> bool:
         """
-        Checks if the user scopes are a subset of the API scopes.
+        Checks if the required scopes are a subset of the user scopes.
         """
         if not set(api_scopes).issubset(user_scopes):
             raise HTTPException(
@@ -137,10 +137,18 @@ class AuthHandler:
         sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """
-        Verifies the API key and checks if the user scopes are a subset of the API scopes.
+        Verifies the API key and checks the scopes.
         Use this function if you only want to allow access via the API key.
+        This function is used for HTTP connections.
         """
-        return await self.combined_auth(bearer=None, api_key=api_key, sec=sec)
+        try:
+            return await self.combined_auth(bearer=None, api_key=api_key, sec=sec)
+        except HTTPException as e:
+            if e.detail.get("code") == ApiError.NO_CREDENTIALS.identifier:
+                raise HTTPException(
+                    content=ExceptionContent(error=ApiError.NO_API_KEY, message="No credentials provided. API key is required"),
+                )
+            raise e
 
     async def bearer_auth(
         self,
@@ -151,10 +159,18 @@ class AuthHandler:
         sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """
-        Verifies the bearer token and checks if the user scopes are a subset of the API scopes.
+        Verifies the bearer token and checks the scopes.
         Use this function if you only want to allow access via the bearer token.
+        This function is used for HTTP connections.
         """
-        return await self.combined_auth(bearer=bearer, api_key=None, sec=sec)
+        try:
+            return await self.combined_auth(bearer=bearer, api_key=None, sec=sec)
+        except HTTPException as e:
+            if e.detail.get("code") == ApiError.NO_CREDENTIALS.identifier:
+                raise HTTPException(
+                    content=ExceptionContent(error=ApiError.NO_BEARER, message="No credentials provided. Bearer token is required"),
+                )
+            raise e
 
     async def combined_auth(
         self,
@@ -165,9 +181,10 @@ class AuthHandler:
         sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """
-        Verifies the bearer token and/or API key and checks if the user scopes are a subset of the API scopes.
+        Verifies the bearer token and/or API key and checks the scopes.
         Returns early on the first successful verification, otherwise tries all available tokens.
         Use this function if you want to allow access via either the bearer token or the API key.
+        This function is used for HTTP connections.
         """
         tokens = [bearer, api_key]
 
@@ -197,7 +214,7 @@ class AuthHandler:
             raise HTTPException(
                 content=ExceptionContent(
                     error=ApiError.NO_CREDENTIALS,
-                    message="No credentials provided",
+                    message="No credentials provided. Either API key or bearer token is required.",
                 ),
             )
 
@@ -207,10 +224,14 @@ class AuthHandler:
         sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """
-        Verifies the API key and checks if the user scopes are a subset of the API scopes.
+        Verifies the API key and checks the scopes.
         Use this function if you only want to allow access via the API key.
+        This function is used for WebSocket connections.
         """
-        return await self.ws_combined_auth(bearer=None, api_key=api_key, sec=sec)
+        try:
+            return await self.api_key_auth(api_key=api_key, sec=sec)
+        except HTTPException as e:
+            raise WebSocketException.from_http_exception(e)
 
     async def ws_bearer_auth(
         self,
@@ -218,10 +239,14 @@ class AuthHandler:
         sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """
-        Verifies the bearer token and checks if the user scopes are a subset of the API scopes.
+        Verifies the bearer token and checks the scopes.
         Use this function if you only want to allow access via the bearer token.
+        This function is used for WebSocket connections.
         """
-        return await self.ws_combined_auth(bearer=bearer, api_key=None, sec=sec)
+        try:
+            return await self.bearer_auth(bearer=bearer, sec=sec)
+        except HTTPException as e:
+            raise WebSocketException.from_http_exception(e)
 
     async def ws_combined_auth(
         self,
@@ -230,8 +255,9 @@ class AuthHandler:
         sec: SecurityScopes = SecurityScopes(),
     ) -> Verify200Response:
         """
-        Verifies the bearer token and/or API key and checks if the user scopes are a subset of the API scopes.
+        Verifies the bearer token and/or API key and checks the scopes.
         Use this function if you want to allow access via either the bearer token or the API key.
+        This function is used for WebSocket connections.
         """
         credentials = (
             HTTPAuthorizationCredentials(scheme="Bearer", credentials=bearer)
