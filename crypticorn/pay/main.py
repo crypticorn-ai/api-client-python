@@ -1,3 +1,5 @@
+from __future__ import annotations
+from typing import Optional
 from crypticorn.pay import (
     ApiClient,
     Configuration,
@@ -19,14 +21,12 @@ class PayClient:
     def __init__(
         self,
         config: Configuration,
-        http_client=None,
+        http_client: Optional['aiohttp.ClientSession'] = None,
     ):
         self.config = config
+        self.base_client = ApiClient(configuration=self.config)
         if http_client is not None:
-            self.base_client = ApiClient(configuration=self.config)
             self.base_client.rest_client.pool_manager = http_client
-        else:
-            self.base_client = ApiClient(configuration=self.config)
         self.now = NOWPaymentsApi(self.base_client)
         self.status = StatusApi(self.base_client)
         self.payments = PaymentsApi(self.base_client)
