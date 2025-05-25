@@ -23,9 +23,9 @@ from typing import Optional, Set
 from typing_extensions import Self
 
 
-class TPSL(BaseModel):
+class TPSLCreate(BaseModel):
     """
-    Runtime fields for take profit and stop loss
+    Model for take profit and stop loss
     """  # noqa: E501
 
     price_delta: Optional[StrictStr] = None
@@ -33,15 +33,7 @@ class TPSL(BaseModel):
     allocation: StrictStr = Field(
         description="Percentage of the open order to sell. All allocations must sum up to 1. Use this allocation again when closing the order."
     )
-    execution_id: Optional[StrictStr] = None
-    client_order_id: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = [
-        "price_delta",
-        "price",
-        "allocation",
-        "execution_id",
-        "client_order_id",
-    ]
+    __properties: ClassVar[List[str]] = ["price_delta", "price", "allocation"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -60,7 +52,7 @@ class TPSL(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of TPSL from a JSON string"""
+        """Create an instance of TPSLCreate from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -90,21 +82,11 @@ class TPSL(BaseModel):
         if self.price is None and "price" in self.model_fields_set:
             _dict["price"] = None
 
-        # set to None if execution_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.execution_id is None and "execution_id" in self.model_fields_set:
-            _dict["execution_id"] = None
-
-        # set to None if client_order_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.client_order_id is None and "client_order_id" in self.model_fields_set:
-            _dict["client_order_id"] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of TPSL from a dict"""
+        """Create an instance of TPSLCreate from a dict"""
         if obj is None:
             return None
 
@@ -116,8 +98,6 @@ class TPSL(BaseModel):
                 "price_delta": obj.get("price_delta"),
                 "price": obj.get("price"),
                 "allocation": obj.get("allocation"),
-                "execution_id": obj.get("execution_id"),
-                "client_order_id": obj.get("client_order_id"),
             }
         )
         return _obj

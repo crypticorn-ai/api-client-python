@@ -49,4 +49,5 @@ from crypticorn.trade.client.models.strategy_create import StrategyCreate
 from crypticorn.trade.client.models.strategy_exchange_info import StrategyExchangeInfo
 from crypticorn.trade.client.models.strategy_update import StrategyUpdate
 from crypticorn.trade.client.models.tpsl import TPSL
+from crypticorn.trade.client.models.tpsl_create import TPSLCreate
 from crypticorn.trade.client.models.trading_action_type import TradingActionType

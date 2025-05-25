@@ -17,16 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    StrictBool,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
-)
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from crypticorn.trade.client.models.margin_mode import MarginMode
 from crypticorn.trade.client.models.market_type import MarketType
@@ -41,6 +33,8 @@ class FuturesTradingAction(BaseModel):
     Model for futures trading actions
     """  # noqa: E501
 
+    leverage: Optional[Annotated[int, Field(strict=True, ge=1)]]
+    margin_mode: Optional[MarginMode] = None
     created_at: Optional[StrictInt] = Field(
         default=None, description="Timestamp of creation"
     )
@@ -59,24 +53,18 @@ class FuturesTradingAction(BaseModel):
         description="Trading symbol or asset pair in format: 'symbol/quote_currency' (see market service for valid symbols)"
     )
     is_limit: Optional[StrictBool] = None
-    limit_price: Optional[Union[StrictFloat, StrictInt]] = None
-    allocation: Optional[
-        Union[
-            Annotated[float, Field(le=1.0, strict=True)],
-            Annotated[int, Field(le=1, strict=True)],
-        ]
-    ] = Field(
-        default=None,
-        description="How much of bot's balance to use for the order (for open actions). How much of the reference open order (open_order_execution_id) to close (for close actions). 0=0%, 1=100%.",
+    limit_price: Optional[StrictStr] = None
+    allocation: StrictStr = Field(
+        description="How much of bot's balance to use for the order (for open actions). How much of the reference open order (open_order_execution_id) to close (for close actions). 0=0%, 1=100%."
     )
     take_profit: Optional[List[TPSL]] = None
     stop_loss: Optional[List[TPSL]] = None
     expiry_timestamp: Optional[StrictInt] = None
     client_order_id: Optional[StrictStr] = None
     position_id: Optional[StrictStr] = None
-    leverage: Optional[Annotated[int, Field(strict=True, ge=1)]]
-    margin_mode: Optional[MarginMode] = None
     __properties: ClassVar[List[str]] = [
+        "leverage",
+        "margin_mode",
         "created_at",
         "updated_at",
         "id",
@@ -94,8 +82,6 @@ class FuturesTradingAction(BaseModel):
         "expiry_timestamp",
         "client_order_id",
         "position_id",
-        "leverage",
-        "margin_mode",
     ]
 
     model_config = ConfigDict(
@@ -149,6 +135,16 @@ class FuturesTradingAction(BaseModel):
                 if _item_stop_loss:
                     _items.append(_item_stop_loss.to_dict())
             _dict["stop_loss"] = _items
+        # set to None if leverage (nullable) is None
+        # and model_fields_set contains the field
+        if self.leverage is None and "leverage" in self.model_fields_set:
+            _dict["leverage"] = None
+
+        # set to None if margin_mode (nullable) is None
+        # and model_fields_set contains the field
+        if self.margin_mode is None and "margin_mode" in self.model_fields_set:
+            _dict["margin_mode"] = None
+
         # set to None if execution_id (nullable) is None
         # and model_fields_set contains the field
         if self.execution_id is None and "execution_id" in self.model_fields_set:
@@ -200,16 +196,6 @@ class FuturesTradingAction(BaseModel):
         if self.position_id is None and "position_id" in self.model_fields_set:
             _dict["position_id"] = None
 
-        # set to None if leverage (nullable) is None
-        # and model_fields_set contains the field
-        if self.leverage is None and "leverage" in self.model_fields_set:
-            _dict["leverage"] = None
-
-        # set to None if margin_mode (nullable) is None
-        # and model_fields_set contains the field
-        if self.margin_mode is None and "margin_mode" in self.model_fields_set:
-            _dict["margin_mode"] = None
-
         return _dict
 
     @classmethod
@@ -223,6 +209,10 @@ class FuturesTradingAction(BaseModel):
 
         _obj = cls.model_validate(
             {
+                "leverage": (
+                    obj.get("leverage") if obj.get("leverage") is not None else 1
+                ),
+                "margin_mode": obj.get("margin_mode"),
                 "created_at": obj.get("created_at"),
                 "updated_at": obj.get("updated_at"),
                 "id": obj.get("id"),
@@ -248,10 +238,6 @@ class FuturesTradingAction(BaseModel):
                 "expiry_timestamp": obj.get("expiry_timestamp"),
                 "client_order_id": obj.get("client_order_id"),
                 "position_id": obj.get("position_id"),
-                "leverage": (
-                    obj.get("leverage") if obj.get("leverage") is not None else 1
-                ),
-                "margin_mode": obj.get("margin_mode"),
             }
         )
         return _obj

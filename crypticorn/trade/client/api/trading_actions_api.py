@@ -285,7 +285,7 @@ class TradingActionsApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
+        _auth_settings: List[str] = ["HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -320,7 +320,7 @@ class TradingActionsApi:
     ) -> PostFuturesAction:
         """Post Futures Action
 
-        Endpoint to receive futures trading actions. The action is queued for processing and the response is returned immediately.
+        Endpoint to send futures trading actions. The action is queued for processing and the response is returned immediately. Only API key authentication is supported.
 
         :param futures_trading_action_create: (required)
         :type futures_trading_action_create: FuturesTradingActionCreate
@@ -384,7 +384,7 @@ class TradingActionsApi:
     ) -> ApiResponse[PostFuturesAction]:
         """Post Futures Action
 
-        Endpoint to receive futures trading actions. The action is queued for processing and the response is returned immediately.
+        Endpoint to send futures trading actions. The action is queued for processing and the response is returned immediately. Only API key authentication is supported.
 
         :param futures_trading_action_create: (required)
         :type futures_trading_action_create: FuturesTradingActionCreate
@@ -448,7 +448,7 @@ class TradingActionsApi:
     ) -> RESTResponseType:
         """Post Futures Action
 
-        Endpoint to receive futures trading actions. The action is queued for processing and the response is returned immediately.
+        Endpoint to send futures trading actions. The action is queued for processing and the response is returned immediately. Only API key authentication is supported.
 
         :param futures_trading_action_create: (required)
         :type futures_trading_action_create: FuturesTradingActionCreate

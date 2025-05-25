@@ -17,19 +17,10 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    StrictBool,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
-)
-from typing import Any, ClassVar, Dict, List, Optional, Union
-from typing_extensions import Annotated
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.trade.client.models.market_type import MarketType
-from crypticorn.trade.client.models.tpsl import TPSL
+from crypticorn.trade.client.models.tpsl_create import TPSLCreate
 from crypticorn.trade.client.models.trading_action_type import TradingActionType
 from typing import Optional, Set
 from typing_extensions import Self
@@ -49,18 +40,12 @@ class SpotTradingActionCreate(BaseModel):
         description="Trading symbol or asset pair in format: 'symbol/quote_currency' (see market service for valid symbols)"
     )
     is_limit: Optional[StrictBool] = None
-    limit_price: Optional[Union[StrictFloat, StrictInt]] = None
-    allocation: Optional[
-        Union[
-            Annotated[float, Field(le=1.0, strict=True)],
-            Annotated[int, Field(le=1, strict=True)],
-        ]
-    ] = Field(
-        default=None,
-        description="How much of bot's balance to use for the order (for open actions). How much of the reference open order (open_order_execution_id) to close (for close actions). 0=0%, 1=100%.",
+    limit_price: Optional[StrictStr] = None
+    allocation: StrictStr = Field(
+        description="How much of bot's balance to use for the order (for open actions). How much of the reference open order (open_order_execution_id) to close (for close actions). 0=0%, 1=100%."
     )
-    take_profit: Optional[List[TPSL]] = None
-    stop_loss: Optional[List[TPSL]] = None
+    take_profit: Optional[List[TPSLCreate]] = None
+    stop_loss: Optional[List[TPSLCreate]] = None
     expiry_timestamp: Optional[StrictInt] = None
     __properties: ClassVar[List[str]] = [
         "execution_id",
@@ -192,12 +177,12 @@ class SpotTradingActionCreate(BaseModel):
                 "limit_price": obj.get("limit_price"),
                 "allocation": obj.get("allocation"),
                 "take_profit": (
-                    [TPSL.from_dict(_item) for _item in obj["take_profit"]]
+                    [TPSLCreate.from_dict(_item) for _item in obj["take_profit"]]
                     if obj.get("take_profit") is not None
                     else None
                 ),
                 "stop_loss": (
-                    [TPSL.from_dict(_item) for _item in obj["stop_loss"]]
+                    [TPSLCreate.from_dict(_item) for _item in obj["stop_loss"]]
                     if obj.get("stop_loss") is not None
                     else None
                 ),

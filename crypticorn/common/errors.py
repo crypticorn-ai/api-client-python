@@ -22,6 +22,7 @@ class ApiErrorType(StrEnum):
     NO_ERROR = "no error"
     """error that does not need to be handled or does not affect the program or is a placeholder."""
 
+
 class ApiErrorLevel(StrEnum):
     """Level of the API error."""
 
