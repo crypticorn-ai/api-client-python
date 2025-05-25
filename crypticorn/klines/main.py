@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import TYPE_CHECKING, Optional
 from crypticorn.klines import (
     ApiClient,
     Configuration,
@@ -9,6 +10,9 @@ from crypticorn.klines import (
     UDFApi,
 )
 from crypticorn.common import optional_import
+
+if TYPE_CHECKING:
+    from aiohttp import ClientSession
 
 
 class KlinesClient:
@@ -21,9 +25,12 @@ class KlinesClient:
     def __init__(
         self,
         config: Configuration,
+        http_client: Optional[ClientSession] = None,
     ):
         self.config = config
         self.base_client = ApiClient(configuration=self.config)
+        if http_client is not None:
+            self.base_client.rest_client.pool_manager = http_client
         # Instantiate all the endpoint clients
         self.funding = FundingRatesApiWrapper(self.base_client)
         self.ohlcv = OHLCVDataApiWrapper(self.base_client)
