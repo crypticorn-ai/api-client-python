@@ -1,4 +1,6 @@
 from typing import TypeVar
+import aiohttp
+import aiohttp_retry
 from crypticorn.hive import HiveClient
 from crypticorn.klines import KlinesClient
 from crypticorn.pay import PayClient
@@ -6,6 +8,7 @@ from crypticorn.trade import TradeClient
 from crypticorn.metrics import MetricsClient
 from crypticorn.auth import AuthClient
 from crypticorn.common import BaseUrl, ApiVersion, Service, apikey_header as aph
+from crypticorn.pay.client import __version__
 
 ConfigT = TypeVar("ConfigT")
 SubClient = TypeVar("SubClient")
@@ -18,20 +21,18 @@ class ApiClient:
     It is consisting of multiple microservices covering the whole stack of the Crypticorn project.
     """
 
-    def __init__(
-        self,
-        api_key: str = None,
-        jwt: str = None,
-        base_url: BaseUrl = BaseUrl.PROD,
-    ):
+    def __init__(self, api_key=None, jwt=None, base_url=None):
+        if base_url is None:
+            base_url = BaseUrl.PROD
         self.base_url = base_url
-        """The base URL the client will use to connect to the API."""
         self.api_key = api_key
-        """The API key to use for authentication (recommended)."""
         self.jwt = jwt
-        """The JWT to use for authentication (not recommended)."""
-
-        self._service_classes: dict[Service, type[SubClient]] = {
+        self._http_client = aiohttp.ClientSession(
+            timeout=aiohttp.ClientTimeout(total=30.0),
+            connector=aiohttp.TCPConnector(limit=100, limit_per_host=20),
+            headers={"User-Agent": f"crypticorn-sdk/{__version__}"},
+        )
+        self._service_classes = {
             Service.HIVE: HiveClient,
             Service.TRADE: TradeClient,
             Service.KLINES: KlinesClient,
@@ -39,9 +40,8 @@ class ApiClient:
             Service.METRICS: MetricsClient,
             Service.AUTH: AuthClient,
         }
-
-        self._services: dict[Service, SubClient] = {
-            service: client_class(self._get_default_config(service))
+        self._services = {
+            service: client_class(self._get_default_config(service), http_client=self._http_client)
             for service, client_class in self._service_classes.items()
         }
 
@@ -88,17 +88,14 @@ class ApiClient:
         return self._services[Service.AUTH]
 
     async def close(self):
-        """Close all client sessions."""
         for service in self._services.values():
-            if hasattr(service.base_client, "close"):
+            if hasattr(service, "base_client") and hasattr(service.base_client, "close"):
                 await service.base_client.close()
+        await self._http_client.close()
 
-    def _get_default_config(
-        self, service: Service, version: ApiVersion = ApiVersion.V1
-    ):
-        """
-        Get the default configuration for a given service.
-        """
+    def _get_default_config(self, service, version=None):
+        if version is None:
+            version = ApiVersion.V1
         config_class = self._service_classes[service].config_class
         return config_class(
             host=f"{self.base_url}/{version}/{service}",
@@ -107,9 +104,7 @@ class ApiClient:
         )
 
     def configure(
-        self,
-        config: ConfigT,
-        service: Service,
+        self, config, service
     ):
         """
         Update a sub-client's configuration by overriding with the values set in the new config.
@@ -125,13 +120,11 @@ class ApiClient:
         assert Service.validate(service), f"Invalid service: {service}"
         client = self._services[service]
         new_config = client.config
-
         for attr in vars(config):
             new_value = getattr(config, attr)
             if new_value:
                 setattr(new_config, attr, new_value)
-
-        self._services[service] = type(client)(new_config)
+        self._services[service] = type(client)(new_config, http_client=self._http_client)
 
     async def __aenter__(self):
         return self
