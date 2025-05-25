@@ -150,6 +150,13 @@ __all__ = ["{upper_module_name}Client", ]
                 with open(file_path, "w") as f:
                     f.write(content)
 
+    print("========================IMPORTANT========================")
+    print("If you are adding a new module, you need to do the following:")
+    print(f"- Edit the generated crypticorn/client.py file.")
+    print(f"- Edit the generated crypticorn/{module_name}/main.py file.")
+    print(f"- Edit the crypticorn/common/urls.py file to add the new module.")
+    print("=========================================================")
+
 
 if __name__ == "__main__":
     main()

@@ -107,8 +107,8 @@ class ApiClient:
         )
 
     def configure(
-        self, config, service
-    ):
+        self, config: ConfigT, service: Service
+    ) -> None:
         """
         Update a sub-client's configuration by overriding with the values set in the new config.
         Useful for testing a specific service against a local server instead of the default proxy.
