@@ -146,7 +146,10 @@ class AuthHandler:
         except HTTPException as e:
             if e.detail.get("code") == ApiError.NO_CREDENTIALS.identifier:
                 raise HTTPException(
-                    content=ExceptionContent(error=ApiError.NO_API_KEY, message="No credentials provided. API key is required"),
+                    content=ExceptionContent(
+                        error=ApiError.NO_API_KEY,
+                        message="No credentials provided. API key is required",
+                    ),
                 )
             raise e
 
@@ -168,7 +171,10 @@ class AuthHandler:
         except HTTPException as e:
             if e.detail.get("code") == ApiError.NO_CREDENTIALS.identifier:
                 raise HTTPException(
-                    content=ExceptionContent(error=ApiError.NO_BEARER, message="No credentials provided. Bearer token is required"),
+                    content=ExceptionContent(
+                        error=ApiError.NO_BEARER,
+                        message="No credentials provided. Bearer token is required",
+                    ),
                 )
             raise e
 
