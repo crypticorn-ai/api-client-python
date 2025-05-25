@@ -15,4 +15,6 @@ async def client():
 async def test_client_config(client: ApiClient):
     client.configure(config=HiveConfig(host="something"), service=Service.HIVE)
     assert client.hive.config.host == "something"  # overriden
-    assert client.hive.config.api_key == {apikey_header.scheme_name: "test"}  # not overriden
+    assert client.hive.config.api_key == {
+        apikey_header.scheme_name: "test"
+    }  # not overriden

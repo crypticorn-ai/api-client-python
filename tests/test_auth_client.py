@@ -131,6 +131,7 @@ async def test_combined_auth_with_invalid_api_key(auth_handler: AuthHandler):
     assert e.value.status_code == 401
     assert e.value.detail.get("code") == ApiError.INVALID_API_KEY.identifier
 
+
 @pytest.mark.asyncio
 async def test_combined_auth_with_one_scope_valid_api_key(auth_handler: AuthHandler):
     """With one scope valid api key"""
