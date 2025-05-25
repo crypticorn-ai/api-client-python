@@ -1,6 +1,5 @@
 from typing import TypeVar, Optional
-import aiohttp
-import aiohttp_retry
+from aiohttp import ClientSession, ClientTimeout, TCPConnector
 from crypticorn.hive import HiveClient
 from crypticorn.klines import KlinesClient
 from crypticorn.pay import PayClient
@@ -8,7 +7,7 @@ from crypticorn.trade import TradeClient
 from crypticorn.metrics import MetricsClient
 from crypticorn.auth import AuthClient
 from crypticorn.common import BaseUrl, ApiVersion, Service, apikey_header as aph
-from crypticorn.pay.client import __version__
+from importlib.metadata import version
 
 ConfigT = TypeVar("ConfigT")
 SubClient = TypeVar("SubClient")
@@ -17,10 +16,9 @@ SubClient = TypeVar("SubClient")
 class ApiClient:
     """
     The official Python client for interacting with the Crypticorn API.
-
     It is consisting of multiple microservices covering the whole stack of the Crypticorn project.
     """
-    # Use Optional to clearly express value can be None while avoiding a runtime import
+
     def __init__(
         self,
         api_key: Optional[str] = None,
@@ -28,14 +26,20 @@ class ApiClient:
         base_url: BaseUrl = BaseUrl.PROD,
     ):
         self.base_url = base_url
+        """The base URL the client will use to connect to the API."""
         self.api_key = api_key
+        """The API key to use for authentication (recommended)."""
         self.jwt = jwt
-        self._http_client = aiohttp.ClientSession(
-            timeout=aiohttp.ClientTimeout(total=30.0),
-            connector=aiohttp.TCPConnector(limit=100, limit_per_host=20),
-            headers={"User-Agent": f"crypticorn-sdk/{__version__}"},
+        """The JWT to use for authentication (not recommended)."""
+        self.version = version("crypticorn")
+        """The version of the client."""
+
+        self._http_client = ClientSession(
+            timeout=ClientTimeout(total=30.0),
+            connector=TCPConnector(limit=100, limit_per_host=20),
+            headers={"User-Agent": f"crypticorn/python/{self.version}"},
         )
-        self._service_classes = {
+        self._service_classes: dict[Service, type[SubClient]] = {
             Service.HIVE: HiveClient,
             Service.TRADE: TradeClient,
             Service.KLINES: KlinesClient,
@@ -43,8 +47,10 @@ class ApiClient:
             Service.METRICS: MetricsClient,
             Service.AUTH: AuthClient,
         }
-        self._services = {
-            service: client_class(self._get_default_config(service), http_client=self._http_client)
+        self._services: dict[Service, SubClient] = {
+            service: client_class(
+                self._get_default_config(service), http_client=self._http_client
+            )
             for service, client_class in self._service_classes.items()
         }
 
@@ -92,7 +98,9 @@ class ApiClient:
 
     async def close(self):
         for service in self._services.values():
-            if hasattr(service, "base_client") and hasattr(service.base_client, "close"):
+            if hasattr(service, "base_client") and hasattr(
+                service.base_client, "close"
+            ):
                 await service.base_client.close()
         await self._http_client.close()
 
@@ -106,9 +114,7 @@ class ApiClient:
             api_key={aph.scheme_name: self.api_key} if self.api_key else None,
         )
 
-    def configure(
-        self, config: ConfigT, service: Service
-    ) -> None:
+    def configure(self, config: ConfigT, service: Service) -> None:
         """
         Update a sub-client's configuration by overriding with the values set in the new config.
         Useful for testing a specific service against a local server instead of the default proxy.
@@ -127,7 +133,9 @@ class ApiClient:
             new_value = getattr(config, attr)
             if new_value:
                 setattr(new_config, attr, new_value)
-        self._services[service] = type(client)(new_config, http_client=self._http_client)
+        self._services[service] = type(client)(
+            new_config, http_client=self._http_client
+        )
 
     async def __aenter__(self):
         return self
