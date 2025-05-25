@@ -3,10 +3,12 @@ import aiohttp
 from crypticorn import ApiClient
 from crypticorn.common import Service
 
+
 class DummyClientSession(aiohttp.ClientSession):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.is_dummy = True
+
 
 @pytest.mark.asyncio
 async def test_shared_aiohttp_client_across_services():

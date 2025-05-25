@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 from crypticorn.auth import (
     ApiClient,
     Configuration,
@@ -9,6 +9,9 @@ from crypticorn.auth import (
     WalletApi,
     AuthApi,
 )
+
+if TYPE_CHECKING:
+    from aiohttp import ClientSession
 
 
 class AuthClient:
@@ -21,7 +24,7 @@ class AuthClient:
     def __init__(
         self,
         config: Configuration,
-        http_client: Optional['aiohttp.ClientSession'] = None,
+        http_client: Optional[ClientSession] = None,
     ):
         self.config = config
         self.base_client = ApiClient(configuration=self.config)

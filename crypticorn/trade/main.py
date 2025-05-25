@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Optional
+from typing import TYPE_CHECKING
 from crypticorn.trade import (
     ApiClient,
     APIKeysApi,
@@ -14,6 +14,9 @@ from crypticorn.trade import (
     TradingActionsApi,
 )
 
+if TYPE_CHECKING:
+    from aiohttp import ClientSession
+
 
 class TradeClient:
     """
@@ -22,7 +25,9 @@ class TradeClient:
 
     config_class = Configuration
 
-    def __init__(self, config: Configuration, http_client: Optional['aiohttp.ClientSession'] = None):
+    def __init__(
+        self, config: Configuration, http_client: Optional[ClientSession] = None
+    ):
         self.config = config
         self.base_client = ApiClient(configuration=self.config)
         if http_client is not None:
