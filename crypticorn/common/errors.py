@@ -36,6 +36,7 @@ class ApiErrorIdentifier(StrEnum):
 
     ALLOCATION_BELOW_EXPOSURE = "allocation_below_current_exposure"
     ALLOCATION_BELOW_MINIMUM = "allocation_below_min_amount"
+    ALLOCATION_LIMIT_EXCEEDED = "allocation_limit_exceeded"
     BLACK_SWAN = "black_swan"
     BOT_ALREADY_DELETED = "bot_already_deleted"
     BOT_DISABLED = "bot_disabled"
@@ -137,6 +138,11 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
         ApiErrorIdentifier.ALLOCATION_BELOW_MINIMUM,
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
+    )
+    ALLOCATION_LIMIT_EXCEEDED = (
+        ApiErrorIdentifier.ALLOCATION_LIMIT_EXCEEDED,
+        ApiErrorType.NO_ERROR,
+        ApiErrorLevel.INFO,
     )
     BLACK_SWAN = (
         ApiErrorIdentifier.BLACK_SWAN,
@@ -744,6 +750,10 @@ class StatusCodeMapper:
             status.WS_1008_POLICY_VIOLATION,
         ),
         ApiError.ALLOCATION_BELOW_EXPOSURE: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.ALLOCATION_LIMIT_EXCEEDED: (
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
         ),
