@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Optional
 from crypticorn.klines import (
     ApiClient,
     Configuration,
@@ -21,14 +22,12 @@ class KlinesClient:
     def __init__(
         self,
         config: Configuration,
-        http_client = None
+        http_client: Optional['aiohttp.ClientSession'] = None
     ):
         self.config = config
+        self.base_client = ApiClient(configuration=self.config)
         if http_client is not None:
-            self.base_client = ApiClient(configuration=self.config)
             self.base_client.rest_client.pool_manager = http_client
-        else:
-            self.base_client = ApiClient(configuration=self.config)
         # Instantiate all the endpoint clients
         self.funding = FundingRatesApiWrapper(self.base_client)
         self.ohlcv = OHLCVDataApiWrapper(self.base_client)

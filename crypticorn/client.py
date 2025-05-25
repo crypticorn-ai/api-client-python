@@ -1,4 +1,4 @@
-from typing import TypeVar
+from typing import TypeVar, Optional
 import aiohttp
 import aiohttp_retry
 from crypticorn.hive import HiveClient
@@ -20,10 +20,13 @@ class ApiClient:
 
     It is consisting of multiple microservices covering the whole stack of the Crypticorn project.
     """
-
-    def __init__(self, api_key=None, jwt=None, base_url=None):
-        if base_url is None:
-            base_url = BaseUrl.PROD
+    # Use Optional to clearly express value can be None while avoiding a runtime import
+    def __init__(
+        self,
+        api_key: Optional[str] = None,
+        jwt: Optional[str] = None,
+        base_url: BaseUrl = BaseUrl.PROD,
+    ):
         self.base_url = base_url
         self.api_key = api_key
         self.jwt = jwt
