@@ -150,30 +150,6 @@ __all__ = ["{upper_module_name}Client", ]
                 with open(file_path, "w") as f:
                     f.write(content)
 
-    for root, _, files in os.walk(f"python/crypticorn/{module_name}"):
-        for file in files:
-            if file.endswith("main.py"):
-                file_path = os.path.join(root, file)
-                with open(file_path, "r") as f:
-                    content = f.read()
-                content = content.replace(
-                    "def __init__(self, config:",
-                    "def __init__(self, config, http_client=None:",
-                )
-                content = content.replace(
-                    "self.base_client = ApiClient(configuration=self.config)",
-                    "if http_client is not None:\n            # Create an ApiClient and inject the shared aiohttp session\n            self.base_client = ApiClient(configuration=self.config)\n            # Replace the pool_manager with our shared session\n            self.base_client.rest_client.pool_manager = http_client\n        else:\n            self.base_client = ApiClient(configuration=self.config)",
-                )
-                with open(file_path, "w") as f:
-                    f.write(content)
-
-    print("========================IMPORTANT========================")
-    print("If you are adding a new module, you need to do the following:")
-    print(f"- Edit the generated crypticorn/client.py file.")
-    print(f"- Edit the generated crypticorn/{module_name}/main.py file.")
-    print(f"- Edit the crypticorn/common/urls.py file to add the new module.")
-    print("=========================================================")
-
 
 if __name__ == "__main__":
     main()
