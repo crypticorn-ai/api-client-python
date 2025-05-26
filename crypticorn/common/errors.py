@@ -63,7 +63,7 @@ class ApiErrorIdentifier(StrEnum):
     EXCHANGE_USER_FROZEN = "exchange_user_account_is_frozen"
     EXPIRED_API_KEY = "api_key_expired"
     EXPIRED_BEARER = "bearer_token_expired"
-    FAILED_OPEN_ORDER = "open_order_expired"
+    FAILED_OPEN_ORDER = "failed_open_order"
     FORBIDDEN = "forbidden"
     HEDGE_MODE_NOT_ACTIVE = "hedge_mode_not_active"
     INSUFFICIENT_BALANCE = "insufficient_balance"
