@@ -34,12 +34,7 @@ class ApiClient:
         self.version = version("crypticorn")
         """The version of the client."""
 
-        # self._http_client = ClientSession(
-        #     timeout=ClientTimeout(total=30.0),
-        #     connector=TCPConnector(limit=100, limit_per_host=20),
-        #     headers={"User-Agent": f"crypticorn/python/{self.version}"},
-        # )
-        self._http_client = None # temporary fix for the issue with the event loop
+        self._http_client: Optional[ClientSession] = None # http client doesn't exist yet
 
         self._service_classes: dict[Service, type[SubClient]] = {
             Service.HIVE: HiveClient,
@@ -102,6 +97,31 @@ class ApiClient:
         for service in self._services.values():
             if hasattr(service.base_client, "close"):
                 await service.base_client.close()
+        if self._http_client:
+            await self._http_client.close()
+
+    async def _ensure_http_client(self) -> ClientSession:
+        """
+        Lazily create the shared HTTP client when first needed.
+        
+        This is the proper solution for the aiohttp ClientSession event loop requirement:
+        - ClientSession requires an active event loop to be created
+        - __init__ is called synchronously (no event loop available)
+        - This method is only called from async context (event loop guaranteed)
+        
+        Returns:
+            ClientSession: The shared HTTP client instance used by all services
+        """
+        if self._http_client is None:
+            self._http_client = ClientSession(
+                timeout=ClientTimeout(total=30.0),
+                connector=TCPConnector(limit=100, limit_per_host=20),
+                headers={"User-Agent": f"crypticorn/python/{self.version}"},
+            )
+            for service in self._services.values():
+                if hasattr(service, 'base_client') and hasattr(service.base_client, 'rest_client'):
+                    service.base_client.rest_client.pool_manager = self._http_client
+        return self._http_client
 
     def _get_default_config(self, service, version=None):
         if version is None:
@@ -137,6 +157,7 @@ class ApiClient:
         )
 
     async def __aenter__(self):
+        await self._ensure_http_client()
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
