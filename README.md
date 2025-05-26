@@ -152,19 +152,27 @@ async with ApiClient() as client:
 
 ### Session Management
 
-By default `ApiClient` manages a single shared `aiohttp.ClientSession` for all service wrappers. You can pass your own configured `aiohttp.ClientSession` for advanced use cases (for custom retry, logging, or mocking):
+By default, `ApiClient` manages a single shared `aiohttp.ClientSession` for all service wrappers.  
+However, you can pass your own pre-configured `aiohttp.ClientSession` if you need advanced control — for example, to add retries, custom headers, logging, or mocking behavior.
+
+When you inject a custom session, you are responsible for managing its lifecycle, including closing when you're done.
 
 ```python
 import aiohttp
 from crypticorn import ApiClient
 
-custom_http_client = aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10), headers={"X-Test": "1"})
-api = ApiClient(api_key="your-key")
-api._http_client = custom_http_client
-
-for service in api._services.values():
-    service.base_client.rest_client.pool_manager = custom_http_client
+async def main():
+    custom_session = aiohttp.ClientSession()
+    async with ApiClient(api_key="your-key", http_client=custom_session) as client:
+        await client.trade.status.ping()
+    await custom_session.close()
+    # or
+    custom_session = aiohttp.ClientSession()
+    client = ApiClient(api_key="your-key", http_client=custom_session)
+    await client.trade.status.ping()
+    await custom_session.close()
 ```
+If you don’t pass a session, `ApiClient` will create and manage one internally. In that case, it will be automatically closed when using `async with` or when calling `await client.close()` manually.
 
 ### Disable Logging
 
