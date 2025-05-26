@@ -1,3 +1,4 @@
+from aiohttp import ClientSession
 from crypticorn.auth.client.exceptions import UnauthorizedException
 from crypticorn.auth import CreateApiKeyRequest
 from crypticorn.common import BaseUrl, Scope, Service, MarketType, InternalExchange
@@ -170,10 +171,20 @@ async def configure_client():
         )
         res = await client.hive.status.ping()
         print(res)
-
+        
+async def custom_main():
+    custom_session = ClientSession()
+    async with ApiClient(api_key="your-key", http_client=custom_session) as client:
+        await client.trade.status.ping()
+    await custom_session.close()
+    custom_session = ClientSession()
+    client = ApiClient(api_key="your-key", http_client=custom_session)
+    await client.trade.status.ping()
+    await custom_session.close()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    # asyncio.run(main())
+    asyncio.run(custom_main())
     # asyncio.run(configure_client())
     # response = asyncio.run(client.hive.models.get_all_models())
     # print(response)
