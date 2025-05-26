@@ -1,6 +1,24 @@
 # CHANGELOG
 
 
+## v2.14.0 (2025-05-26)
+
+### Bug Fixes
+
+- Fixes error code value
+  ([`182d4d7`](https://github.com/crypticorn-ai/api-client/commit/182d4d7a92289b66914816a90e707739dba4af1c))
+
+### Continuous Integration
+
+- Cleanup on failure in release step
+  ([`dff5ee4`](https://github.com/crypticorn-ai/api-client/commit/dff5ee4b25832ed8b6944213325e7a6d658a2491))
+
+### Features
+
+- Allow custom http client injection
+  ([`1a4cd0c`](https://github.com/crypticorn-ai/api-client/commit/1a4cd0cdd68d39a950f547d22721409e022c896a))
+
+
 ## v2.13.3 (2025-05-26)
 
 ### Bug Fixes
