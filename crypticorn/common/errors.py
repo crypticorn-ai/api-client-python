@@ -40,13 +40,14 @@ class ApiErrorIdentifier(StrEnum):
     ALLOCATION_LIMIT_EXCEEDED = "allocation_limit_exceeded"
     BLACK_SWAN = "black_swan"
     BOT_ALREADY_DELETED = "bot_already_deleted"
-    BOT_DISABLED = "bot_disabled"
     BOT_STOPPING_COMPLETED = "bot_stopping_completed"
     BOT_STOPPING_STARTED = "bot_stopping_started"
     CANCELLED_OPEN_ORDER = "cancelled_open_order"
     CLIENT_ORDER_ID_REPEATED = "client_order_id_already_exists"
     CONTENT_TYPE_ERROR = "invalid_content_type"
     DELETE_BOT_ERROR = "delete_bot_error"
+    EXCHANGE_HTTP_ERROR = "exchange_http_request_error"
+    EXCHANGE_INVALID_PARAMETER = "exchange_invalid_parameter"
     EXCHANGE_INVALID_SIGNATURE = "exchange_invalid_signature"
     EXCHANGE_INVALID_TIMESTAMP = "exchange_invalid_timestamp"
     EXCHANGE_IP_RESTRICTED = "exchange_ip_address_is_not_authorized"
@@ -65,7 +66,6 @@ class ApiErrorIdentifier(StrEnum):
     FAILED_OPEN_ORDER = "open_order_expired"
     FORBIDDEN = "forbidden"
     HEDGE_MODE_NOT_ACTIVE = "hedge_mode_not_active"
-    HTTP_ERROR = "http_request_error"
     INSUFFICIENT_BALANCE = "insufficient_balance"
     INSUFFICIENT_MARGIN = "insufficient_margin"
     INSUFFICIENT_SCOPES = "insufficient_scopes"
@@ -74,9 +74,7 @@ class ApiErrorIdentifier(StrEnum):
     INVALID_DATA_REQUEST = "invalid_data"
     INVALID_DATA_RESPONSE = "invalid_data_response"
     INVALID_EXCHANGE_KEY = "invalid_exchange_key"
-    INVALID_MARGIN_MODE = "invalid_margin_mode"
     INVALID_MODEL_NAME = "invalid_model_name"
-    INVALID_PARAMETER = "invalid_parameter_provided"
     LEVERAGE_EXCEEDED = "leverage_limit_exceeded"
     LIQUIDATION_PRICE_VIOLATION = "order_violates_liquidation_price_constraints"
     MARGIN_MODE_CLASH = "margin_mode_clash"
@@ -108,7 +106,6 @@ class ApiErrorIdentifier(StrEnum):
     RISK_LIMIT_EXCEEDED = "risk_limit_exceeded"
     RPC_TIMEOUT = "rpc_timeout"
     SETTLEMENT_IN_PROGRESS = "system_settlement_in_process"
-    STRATEGY_ALREADY_EXISTS = "strategy_already_exists"
     STRATEGY_DISABLED = "strategy_disabled"
     STRATEGY_LEVERAGE_MISMATCH = "strategy_leverage_mismatch"
     STRATEGY_NOT_SUPPORTING_EXCHANGE = "strategy_not_supporting_exchange"
@@ -147,7 +144,7 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
     )
     BLACK_SWAN = (
         ApiErrorIdentifier.BLACK_SWAN,
-        ApiErrorType.USER_ERROR,
+        ApiErrorType.EXCHANGE_ERROR,
         ApiErrorLevel.INFO,
     )
     BOT_ALREADY_DELETED = (
@@ -155,20 +152,15 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.INFO,
     )
-    BOT_DISABLED = (
-        ApiErrorIdentifier.BOT_DISABLED,
-        ApiErrorType.USER_ERROR,
-        ApiErrorLevel.WARNING,
-    )
     BOT_STOPPING_COMPLETED = (
         ApiErrorIdentifier.BOT_STOPPING_COMPLETED,
         ApiErrorType.NO_ERROR,
-        ApiErrorLevel.INFO,
+        ApiErrorLevel.SUCCESS,
     )
     BOT_STOPPING_STARTED = (
         ApiErrorIdentifier.BOT_STOPPING_STARTED,
         ApiErrorType.NO_ERROR,
-        ApiErrorLevel.INFO,
+        ApiErrorLevel.SUCCESS,
     )
     CANCELLED_OPEN_ORDER = (
         ApiErrorIdentifier.CANCELLED_OPEN_ORDER,
@@ -190,6 +182,16 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
         ApiErrorType.SERVER_ERROR,
         ApiErrorLevel.ERROR,
     )
+    EXCHANGE_HTTP_ERROR = (
+        ApiErrorIdentifier.EXCHANGE_HTTP_ERROR,
+        ApiErrorType.EXCHANGE_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    EXCHANGE_INVALID_PARAMETER = (
+        ApiErrorIdentifier.EXCHANGE_INVALID_PARAMETER,
+        ApiErrorType.SERVER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
     EXCHANGE_INVALID_SIGNATURE = (
         ApiErrorIdentifier.EXCHANGE_INVALID_SIGNATURE,
         ApiErrorType.SERVER_ERROR,
@@ -202,7 +204,7 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
     )
     EXCHANGE_IP_RESTRICTED = (
         ApiErrorIdentifier.EXCHANGE_IP_RESTRICTED,
-        ApiErrorType.SERVER_ERROR,
+        ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
     EXCHANGE_KEY_ALREADY_EXISTS = (
@@ -212,7 +214,7 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
     )
     EXCHANGE_KEY_IN_USE = (
         ApiErrorIdentifier.EXCHANGE_KEY_IN_USE,
-        ApiErrorType.SERVER_ERROR,
+        ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
     EXCHANGE_MAINTENANCE = (
@@ -222,7 +224,7 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
     )
     EXCHANGE_RATE_LIMIT = (
         ApiErrorIdentifier.EXCHANGE_RATE_LIMIT,
-        ApiErrorType.EXCHANGE_ERROR,
+        ApiErrorType.SERVER_ERROR,
         ApiErrorLevel.ERROR,
     )
     EXCHANGE_PERMISSION_DENIED = (
@@ -280,11 +282,6 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
-    HTTP_ERROR = (
-        ApiErrorIdentifier.HTTP_ERROR,
-        ApiErrorType.EXCHANGE_ERROR,
-        ApiErrorLevel.ERROR,
-    )
     INSUFFICIENT_BALANCE = (
         ApiErrorIdentifier.INSUFFICIENT_BALANCE,
         ApiErrorType.USER_ERROR,
@@ -317,7 +314,7 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
     )
     INVALID_DATA_RESPONSE = (
         ApiErrorIdentifier.INVALID_DATA_RESPONSE,
-        ApiErrorType.USER_ERROR,
+        ApiErrorType.SERVER_ERROR,
         ApiErrorLevel.ERROR,
     )
     INVALID_EXCHANGE_KEY = (
@@ -325,19 +322,9 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
-    INVALID_MARGIN_MODE = (
-        ApiErrorIdentifier.INVALID_MARGIN_MODE,
-        ApiErrorType.SERVER_ERROR,
-        ApiErrorLevel.ERROR,
-    )
     INVALID_MODEL_NAME = (
         ApiErrorIdentifier.INVALID_MODEL_NAME,
         ApiErrorType.USER_ERROR,
-        ApiErrorLevel.ERROR,
-    )
-    INVALID_PARAMETER = (
-        ApiErrorIdentifier.INVALID_PARAMETER,
-        ApiErrorType.SERVER_ERROR,
         ApiErrorLevel.ERROR,
     )
     LEVERAGE_EXCEEDED = (
@@ -382,18 +369,18 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
     )
     OBJECT_ALREADY_EXISTS = (
         ApiErrorIdentifier.OBJECT_ALREADY_EXISTS,
-        ApiErrorType.SERVER_ERROR,
+        ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
     OBJECT_CREATED = (
         ApiErrorIdentifier.OBJECT_CREATED,
-        ApiErrorType.SERVER_ERROR,
-        ApiErrorLevel.INFO,
+        ApiErrorType.NO_ERROR,
+        ApiErrorLevel.SUCCESS,
     )
     OBJECT_DELETED = (
         ApiErrorIdentifier.OBJECT_DELETED,
-        ApiErrorType.SERVER_ERROR,
-        ApiErrorLevel.INFO,
+        ApiErrorType.NO_ERROR,
+        ApiErrorLevel.SUCCESS,
     )
     OBJECT_LOCKED = (
         ApiErrorIdentifier.OBJECT_LOCKED,
@@ -402,13 +389,13 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
     )
     OBJECT_NOT_FOUND = (
         ApiErrorIdentifier.OBJECT_NOT_FOUND,
-        ApiErrorType.SERVER_ERROR,
+        ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
     OBJECT_UPDATED = (
         ApiErrorIdentifier.OBJECT_UPDATED,
-        ApiErrorType.SERVER_ERROR,
-        ApiErrorLevel.INFO,
+        ApiErrorType.NO_ERROR,
+        ApiErrorLevel.SUCCESS,
     )
     ORDER_ALREADY_FILLED = (
         ApiErrorIdentifier.ORDER_ALREADY_FILLED,
@@ -447,13 +434,13 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
     )
     ORPHAN_OPEN_ORDER = (
         ApiErrorIdentifier.ORPHAN_OPEN_ORDER,
-        ApiErrorType.SERVER_ERROR,
-        ApiErrorLevel.INFO,
+        ApiErrorType.NO_ERROR,
+        ApiErrorLevel.WARNING,
     )
     ORPHAN_CLOSE_ORDER = (
         ApiErrorIdentifier.ORPHAN_CLOSE_ORDER,
         ApiErrorType.NO_ERROR,
-        ApiErrorLevel.INFO,
+        ApiErrorLevel.WARNING,
     )
     POSITION_LIMIT_EXCEEDED = (
         ApiErrorIdentifier.POSITION_LIMIT_EXCEEDED,
@@ -463,7 +450,7 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
     POSITION_NOT_FOUND = (
         ApiErrorIdentifier.POSITION_NOT_FOUND,
         ApiErrorType.NO_ERROR,
-        ApiErrorLevel.INFO,
+        ApiErrorLevel.WARNING,
     )
     POSITION_SUSPENDED = (
         ApiErrorIdentifier.POSITION_SUSPENDED,
@@ -495,15 +482,10 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
         ApiErrorType.EXCHANGE_ERROR,
         ApiErrorLevel.ERROR,
     )
-    STRATEGY_ALREADY_EXISTS = (
-        ApiErrorIdentifier.STRATEGY_ALREADY_EXISTS,
-        ApiErrorType.USER_ERROR,
-        ApiErrorLevel.ERROR,
-    )
     STRATEGY_DISABLED = (
         ApiErrorIdentifier.STRATEGY_DISABLED,
-        ApiErrorType.USER_ERROR,
-        ApiErrorLevel.ERROR,
+        ApiErrorType.NO_ERROR,
+        ApiErrorLevel.WARNING,
     )
     STRATEGY_LEVERAGE_MISMATCH = (
         ApiErrorIdentifier.STRATEGY_LEVERAGE_MISMATCH,
@@ -512,8 +494,8 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
     )
     STRATEGY_NOT_SUPPORTING_EXCHANGE = (
         ApiErrorIdentifier.STRATEGY_NOT_SUPPORTING_EXCHANGE,
-        ApiErrorType.USER_ERROR,
-        ApiErrorLevel.ERROR,
+        ApiErrorType.NO_ERROR,
+        ApiErrorLevel.WARNING,
     )
     SUCCESS = (ApiErrorIdentifier.SUCCESS, ApiErrorType.NO_ERROR, ApiErrorLevel.SUCCESS)
     SYMBOL_NOT_FOUND = (
@@ -669,10 +651,6 @@ class StatusCodeMapper:
             status.HTTP_409_CONFLICT,
             status.WS_1008_POLICY_VIOLATION,
         ),
-        ApiError.STRATEGY_ALREADY_EXISTS: (
-            status.HTTP_409_CONFLICT,
-            status.WS_1008_POLICY_VIOLATION,
-        ),
         ApiError.NAME_NOT_UNIQUE: (
             status.HTTP_409_CONFLICT,
             status.WS_1008_POLICY_VIOLATION,
@@ -766,10 +744,6 @@ class StatusCodeMapper:
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
         ),
-        ApiError.BOT_DISABLED: (
-            status.HTTP_400_BAD_REQUEST,
-            status.WS_1008_POLICY_VIOLATION,
-        ),
         ApiError.DELETE_BOT_ERROR: (
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
@@ -798,7 +772,7 @@ class StatusCodeMapper:
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
         ),
-        ApiError.HTTP_ERROR: (
+        ApiError.EXCHANGE_HTTP_ERROR: (
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
         ),
@@ -806,16 +780,15 @@ class StatusCodeMapper:
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
         ),
-        ApiError.INSUFFICIENT_MARGIN: status.HTTP_400_BAD_REQUEST,
+        ApiError.INSUFFICIENT_MARGIN: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
         ApiError.INVALID_EXCHANGE_KEY: (
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
         ),
-        ApiError.INVALID_MARGIN_MODE: (
-            status.HTTP_400_BAD_REQUEST,
-            status.WS_1008_POLICY_VIOLATION,
-        ),
-        ApiError.INVALID_PARAMETER: (
+        ApiError.EXCHANGE_INVALID_PARAMETER: (
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
         ),
