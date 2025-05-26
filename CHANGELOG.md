@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.13.2 (2025-05-26)
+
+### Bug Fixes
+
+- Temporary fix disabling the custom http session
+  ([`613fc6f`](https://github.com/crypticorn-ai/api-client/commit/613fc6ff4d55fea322839cb879871a57c9fbc8d3))
+
+
 ## v2.13.1 (2025-05-26)
 
 ### Bug Fixes
