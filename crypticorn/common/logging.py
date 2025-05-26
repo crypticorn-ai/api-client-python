@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from logging.handlers import RotatingFileHandler
 import sys
 from crypticorn.common.mixins import ValidateEnumMixin
 from crypticorn.common.ansi_colors import AnsiColors as C
@@ -109,7 +110,7 @@ def configure_logging(
     # Configure file handler
     if log_file:
         os.makedirs(os.path.dirname(log_file), exist_ok=True)
-        file_handler = logging.handlers.RotatingFileHandler(
+        file_handler = RotatingFileHandler(
             log_file, maxBytes=10 * 1024 * 1024, backupCount=5
         )
         file_handler.setLevel(file_level)
