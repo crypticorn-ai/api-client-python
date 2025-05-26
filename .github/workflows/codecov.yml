@@ -52,6 +52,7 @@ jobs:
     #     files: ./coverage.xml
 
     - name: Pytest coverage comment
+      if: ${{ matrix.python-version == '3.13' }}
       uses: MishaKav/pytest-coverage-comment@main
       with:
         title: Coverage Report ${{ matrix.python-version }}
