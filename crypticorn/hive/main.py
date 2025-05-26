@@ -1,20 +1,23 @@
+from __future__ import annotations
+import os
 import asyncio
 from pathlib import Path
-import os
+from typing import TYPE_CHECKING, Optional
 from crypticorn.hive import (
     ApiClient,
     Configuration,
     ModelsApi,
     DataApi,
     StatusApi,
-    Configuration,
     AdminApi,
     DataVersion,
     FeatureSize,
 )
 from crypticorn.hive.utils import download_file
-from typing import Optional
 from pydantic import StrictInt
+
+if TYPE_CHECKING:
+    from aiohttp import ClientSession
 
 
 class DataApiWrapper(DataApi):
@@ -82,11 +85,12 @@ class HiveClient:
     config_class = Configuration
 
     def __init__(
-        self,
-        config: Configuration,
+        self, config: Configuration, http_client: Optional[ClientSession] = None
     ):
         self.config = config
         self.base_client = ApiClient(configuration=self.config)
+        if http_client is not None:
+            self.base_client.rest_client.pool_manager = http_client
         # Instantiate all the endpoint clients
         self.models = ModelsApi(self.base_client)
         self.data = DataApiWrapper(self.base_client)

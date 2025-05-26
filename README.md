@@ -136,14 +136,41 @@ This utility allows direct data streaming to your local disk, instead of only re
 
 ## Advanced Usage
 
+### Sub Client Configuration
+
 You can override some configuration for specific services. If you just want to use the API as is, you don't need to configure anything.
 This might be of use if you are testing a specific API locally.
 
 To override e.g. the host for the Hive client to connect to localhost:8000 instead of the default proxy, you would do:
 ```python
-from crypticorn.hive import Configuration as Hiveconfig
+from crypticorn.hive import Configuration as HiveConfig
 from crypticorn.common import Service
 
 async with ApiClient() as client:
-        client.configure(config=HiveConfig(host="http://localhost:8000"), client=Service.HIVE)
+    client.configure(config=HiveConfig(host="http://localhost:8000"), service=Service.HIVE)
+```
+
+### Session Management
+
+By default `ApiClient` manages a single shared `aiohttp.ClientSession` for all service wrappers. You can pass your own configured `aiohttp.ClientSession` for advanced use cases (for custom retry, logging, or mocking):
+
+```python
+import aiohttp
+from crypticorn import ApiClient
+
+custom_http_client = aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10), headers={"X-Test": "1"})
+api = ApiClient(api_key="your-key")
+api._http_client = custom_http_client
+
+for service in api._services.values():
+    service.base_client.rest_client.pool_manager = custom_http_client
+```
+
+### Disable Logging
+
+In case you don't want any logging statements by the `crypticorn` logger to be logged to stdout, you can disable it with:
+
+```python
+from crypticorn.common import disable_logging
+disable_logging()
 ```

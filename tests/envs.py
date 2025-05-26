@@ -81,13 +81,6 @@ VALID_ADMIN_JWT = asyncio.run(
     )
 )
 # API KEY
-FULL_SCOPE_API_KEY = asyncio.run(
-    generate_api_key(
-        user_id=USER_ID,
-        scopes=[x for x in Scope if x not in Scope.internal_scopes()],
-        expires_at=datetime.datetime.now() + datetime.timedelta(days=1),  # 1 day
-    )
-)
 ONE_SCOPE_API_KEY_SCOPE = Scope.READ_TRADE_BOTS
 ONE_SCOPE_API_KEY = asyncio.run(
     generate_api_key(
@@ -99,13 +92,11 @@ ONE_SCOPE_API_KEY = asyncio.run(
 EXPIRED_API_KEY = asyncio.run(
     generate_api_key(
         user_id=USER_ID,
-        scopes=[x for x in Scope if x not in Scope.internal_scopes()],
+        scopes=[ONE_SCOPE_API_KEY_SCOPE],
         expires_at=datetime.datetime.now() - datetime.timedelta(days=1),  # 1 day ago
     )
 )
 
-if not FULL_SCOPE_API_KEY:
-    raise ValueError("FULL_SCOPE_API_KEY is not set")
 if not VALID_JWT:
     raise ValueError("VALID_JWT is not set")
 if not EXPIRED_JWT:
