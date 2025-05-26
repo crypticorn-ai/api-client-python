@@ -1,6 +1,26 @@
 # CHANGELOG
 
 
+## v2.13.1 (2025-05-26)
+
+### Bug Fixes
+
+- Update error code levels and types
+  ([`9266c4b`](https://github.com/crypticorn-ai/api-client/commit/9266c4bc85adb879ab3b978ce7835a192147a825))
+
+### Performance Improvements
+
+- Decrease client startup time by using a shared http session across all subclients
+  ([`dd41a60`](https://github.com/crypticorn-ai/api-client/commit/dd41a6079bd6568e074cbaebb1d4eda629a9b179))
+
+centralize aiohttp.ClientSession in ApiClient
+
+### Refactoring
+
+- Return specific exceptions for api key / bearer only endpoints
+  ([`52c77ce`](https://github.com/crypticorn-ai/api-client/commit/52c77ce73e880bdc08394a3f754c7f9bf0f81e6d))
+
+
 ## v2.13.0 (2025-05-23)
 
 ### Features
