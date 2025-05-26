@@ -46,7 +46,7 @@ build_command = "pip install build && python -m build" # https://python-semantic
 
 # https://python-semantic-release.readthedocs.io/en/latest/multibranch_releases.html#multibranch-releases
 [tool.semantic_release.branches.main]
-match = "main" # TODO: change this later to only main and uncomment the block below
+match = "main"
 prerelease = false
 
 [tool.semantic_release.branches.dev]
