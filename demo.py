@@ -171,7 +171,8 @@ async def configure_client():
         )
         res = await client.hive.status.ping()
         print(res)
-        
+
+
 async def custom_main():
     custom_session = ClientSession()
     async with ApiClient(api_key="your-key", http_client=custom_session) as client:
@@ -181,6 +182,7 @@ async def custom_main():
     client = ApiClient(api_key="your-key", http_client=custom_session)
     await client.trade.status.ping()
     await custom_session.close()
+
 
 if __name__ == "__main__":
     # asyncio.run(main())
