@@ -34,11 +34,13 @@ class ApiClient:
         self.version = version("crypticorn")
         """The version of the client."""
 
-        self._http_client = ClientSession(
-            timeout=ClientTimeout(total=30.0),
-            connector=TCPConnector(limit=100, limit_per_host=20),
-            headers={"User-Agent": f"crypticorn/python/{self.version}"},
-        )
+        # self._http_client = ClientSession(
+        #     timeout=ClientTimeout(total=30.0),
+        #     connector=TCPConnector(limit=100, limit_per_host=20),
+        #     headers={"User-Agent": f"crypticorn/python/{self.version}"},
+        # )
+        self._http_client = None # temporary fix for the issue with the event loop
+
         self._service_classes: dict[Service, type[SubClient]] = {
             Service.HIVE: HiveClient,
             Service.TRADE: TradeClient,
@@ -98,11 +100,8 @@ class ApiClient:
 
     async def close(self):
         for service in self._services.values():
-            if hasattr(service, "base_client") and hasattr(
-                service.base_client, "close"
-            ):
+            if hasattr(service.base_client, "close"):
                 await service.base_client.close()
-        await self._http_client.close()
 
     def _get_default_config(self, service, version=None):
         if version is None:
