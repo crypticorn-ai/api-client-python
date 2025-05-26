@@ -37,7 +37,7 @@ class ApiClient:
         """The version of the client."""
 
         self._http_client = http_client
-        self._owns_http_client = http_client is None # whether we own the http client
+        self._owns_http_client = http_client is None  # whether we own the http client
         self._service_classes: dict[Service, type[SubClient]] = {
             Service.HIVE: HiveClient,
             Service.TRADE: TradeClient,
@@ -116,7 +116,9 @@ class ApiClient:
                 headers={"User-Agent": f"crypticorn/python/{self.version}"},
             )
             for service in self._services.values():
-                if hasattr(service, 'base_client') and hasattr(service.base_client, 'rest_client'):
+                if hasattr(service, "base_client") and hasattr(
+                    service.base_client, "rest_client"
+                ):
                     service.base_client.rest_client.pool_manager = self._http_client
 
     def _get_default_config(self, service, version=None):

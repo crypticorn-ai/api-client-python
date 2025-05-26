@@ -57,7 +57,8 @@ async def test_close_owned_http_client():
     session = client._http_client
 
     await client.close()
-    assert session.closed # session should be closed since we own it
+    assert session.closed  # session should be closed since we own it
+
 
 @pytest.mark.asyncio
 async def test_unclosed_owned_session_warns():
@@ -77,6 +78,7 @@ async def test_unclosed_owned_session_warns():
         ]
         assert unclosed_warnings, "Expected unclosed client session warning"
 
+
 @pytest.mark.asyncio
 async def test_custom_session_not_closed_by_client():
     with warnings.catch_warnings(record=True) as w:
@@ -95,11 +97,13 @@ async def test_custom_session_not_closed_by_client():
         await asyncio.sleep(0.1)
 
         unclosed_warnings = [
-            warn for warn in w 
-            if "Unclosed client session" in str(warn.message) or 
-               "Unclosed connector" in str(warn.message)
+            warn
+            for warn in w
+            if "Unclosed client session" in str(warn.message)
+            or "Unclosed connector" in str(warn.message)
         ]
         assert unclosed_warnings, "Expected unclosed client session warning"
+
 
 @pytest.mark.asyncio
 async def test_context_manager_usage():
