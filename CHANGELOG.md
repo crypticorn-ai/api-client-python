@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.13.3 (2025-05-26)
+
+### Bug Fixes
+
+- Fixes logging import error
+  ([`5df42ef`](https://github.com/crypticorn-ai/api-client/commit/5df42ef9835a397ed6162dcb1c1ad4ab67badd4e))
+
+
 ## v2.13.2 (2025-05-26)
 
 ### Bug Fixes
