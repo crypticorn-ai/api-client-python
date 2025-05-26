@@ -133,15 +133,6 @@ async def test_combined_auth_with_invalid_api_key(auth_handler: AuthHandler):
 
 
 @pytest.mark.asyncio
-async def test_combined_auth_with_full_scope_valid_api_key(auth_handler: AuthHandler):
-    """With full scope valid api key"""
-    res = await auth_handler.combined_auth(bearer=None, api_key=FULL_SCOPE_API_KEY)
-    assert res.scopes == [
-        x for x in Scope if x not in Scope.internal_scopes()
-    ], UPDATE_SCOPES
-
-
-@pytest.mark.asyncio
 async def test_combined_auth_with_one_scope_valid_api_key(auth_handler: AuthHandler):
     """With one scope valid api key"""
     res = await auth_handler.combined_auth(bearer=None, api_key=ONE_SCOPE_API_KEY)

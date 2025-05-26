@@ -68,13 +68,13 @@ class ApiErrorIdentifier(str, Enum):
     INVALID_EXCHANGE_KEY = "invalid_exchange_key"
     INVALID_MARGIN_MODE = "invalid_margin_mode"
     INVALID_MODEL_NAME = "invalid_model_name"
-    INVALID_PARAMETER_PROVIDED = "invalid_parameter_provided"
+    INVALID_PARAMETER_PROVIDED = "exchange_invalid_parameter"
     LEVERAGE_LIMIT_EXCEEDED = "leverage_limit_exceeded"
     ORDER_VIOLATES_LIQUIDATION_PRICE_CONSTRAINTS = (
         "order_violates_liquidation_price_constraints"
     )
     MARGIN_MODE_CLASH = "margin_mode_clash"
-    MODEL_NAME_NOT_UNIQUE = "model_name_not_unique"
+    NAME_NOT_UNIQUE = "name_not_unique"
     NO_CREDENTIALS = "no_credentials"
     NOW_API_DOWN = "now_api_down"
     OBJECT_ALREADY_EXISTS = "object_already_exists"

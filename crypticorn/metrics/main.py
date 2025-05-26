@@ -1,4 +1,6 @@
 from __future__ import annotations
+from typing import TYPE_CHECKING, Optional
+from crypticorn.common import optional_import
 from crypticorn.metrics import (
     ApiClient,
     Configuration,
@@ -12,7 +14,9 @@ from crypticorn.metrics import (
     AdminApi,
     QuoteCurrenciesApi,
 )
-from crypticorn.common import optional_import
+
+if TYPE_CHECKING:
+    from aiohttp import ClientSession
 
 
 class MetricsClient:
@@ -23,11 +27,12 @@ class MetricsClient:
     config_class = Configuration
 
     def __init__(
-        self,
-        config: Configuration,
+        self, config: Configuration, http_client: Optional[ClientSession] = None
     ):
         self.config = config
         self.base_client = ApiClient(configuration=self.config)
+        if http_client is not None:
+            self.base_client.rest_client.pool_manager = http_client
         # Instantiate all the endpoint clients
         self.status = StatusApi(self.base_client)
         self.indicators = IndicatorsApi(self.base_client)

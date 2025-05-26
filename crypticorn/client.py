@@ -1,4 +1,5 @@
-from typing import TypeVar
+from typing import TypeVar, Optional
+from aiohttp import ClientSession, ClientTimeout, TCPConnector
 from crypticorn.hive import HiveClient
 from crypticorn.klines import KlinesClient
 from crypticorn.pay import PayClient
@@ -6,6 +7,7 @@ from crypticorn.trade import TradeClient
 from crypticorn.metrics import MetricsClient
 from crypticorn.auth import AuthClient
 from crypticorn.common import BaseUrl, ApiVersion, Service, apikey_header as aph
+from importlib.metadata import version
 
 ConfigT = TypeVar("ConfigT")
 SubClient = TypeVar("SubClient")
@@ -14,14 +16,13 @@ SubClient = TypeVar("SubClient")
 class ApiClient:
     """
     The official Python client for interacting with the Crypticorn API.
-
     It is consisting of multiple microservices covering the whole stack of the Crypticorn project.
     """
 
     def __init__(
         self,
-        api_key: str = None,
-        jwt: str = None,
+        api_key: Optional[str] = None,
+        jwt: Optional[str] = None,
         base_url: BaseUrl = BaseUrl.PROD,
     ):
         self.base_url = base_url
@@ -30,7 +31,14 @@ class ApiClient:
         """The API key to use for authentication (recommended)."""
         self.jwt = jwt
         """The JWT to use for authentication (not recommended)."""
+        self.version = version("crypticorn")
+        """The version of the client."""
 
+        self._http_client = ClientSession(
+            timeout=ClientTimeout(total=30.0),
+            connector=TCPConnector(limit=100, limit_per_host=20),
+            headers={"User-Agent": f"crypticorn/python/{self.version}"},
+        )
         self._service_classes: dict[Service, type[SubClient]] = {
             Service.HIVE: HiveClient,
             Service.TRADE: TradeClient,
@@ -39,9 +47,10 @@ class ApiClient:
             Service.METRICS: MetricsClient,
             Service.AUTH: AuthClient,
         }
-
         self._services: dict[Service, SubClient] = {
-            service: client_class(self._get_default_config(service))
+            service: client_class(
+                self._get_default_config(service), http_client=self._http_client
+            )
             for service, client_class in self._service_classes.items()
         }
 
@@ -88,17 +97,16 @@ class ApiClient:
         return self._services[Service.AUTH]
 
     async def close(self):
-        """Close all client sessions."""
         for service in self._services.values():
-            if hasattr(service.base_client, "close"):
+            if hasattr(service, "base_client") and hasattr(
+                service.base_client, "close"
+            ):
                 await service.base_client.close()
+        await self._http_client.close()
 
-    def _get_default_config(
-        self, service: Service, version: ApiVersion = ApiVersion.V1
-    ):
-        """
-        Get the default configuration for a given service.
-        """
+    def _get_default_config(self, service, version=None):
+        if version is None:
+            version = ApiVersion.V1
         config_class = self._service_classes[service].config_class
         return config_class(
             host=f"{self.base_url}/{version}/{service}",
@@ -106,11 +114,7 @@ class ApiClient:
             api_key={aph.scheme_name: self.api_key} if self.api_key else None,
         )
 
-    def configure(
-        self,
-        config: ConfigT,
-        service: Service,
-    ):
+    def configure(self, config: ConfigT, service: Service) -> None:
         """
         Update a sub-client's configuration by overriding with the values set in the new config.
         Useful for testing a specific service against a local server instead of the default proxy.
@@ -125,13 +129,13 @@ class ApiClient:
         assert Service.validate(service), f"Invalid service: {service}"
         client = self._services[service]
         new_config = client.config
-
         for attr in vars(config):
             new_value = getattr(config, attr)
             if new_value:
                 setattr(new_config, attr, new_value)
-
-        self._services[service] = type(client)(new_config)
+        self._services[service] = type(client)(
+            new_config, http_client=self._http_client
+        )
 
     async def __aenter__(self):
         return self
