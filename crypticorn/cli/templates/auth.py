@@ -14,13 +14,8 @@ dotenv.load_dotenv()
 
 logger = logging.getLogger(__name__)
 
-DOCKER_ENV = os.getenv("IS_DOCKER")
+DOCKER_ENV = os.getenv("IS_DOCKER", "0")
 API_ENV = os.getenv("API_ENV")
-
-if not DOCKER_ENV:
-    raise ValueError(
-        "IS_DOCKER is not set. Please set it to '0' in .env and '1' in the docker-compose.yml file."
-    )
 
 if not API_ENV:
     raise ValueError(

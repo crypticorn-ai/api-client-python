@@ -1,7 +1,7 @@
 """
 This module contains the status router for the API.
 It provides endpoints for checking the status of the API and get the server's time.
-SHOULD ALLOW ACCESS TO THIS ROUTER WITHOUT.
+SHOULD ALLOW ACCESS TO THIS ROUTER WITHOUT AUTH.
 >>> app.include_router(status_router)
 """
 

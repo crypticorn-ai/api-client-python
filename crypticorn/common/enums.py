@@ -5,15 +5,24 @@ try:
 except ImportError:
     from strenum import StrEnum
 
+from enum import Enum
+import warnings
+import typing_extensions
 from crypticorn.common.mixins import ValidateEnumMixin
+from crypticorn.common.warnings import CrypticornDeprecatedSince215
 
 
 class Exchange(ValidateEnumMixin, StrEnum):
-    """Supported exchanges for trading"""
+    """All exchanges used in the crypticorn ecosystem. Refer to the APIs for support for a specific usecase (data, trading, etc.)."""
 
     KUCOIN = "kucoin"
     BINGX = "bingx"
+    BINANCE = "binance"
+    BYBIT = "bybit"
     HYPERLIQUID = "hyperliquid"
+    BITGET = "bitget"
+    GATEIO = "gateio"
+    BITSTAMP = "bitstamp"
 
 
 class InternalExchange(ValidateEnumMixin, StrEnum):
@@ -25,6 +34,14 @@ class InternalExchange(ValidateEnumMixin, StrEnum):
     BYBIT = "bybit"
     HYPERLIQUID = "hyperliquid"
     BITGET = "bitget"
+
+    @classmethod
+    def __getattr__(cls, name):
+        warnings.warn(
+            "The `InternalExchange` enum is deprecated; use `Exchange` instead.",
+            category=CrypticornDeprecatedSince215,
+        )
+        return super().__getattr__(name)
 
 
 class MarketType(ValidateEnumMixin, StrEnum):
