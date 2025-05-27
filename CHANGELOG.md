@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.15.0 (2025-05-27)
+
+### Features
+
+- Deprecate `InternalExchange` and move enum members to `Exchange`
+  ([`5a4cea7`](https://github.com/crypticorn-ai/api-client/commit/5a4cea7695f862a2bc66bf921749f973117452cb))
+
+
 ## v2.14.0 (2025-05-26)
 
 ### Bug Fixes
