@@ -34,13 +34,11 @@ class TPSL(BaseModel):
         description="Percentage of the open order to sell. All allocations must sum up to 1. Use this allocation again when closing the order."
     )
     execution_id: Optional[StrictStr] = None
-    client_order_id: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = [
         "price_delta",
         "price",
         "allocation",
         "execution_id",
-        "client_order_id",
     ]
 
     model_config = ConfigDict(
@@ -95,11 +93,6 @@ class TPSL(BaseModel):
         if self.execution_id is None and "execution_id" in self.model_fields_set:
             _dict["execution_id"] = None
 
-        # set to None if client_order_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.client_order_id is None and "client_order_id" in self.model_fields_set:
-            _dict["client_order_id"] = None
-
         return _dict
 
     @classmethod
@@ -117,7 +110,6 @@ class TPSL(BaseModel):
                 "price": obj.get("price"),
                 "allocation": obj.get("allocation"),
                 "execution_id": obj.get("execution_id"),
-                "client_order_id": obj.get("client_order_id"),
             }
         )
         return _obj

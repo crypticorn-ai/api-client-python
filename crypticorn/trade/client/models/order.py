@@ -65,7 +65,7 @@ class Order(BaseModel):
     sent_qty: Optional[StrictStr] = None
     fee: Optional[StrictStr] = None
     leverage: Optional[StrictInt] = None
-    order_details: Optional[Any] = Field(
+    order_details: Optional[Dict[str, Any]] = Field(
         default=None, description="Exchange specific details of the order"
     )
     pnl: Optional[StrictStr] = None
@@ -138,9 +138,6 @@ class Order(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of order_details
-        if self.order_details:
-            _dict["order_details"] = self.order_details.to_dict()
         # set to None if trading_action_id (nullable) is None
         # and model_fields_set contains the field
         if (
@@ -257,11 +254,6 @@ class Order(BaseModel):
         if self.leverage is None and "leverage" in self.model_fields_set:
             _dict["leverage"] = None
 
-        # set to None if order_details (nullable) is None
-        # and model_fields_set contains the field
-        if self.order_details is None and "order_details" in self.model_fields_set:
-            _dict["order_details"] = None
-
         # set to None if pnl (nullable) is None
         # and model_fields_set contains the field
         if self.pnl is None and "pnl" in self.model_fields_set:
@@ -310,11 +302,7 @@ class Order(BaseModel):
                 "sent_qty": obj.get("sent_qty"),
                 "fee": obj.get("fee"),
                 "leverage": obj.get("leverage"),
-                "order_details": (
-                    AnyOf.from_dict(obj["order_details"])
-                    if obj.get("order_details") is not None
-                    else None
-                ),
+                "order_details": obj.get("order_details"),
                 "pnl": obj.get("pnl"),
                 "order_time": obj.get("order_time"),
             }

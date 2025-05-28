@@ -33,12 +33,19 @@ class FuturesTradingActionCreate(BaseModel):
     Model for sending futures trading actions
     """  # noqa: E501
 
-    leverage: Optional[Annotated[int, Field(strict=True, ge=1)]]
-    margin_mode: Optional[MarginMode] = None
+    leverage: Optional[Annotated[int, Field(strict=True, ge=1)]] = Field(
+        default=1, description="Leverage to use for futures trades. Default is 1."
+    )
+    margin_mode: Optional[MarginMode] = Field(
+        default=None, description="Margin mode for futures trades. Default is isolated."
+    )
     execution_id: Optional[StrictStr] = None
     open_order_execution_id: Optional[StrictStr] = None
     action_type: TradingActionType = Field(description="The type of action.")
-    market_type: MarketType = Field(description="The type of market the action is for.")
+    market_type: Optional[MarketType] = Field(
+        default=None,
+        description="The type of market the action is for. Must be set to futures.",
+    )
     strategy_id: StrictStr = Field(description="UID for the strategy.")
     symbol: StrictStr = Field(
         description="Trading symbol or asset pair in format: 'symbol/quote_currency' (see market service for valid symbols)"
@@ -119,16 +126,6 @@ class FuturesTradingActionCreate(BaseModel):
                 if _item_stop_loss:
                     _items.append(_item_stop_loss.to_dict())
             _dict["stop_loss"] = _items
-        # set to None if leverage (nullable) is None
-        # and model_fields_set contains the field
-        if self.leverage is None and "leverage" in self.model_fields_set:
-            _dict["leverage"] = None
-
-        # set to None if margin_mode (nullable) is None
-        # and model_fields_set contains the field
-        if self.margin_mode is None and "margin_mode" in self.model_fields_set:
-            _dict["margin_mode"] = None
-
         # set to None if execution_id (nullable) is None
         # and model_fields_set contains the field
         if self.execution_id is None and "execution_id" in self.model_fields_set:
