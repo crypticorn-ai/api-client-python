@@ -1,6 +1,6 @@
 """Utilities for handling paginated API responses and cursor-based pagination."""
 
-from typing import Generic, Type, TypeVar, List, Optional, Literal
+from typing import Generic, Type, TypeVar, Optional, Literal
 from pydantic import BaseModel, Field, model_validator
 
 T = TypeVar("T")
@@ -11,7 +11,7 @@ class PaginatedResponse(BaseModel, Generic[T]):
     >>> PaginatedResponse[ItemModel](data=items, total=total_items, page=1, size=10, prev=None, next=2)
     """
 
-    data: List[T]
+    data: list[T]
     total: int = Field(description="The total number of items")
     page: int = Field(description="The current page number")
     size: int = Field(description="The number of items per page")
@@ -28,9 +28,7 @@ class PaginationParams(BaseModel, Generic[T]):
 
     page: int = Field(default=1, description="The current page number")
     size: int = Field(default=10, description="The number of items per page")
-    order: Literal["asc", "desc"] = Field(
-        default="asc", description="The order to sort by"
-    )
+    order: Optional[Literal["asc", "desc"]] = Field(None, description="The order to sort by")
     sort: Optional[str] = Field(None, description="The field to sort by")
 
     @model_validator(mode="after")
@@ -48,4 +46,8 @@ class PaginationParams(BaseModel, Generic[T]):
                 raise ValueError(
                     f"Invalid sort field: '{self.sort}' — must be one of: {list(model.model_fields)}"
                 )
+        if self.order and self.order not in ["asc", "desc"]:
+            raise ValueError(f"Invalid order: '{self.order}' — must be one of: ['asc', 'desc']")
+        if self.order and not self.sort or self.sort and not self.order:
+            raise ValueError("Sort and order must be provided together")
         return self
