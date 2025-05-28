@@ -55,6 +55,7 @@ class CrypticornDeprecatedSince28(CrypticornDeprecationWarning):
     def __init__(self, message: str, *args: object) -> None:
         super().__init__(message, *args, since=(2, 8), expected_removal=(3, 0))
 
+
 class CrypticornDeprecatedSince215(CrypticornDeprecationWarning):
     """A specific `CrypticornDeprecationWarning` subclass defining functionality deprecated since Crypticorn 2.15."""
 

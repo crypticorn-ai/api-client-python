@@ -34,7 +34,10 @@ class SpotTradingActionCreate(BaseModel):
     execution_id: Optional[StrictStr] = None
     open_order_execution_id: Optional[StrictStr] = None
     action_type: TradingActionType = Field(description="The type of action.")
-    market_type: MarketType = Field(description="The type of market the action is for.")
+    market_type: Optional[MarketType] = Field(
+        default=None,
+        description="The type of market the action is for. Must be set to spot.",
+    )
     strategy_id: StrictStr = Field(description="UID for the strategy.")
     symbol: StrictStr = Field(
         description="Trading symbol or asset pair in format: 'symbol/quote_currency' (see market service for valid symbols)"

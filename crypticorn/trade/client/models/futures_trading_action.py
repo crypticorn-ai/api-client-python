@@ -33,8 +33,12 @@ class FuturesTradingAction(BaseModel):
     Model for futures trading actions
     """  # noqa: E501
 
-    leverage: Optional[Annotated[int, Field(strict=True, ge=1)]]
-    margin_mode: Optional[MarginMode] = None
+    leverage: Optional[Annotated[int, Field(strict=True, ge=1)]] = Field(
+        default=1, description="Leverage to use for futures trades. Default is 1."
+    )
+    margin_mode: Optional[MarginMode] = Field(
+        default=None, description="Margin mode for futures trades. Default is isolated."
+    )
     created_at: Optional[StrictInt] = Field(
         default=None, description="Timestamp of creation"
     )
@@ -60,8 +64,6 @@ class FuturesTradingAction(BaseModel):
     take_profit: Optional[List[TPSL]] = None
     stop_loss: Optional[List[TPSL]] = None
     expiry_timestamp: Optional[StrictInt] = None
-    client_order_id: Optional[StrictStr] = None
-    position_id: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = [
         "leverage",
         "margin_mode",
@@ -80,8 +82,6 @@ class FuturesTradingAction(BaseModel):
         "take_profit",
         "stop_loss",
         "expiry_timestamp",
-        "client_order_id",
-        "position_id",
     ]
 
     model_config = ConfigDict(
@@ -135,16 +135,6 @@ class FuturesTradingAction(BaseModel):
                 if _item_stop_loss:
                     _items.append(_item_stop_loss.to_dict())
             _dict["stop_loss"] = _items
-        # set to None if leverage (nullable) is None
-        # and model_fields_set contains the field
-        if self.leverage is None and "leverage" in self.model_fields_set:
-            _dict["leverage"] = None
-
-        # set to None if margin_mode (nullable) is None
-        # and model_fields_set contains the field
-        if self.margin_mode is None and "margin_mode" in self.model_fields_set:
-            _dict["margin_mode"] = None
-
         # set to None if execution_id (nullable) is None
         # and model_fields_set contains the field
         if self.execution_id is None and "execution_id" in self.model_fields_set:
@@ -186,16 +176,6 @@ class FuturesTradingAction(BaseModel):
         ):
             _dict["expiry_timestamp"] = None
 
-        # set to None if client_order_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.client_order_id is None and "client_order_id" in self.model_fields_set:
-            _dict["client_order_id"] = None
-
-        # set to None if position_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.position_id is None and "position_id" in self.model_fields_set:
-            _dict["position_id"] = None
-
         return _dict
 
     @classmethod
@@ -236,8 +216,6 @@ class FuturesTradingAction(BaseModel):
                     else None
                 ),
                 "expiry_timestamp": obj.get("expiry_timestamp"),
-                "client_order_id": obj.get("client_order_id"),
-                "position_id": obj.get("position_id"),
             }
         )
         return _obj
