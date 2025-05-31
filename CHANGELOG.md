@@ -1,6 +1,24 @@
 # CHANGELOG
 
 
+## v2.16.0 (2025-05-31)
+
+### Features
+
+- Add new scope for DEX AI Signals
+  ([`8b566f1`](https://github.com/crypticorn-ai/api-client/commit/8b566f1203268bfa898e9b03e32468f4611ebccc))
+
+### Refactoring
+
+- Make order field in pagination model optional and improve the data validation
+  ([`d3e3a6f`](https://github.com/crypticorn-ai/api-client/commit/d3e3a6f8e1752f38ab51d1fbc74d976968ef3c1c))
+
+### Testing
+
+- Update pagination tests
+  ([`1692b8d`](https://github.com/crypticorn-ai/api-client/commit/1692b8d02c99c9592c19e612c82ed128de95213d))
+
+
 ## v2.15.0 (2025-05-27)
 
 ### Features
