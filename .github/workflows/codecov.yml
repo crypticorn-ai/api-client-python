@@ -9,9 +9,8 @@ on:
     branches:
       - main
       - dev
-  path:
-    - 'python/**'
-      
+    paths:
+      - python/**
 
 permissions:
   contents: write
@@ -29,34 +28,34 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
-    
+
     steps:
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
 
-    - name: Check-out repository
-      uses: actions/checkout@v4
+      - name: Check-out repository
+        uses: actions/checkout@v4
 
-    - name: Generate .env
-      run: ./python/scripts/merge-env.sh
+      - name: Generate .env
+        run: ./python/scripts/merge-env.sh
 
-    - name: Install package
-      run: pip install -e python[test]
+      - name: Install package
+        run: pip install -e python[test]
 
-    - name: Test with pytest
-      run: pytest python/tests/ --cov=crypticorn --cov-branch --cov-report=xml
+      - name: Test with pytest
+        run: pytest python/tests/ --cov=crypticorn --cov-branch --cov-report=xml
 
-    # - name: Use Codecov to track coverage
-    #   uses: codecov/codecov-action@v2
-    #   with:
-    #     files: ./coverage.xml
+      # - name: Use Codecov to track coverage
+      #   uses: codecov/codecov-action@v2
+      #   with:
+      #     files: ./coverage.xml
 
-    - name: Pytest coverage comment
-      if: ${{ matrix.python-version == '3.13' }}
-      uses: MishaKav/pytest-coverage-comment@main
-      with:
-        title: Coverage Report ${{ matrix.python-version }}
-        pytest-xml-coverage-path: ./coverage.xml
-        report-only-changed-files: true
+      - name: Pytest coverage comment
+        if: ${{ matrix.python-version == '3.13' }}
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          title: Coverage Report ${{ matrix.python-version }}
+          pytest-xml-coverage-path: ./coverage.xml
+          report-only-changed-files: true
