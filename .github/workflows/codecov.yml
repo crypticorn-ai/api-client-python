@@ -1,10 +1,10 @@
+---
 # https://github.com/marketplace/actions/pytest-coverage-comment
 name: Test and Coverage
+
 on:
   pull_request:
-    branches:
-      - main
-      - dev
+    branches: [main, dev]
   push:
     branches:
       - main
@@ -18,7 +18,7 @@ permissions:
   pull-requests: write
 
 env:
-  API_ENV: ${{ github.event.workflow_run.head_branch == 'main' && 'prod' || 'dev' }}
+  API_ENV: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
   JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
 jobs:
@@ -42,7 +42,20 @@ jobs:
         run: ./python/scripts/merge-env.sh
 
       - name: Install package
-        run: pip install -e python[test]
+        run: pip install -e python[test,dev]
+
+      - name: Package build test
+        run: |
+          cd python
+          python -m build --wheel --sdist
+      - name: Import verification
+        run: |
+          cd python
+          python -c "import crypticorn; import importlib.metadata; print(f'Package version: {importlib.metadata.distribution(\"crypticorn\").version}')"
+      - name: CLI functionality test
+        run: |
+          crypticorn version
+          crypticorn --help
 
       - name: Test with pytest
         run: pytest python/tests/ --cov=crypticorn --cov-branch --cov-report=xml
