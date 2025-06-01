@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.17.0-rc.1 (2025-06-01)
+
+### Features
+
+- Add metrics router
+  ([`9b4a9bd`](https://github.com/crypticorn-ai/api-client/commit/9b4a9bd33e16d70d4338f7d458e2d405cb1d22dd))
+
+
 ## v2.16.0 (2025-05-31)
 
 ### Features
