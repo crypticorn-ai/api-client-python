@@ -47,3 +47,6 @@ General utility functions and helper methods used across the codebase.
 
 ## Warnings
 Warning handling and custom warning types for the application.
+
+## Metrics
+Shared metrics we collect from our APIs and expose to Prometheus and Grafana.
