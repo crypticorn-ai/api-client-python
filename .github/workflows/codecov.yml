@@ -9,6 +9,8 @@ on:
     branches:
       - main
       - dev
+  path:
+    - 'python/**'
       
 
 permissions:
