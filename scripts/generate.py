@@ -100,6 +100,8 @@ def main():
         "--minimal-update",
         "--library",
         "asyncio",
+        "-t",
+        "python/scripts/templates",
     ]
     subprocess.run(generator_cmd, check=True)
 

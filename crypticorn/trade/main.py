@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, Optional
-from crypticorn.trade import (
+from crypticorn.trade.client import (
     ApiClient,
     APIKeysApi,
     BotsApi,
