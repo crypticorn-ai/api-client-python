@@ -3,6 +3,7 @@ from aiohttp import ClientSession, ClientTimeout, TCPConnector
 from crypticorn.hive import HiveClient
 from crypticorn.klines import KlinesClient
 from crypticorn.pay import PayClient
+
 from crypticorn.trade import TradeClient
 from crypticorn.metrics import MetricsClient
 from crypticorn.auth import AuthClient
