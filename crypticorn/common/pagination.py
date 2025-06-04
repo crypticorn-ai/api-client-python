@@ -35,13 +35,19 @@ class PaginationParams(BaseModel, Generic[T]):
     """
 
     page: Optional[int] = Field(default=1, description="The current page number")
-    page_size: Annotated[int, Field(ge=1, le=100)] = Field(10, description="The number of items per page. Default is 10, max is 100.")
+    page_size: Annotated[int, Field(ge=1, le=100)] = Field(
+        10, description="The number of items per page. Default is 10, max is 100."
+    )
+
 
 class HeavyPaginationParams(PaginationParams[T]):
-    """Pagination parameters with a higher default size. Refer to `PaginationParams` for usage examples.
-    """
-    page_size: Annotated[int, Field(ge=1, le=1000)] = Field(100, description="The number of items per page. Default is 100, max is 1000.")
-        
+    """Pagination parameters with a higher default size. Refer to `PaginationParams` for usage examples."""
+
+    page_size: Annotated[int, Field(ge=1, le=1000)] = Field(
+        100, description="The number of items per page. Default is 100, max is 1000."
+    )
+
+
 class SortParams(BaseModel, Generic[T]):
     """Standard sort parameters for usage in API endpoints. Check the [fastapi docs](https://fastapi.tiangolo.com/tutorial/query-param-models/?h=qu#query-parameters-with-a-pydantic-model) for usage examples.
     Can only be used isolated, not in combination with other parameters. If you need to combine with other parameters, use `FilterComboParams` or refer to this [workaround](https://github.com/fastapi/fastapi/discussions/13448#discussioncomment-12440374).
@@ -53,11 +59,13 @@ class SortParams(BaseModel, Generic[T]):
     >>>     ...
     """
 
-    sort_order: Optional[Literal["asc", "desc"]] = Field(None, description="The order to sort by")
+    sort_order: Optional[Literal["asc", "desc"]] = Field(
+        None, description="The order to sort by"
+    )
     sort_by: Optional[str] = Field(None, description="The field to sort by")
 
     @model_validator(mode="after")
-    def validate(self):
+    def validate_sort(self):
         # Extract the generic argument type
         args: tuple = self.__pydantic_generic_metadata__.get("args")
         if not args or not issubclass(args[0], BaseModel):
@@ -67,14 +75,18 @@ class SortParams(BaseModel, Generic[T]):
         if self.sort_by:
             # check if the sort field is valid
             model: Type[BaseModel] = args[0]
-            _enforce_field_type(model, self.sort_by, self.sort_by)
+            if self.sort_by not in model.model_fields:
+                raise ValueError(
+                    f"Invalid field: '{self.sort_by}'. Must be one of: {list(model.model_fields)}"
+                )
         if self.sort_order and self.sort_order not in ["asc", "desc"]:
             raise ValueError(
                 f"Invalid order: '{self.sort_order}' — must be one of: ['asc', 'desc']"
             )
-        if self.sort_order and not self.sort_by or self.sort_by and not self.sort_order:
+        if self.sort_order and self.sort_by is None or self.sort_by and self.sort_order is None:
             raise ValueError("sort_order and sort_by must be provided together")
         return self
+
 
 class FilterParams(BaseModel, Generic[T]):
     """Standard filter parameters for usage in API endpoints. Check the [fastapi docs](https://fastapi.tiangolo.com/tutorial/query-param-models/?h=qu#query-parameters-with-a-pydantic-model) for usage examples.
@@ -86,13 +98,14 @@ class FilterParams(BaseModel, Generic[T]):
     >>> ) -> PaginatedResponse[Order]:
     >>>     ...
     """
+
     filter_by: Optional[str] = Field(None, description="The field to filter by")
     filter_value: Optional[Any] = Field(None, description="The value to filter with")
 
     @model_validator(mode="after")
-    def validate(self):
+    def validate_filter(self):
         if self.filter_by and not self.filter_value:
-            raise ValueError("Value must be provided when filtering by a field")
+            raise ValueError("filter_by and filter_value must be provided together")
         if self.filter_by:
             # Extract the generic argument type
             args: tuple = self.__pydantic_generic_metadata__.get("args")
@@ -102,10 +115,15 @@ class FilterParams(BaseModel, Generic[T]):
                 )
             # check if the filter field is valid
             model: Type[BaseModel] = args[0]
-            _enforce_field_type(model, self.filter_by, self.filter_value)
+            if self.filter_by not in model.model_fields:
+                raise ValueError(
+                    f"Invalid field: '{self.filter_by}'. Must be one of: {list(model.model_fields)}"
+                )
+            self.filter_value = _enforce_field_type(model, self.filter_by, self.filter_value)
         return self
 
-class FilterComboParams(PaginationParams[T], FilterParams[T], SortParams[T]):
+
+class FilterComboParams(PaginationParams[T], SortParams[T], FilterParams[T], ):
     """Combines pagination, filter, and sort parameters.
     Usage:
     >>> @router.get("", operation_id="getOrders")
@@ -114,7 +132,9 @@ class FilterComboParams(PaginationParams[T], FilterParams[T], SortParams[T]):
     >>> ) -> PaginatedResponse[Order]:
     >>>     ...
     """
+
     pass
+
 
 class HeavyFilterComboParams(HeavyPaginationParams[T], FilterParams[T], SortParams[T]):
     """Combines pagination, filter, and sort parameters.
@@ -125,11 +145,13 @@ class HeavyFilterComboParams(HeavyPaginationParams[T], FilterParams[T], SortPara
     >>> ) -> PaginatedResponse[Order]:
     >>>     ...
     """
+
     pass
+
 
 def _enforce_field_type(model: Type[BaseModel], field_name: str, value: Any) -> Any:
     """
-    Coerce or validate `value` to match the type of `field_name` on the given `model`.
+    Coerce or validate `value` to match the type of `field_name` on the given `model`. Should be used after checking that the field is valid.
 
     :param model: The Pydantic model.
     :param field_name: The name of the field to match.
@@ -139,14 +161,12 @@ def _enforce_field_type(model: Type[BaseModel], field_name: str, value: Any) -> 
 
     :raises: ValueError: If the field doesn't exist or coercion fails.
     """
-    if field_name not in model.model_fields:
-        raise ValueError(f"Invalid field: '{field_name}'. Must be one of: {list(model.model_fields)}")
     expected_type = model.model_fields[field_name].annotation
-    
+
     if isinstance(value, expected_type):
         return value
 
     try:
         return expected_type(value)
     except Exception as e:
-        raise ValueError(f"Expected {expected_type}, got {type(value)}")
+        raise ValueError(f"Expected {expected_type} for field {field_name}, got {type(value)}")
