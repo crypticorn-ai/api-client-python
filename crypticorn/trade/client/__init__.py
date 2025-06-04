@@ -21,7 +21,6 @@ from crypticorn.trade.client.api.api_keys_api import APIKeysApi
 from crypticorn.trade.client.api.admin_api import AdminApi
 from crypticorn.trade.client.api.bots_api import BotsApi
 from crypticorn.trade.client.api.exchanges_api import ExchangesApi
-from crypticorn.trade.client.api.futures_trading_panel_api import FuturesTradingPanelApi
 from crypticorn.trade.client.api.notifications_api import NotificationsApi
 from crypticorn.trade.client.api.orders_api import OrdersApi
 from crypticorn.trade.client.api.status_api import StatusApi
@@ -50,6 +49,7 @@ from crypticorn.trade.client.models.bot_update import BotUpdate
 from crypticorn.trade.client.models.exception_detail import ExceptionDetail
 from crypticorn.trade.client.models.exchange import Exchange
 from crypticorn.trade.client.models.exchange_key import ExchangeKey
+from crypticorn.trade.client.models.exchange_key_balance import ExchangeKeyBalance
 from crypticorn.trade.client.models.exchange_key_create import ExchangeKeyCreate
 from crypticorn.trade.client.models.exchange_key_update import ExchangeKeyUpdate
 from crypticorn.trade.client.models.execution_ids import ExecutionIds
@@ -67,6 +67,7 @@ from crypticorn.trade.client.models.notification_update import NotificationUpdat
 from crypticorn.trade.client.models.order import Order
 from crypticorn.trade.client.models.order_status import OrderStatus
 from crypticorn.trade.client.models.post_futures_action import PostFuturesAction
+from crypticorn.trade.client.models.spot_balance import SpotBalance
 from crypticorn.trade.client.models.spot_trading_action_create import (
     SpotTradingActionCreate,
 )

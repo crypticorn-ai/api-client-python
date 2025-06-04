@@ -16,6 +16,7 @@ async def auth_handler() -> AsyncGenerator[AuthHandler, None]:
     yield handler
     await handler.client.base_client.close()
 
+
 @pytest.fixture(scope="session")
 def app():
     """

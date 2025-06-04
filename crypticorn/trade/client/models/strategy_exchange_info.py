@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.trade.client.models.exchange import Exchange
 from typing import Optional, Set
 from typing_extensions import Self
@@ -30,10 +30,14 @@ class StrategyExchangeInfo(BaseModel):
     """  # noqa: E501
 
     exchange: Exchange = Field(description="Exchange name. Of type Exchange")
+    base_asset: Optional[StrictStr] = Field(
+        default="USDT",
+        description="Base asset for the strategy. This is the asset that will be used to trade with. Default is USDT.",
+    )
     min_amount: StrictInt = Field(
         description="Minimum amount for the strategy on the exchange"
     )
-    __properties: ClassVar[List[str]] = ["exchange", "min_amount"]
+    __properties: ClassVar[List[str]] = ["exchange", "base_asset", "min_amount"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -84,6 +88,14 @@ class StrategyExchangeInfo(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {"exchange": obj.get("exchange"), "min_amount": obj.get("min_amount")}
+            {
+                "exchange": obj.get("exchange"),
+                "base_asset": (
+                    obj.get("base_asset")
+                    if obj.get("base_asset") is not None
+                    else "USDT"
+                ),
+                "min_amount": obj.get("min_amount"),
+            }
         )
         return _obj

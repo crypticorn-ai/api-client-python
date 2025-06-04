@@ -16,4 +16,3 @@ from crypticorn.common.openapi import *
 from crypticorn.common.metrics import *
 from crypticorn.common.router.status_router import router as status_router
 from crypticorn.common.router.admin_router import router as admin_router
-

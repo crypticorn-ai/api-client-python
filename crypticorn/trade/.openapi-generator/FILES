@@ -4,7 +4,6 @@ client/api/admin_api.py
 client/api/api_keys_api.py
 client/api/bots_api.py
 client/api/exchanges_api.py
-client/api/futures_trading_panel_api.py
 client/api/notifications_api.py
 client/api/orders_api.py
 client/api/status_api.py
@@ -25,6 +24,7 @@ client/models/bot_update.py
 client/models/exception_detail.py
 client/models/exchange.py
 client/models/exchange_key.py
+client/models/exchange_key_balance.py
 client/models/exchange_key_create.py
 client/models/exchange_key_update.py
 client/models/execution_ids.py
@@ -40,6 +40,7 @@ client/models/notification_update.py
 client/models/order.py
 client/models/order_status.py
 client/models/post_futures_action.py
+client/models/spot_balance.py
 client/models/spot_trading_action_create.py
 client/models/strategy.py
 client/models/strategy_create.py

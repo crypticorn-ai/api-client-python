@@ -10,9 +10,15 @@ class Item(BaseModel):
 
 @pytest.mark.asyncio
 async def test_pagination():
-    with pytest.raises(TypeError, match="PaginationParams must be used with a Pydantic BaseModel as a generic parameter"):
+    with pytest.raises(
+        TypeError,
+        match="PaginationParams must be used with a Pydantic BaseModel as a generic parameter",
+    ):
         PaginationParams[int]()
-    with pytest.raises(ValueError, match="Invalid sort field: 'foo' — must be one of: \\['name', 'value'\\]"):
+    with pytest.raises(
+        ValueError,
+        match="Invalid sort field: 'foo' — must be one of: \\['name', 'value'\\]",
+    ):
         PaginationParams[Item](sort="foo")
 
     pagination_params = PaginationParams[Item](sort="name", order="asc")
@@ -34,10 +40,10 @@ async def test_pagination_sort_order_interaction():
     # Test that sort and order must be provided together
     with pytest.raises(ValueError, match="Sort and order must be provided together"):
         PaginationParams[Item](sort="name")
-    
+
     with pytest.raises(ValueError, match="Sort and order must be provided together"):
         PaginationParams[Item](order="asc")
-    
+
     # Test valid combination
     params = PaginationParams[Item](sort="name", order="asc")
     assert params.sort == "name"

@@ -50,14 +50,16 @@ class Strategy(BaseModel):
         description="Whether the strategy is enabled. If false, no bots will be created or updated for this strategy, open trades will be rejected. Existing bots will be marked as stopping."
     )
     performance_fee: Union[
-        Annotated[float, Field(le=1.0, strict=True)],
-        Annotated[int, Field(le=1, strict=True)],
+        Annotated[float, Field(le=1.0, strict=True, ge=0.0)],
+        Annotated[int, Field(le=1, strict=True, ge=0)],
     ] = Field(description="Performance fee for the strategy")
     identifier: StrictStr = Field(
         description="Unique human readable identifier for the strategy e.g. 'daily_trend_momentum'"
     )
     margin_mode: Optional[MarginMode] = None
-    leverage: StrictInt = Field(description="Leverage for the strategy")
+    leverage: Annotated[int, Field(strict=True, ge=1)] = Field(
+        description="Leverage for the strategy"
+    )
     market_type: MarketType = Field(description="Market of operation of the strategy")
     __properties: ClassVar[List[str]] = [
         "created_at",
