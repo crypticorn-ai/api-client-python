@@ -1,10 +1,11 @@
 """General utility functions and helper methods used across the codebase."""
 
 from datetime import datetime
-from typing import Any, Union
+from typing import Any, Type, Union
 from decimal import Decimal
 import string
 import random
+from pydantic import BaseModel
 import typing_extensions
 import warnings
 
