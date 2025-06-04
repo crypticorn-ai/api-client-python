@@ -36,8 +36,8 @@ class StrategyUpdate(BaseModel):
     enabled: Optional[StrictBool] = None
     performance_fee: Optional[
         Union[
-            Annotated[float, Field(le=1.0, strict=True)],
-            Annotated[int, Field(le=1, strict=True)],
+            Annotated[float, Field(le=1.0, strict=True, ge=0.0)],
+            Annotated[int, Field(le=1, strict=True, ge=0)],
         ]
     ] = None
     __properties: ClassVar[List[str]] = [

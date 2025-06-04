@@ -10,6 +10,7 @@ import warnings
 from crypticorn.common.warnings import CrypticornDeprecatedSince217
 from crypticorn.common.metrics import http_requests_total, http_request_duration_seconds
 
+
 class PrometheusMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request, call_next):
         start = time.perf_counter()
@@ -19,19 +20,22 @@ class PrometheusMiddleware(BaseHTTPMiddleware):
         http_requests_total.labels(
             method=request.method,
             endpoint=request.url.path,
-            status_code=response.status_code
+            status_code=response.status_code,
         ).inc()
 
-        http_request_duration_seconds.labels(
-            endpoint=request.url.path
-        ).observe(duration)
+        http_request_duration_seconds.labels(endpoint=request.url.path).observe(
+            duration
+        )
 
         return response
 
 
 @deprecated("Use add_middleware instead", category=None)
 def add_cors_middleware(app: "FastAPI"):
-    warnings.warn("add_cors_middleware is deprecated. Use add_middleware instead.", CrypticornDeprecatedSince217)
+    warnings.warn(
+        "add_cors_middleware is deprecated. Use add_middleware instead.",
+        CrypticornDeprecatedSince217,
+    )
     app.add_middleware(
         CORSMiddleware,
         allow_origins=[
@@ -43,6 +47,7 @@ def add_cors_middleware(app: "FastAPI"):
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
 
 def add_middleware(app: "FastAPI"):
     app.add_middleware(

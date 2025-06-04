@@ -17,47 +17,23 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List
+from crypticorn.trade.client.models.futures_balance import FuturesBalance
+from crypticorn.trade.client.models.spot_balance import SpotBalance
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class FuturesBalance(BaseModel):
+class ExchangeKeyBalance(BaseModel):
     """
-    Model for futures balance
+    ExchangeKeyBalance
     """  # noqa: E501
 
-    asset: StrictStr = Field(description="Asset the balance values are in")
-    equity: Union[StrictFloat, StrictInt] = Field(
-        description="Net asset value including unrealized profit and loss"
-    )
-    balance: Union[StrictFloat, StrictInt] = Field(
-        description="Actual account balance (equity - unrealized)"
-    )
-    available: Union[StrictFloat, StrictInt] = Field(
-        description="Available balance for trading/withdrawal"
-    )
-    unrealized: Union[StrictFloat, StrictInt] = Field(
-        description="Unrealized profit and loss"
-    )
-    used: Union[StrictFloat, StrictInt] = Field(
-        description="Margin used in open positions"
-    )
-    frozen: Union[StrictFloat, StrictInt] = Field(
-        description="Frozen funds not available for use"
-    )
-    allocated: Optional[Union[StrictFloat, StrictInt]] = None
-    __properties: ClassVar[List[str]] = [
-        "asset",
-        "equity",
-        "balance",
-        "available",
-        "unrealized",
-        "used",
-        "frozen",
-        "allocated",
-    ]
+    api_key_id: StrictStr = Field(description="API key ID.")
+    futures: FuturesBalance = Field(description="Futures balance information.")
+    spot: List[SpotBalance] = Field(description="Spot balance information.")
+    __properties: ClassVar[List[str]] = ["api_key_id", "futures", "spot"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -76,7 +52,7 @@ class FuturesBalance(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FuturesBalance from a JSON string"""
+        """Create an instance of ExchangeKeyBalance from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -96,16 +72,21 @@ class FuturesBalance(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if allocated (nullable) is None
-        # and model_fields_set contains the field
-        if self.allocated is None and "allocated" in self.model_fields_set:
-            _dict["allocated"] = None
-
+        # override the default output from pydantic by calling `to_dict()` of futures
+        if self.futures:
+            _dict["futures"] = self.futures.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in spot (list)
+        _items = []
+        if self.spot:
+            for _item_spot in self.spot:
+                if _item_spot:
+                    _items.append(_item_spot.to_dict())
+            _dict["spot"] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FuturesBalance from a dict"""
+        """Create an instance of ExchangeKeyBalance from a dict"""
         if obj is None:
             return None
 
@@ -114,14 +95,17 @@ class FuturesBalance(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "asset": obj.get("asset"),
-                "equity": obj.get("equity"),
-                "balance": obj.get("balance"),
-                "available": obj.get("available"),
-                "unrealized": obj.get("unrealized"),
-                "used": obj.get("used"),
-                "frozen": obj.get("frozen"),
-                "allocated": obj.get("allocated"),
+                "api_key_id": obj.get("api_key_id"),
+                "futures": (
+                    FuturesBalance.from_dict(obj["futures"])
+                    if obj.get("futures") is not None
+                    else None
+                ),
+                "spot": (
+                    [SpotBalance.from_dict(_item) for _item in obj["spot"]]
+                    if obj.get("spot") is not None
+                    else None
+                ),
             }
         )
         return _obj

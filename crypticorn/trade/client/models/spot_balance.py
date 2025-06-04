@@ -23,26 +23,15 @@ from typing import Optional, Set
 from typing_extensions import Self
 
 
-class FuturesBalance(BaseModel):
+class SpotBalance(BaseModel):
     """
-    Model for futures balance
+    Model for spot balance
     """  # noqa: E501
 
-    asset: StrictStr = Field(description="Asset the balance values are in")
-    equity: Union[StrictFloat, StrictInt] = Field(
-        description="Net asset value including unrealized profit and loss"
-    )
-    balance: Union[StrictFloat, StrictInt] = Field(
-        description="Actual account balance (equity - unrealized)"
-    )
+    asset: StrictStr = Field(description="Asset/Currency code")
+    balance: Union[StrictFloat, StrictInt] = Field(description="Balance of the asset")
     available: Union[StrictFloat, StrictInt] = Field(
         description="Available balance for trading/withdrawal"
-    )
-    unrealized: Union[StrictFloat, StrictInt] = Field(
-        description="Unrealized profit and loss"
-    )
-    used: Union[StrictFloat, StrictInt] = Field(
-        description="Margin used in open positions"
     )
     frozen: Union[StrictFloat, StrictInt] = Field(
         description="Frozen funds not available for use"
@@ -50,11 +39,8 @@ class FuturesBalance(BaseModel):
     allocated: Optional[Union[StrictFloat, StrictInt]] = None
     __properties: ClassVar[List[str]] = [
         "asset",
-        "equity",
         "balance",
         "available",
-        "unrealized",
-        "used",
         "frozen",
         "allocated",
     ]
@@ -76,7 +62,7 @@ class FuturesBalance(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FuturesBalance from a JSON string"""
+        """Create an instance of SpotBalance from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -105,7 +91,7 @@ class FuturesBalance(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FuturesBalance from a dict"""
+        """Create an instance of SpotBalance from a dict"""
         if obj is None:
             return None
 
@@ -115,11 +101,8 @@ class FuturesBalance(BaseModel):
         _obj = cls.model_validate(
             {
                 "asset": obj.get("asset"),
-                "equity": obj.get("equity"),
                 "balance": obj.get("balance"),
                 "available": obj.get("available"),
-                "unrealized": obj.get("unrealized"),
-                "used": obj.get("used"),
                 "frozen": obj.get("frozen"),
                 "allocated": obj.get("allocated"),
             }

@@ -6,7 +6,6 @@ from crypticorn.trade import (
     BotsApi,
     Configuration,
     ExchangesApi,
-    FuturesTradingPanelApi,
     NotificationsApi,
     OrdersApi,
     StatusApi,
@@ -40,5 +39,4 @@ class TradeClient:
         self.status = StatusApi(self.base_client)
         self.strategies = StrategiesApi(self.base_client)
         self.actions = TradingActionsApi(self.base_client)
-        self.futures = FuturesTradingPanelApi(self.base_client)
         self.keys = APIKeysApi(self.base_client)
