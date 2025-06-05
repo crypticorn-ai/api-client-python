@@ -25,11 +25,11 @@ You can install extra dependencies grouped in the extras `extra`, `dev` (develop
 
 Our API is available as both an asynchronous and synchronous Python SDK. The main entry points are:
 
-- `ApiClient` - Asynchronous client for async/await usage
-- `SyncApiClient` - Synchronous client for traditional blocking calls
+- `AsyncClient` - Asynchronous client for async/await usage
+- `SyncClient` - Synchronous client for traditional blocking calls
 
 ```python
-from crypticorn import ApiClient, SyncApiClient
+from crypticorn import AsyncClient, SyncClient
 ```
 Both clients serve as the central interface for API operations and instantiate multiple API wrappers corresponding to our micro services. These are structured the following:
 
@@ -63,18 +63,18 @@ There are scopes which don't follow this structure. Those are either scopes that
 
 You can use the async client with the context manager protocol...
 ```python
-async with ApiClient(api_key="your-api-key") as client:
+async with AsyncClient(api_key="your-api-key") as client:
     await client.pay.products.get_products()
 ```
 ...or without it like this...
 ```python
-client = ApiClient(api_key="your-api-key")
+client = AsyncClient(api_key="your-api-key")
 asyncio.run(client.pay.products.get_products())
 asyncio.run(client.close())
 ```
 ...or this.
 ```python
-client = ApiClient(api_key="your-api-key")
+client = AsyncClient(api_key="your-api-key")
 
 async def main():
     await client.pay.products.get_products()
@@ -85,18 +85,18 @@ asyncio.run(client.close())
 
 ### Synchronous Client
 
-For traditional synchronous usage without async/await, use the `SyncApiClient`:
+For traditional synchronous usage without async/await, use the `SyncClient`:
 
 ```python
-from crypticorn import SyncApiClient
+from crypticorn import SyncClient
 
 # With context manager (recommended)
-with SyncApiClient(api_key="your-api-key") as client:
+with SyncClient(api_key="your-api-key") as client:
     products = client.pay.products.get_products()
     status = client.trade.status.ping()
 
 # Or without context manager
-client = SyncApiClient(api_key="your-api-key")
+client = SyncClient(api_key="your-api-key")
 try:
     products = client.pay.products.get_products()
     status = client.trade.status.ping()
@@ -186,33 +186,33 @@ from crypticorn.hive import Configuration as HiveConfig
 from crypticorn.common import Service
 
 # Async client
-async with ApiClient() as client:
+async with AsyncClient() as client:
     client.configure(config=HiveConfig(host="http://localhost:8000"), service=Service.HIVE)
 
 # Sync client
-with SyncApiClient() as client:
+with SyncClient() as client:
     client.configure(config=HiveConfig(host="http://localhost:8000"), service=Service.HIVE)
 ```
 
 ### Session Management
 
-By default, `ApiClient` manages a single shared `aiohttp.ClientSession` for all service wrappers.  
+By default, `AsyncClient` manages a single shared `aiohttp.ClientSession` for all service wrappers.  
 However, you can pass your own pre-configured `aiohttp.ClientSession` if you need advanced control — for example, to add retries, custom headers, logging, or mocking behavior.
 
 When you inject a custom session, you are responsible for managing its lifecycle, including closing when you're done.
 
 ```python
 import aiohttp
-from crypticorn import ApiClient
+from crypticorn import AsyncClient
 
 async def main():
     custom_session = aiohttp.ClientSession()
-    async with ApiClient(api_key="your-key", http_client=custom_session) as client:
+    async with AsyncClient(api_key="your-key", http_client=custom_session) as client:
         await client.trade.status.ping()
     await custom_session.close()
 
 ```
-If you don’t pass a session, `ApiClient` will create and manage one internally. In that case, it will be automatically closed when using `async with` or when calling `await client.close()` manually.
+If you don’t pass a session, `AsyncClient` will create and manage one internally. In that case, it will be automatically closed when using `async with` or when calling `await client.close()` manually.
 
 ### Disable Logging
 
@@ -223,4 +223,4 @@ from crypticorn.common import disable_logging
 disable_logging()
 ```
 
-**Note on Sync Client**: The `SyncApiClient` uses per-operation sessions (creates and closes a session for each API call) to ensure reliable synchronous behavior. Custom sessions are accepted but not used. This approach prevents event loop conflicts at the cost of slightly higher overhead per operation.
+**Note on Sync Client**: The `SyncClient` uses per-operation sessions (creates and closes a session for each API call) to ensure reliable synchronous behavior. Custom sessions are accepted but not used. This approach prevents event loop conflicts at the cost of slightly higher overhead per operation.
