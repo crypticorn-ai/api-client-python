@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.17.0-rc.3 (2025-06-05)
+
+### Bug Fixes
+
+- Fixes bearer auth in websocket
+  ([`cb2f5f0`](https://github.com/crypticorn-ai/api-client/commit/cb2f5f07be25b8009f734de0d4bfdd4dd8b5c357))
+
+
 ## v2.17.0-rc.2 (2025-06-05)
 
 ### Documentation
