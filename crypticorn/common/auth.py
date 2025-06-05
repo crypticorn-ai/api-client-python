@@ -250,7 +250,8 @@ class AuthHandler:
         This function is used for WebSocket connections.
         """
         try:
-            return await self.bearer_auth(bearer=bearer, sec=sec)
+            credentials = HTTPAuthorizationCredentials(scheme="Bearer", credentials=bearer)
+            return await self.bearer_auth(bearer=credentials, sec=sec)
         except HTTPException as e:
             raise WebSocketException.from_http_exception(e)
 
