@@ -9,15 +9,15 @@ from crypticorn.pay import PayClient
 from crypticorn.trade import TradeClient
 from crypticorn.metrics import MetricsClient
 from crypticorn.auth import AuthClient
-from crypticorn.common import BaseUrl, ApiVersion, Service, apikey_header as aph
+from crypticorn.common import BaseUrl, ApiVersion, Service, apikey_header as aph, CrypticornDeprecatedSince217
 from importlib.metadata import version
-from asgiref.sync import async_to_sync
+from typing_extensions import deprecated
 
 ConfigT = TypeVar("ConfigT")
 SubClient = TypeVar("SubClient")
 
 
-class BaseApiClient:
+class BaseAsyncClient:
     """
     Base class for Crypticorn API clients containing shared functionality.
     """
@@ -63,9 +63,13 @@ class BaseApiClient:
             # For sync clients, don't pass the persistent http_client
             # Let each operation manage its own session
             if self._is_sync:
-                services[service] = client_class(config, http_client=None, is_sync=self._is_sync)
+                services[service] = client_class(
+                    config, http_client=None, is_sync=self._is_sync
+                )
             else:
-                services[service] = client_class(config, http_client=self._http_client, is_sync=self._is_sync)
+                services[service] = client_class(
+                    config, http_client=self._http_client, is_sync=self._is_sync
+                )
         return services
 
     @property
@@ -90,7 +94,7 @@ class BaseApiClient:
         This is the not the preferred way to authenticate.
         """
         return self._jwt
-    
+
     @property
     def version(self) -> str:
         """
@@ -164,11 +168,11 @@ class BaseApiClient:
 
         Example:
         >>> # For async client
-        >>> async with ApiClient() as client:
+        >>> async with AsyncClient() as client:
         ...     client.configure(config=HiveConfig(host="http://localhost:8000"), service=Service.HIVE)
         >>>
         >>> # For sync client
-        >>> with SyncApiClient() as client:
+        >>> with SyncClient() as client:
         ...     client.configure(config=HiveConfig(host="http://localhost:8000"), service=Service.HIVE)
         """
         assert Service.validate(service), f"Invalid service: {service}"
@@ -181,9 +185,13 @@ class BaseApiClient:
 
         # Recreate service with new config and appropriate parameters
         if self._is_sync:
-            self._services[service] = type(client)(new_config, is_sync=self._is_sync, http_client=self._http_client)
+            self._services[service] = type(client)(
+                new_config, is_sync=self._is_sync, http_client=self._http_client
+            )
         else:
-            self._services[service] = type(client)(new_config, http_client=self._http_client)
+            self._services[service] = type(client)(
+                new_config, http_client=self._http_client
+            )
 
     def _get_default_config(self, service, version=None):
         if version is None:
@@ -194,12 +202,16 @@ class BaseApiClient:
             access_token=self.jwt,
             api_key={aph.scheme_name: self.api_key} if self.api_key else None,
         )
-    
+
     async def close(self):
         """Close the client and clean up resources."""
         # close each service
         for service in self._services.values():
-            if hasattr(service, "base_client") and hasattr(service.base_client, "close") and self._owns_http_client:
+            if (
+                hasattr(service, "base_client")
+                and hasattr(service.base_client, "close")
+                and self._owns_http_client
+            ):
                 await service.base_client.close()
         # close shared http client if we own it
         if self._http_client and self._owns_http_client:
@@ -220,7 +232,7 @@ class BaseApiClient:
             self._services = self._create_services()
 
 
-class ApiClient(BaseApiClient):
+class AsyncClient(BaseAsyncClient):
     """
     The official async Python client for interacting with the Crypticorn API.
     It is consisting of multiple microservices covering the whole stack of the Crypticorn project.

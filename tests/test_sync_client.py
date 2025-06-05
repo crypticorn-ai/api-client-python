@@ -1,10 +1,10 @@
 import pytest
-from crypticorn.client import SyncApiClient, Service
+from crypticorn.client import SyncClient, Service
 
 
 def test_client_basic_instantiation():
     """Test basic client instantiation without errors."""
-    client = SyncApiClient()
+    client = SyncClient()
     assert client is not None
     assert client._http_client is None
     client.close()
@@ -12,10 +12,10 @@ def test_client_basic_instantiation():
 
 def test_client_manual_close():
     """Test manual close of client."""
-    client = SyncApiClient()
-    
+    client = SyncClient()
+
     assert client._http_client is None
-    
+
     # Close manually
     client.close()
     assert client._http_client is None
@@ -23,8 +23,8 @@ def test_client_manual_close():
 
 def test_client_ping_functionality():
     """Test that ping works correctly."""
-    client = SyncApiClient()
-    
+    client = SyncClient()
+
     try:
         response = client.trade.status.ping()
         # Should not raise any exceptions
@@ -35,8 +35,8 @@ def test_client_ping_functionality():
 
 def test_client_multiple_service_access():
     """Test accessing multiple services without errors."""
-    client = SyncApiClient()
-    
+    client = SyncClient()
+
     try:
         assert client._http_client is None
         # Access multiple services to ensure they're properly initialized
@@ -50,17 +50,17 @@ def test_client_multiple_service_access():
 
 def test_client_no_exceptions_on_basic_operations():
     """Test that basic operations don't raise unexpected exceptions."""
-    client = SyncApiClient()
-    
+    client = SyncClient()
+
     try:
         # Access a service
         trade_client = client.trade
         assert trade_client is not None
-        
+
         # Ping should work
         response = client.trade.status.ping()
         assert response is not None
-        
+
     except Exception as e:
         pytest.fail(f"Unexpected exception raised: {e}")
     finally:
@@ -69,29 +69,28 @@ def test_client_no_exceptions_on_basic_operations():
 
 def test_client_service_lazy_initialization():
     """Test that services are lazily initialized."""
-    client = SyncApiClient()
-    
+    client = SyncClient()
+
     # Services should be available immediately
     assert len(client._services) == len(Service)
-    
+
     # But HTTP client should be None until first use
     assert client._http_client is None
     # First access should create the session
     client.trade.status.ping()
     assert client._http_client is None
-    
+
     client.close()
     assert client._http_client is None
 
 
 def test_client_concurrent_operations():
     """Test that client handles concurrent operations correctly."""
-    client = SyncApiClient()
-    
+    client = SyncClient()
+
     responses = []
     for _ in range(5):
         responses.append(client.trade.status.ping())  # ✅ Each call properly managed
-    
+
     client.close()  # ✅ Reliable cleanup
     assert client._http_client is None
-
