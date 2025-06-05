@@ -51,13 +51,189 @@ class FundingRatesApi:
     Do not edit the class manually.
     """
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client=None, is_sync: bool = False) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+        self.is_sync = is_sync
 
     @validate_call
-    async def get_funding_rates(
+    def get_funding_rates(
+        self,
+        symbol: Annotated[
+            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
+        ],
+        start: Annotated[
+            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
+        ] = None,
+        end: Annotated[
+            Optional[StrictInt], Field(description="End timestamp in milliseconds")
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Number of funding rates to return"),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> FundingRateResponse:
+        """Funding Rate
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_funding_rates_sync(
+                symbol=symbol,
+                start=start,
+                end=end,
+                limit=limit,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_funding_rates_async(
+                symbol=symbol,
+                start=start,
+                end=end,
+                limit=limit,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_funding_rates_with_http_info(
+        self,
+        symbol: Annotated[
+            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
+        ],
+        start: Annotated[
+            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
+        ] = None,
+        end: Annotated[
+            Optional[StrictInt], Field(description="End timestamp in milliseconds")
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Number of funding rates to return"),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[FundingRateResponse]:
+        """Funding Rate with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_funding_rates_sync_with_http_info(
+                symbol=symbol,
+                start=start,
+                end=end,
+                limit=limit,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_funding_rates_async_with_http_info(
+                symbol=symbol,
+                start=start,
+                end=end,
+                limit=limit,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_funding_rates_without_preload_content(
+        self,
+        symbol: Annotated[
+            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
+        ],
+        start: Annotated[
+            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
+        ] = None,
+        end: Annotated[
+            Optional[StrictInt], Field(description="End timestamp in milliseconds")
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Number of funding rates to return"),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Funding Rate without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_funding_rates_sync_without_preload_content(
+                symbol=symbol,
+                start=start,
+                end=end,
+                limit=limit,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_funding_rates_async_without_preload_content(
+                symbol=symbol,
+                start=start,
+                end=end,
+                limit=limit,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_funding_rates_async(
         self,
         symbol: Annotated[
             StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
@@ -142,130 +318,7 @@ class FundingRatesApi:
         ).data
 
     @validate_call
-    def get_funding_rates_sync(
-        self,
-        symbol: Annotated[
-            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
-        ],
-        start: Annotated[
-            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
-        ] = None,
-        end: Annotated[
-            Optional[StrictInt], Field(description="End timestamp in milliseconds")
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=1)]],
-            Field(description="Number of funding rates to return"),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> FundingRateResponse:
-        """Synchronous version of get_funding_rates"""
-        return async_to_sync(self.get_funding_rates)(
-            symbol=symbol,
-            start=start,
-            end=end,
-            limit=limit,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def get_funding_rates_sync_with_http_info(
-        self,
-        symbol: Annotated[
-            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
-        ],
-        start: Annotated[
-            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
-        ] = None,
-        end: Annotated[
-            Optional[StrictInt], Field(description="End timestamp in milliseconds")
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=1)]],
-            Field(description="Number of funding rates to return"),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[FundingRateResponse]:
-        """Synchronous version of get_funding_rates_with_http_info"""
-        return async_to_sync(self.get_funding_rates_with_http_info)(
-            symbol=symbol,
-            start=start,
-            end=end,
-            limit=limit,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def get_funding_rates_sync_without_preload_content(
-        self,
-        symbol: Annotated[
-            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
-        ],
-        start: Annotated[
-            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
-        ] = None,
-        end: Annotated[
-            Optional[StrictInt], Field(description="End timestamp in milliseconds")
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=1)]],
-            Field(description="Number of funding rates to return"),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Synchronous version of get_funding_rates_without_preload_content"""
-        return async_to_sync(self.get_funding_rates_without_preload_content)(
-            symbol=symbol,
-            start=start,
-            end=end,
-            limit=limit,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    async def get_funding_rates_with_http_info(
+    async def _get_funding_rates_async_with_http_info(
         self,
         symbol: Annotated[
             StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
@@ -345,12 +398,11 @@ class FundingRatesApi:
         )
         await response_data.read()
         return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
+            response_data=response_data, response_types_map=_response_types_map
         )
 
     @validate_call
-    async def get_funding_rates_without_preload_content(
+    async def _get_funding_rates_async_without_preload_content(
         self,
         symbol: Annotated[
             StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
@@ -428,7 +480,131 @@ class FundingRatesApi:
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        return response_data.response
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _get_funding_rates_sync(
+        self,
+        symbol: Annotated[
+            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
+        ],
+        start: Annotated[
+            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
+        ] = None,
+        end: Annotated[
+            Optional[StrictInt], Field(description="End timestamp in milliseconds")
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Number of funding rates to return"),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> FundingRateResponse:
+        """Synchronous version of get_funding_rates"""
+        return async_to_sync(self._get_funding_rates_async)(
+            symbol=symbol,
+            start=start,
+            end=end,
+            limit=limit,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_funding_rates_sync_with_http_info(
+        self,
+        symbol: Annotated[
+            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
+        ],
+        start: Annotated[
+            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
+        ] = None,
+        end: Annotated[
+            Optional[StrictInt], Field(description="End timestamp in milliseconds")
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Number of funding rates to return"),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[FundingRateResponse]:
+        """Synchronous version of get_funding_rates_with_http_info"""
+        return async_to_sync(self._get_funding_rates_async_with_http_info)(
+            symbol=symbol,
+            start=start,
+            end=end,
+            limit=limit,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_funding_rates_sync_without_preload_content(
+        self,
+        symbol: Annotated[
+            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
+        ],
+        start: Annotated[
+            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
+        ] = None,
+        end: Annotated[
+            Optional[StrictInt], Field(description="End timestamp in milliseconds")
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Number of funding rates to return"),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of get_funding_rates_without_preload_content"""
+        return async_to_sync(self._get_funding_rates_async_without_preload_content)(
+            symbol=symbol,
+            start=start,
+            end=end,
+            limit=limit,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
 
     def _get_funding_rates_serialize(
         self,

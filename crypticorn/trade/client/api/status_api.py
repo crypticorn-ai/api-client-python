@@ -49,13 +49,135 @@ class StatusApi:
     Do not edit the class manually.
     """
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client=None, is_sync: bool = False) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+        self.is_sync = is_sync
 
     @validate_call
-    async def get_time(
+    def get_time(
+        self,
+        type: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> str:
+        """Time
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_time_sync(
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_time_async(
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_time_with_http_info(
+        self,
+        type: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[str]:
+        """Time with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_time_sync_with_http_info(
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_time_async_with_http_info(
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_time_without_preload_content(
+        self,
+        type: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Time without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_time_sync_without_preload_content(
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_time_async_without_preload_content(
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_time_async(
         self,
         type: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -119,7 +241,7 @@ class StatusApi:
         ).data
 
     @validate_call
-    async def get_time_with_http_info(
+    async def _get_time_async_with_http_info(
         self,
         type: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -182,7 +304,7 @@ class StatusApi:
         )
 
     @validate_call
-    async def get_time_without_preload_content(
+    async def _get_time_async_without_preload_content(
         self,
         type: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -241,9 +363,9 @@ class StatusApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_time_sync(
+    def _get_time_sync(
         self,
         type: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -259,7 +381,7 @@ class StatusApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> str:
         """Synchronous version of get_time"""
-        return async_to_sync(self.get_time)(
+        return async_to_sync(self._get_time_async)(
             type=type,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -269,7 +391,7 @@ class StatusApi:
         )
 
     @validate_call
-    def get_time_sync_with_http_info(
+    def _get_time_sync_with_http_info(
         self,
         type: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -285,7 +407,7 @@ class StatusApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[str]:
         """Synchronous version of get_time_with_http_info"""
-        return async_to_sync(self.get_time_with_http_info)(
+        return async_to_sync(self._get_time_async_with_http_info)(
             type=type,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -295,7 +417,7 @@ class StatusApi:
         )
 
     @validate_call
-    def get_time_sync_without_preload_content(
+    def _get_time_sync_without_preload_content(
         self,
         type: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -311,7 +433,7 @@ class StatusApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_time_without_preload_content"""
-        return async_to_sync(self.get_time_without_preload_content)(
+        return async_to_sync(self._get_time_async_without_preload_content)(
             type=type,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -377,7 +499,119 @@ class StatusApi:
         )
 
     @validate_call
-    async def ping(
+    def ping(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> str:
+        """Ping
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._ping_sync(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._ping_async(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def ping_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[str]:
+        """Ping with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._ping_sync_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._ping_async_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def ping_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Ping without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._ping_sync_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._ping_async_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _ping_async(
         self,
         _request_timeout: Union[
             None,
@@ -437,7 +671,7 @@ class StatusApi:
         ).data
 
     @validate_call
-    async def ping_with_http_info(
+    async def _ping_async_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -496,7 +730,7 @@ class StatusApi:
         )
 
     @validate_call
-    async def ping_without_preload_content(
+    async def _ping_async_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -551,9 +785,9 @@ class StatusApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def ping_sync(
+    def _ping_sync(
         self,
         _request_timeout: Union[
             None,
@@ -568,7 +802,7 @@ class StatusApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> str:
         """Synchronous version of ping"""
-        return async_to_sync(self.ping)(
+        return async_to_sync(self._ping_async)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -577,7 +811,7 @@ class StatusApi:
         )
 
     @validate_call
-    def ping_sync_with_http_info(
+    def _ping_sync_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -592,7 +826,7 @@ class StatusApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[str]:
         """Synchronous version of ping_with_http_info"""
-        return async_to_sync(self.ping_with_http_info)(
+        return async_to_sync(self._ping_async_with_http_info)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -601,7 +835,7 @@ class StatusApi:
         )
 
     @validate_call
-    def ping_sync_without_preload_content(
+    def _ping_sync_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -616,7 +850,7 @@ class StatusApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of ping_without_preload_content"""
-        return async_to_sync(self.ping_without_preload_content)(
+        return async_to_sync(self._ping_async_without_preload_content)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,

@@ -1,6 +1,7 @@
 from aiohttp import ClientSession
 from crypticorn.auth.client.exceptions import UnauthorizedException
 from crypticorn.auth import CreateApiKeyRequest
+from crypticorn.client import SyncApiClient
 from crypticorn.common import BaseUrl, Scope, Service, MarketType, InternalExchange
 from crypticorn.hive import Configuration as HiveConfig, DataInfo, ModelCreate
 from crypticorn.hive import Coins, Target
@@ -17,6 +18,8 @@ from crypticorn.trade import Bot, BotStatus
 from crypticorn.klines import Timeframe
 from datetime import datetime, timedelta
 import time
+from httpx import AsyncClient
+from httpx import Client as SyncClient
 
 jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuYlowNUVqS2ZqWGpXdDBTMDdvOSIsImF1ZCI6ImFwcC5jcnlwdGljb3JuLmNvbSIsImlzcyI6ImFjY291bnRzLmNyeXB0aWNvcm4uY29tIiwianRpIjoiUm1RcE9BZWNaV0t1djNDemNjd1YiLCJpYXQiOjE3NDQ1NDU1NTQsImV4cCI6MTc0NDU0OTE1NCwic2NvcGVzIjpbInJlYWQ6cHJlZGljdGlvbnMiXX0.UVD4-6Z5C6yYAaL6LMDwbGJCrhpk7TkDNo1TbinvDzM"
 
@@ -175,18 +178,28 @@ async def configure_client():
 
 async def custom_main():
     custom_session = ClientSession()
-    async with ApiClient(api_key="your-key", http_client=custom_session) as client:
-        await client.trade.status.ping()
+    async with ApiClient(http_client=custom_session) as client:
+        res = await client.trade.status.ping()
+        print(res)
     await custom_session.close()
     custom_session = ClientSession()
-    client = ApiClient(api_key="your-key", http_client=custom_session)
-    await client.trade.status.ping()
+    client = ApiClient(http_client=custom_session)
+    res = await client.trade.status.ping()
+    print(res)
     await custom_session.close()
+
+
+def sync_client():
+    client = SyncApiClient(base_url=BaseUrl.DEV)
+    res = client.trade.status.ping()
+    res = client.hive.status.ping()
+    print(res)
 
 
 if __name__ == "__main__":
     # asyncio.run(main())
     asyncio.run(custom_main())
+    # sync_client()
     # asyncio.run(configure_client())
     # response = asyncio.run(client.hive.models.get_all_models())
     # print(response)

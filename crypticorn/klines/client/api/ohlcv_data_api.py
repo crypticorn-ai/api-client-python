@@ -54,13 +54,231 @@ class OHLCVDataApi:
     Do not edit the class manually.
     """
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client=None, is_sync: bool = False) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+        self.is_sync = is_sync
 
     @validate_call
-    async def get_ohlcv(
+    def get_ohlcv(
+        self,
+        market: Annotated[MarketType, Field(description="Market type")],
+        timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
+        symbol: Annotated[
+            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
+        ],
+        start: Annotated[
+            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
+        ] = None,
+        end: Annotated[
+            Optional[StrictInt], Field(description="End timestamp in milliseconds")
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Number of candles to return"),
+        ] = None,
+        sort_direction: Annotated[
+            Optional[SortDirection],
+            Field(
+                description="Sort by timestamp in ascending or descending order. Default is descending."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[OHLCV]:
+        """Get Ohlcv
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_ohlcv_sync(
+                market=market,
+                timeframe=timeframe,
+                symbol=symbol,
+                start=start,
+                end=end,
+                limit=limit,
+                sort_direction=sort_direction,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_ohlcv_async(
+                market=market,
+                timeframe=timeframe,
+                symbol=symbol,
+                start=start,
+                end=end,
+                limit=limit,
+                sort_direction=sort_direction,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_ohlcv_with_http_info(
+        self,
+        market: Annotated[MarketType, Field(description="Market type")],
+        timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
+        symbol: Annotated[
+            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
+        ],
+        start: Annotated[
+            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
+        ] = None,
+        end: Annotated[
+            Optional[StrictInt], Field(description="End timestamp in milliseconds")
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Number of candles to return"),
+        ] = None,
+        sort_direction: Annotated[
+            Optional[SortDirection],
+            Field(
+                description="Sort by timestamp in ascending or descending order. Default is descending."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[OHLCV]]:
+        """Get Ohlcv with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_ohlcv_sync_with_http_info(
+                market=market,
+                timeframe=timeframe,
+                symbol=symbol,
+                start=start,
+                end=end,
+                limit=limit,
+                sort_direction=sort_direction,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_ohlcv_async_with_http_info(
+                market=market,
+                timeframe=timeframe,
+                symbol=symbol,
+                start=start,
+                end=end,
+                limit=limit,
+                sort_direction=sort_direction,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_ohlcv_without_preload_content(
+        self,
+        market: Annotated[MarketType, Field(description="Market type")],
+        timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
+        symbol: Annotated[
+            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
+        ],
+        start: Annotated[
+            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
+        ] = None,
+        end: Annotated[
+            Optional[StrictInt], Field(description="End timestamp in milliseconds")
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Number of candles to return"),
+        ] = None,
+        sort_direction: Annotated[
+            Optional[SortDirection],
+            Field(
+                description="Sort by timestamp in ascending or descending order. Default is descending."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Ohlcv without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_ohlcv_sync_without_preload_content(
+                market=market,
+                timeframe=timeframe,
+                symbol=symbol,
+                start=start,
+                end=end,
+                limit=limit,
+                sort_direction=sort_direction,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_ohlcv_async_without_preload_content(
+                market=market,
+                timeframe=timeframe,
+                symbol=symbol,
+                start=start,
+                end=end,
+                limit=limit,
+                sort_direction=sort_direction,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_ohlcv_async(
         self,
         market: Annotated[MarketType, Field(description="Market type")],
         timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
@@ -162,163 +380,7 @@ class OHLCVDataApi:
         ).data
 
     @validate_call
-    def get_ohlcv_sync(
-        self,
-        market: Annotated[MarketType, Field(description="Market type")],
-        timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
-        symbol: Annotated[
-            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
-        ],
-        start: Annotated[
-            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
-        ] = None,
-        end: Annotated[
-            Optional[StrictInt], Field(description="End timestamp in milliseconds")
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=1)]],
-            Field(description="Number of candles to return"),
-        ] = None,
-        sort_direction: Annotated[
-            Optional[SortDirection],
-            Field(
-                description="Sort by timestamp in ascending or descending order. Default is descending."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[OHLCV]:
-        """Synchronous version of get_ohlcv"""
-        return async_to_sync(self.get_ohlcv)(
-            market=market,
-            timeframe=timeframe,
-            symbol=symbol,
-            start=start,
-            end=end,
-            limit=limit,
-            sort_direction=sort_direction,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def get_ohlcv_sync_with_http_info(
-        self,
-        market: Annotated[MarketType, Field(description="Market type")],
-        timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
-        symbol: Annotated[
-            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
-        ],
-        start: Annotated[
-            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
-        ] = None,
-        end: Annotated[
-            Optional[StrictInt], Field(description="End timestamp in milliseconds")
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=1)]],
-            Field(description="Number of candles to return"),
-        ] = None,
-        sort_direction: Annotated[
-            Optional[SortDirection],
-            Field(
-                description="Sort by timestamp in ascending or descending order. Default is descending."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[OHLCV]]:
-        """Synchronous version of get_ohlcv_with_http_info"""
-        return async_to_sync(self.get_ohlcv_with_http_info)(
-            market=market,
-            timeframe=timeframe,
-            symbol=symbol,
-            start=start,
-            end=end,
-            limit=limit,
-            sort_direction=sort_direction,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def get_ohlcv_sync_without_preload_content(
-        self,
-        market: Annotated[MarketType, Field(description="Market type")],
-        timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
-        symbol: Annotated[
-            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
-        ],
-        start: Annotated[
-            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
-        ] = None,
-        end: Annotated[
-            Optional[StrictInt], Field(description="End timestamp in milliseconds")
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(strict=True, ge=1)]],
-            Field(description="Number of candles to return"),
-        ] = None,
-        sort_direction: Annotated[
-            Optional[SortDirection],
-            Field(
-                description="Sort by timestamp in ascending or descending order. Default is descending."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Synchronous version of get_ohlcv_without_preload_content"""
-        return async_to_sync(self.get_ohlcv_without_preload_content)(
-            market=market,
-            timeframe=timeframe,
-            symbol=symbol,
-            start=start,
-            end=end,
-            limit=limit,
-            sort_direction=sort_direction,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    async def get_ohlcv_with_http_info(
+    async def _get_ohlcv_async_with_http_info(
         self,
         market: Annotated[MarketType, Field(description="Market type")],
         timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
@@ -415,12 +477,11 @@ class OHLCVDataApi:
         )
         await response_data.read()
         return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
+            response_data=response_data, response_types_map=_response_types_map
         )
 
     @validate_call
-    async def get_ohlcv_without_preload_content(
+    async def _get_ohlcv_async_without_preload_content(
         self,
         market: Annotated[MarketType, Field(description="Market type")],
         timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
@@ -515,7 +576,164 @@ class OHLCVDataApi:
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        return response_data.response
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _get_ohlcv_sync(
+        self,
+        market: Annotated[MarketType, Field(description="Market type")],
+        timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
+        symbol: Annotated[
+            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
+        ],
+        start: Annotated[
+            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
+        ] = None,
+        end: Annotated[
+            Optional[StrictInt], Field(description="End timestamp in milliseconds")
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Number of candles to return"),
+        ] = None,
+        sort_direction: Annotated[
+            Optional[SortDirection],
+            Field(
+                description="Sort by timestamp in ascending or descending order. Default is descending."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[OHLCV]:
+        """Synchronous version of get_ohlcv"""
+        return async_to_sync(self._get_ohlcv_async)(
+            market=market,
+            timeframe=timeframe,
+            symbol=symbol,
+            start=start,
+            end=end,
+            limit=limit,
+            sort_direction=sort_direction,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_ohlcv_sync_with_http_info(
+        self,
+        market: Annotated[MarketType, Field(description="Market type")],
+        timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
+        symbol: Annotated[
+            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
+        ],
+        start: Annotated[
+            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
+        ] = None,
+        end: Annotated[
+            Optional[StrictInt], Field(description="End timestamp in milliseconds")
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Number of candles to return"),
+        ] = None,
+        sort_direction: Annotated[
+            Optional[SortDirection],
+            Field(
+                description="Sort by timestamp in ascending or descending order. Default is descending."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[OHLCV]]:
+        """Synchronous version of get_ohlcv_with_http_info"""
+        return async_to_sync(self._get_ohlcv_async_with_http_info)(
+            market=market,
+            timeframe=timeframe,
+            symbol=symbol,
+            start=start,
+            end=end,
+            limit=limit,
+            sort_direction=sort_direction,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_ohlcv_sync_without_preload_content(
+        self,
+        market: Annotated[MarketType, Field(description="Market type")],
+        timeframe: Annotated[Timeframe, Field(description="Timeframe for the candles")],
+        symbol: Annotated[
+            StrictStr, Field(description="Trading pair symbol (e.g., BTCUSDT)")
+        ],
+        start: Annotated[
+            Optional[StrictInt], Field(description="Start timestamp in milliseconds")
+        ] = None,
+        end: Annotated[
+            Optional[StrictInt], Field(description="End timestamp in milliseconds")
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(strict=True, ge=1)]],
+            Field(description="Number of candles to return"),
+        ] = None,
+        sort_direction: Annotated[
+            Optional[SortDirection],
+            Field(
+                description="Sort by timestamp in ascending or descending order. Default is descending."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of get_ohlcv_without_preload_content"""
+        return async_to_sync(self._get_ohlcv_async_without_preload_content)(
+            market=market,
+            timeframe=timeframe,
+            symbol=symbol,
+            start=start,
+            end=end,
+            limit=limit,
+            sort_direction=sort_direction,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
 
     def _get_ohlcv_serialize(
         self,

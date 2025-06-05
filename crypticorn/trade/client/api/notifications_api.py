@@ -52,13 +52,135 @@ class NotificationsApi:
     Do not edit the class manually.
     """
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client=None, is_sync: bool = False) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+        self.is_sync = is_sync
 
     @validate_call
-    async def create_notification(
+    def create_notification(
+        self,
+        notification_create: NotificationCreate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Create Notification
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._create_notification_sync(
+                notification_create=notification_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._create_notification_async(
+                notification_create=notification_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def create_notification_with_http_info(
+        self,
+        notification_create: NotificationCreate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Create Notification with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._create_notification_sync_with_http_info(
+                notification_create=notification_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._create_notification_async_with_http_info(
+                notification_create=notification_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def create_notification_without_preload_content(
+        self,
+        notification_create: NotificationCreate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Create Notification without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._create_notification_sync_without_preload_content(
+                notification_create=notification_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._create_notification_async_without_preload_content(
+                notification_create=notification_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _create_notification_async(
         self,
         notification_create: NotificationCreate,
         _request_timeout: Union[
@@ -122,7 +244,7 @@ class NotificationsApi:
         ).data
 
     @validate_call
-    async def create_notification_with_http_info(
+    async def _create_notification_async_with_http_info(
         self,
         notification_create: NotificationCreate,
         _request_timeout: Union[
@@ -185,7 +307,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    async def create_notification_without_preload_content(
+    async def _create_notification_async_without_preload_content(
         self,
         notification_create: NotificationCreate,
         _request_timeout: Union[
@@ -244,9 +366,9 @@ class NotificationsApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def create_notification_sync(
+    def _create_notification_sync(
         self,
         notification_create: NotificationCreate,
         _request_timeout: Union[
@@ -262,7 +384,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
         """Synchronous version of create_notification"""
-        return async_to_sync(self.create_notification)(
+        return async_to_sync(self._create_notification_async)(
             notification_create=notification_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -272,7 +394,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    def create_notification_sync_with_http_info(
+    def _create_notification_sync_with_http_info(
         self,
         notification_create: NotificationCreate,
         _request_timeout: Union[
@@ -288,7 +410,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
         """Synchronous version of create_notification_with_http_info"""
-        return async_to_sync(self.create_notification_with_http_info)(
+        return async_to_sync(self._create_notification_async_with_http_info)(
             notification_create=notification_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -298,7 +420,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    def create_notification_sync_without_preload_content(
+    def _create_notification_sync_without_preload_content(
         self,
         notification_create: NotificationCreate,
         _request_timeout: Union[
@@ -314,7 +436,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of create_notification_without_preload_content"""
-        return async_to_sync(self.create_notification_without_preload_content)(
+        return async_to_sync(self._create_notification_async_without_preload_content)(
             notification_create=notification_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -388,7 +510,128 @@ class NotificationsApi:
         )
 
     @validate_call
-    async def delete_notification(
+    def delete_notification(
+        self,
+        id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> None:
+        """Delete Notification
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._delete_notification_sync(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._delete_notification_async(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def delete_notification_with_http_info(
+        self,
+        id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[None]:
+        """Delete Notification with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._delete_notification_sync_with_http_info(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._delete_notification_async_with_http_info(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def delete_notification_without_preload_content(
+        self,
+        id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Delete Notification without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._delete_notification_sync_without_preload_content(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._delete_notification_async_without_preload_content(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _delete_notification_async(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -451,7 +694,7 @@ class NotificationsApi:
         ).data
 
     @validate_call
-    async def delete_notification_with_http_info(
+    async def _delete_notification_async_with_http_info(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -513,7 +756,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    async def delete_notification_without_preload_content(
+    async def _delete_notification_async_without_preload_content(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -571,9 +814,9 @@ class NotificationsApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def delete_notification_sync(
+    def _delete_notification_sync(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -589,7 +832,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
         """Synchronous version of delete_notification"""
-        return async_to_sync(self.delete_notification)(
+        return async_to_sync(self._delete_notification_async)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -599,7 +842,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    def delete_notification_sync_with_http_info(
+    def _delete_notification_sync_with_http_info(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -615,7 +858,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
         """Synchronous version of delete_notification_with_http_info"""
-        return async_to_sync(self.delete_notification_with_http_info)(
+        return async_to_sync(self._delete_notification_async_with_http_info)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -625,7 +868,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    def delete_notification_sync_without_preload_content(
+    def _delete_notification_sync_without_preload_content(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -641,7 +884,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of delete_notification_without_preload_content"""
-        return async_to_sync(self.delete_notification_without_preload_content)(
+        return async_to_sync(self._delete_notification_async_without_preload_content)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -705,7 +948,119 @@ class NotificationsApi:
         )
 
     @validate_call
-    async def delete_notifications(
+    def delete_notifications(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> None:
+        """Delete Notifications
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._delete_notifications_sync(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._delete_notifications_async(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def delete_notifications_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[None]:
+        """Delete Notifications with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._delete_notifications_sync_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._delete_notifications_async_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def delete_notifications_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Delete Notifications without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._delete_notifications_sync_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._delete_notifications_async_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _delete_notifications_async(
         self,
         _request_timeout: Union[
             None,
@@ -765,7 +1120,7 @@ class NotificationsApi:
         ).data
 
     @validate_call
-    async def delete_notifications_with_http_info(
+    async def _delete_notifications_async_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -824,7 +1179,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    async def delete_notifications_without_preload_content(
+    async def _delete_notifications_async_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -879,9 +1234,9 @@ class NotificationsApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def delete_notifications_sync(
+    def _delete_notifications_sync(
         self,
         _request_timeout: Union[
             None,
@@ -896,7 +1251,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
         """Synchronous version of delete_notifications"""
-        return async_to_sync(self.delete_notifications)(
+        return async_to_sync(self._delete_notifications_async)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -905,7 +1260,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    def delete_notifications_sync_with_http_info(
+    def _delete_notifications_sync_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -920,7 +1275,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
         """Synchronous version of delete_notifications_with_http_info"""
-        return async_to_sync(self.delete_notifications_with_http_info)(
+        return async_to_sync(self._delete_notifications_async_with_http_info)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -929,7 +1284,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    def delete_notifications_sync_without_preload_content(
+    def _delete_notifications_sync_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -944,7 +1299,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of delete_notifications_without_preload_content"""
-        return async_to_sync(self.delete_notifications_without_preload_content)(
+        return async_to_sync(self._delete_notifications_async_without_preload_content)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1004,7 +1359,137 @@ class NotificationsApi:
         )
 
     @validate_call
-    async def get_notifications(
+    def get_notifications(
+        self,
+        limit: Optional[StrictInt] = None,
+        offset: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[Notification]:
+        """Get Notifications
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_notifications_sync(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_notifications_async(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_notifications_with_http_info(
+        self,
+        limit: Optional[StrictInt] = None,
+        offset: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[Notification]]:
+        """Get Notifications with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_notifications_sync_with_http_info(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_notifications_async_with_http_info(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_notifications_without_preload_content(
+        self,
+        limit: Optional[StrictInt] = None,
+        offset: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Notifications without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_notifications_sync_without_preload_content(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_notifications_async_without_preload_content(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_notifications_async(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -1072,7 +1557,7 @@ class NotificationsApi:
         ).data
 
     @validate_call
-    async def get_notifications_with_http_info(
+    async def _get_notifications_async_with_http_info(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -1139,7 +1624,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    async def get_notifications_without_preload_content(
+    async def _get_notifications_async_without_preload_content(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -1202,9 +1687,9 @@ class NotificationsApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_notifications_sync(
+    def _get_notifications_sync(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -1221,7 +1706,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Notification]:
         """Synchronous version of get_notifications"""
-        return async_to_sync(self.get_notifications)(
+        return async_to_sync(self._get_notifications_async)(
             limit=limit,
             offset=offset,
             _request_timeout=_request_timeout,
@@ -1232,7 +1717,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    def get_notifications_sync_with_http_info(
+    def _get_notifications_sync_with_http_info(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -1249,7 +1734,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Notification]]:
         """Synchronous version of get_notifications_with_http_info"""
-        return async_to_sync(self.get_notifications_with_http_info)(
+        return async_to_sync(self._get_notifications_async_with_http_info)(
             limit=limit,
             offset=offset,
             _request_timeout=_request_timeout,
@@ -1260,7 +1745,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    def get_notifications_sync_without_preload_content(
+    def _get_notifications_sync_without_preload_content(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -1277,7 +1762,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_notifications_without_preload_content"""
-        return async_to_sync(self.get_notifications_without_preload_content)(
+        return async_to_sync(self._get_notifications_async_without_preload_content)(
             limit=limit,
             offset=offset,
             _request_timeout=_request_timeout,
@@ -1349,7 +1834,137 @@ class NotificationsApi:
         )
 
     @validate_call
-    async def update_notification(
+    def update_notification(
+        self,
+        id: StrictStr,
+        notification_update: NotificationUpdate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> None:
+        """Update Notification
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._update_notification_sync(
+                id=id,
+                notification_update=notification_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_notification_async(
+                id=id,
+                notification_update=notification_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def update_notification_with_http_info(
+        self,
+        id: StrictStr,
+        notification_update: NotificationUpdate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[None]:
+        """Update Notification with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._update_notification_sync_with_http_info(
+                id=id,
+                notification_update=notification_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_notification_async_with_http_info(
+                id=id,
+                notification_update=notification_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def update_notification_without_preload_content(
+        self,
+        id: StrictStr,
+        notification_update: NotificationUpdate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Update Notification without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._update_notification_sync_without_preload_content(
+                id=id,
+                notification_update=notification_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_notification_async_without_preload_content(
+                id=id,
+                notification_update=notification_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _update_notification_async(
         self,
         id: StrictStr,
         notification_update: NotificationUpdate,
@@ -1417,7 +2032,7 @@ class NotificationsApi:
         ).data
 
     @validate_call
-    async def update_notification_with_http_info(
+    async def _update_notification_async_with_http_info(
         self,
         id: StrictStr,
         notification_update: NotificationUpdate,
@@ -1484,7 +2099,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    async def update_notification_without_preload_content(
+    async def _update_notification_async_without_preload_content(
         self,
         id: StrictStr,
         notification_update: NotificationUpdate,
@@ -1547,9 +2162,9 @@ class NotificationsApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def update_notification_sync(
+    def _update_notification_sync(
         self,
         id: StrictStr,
         notification_update: NotificationUpdate,
@@ -1566,7 +2181,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
         """Synchronous version of update_notification"""
-        return async_to_sync(self.update_notification)(
+        return async_to_sync(self._update_notification_async)(
             id=id,
             notification_update=notification_update,
             _request_timeout=_request_timeout,
@@ -1577,7 +2192,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    def update_notification_sync_with_http_info(
+    def _update_notification_sync_with_http_info(
         self,
         id: StrictStr,
         notification_update: NotificationUpdate,
@@ -1594,7 +2209,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
         """Synchronous version of update_notification_with_http_info"""
-        return async_to_sync(self.update_notification_with_http_info)(
+        return async_to_sync(self._update_notification_async_with_http_info)(
             id=id,
             notification_update=notification_update,
             _request_timeout=_request_timeout,
@@ -1605,7 +2220,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    def update_notification_sync_without_preload_content(
+    def _update_notification_sync_without_preload_content(
         self,
         id: StrictStr,
         notification_update: NotificationUpdate,
@@ -1622,7 +2237,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of update_notification_without_preload_content"""
-        return async_to_sync(self.update_notification_without_preload_content)(
+        return async_to_sync(self._update_notification_async_without_preload_content)(
             id=id,
             notification_update=notification_update,
             _request_timeout=_request_timeout,
@@ -1700,7 +2315,128 @@ class NotificationsApi:
         )
 
     @validate_call
-    async def update_notifications(
+    def update_notifications(
+        self,
+        notification_update: NotificationUpdate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> None:
+        """Update Notifications
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._update_notifications_sync(
+                notification_update=notification_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_notifications_async(
+                notification_update=notification_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def update_notifications_with_http_info(
+        self,
+        notification_update: NotificationUpdate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[None]:
+        """Update Notifications with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._update_notifications_sync_with_http_info(
+                notification_update=notification_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_notifications_async_with_http_info(
+                notification_update=notification_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def update_notifications_without_preload_content(
+        self,
+        notification_update: NotificationUpdate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Update Notifications without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._update_notifications_sync_without_preload_content(
+                notification_update=notification_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_notifications_async_without_preload_content(
+                notification_update=notification_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _update_notifications_async(
         self,
         notification_update: NotificationUpdate,
         _request_timeout: Union[
@@ -1764,7 +2500,7 @@ class NotificationsApi:
         ).data
 
     @validate_call
-    async def update_notifications_with_http_info(
+    async def _update_notifications_async_with_http_info(
         self,
         notification_update: NotificationUpdate,
         _request_timeout: Union[
@@ -1827,7 +2563,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    async def update_notifications_without_preload_content(
+    async def _update_notifications_async_without_preload_content(
         self,
         notification_update: NotificationUpdate,
         _request_timeout: Union[
@@ -1886,9 +2622,9 @@ class NotificationsApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def update_notifications_sync(
+    def _update_notifications_sync(
         self,
         notification_update: NotificationUpdate,
         _request_timeout: Union[
@@ -1904,7 +2640,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
         """Synchronous version of update_notifications"""
-        return async_to_sync(self.update_notifications)(
+        return async_to_sync(self._update_notifications_async)(
             notification_update=notification_update,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -1914,7 +2650,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    def update_notifications_sync_with_http_info(
+    def _update_notifications_sync_with_http_info(
         self,
         notification_update: NotificationUpdate,
         _request_timeout: Union[
@@ -1930,7 +2666,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
         """Synchronous version of update_notifications_with_http_info"""
-        return async_to_sync(self.update_notifications_with_http_info)(
+        return async_to_sync(self._update_notifications_async_with_http_info)(
             notification_update=notification_update,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -1940,7 +2676,7 @@ class NotificationsApi:
         )
 
     @validate_call
-    def update_notifications_sync_without_preload_content(
+    def _update_notifications_sync_without_preload_content(
         self,
         notification_update: NotificationUpdate,
         _request_timeout: Union[
@@ -1956,7 +2692,7 @@ class NotificationsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of update_notifications_without_preload_content"""
-        return async_to_sync(self.update_notifications_without_preload_content)(
+        return async_to_sync(self._update_notifications_async_without_preload_content)(
             notification_update=notification_update,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,

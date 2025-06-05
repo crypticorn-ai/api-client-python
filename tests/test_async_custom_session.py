@@ -28,7 +28,7 @@ async def test_lazy_http_client_creation():
     client = ApiClient()
     assert client._http_client is None
 
-    await client._ensure_session()
+    client._ensure_session()
 
     assert isinstance(client._http_client, ClientSession)
     for service in Service:
@@ -53,7 +53,7 @@ async def test_close_custom_http_client_not_owned():
 @pytest.mark.asyncio
 async def test_close_owned_http_client():
     client = ApiClient()
-    await client._ensure_session()
+    client._ensure_session()
     session = client._http_client
 
     await client.close()

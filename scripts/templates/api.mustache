@@ -37,15 +37,53 @@ class {{classname}}:
     Do not edit the class manually.
     """
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client=None, is_sync: bool = False) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+        self.is_sync = is_sync
 {{#operation}}
 
 
     @validate_call
-    async def {{operationId}}{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
+    def {{operationId}}{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
+        """{{summary}}{{^summary}}{{operationId}}{{/summary}}
+        
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._{{operationId}}_sync{{>partial_api_args_call}}
+        else:
+            return self._{{operationId}}_async{{>partial_api_args_call}}
+
+
+    @validate_call
+    def {{operationId}}_with_http_info{{>partial_api_args}} -> ApiResponse[{{{returnType}}}{{^returnType}}None{{/returnType}}]:
+        """{{summary}}{{^summary}}{{operationId}}{{/summary}} with HTTP info
+        
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._{{operationId}}_sync_with_http_info{{>partial_api_args_call}}
+        else:
+            return self._{{operationId}}_async_with_http_info{{>partial_api_args_call}}
+
+
+    @validate_call
+    def {{operationId}}_without_preload_content{{>partial_api_args}} -> RESTResponseType:
+        """{{summary}}{{^summary}}{{operationId}}{{/summary}} without preloading content
+        
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._{{operationId}}_sync_without_preload_content{{>partial_api_args_call}}
+        else:
+            return self._{{operationId}}_async_without_preload_content{{>partial_api_args_call}}
+
+
+    # Private async implementation methods
+    @validate_call
+    async def _{{operationId}}_async{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
 {{>partial_api}}
         response_data = await self.api_client.call_api(
             *_param,
@@ -59,7 +97,7 @@ class {{classname}}:
 
 
     @validate_call
-    async def {{operationId}}_with_http_info{{>partial_api_args}} -> ApiResponse[{{{returnType}}}{{^returnType}}None{{/returnType}}]:
+    async def _{{operationId}}_async_with_http_info{{>partial_api_args}} -> ApiResponse[{{{returnType}}}{{^returnType}}None{{/returnType}}]:
 {{>partial_api}}
         response_data = await self.api_client.call_api(
             *_param,
@@ -72,7 +110,7 @@ class {{classname}}:
 
 
     @validate_call
-    async def {{operationId}}_without_preload_content{{>partial_api_args}} -> RESTResponseType:
+    async def _{{operationId}}_async_without_preload_content{{>partial_api_args}} -> RESTResponseType:
 {{>partial_api}}
         response_data = await self.api_client.call_api(
             *_param,
@@ -81,23 +119,23 @@ class {{classname}}:
         return response_data
 
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call  
-    def {{operationId}}_sync{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
+    def _{{operationId}}_sync{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
         """Synchronous version of {{operationId}}"""
-        return async_to_sync(self.{{operationId}}){{>partial_api_args_call}}
+        return async_to_sync(self._{{operationId}}_async){{>partial_api_args_call}}
 
 
     @validate_call
-    def {{operationId}}_sync_with_http_info{{>partial_api_args}} -> ApiResponse[{{{returnType}}}{{^returnType}}None{{/returnType}}]:
+    def _{{operationId}}_sync_with_http_info{{>partial_api_args}} -> ApiResponse[{{{returnType}}}{{^returnType}}None{{/returnType}}]:
         """Synchronous version of {{operationId}}_with_http_info"""
-        return async_to_sync(self.{{operationId}}_with_http_info){{>partial_api_args_call}}
+        return async_to_sync(self._{{operationId}}_async_with_http_info){{>partial_api_args_call}}
 
 
     @validate_call
-    def {{operationId}}_sync_without_preload_content{{>partial_api_args}} -> RESTResponseType:
+    def _{{operationId}}_sync_without_preload_content{{>partial_api_args}} -> RESTResponseType:
         """Synchronous version of {{operationId}}_without_preload_content"""
-        return async_to_sync(self.{{operationId}}_without_preload_content){{>partial_api_args_call}}
+        return async_to_sync(self._{{operationId}}_async_without_preload_content){{>partial_api_args_call}}
 
 
     def _{{operationId}}_serialize(

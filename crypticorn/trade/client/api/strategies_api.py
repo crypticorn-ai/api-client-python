@@ -53,13 +53,135 @@ class StrategiesApi:
     Do not edit the class manually.
     """
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client=None, is_sync: bool = False) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+        self.is_sync = is_sync
 
     @validate_call
-    async def create_strategy(
+    def create_strategy(
+        self,
+        strategy_create: StrategyCreate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Strategy:
+        """Create Strategy
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._create_strategy_sync(
+                strategy_create=strategy_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._create_strategy_async(
+                strategy_create=strategy_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def create_strategy_with_http_info(
+        self,
+        strategy_create: StrategyCreate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Strategy]:
+        """Create Strategy with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._create_strategy_sync_with_http_info(
+                strategy_create=strategy_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._create_strategy_async_with_http_info(
+                strategy_create=strategy_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def create_strategy_without_preload_content(
+        self,
+        strategy_create: StrategyCreate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Create Strategy without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._create_strategy_sync_without_preload_content(
+                strategy_create=strategy_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._create_strategy_async_without_preload_content(
+                strategy_create=strategy_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _create_strategy_async(
         self,
         strategy_create: StrategyCreate,
         _request_timeout: Union[
@@ -123,7 +245,7 @@ class StrategiesApi:
         ).data
 
     @validate_call
-    async def create_strategy_with_http_info(
+    async def _create_strategy_async_with_http_info(
         self,
         strategy_create: StrategyCreate,
         _request_timeout: Union[
@@ -186,7 +308,7 @@ class StrategiesApi:
         )
 
     @validate_call
-    async def create_strategy_without_preload_content(
+    async def _create_strategy_async_without_preload_content(
         self,
         strategy_create: StrategyCreate,
         _request_timeout: Union[
@@ -245,9 +367,9 @@ class StrategiesApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def create_strategy_sync(
+    def _create_strategy_sync(
         self,
         strategy_create: StrategyCreate,
         _request_timeout: Union[
@@ -263,7 +385,7 @@ class StrategiesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Strategy:
         """Synchronous version of create_strategy"""
-        return async_to_sync(self.create_strategy)(
+        return async_to_sync(self._create_strategy_async)(
             strategy_create=strategy_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -273,7 +395,7 @@ class StrategiesApi:
         )
 
     @validate_call
-    def create_strategy_sync_with_http_info(
+    def _create_strategy_sync_with_http_info(
         self,
         strategy_create: StrategyCreate,
         _request_timeout: Union[
@@ -289,7 +411,7 @@ class StrategiesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Strategy]:
         """Synchronous version of create_strategy_with_http_info"""
-        return async_to_sync(self.create_strategy_with_http_info)(
+        return async_to_sync(self._create_strategy_async_with_http_info)(
             strategy_create=strategy_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -299,7 +421,7 @@ class StrategiesApi:
         )
 
     @validate_call
-    def create_strategy_sync_without_preload_content(
+    def _create_strategy_sync_without_preload_content(
         self,
         strategy_create: StrategyCreate,
         _request_timeout: Union[
@@ -315,7 +437,7 @@ class StrategiesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of create_strategy_without_preload_content"""
-        return async_to_sync(self.create_strategy_without_preload_content)(
+        return async_to_sync(self._create_strategy_async_without_preload_content)(
             strategy_create=strategy_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -389,7 +511,167 @@ class StrategiesApi:
         )
 
     @validate_call
-    async def get_strategies(
+    def get_strategies(
+        self,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Limit the number of strategies returned. 0 means no limit."
+            ),
+        ] = None,
+        offset: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Offset the number of strategies returned. 0 means no offset."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[Strategy]:
+        """Get Strategies
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_strategies_sync(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_strategies_async(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_strategies_with_http_info(
+        self,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Limit the number of strategies returned. 0 means no limit."
+            ),
+        ] = None,
+        offset: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Offset the number of strategies returned. 0 means no offset."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[Strategy]]:
+        """Get Strategies with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_strategies_sync_with_http_info(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_strategies_async_with_http_info(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_strategies_without_preload_content(
+        self,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Limit the number of strategies returned. 0 means no limit."
+            ),
+        ] = None,
+        offset: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Offset the number of strategies returned. 0 means no offset."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Strategies without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_strategies_sync_without_preload_content(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_strategies_async_without_preload_content(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_strategies_async(
         self,
         limit: Annotated[
             Optional[StrictInt],
@@ -467,7 +749,7 @@ class StrategiesApi:
         ).data
 
     @validate_call
-    async def get_strategies_with_http_info(
+    async def _get_strategies_async_with_http_info(
         self,
         limit: Annotated[
             Optional[StrictInt],
@@ -544,7 +826,7 @@ class StrategiesApi:
         )
 
     @validate_call
-    async def get_strategies_without_preload_content(
+    async def _get_strategies_async_without_preload_content(
         self,
         limit: Annotated[
             Optional[StrictInt],
@@ -617,9 +899,9 @@ class StrategiesApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_strategies_sync(
+    def _get_strategies_sync(
         self,
         limit: Annotated[
             Optional[StrictInt],
@@ -646,7 +928,7 @@ class StrategiesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Strategy]:
         """Synchronous version of get_strategies"""
-        return async_to_sync(self.get_strategies)(
+        return async_to_sync(self._get_strategies_async)(
             limit=limit,
             offset=offset,
             _request_timeout=_request_timeout,
@@ -657,7 +939,7 @@ class StrategiesApi:
         )
 
     @validate_call
-    def get_strategies_sync_with_http_info(
+    def _get_strategies_sync_with_http_info(
         self,
         limit: Annotated[
             Optional[StrictInt],
@@ -684,7 +966,7 @@ class StrategiesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Strategy]]:
         """Synchronous version of get_strategies_with_http_info"""
-        return async_to_sync(self.get_strategies_with_http_info)(
+        return async_to_sync(self._get_strategies_async_with_http_info)(
             limit=limit,
             offset=offset,
             _request_timeout=_request_timeout,
@@ -695,7 +977,7 @@ class StrategiesApi:
         )
 
     @validate_call
-    def get_strategies_sync_without_preload_content(
+    def _get_strategies_sync_without_preload_content(
         self,
         limit: Annotated[
             Optional[StrictInt],
@@ -722,7 +1004,7 @@ class StrategiesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_strategies_without_preload_content"""
-        return async_to_sync(self.get_strategies_without_preload_content)(
+        return async_to_sync(self._get_strategies_async_without_preload_content)(
             limit=limit,
             offset=offset,
             _request_timeout=_request_timeout,
@@ -794,7 +1076,119 @@ class StrategiesApi:
         )
 
     @validate_call
-    async def get_strategy_usage(
+    def get_strategy_usage(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[List[object]]:
+        """Get Strategy Usage
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_strategy_usage_sync(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_strategy_usage_async(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_strategy_usage_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[List[object]]]:
+        """Get Strategy Usage with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_strategy_usage_sync_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_strategy_usage_async_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_strategy_usage_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Strategy Usage without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_strategy_usage_sync_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_strategy_usage_async_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_strategy_usage_async(
         self,
         _request_timeout: Union[
             None,
@@ -854,7 +1248,7 @@ class StrategiesApi:
         ).data
 
     @validate_call
-    async def get_strategy_usage_with_http_info(
+    async def _get_strategy_usage_async_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -913,7 +1307,7 @@ class StrategiesApi:
         )
 
     @validate_call
-    async def get_strategy_usage_without_preload_content(
+    async def _get_strategy_usage_async_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -968,9 +1362,9 @@ class StrategiesApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_strategy_usage_sync(
+    def _get_strategy_usage_sync(
         self,
         _request_timeout: Union[
             None,
@@ -985,7 +1379,7 @@ class StrategiesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[List[object]]:
         """Synchronous version of get_strategy_usage"""
-        return async_to_sync(self.get_strategy_usage)(
+        return async_to_sync(self._get_strategy_usage_async)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -994,7 +1388,7 @@ class StrategiesApi:
         )
 
     @validate_call
-    def get_strategy_usage_sync_with_http_info(
+    def _get_strategy_usage_sync_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -1009,7 +1403,7 @@ class StrategiesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[List[object]]]:
         """Synchronous version of get_strategy_usage_with_http_info"""
-        return async_to_sync(self.get_strategy_usage_with_http_info)(
+        return async_to_sync(self._get_strategy_usage_async_with_http_info)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1018,7 +1412,7 @@ class StrategiesApi:
         )
 
     @validate_call
-    def get_strategy_usage_sync_without_preload_content(
+    def _get_strategy_usage_sync_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -1033,7 +1427,7 @@ class StrategiesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_strategy_usage_without_preload_content"""
-        return async_to_sync(self.get_strategy_usage_without_preload_content)(
+        return async_to_sync(self._get_strategy_usage_async_without_preload_content)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1093,7 +1487,128 @@ class StrategiesApi:
         )
 
     @validate_call
-    async def kill_strategy(
+    def kill_strategy(
+        self,
+        id: Annotated[StrictStr, Field(description="The ID of the strategy to kill.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> None:
+        """Kill Strategy
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._kill_strategy_sync(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._kill_strategy_async(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def kill_strategy_with_http_info(
+        self,
+        id: Annotated[StrictStr, Field(description="The ID of the strategy to kill.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[None]:
+        """Kill Strategy with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._kill_strategy_sync_with_http_info(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._kill_strategy_async_with_http_info(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def kill_strategy_without_preload_content(
+        self,
+        id: Annotated[StrictStr, Field(description="The ID of the strategy to kill.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Kill Strategy without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._kill_strategy_sync_without_preload_content(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._kill_strategy_async_without_preload_content(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _kill_strategy_async(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the strategy to kill.")],
         _request_timeout: Union[
@@ -1157,7 +1672,7 @@ class StrategiesApi:
         ).data
 
     @validate_call
-    async def kill_strategy_with_http_info(
+    async def _kill_strategy_async_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the strategy to kill.")],
         _request_timeout: Union[
@@ -1220,7 +1735,7 @@ class StrategiesApi:
         )
 
     @validate_call
-    async def kill_strategy_without_preload_content(
+    async def _kill_strategy_async_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the strategy to kill.")],
         _request_timeout: Union[
@@ -1279,9 +1794,9 @@ class StrategiesApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def kill_strategy_sync(
+    def _kill_strategy_sync(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the strategy to kill.")],
         _request_timeout: Union[
@@ -1297,7 +1812,7 @@ class StrategiesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
         """Synchronous version of kill_strategy"""
-        return async_to_sync(self.kill_strategy)(
+        return async_to_sync(self._kill_strategy_async)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -1307,7 +1822,7 @@ class StrategiesApi:
         )
 
     @validate_call
-    def kill_strategy_sync_with_http_info(
+    def _kill_strategy_sync_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the strategy to kill.")],
         _request_timeout: Union[
@@ -1323,7 +1838,7 @@ class StrategiesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
         """Synchronous version of kill_strategy_with_http_info"""
-        return async_to_sync(self.kill_strategy_with_http_info)(
+        return async_to_sync(self._kill_strategy_async_with_http_info)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -1333,7 +1848,7 @@ class StrategiesApi:
         )
 
     @validate_call
-    def kill_strategy_sync_without_preload_content(
+    def _kill_strategy_sync_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the strategy to kill.")],
         _request_timeout: Union[
@@ -1349,7 +1864,7 @@ class StrategiesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of kill_strategy_without_preload_content"""
-        return async_to_sync(self.kill_strategy_without_preload_content)(
+        return async_to_sync(self._kill_strategy_async_without_preload_content)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -1413,7 +1928,143 @@ class StrategiesApi:
         )
 
     @validate_call
-    async def update_strategy(
+    def update_strategy(
+        self,
+        id: Annotated[
+            StrictStr, Field(description="The ID of the strategy to update.")
+        ],
+        strategy_update: StrategyUpdate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Strategy:
+        """Update Strategy
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._update_strategy_sync(
+                id=id,
+                strategy_update=strategy_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_strategy_async(
+                id=id,
+                strategy_update=strategy_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def update_strategy_with_http_info(
+        self,
+        id: Annotated[
+            StrictStr, Field(description="The ID of the strategy to update.")
+        ],
+        strategy_update: StrategyUpdate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Strategy]:
+        """Update Strategy with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._update_strategy_sync_with_http_info(
+                id=id,
+                strategy_update=strategy_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_strategy_async_with_http_info(
+                id=id,
+                strategy_update=strategy_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def update_strategy_without_preload_content(
+        self,
+        id: Annotated[
+            StrictStr, Field(description="The ID of the strategy to update.")
+        ],
+        strategy_update: StrategyUpdate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Update Strategy without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._update_strategy_sync_without_preload_content(
+                id=id,
+                strategy_update=strategy_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_strategy_async_without_preload_content(
+                id=id,
+                strategy_update=strategy_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _update_strategy_async(
         self,
         id: Annotated[
             StrictStr, Field(description="The ID of the strategy to update.")
@@ -1483,7 +2134,7 @@ class StrategiesApi:
         ).data
 
     @validate_call
-    async def update_strategy_with_http_info(
+    async def _update_strategy_async_with_http_info(
         self,
         id: Annotated[
             StrictStr, Field(description="The ID of the strategy to update.")
@@ -1552,7 +2203,7 @@ class StrategiesApi:
         )
 
     @validate_call
-    async def update_strategy_without_preload_content(
+    async def _update_strategy_async_without_preload_content(
         self,
         id: Annotated[
             StrictStr, Field(description="The ID of the strategy to update.")
@@ -1617,9 +2268,9 @@ class StrategiesApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def update_strategy_sync(
+    def _update_strategy_sync(
         self,
         id: Annotated[
             StrictStr, Field(description="The ID of the strategy to update.")
@@ -1638,7 +2289,7 @@ class StrategiesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Strategy:
         """Synchronous version of update_strategy"""
-        return async_to_sync(self.update_strategy)(
+        return async_to_sync(self._update_strategy_async)(
             id=id,
             strategy_update=strategy_update,
             _request_timeout=_request_timeout,
@@ -1649,7 +2300,7 @@ class StrategiesApi:
         )
 
     @validate_call
-    def update_strategy_sync_with_http_info(
+    def _update_strategy_sync_with_http_info(
         self,
         id: Annotated[
             StrictStr, Field(description="The ID of the strategy to update.")
@@ -1668,7 +2319,7 @@ class StrategiesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Strategy]:
         """Synchronous version of update_strategy_with_http_info"""
-        return async_to_sync(self.update_strategy_with_http_info)(
+        return async_to_sync(self._update_strategy_async_with_http_info)(
             id=id,
             strategy_update=strategy_update,
             _request_timeout=_request_timeout,
@@ -1679,7 +2330,7 @@ class StrategiesApi:
         )
 
     @validate_call
-    def update_strategy_sync_without_preload_content(
+    def _update_strategy_sync_without_preload_content(
         self,
         id: Annotated[
             StrictStr, Field(description="The ID of the strategy to update.")
@@ -1698,7 +2349,7 @@ class StrategiesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of update_strategy_without_preload_content"""
-        return async_to_sync(self.update_strategy_without_preload_content)(
+        return async_to_sync(self._update_strategy_async_without_preload_content)(
             id=id,
             strategy_update=strategy_update,
             _request_timeout=_request_timeout,

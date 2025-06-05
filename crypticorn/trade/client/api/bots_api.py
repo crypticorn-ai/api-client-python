@@ -52,13 +52,135 @@ class BotsApi:
     Do not edit the class manually.
     """
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client=None, is_sync: bool = False) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+        self.is_sync = is_sync
 
     @validate_call
-    async def create_bot(
+    def create_bot(
+        self,
+        bot_create: BotCreate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Bot:
+        """Create Bot
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._create_bot_sync(
+                bot_create=bot_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._create_bot_async(
+                bot_create=bot_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def create_bot_with_http_info(
+        self,
+        bot_create: BotCreate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Bot]:
+        """Create Bot with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._create_bot_sync_with_http_info(
+                bot_create=bot_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._create_bot_async_with_http_info(
+                bot_create=bot_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def create_bot_without_preload_content(
+        self,
+        bot_create: BotCreate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Create Bot without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._create_bot_sync_without_preload_content(
+                bot_create=bot_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._create_bot_async_without_preload_content(
+                bot_create=bot_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _create_bot_async(
         self,
         bot_create: BotCreate,
         _request_timeout: Union[
@@ -122,7 +244,7 @@ class BotsApi:
         ).data
 
     @validate_call
-    async def create_bot_with_http_info(
+    async def _create_bot_async_with_http_info(
         self,
         bot_create: BotCreate,
         _request_timeout: Union[
@@ -185,7 +307,7 @@ class BotsApi:
         )
 
     @validate_call
-    async def create_bot_without_preload_content(
+    async def _create_bot_async_without_preload_content(
         self,
         bot_create: BotCreate,
         _request_timeout: Union[
@@ -244,9 +366,9 @@ class BotsApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def create_bot_sync(
+    def _create_bot_sync(
         self,
         bot_create: BotCreate,
         _request_timeout: Union[
@@ -262,7 +384,7 @@ class BotsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Bot:
         """Synchronous version of create_bot"""
-        return async_to_sync(self.create_bot)(
+        return async_to_sync(self._create_bot_async)(
             bot_create=bot_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -272,7 +394,7 @@ class BotsApi:
         )
 
     @validate_call
-    def create_bot_sync_with_http_info(
+    def _create_bot_sync_with_http_info(
         self,
         bot_create: BotCreate,
         _request_timeout: Union[
@@ -288,7 +410,7 @@ class BotsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Bot]:
         """Synchronous version of create_bot_with_http_info"""
-        return async_to_sync(self.create_bot_with_http_info)(
+        return async_to_sync(self._create_bot_async_with_http_info)(
             bot_create=bot_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -298,7 +420,7 @@ class BotsApi:
         )
 
     @validate_call
-    def create_bot_sync_without_preload_content(
+    def _create_bot_sync_without_preload_content(
         self,
         bot_create: BotCreate,
         _request_timeout: Union[
@@ -314,7 +436,7 @@ class BotsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of create_bot_without_preload_content"""
-        return async_to_sync(self.create_bot_without_preload_content)(
+        return async_to_sync(self._create_bot_async_without_preload_content)(
             bot_create=bot_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -388,7 +510,128 @@ class BotsApi:
         )
 
     @validate_call
-    async def delete_bot(
+    def delete_bot(
+        self,
+        id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> None:
+        """Delete Bot
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._delete_bot_sync(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._delete_bot_async(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def delete_bot_with_http_info(
+        self,
+        id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[None]:
+        """Delete Bot with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._delete_bot_sync_with_http_info(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._delete_bot_async_with_http_info(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def delete_bot_without_preload_content(
+        self,
+        id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Delete Bot without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._delete_bot_sync_without_preload_content(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._delete_bot_async_without_preload_content(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _delete_bot_async(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -452,7 +695,7 @@ class BotsApi:
         ).data
 
     @validate_call
-    async def delete_bot_with_http_info(
+    async def _delete_bot_async_with_http_info(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -515,7 +758,7 @@ class BotsApi:
         )
 
     @validate_call
-    async def delete_bot_without_preload_content(
+    async def _delete_bot_async_without_preload_content(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -574,9 +817,9 @@ class BotsApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def delete_bot_sync(
+    def _delete_bot_sync(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -592,7 +835,7 @@ class BotsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
         """Synchronous version of delete_bot"""
-        return async_to_sync(self.delete_bot)(
+        return async_to_sync(self._delete_bot_async)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -602,7 +845,7 @@ class BotsApi:
         )
 
     @validate_call
-    def delete_bot_sync_with_http_info(
+    def _delete_bot_sync_with_http_info(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -618,7 +861,7 @@ class BotsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
         """Synchronous version of delete_bot_with_http_info"""
-        return async_to_sync(self.delete_bot_with_http_info)(
+        return async_to_sync(self._delete_bot_async_with_http_info)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -628,7 +871,7 @@ class BotsApi:
         )
 
     @validate_call
-    def delete_bot_sync_without_preload_content(
+    def _delete_bot_sync_without_preload_content(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -644,7 +887,7 @@ class BotsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of delete_bot_without_preload_content"""
-        return async_to_sync(self.delete_bot_without_preload_content)(
+        return async_to_sync(self._delete_bot_async_without_preload_content)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -708,7 +951,128 @@ class BotsApi:
         )
 
     @validate_call
-    async def get_bot(
+    def get_bot(
+        self,
+        id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Bot:
+        """Get Bot
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_bot_sync(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_bot_async(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_bot_with_http_info(
+        self,
+        id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Bot]:
+        """Get Bot with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_bot_sync_with_http_info(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_bot_async_with_http_info(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_bot_without_preload_content(
+        self,
+        id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Bot without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_bot_sync_without_preload_content(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_bot_async_without_preload_content(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_bot_async(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -771,7 +1135,7 @@ class BotsApi:
         ).data
 
     @validate_call
-    async def get_bot_with_http_info(
+    async def _get_bot_async_with_http_info(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -833,7 +1197,7 @@ class BotsApi:
         )
 
     @validate_call
-    async def get_bot_without_preload_content(
+    async def _get_bot_async_without_preload_content(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -891,9 +1255,9 @@ class BotsApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_bot_sync(
+    def _get_bot_sync(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -909,7 +1273,7 @@ class BotsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Bot:
         """Synchronous version of get_bot"""
-        return async_to_sync(self.get_bot)(
+        return async_to_sync(self._get_bot_async)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -919,7 +1283,7 @@ class BotsApi:
         )
 
     @validate_call
-    def get_bot_sync_with_http_info(
+    def _get_bot_sync_with_http_info(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -935,7 +1299,7 @@ class BotsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Bot]:
         """Synchronous version of get_bot_with_http_info"""
-        return async_to_sync(self.get_bot_with_http_info)(
+        return async_to_sync(self._get_bot_async_with_http_info)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -945,7 +1309,7 @@ class BotsApi:
         )
 
     @validate_call
-    def get_bot_sync_without_preload_content(
+    def _get_bot_sync_without_preload_content(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -961,7 +1325,7 @@ class BotsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_bot_without_preload_content"""
-        return async_to_sync(self.get_bot_without_preload_content)(
+        return async_to_sync(self._get_bot_async_without_preload_content)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -1025,7 +1389,146 @@ class BotsApi:
         )
 
     @validate_call
-    async def get_bots(
+    def get_bots(
+        self,
+        include_deleted: Optional[StrictBool] = None,
+        limit: Optional[StrictInt] = None,
+        offset: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[Bot]:
+        """Get Bots
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_bots_sync(
+                include_deleted=include_deleted,
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_bots_async(
+                include_deleted=include_deleted,
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_bots_with_http_info(
+        self,
+        include_deleted: Optional[StrictBool] = None,
+        limit: Optional[StrictInt] = None,
+        offset: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[Bot]]:
+        """Get Bots with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_bots_sync_with_http_info(
+                include_deleted=include_deleted,
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_bots_async_with_http_info(
+                include_deleted=include_deleted,
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_bots_without_preload_content(
+        self,
+        include_deleted: Optional[StrictBool] = None,
+        limit: Optional[StrictInt] = None,
+        offset: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Bots without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_bots_sync_without_preload_content(
+                include_deleted=include_deleted,
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_bots_async_without_preload_content(
+                include_deleted=include_deleted,
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_bots_async(
         self,
         include_deleted: Optional[StrictBool] = None,
         limit: Optional[StrictInt] = None,
@@ -1096,7 +1599,7 @@ class BotsApi:
         ).data
 
     @validate_call
-    async def get_bots_with_http_info(
+    async def _get_bots_async_with_http_info(
         self,
         include_deleted: Optional[StrictBool] = None,
         limit: Optional[StrictInt] = None,
@@ -1166,7 +1669,7 @@ class BotsApi:
         )
 
     @validate_call
-    async def get_bots_without_preload_content(
+    async def _get_bots_async_without_preload_content(
         self,
         include_deleted: Optional[StrictBool] = None,
         limit: Optional[StrictInt] = None,
@@ -1232,9 +1735,9 @@ class BotsApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_bots_sync(
+    def _get_bots_sync(
         self,
         include_deleted: Optional[StrictBool] = None,
         limit: Optional[StrictInt] = None,
@@ -1252,7 +1755,7 @@ class BotsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Bot]:
         """Synchronous version of get_bots"""
-        return async_to_sync(self.get_bots)(
+        return async_to_sync(self._get_bots_async)(
             include_deleted=include_deleted,
             limit=limit,
             offset=offset,
@@ -1264,7 +1767,7 @@ class BotsApi:
         )
 
     @validate_call
-    def get_bots_sync_with_http_info(
+    def _get_bots_sync_with_http_info(
         self,
         include_deleted: Optional[StrictBool] = None,
         limit: Optional[StrictInt] = None,
@@ -1282,7 +1785,7 @@ class BotsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Bot]]:
         """Synchronous version of get_bots_with_http_info"""
-        return async_to_sync(self.get_bots_with_http_info)(
+        return async_to_sync(self._get_bots_async_with_http_info)(
             include_deleted=include_deleted,
             limit=limit,
             offset=offset,
@@ -1294,7 +1797,7 @@ class BotsApi:
         )
 
     @validate_call
-    def get_bots_sync_without_preload_content(
+    def _get_bots_sync_without_preload_content(
         self,
         include_deleted: Optional[StrictBool] = None,
         limit: Optional[StrictInt] = None,
@@ -1312,7 +1815,7 @@ class BotsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_bots_without_preload_content"""
-        return async_to_sync(self.get_bots_without_preload_content)(
+        return async_to_sync(self._get_bots_async_without_preload_content)(
             include_deleted=include_deleted,
             limit=limit,
             offset=offset,
@@ -1390,7 +1893,137 @@ class BotsApi:
         )
 
     @validate_call
-    async def update_bot(
+    def update_bot(
+        self,
+        id: StrictStr,
+        bot_update: BotUpdate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Bot:
+        """Update Bot
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._update_bot_sync(
+                id=id,
+                bot_update=bot_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_bot_async(
+                id=id,
+                bot_update=bot_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def update_bot_with_http_info(
+        self,
+        id: StrictStr,
+        bot_update: BotUpdate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Bot]:
+        """Update Bot with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._update_bot_sync_with_http_info(
+                id=id,
+                bot_update=bot_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_bot_async_with_http_info(
+                id=id,
+                bot_update=bot_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def update_bot_without_preload_content(
+        self,
+        id: StrictStr,
+        bot_update: BotUpdate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Update Bot without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._update_bot_sync_without_preload_content(
+                id=id,
+                bot_update=bot_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_bot_async_without_preload_content(
+                id=id,
+                bot_update=bot_update,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _update_bot_async(
         self,
         id: StrictStr,
         bot_update: BotUpdate,
@@ -1458,7 +2091,7 @@ class BotsApi:
         ).data
 
     @validate_call
-    async def update_bot_with_http_info(
+    async def _update_bot_async_with_http_info(
         self,
         id: StrictStr,
         bot_update: BotUpdate,
@@ -1525,7 +2158,7 @@ class BotsApi:
         )
 
     @validate_call
-    async def update_bot_without_preload_content(
+    async def _update_bot_async_without_preload_content(
         self,
         id: StrictStr,
         bot_update: BotUpdate,
@@ -1588,9 +2221,9 @@ class BotsApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def update_bot_sync(
+    def _update_bot_sync(
         self,
         id: StrictStr,
         bot_update: BotUpdate,
@@ -1607,7 +2240,7 @@ class BotsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Bot:
         """Synchronous version of update_bot"""
-        return async_to_sync(self.update_bot)(
+        return async_to_sync(self._update_bot_async)(
             id=id,
             bot_update=bot_update,
             _request_timeout=_request_timeout,
@@ -1618,7 +2251,7 @@ class BotsApi:
         )
 
     @validate_call
-    def update_bot_sync_with_http_info(
+    def _update_bot_sync_with_http_info(
         self,
         id: StrictStr,
         bot_update: BotUpdate,
@@ -1635,7 +2268,7 @@ class BotsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Bot]:
         """Synchronous version of update_bot_with_http_info"""
-        return async_to_sync(self.update_bot_with_http_info)(
+        return async_to_sync(self._update_bot_async_with_http_info)(
             id=id,
             bot_update=bot_update,
             _request_timeout=_request_timeout,
@@ -1646,7 +2279,7 @@ class BotsApi:
         )
 
     @validate_call
-    def update_bot_sync_without_preload_content(
+    def _update_bot_sync_without_preload_content(
         self,
         id: StrictStr,
         bot_update: BotUpdate,
@@ -1663,7 +2296,7 @@ class BotsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of update_bot_without_preload_content"""
-        return async_to_sync(self.update_bot_without_preload_content)(
+        return async_to_sync(self._update_bot_async_without_preload_content)(
             id=id,
             bot_update=bot_update,
             _request_timeout=_request_timeout,

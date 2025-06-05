@@ -51,13 +51,126 @@ class AdminApi:
     Do not edit the class manually.
     """
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client=None, is_sync: bool = False) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+        self.is_sync = is_sync
 
     @validate_call
-    async def get_container_limits(
+    def get_container_limits(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Dict[str, object]:
+        """Get Container Limits
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_container_limits_sync(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_container_limits_async(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_container_limits_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Dict[str, object]]:
+        """Get Container Limits with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_container_limits_sync_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_container_limits_async_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_container_limits_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Container Limits without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_container_limits_sync_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_container_limits_async_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_container_limits_async(
         self,
         _request_timeout: Union[
             None,
@@ -117,7 +230,7 @@ class AdminApi:
         ).data
 
     @validate_call
-    async def get_container_limits_with_http_info(
+    async def _get_container_limits_async_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -176,7 +289,7 @@ class AdminApi:
         )
 
     @validate_call
-    async def get_container_limits_without_preload_content(
+    async def _get_container_limits_async_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -231,9 +344,9 @@ class AdminApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_container_limits_sync(
+    def _get_container_limits_sync(
         self,
         _request_timeout: Union[
             None,
@@ -248,7 +361,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Dict[str, object]:
         """Synchronous version of get_container_limits"""
-        return async_to_sync(self.get_container_limits)(
+        return async_to_sync(self._get_container_limits_async)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -257,7 +370,7 @@ class AdminApi:
         )
 
     @validate_call
-    def get_container_limits_sync_with_http_info(
+    def _get_container_limits_sync_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -272,7 +385,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Dict[str, object]]:
         """Synchronous version of get_container_limits_with_http_info"""
-        return async_to_sync(self.get_container_limits_with_http_info)(
+        return async_to_sync(self._get_container_limits_async_with_http_info)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -281,7 +394,7 @@ class AdminApi:
         )
 
     @validate_call
-    def get_container_limits_sync_without_preload_content(
+    def _get_container_limits_sync_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -296,7 +409,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_container_limits_without_preload_content"""
-        return async_to_sync(self.get_container_limits_without_preload_content)(
+        return async_to_sync(self._get_container_limits_async_without_preload_content)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -356,7 +469,143 @@ class AdminApi:
         )
 
     @validate_call
-    async def get_dependencies(
+    def get_dependencies(
+        self,
+        include: Annotated[
+            Optional[List[StrictStr]],
+            Field(
+                description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Dict[str, str]:
+        """List Installed Packages
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_dependencies_sync(
+                include=include,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_dependencies_async(
+                include=include,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_dependencies_with_http_info(
+        self,
+        include: Annotated[
+            Optional[List[StrictStr]],
+            Field(
+                description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Dict[str, str]]:
+        """List Installed Packages with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_dependencies_sync_with_http_info(
+                include=include,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_dependencies_async_with_http_info(
+                include=include,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_dependencies_without_preload_content(
+        self,
+        include: Annotated[
+            Optional[List[StrictStr]],
+            Field(
+                description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List Installed Packages without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_dependencies_sync_without_preload_content(
+                include=include,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_dependencies_async_without_preload_content(
+                include=include,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_dependencies_async(
         self,
         include: Annotated[
             Optional[List[StrictStr]],
@@ -425,7 +674,7 @@ class AdminApi:
         ).data
 
     @validate_call
-    async def get_dependencies_with_http_info(
+    async def _get_dependencies_async_with_http_info(
         self,
         include: Annotated[
             Optional[List[StrictStr]],
@@ -493,7 +742,7 @@ class AdminApi:
         )
 
     @validate_call
-    async def get_dependencies_without_preload_content(
+    async def _get_dependencies_async_without_preload_content(
         self,
         include: Annotated[
             Optional[List[StrictStr]],
@@ -557,9 +806,9 @@ class AdminApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_dependencies_sync(
+    def _get_dependencies_sync(
         self,
         include: Annotated[
             Optional[List[StrictStr]],
@@ -580,7 +829,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Dict[str, str]:
         """Synchronous version of get_dependencies"""
-        return async_to_sync(self.get_dependencies)(
+        return async_to_sync(self._get_dependencies_async)(
             include=include,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -590,7 +839,7 @@ class AdminApi:
         )
 
     @validate_call
-    def get_dependencies_sync_with_http_info(
+    def _get_dependencies_sync_with_http_info(
         self,
         include: Annotated[
             Optional[List[StrictStr]],
@@ -611,7 +860,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Dict[str, str]]:
         """Synchronous version of get_dependencies_with_http_info"""
-        return async_to_sync(self.get_dependencies_with_http_info)(
+        return async_to_sync(self._get_dependencies_async_with_http_info)(
             include=include,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -621,7 +870,7 @@ class AdminApi:
         )
 
     @validate_call
-    def get_dependencies_sync_without_preload_content(
+    def _get_dependencies_sync_without_preload_content(
         self,
         include: Annotated[
             Optional[List[StrictStr]],
@@ -642,7 +891,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_dependencies_without_preload_content"""
-        return async_to_sync(self.get_dependencies_without_preload_content)(
+        return async_to_sync(self._get_dependencies_async_without_preload_content)(
             include=include,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -710,7 +959,119 @@ class AdminApi:
         )
 
     @validate_call
-    async def get_log_level(
+    def get_log_level(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> LogLevel:
+        """Get Logging Level
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_log_level_sync(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_log_level_async(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_log_level_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[LogLevel]:
+        """Get Logging Level with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_log_level_sync_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_log_level_async_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_log_level_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Logging Level without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_log_level_sync_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_log_level_async_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_log_level_async(
         self,
         _request_timeout: Union[
             None,
@@ -771,7 +1132,7 @@ class AdminApi:
         ).data
 
     @validate_call
-    async def get_log_level_with_http_info(
+    async def _get_log_level_async_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -831,7 +1192,7 @@ class AdminApi:
         )
 
     @validate_call
-    async def get_log_level_without_preload_content(
+    async def _get_log_level_async_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -887,9 +1248,9 @@ class AdminApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_log_level_sync(
+    def _get_log_level_sync(
         self,
         _request_timeout: Union[
             None,
@@ -904,7 +1265,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> LogLevel:
         """Synchronous version of get_log_level"""
-        return async_to_sync(self.get_log_level)(
+        return async_to_sync(self._get_log_level_async)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -913,7 +1274,7 @@ class AdminApi:
         )
 
     @validate_call
-    def get_log_level_sync_with_http_info(
+    def _get_log_level_sync_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -928,7 +1289,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[LogLevel]:
         """Synchronous version of get_log_level_with_http_info"""
-        return async_to_sync(self.get_log_level_with_http_info)(
+        return async_to_sync(self._get_log_level_async_with_http_info)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -937,7 +1298,7 @@ class AdminApi:
         )
 
     @validate_call
-    def get_log_level_sync_without_preload_content(
+    def _get_log_level_sync_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -952,7 +1313,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_log_level_without_preload_content"""
-        return async_to_sync(self.get_log_level_without_preload_content)(
+        return async_to_sync(self._get_log_level_async_without_preload_content)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1012,7 +1373,119 @@ class AdminApi:
         )
 
     @validate_call
-    async def get_memory_usage(
+    def get_memory_usage(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> float:
+        """Get Memory Usage
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_memory_usage_sync(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_memory_usage_async(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_memory_usage_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[float]:
+        """Get Memory Usage with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_memory_usage_sync_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_memory_usage_async_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_memory_usage_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Memory Usage without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_memory_usage_sync_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_memory_usage_async_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_memory_usage_async(
         self,
         _request_timeout: Union[
             None,
@@ -1072,7 +1545,7 @@ class AdminApi:
         ).data
 
     @validate_call
-    async def get_memory_usage_with_http_info(
+    async def _get_memory_usage_async_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -1131,7 +1604,7 @@ class AdminApi:
         )
 
     @validate_call
-    async def get_memory_usage_without_preload_content(
+    async def _get_memory_usage_async_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -1186,9 +1659,9 @@ class AdminApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_memory_usage_sync(
+    def _get_memory_usage_sync(
         self,
         _request_timeout: Union[
             None,
@@ -1203,7 +1676,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> float:
         """Synchronous version of get_memory_usage"""
-        return async_to_sync(self.get_memory_usage)(
+        return async_to_sync(self._get_memory_usage_async)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1212,7 +1685,7 @@ class AdminApi:
         )
 
     @validate_call
-    def get_memory_usage_sync_with_http_info(
+    def _get_memory_usage_sync_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -1227,7 +1700,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[float]:
         """Synchronous version of get_memory_usage_with_http_info"""
-        return async_to_sync(self.get_memory_usage_with_http_info)(
+        return async_to_sync(self._get_memory_usage_async_with_http_info)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1236,7 +1709,7 @@ class AdminApi:
         )
 
     @validate_call
-    def get_memory_usage_sync_without_preload_content(
+    def _get_memory_usage_sync_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -1251,7 +1724,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_memory_usage_without_preload_content"""
-        return async_to_sync(self.get_memory_usage_without_preload_content)(
+        return async_to_sync(self._get_memory_usage_async_without_preload_content)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1311,7 +1784,119 @@ class AdminApi:
         )
 
     @validate_call
-    async def get_metrics(
+    def get_metrics(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Metrics
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_metrics_sync(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_metrics_async(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_metrics_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Metrics with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_metrics_sync_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_metrics_async_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_metrics_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Metrics without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_metrics_sync_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_metrics_async_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_metrics_async(
         self,
         _request_timeout: Union[
             None,
@@ -1371,7 +1956,7 @@ class AdminApi:
         ).data
 
     @validate_call
-    async def get_metrics_with_http_info(
+    async def _get_metrics_async_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -1431,7 +2016,7 @@ class AdminApi:
         )
 
     @validate_call
-    async def get_metrics_without_preload_content(
+    async def _get_metrics_async_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -1486,9 +2071,9 @@ class AdminApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_metrics_sync(
+    def _get_metrics_sync(
         self,
         _request_timeout: Union[
             None,
@@ -1503,7 +2088,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
         """Synchronous version of get_metrics"""
-        return async_to_sync(self.get_metrics)(
+        return async_to_sync(self._get_metrics_async)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1512,7 +2097,7 @@ class AdminApi:
         )
 
     @validate_call
-    def get_metrics_sync_with_http_info(
+    def _get_metrics_sync_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -1527,7 +2112,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
         """Synchronous version of get_metrics_with_http_info"""
-        return async_to_sync(self.get_metrics_with_http_info)(
+        return async_to_sync(self._get_metrics_async_with_http_info)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1536,7 +2121,7 @@ class AdminApi:
         )
 
     @validate_call
-    def get_metrics_sync_without_preload_content(
+    def _get_metrics_sync_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -1551,7 +2136,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_metrics_without_preload_content"""
-        return async_to_sync(self.get_metrics_without_preload_content)(
+        return async_to_sync(self._get_metrics_async_without_preload_content)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1611,7 +2196,119 @@ class AdminApi:
         )
 
     @validate_call
-    async def get_threads(
+    def get_threads(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Dict[str, object]:
+        """Get Threads
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_threads_sync(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_threads_async(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_threads_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Dict[str, object]]:
+        """Get Threads with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_threads_sync_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_threads_async_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_threads_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Threads without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_threads_sync_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_threads_async_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_threads_async(
         self,
         _request_timeout: Union[
             None,
@@ -1671,7 +2368,7 @@ class AdminApi:
         ).data
 
     @validate_call
-    async def get_threads_with_http_info(
+    async def _get_threads_async_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -1730,7 +2427,7 @@ class AdminApi:
         )
 
     @validate_call
-    async def get_threads_without_preload_content(
+    async def _get_threads_async_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -1785,9 +2482,9 @@ class AdminApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_threads_sync(
+    def _get_threads_sync(
         self,
         _request_timeout: Union[
             None,
@@ -1802,7 +2499,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Dict[str, object]:
         """Synchronous version of get_threads"""
-        return async_to_sync(self.get_threads)(
+        return async_to_sync(self._get_threads_async)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1811,7 +2508,7 @@ class AdminApi:
         )
 
     @validate_call
-    def get_threads_sync_with_http_info(
+    def _get_threads_sync_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -1826,7 +2523,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Dict[str, object]]:
         """Synchronous version of get_threads_with_http_info"""
-        return async_to_sync(self.get_threads_with_http_info)(
+        return async_to_sync(self._get_threads_async_with_http_info)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1835,7 +2532,7 @@ class AdminApi:
         )
 
     @validate_call
-    def get_threads_sync_without_preload_content(
+    def _get_threads_sync_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -1850,7 +2547,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_threads_without_preload_content"""
-        return async_to_sync(self.get_threads_without_preload_content)(
+        return async_to_sync(self._get_threads_async_without_preload_content)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1910,7 +2607,128 @@ class AdminApi:
         )
 
     @validate_call
-    async def get_uptime(
+    def get_uptime(
+        self,
+        type: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> str:
+        """Get Uptime
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_uptime_sync(
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_uptime_async(
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_uptime_with_http_info(
+        self,
+        type: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[str]:
+        """Get Uptime with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_uptime_sync_with_http_info(
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_uptime_async_with_http_info(
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_uptime_without_preload_content(
+        self,
+        type: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Uptime without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_uptime_sync_without_preload_content(
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_uptime_async_without_preload_content(
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_uptime_async(
         self,
         type: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -1974,7 +2792,7 @@ class AdminApi:
         ).data
 
     @validate_call
-    async def get_uptime_with_http_info(
+    async def _get_uptime_async_with_http_info(
         self,
         type: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -2037,7 +2855,7 @@ class AdminApi:
         )
 
     @validate_call
-    async def get_uptime_without_preload_content(
+    async def _get_uptime_async_without_preload_content(
         self,
         type: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -2096,9 +2914,9 @@ class AdminApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_uptime_sync(
+    def _get_uptime_sync(
         self,
         type: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -2114,7 +2932,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> str:
         """Synchronous version of get_uptime"""
-        return async_to_sync(self.get_uptime)(
+        return async_to_sync(self._get_uptime_async)(
             type=type,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -2124,7 +2942,7 @@ class AdminApi:
         )
 
     @validate_call
-    def get_uptime_sync_with_http_info(
+    def _get_uptime_sync_with_http_info(
         self,
         type: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -2140,7 +2958,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[str]:
         """Synchronous version of get_uptime_with_http_info"""
-        return async_to_sync(self.get_uptime_with_http_info)(
+        return async_to_sync(self._get_uptime_async_with_http_info)(
             type=type,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -2150,7 +2968,7 @@ class AdminApi:
         )
 
     @validate_call
-    def get_uptime_sync_without_preload_content(
+    def _get_uptime_sync_without_preload_content(
         self,
         type: Optional[StrictStr] = None,
         _request_timeout: Union[
@@ -2166,7 +2984,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_uptime_without_preload_content"""
-        return async_to_sync(self.get_uptime_without_preload_content)(
+        return async_to_sync(self._get_uptime_async_without_preload_content)(
             type=type,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,

@@ -25,12 +25,13 @@ class PayClient:
         self,
         config: Configuration,
         http_client: Optional[ClientSession] = None,
+        is_sync: bool = False,
     ):
         self.config = config
         self.base_client = ApiClient(configuration=self.config)
         self.base_client.rest_client.pool_manager = http_client
-        self.now = NOWPaymentsApi(self.base_client)
-        self.status = StatusApi(self.base_client)
-        self.payments = PaymentsApi(self.base_client)
-        self.products = ProductsApi(self.base_client)
-        self.admin = AdminApi(self.base_client)
+        self.now = NOWPaymentsApi(self.base_client, is_sync=is_sync)
+        self.status = StatusApi(self.base_client, is_sync=is_sync)
+        self.payments = PaymentsApi(self.base_client, is_sync=is_sync)
+        self.products = ProductsApi(self.base_client, is_sync=is_sync)
+        self.admin = AdminApi(self.base_client, is_sync=is_sync)
