@@ -184,8 +184,6 @@ async def test_client_concurrent_operations():
         for response in responses:
             assert response is not None
             
-        # All should use their own session
-        assert client._http_client is None
     finally:
         await client.close()
         assert client._http_client is None

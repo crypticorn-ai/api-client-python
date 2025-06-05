@@ -29,7 +29,10 @@ class PayClient:
     ):
         self.config = config
         self.base_client = ApiClient(configuration=self.config)
-        self.base_client.rest_client.pool_manager = http_client
+        if http_client is not None:
+            self.base_client.rest_client.pool_manager = http_client
+        # Pass sync context to REST client for proper session management
+        self.base_client.rest_client.is_sync = is_sync
         self.now = NOWPaymentsApi(self.base_client, is_sync=is_sync)
         self.status = StatusApi(self.base_client, is_sync=is_sync)
         self.payments = PaymentsApi(self.base_client, is_sync=is_sync)
