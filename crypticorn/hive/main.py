@@ -2,7 +2,7 @@ from __future__ import annotations
 import os
 import asyncio
 from pathlib import Path
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Union, Coroutine, Any
 from crypticorn.hive import (
     ApiClient,
     Configuration,
@@ -18,6 +18,7 @@ from pydantic import StrictInt
 
 if TYPE_CHECKING:
     from aiohttp import ClientSession
+
 
 class HiveClient:
     """
@@ -58,17 +59,49 @@ class DataApiWrapper(DataApi):
         feature_size: Optional[FeatureSize] = None,
         *args,
         **kwargs,
-    ) -> list[Path]:
+    ) -> Union[list[Path], Coroutine[Any, Any, list[Path]]]:
         """
         Download data for model training. All three files (y_train, x_test, x_train) are downloaded and saved under e.g. FOLDER/v1/coin_1/*.feather.
         The folder will be created if it doesn't exist.
+        Works in both sync and async contexts.
 
         :param model_id: Model ID (required) (type: int)
         :param version: Data version. Default is the latest public version. (optional) (type: DataVersion)
         :param feature_size: The number of features in the data. Default is LARGE. (optional) (type: FeatureSize)
         :return: A list of paths to the downloaded files.
         """
-        response = super().download_data(
+        if self.is_sync:
+            return self._download_data_wrapper_sync(
+                model_id=model_id,
+                folder=folder,
+                version=version,
+                feature_size=feature_size,
+                *args,
+                **kwargs,
+            )
+        else:
+            return self._download_data_wrapper_async(
+                model_id=model_id,
+                folder=folder,
+                version=version,
+                feature_size=feature_size,
+                *args,
+                **kwargs,
+            )
+
+    def _download_data_wrapper_sync(
+        self,
+        model_id: StrictInt,
+        folder: Path = Path("data"),
+        version: Optional[DataVersion] = None,
+        feature_size: Optional[FeatureSize] = None,
+        *args,
+        **kwargs,
+    ) -> list[Path]:
+        """
+        Download data for model training (sync version).
+        """
+        response = self._download_data_sync(
             model_id=model_id,
             version=version,
             feature_size=feature_size,
@@ -79,22 +112,53 @@ class DataApiWrapper(DataApi):
         os.makedirs(base_path, exist_ok=True)
 
         return [
-                download_file(
-                    url=response.links.y_train,
-                    dest_path=base_path + "y_train_" + response.target + ".feather",
-                ),
-                download_file(
-                    url=response.links.x_test,
-                    dest_path=base_path
-                    + "x_test_"
-                    + response.feature_size
-                    + ".feather",
-                ),
-                download_file(
-                    url=response.links.x_train,
-                    dest_path=base_path
-                    + "x_train_"
-                    + response.feature_size
-                    + ".feather",
-                ),
-            ]
+            download_file(
+                url=response.links.y_train,
+                dest_path=base_path + "y_train_" + response.target + ".feather",
+            ),
+            download_file(
+                url=response.links.x_test,
+                dest_path=base_path + "x_test_" + response.feature_size + ".feather",
+            ),
+            download_file(
+                url=response.links.x_train,
+                dest_path=base_path + "x_train_" + response.feature_size + ".feather",
+            ),
+        ]
+
+    async def _download_data_wrapper_async(
+        self,
+        model_id: StrictInt,
+        folder: Path = Path("data"),
+        version: Optional[DataVersion] = None,
+        feature_size: Optional[FeatureSize] = None,
+        *args,
+        **kwargs,
+    ) -> list[Path]:
+        """
+        Download data for model training (async version).
+        """
+        response = await self._download_data_async(
+            model_id=model_id,
+            version=version,
+            feature_size=feature_size,
+            *args,
+            **kwargs,
+        )
+        base_path = f"{folder}/v{response.version.value}/coin_{response.coin.value}/"
+        os.makedirs(base_path, exist_ok=True)
+
+        return await asyncio.gather(
+            *[download_file(
+                url=response.links.y_train,
+                dest_path=base_path + "y_train_" + response.target + ".feather",
+            ),
+            download_file(
+                url=response.links.x_test,
+                dest_path=base_path + "x_test_" + response.feature_size + ".feather",
+            ),
+            download_file(
+                url=response.links.x_train,
+                dest_path=base_path + "x_train_" + response.feature_size + ".feather",
+            ),]
+        )

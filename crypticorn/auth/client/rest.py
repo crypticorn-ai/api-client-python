@@ -173,7 +173,7 @@ class RESTClientObject:
 
         # For sync operations, always use a fresh session
         should_close_session = False
-        
+
         if self.pool_manager is None:
             self.pool_manager = aiohttp.ClientSession(
                 connector=aiohttp.TCPConnector(
