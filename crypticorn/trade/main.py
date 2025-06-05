@@ -25,18 +25,21 @@ class TradeClient:
     config_class = Configuration
 
     def __init__(
-        self, config: Configuration, http_client: Optional[ClientSession] = None
+        self,
+        config: Configuration,
+        http_client: Optional[ClientSession] = None,
+        is_sync: bool = False,
     ):
         self.config = config
         self.base_client = ApiClient(configuration=self.config)
         if http_client is not None:
             self.base_client.rest_client.pool_manager = http_client
         # Instantiate all the endpoint clients
-        self.bots = BotsApi(self.base_client)
-        self.exchanges = ExchangesApi(self.base_client)
-        self.notifications = NotificationsApi(self.base_client)
-        self.orders = OrdersApi(self.base_client)
-        self.status = StatusApi(self.base_client)
-        self.strategies = StrategiesApi(self.base_client)
-        self.actions = TradingActionsApi(self.base_client)
-        self.keys = APIKeysApi(self.base_client)
+        self.bots = BotsApi(self.base_client, is_sync=is_sync)
+        self.exchanges = ExchangesApi(self.base_client, is_sync=is_sync)
+        self.notifications = NotificationsApi(self.base_client, is_sync=is_sync)
+        self.orders = OrdersApi(self.base_client, is_sync=is_sync)
+        self.status = StatusApi(self.base_client, is_sync=is_sync)
+        self.strategies = StrategiesApi(self.base_client, is_sync=is_sync)
+        self.actions = TradingActionsApi(self.base_client, is_sync=is_sync)
+        self.keys = APIKeysApi(self.base_client, is_sync=is_sync)

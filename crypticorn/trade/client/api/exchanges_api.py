@@ -49,13 +49,126 @@ class ExchangesApi:
     Do not edit the class manually.
     """
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client=None, is_sync: bool = False) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+        self.is_sync = is_sync
 
     @validate_call
-    async def get_all_exchanges(
+    def get_all_exchanges(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[Exchange]:
+        """Get All Exchanges
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_all_exchanges_sync(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_all_exchanges_async(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_all_exchanges_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[Exchange]]:
+        """Get All Exchanges with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_all_exchanges_sync_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_all_exchanges_async_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_all_exchanges_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get All Exchanges without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_all_exchanges_sync_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_all_exchanges_async_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_all_exchanges_async(
         self,
         _request_timeout: Union[
             None,
@@ -115,7 +228,7 @@ class ExchangesApi:
         ).data
 
     @validate_call
-    async def get_all_exchanges_with_http_info(
+    async def _get_all_exchanges_async_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -174,7 +287,7 @@ class ExchangesApi:
         )
 
     @validate_call
-    async def get_all_exchanges_without_preload_content(
+    async def _get_all_exchanges_async_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -229,9 +342,9 @@ class ExchangesApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_all_exchanges_sync(
+    def _get_all_exchanges_sync(
         self,
         _request_timeout: Union[
             None,
@@ -246,7 +359,7 @@ class ExchangesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Exchange]:
         """Synchronous version of get_all_exchanges"""
-        return async_to_sync(self.get_all_exchanges)(
+        return async_to_sync(self._get_all_exchanges_async)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -255,7 +368,7 @@ class ExchangesApi:
         )
 
     @validate_call
-    def get_all_exchanges_sync_with_http_info(
+    def _get_all_exchanges_sync_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -270,7 +383,7 @@ class ExchangesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Exchange]]:
         """Synchronous version of get_all_exchanges_with_http_info"""
-        return async_to_sync(self.get_all_exchanges_with_http_info)(
+        return async_to_sync(self._get_all_exchanges_async_with_http_info)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -279,7 +392,7 @@ class ExchangesApi:
         )
 
     @validate_call
-    def get_all_exchanges_sync_without_preload_content(
+    def _get_all_exchanges_sync_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -294,7 +407,7 @@ class ExchangesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_all_exchanges_without_preload_content"""
-        return async_to_sync(self.get_all_exchanges_without_preload_content)(
+        return async_to_sync(self._get_all_exchanges_async_without_preload_content)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -354,7 +467,119 @@ class ExchangesApi:
         )
 
     @validate_call
-    async def get_planned_exchanges(
+    def get_planned_exchanges(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[Exchange]:
+        """Get Planned Exchanges
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_planned_exchanges_sync(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_planned_exchanges_async(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_planned_exchanges_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[Exchange]]:
+        """Get Planned Exchanges with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_planned_exchanges_sync_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_planned_exchanges_async_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_planned_exchanges_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Planned Exchanges without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_planned_exchanges_sync_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_planned_exchanges_async_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_planned_exchanges_async(
         self,
         _request_timeout: Union[
             None,
@@ -414,7 +639,7 @@ class ExchangesApi:
         ).data
 
     @validate_call
-    async def get_planned_exchanges_with_http_info(
+    async def _get_planned_exchanges_async_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -473,7 +698,7 @@ class ExchangesApi:
         )
 
     @validate_call
-    async def get_planned_exchanges_without_preload_content(
+    async def _get_planned_exchanges_async_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -528,9 +753,9 @@ class ExchangesApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_planned_exchanges_sync(
+    def _get_planned_exchanges_sync(
         self,
         _request_timeout: Union[
             None,
@@ -545,7 +770,7 @@ class ExchangesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Exchange]:
         """Synchronous version of get_planned_exchanges"""
-        return async_to_sync(self.get_planned_exchanges)(
+        return async_to_sync(self._get_planned_exchanges_async)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -554,7 +779,7 @@ class ExchangesApi:
         )
 
     @validate_call
-    def get_planned_exchanges_sync_with_http_info(
+    def _get_planned_exchanges_sync_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -569,7 +794,7 @@ class ExchangesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Exchange]]:
         """Synchronous version of get_planned_exchanges_with_http_info"""
-        return async_to_sync(self.get_planned_exchanges_with_http_info)(
+        return async_to_sync(self._get_planned_exchanges_async_with_http_info)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -578,7 +803,7 @@ class ExchangesApi:
         )
 
     @validate_call
-    def get_planned_exchanges_sync_without_preload_content(
+    def _get_planned_exchanges_sync_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -593,7 +818,7 @@ class ExchangesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_planned_exchanges_without_preload_content"""
-        return async_to_sync(self.get_planned_exchanges_without_preload_content)(
+        return async_to_sync(self._get_planned_exchanges_async_without_preload_content)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -653,7 +878,119 @@ class ExchangesApi:
         )
 
     @validate_call
-    async def get_tradeable_exchanges(
+    def get_tradeable_exchanges(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[Exchange]:
+        """Get Tradeable Exchanges
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_tradeable_exchanges_sync(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_tradeable_exchanges_async(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_tradeable_exchanges_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[Exchange]]:
+        """Get Tradeable Exchanges with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_tradeable_exchanges_sync_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_tradeable_exchanges_async_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_tradeable_exchanges_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Tradeable Exchanges without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_tradeable_exchanges_sync_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_tradeable_exchanges_async_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_tradeable_exchanges_async(
         self,
         _request_timeout: Union[
             None,
@@ -713,7 +1050,7 @@ class ExchangesApi:
         ).data
 
     @validate_call
-    async def get_tradeable_exchanges_with_http_info(
+    async def _get_tradeable_exchanges_async_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -772,7 +1109,7 @@ class ExchangesApi:
         )
 
     @validate_call
-    async def get_tradeable_exchanges_without_preload_content(
+    async def _get_tradeable_exchanges_async_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -827,9 +1164,9 @@ class ExchangesApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_tradeable_exchanges_sync(
+    def _get_tradeable_exchanges_sync(
         self,
         _request_timeout: Union[
             None,
@@ -844,7 +1181,7 @@ class ExchangesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Exchange]:
         """Synchronous version of get_tradeable_exchanges"""
-        return async_to_sync(self.get_tradeable_exchanges)(
+        return async_to_sync(self._get_tradeable_exchanges_async)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -853,7 +1190,7 @@ class ExchangesApi:
         )
 
     @validate_call
-    def get_tradeable_exchanges_sync_with_http_info(
+    def _get_tradeable_exchanges_sync_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -868,7 +1205,7 @@ class ExchangesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Exchange]]:
         """Synchronous version of get_tradeable_exchanges_with_http_info"""
-        return async_to_sync(self.get_tradeable_exchanges_with_http_info)(
+        return async_to_sync(self._get_tradeable_exchanges_async_with_http_info)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -877,7 +1214,7 @@ class ExchangesApi:
         )
 
     @validate_call
-    def get_tradeable_exchanges_sync_without_preload_content(
+    def _get_tradeable_exchanges_sync_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -892,7 +1229,9 @@ class ExchangesApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_tradeable_exchanges_without_preload_content"""
-        return async_to_sync(self.get_tradeable_exchanges_without_preload_content)(
+        return async_to_sync(
+            self._get_tradeable_exchanges_async_without_preload_content
+        )(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,

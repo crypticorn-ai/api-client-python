@@ -27,22 +27,25 @@ class MetricsClient:
     config_class = Configuration
 
     def __init__(
-        self, config: Configuration, http_client: Optional[ClientSession] = None
+        self,
+        config: Configuration,
+        http_client: Optional[ClientSession] = None,
+        is_sync: bool = False,
     ):
         self.config = config
         self.base_client = ApiClient(configuration=self.config)
         if http_client is not None:
             self.base_client.rest_client.pool_manager = http_client
         # Instantiate all the endpoint clients
-        self.status = StatusApi(self.base_client)
-        self.indicators = IndicatorsApi(self.base_client)
-        self.logs = LogsApi(self.base_client)
-        self.marketcap = MarketcapApiWrapper(self.base_client)
-        self.markets = MarketsApi(self.base_client)
-        self.tokens = TokensApiWrapper(self.base_client)
-        self.exchanges = ExchangesApiWrapper(self.base_client)
-        self.quote_currencies = QuoteCurrenciesApi(self.base_client)
-        self.admin = AdminApi(self.base_client)
+        self.status = StatusApi(self.base_client, is_sync=is_sync)
+        self.indicators = IndicatorsApi(self.base_client, is_sync=is_sync)
+        self.logs = LogsApi(self.base_client, is_sync=is_sync)
+        self.marketcap = MarketcapApiWrapper(self.base_client, is_sync=is_sync)
+        self.markets = MarketsApi(self.base_client, is_sync=is_sync)
+        self.tokens = TokensApiWrapper(self.base_client, is_sync=is_sync)
+        self.exchanges = ExchangesApiWrapper(self.base_client, is_sync=is_sync)
+        self.quote_currencies = QuoteCurrenciesApi(self.base_client, is_sync=is_sync)
+        self.admin = AdminApi(self.base_client, is_sync=is_sync)
 
 
 class MarketcapApiWrapper(MarketcapApi):
@@ -50,12 +53,12 @@ class MarketcapApiWrapper(MarketcapApi):
     A wrapper for the MarketcapApi class.
     """
 
-    async def get_marketcap_symbols_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    def get_marketcap_symbols_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
         """
         Get the marketcap symbols in a pandas dataframe
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_marketcap_symbols(*args, **kwargs)
+        response = self.get_marketcap_symbols(*args, **kwargs)
         rows = []
         for item in response:
             row = {"timestamp": item.timestamp}
@@ -70,20 +73,20 @@ class TokensApiWrapper(TokensApi):
     A wrapper for the TokensApi class.
     """
 
-    async def get_stable_tokens_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    def get_stable_tokens_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
         """
         Get the tokens in a pandas dataframe
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_stable_tokens(*args, **kwargs)
+        response = self.get_stable_tokens(*args, **kwargs)
         return pd.DataFrame(response)
 
-    async def get_wrapped_tokens_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    def get_wrapped_tokens_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
         """
         Get the wrapped tokens in a pandas dataframe
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_wrapped_tokens(*args, **kwargs)
+        response = self.get_wrapped_tokens(*args, **kwargs)
         return pd.DataFrame(response)
 
 
@@ -92,12 +95,12 @@ class ExchangesApiWrapper(ExchangesApi):
     A wrapper for the ExchangesApi class.
     """
 
-    async def get_available_exchanges_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    def get_available_exchanges_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
         """
         Get the exchanges in a pandas dataframe
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_available_exchanges(*args, **kwargs)
+        response = self.get_available_exchanges(*args, **kwargs)
 
         # Create list of dictionaries with timestamp and flattened exchange data
         rows = []

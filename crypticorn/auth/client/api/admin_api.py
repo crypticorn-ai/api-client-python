@@ -55,13 +55,135 @@ class AdminApi:
     Do not edit the class manually.
     """
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client=None, is_sync: bool = False) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+        self.is_sync = is_sync
 
     @validate_call
-    async def revoke_user_tokens(
+    def revoke_user_tokens(
+        self,
+        revoke_user_tokens_request: RevokeUserTokensRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> LogoutDefaultResponseIssuesInner:
+        """Revoke user tokens
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._revoke_user_tokens_sync(
+                revoke_user_tokens_request=revoke_user_tokens_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._revoke_user_tokens_async(
+                revoke_user_tokens_request=revoke_user_tokens_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def revoke_user_tokens_with_http_info(
+        self,
+        revoke_user_tokens_request: RevokeUserTokensRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[LogoutDefaultResponseIssuesInner]:
+        """Revoke user tokens with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._revoke_user_tokens_sync_with_http_info(
+                revoke_user_tokens_request=revoke_user_tokens_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._revoke_user_tokens_async_with_http_info(
+                revoke_user_tokens_request=revoke_user_tokens_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def revoke_user_tokens_without_preload_content(
+        self,
+        revoke_user_tokens_request: RevokeUserTokensRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Revoke user tokens without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._revoke_user_tokens_sync_without_preload_content(
+                revoke_user_tokens_request=revoke_user_tokens_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._revoke_user_tokens_async_without_preload_content(
+                revoke_user_tokens_request=revoke_user_tokens_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _revoke_user_tokens_async(
         self,
         revoke_user_tokens_request: RevokeUserTokensRequest,
         _request_timeout: Union[
@@ -125,7 +247,7 @@ class AdminApi:
         ).data
 
     @validate_call
-    async def revoke_user_tokens_with_http_info(
+    async def _revoke_user_tokens_async_with_http_info(
         self,
         revoke_user_tokens_request: RevokeUserTokensRequest,
         _request_timeout: Union[
@@ -188,7 +310,7 @@ class AdminApi:
         )
 
     @validate_call
-    async def revoke_user_tokens_without_preload_content(
+    async def _revoke_user_tokens_async_without_preload_content(
         self,
         revoke_user_tokens_request: RevokeUserTokensRequest,
         _request_timeout: Union[
@@ -247,9 +369,9 @@ class AdminApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def revoke_user_tokens_sync(
+    def _revoke_user_tokens_sync(
         self,
         revoke_user_tokens_request: RevokeUserTokensRequest,
         _request_timeout: Union[
@@ -265,7 +387,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> LogoutDefaultResponseIssuesInner:
         """Synchronous version of revoke_user_tokens"""
-        return async_to_sync(self.revoke_user_tokens)(
+        return async_to_sync(self._revoke_user_tokens_async)(
             revoke_user_tokens_request=revoke_user_tokens_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -275,7 +397,7 @@ class AdminApi:
         )
 
     @validate_call
-    def revoke_user_tokens_sync_with_http_info(
+    def _revoke_user_tokens_sync_with_http_info(
         self,
         revoke_user_tokens_request: RevokeUserTokensRequest,
         _request_timeout: Union[
@@ -291,7 +413,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[LogoutDefaultResponseIssuesInner]:
         """Synchronous version of revoke_user_tokens_with_http_info"""
-        return async_to_sync(self.revoke_user_tokens_with_http_info)(
+        return async_to_sync(self._revoke_user_tokens_async_with_http_info)(
             revoke_user_tokens_request=revoke_user_tokens_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -301,7 +423,7 @@ class AdminApi:
         )
 
     @validate_call
-    def revoke_user_tokens_sync_without_preload_content(
+    def _revoke_user_tokens_sync_without_preload_content(
         self,
         revoke_user_tokens_request: RevokeUserTokensRequest,
         _request_timeout: Union[
@@ -317,7 +439,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of revoke_user_tokens_without_preload_content"""
-        return async_to_sync(self.revoke_user_tokens_without_preload_content)(
+        return async_to_sync(self._revoke_user_tokens_async_without_preload_content)(
             revoke_user_tokens_request=revoke_user_tokens_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -391,7 +513,119 @@ class AdminApi:
         )
 
     @validate_call
-    async def user_list(
+    def user_list(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[Whoami200Response]:
+        """User List
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._user_list_sync(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._user_list_async(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def user_list_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[Whoami200Response]]:
+        """User List with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._user_list_sync_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._user_list_async_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def user_list_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """User List without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._user_list_sync_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._user_list_async_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _user_list_async(
         self,
         _request_timeout: Union[
             None,
@@ -451,7 +685,7 @@ class AdminApi:
         ).data
 
     @validate_call
-    async def user_list_with_http_info(
+    async def _user_list_async_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -510,7 +744,7 @@ class AdminApi:
         )
 
     @validate_call
-    async def user_list_without_preload_content(
+    async def _user_list_async_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -565,9 +799,9 @@ class AdminApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def user_list_sync(
+    def _user_list_sync(
         self,
         _request_timeout: Union[
             None,
@@ -582,7 +816,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Whoami200Response]:
         """Synchronous version of user_list"""
-        return async_to_sync(self.user_list)(
+        return async_to_sync(self._user_list_async)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -591,7 +825,7 @@ class AdminApi:
         )
 
     @validate_call
-    def user_list_sync_with_http_info(
+    def _user_list_sync_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -606,7 +840,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Whoami200Response]]:
         """Synchronous version of user_list_with_http_info"""
-        return async_to_sync(self.user_list_with_http_info)(
+        return async_to_sync(self._user_list_async_with_http_info)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -615,7 +849,7 @@ class AdminApi:
         )
 
     @validate_call
-    def user_list_sync_without_preload_content(
+    def _user_list_sync_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -630,7 +864,7 @@ class AdminApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of user_list_without_preload_content"""
-        return async_to_sync(self.user_list_without_preload_content)(
+        return async_to_sync(self._user_list_async_without_preload_content)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,

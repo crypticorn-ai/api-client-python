@@ -55,13 +55,135 @@ class UDFApi:
     Do not edit the class manually.
     """
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client=None, is_sync: bool = False) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+        self.is_sync = is_sync
 
     @validate_call
-    async def get_symbol(
+    def get_symbol(
+        self,
+        symbol: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> SymbolInfo:
+        """Get Symbol
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_symbol_sync(
+                symbol=symbol,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_symbol_async(
+                symbol=symbol,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_symbol_with_http_info(
+        self,
+        symbol: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[SymbolInfo]:
+        """Get Symbol with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_symbol_sync_with_http_info(
+                symbol=symbol,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_symbol_async_with_http_info(
+                symbol=symbol,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_symbol_without_preload_content(
+        self,
+        symbol: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Symbol without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_symbol_sync_without_preload_content(
+                symbol=symbol,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_symbol_async_without_preload_content(
+                symbol=symbol,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_symbol_async(
         self,
         symbol: StrictStr,
         _request_timeout: Union[
@@ -124,7 +246,7 @@ class UDFApi:
         ).data
 
     @validate_call
-    async def get_symbol_with_http_info(
+    async def _get_symbol_async_with_http_info(
         self,
         symbol: StrictStr,
         _request_timeout: Union[
@@ -182,12 +304,11 @@ class UDFApi:
         )
         await response_data.read()
         return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
+            response_data=response_data, response_types_map=_response_types_map
         )
 
     @validate_call
-    async def get_symbol_without_preload_content(
+    async def _get_symbol_async_without_preload_content(
         self,
         symbol: StrictStr,
         _request_timeout: Union[
@@ -243,7 +364,86 @@ class UDFApi:
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        return response_data.response
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _get_symbol_sync(
+        self,
+        symbol: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> SymbolInfo:
+        """Synchronous version of get_symbol"""
+        return async_to_sync(self._get_symbol_async)(
+            symbol=symbol,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_symbol_sync_with_http_info(
+        self,
+        symbol: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[SymbolInfo]:
+        """Synchronous version of get_symbol_with_http_info"""
+        return async_to_sync(self._get_symbol_async_with_http_info)(
+            symbol=symbol,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_symbol_sync_without_preload_content(
+        self,
+        symbol: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of get_symbol_without_preload_content"""
+        return async_to_sync(self._get_symbol_async_without_preload_content)(
+            symbol=symbol,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
 
     def _get_symbol_serialize(
         self,
@@ -301,11 +501,10 @@ class UDFApi:
             _request_auth=_request_auth,
         )
 
-    # Sync versions of get_symbol methods
     @validate_call
-    def get_symbol_sync(
+    def get_symbol_info(
         self,
-        symbol: StrictStr,
+        group: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -317,21 +516,35 @@ class UDFApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> SymbolInfo:
-        """Sync version of get_symbol"""
-        return async_to_sync(self.get_symbol)(
-            symbol=symbol,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+    ) -> SymbolGroup:
+        """Get Symbol Info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_symbol_info_sync(
+                group=group,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_symbol_info_async(
+                group=group,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
 
     @validate_call
-    def get_symbol_sync_with_http_info(
+    def get_symbol_info_with_http_info(
         self,
-        symbol: StrictStr,
+        group: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -343,21 +556,35 @@ class UDFApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[SymbolInfo]:
-        """Sync version of get_symbol_with_http_info"""
-        return async_to_sync(self.get_symbol_with_http_info)(
-            symbol=symbol,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+    ) -> ApiResponse[SymbolGroup]:
+        """Get Symbol Info with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_symbol_info_sync_with_http_info(
+                group=group,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_symbol_info_async_with_http_info(
+                group=group,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
 
     @validate_call
-    def get_symbol_sync_without_preload_content(
+    def get_symbol_info_without_preload_content(
         self,
-        symbol: StrictStr,
+        group: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -370,18 +597,33 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Sync version of get_symbol_without_preload_content"""
-        return async_to_sync(self.get_symbol_without_preload_content)(
-            symbol=symbol,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+        """Get Symbol Info without preloading content
 
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_symbol_info_sync_without_preload_content(
+                group=group,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_symbol_info_async_without_preload_content(
+                group=group,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
     @validate_call
-    async def get_symbol_info(
+    async def _get_symbol_info_async(
         self,
         group: StrictStr,
         _request_timeout: Union[
@@ -446,7 +688,7 @@ class UDFApi:
         ).data
 
     @validate_call
-    async def get_symbol_info_with_http_info(
+    async def _get_symbol_info_async_with_http_info(
         self,
         group: StrictStr,
         _request_timeout: Union[
@@ -506,12 +748,11 @@ class UDFApi:
         )
         await response_data.read()
         return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
+            response_data=response_data, response_types_map=_response_types_map
         )
 
     @validate_call
-    async def get_symbol_info_without_preload_content(
+    async def _get_symbol_info_async_without_preload_content(
         self,
         group: StrictStr,
         _request_timeout: Union[
@@ -569,7 +810,86 @@ class UDFApi:
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        return response_data.response
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _get_symbol_info_sync(
+        self,
+        group: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> SymbolGroup:
+        """Synchronous version of get_symbol_info"""
+        return async_to_sync(self._get_symbol_info_async)(
+            group=group,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_symbol_info_sync_with_http_info(
+        self,
+        group: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[SymbolGroup]:
+        """Synchronous version of get_symbol_info_with_http_info"""
+        return async_to_sync(self._get_symbol_info_async_with_http_info)(
+            group=group,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_symbol_info_sync_without_preload_content(
+        self,
+        group: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of get_symbol_info_without_preload_content"""
+        return async_to_sync(self._get_symbol_info_async_without_preload_content)(
+            group=group,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
 
     def _get_symbol_info_serialize(
         self,
@@ -627,11 +947,9 @@ class UDFApi:
             _request_auth=_request_auth,
         )
 
-    # Sync versions of get_symbol_info methods
     @validate_call
-    def get_symbol_info_sync(
+    def get_udf_config(
         self,
-        group: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -643,21 +961,32 @@ class UDFApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[SymbolInfo]:
-        """Sync version of get_symbol_info"""
-        return async_to_sync(self.get_symbol_info)(
-            group=group,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+    ) -> UDFConfig:
+        """Get Config
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_udf_config_sync(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_udf_config_async(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
 
     @validate_call
-    def get_symbol_info_sync_with_http_info(
+    def get_udf_config_with_http_info(
         self,
-        group: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -669,21 +998,32 @@ class UDFApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[SymbolInfo]]:
-        """Sync version of get_symbol_info_with_http_info"""
-        return async_to_sync(self.get_symbol_info_with_http_info)(
-            group=group,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+    ) -> ApiResponse[UDFConfig]:
+        """Get Config with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_udf_config_sync_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_udf_config_async_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
 
     @validate_call
-    def get_symbol_info_sync_without_preload_content(
+    def get_udf_config_without_preload_content(
         self,
-        group: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -696,18 +1036,31 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Sync version of get_symbol_info_without_preload_content"""
-        return async_to_sync(self.get_symbol_info_without_preload_content)(
-            group=group,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+        """Get Config without preloading content
 
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_udf_config_sync_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_udf_config_async_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
     @validate_call
-    async def get_udf_config(
+    async def _get_udf_config_async(
         self,
         _request_timeout: Union[
             None,
@@ -766,7 +1119,7 @@ class UDFApi:
         ).data
 
     @validate_call
-    async def get_udf_config_with_http_info(
+    async def _get_udf_config_async_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -820,12 +1173,11 @@ class UDFApi:
         )
         await response_data.read()
         return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
+            response_data=response_data, response_types_map=_response_types_map
         )
 
     @validate_call
-    async def get_udf_config_without_preload_content(
+    async def _get_udf_config_async_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -877,7 +1229,80 @@ class UDFApi:
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        return response_data.response
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _get_udf_config_sync(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> UDFConfig:
+        """Synchronous version of get_udf_config"""
+        return async_to_sync(self._get_udf_config_async)(
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_udf_config_sync_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[UDFConfig]:
+        """Synchronous version of get_udf_config_with_http_info"""
+        return async_to_sync(self._get_udf_config_async_with_http_info)(
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_udf_config_sync_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of get_udf_config_without_preload_content"""
+        return async_to_sync(self._get_udf_config_async_without_preload_content)(
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
 
     def _get_udf_config_serialize(
         self,
@@ -930,10 +1355,14 @@ class UDFApi:
             _request_auth=_request_auth,
         )
 
-    # Sync versions of get_udf_config methods
     @validate_call
-    def get_udf_config_sync(
+    def get_udf_history(
         self,
+        symbol: StrictStr,
+        resolution: Resolution,
+        var_from: StrictInt,
+        to: StrictInt,
+        countback: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -945,19 +1374,47 @@ class UDFApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> UDFConfig:
-        """Sync version of get_udf_config"""
-        return async_to_sync(self.get_udf_config)(
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+    ) -> OHLCV:
+        """Get History
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_udf_history_sync(
+                symbol=symbol,
+                resolution=resolution,
+                var_from=var_from,
+                to=to,
+                countback=countback,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_udf_history_async(
+                symbol=symbol,
+                resolution=resolution,
+                var_from=var_from,
+                to=to,
+                countback=countback,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
 
     @validate_call
-    def get_udf_config_sync_with_http_info(
+    def get_udf_history_with_http_info(
         self,
+        symbol: StrictStr,
+        resolution: Resolution,
+        var_from: StrictInt,
+        to: StrictInt,
+        countback: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -969,19 +1426,47 @@ class UDFApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[UDFConfig]:
-        """Sync version of get_udf_config_with_http_info"""
-        return async_to_sync(self.get_udf_config_with_http_info)(
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+    ) -> ApiResponse[OHLCV]:
+        """Get History with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_udf_history_sync_with_http_info(
+                symbol=symbol,
+                resolution=resolution,
+                var_from=var_from,
+                to=to,
+                countback=countback,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_udf_history_async_with_http_info(
+                symbol=symbol,
+                resolution=resolution,
+                var_from=var_from,
+                to=to,
+                countback=countback,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
 
     @validate_call
-    def get_udf_config_sync_without_preload_content(
+    def get_udf_history_without_preload_content(
         self,
+        symbol: StrictStr,
+        resolution: Resolution,
+        var_from: StrictInt,
+        to: StrictInt,
+        countback: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -994,17 +1479,41 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Sync version of get_udf_config_without_preload_content"""
-        return async_to_sync(self.get_udf_config_without_preload_content)(
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+        """Get History without preloading content
 
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_udf_history_sync_without_preload_content(
+                symbol=symbol,
+                resolution=resolution,
+                var_from=var_from,
+                to=to,
+                countback=countback,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_udf_history_async_without_preload_content(
+                symbol=symbol,
+                resolution=resolution,
+                var_from=var_from,
+                to=to,
+                countback=countback,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
     @validate_call
-    async def get_udf_history(
+    async def _get_udf_history_async(
         self,
         symbol: StrictStr,
         resolution: Resolution,
@@ -1083,7 +1592,7 @@ class UDFApi:
         ).data
 
     @validate_call
-    async def get_udf_history_with_http_info(
+    async def _get_udf_history_async_with_http_info(
         self,
         symbol: StrictStr,
         resolution: Resolution,
@@ -1157,12 +1666,11 @@ class UDFApi:
         )
         await response_data.read()
         return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
+            response_data=response_data, response_types_map=_response_types_map
         )
 
     @validate_call
-    async def get_udf_history_without_preload_content(
+    async def _get_udf_history_async_without_preload_content(
         self,
         symbol: StrictStr,
         resolution: Resolution,
@@ -1234,7 +1742,110 @@ class UDFApi:
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        return response_data.response
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _get_udf_history_sync(
+        self,
+        symbol: StrictStr,
+        resolution: Resolution,
+        var_from: StrictInt,
+        to: StrictInt,
+        countback: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> OHLCV:
+        """Synchronous version of get_udf_history"""
+        return async_to_sync(self._get_udf_history_async)(
+            symbol=symbol,
+            resolution=resolution,
+            var_from=var_from,
+            to=to,
+            countback=countback,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_udf_history_sync_with_http_info(
+        self,
+        symbol: StrictStr,
+        resolution: Resolution,
+        var_from: StrictInt,
+        to: StrictInt,
+        countback: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[OHLCV]:
+        """Synchronous version of get_udf_history_with_http_info"""
+        return async_to_sync(self._get_udf_history_async_with_http_info)(
+            symbol=symbol,
+            resolution=resolution,
+            var_from=var_from,
+            to=to,
+            countback=countback,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_udf_history_sync_without_preload_content(
+        self,
+        symbol: StrictStr,
+        resolution: Resolution,
+        var_from: StrictInt,
+        to: StrictInt,
+        countback: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of get_udf_history_without_preload_content"""
+        return async_to_sync(self._get_udf_history_async_without_preload_content)(
+            symbol=symbol,
+            resolution=resolution,
+            var_from=var_from,
+            to=to,
+            countback=countback,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
 
     def _get_udf_history_serialize(
         self,
@@ -1312,15 +1923,10 @@ class UDFApi:
             _request_auth=_request_auth,
         )
 
-    # Sync versions of get_udf_history methods
     @validate_call
-    def get_udf_history_sync(
+    def options_handler(
         self,
-        symbol: StrictStr,
-        resolution: Resolution,
-        var_from: StrictInt,
-        to: StrictInt,
-        countback: Optional[StrictInt] = None,
+        path: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1332,29 +1938,35 @@ class UDFApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> OHLCV:
-        """Sync version of get_udf_history"""
-        return async_to_sync(self.get_udf_history)(
-            symbol=symbol,
-            resolution=resolution,
-            var_from=var_from,
-            to=to,
-            countback=countback,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+    ) -> object:
+        """Options Handler
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._options_handler_sync(
+                path=path,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._options_handler_async(
+                path=path,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
 
     @validate_call
-    def get_udf_history_sync_with_http_info(
+    def options_handler_with_http_info(
         self,
-        symbol: StrictStr,
-        resolution: Resolution,
-        var_from: StrictInt,
-        to: StrictInt,
-        countback: Optional[StrictInt] = None,
+        path: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1366,29 +1978,35 @@ class UDFApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[OHLCV]:
-        """Sync version of get_udf_history_with_http_info"""
-        return async_to_sync(self.get_udf_history_with_http_info)(
-            symbol=symbol,
-            resolution=resolution,
-            var_from=var_from,
-            to=to,
-            countback=countback,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+    ) -> ApiResponse[object]:
+        """Options Handler with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._options_handler_sync_with_http_info(
+                path=path,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._options_handler_async_with_http_info(
+                path=path,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
 
     @validate_call
-    def get_udf_history_sync_without_preload_content(
+    def options_handler_without_preload_content(
         self,
-        symbol: StrictStr,
-        resolution: Resolution,
-        var_from: StrictInt,
-        to: StrictInt,
-        countback: Optional[StrictInt] = None,
+        path: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1401,22 +2019,33 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Sync version of get_udf_history_without_preload_content"""
-        return async_to_sync(self.get_udf_history_without_preload_content)(
-            symbol=symbol,
-            resolution=resolution,
-            var_from=var_from,
-            to=to,
-            countback=countback,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+        """Options Handler without preloading content
 
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._options_handler_sync_without_preload_content(
+                path=path,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._options_handler_async_without_preload_content(
+                path=path,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
     @validate_call
-    async def options_handler(
+    async def _options_handler_async(
         self,
         path: StrictStr,
         _request_timeout: Union[
@@ -1480,7 +2109,7 @@ class UDFApi:
         ).data
 
     @validate_call
-    async def options_handler_with_http_info(
+    async def _options_handler_async_with_http_info(
         self,
         path: StrictStr,
         _request_timeout: Union[
@@ -1539,12 +2168,11 @@ class UDFApi:
         )
         await response_data.read()
         return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
+            response_data=response_data, response_types_map=_response_types_map
         )
 
     @validate_call
-    async def options_handler_without_preload_content(
+    async def _options_handler_async_without_preload_content(
         self,
         path: StrictStr,
         _request_timeout: Union[
@@ -1601,7 +2229,86 @@ class UDFApi:
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        return response_data.response
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _options_handler_sync(
+        self,
+        path: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Synchronous version of options_handler"""
+        return async_to_sync(self._options_handler_async)(
+            path=path,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _options_handler_sync_with_http_info(
+        self,
+        path: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Synchronous version of options_handler_with_http_info"""
+        return async_to_sync(self._options_handler_async_with_http_info)(
+            path=path,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _options_handler_sync_without_preload_content(
+        self,
+        path: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of options_handler_without_preload_content"""
+        return async_to_sync(self._options_handler_async_without_preload_content)(
+            path=path,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
 
     def _options_handler_serialize(
         self,
@@ -1657,11 +2364,11 @@ class UDFApi:
             _request_auth=_request_auth,
         )
 
-    # Sync versions of options_handler methods
     @validate_call
-    def options_handler_sync(
+    def search_symbols(
         self,
-        path: StrictStr,
+        query: StrictStr,
+        limit: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1673,21 +2380,38 @@ class UDFApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
-        """Sync version of options_handler"""
-        return async_to_sync(self.options_handler)(
-            path=path,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+    ) -> List[SearchSymbol]:
+        """Search Symbols
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._search_symbols_sync(
+                query=query,
+                limit=limit,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._search_symbols_async(
+                query=query,
+                limit=limit,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
 
     @validate_call
-    def options_handler_sync_with_http_info(
+    def search_symbols_with_http_info(
         self,
-        path: StrictStr,
+        query: StrictStr,
+        limit: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1699,21 +2423,38 @@ class UDFApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
-        """Sync version of options_handler_with_http_info"""
-        return async_to_sync(self.options_handler_with_http_info)(
-            path=path,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+    ) -> ApiResponse[List[SearchSymbol]]:
+        """Search Symbols with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._search_symbols_sync_with_http_info(
+                query=query,
+                limit=limit,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._search_symbols_async_with_http_info(
+                query=query,
+                limit=limit,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
 
     @validate_call
-    def options_handler_sync_without_preload_content(
+    def search_symbols_without_preload_content(
         self,
-        path: StrictStr,
+        query: StrictStr,
+        limit: Optional[StrictInt] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1726,18 +2467,35 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Sync version of options_handler_without_preload_content"""
-        return async_to_sync(self.options_handler_without_preload_content)(
-            path=path,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
+        """Search Symbols without preloading content
 
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._search_symbols_sync_without_preload_content(
+                query=query,
+                limit=limit,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._search_symbols_async_without_preload_content(
+                query=query,
+                limit=limit,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
     @validate_call
-    async def search_symbols(
+    async def _search_symbols_async(
         self,
         query: StrictStr,
         limit: Optional[StrictInt] = None,
@@ -1805,7 +2563,7 @@ class UDFApi:
         ).data
 
     @validate_call
-    async def search_symbols_with_http_info(
+    async def _search_symbols_async_with_http_info(
         self,
         query: StrictStr,
         limit: Optional[StrictInt] = None,
@@ -1868,12 +2626,11 @@ class UDFApi:
         )
         await response_data.read()
         return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
+            response_data=response_data, response_types_map=_response_types_map
         )
 
     @validate_call
-    async def search_symbols_without_preload_content(
+    async def _search_symbols_async_without_preload_content(
         self,
         query: StrictStr,
         limit: Optional[StrictInt] = None,
@@ -1934,7 +2691,92 @@ class UDFApi:
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        return response_data.response
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _search_symbols_sync(
+        self,
+        query: StrictStr,
+        limit: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[SearchSymbol]:
+        """Synchronous version of search_symbols"""
+        return async_to_sync(self._search_symbols_async)(
+            query=query,
+            limit=limit,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _search_symbols_sync_with_http_info(
+        self,
+        query: StrictStr,
+        limit: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[SearchSymbol]]:
+        """Synchronous version of search_symbols_with_http_info"""
+        return async_to_sync(self._search_symbols_async_with_http_info)(
+            query=query,
+            limit=limit,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _search_symbols_sync_without_preload_content(
+        self,
+        query: StrictStr,
+        limit: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of search_symbols_without_preload_content"""
+        return async_to_sync(self._search_symbols_async_without_preload_content)(
+            query=query,
+            limit=limit,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
 
     def _search_symbols_serialize(
         self,

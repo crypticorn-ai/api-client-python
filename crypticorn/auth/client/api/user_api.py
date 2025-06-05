@@ -69,13 +69,135 @@ class UserApi:
     Do not edit the class manually.
     """
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client=None, is_sync: bool = False) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+        self.is_sync = is_sync
 
     @validate_call
-    async def create_user(
+    def create_user(
+        self,
+        create_user_request: CreateUserRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Create User
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._create_user_sync(
+                create_user_request=create_user_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._create_user_async(
+                create_user_request=create_user_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def create_user_with_http_info(
+        self,
+        create_user_request: CreateUserRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Create User with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._create_user_sync_with_http_info(
+                create_user_request=create_user_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._create_user_async_with_http_info(
+                create_user_request=create_user_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def create_user_without_preload_content(
+        self,
+        create_user_request: CreateUserRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Create User without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._create_user_sync_without_preload_content(
+                create_user_request=create_user_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._create_user_async_without_preload_content(
+                create_user_request=create_user_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _create_user_async(
         self,
         create_user_request: CreateUserRequest,
         _request_timeout: Union[
@@ -139,7 +261,7 @@ class UserApi:
         ).data
 
     @validate_call
-    async def create_user_with_http_info(
+    async def _create_user_async_with_http_info(
         self,
         create_user_request: CreateUserRequest,
         _request_timeout: Union[
@@ -202,7 +324,7 @@ class UserApi:
         )
 
     @validate_call
-    async def create_user_without_preload_content(
+    async def _create_user_async_without_preload_content(
         self,
         create_user_request: CreateUserRequest,
         _request_timeout: Union[
@@ -261,9 +383,9 @@ class UserApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def create_user_sync(
+    def _create_user_sync(
         self,
         create_user_request: CreateUserRequest,
         _request_timeout: Union[
@@ -279,7 +401,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
         """Synchronous version of create_user"""
-        return async_to_sync(self.create_user)(
+        return async_to_sync(self._create_user_async)(
             create_user_request=create_user_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -289,7 +411,7 @@ class UserApi:
         )
 
     @validate_call
-    def create_user_sync_with_http_info(
+    def _create_user_sync_with_http_info(
         self,
         create_user_request: CreateUserRequest,
         _request_timeout: Union[
@@ -305,7 +427,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
         """Synchronous version of create_user_with_http_info"""
-        return async_to_sync(self.create_user_with_http_info)(
+        return async_to_sync(self._create_user_async_with_http_info)(
             create_user_request=create_user_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -315,7 +437,7 @@ class UserApi:
         )
 
     @validate_call
-    def create_user_sync_without_preload_content(
+    def _create_user_sync_without_preload_content(
         self,
         create_user_request: CreateUserRequest,
         _request_timeout: Union[
@@ -331,7 +453,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of create_user_without_preload_content"""
-        return async_to_sync(self.create_user_without_preload_content)(
+        return async_to_sync(self._create_user_async_without_preload_content)(
             create_user_request=create_user_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -405,7 +527,119 @@ class UserApi:
         )
 
     @validate_call
-    async def logout(
+    def logout(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Logout
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._logout_sync(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._logout_async(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def logout_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Logout with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._logout_sync_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._logout_async_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def logout_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Logout without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._logout_sync_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._logout_async_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _logout_async(
         self,
         _request_timeout: Union[
             None,
@@ -465,7 +699,7 @@ class UserApi:
         ).data
 
     @validate_call
-    async def logout_with_http_info(
+    async def _logout_async_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -524,7 +758,7 @@ class UserApi:
         )
 
     @validate_call
-    async def logout_without_preload_content(
+    async def _logout_async_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -579,9 +813,9 @@ class UserApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def logout_sync(
+    def _logout_sync(
         self,
         _request_timeout: Union[
             None,
@@ -596,7 +830,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
         """Synchronous version of logout"""
-        return async_to_sync(self.logout)(
+        return async_to_sync(self._logout_async)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -605,7 +839,7 @@ class UserApi:
         )
 
     @validate_call
-    def logout_sync_with_http_info(
+    def _logout_sync_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -620,7 +854,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
         """Synchronous version of logout_with_http_info"""
-        return async_to_sync(self.logout_with_http_info)(
+        return async_to_sync(self._logout_async_with_http_info)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -629,7 +863,7 @@ class UserApi:
         )
 
     @validate_call
-    def logout_sync_without_preload_content(
+    def _logout_sync_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -644,7 +878,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of logout_without_preload_content"""
-        return async_to_sync(self.logout_without_preload_content)(
+        return async_to_sync(self._logout_async_without_preload_content)(
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -704,7 +938,128 @@ class UserApi:
         )
 
     @validate_call
-    async def resend_verification_email(
+    def resend_verification_email(
+        self,
+        resend_verification_email_request: ResendVerificationEmailRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Resend Verification Email
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._resend_verification_email_sync(
+                resend_verification_email_request=resend_verification_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._resend_verification_email_async(
+                resend_verification_email_request=resend_verification_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def resend_verification_email_with_http_info(
+        self,
+        resend_verification_email_request: ResendVerificationEmailRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Resend Verification Email with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._resend_verification_email_sync_with_http_info(
+                resend_verification_email_request=resend_verification_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._resend_verification_email_async_with_http_info(
+                resend_verification_email_request=resend_verification_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def resend_verification_email_without_preload_content(
+        self,
+        resend_verification_email_request: ResendVerificationEmailRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Resend Verification Email without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._resend_verification_email_sync_without_preload_content(
+                resend_verification_email_request=resend_verification_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._resend_verification_email_async_without_preload_content(
+                resend_verification_email_request=resend_verification_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _resend_verification_email_async(
         self,
         resend_verification_email_request: ResendVerificationEmailRequest,
         _request_timeout: Union[
@@ -768,7 +1123,7 @@ class UserApi:
         ).data
 
     @validate_call
-    async def resend_verification_email_with_http_info(
+    async def _resend_verification_email_async_with_http_info(
         self,
         resend_verification_email_request: ResendVerificationEmailRequest,
         _request_timeout: Union[
@@ -831,7 +1186,7 @@ class UserApi:
         )
 
     @validate_call
-    async def resend_verification_email_without_preload_content(
+    async def _resend_verification_email_async_without_preload_content(
         self,
         resend_verification_email_request: ResendVerificationEmailRequest,
         _request_timeout: Union[
@@ -890,9 +1245,9 @@ class UserApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def resend_verification_email_sync(
+    def _resend_verification_email_sync(
         self,
         resend_verification_email_request: ResendVerificationEmailRequest,
         _request_timeout: Union[
@@ -908,7 +1263,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
         """Synchronous version of resend_verification_email"""
-        return async_to_sync(self.resend_verification_email)(
+        return async_to_sync(self._resend_verification_email_async)(
             resend_verification_email_request=resend_verification_email_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -918,7 +1273,7 @@ class UserApi:
         )
 
     @validate_call
-    def resend_verification_email_sync_with_http_info(
+    def _resend_verification_email_sync_with_http_info(
         self,
         resend_verification_email_request: ResendVerificationEmailRequest,
         _request_timeout: Union[
@@ -934,7 +1289,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
         """Synchronous version of resend_verification_email_with_http_info"""
-        return async_to_sync(self.resend_verification_email_with_http_info)(
+        return async_to_sync(self._resend_verification_email_async_with_http_info)(
             resend_verification_email_request=resend_verification_email_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -944,7 +1299,7 @@ class UserApi:
         )
 
     @validate_call
-    def resend_verification_email_sync_without_preload_content(
+    def _resend_verification_email_sync_without_preload_content(
         self,
         resend_verification_email_request: ResendVerificationEmailRequest,
         _request_timeout: Union[
@@ -960,7 +1315,9 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of resend_verification_email_without_preload_content"""
-        return async_to_sync(self.resend_verification_email_without_preload_content)(
+        return async_to_sync(
+            self._resend_verification_email_async_without_preload_content
+        )(
             resend_verification_email_request=resend_verification_email_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -1034,7 +1391,128 @@ class UserApi:
         )
 
     @validate_call
-    async def send_password_reset_email(
+    def send_password_reset_email(
+        self,
+        resend_verification_email_request: ResendVerificationEmailRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Send Password Reset Email
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._send_password_reset_email_sync(
+                resend_verification_email_request=resend_verification_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._send_password_reset_email_async(
+                resend_verification_email_request=resend_verification_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def send_password_reset_email_with_http_info(
+        self,
+        resend_verification_email_request: ResendVerificationEmailRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Send Password Reset Email with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._send_password_reset_email_sync_with_http_info(
+                resend_verification_email_request=resend_verification_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._send_password_reset_email_async_with_http_info(
+                resend_verification_email_request=resend_verification_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def send_password_reset_email_without_preload_content(
+        self,
+        resend_verification_email_request: ResendVerificationEmailRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Send Password Reset Email without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._send_password_reset_email_sync_without_preload_content(
+                resend_verification_email_request=resend_verification_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._send_password_reset_email_async_without_preload_content(
+                resend_verification_email_request=resend_verification_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _send_password_reset_email_async(
         self,
         resend_verification_email_request: ResendVerificationEmailRequest,
         _request_timeout: Union[
@@ -1098,7 +1576,7 @@ class UserApi:
         ).data
 
     @validate_call
-    async def send_password_reset_email_with_http_info(
+    async def _send_password_reset_email_async_with_http_info(
         self,
         resend_verification_email_request: ResendVerificationEmailRequest,
         _request_timeout: Union[
@@ -1161,7 +1639,7 @@ class UserApi:
         )
 
     @validate_call
-    async def send_password_reset_email_without_preload_content(
+    async def _send_password_reset_email_async_without_preload_content(
         self,
         resend_verification_email_request: ResendVerificationEmailRequest,
         _request_timeout: Union[
@@ -1220,9 +1698,9 @@ class UserApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def send_password_reset_email_sync(
+    def _send_password_reset_email_sync(
         self,
         resend_verification_email_request: ResendVerificationEmailRequest,
         _request_timeout: Union[
@@ -1238,7 +1716,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
         """Synchronous version of send_password_reset_email"""
-        return async_to_sync(self.send_password_reset_email)(
+        return async_to_sync(self._send_password_reset_email_async)(
             resend_verification_email_request=resend_verification_email_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -1248,7 +1726,7 @@ class UserApi:
         )
 
     @validate_call
-    def send_password_reset_email_sync_with_http_info(
+    def _send_password_reset_email_sync_with_http_info(
         self,
         resend_verification_email_request: ResendVerificationEmailRequest,
         _request_timeout: Union[
@@ -1264,7 +1742,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
         """Synchronous version of send_password_reset_email_with_http_info"""
-        return async_to_sync(self.send_password_reset_email_with_http_info)(
+        return async_to_sync(self._send_password_reset_email_async_with_http_info)(
             resend_verification_email_request=resend_verification_email_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -1274,7 +1752,7 @@ class UserApi:
         )
 
     @validate_call
-    def send_password_reset_email_sync_without_preload_content(
+    def _send_password_reset_email_sync_without_preload_content(
         self,
         resend_verification_email_request: ResendVerificationEmailRequest,
         _request_timeout: Union[
@@ -1290,7 +1768,9 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of send_password_reset_email_without_preload_content"""
-        return async_to_sync(self.send_password_reset_email_without_preload_content)(
+        return async_to_sync(
+            self._send_password_reset_email_async_without_preload_content
+        )(
             resend_verification_email_request=resend_verification_email_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -1364,7 +1844,128 @@ class UserApi:
         )
 
     @validate_call
-    async def update_user(
+    def update_user(
+        self,
+        update_user_request: UpdateUserRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Update User
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._update_user_sync(
+                update_user_request=update_user_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_user_async(
+                update_user_request=update_user_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def update_user_with_http_info(
+        self,
+        update_user_request: UpdateUserRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Update User with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._update_user_sync_with_http_info(
+                update_user_request=update_user_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_user_async_with_http_info(
+                update_user_request=update_user_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def update_user_without_preload_content(
+        self,
+        update_user_request: UpdateUserRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Update User without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._update_user_sync_without_preload_content(
+                update_user_request=update_user_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_user_async_without_preload_content(
+                update_user_request=update_user_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _update_user_async(
         self,
         update_user_request: UpdateUserRequest,
         _request_timeout: Union[
@@ -1428,7 +2029,7 @@ class UserApi:
         ).data
 
     @validate_call
-    async def update_user_with_http_info(
+    async def _update_user_async_with_http_info(
         self,
         update_user_request: UpdateUserRequest,
         _request_timeout: Union[
@@ -1491,7 +2092,7 @@ class UserApi:
         )
 
     @validate_call
-    async def update_user_without_preload_content(
+    async def _update_user_async_without_preload_content(
         self,
         update_user_request: UpdateUserRequest,
         _request_timeout: Union[
@@ -1550,9 +2151,9 @@ class UserApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def update_user_sync(
+    def _update_user_sync(
         self,
         update_user_request: UpdateUserRequest,
         _request_timeout: Union[
@@ -1568,7 +2169,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
         """Synchronous version of update_user"""
-        return async_to_sync(self.update_user)(
+        return async_to_sync(self._update_user_async)(
             update_user_request=update_user_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -1578,7 +2179,7 @@ class UserApi:
         )
 
     @validate_call
-    def update_user_sync_with_http_info(
+    def _update_user_sync_with_http_info(
         self,
         update_user_request: UpdateUserRequest,
         _request_timeout: Union[
@@ -1594,7 +2195,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
         """Synchronous version of update_user_with_http_info"""
-        return async_to_sync(self.update_user_with_http_info)(
+        return async_to_sync(self._update_user_async_with_http_info)(
             update_user_request=update_user_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -1604,7 +2205,7 @@ class UserApi:
         )
 
     @validate_call
-    def update_user_sync_without_preload_content(
+    def _update_user_sync_without_preload_content(
         self,
         update_user_request: UpdateUserRequest,
         _request_timeout: Union[
@@ -1620,7 +2221,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of update_user_without_preload_content"""
-        return async_to_sync(self.update_user_without_preload_content)(
+        return async_to_sync(self._update_user_async_without_preload_content)(
             update_user_request=update_user_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -1694,7 +2295,128 @@ class UserApi:
         )
 
     @validate_call
-    async def user_by_id(
+    def user_by_id(
+        self,
+        id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Whoami200Response:
+        """User By Id
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._user_by_id_sync(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._user_by_id_async(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def user_by_id_with_http_info(
+        self,
+        id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Whoami200Response]:
+        """User By Id with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._user_by_id_sync_with_http_info(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._user_by_id_async_with_http_info(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def user_by_id_without_preload_content(
+        self,
+        id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """User By Id without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._user_by_id_sync_without_preload_content(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._user_by_id_async_without_preload_content(
+                id=id,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _user_by_id_async(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -1758,7 +2480,7 @@ class UserApi:
         ).data
 
     @validate_call
-    async def user_by_id_with_http_info(
+    async def _user_by_id_async_with_http_info(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -1821,7 +2543,7 @@ class UserApi:
         )
 
     @validate_call
-    async def user_by_id_without_preload_content(
+    async def _user_by_id_async_without_preload_content(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -1880,9 +2602,9 @@ class UserApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def user_by_id_sync(
+    def _user_by_id_sync(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -1898,7 +2620,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Whoami200Response:
         """Synchronous version of user_by_id"""
-        return async_to_sync(self.user_by_id)(
+        return async_to_sync(self._user_by_id_async)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -1908,7 +2630,7 @@ class UserApi:
         )
 
     @validate_call
-    def user_by_id_sync_with_http_info(
+    def _user_by_id_sync_with_http_info(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -1924,7 +2646,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Whoami200Response]:
         """Synchronous version of user_by_id_with_http_info"""
-        return async_to_sync(self.user_by_id_with_http_info)(
+        return async_to_sync(self._user_by_id_async_with_http_info)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -1934,7 +2656,7 @@ class UserApi:
         )
 
     @validate_call
-    def user_by_id_sync_without_preload_content(
+    def _user_by_id_sync_without_preload_content(
         self,
         id: StrictStr,
         _request_timeout: Union[
@@ -1950,7 +2672,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of user_by_id_without_preload_content"""
-        return async_to_sync(self.user_by_id_without_preload_content)(
+        return async_to_sync(self._user_by_id_async_without_preload_content)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -2016,7 +2738,128 @@ class UserApi:
         )
 
     @validate_call
-    async def user_by_username(
+    def user_by_username(
+        self,
+        username: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> UserByUsername200Response:
+        """User By Username
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._user_by_username_sync(
+                username=username,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._user_by_username_async(
+                username=username,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def user_by_username_with_http_info(
+        self,
+        username: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[UserByUsername200Response]:
+        """User By Username with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._user_by_username_sync_with_http_info(
+                username=username,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._user_by_username_async_with_http_info(
+                username=username,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def user_by_username_without_preload_content(
+        self,
+        username: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """User By Username without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._user_by_username_sync_without_preload_content(
+                username=username,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._user_by_username_async_without_preload_content(
+                username=username,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _user_by_username_async(
         self,
         username: StrictStr,
         _request_timeout: Union[
@@ -2080,7 +2923,7 @@ class UserApi:
         ).data
 
     @validate_call
-    async def user_by_username_with_http_info(
+    async def _user_by_username_async_with_http_info(
         self,
         username: StrictStr,
         _request_timeout: Union[
@@ -2143,7 +2986,7 @@ class UserApi:
         )
 
     @validate_call
-    async def user_by_username_without_preload_content(
+    async def _user_by_username_async_without_preload_content(
         self,
         username: StrictStr,
         _request_timeout: Union[
@@ -2202,9 +3045,9 @@ class UserApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def user_by_username_sync(
+    def _user_by_username_sync(
         self,
         username: StrictStr,
         _request_timeout: Union[
@@ -2220,7 +3063,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> UserByUsername200Response:
         """Synchronous version of user_by_username"""
-        return async_to_sync(self.user_by_username)(
+        return async_to_sync(self._user_by_username_async)(
             username=username,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -2230,7 +3073,7 @@ class UserApi:
         )
 
     @validate_call
-    def user_by_username_sync_with_http_info(
+    def _user_by_username_sync_with_http_info(
         self,
         username: StrictStr,
         _request_timeout: Union[
@@ -2246,7 +3089,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[UserByUsername200Response]:
         """Synchronous version of user_by_username_with_http_info"""
-        return async_to_sync(self.user_by_username_with_http_info)(
+        return async_to_sync(self._user_by_username_async_with_http_info)(
             username=username,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -2256,7 +3099,7 @@ class UserApi:
         )
 
     @validate_call
-    def user_by_username_sync_without_preload_content(
+    def _user_by_username_sync_without_preload_content(
         self,
         username: StrictStr,
         _request_timeout: Union[
@@ -2272,7 +3115,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of user_by_username_without_preload_content"""
-        return async_to_sync(self.user_by_username_without_preload_content)(
+        return async_to_sync(self._user_by_username_async_without_preload_content)(
             username=username,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -2338,7 +3181,128 @@ class UserApi:
         )
 
     @validate_call
-    async def user_reset_password(
+    def user_reset_password(
+        self,
+        user_reset_password_request: UserResetPasswordRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> VerifyEmail200Response:
+        """User Reset Password
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._user_reset_password_sync(
+                user_reset_password_request=user_reset_password_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._user_reset_password_async(
+                user_reset_password_request=user_reset_password_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def user_reset_password_with_http_info(
+        self,
+        user_reset_password_request: UserResetPasswordRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[VerifyEmail200Response]:
+        """User Reset Password with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._user_reset_password_sync_with_http_info(
+                user_reset_password_request=user_reset_password_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._user_reset_password_async_with_http_info(
+                user_reset_password_request=user_reset_password_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def user_reset_password_without_preload_content(
+        self,
+        user_reset_password_request: UserResetPasswordRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """User Reset Password without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._user_reset_password_sync_without_preload_content(
+                user_reset_password_request=user_reset_password_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._user_reset_password_async_without_preload_content(
+                user_reset_password_request=user_reset_password_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _user_reset_password_async(
         self,
         user_reset_password_request: UserResetPasswordRequest,
         _request_timeout: Union[
@@ -2402,7 +3366,7 @@ class UserApi:
         ).data
 
     @validate_call
-    async def user_reset_password_with_http_info(
+    async def _user_reset_password_async_with_http_info(
         self,
         user_reset_password_request: UserResetPasswordRequest,
         _request_timeout: Union[
@@ -2465,7 +3429,7 @@ class UserApi:
         )
 
     @validate_call
-    async def user_reset_password_without_preload_content(
+    async def _user_reset_password_async_without_preload_content(
         self,
         user_reset_password_request: UserResetPasswordRequest,
         _request_timeout: Union[
@@ -2524,9 +3488,9 @@ class UserApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def user_reset_password_sync(
+    def _user_reset_password_sync(
         self,
         user_reset_password_request: UserResetPasswordRequest,
         _request_timeout: Union[
@@ -2542,7 +3506,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> VerifyEmail200Response:
         """Synchronous version of user_reset_password"""
-        return async_to_sync(self.user_reset_password)(
+        return async_to_sync(self._user_reset_password_async)(
             user_reset_password_request=user_reset_password_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -2552,7 +3516,7 @@ class UserApi:
         )
 
     @validate_call
-    def user_reset_password_sync_with_http_info(
+    def _user_reset_password_sync_with_http_info(
         self,
         user_reset_password_request: UserResetPasswordRequest,
         _request_timeout: Union[
@@ -2568,7 +3532,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[VerifyEmail200Response]:
         """Synchronous version of user_reset_password_with_http_info"""
-        return async_to_sync(self.user_reset_password_with_http_info)(
+        return async_to_sync(self._user_reset_password_async_with_http_info)(
             user_reset_password_request=user_reset_password_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -2578,7 +3542,7 @@ class UserApi:
         )
 
     @validate_call
-    def user_reset_password_sync_without_preload_content(
+    def _user_reset_password_sync_without_preload_content(
         self,
         user_reset_password_request: UserResetPasswordRequest,
         _request_timeout: Union[
@@ -2594,7 +3558,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of user_reset_password_without_preload_content"""
-        return async_to_sync(self.user_reset_password_without_preload_content)(
+        return async_to_sync(self._user_reset_password_async_without_preload_content)(
             user_reset_password_request=user_reset_password_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -2668,7 +3632,128 @@ class UserApi:
         )
 
     @validate_call
-    async def user_set_password(
+    def user_set_password(
+        self,
+        user_set_password_request: UserSetPasswordRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """User Set Password
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._user_set_password_sync(
+                user_set_password_request=user_set_password_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._user_set_password_async(
+                user_set_password_request=user_set_password_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def user_set_password_with_http_info(
+        self,
+        user_set_password_request: UserSetPasswordRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """User Set Password with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._user_set_password_sync_with_http_info(
+                user_set_password_request=user_set_password_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._user_set_password_async_with_http_info(
+                user_set_password_request=user_set_password_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def user_set_password_without_preload_content(
+        self,
+        user_set_password_request: UserSetPasswordRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """User Set Password without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._user_set_password_sync_without_preload_content(
+                user_set_password_request=user_set_password_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._user_set_password_async_without_preload_content(
+                user_set_password_request=user_set_password_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _user_set_password_async(
         self,
         user_set_password_request: UserSetPasswordRequest,
         _request_timeout: Union[
@@ -2732,7 +3817,7 @@ class UserApi:
         ).data
 
     @validate_call
-    async def user_set_password_with_http_info(
+    async def _user_set_password_async_with_http_info(
         self,
         user_set_password_request: UserSetPasswordRequest,
         _request_timeout: Union[
@@ -2795,7 +3880,7 @@ class UserApi:
         )
 
     @validate_call
-    async def user_set_password_without_preload_content(
+    async def _user_set_password_async_without_preload_content(
         self,
         user_set_password_request: UserSetPasswordRequest,
         _request_timeout: Union[
@@ -2854,9 +3939,9 @@ class UserApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def user_set_password_sync(
+    def _user_set_password_sync(
         self,
         user_set_password_request: UserSetPasswordRequest,
         _request_timeout: Union[
@@ -2872,7 +3957,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
         """Synchronous version of user_set_password"""
-        return async_to_sync(self.user_set_password)(
+        return async_to_sync(self._user_set_password_async)(
             user_set_password_request=user_set_password_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -2882,7 +3967,7 @@ class UserApi:
         )
 
     @validate_call
-    def user_set_password_sync_with_http_info(
+    def _user_set_password_sync_with_http_info(
         self,
         user_set_password_request: UserSetPasswordRequest,
         _request_timeout: Union[
@@ -2898,7 +3983,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
         """Synchronous version of user_set_password_with_http_info"""
-        return async_to_sync(self.user_set_password_with_http_info)(
+        return async_to_sync(self._user_set_password_async_with_http_info)(
             user_set_password_request=user_set_password_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -2908,7 +3993,7 @@ class UserApi:
         )
 
     @validate_call
-    def user_set_password_sync_without_preload_content(
+    def _user_set_password_sync_without_preload_content(
         self,
         user_set_password_request: UserSetPasswordRequest,
         _request_timeout: Union[
@@ -2924,7 +4009,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of user_set_password_without_preload_content"""
-        return async_to_sync(self.user_set_password_without_preload_content)(
+        return async_to_sync(self._user_set_password_async_without_preload_content)(
             user_set_password_request=user_set_password_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -2998,7 +4083,128 @@ class UserApi:
         )
 
     @validate_call
-    async def verify_email(
+    def verify_email(
+        self,
+        verify_email_request: VerifyEmailRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> VerifyEmail200Response:
+        """Verify Email
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._verify_email_sync(
+                verify_email_request=verify_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._verify_email_async(
+                verify_email_request=verify_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def verify_email_with_http_info(
+        self,
+        verify_email_request: VerifyEmailRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[VerifyEmail200Response]:
+        """Verify Email with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._verify_email_sync_with_http_info(
+                verify_email_request=verify_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._verify_email_async_with_http_info(
+                verify_email_request=verify_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def verify_email_without_preload_content(
+        self,
+        verify_email_request: VerifyEmailRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Verify Email without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._verify_email_sync_without_preload_content(
+                verify_email_request=verify_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._verify_email_async_without_preload_content(
+                verify_email_request=verify_email_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _verify_email_async(
         self,
         verify_email_request: VerifyEmailRequest,
         _request_timeout: Union[
@@ -3062,7 +4268,7 @@ class UserApi:
         ).data
 
     @validate_call
-    async def verify_email_with_http_info(
+    async def _verify_email_async_with_http_info(
         self,
         verify_email_request: VerifyEmailRequest,
         _request_timeout: Union[
@@ -3125,7 +4331,7 @@ class UserApi:
         )
 
     @validate_call
-    async def verify_email_without_preload_content(
+    async def _verify_email_async_without_preload_content(
         self,
         verify_email_request: VerifyEmailRequest,
         _request_timeout: Union[
@@ -3184,9 +4390,9 @@ class UserApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def verify_email_sync(
+    def _verify_email_sync(
         self,
         verify_email_request: VerifyEmailRequest,
         _request_timeout: Union[
@@ -3202,7 +4408,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> VerifyEmail200Response:
         """Synchronous version of verify_email"""
-        return async_to_sync(self.verify_email)(
+        return async_to_sync(self._verify_email_async)(
             verify_email_request=verify_email_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -3212,7 +4418,7 @@ class UserApi:
         )
 
     @validate_call
-    def verify_email_sync_with_http_info(
+    def _verify_email_sync_with_http_info(
         self,
         verify_email_request: VerifyEmailRequest,
         _request_timeout: Union[
@@ -3228,7 +4434,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[VerifyEmail200Response]:
         """Synchronous version of verify_email_with_http_info"""
-        return async_to_sync(self.verify_email_with_http_info)(
+        return async_to_sync(self._verify_email_async_with_http_info)(
             verify_email_request=verify_email_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -3238,7 +4444,7 @@ class UserApi:
         )
 
     @validate_call
-    def verify_email_sync_without_preload_content(
+    def _verify_email_sync_without_preload_content(
         self,
         verify_email_request: VerifyEmailRequest,
         _request_timeout: Union[
@@ -3254,7 +4460,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of verify_email_without_preload_content"""
-        return async_to_sync(self.verify_email_without_preload_content)(
+        return async_to_sync(self._verify_email_async_without_preload_content)(
             verify_email_request=verify_email_request,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -3328,7 +4534,137 @@ class UserApi:
         )
 
     @validate_call
-    async def whoami(
+    def whoami(
+        self,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Whoami200Response:
+        """Whoami
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._whoami_sync(
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._whoami_async(
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def whoami_with_http_info(
+        self,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Whoami200Response]:
+        """Whoami with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._whoami_sync_with_http_info(
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._whoami_async_with_http_info(
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def whoami_without_preload_content(
+        self,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Whoami without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._whoami_sync_without_preload_content(
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._whoami_async_without_preload_content(
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _whoami_async(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -3395,7 +4731,7 @@ class UserApi:
         ).data
 
     @validate_call
-    async def whoami_with_http_info(
+    async def _whoami_async_with_http_info(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -3461,7 +4797,7 @@ class UserApi:
         )
 
     @validate_call
-    async def whoami_without_preload_content(
+    async def _whoami_async_without_preload_content(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -3523,9 +4859,9 @@ class UserApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def whoami_sync(
+    def _whoami_sync(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -3544,7 +4880,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Whoami200Response:
         """Synchronous version of whoami"""
-        return async_to_sync(self.whoami)(
+        return async_to_sync(self._whoami_async)(
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -3554,7 +4890,7 @@ class UserApi:
         )
 
     @validate_call
-    def whoami_sync_with_http_info(
+    def _whoami_sync_with_http_info(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -3573,7 +4909,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Whoami200Response]:
         """Synchronous version of whoami_with_http_info"""
-        return async_to_sync(self.whoami_with_http_info)(
+        return async_to_sync(self._whoami_async_with_http_info)(
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -3583,7 +4919,7 @@ class UserApi:
         )
 
     @validate_call
-    def whoami_sync_without_preload_content(
+    def _whoami_sync_without_preload_content(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -3602,7 +4938,7 @@ class UserApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of whoami_without_preload_content"""
-        return async_to_sync(self.whoami_without_preload_content)(
+        return async_to_sync(self._whoami_async_without_preload_content)(
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,

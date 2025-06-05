@@ -19,13 +19,36 @@ from pydantic import StrictInt
 if TYPE_CHECKING:
     from aiohttp import ClientSession
 
+class HiveClient:
+    """
+    A client for interacting with the Crypticorn Hive API.
+    """
+
+    config_class = Configuration
+
+    def __init__(
+        self,
+        config: Configuration,
+        http_client: Optional[ClientSession] = None,
+        is_sync: bool = False,
+    ):
+        self.config = config
+        self.base_client = ApiClient(configuration=self.config)
+        if http_client is not None:
+            self.base_client.rest_client.pool_manager = http_client
+        # Instantiate all the endpoint clients
+        self.models = ModelsApi(self.base_client, is_sync=is_sync)
+        self.data = DataApiWrapper(self.base_client, is_sync=is_sync)
+        self.status = StatusApi(self.base_client, is_sync=is_sync)
+        self.admin = AdminApi(self.base_client, is_sync=is_sync)
+
 
 class DataApiWrapper(DataApi):
     """
     A wrapper for the DataApi class.
     """
 
-    async def download_data(
+    def download_data(
         self,
         model_id: StrictInt,
         folder: Path = Path("data"),
@@ -43,7 +66,7 @@ class DataApiWrapper(DataApi):
         :param feature_size: The number of features in the data. Default is LARGE. (optional) (type: FeatureSize)
         :return: A list of paths to the downloaded files.
         """
-        response = await super().download_data(
+        response = super().download_data(
             model_id=model_id,
             version=version,
             feature_size=feature_size,
@@ -53,8 +76,7 @@ class DataApiWrapper(DataApi):
         base_path = f"{folder}/v{response.version.value}/coin_{response.coin.value}/"
         os.makedirs(base_path, exist_ok=True)
 
-        return await asyncio.gather(
-            *[
+        return [
                 download_file(
                     url=response.links.y_train,
                     dest_path=base_path + "y_train_" + response.target + ".feather",
@@ -74,25 +96,3 @@ class DataApiWrapper(DataApi):
                     + ".feather",
                 ),
             ]
-        )
-
-
-class HiveClient:
-    """
-    A client for interacting with the Crypticorn Hive API.
-    """
-
-    config_class = Configuration
-
-    def __init__(
-        self, config: Configuration, http_client: Optional[ClientSession] = None
-    ):
-        self.config = config
-        self.base_client = ApiClient(configuration=self.config)
-        if http_client is not None:
-            self.base_client.rest_client.pool_manager = http_client
-        # Instantiate all the endpoint clients
-        self.models = ModelsApi(self.base_client)
-        self.data = DataApiWrapper(self.base_client)
-        self.status = StatusApi(self.base_client)
-        self.admin = AdminApi(self.base_client)

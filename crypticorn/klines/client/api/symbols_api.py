@@ -51,13 +51,135 @@ class SymbolsApi:
     Do not edit the class manually.
     """
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client=None, is_sync: bool = False) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+        self.is_sync = is_sync
 
     @validate_call
-    async def get_klines_symbols(
+    def get_klines_symbols(
+        self,
+        market: Annotated[MarketType, Field(description="Market type")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[str]:
+        """Symbols
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_klines_symbols_sync(
+                market=market,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_klines_symbols_async(
+                market=market,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_klines_symbols_with_http_info(
+        self,
+        market: Annotated[MarketType, Field(description="Market type")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[str]]:
+        """Symbols with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_klines_symbols_sync_with_http_info(
+                market=market,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_klines_symbols_async_with_http_info(
+                market=market,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_klines_symbols_without_preload_content(
+        self,
+        market: Annotated[MarketType, Field(description="Market type")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Symbols without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_klines_symbols_sync_without_preload_content(
+                market=market,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_klines_symbols_async_without_preload_content(
+                market=market,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_klines_symbols_async(
         self,
         market: Annotated[MarketType, Field(description="Market type")],
         _request_timeout: Union[
@@ -121,85 +243,7 @@ class SymbolsApi:
         ).data
 
     @validate_call
-    def get_klines_symbols_sync(
-        self,
-        market: Annotated[MarketType, Field(description="Market type")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[str]:
-        """Synchronous version of get_klines_symbols"""
-        return async_to_sync(self.get_klines_symbols)(
-            market=market,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def get_klines_symbols_sync_with_http_info(
-        self,
-        market: Annotated[MarketType, Field(description="Market type")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[str]]:
-        """Synchronous version of get_klines_symbols_with_http_info"""
-        return async_to_sync(self.get_klines_symbols_with_http_info)(
-            market=market,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def get_klines_symbols_sync_without_preload_content(
-        self,
-        market: Annotated[MarketType, Field(description="Market type")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Synchronous version of get_klines_symbols_without_preload_content"""
-        return async_to_sync(self.get_klines_symbols_without_preload_content)(
-            market=market,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    async def get_klines_symbols_with_http_info(
+    async def _get_klines_symbols_async_with_http_info(
         self,
         market: Annotated[MarketType, Field(description="Market type")],
         _request_timeout: Union[
@@ -258,12 +302,11 @@ class SymbolsApi:
         )
         await response_data.read()
         return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
+            response_data=response_data, response_types_map=_response_types_map
         )
 
     @validate_call
-    async def get_klines_symbols_without_preload_content(
+    async def _get_klines_symbols_async_without_preload_content(
         self,
         market: Annotated[MarketType, Field(description="Market type")],
         _request_timeout: Union[
@@ -320,7 +363,86 @@ class SymbolsApi:
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        return response_data.response
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _get_klines_symbols_sync(
+        self,
+        market: Annotated[MarketType, Field(description="Market type")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[str]:
+        """Synchronous version of get_klines_symbols"""
+        return async_to_sync(self._get_klines_symbols_async)(
+            market=market,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_klines_symbols_sync_with_http_info(
+        self,
+        market: Annotated[MarketType, Field(description="Market type")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[str]]:
+        """Synchronous version of get_klines_symbols_with_http_info"""
+        return async_to_sync(self._get_klines_symbols_async_with_http_info)(
+            market=market,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_klines_symbols_sync_without_preload_content(
+        self,
+        market: Annotated[MarketType, Field(description="Market type")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of get_klines_symbols_without_preload_content"""
+        return async_to_sync(self._get_klines_symbols_async_without_preload_content)(
+            market=market,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
 
     def _get_klines_symbols_serialize(
         self,

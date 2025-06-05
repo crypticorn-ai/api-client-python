@@ -63,13 +63,153 @@ class WalletApi:
     Do not edit the class manually.
     """
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client=None, is_sync: bool = False) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+        self.is_sync = is_sync
 
     @validate_call
-    async def add_wallet(
+    def add_wallet(
+        self,
+        add_wallet_request: AddWalletRequest,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> AddWallet200Response:
+        """Add a wallet to the user
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._add_wallet_sync(
+                add_wallet_request=add_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._add_wallet_async(
+                add_wallet_request=add_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def add_wallet_with_http_info(
+        self,
+        add_wallet_request: AddWalletRequest,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[AddWallet200Response]:
+        """Add a wallet to the user with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._add_wallet_sync_with_http_info(
+                add_wallet_request=add_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._add_wallet_async_with_http_info(
+                add_wallet_request=add_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def add_wallet_without_preload_content(
+        self,
+        add_wallet_request: AddWalletRequest,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Add a wallet to the user without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._add_wallet_sync_without_preload_content(
+                add_wallet_request=add_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._add_wallet_async_without_preload_content(
+                add_wallet_request=add_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _add_wallet_async(
         self,
         add_wallet_request: AddWalletRequest,
         x_refresh_token: Annotated[
@@ -140,7 +280,7 @@ class WalletApi:
         ).data
 
     @validate_call
-    async def add_wallet_with_http_info(
+    async def _add_wallet_async_with_http_info(
         self,
         add_wallet_request: AddWalletRequest,
         x_refresh_token: Annotated[
@@ -210,7 +350,7 @@ class WalletApi:
         )
 
     @validate_call
-    async def add_wallet_without_preload_content(
+    async def _add_wallet_async_without_preload_content(
         self,
         add_wallet_request: AddWalletRequest,
         x_refresh_token: Annotated[
@@ -276,9 +416,9 @@ class WalletApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def add_wallet_sync(
+    def _add_wallet_sync(
         self,
         add_wallet_request: AddWalletRequest,
         x_refresh_token: Annotated[
@@ -298,7 +438,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> AddWallet200Response:
         """Synchronous version of add_wallet"""
-        return async_to_sync(self.add_wallet)(
+        return async_to_sync(self._add_wallet_async)(
             add_wallet_request=add_wallet_request,
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
@@ -309,7 +449,7 @@ class WalletApi:
         )
 
     @validate_call
-    def add_wallet_sync_with_http_info(
+    def _add_wallet_sync_with_http_info(
         self,
         add_wallet_request: AddWalletRequest,
         x_refresh_token: Annotated[
@@ -329,7 +469,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[AddWallet200Response]:
         """Synchronous version of add_wallet_with_http_info"""
-        return async_to_sync(self.add_wallet_with_http_info)(
+        return async_to_sync(self._add_wallet_async_with_http_info)(
             add_wallet_request=add_wallet_request,
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
@@ -340,7 +480,7 @@ class WalletApi:
         )
 
     @validate_call
-    def add_wallet_sync_without_preload_content(
+    def _add_wallet_sync_without_preload_content(
         self,
         add_wallet_request: AddWalletRequest,
         x_refresh_token: Annotated[
@@ -360,7 +500,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of add_wallet_without_preload_content"""
-        return async_to_sync(self.add_wallet_without_preload_content)(
+        return async_to_sync(self._add_wallet_async_without_preload_content)(
             add_wallet_request=add_wallet_request,
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
@@ -438,7 +578,137 @@ class WalletApi:
         )
 
     @validate_call
-    async def get_balances(
+    def get_balances(
+        self,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ListWallets200ResponseUserValue:
+        """Get the balances of the user
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_balances_sync(
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_balances_async(
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_balances_with_http_info(
+        self,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ListWallets200ResponseUserValue]:
+        """Get the balances of the user with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_balances_sync_with_http_info(
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_balances_async_with_http_info(
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_balances_without_preload_content(
+        self,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get the balances of the user without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_balances_sync_without_preload_content(
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_balances_async_without_preload_content(
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_balances_async(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -505,7 +775,7 @@ class WalletApi:
         ).data
 
     @validate_call
-    async def get_balances_with_http_info(
+    async def _get_balances_async_with_http_info(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -571,7 +841,7 @@ class WalletApi:
         )
 
     @validate_call
-    async def get_balances_without_preload_content(
+    async def _get_balances_async_without_preload_content(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -633,9 +903,9 @@ class WalletApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_balances_sync(
+    def _get_balances_sync(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -654,7 +924,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ListWallets200ResponseUserValue:
         """Synchronous version of get_balances"""
-        return async_to_sync(self.get_balances)(
+        return async_to_sync(self._get_balances_async)(
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -664,7 +934,7 @@ class WalletApi:
         )
 
     @validate_call
-    def get_balances_sync_with_http_info(
+    def _get_balances_sync_with_http_info(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -683,7 +953,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ListWallets200ResponseUserValue]:
         """Synchronous version of get_balances_with_http_info"""
-        return async_to_sync(self.get_balances_with_http_info)(
+        return async_to_sync(self._get_balances_async_with_http_info)(
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -693,7 +963,7 @@ class WalletApi:
         )
 
     @validate_call
-    def get_balances_sync_without_preload_content(
+    def _get_balances_sync_without_preload_content(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -712,7 +982,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_balances_without_preload_content"""
-        return async_to_sync(self.get_balances_without_preload_content)(
+        return async_to_sync(self._get_balances_async_without_preload_content)(
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -776,7 +1046,170 @@ class WalletApi:
         )
 
     @validate_call
-    async def list_wallets(
+    def list_wallets(
+        self,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        limit: Optional[
+            Union[
+                Annotated[float, Field(le=100, strict=True)],
+                Annotated[int, Field(le=100, strict=True)],
+            ]
+        ] = None,
+        offset: Optional[Union[StrictFloat, StrictInt]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ListWallets200Response:
+        """List wallets
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._list_wallets_sync(
+                x_refresh_token=x_refresh_token,
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._list_wallets_async(
+                x_refresh_token=x_refresh_token,
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def list_wallets_with_http_info(
+        self,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        limit: Optional[
+            Union[
+                Annotated[float, Field(le=100, strict=True)],
+                Annotated[int, Field(le=100, strict=True)],
+            ]
+        ] = None,
+        offset: Optional[Union[StrictFloat, StrictInt]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ListWallets200Response]:
+        """List wallets with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._list_wallets_sync_with_http_info(
+                x_refresh_token=x_refresh_token,
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._list_wallets_async_with_http_info(
+                x_refresh_token=x_refresh_token,
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def list_wallets_without_preload_content(
+        self,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        limit: Optional[
+            Union[
+                Annotated[float, Field(le=100, strict=True)],
+                Annotated[int, Field(le=100, strict=True)],
+            ]
+        ] = None,
+        offset: Optional[Union[StrictFloat, StrictInt]] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List wallets without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._list_wallets_sync_without_preload_content(
+                x_refresh_token=x_refresh_token,
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._list_wallets_async_without_preload_content(
+                x_refresh_token=x_refresh_token,
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _list_wallets_async(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -856,7 +1289,7 @@ class WalletApi:
         ).data
 
     @validate_call
-    async def list_wallets_with_http_info(
+    async def _list_wallets_async_with_http_info(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -935,7 +1368,7 @@ class WalletApi:
         )
 
     @validate_call
-    async def list_wallets_without_preload_content(
+    async def _list_wallets_async_without_preload_content(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -1010,9 +1443,9 @@ class WalletApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def list_wallets_sync(
+    def _list_wallets_sync(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -1038,7 +1471,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ListWallets200Response:
         """Synchronous version of list_wallets"""
-        return async_to_sync(self.list_wallets)(
+        return async_to_sync(self._list_wallets_async)(
             x_refresh_token=x_refresh_token,
             limit=limit,
             offset=offset,
@@ -1050,7 +1483,7 @@ class WalletApi:
         )
 
     @validate_call
-    def list_wallets_sync_with_http_info(
+    def _list_wallets_sync_with_http_info(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -1076,7 +1509,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ListWallets200Response]:
         """Synchronous version of list_wallets_with_http_info"""
-        return async_to_sync(self.list_wallets_with_http_info)(
+        return async_to_sync(self._list_wallets_async_with_http_info)(
             x_refresh_token=x_refresh_token,
             limit=limit,
             offset=offset,
@@ -1088,7 +1521,7 @@ class WalletApi:
         )
 
     @validate_call
-    def list_wallets_sync_without_preload_content(
+    def _list_wallets_sync_without_preload_content(
         self,
         x_refresh_token: Annotated[
             Optional[StrictStr],
@@ -1114,7 +1547,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of list_wallets_without_preload_content"""
-        return async_to_sync(self.list_wallets_without_preload_content)(
+        return async_to_sync(self._list_wallets_async_without_preload_content)(
             x_refresh_token=x_refresh_token,
             limit=limit,
             offset=offset,
@@ -1190,7 +1623,146 @@ class WalletApi:
         )
 
     @validate_call
-    async def unlink_wallet(
+    def unlink_wallet(
+        self,
+        unlink_wallet_request: UnlinkWalletRequest,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Unlink a wallet
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._unlink_wallet_sync(
+                unlink_wallet_request=unlink_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._unlink_wallet_async(
+                unlink_wallet_request=unlink_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def unlink_wallet_with_http_info(
+        self,
+        unlink_wallet_request: UnlinkWalletRequest,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Unlink a wallet with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._unlink_wallet_sync_with_http_info(
+                unlink_wallet_request=unlink_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._unlink_wallet_async_with_http_info(
+                unlink_wallet_request=unlink_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def unlink_wallet_without_preload_content(
+        self,
+        unlink_wallet_request: UnlinkWalletRequest,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Unlink a wallet without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._unlink_wallet_sync_without_preload_content(
+                unlink_wallet_request=unlink_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._unlink_wallet_async_without_preload_content(
+                unlink_wallet_request=unlink_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _unlink_wallet_async(
         self,
         unlink_wallet_request: UnlinkWalletRequest,
         x_refresh_token: Annotated[
@@ -1261,7 +1833,7 @@ class WalletApi:
         ).data
 
     @validate_call
-    async def unlink_wallet_with_http_info(
+    async def _unlink_wallet_async_with_http_info(
         self,
         unlink_wallet_request: UnlinkWalletRequest,
         x_refresh_token: Annotated[
@@ -1331,7 +1903,7 @@ class WalletApi:
         )
 
     @validate_call
-    async def unlink_wallet_without_preload_content(
+    async def _unlink_wallet_async_without_preload_content(
         self,
         unlink_wallet_request: UnlinkWalletRequest,
         x_refresh_token: Annotated[
@@ -1397,9 +1969,9 @@ class WalletApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def unlink_wallet_sync(
+    def _unlink_wallet_sync(
         self,
         unlink_wallet_request: UnlinkWalletRequest,
         x_refresh_token: Annotated[
@@ -1419,7 +1991,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
         """Synchronous version of unlink_wallet"""
-        return async_to_sync(self.unlink_wallet)(
+        return async_to_sync(self._unlink_wallet_async)(
             unlink_wallet_request=unlink_wallet_request,
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
@@ -1430,7 +2002,7 @@ class WalletApi:
         )
 
     @validate_call
-    def unlink_wallet_sync_with_http_info(
+    def _unlink_wallet_sync_with_http_info(
         self,
         unlink_wallet_request: UnlinkWalletRequest,
         x_refresh_token: Annotated[
@@ -1450,7 +2022,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
         """Synchronous version of unlink_wallet_with_http_info"""
-        return async_to_sync(self.unlink_wallet_with_http_info)(
+        return async_to_sync(self._unlink_wallet_async_with_http_info)(
             unlink_wallet_request=unlink_wallet_request,
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
@@ -1461,7 +2033,7 @@ class WalletApi:
         )
 
     @validate_call
-    def unlink_wallet_sync_without_preload_content(
+    def _unlink_wallet_sync_without_preload_content(
         self,
         unlink_wallet_request: UnlinkWalletRequest,
         x_refresh_token: Annotated[
@@ -1481,7 +2053,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of unlink_wallet_without_preload_content"""
-        return async_to_sync(self.unlink_wallet_without_preload_content)(
+        return async_to_sync(self._unlink_wallet_async_without_preload_content)(
             unlink_wallet_request=unlink_wallet_request,
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
@@ -1559,7 +2131,146 @@ class WalletApi:
         )
 
     @validate_call
-    async def verify_wallet(
+    def verify_wallet(
+        self,
+        verify_wallet_request: VerifyWalletRequest,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Verify a wallet
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._verify_wallet_sync(
+                verify_wallet_request=verify_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._verify_wallet_async(
+                verify_wallet_request=verify_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def verify_wallet_with_http_info(
+        self,
+        verify_wallet_request: VerifyWalletRequest,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Verify a wallet with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._verify_wallet_sync_with_http_info(
+                verify_wallet_request=verify_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._verify_wallet_async_with_http_info(
+                verify_wallet_request=verify_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def verify_wallet_without_preload_content(
+        self,
+        verify_wallet_request: VerifyWalletRequest,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Verify a wallet without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._verify_wallet_sync_without_preload_content(
+                verify_wallet_request=verify_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._verify_wallet_async_without_preload_content(
+                verify_wallet_request=verify_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _verify_wallet_async(
         self,
         verify_wallet_request: VerifyWalletRequest,
         x_refresh_token: Annotated[
@@ -1630,7 +2341,7 @@ class WalletApi:
         ).data
 
     @validate_call
-    async def verify_wallet_with_http_info(
+    async def _verify_wallet_async_with_http_info(
         self,
         verify_wallet_request: VerifyWalletRequest,
         x_refresh_token: Annotated[
@@ -1700,7 +2411,7 @@ class WalletApi:
         )
 
     @validate_call
-    async def verify_wallet_without_preload_content(
+    async def _verify_wallet_async_without_preload_content(
         self,
         verify_wallet_request: VerifyWalletRequest,
         x_refresh_token: Annotated[
@@ -1766,9 +2477,9 @@ class WalletApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def verify_wallet_sync(
+    def _verify_wallet_sync(
         self,
         verify_wallet_request: VerifyWalletRequest,
         x_refresh_token: Annotated[
@@ -1788,7 +2499,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
         """Synchronous version of verify_wallet"""
-        return async_to_sync(self.verify_wallet)(
+        return async_to_sync(self._verify_wallet_async)(
             verify_wallet_request=verify_wallet_request,
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
@@ -1799,7 +2510,7 @@ class WalletApi:
         )
 
     @validate_call
-    def verify_wallet_sync_with_http_info(
+    def _verify_wallet_sync_with_http_info(
         self,
         verify_wallet_request: VerifyWalletRequest,
         x_refresh_token: Annotated[
@@ -1819,7 +2530,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
         """Synchronous version of verify_wallet_with_http_info"""
-        return async_to_sync(self.verify_wallet_with_http_info)(
+        return async_to_sync(self._verify_wallet_async_with_http_info)(
             verify_wallet_request=verify_wallet_request,
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
@@ -1830,7 +2541,7 @@ class WalletApi:
         )
 
     @validate_call
-    def verify_wallet_sync_without_preload_content(
+    def _verify_wallet_sync_without_preload_content(
         self,
         verify_wallet_request: VerifyWalletRequest,
         x_refresh_token: Annotated[
@@ -1850,7 +2561,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of verify_wallet_without_preload_content"""
-        return async_to_sync(self.verify_wallet_without_preload_content)(
+        return async_to_sync(self._verify_wallet_async_without_preload_content)(
             verify_wallet_request=verify_wallet_request,
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
@@ -1928,7 +2639,146 @@ class WalletApi:
         )
 
     @validate_call
-    async def wallet_verified(
+    def wallet_verified(
+        self,
+        address: StrictStr,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> WalletVerified200Response:
+        """Check if a wallet is verified
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._wallet_verified_sync(
+                address=address,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._wallet_verified_async(
+                address=address,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def wallet_verified_with_http_info(
+        self,
+        address: StrictStr,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[WalletVerified200Response]:
+        """Check if a wallet is verified with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._wallet_verified_sync_with_http_info(
+                address=address,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._wallet_verified_async_with_http_info(
+                address=address,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def wallet_verified_without_preload_content(
+        self,
+        address: StrictStr,
+        x_refresh_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The refresh token for rotating the access token."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Check if a wallet is verified without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._wallet_verified_sync_without_preload_content(
+                address=address,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._wallet_verified_async_without_preload_content(
+                address=address,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _wallet_verified_async(
         self,
         address: StrictStr,
         x_refresh_token: Annotated[
@@ -1999,7 +2849,7 @@ class WalletApi:
         ).data
 
     @validate_call
-    async def wallet_verified_with_http_info(
+    async def _wallet_verified_async_with_http_info(
         self,
         address: StrictStr,
         x_refresh_token: Annotated[
@@ -2069,7 +2919,7 @@ class WalletApi:
         )
 
     @validate_call
-    async def wallet_verified_without_preload_content(
+    async def _wallet_verified_async_without_preload_content(
         self,
         address: StrictStr,
         x_refresh_token: Annotated[
@@ -2135,9 +2985,9 @@ class WalletApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def wallet_verified_sync(
+    def _wallet_verified_sync(
         self,
         address: StrictStr,
         x_refresh_token: Annotated[
@@ -2157,7 +3007,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> WalletVerified200Response:
         """Synchronous version of wallet_verified"""
-        return async_to_sync(self.wallet_verified)(
+        return async_to_sync(self._wallet_verified_async)(
             address=address,
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
@@ -2168,7 +3018,7 @@ class WalletApi:
         )
 
     @validate_call
-    def wallet_verified_sync_with_http_info(
+    def _wallet_verified_sync_with_http_info(
         self,
         address: StrictStr,
         x_refresh_token: Annotated[
@@ -2188,7 +3038,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[WalletVerified200Response]:
         """Synchronous version of wallet_verified_with_http_info"""
-        return async_to_sync(self.wallet_verified_with_http_info)(
+        return async_to_sync(self._wallet_verified_async_with_http_info)(
             address=address,
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
@@ -2199,7 +3049,7 @@ class WalletApi:
         )
 
     @validate_call
-    def wallet_verified_sync_without_preload_content(
+    def _wallet_verified_sync_without_preload_content(
         self,
         address: StrictStr,
         x_refresh_token: Annotated[
@@ -2219,7 +3069,7 @@ class WalletApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of wallet_verified_without_preload_content"""
-        return async_to_sync(self.wallet_verified_without_preload_content)(
+        return async_to_sync(self._wallet_verified_async_without_preload_content)(
             address=address,
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,

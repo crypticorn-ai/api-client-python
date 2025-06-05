@@ -57,13 +57,144 @@ class TradingActionsApi:
     Do not edit the class manually.
     """
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client=None, is_sync: bool = False) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+        self.is_sync = is_sync
 
     @validate_call
-    async def get_actions(
+    def get_actions(
+        self,
+        limit: Optional[StrictInt] = None,
+        offset: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[FuturesTradingAction]:
+        """Get Actions
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_actions_sync(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_actions_async(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_actions_with_http_info(
+        self,
+        limit: Optional[StrictInt] = None,
+        offset: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[FuturesTradingAction]]:
+        """Get Actions with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_actions_sync_with_http_info(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_actions_async_with_http_info(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_actions_without_preload_content(
+        self,
+        limit: Optional[StrictInt] = None,
+        offset: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Actions without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._get_actions_sync_without_preload_content(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_actions_async_without_preload_content(
+                limit=limit,
+                offset=offset,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_actions_async(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -130,7 +261,7 @@ class TradingActionsApi:
         ).data
 
     @validate_call
-    async def get_actions_with_http_info(
+    async def _get_actions_async_with_http_info(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -196,7 +327,7 @@ class TradingActionsApi:
         )
 
     @validate_call
-    async def get_actions_without_preload_content(
+    async def _get_actions_async_without_preload_content(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -258,9 +389,9 @@ class TradingActionsApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def get_actions_sync(
+    def _get_actions_sync(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -277,7 +408,7 @@ class TradingActionsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[FuturesTradingAction]:
         """Synchronous version of get_actions"""
-        return async_to_sync(self.get_actions)(
+        return async_to_sync(self._get_actions_async)(
             limit=limit,
             offset=offset,
             _request_timeout=_request_timeout,
@@ -288,7 +419,7 @@ class TradingActionsApi:
         )
 
     @validate_call
-    def get_actions_sync_with_http_info(
+    def _get_actions_sync_with_http_info(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -305,7 +436,7 @@ class TradingActionsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[FuturesTradingAction]]:
         """Synchronous version of get_actions_with_http_info"""
-        return async_to_sync(self.get_actions_with_http_info)(
+        return async_to_sync(self._get_actions_async_with_http_info)(
             limit=limit,
             offset=offset,
             _request_timeout=_request_timeout,
@@ -316,7 +447,7 @@ class TradingActionsApi:
         )
 
     @validate_call
-    def get_actions_sync_without_preload_content(
+    def _get_actions_sync_without_preload_content(
         self,
         limit: Optional[StrictInt] = None,
         offset: Optional[StrictInt] = None,
@@ -333,7 +464,7 @@ class TradingActionsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of get_actions_without_preload_content"""
-        return async_to_sync(self.get_actions_without_preload_content)(
+        return async_to_sync(self._get_actions_async_without_preload_content)(
             limit=limit,
             offset=offset,
             _request_timeout=_request_timeout,
@@ -405,7 +536,128 @@ class TradingActionsApi:
         )
 
     @validate_call
-    async def post_futures_action(
+    def post_futures_action(
+        self,
+        futures_trading_action_create: FuturesTradingActionCreate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> PostFuturesAction:
+        """Post Futures Action
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._post_futures_action_sync(
+                futures_trading_action_create=futures_trading_action_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._post_futures_action_async(
+                futures_trading_action_create=futures_trading_action_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def post_futures_action_with_http_info(
+        self,
+        futures_trading_action_create: FuturesTradingActionCreate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[PostFuturesAction]:
+        """Post Futures Action with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._post_futures_action_sync_with_http_info(
+                futures_trading_action_create=futures_trading_action_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._post_futures_action_async_with_http_info(
+                futures_trading_action_create=futures_trading_action_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def post_futures_action_without_preload_content(
+        self,
+        futures_trading_action_create: FuturesTradingActionCreate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Post Futures Action without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._post_futures_action_sync_without_preload_content(
+                futures_trading_action_create=futures_trading_action_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._post_futures_action_async_without_preload_content(
+                futures_trading_action_create=futures_trading_action_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _post_futures_action_async(
         self,
         futures_trading_action_create: FuturesTradingActionCreate,
         _request_timeout: Union[
@@ -469,7 +721,7 @@ class TradingActionsApi:
         ).data
 
     @validate_call
-    async def post_futures_action_with_http_info(
+    async def _post_futures_action_async_with_http_info(
         self,
         futures_trading_action_create: FuturesTradingActionCreate,
         _request_timeout: Union[
@@ -532,7 +784,7 @@ class TradingActionsApi:
         )
 
     @validate_call
-    async def post_futures_action_without_preload_content(
+    async def _post_futures_action_async_without_preload_content(
         self,
         futures_trading_action_create: FuturesTradingActionCreate,
         _request_timeout: Union[
@@ -591,9 +843,9 @@ class TradingActionsApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def post_futures_action_sync(
+    def _post_futures_action_sync(
         self,
         futures_trading_action_create: FuturesTradingActionCreate,
         _request_timeout: Union[
@@ -609,7 +861,7 @@ class TradingActionsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PostFuturesAction:
         """Synchronous version of post_futures_action"""
-        return async_to_sync(self.post_futures_action)(
+        return async_to_sync(self._post_futures_action_async)(
             futures_trading_action_create=futures_trading_action_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -619,7 +871,7 @@ class TradingActionsApi:
         )
 
     @validate_call
-    def post_futures_action_sync_with_http_info(
+    def _post_futures_action_sync_with_http_info(
         self,
         futures_trading_action_create: FuturesTradingActionCreate,
         _request_timeout: Union[
@@ -635,7 +887,7 @@ class TradingActionsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PostFuturesAction]:
         """Synchronous version of post_futures_action_with_http_info"""
-        return async_to_sync(self.post_futures_action_with_http_info)(
+        return async_to_sync(self._post_futures_action_async_with_http_info)(
             futures_trading_action_create=futures_trading_action_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -645,7 +897,7 @@ class TradingActionsApi:
         )
 
     @validate_call
-    def post_futures_action_sync_without_preload_content(
+    def _post_futures_action_sync_without_preload_content(
         self,
         futures_trading_action_create: FuturesTradingActionCreate,
         _request_timeout: Union[
@@ -661,7 +913,7 @@ class TradingActionsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of post_futures_action_without_preload_content"""
-        return async_to_sync(self.post_futures_action_without_preload_content)(
+        return async_to_sync(self._post_futures_action_async_without_preload_content)(
             futures_trading_action_create=futures_trading_action_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -735,7 +987,128 @@ class TradingActionsApi:
         )
 
     @validate_call
-    async def post_spot_action(
+    def post_spot_action(
+        self,
+        spot_trading_action_create: SpotTradingActionCreate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Post Spot Action
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._post_spot_action_sync(
+                spot_trading_action_create=spot_trading_action_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._post_spot_action_async(
+                spot_trading_action_create=spot_trading_action_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def post_spot_action_with_http_info(
+        self,
+        spot_trading_action_create: SpotTradingActionCreate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Post Spot Action with HTTP info
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._post_spot_action_sync_with_http_info(
+                spot_trading_action_create=spot_trading_action_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._post_spot_action_async_with_http_info(
+                spot_trading_action_create=spot_trading_action_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def post_spot_action_without_preload_content(
+        self,
+        spot_trading_action_create: SpotTradingActionCreate,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Post Spot Action without preloading content
+
+        This method can work in both sync and async modes based on the is_sync flag.
+        """
+        if self.is_sync:
+            return self._post_spot_action_sync_without_preload_content(
+                spot_trading_action_create=spot_trading_action_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._post_spot_action_async_without_preload_content(
+                spot_trading_action_create=spot_trading_action_create,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _post_spot_action_async(
         self,
         spot_trading_action_create: SpotTradingActionCreate,
         _request_timeout: Union[
@@ -798,7 +1171,7 @@ class TradingActionsApi:
         ).data
 
     @validate_call
-    async def post_spot_action_with_http_info(
+    async def _post_spot_action_async_with_http_info(
         self,
         spot_trading_action_create: SpotTradingActionCreate,
         _request_timeout: Union[
@@ -860,7 +1233,7 @@ class TradingActionsApi:
         )
 
     @validate_call
-    async def post_spot_action_without_preload_content(
+    async def _post_spot_action_async_without_preload_content(
         self,
         spot_trading_action_create: SpotTradingActionCreate,
         _request_timeout: Union[
@@ -918,9 +1291,9 @@ class TradingActionsApi:
         )
         return response_data
 
-    # Sync versions of the methods
+    # Private sync implementation methods
     @validate_call
-    def post_spot_action_sync(
+    def _post_spot_action_sync(
         self,
         spot_trading_action_create: SpotTradingActionCreate,
         _request_timeout: Union[
@@ -936,7 +1309,7 @@ class TradingActionsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
         """Synchronous version of post_spot_action"""
-        return async_to_sync(self.post_spot_action)(
+        return async_to_sync(self._post_spot_action_async)(
             spot_trading_action_create=spot_trading_action_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -946,7 +1319,7 @@ class TradingActionsApi:
         )
 
     @validate_call
-    def post_spot_action_sync_with_http_info(
+    def _post_spot_action_sync_with_http_info(
         self,
         spot_trading_action_create: SpotTradingActionCreate,
         _request_timeout: Union[
@@ -962,7 +1335,7 @@ class TradingActionsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
         """Synchronous version of post_spot_action_with_http_info"""
-        return async_to_sync(self.post_spot_action_with_http_info)(
+        return async_to_sync(self._post_spot_action_async_with_http_info)(
             spot_trading_action_create=spot_trading_action_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -972,7 +1345,7 @@ class TradingActionsApi:
         )
 
     @validate_call
-    def post_spot_action_sync_without_preload_content(
+    def _post_spot_action_sync_without_preload_content(
         self,
         spot_trading_action_create: SpotTradingActionCreate,
         _request_timeout: Union[
@@ -988,7 +1361,7 @@ class TradingActionsApi:
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """Synchronous version of post_spot_action_without_preload_content"""
-        return async_to_sync(self.post_spot_action_without_preload_content)(
+        return async_to_sync(self._post_spot_action_async_without_preload_content)(
             spot_trading_action_create=spot_trading_action_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,

@@ -26,17 +26,18 @@ class KlinesClient:
         self,
         config: Configuration,
         http_client: Optional[ClientSession] = None,
+        is_sync: bool = False,
     ):
         self.config = config
         self.base_client = ApiClient(configuration=self.config)
         if http_client is not None:
             self.base_client.rest_client.pool_manager = http_client
         # Instantiate all the endpoint clients
-        self.funding = FundingRatesApiWrapper(self.base_client)
-        self.ohlcv = OHLCVDataApiWrapper(self.base_client)
-        self.symbols = SymbolsApiWrapper(self.base_client)
-        self.udf = UDFApi(self.base_client)
-        self.status = StatusApi(self.base_client)
+        self.funding = FundingRatesApiWrapper(self.base_client, is_sync=is_sync)
+        self.ohlcv = OHLCVDataApiWrapper(self.base_client, is_sync=is_sync)
+        self.symbols = SymbolsApiWrapper(self.base_client, is_sync=is_sync)
+        self.udf = UDFApi(self.base_client, is_sync=is_sync)
+        self.status = StatusApi(self.base_client, is_sync=is_sync)
 
 
 class FundingRatesApiWrapper(FundingRatesApi):
@@ -44,12 +45,12 @@ class FundingRatesApiWrapper(FundingRatesApi):
     A wrapper for the FundingRatesApi class.
     """
 
-    async def get_funding_rates_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    def get_funding_rates_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
         """
         Get the funding rates in a pandas DataFrame.
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_funding_rates(*args, **kwargs)
+        response = self.get_funding_rates(*args, **kwargs)
         response = [
             {
                 "timestamp": int(m.timestamp.timestamp()),
@@ -66,12 +67,12 @@ class OHLCVDataApiWrapper(OHLCVDataApi):
     A wrapper for the OHLCVDataApi class.
     """
 
-    async def get_ohlcv_data_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    def get_ohlcv_data_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
         """
         Get the OHLCV data in a pandas DataFrame.
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_ohlcv(*args, **kwargs)
+        response = self.get_ohlcv(*args, **kwargs)
         rows = []
         for item in response:
             row = {
@@ -92,10 +93,10 @@ class SymbolsApiWrapper(SymbolsApi):
     A wrapper for the SymbolsApi class.
     """
 
-    async def get_symbols_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    def get_symbols_fmt(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
         """
         Get the symbols in a pandas DataFrame.
         """
         pd = optional_import("pandas", "extra")
-        response = await self.get_klines_symbols(*args, **kwargs)
+        response = self.get_klines_symbols(*args, **kwargs)
         return pd.DataFrame(response, columns=["symbol"])
