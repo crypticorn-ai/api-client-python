@@ -112,6 +112,7 @@ class AuthHandler:
             elif message == "jwt expired":
                 error = ApiError.EXPIRED_BEARER
             else:
+                message = "Invalid bearer token"
                 error = (
                     ApiError.INVALID_BEARER
                 )  # jwt malformed, jwt not active (https://www.npmjs.com/package/jsonwebtoken#errors--codes)
@@ -234,10 +235,7 @@ class AuthHandler:
         Use this function if you only want to allow access via the API key.
         This function is used for WebSocket connections.
         """
-        try:
-            return await self.api_key_auth(api_key=api_key, sec=sec)
-        except HTTPException as e:
-            raise WebSocketException.from_http_exception(e)
+        return await self.api_key_auth(api_key=api_key, sec=sec)
 
     async def ws_bearer_auth(
         self,
@@ -249,11 +247,8 @@ class AuthHandler:
         Use this function if you only want to allow access via the bearer token.
         This function is used for WebSocket connections.
         """
-        try:
-            credentials = HTTPAuthorizationCredentials(scheme="Bearer", credentials=bearer)
-            return await self.bearer_auth(bearer=credentials, sec=sec)
-        except HTTPException as e:
-            raise WebSocketException.from_http_exception(e)
+        credentials = HTTPAuthorizationCredentials(scheme="Bearer", credentials=bearer)
+        return await self.bearer_auth(bearer=credentials, sec=sec)
 
     async def ws_combined_auth(
         self,
@@ -271,9 +266,6 @@ class AuthHandler:
             if bearer
             else None
         )
-        try:
-            return await self.combined_auth(
-                bearer=credentials, api_key=api_key, sec=sec
-            )
-        except HTTPException as e:
-            raise WebSocketException.from_http_exception(e)
+        return await self.combined_auth(
+            bearer=credentials, api_key=api_key, sec=sec
+        )
