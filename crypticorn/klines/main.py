@@ -32,6 +32,8 @@ class KlinesClient:
         self.base_client = ApiClient(configuration=self.config)
         if http_client is not None:
             self.base_client.rest_client.pool_manager = http_client
+        # Pass sync context to REST client for proper session management
+        self.base_client.rest_client.is_sync = is_sync
         # Instantiate all the endpoint clients
         self.funding = FundingRatesApiWrapper(self.base_client, is_sync=is_sync)
         self.ohlcv = OHLCVDataApiWrapper(self.base_client, is_sync=is_sync)

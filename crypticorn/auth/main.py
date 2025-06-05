@@ -31,6 +31,8 @@ class AuthClient:
         self.base_client = ApiClient(configuration=self.config)
         if http_client is not None:
             self.base_client.rest_client.pool_manager = http_client
+        # Pass sync context to REST client for proper session management
+        self.base_client.rest_client.is_sync = is_sync
         # Instantiate all the endpoint clients
         self.admin = AdminApi(self.base_client, is_sync=is_sync)
         self.service = ServiceApi(self.base_client, is_sync=is_sync)
