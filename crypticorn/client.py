@@ -9,7 +9,13 @@ from crypticorn.pay import PayClient
 from crypticorn.trade import TradeClient
 from crypticorn.metrics import MetricsClient
 from crypticorn.auth import AuthClient
-from crypticorn.common import BaseUrl, ApiVersion, Service, apikey_header as aph, CrypticornDeprecatedSince217
+from crypticorn.common import (
+    BaseUrl,
+    ApiVersion,
+    Service,
+    apikey_header as aph,
+    CrypticornDeprecatedSince217,
+)
 from importlib.metadata import version
 from typing_extensions import deprecated
 
@@ -269,7 +275,10 @@ class AsyncClient(BaseAsyncClient):
 @deprecated("Use AsyncClient instead", category=None)
 class ApiClient(AsyncClient):
     def __init__(self, *args, **kwargs):
-        warnings.warn("ApiClient is deprecated. Use AsyncClient instead.", CrypticornDeprecatedSince217)
+        warnings.warn(
+            "ApiClient is deprecated. Use AsyncClient instead.",
+            CrypticornDeprecatedSince217,
+        )
         super().__init__(*args, **kwargs)
 
 

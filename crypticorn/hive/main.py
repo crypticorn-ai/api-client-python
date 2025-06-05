@@ -149,16 +149,24 @@ class DataApiWrapper(DataApi):
         os.makedirs(base_path, exist_ok=True)
 
         return await asyncio.gather(
-            *[download_file(
-                url=response.links.y_train,
-                dest_path=base_path + "y_train_" + response.target + ".feather",
-            ),
-            download_file(
-                url=response.links.x_test,
-                dest_path=base_path + "x_test_" + response.feature_size + ".feather",
-            ),
-            download_file(
-                url=response.links.x_train,
-                dest_path=base_path + "x_train_" + response.feature_size + ".feather",
-            ),]
+            *[
+                download_file(
+                    url=response.links.y_train,
+                    dest_path=base_path + "y_train_" + response.target + ".feather",
+                ),
+                download_file(
+                    url=response.links.x_test,
+                    dest_path=base_path
+                    + "x_test_"
+                    + response.feature_size
+                    + ".feather",
+                ),
+                download_file(
+                    url=response.links.x_train,
+                    dest_path=base_path
+                    + "x_train_"
+                    + response.feature_size
+                    + ".feather",
+                ),
+            ]
         )
