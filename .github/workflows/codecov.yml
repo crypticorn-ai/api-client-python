@@ -58,7 +58,7 @@ jobs:
           crypticorn --help
 
       - name: Test with pytest
-        run: pytest python/tests/ --cov=crypticorn --cov-branch --cov-report=xml
+        run: pytest python/tests/ --cov=crypticorn --cov-branch --cov-report=xml --cov-report=term-missing:skip-covered
 
       # - name: Use Codecov to track coverage
       #   uses: codecov/codecov-action@v2
@@ -72,3 +72,4 @@ jobs:
           title: Coverage Report ${{ matrix.python-version }}
           pytest-xml-coverage-path: ./coverage.xml
           report-only-changed-files: true
+          hide-report: true
