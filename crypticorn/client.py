@@ -254,7 +254,14 @@ class ApiClient(BaseApiClient):
         await self.close()
 
 
-class SyncApiClient(BaseApiClient):
+@deprecated("Use AsyncClient instead", category=None)
+class ApiClient(AsyncClient):
+    def __init__(self, *args, **kwargs):
+        warnings.warn("ApiClient is deprecated. Use AsyncClient instead.", CrypticornDeprecatedSince217)
+        super().__init__(*args, **kwargs)
+
+
+class SyncClient(BaseAsyncClient):
     """
     The official synchronous Python client for interacting with the Crypticorn API.
     """
