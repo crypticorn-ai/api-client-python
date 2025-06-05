@@ -1,6 +1,31 @@
 # CHANGELOG
 
 
+## v2.17.0-rc.2 (2025-06-05)
+
+### Documentation
+
+- Document SyncClient support
+  ([`8935d22`](https://github.com/crypticorn-ai/api-client/commit/8935d221afe6cb6da2529a05341e104b98bb9fbb))
+
+### Features
+
+- Add support for pagination, sorting and filtering query parameters
+  ([`3afcf2b`](https://github.com/crypticorn-ai/api-client/commit/3afcf2bb8eff65a1c38c738f19e7480550f91798))
+
+- Add support for synchronous usage with `SyncClient`. Both API clients are compatible with each
+  other.
+  ([`02e7622`](https://github.com/crypticorn-ai/api-client/commit/02e7622669bd590a853b12c9aa10183db06a73f1))
+
+- Deprecate ApiClient for Async and SyncClient
+  ([`a00b450`](https://github.com/crypticorn-ai/api-client/commit/a00b4502197fb2287aca893042d197d5f9811076))
+
+### Testing
+
+- Improve tests for pagination query params
+  ([`de1f82a`](https://github.com/crypticorn-ai/api-client/commit/de1f82ae6f5461e172459ec4558dd29c0b2646ad))
+
+
 ## v2.17.0-rc.1 (2025-06-01)
 
 ### Features
