@@ -1,6 +1,24 @@
 # CHANGELOG
 
 
+## v2.17.0-rc.4 (2025-06-06)
+
+### Features
+
+- Add `last` attribute and helper functions to paginated responses
+  ([`fe29d0c`](https://github.com/crypticorn-ai/api-client/commit/fe29d0cb1da60c0fa2dc86f9f0ec54e8d035293d))
+
+### Refactoring
+
+- Add message to invalid_bearer exception
+  ([`5578140`](https://github.com/crypticorn-ai/api-client/commit/557814099f6c37ce015c0ad8e5989266f332e834))
+
+### Testing
+
+- Update websocket authentication test
+  ([`4f727d5`](https://github.com/crypticorn-ai/api-client/commit/4f727d545ab7275e7f3dc8e45b1ed2f0270e4038))
+
+
 ## v2.17.0-rc.3 (2025-06-05)
 
 ### Bug Fixes
