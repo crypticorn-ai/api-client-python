@@ -266,6 +266,4 @@ class AuthHandler:
             if bearer
             else None
         )
-        return await self.combined_auth(
-            bearer=credentials, api_key=api_key, sec=sec
-        )
+        return await self.combined_auth(bearer=credentials, api_key=api_key, sec=sec)

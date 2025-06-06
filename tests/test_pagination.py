@@ -1,6 +1,11 @@
 import pytest
 from pydantic import BaseModel, ValidationError
-from crypticorn.common import PaginationParams, SortParams, FilterParams, FilterComboParams
+from crypticorn.common import (
+    PaginationParams,
+    SortParams,
+    FilterParams,
+    FilterComboParams,
+)
 
 
 class Item(BaseModel):
@@ -23,7 +28,7 @@ async def test_pagination_params():
     # Test page_size validation (should be between 1 and 100)
     with pytest.raises(ValidationError):
         PaginationParams[Item](page_size=0)
-    
+
     with pytest.raises(ValidationError):
         PaginationParams[Item](page_size=101)
 
@@ -45,10 +50,14 @@ async def test_sort_params():
         SortParams[Item](sort_by="foo", sort_order="asc")
 
     # Test that sort_by and sort_order must be provided together
-    with pytest.raises(ValueError, match="sort_order and sort_by must be provided together"):
+    with pytest.raises(
+        ValueError, match="sort_order and sort_by must be provided together"
+    ):
         SortParams[Item](sort_by="name")
 
-    with pytest.raises(ValueError, match="sort_order and sort_by must be provided together"):
+    with pytest.raises(
+        ValueError, match="sort_order and sort_by must be provided together"
+    ):
         SortParams[Item](sort_order="asc")
 
     # Test valid combination
@@ -71,7 +80,7 @@ async def test_sort_order_validation():
     # Test valid order values
     params = SortParams[Item](sort_by="name", sort_order="asc")
     assert params.sort_order == "asc"
-    
+
     params = SortParams[Item](sort_by="name", sort_order="desc")
     assert params.sort_order == "desc"
 
@@ -86,7 +95,9 @@ async def test_filter_params():
         FilterParams[int](filter_by="name", filter_value="test")
 
     # Test that filter_value must be provided when filter_by is set
-    with pytest.raises(ValueError, match="filter_by and filter_value must be provided together"):
+    with pytest.raises(
+        ValueError, match="filter_by and filter_value must be provided together"
+    ):
         FilterParams[Item](filter_by="name")
 
     # Test invalid filter field
@@ -111,12 +122,12 @@ async def test_filter_params():
 async def test_filter_combo_params():
     # Test combined functionality
     params = FilterComboParams[Item](
-        page=2, 
-        page_size=20, 
-        sort_by="value", 
+        page=2,
+        page_size=20,
+        sort_by="value",
         sort_order="desc",
         filter_by="name",
-        filter_value="test"
+        filter_value="test",
     )
     assert params.page == 2
     assert params.page_size == 20
@@ -135,19 +146,27 @@ async def test_filter_combo_params():
     assert params.filter_value is None
 
     # Test sort validation still works
-    with pytest.raises(ValueError, match="sort_order and sort_by must be provided together"):
+    with pytest.raises(
+        ValueError, match="sort_order and sort_by must be provided together"
+    ):
         FilterComboParams[Item](sort_by="name")
 
     # Test filter validation still works in combo params
-    with pytest.raises(ValueError, match="filter_by and filter_value must be provided together"):
+    with pytest.raises(
+        ValueError, match="filter_by and filter_value must be provided together"
+    ):
         FilterComboParams[Item](filter_by="name")
 
 
 @pytest.mark.asyncio
 async def test_field_type_validation():
     # Test that invalid type for filter_value raises error
-    with pytest.raises(ValueError, match="Expected <class 'int'> for field value, got <class 'str'>"):
-        FilterComboParams[Item](filter_by="value", filter_value="not_a_number") # tries to coerce to int, but fails
+    with pytest.raises(
+        ValueError, match="Expected <class 'int'> for field value, got <class 'str'>"
+    ):
+        FilterComboParams[Item](
+            filter_by="value", filter_value="not_a_number"
+        )  # tries to coerce to int, but fails
 
     # Test that valid type works
     params = FilterComboParams[Item](filter_by="value", filter_value=42)
@@ -155,7 +174,9 @@ async def test_field_type_validation():
 
     # Test type coercion
     params = FilterComboParams[Item](filter_by="name", filter_value=1)
-    assert params.filter_value == "1" # since name is a str, it will be coerced to a string
+    assert (
+        params.filter_value == "1"
+    )  # since name is a str, it will be coerced to a string
 
     params = FilterComboParams[Item](filter_by="name", filter_value="test")
     assert params.filter_value == "test"

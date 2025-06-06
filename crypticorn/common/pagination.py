@@ -26,14 +26,14 @@ class PaginatedResponse(BaseModel, Generic[T]):
         if page < math.ceil(total / page_size):
             return page + 1
         return None
-    
+
     @staticmethod
     def get_prev_page(page: int) -> Optional[int]:
         """Get the previous page number"""
         if page > 1:
             return page - 1
         return None
-    
+
     @staticmethod
     def get_last_page(total: int, page_size: int) -> int:
         """Get the last page number"""
@@ -104,7 +104,12 @@ class SortParams(BaseModel, Generic[T]):
             raise ValueError(
                 f"Invalid order: '{self.sort_order}' — must be one of: ['asc', 'desc']"
             )
-        if self.sort_order and self.sort_by is None or self.sort_by and self.sort_order is None:
+        if (
+            self.sort_order
+            and self.sort_by is None
+            or self.sort_by
+            and self.sort_order is None
+        ):
             raise ValueError("sort_order and sort_by must be provided together")
         return self
 
@@ -140,11 +145,17 @@ class FilterParams(BaseModel, Generic[T]):
                 raise ValueError(
                     f"Invalid field: '{self.filter_by}'. Must be one of: {list(model.model_fields)}"
                 )
-            self.filter_value = _enforce_field_type(model, self.filter_by, self.filter_value)
+            self.filter_value = _enforce_field_type(
+                model, self.filter_by, self.filter_value
+            )
         return self
 
 
-class FilterComboParams(PaginationParams[T], SortParams[T], FilterParams[T], ):
+class FilterComboParams(
+    PaginationParams[T],
+    SortParams[T],
+    FilterParams[T],
+):
     """Combines pagination, filter, and sort parameters.
     Usage:
     >>> @router.get("", operation_id="getOrders")
@@ -190,4 +201,6 @@ def _enforce_field_type(model: Type[BaseModel], field_name: str, value: Any) -> 
     try:
         return expected_type(value)
     except Exception as e:
-        raise ValueError(f"Expected {expected_type} for field {field_name}, got {type(value)}")
+        raise ValueError(
+            f"Expected {expected_type} for field {field_name}, got {type(value)}"
+        )
