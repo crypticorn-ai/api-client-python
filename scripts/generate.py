@@ -4,7 +4,7 @@ import requests
 import subprocess
 
 # List of possible module names
-MODULES = ["trade", "klines", "hive", "pay", "auth", "metrics"]
+MODULES = ["trade", "klines", "hive", "pay", "auth", "metrics", "dex"]
 ENVIRONMENTS = ["local", "dev", "prod"]
 ENV_MAP = {
     "local": "http://localhost/v1",
