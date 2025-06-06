@@ -153,7 +153,7 @@ async def test_combined_auth_with_expired_api_key(auth_handler: AuthHandler):
 @pytest.mark.asyncio
 async def test_ws_combined_auth_websocket_exception(auth_handler: AuthHandler):
     """Without credentials"""
-    with pytest.raises(WebSocketException) as e:
+    with pytest.raises(HTTPException) as e:
         return await auth_handler.ws_combined_auth(bearer=None, api_key=None)
-    assert e.value.status_code == 1008
+    assert e.value.status_code == 401
     assert e.value.detail.get("code") == ApiError.NO_CREDENTIALS.identifier
