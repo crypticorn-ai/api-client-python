@@ -2,6 +2,7 @@
 
 from typing import Annotated, Any, Generic, Type, TypeVar, Optional, Literal
 from pydantic import BaseModel, Field, model_validator
+import math
 
 T = TypeVar("T")
 
@@ -17,6 +18,26 @@ class PaginatedResponse(BaseModel, Generic[T]):
     page_size: int = Field(description="The number of items per page")
     prev: Optional[int] = Field(None, description="The previous page number")
     next: Optional[int] = Field(None, description="The next page number")
+    last: Optional[int] = Field(None, description="The last page number")
+
+    @staticmethod
+    def get_next_page(total: int, page_size: int, page: int) -> Optional[int]:
+        """Get the next page number"""
+        if page < math.ceil(total / page_size):
+            return page + 1
+        return None
+    
+    @staticmethod
+    def get_prev_page(page: int) -> Optional[int]:
+        """Get the previous page number"""
+        if page > 1:
+            return page - 1
+        return None
+    
+    @staticmethod
+    def get_last_page(total: int, page_size: int) -> int:
+        """Get the last page number"""
+        return max(1, math.ceil(total / page_size))
 
 
 class PaginationParams(BaseModel, Generic[T]):
