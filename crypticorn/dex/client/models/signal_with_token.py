@@ -34,7 +34,9 @@ class SignalWithToken(BaseModel):
     name: StrictStr = Field(description="The name of the token")
     type: StrictStr = Field(description="The type of the signal")
     risk: Optional[StrictStr] = None
-    performance: Optional[StrictStr] = None
+    performance: StrictStr = Field(
+        description="The performance in percent as a string. e.g. +100%"
+    )
     price: StrictStr = Field(description="The price of the signal")
     volume: SignalVolume = Field(description="The volume of the signal")
     liquidity: StrictStr = Field(description="The liquidity of the signal")
@@ -43,7 +45,9 @@ class SignalWithToken(BaseModel):
     updated_at: StrictInt = Field(description="The timestamp of the last update")
     tg_id: Optional[StrictStr]
     data: TokenData = Field(description="The token info")
-    performance_float: Optional[Union[StrictFloat, StrictInt]]
+    performance_float: Union[StrictFloat, StrictInt] = Field(
+        description="The performance in float. e.g. +100% -> 2.0"
+    )
     __properties: ClassVar[List[str]] = [
         "ca",
         "name",
@@ -90,8 +94,13 @@ class SignalWithToken(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
         """
-        excluded_fields: Set[str] = set([])
+        excluded_fields: Set[str] = set(
+            [
+                "performance_float",
+            ]
+        )
 
         _dict = self.model_dump(
             by_alias=True,
@@ -109,23 +118,10 @@ class SignalWithToken(BaseModel):
         if self.risk is None and "risk" in self.model_fields_set:
             _dict["risk"] = None
 
-        # set to None if performance (nullable) is None
-        # and model_fields_set contains the field
-        if self.performance is None and "performance" in self.model_fields_set:
-            _dict["performance"] = None
-
         # set to None if tg_id (nullable) is None
         # and model_fields_set contains the field
         if self.tg_id is None and "tg_id" in self.model_fields_set:
             _dict["tg_id"] = None
-
-        # set to None if performance_float (nullable) is None
-        # and model_fields_set contains the field
-        if (
-            self.performance_float is None
-            and "performance_float" in self.model_fields_set
-        ):
-            _dict["performance_float"] = None
 
         return _dict
 

@@ -23,6 +23,7 @@ from crypticorn.dex.client.models.paginated_response_signal_with_token import (
     PaginatedResponseSignalWithToken,
 )
 from crypticorn.dex.client.models.risk import Risk
+from crypticorn.dex.client.models.signal_overview_stats import SignalOverviewStats
 from crypticorn.dex.client.models.signal_volume import SignalVolume
 from crypticorn.dex.client.models.signal_with_token import SignalWithToken
 from crypticorn.dex.client.models.token_data import TokenData
