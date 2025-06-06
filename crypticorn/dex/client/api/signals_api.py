@@ -60,7 +60,7 @@ class SignalsApi:
         self.is_sync = is_sync
 
     @validate_call
-    def get_signals_signals_get(
+    def get_signals(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -100,7 +100,7 @@ class SignalsApi:
         This method can work in both sync and async modes based on the is_sync flag.
         """
         if self.is_sync:
-            return self._get_signals_signals_get_sync(
+            return self._get_signals_sync(
                 filter_by=filter_by,
                 filter_value=filter_value,
                 sort_order=sort_order,
@@ -115,7 +115,7 @@ class SignalsApi:
             )
 
         else:
-            return self._get_signals_signals_get_async(
+            return self._get_signals_async(
                 filter_by=filter_by,
                 filter_value=filter_value,
                 sort_order=sort_order,
@@ -130,7 +130,7 @@ class SignalsApi:
             )
 
     @validate_call
-    def get_signals_signals_get_with_http_info(
+    def get_signals_with_http_info(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -170,7 +170,7 @@ class SignalsApi:
         This method can work in both sync and async modes based on the is_sync flag.
         """
         if self.is_sync:
-            return self._get_signals_signals_get_sync_with_http_info(
+            return self._get_signals_sync_with_http_info(
                 filter_by=filter_by,
                 filter_value=filter_value,
                 sort_order=sort_order,
@@ -185,7 +185,7 @@ class SignalsApi:
             )
 
         else:
-            return self._get_signals_signals_get_async_with_http_info(
+            return self._get_signals_async_with_http_info(
                 filter_by=filter_by,
                 filter_value=filter_value,
                 sort_order=sort_order,
@@ -200,7 +200,7 @@ class SignalsApi:
             )
 
     @validate_call
-    def get_signals_signals_get_without_preload_content(
+    def get_signals_without_preload_content(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -240,7 +240,7 @@ class SignalsApi:
         This method can work in both sync and async modes based on the is_sync flag.
         """
         if self.is_sync:
-            return self._get_signals_signals_get_sync_without_preload_content(
+            return self._get_signals_sync_without_preload_content(
                 filter_by=filter_by,
                 filter_value=filter_value,
                 sort_order=sort_order,
@@ -255,7 +255,7 @@ class SignalsApi:
             )
 
         else:
-            return self._get_signals_signals_get_async_without_preload_content(
+            return self._get_signals_async_without_preload_content(
                 filter_by=filter_by,
                 filter_value=filter_value,
                 sort_order=sort_order,
@@ -271,7 +271,7 @@ class SignalsApi:
 
     # Private async implementation methods
     @validate_call
-    async def _get_signals_signals_get_async(
+    async def _get_signals_async(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -344,7 +344,7 @@ class SignalsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_signals_signals_get_serialize(
+        _param = self._get_signals_serialize(
             filter_by=filter_by,
             filter_value=filter_value,
             sort_order=sort_order,
@@ -370,7 +370,7 @@ class SignalsApi:
         ).data
 
     @validate_call
-    async def _get_signals_signals_get_async_with_http_info(
+    async def _get_signals_async_with_http_info(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -443,7 +443,7 @@ class SignalsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_signals_signals_get_serialize(
+        _param = self._get_signals_serialize(
             filter_by=filter_by,
             filter_value=filter_value,
             sort_order=sort_order,
@@ -468,7 +468,7 @@ class SignalsApi:
         )
 
     @validate_call
-    async def _get_signals_signals_get_async_without_preload_content(
+    async def _get_signals_async_without_preload_content(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -541,7 +541,7 @@ class SignalsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_signals_signals_get_serialize(
+        _param = self._get_signals_serialize(
             filter_by=filter_by,
             filter_value=filter_value,
             sort_order=sort_order,
@@ -564,7 +564,7 @@ class SignalsApi:
 
     # Private sync implementation methods
     @validate_call
-    def _get_signals_signals_get_sync(
+    def _get_signals_sync(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -599,8 +599,8 @@ class SignalsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PaginatedResponseSignalWithToken:
-        """Synchronous version of get_signals_signals_get"""
-        return async_to_sync(self._get_signals_signals_get_async)(
+        """Synchronous version of get_signals"""
+        return async_to_sync(self._get_signals_async)(
             filter_by=filter_by,
             filter_value=filter_value,
             sort_order=sort_order,
@@ -615,7 +615,7 @@ class SignalsApi:
         )
 
     @validate_call
-    def _get_signals_signals_get_sync_with_http_info(
+    def _get_signals_sync_with_http_info(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -650,8 +650,8 @@ class SignalsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PaginatedResponseSignalWithToken]:
-        """Synchronous version of get_signals_signals_get_with_http_info"""
-        return async_to_sync(self._get_signals_signals_get_async_with_http_info)(
+        """Synchronous version of get_signals_with_http_info"""
+        return async_to_sync(self._get_signals_async_with_http_info)(
             filter_by=filter_by,
             filter_value=filter_value,
             sort_order=sort_order,
@@ -666,7 +666,7 @@ class SignalsApi:
         )
 
     @validate_call
-    def _get_signals_signals_get_sync_without_preload_content(
+    def _get_signals_sync_without_preload_content(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -701,10 +701,8 @@ class SignalsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Synchronous version of get_signals_signals_get_without_preload_content"""
-        return async_to_sync(
-            self._get_signals_signals_get_async_without_preload_content
-        )(
+        """Synchronous version of get_signals_without_preload_content"""
+        return async_to_sync(self._get_signals_async_without_preload_content)(
             filter_by=filter_by,
             filter_value=filter_value,
             sort_order=sort_order,
@@ -718,7 +716,7 @@ class SignalsApi:
             _host_index=_host_index,
         )
 
-    def _get_signals_signals_get_serialize(
+    def _get_signals_serialize(
         self,
         filter_by,
         filter_value,
