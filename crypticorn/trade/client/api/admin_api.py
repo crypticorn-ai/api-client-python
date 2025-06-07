@@ -472,7 +472,7 @@ class AdminApi:
     def get_dependencies(
         self,
         include: Annotated[
-            Optional[List[StrictStr]],
+            Optional[List[Optional[StrictStr]]],
             Field(
                 description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
             ),
@@ -488,7 +488,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, str]:
+    ) -> Dict[str, Optional[str]]:
         """List Installed Packages
 
         This method can work in both sync and async modes based on the is_sync flag.
@@ -517,7 +517,7 @@ class AdminApi:
     def get_dependencies_with_http_info(
         self,
         include: Annotated[
-            Optional[List[StrictStr]],
+            Optional[List[Optional[StrictStr]]],
             Field(
                 description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
             ),
@@ -533,7 +533,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, str]]:
+    ) -> ApiResponse[Dict[str, Optional[str]]]:
         """List Installed Packages with HTTP info
 
         This method can work in both sync and async modes based on the is_sync flag.
@@ -562,7 +562,7 @@ class AdminApi:
     def get_dependencies_without_preload_content(
         self,
         include: Annotated[
-            Optional[List[StrictStr]],
+            Optional[List[Optional[StrictStr]]],
             Field(
                 description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
             ),
@@ -608,7 +608,7 @@ class AdminApi:
     async def _get_dependencies_async(
         self,
         include: Annotated[
-            Optional[List[StrictStr]],
+            Optional[List[Optional[StrictStr]]],
             Field(
                 description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
             ),
@@ -624,13 +624,13 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, str]:
+    ) -> Dict[str, Optional[str]]:
         """List Installed Packages
 
         Return a list of installed packages and versions.  The include parameter accepts regex patterns to match against package names. For example: - crypticorn.* will match all packages starting with 'crypticorn' - .*tic.* will match all packages containing 'tic' in their name
 
         :param include: List of regex patterns to match against package names. If not provided, all installed packages will be returned.
-        :type include: List[str]
+        :type include: List[Optional[str]]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -662,7 +662,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Dict[str, str]",
+            "200": "Dict[str, Optional[str]]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -677,7 +677,7 @@ class AdminApi:
     async def _get_dependencies_async_with_http_info(
         self,
         include: Annotated[
-            Optional[List[StrictStr]],
+            Optional[List[Optional[StrictStr]]],
             Field(
                 description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
             ),
@@ -693,13 +693,13 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, str]]:
+    ) -> ApiResponse[Dict[str, Optional[str]]]:
         """List Installed Packages
 
         Return a list of installed packages and versions.  The include parameter accepts regex patterns to match against package names. For example: - crypticorn.* will match all packages starting with 'crypticorn' - .*tic.* will match all packages containing 'tic' in their name
 
         :param include: List of regex patterns to match against package names. If not provided, all installed packages will be returned.
-        :type include: List[str]
+        :type include: List[Optional[str]]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -731,7 +731,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Dict[str, str]",
+            "200": "Dict[str, Optional[str]]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -745,7 +745,7 @@ class AdminApi:
     async def _get_dependencies_async_without_preload_content(
         self,
         include: Annotated[
-            Optional[List[StrictStr]],
+            Optional[List[Optional[StrictStr]]],
             Field(
                 description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
             ),
@@ -767,7 +767,7 @@ class AdminApi:
         Return a list of installed packages and versions.  The include parameter accepts regex patterns to match against package names. For example: - crypticorn.* will match all packages starting with 'crypticorn' - .*tic.* will match all packages containing 'tic' in their name
 
         :param include: List of regex patterns to match against package names. If not provided, all installed packages will be returned.
-        :type include: List[str]
+        :type include: List[Optional[str]]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -799,7 +799,7 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Dict[str, str]",
+            "200": "Dict[str, Optional[str]]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -811,7 +811,7 @@ class AdminApi:
     def _get_dependencies_sync(
         self,
         include: Annotated[
-            Optional[List[StrictStr]],
+            Optional[List[Optional[StrictStr]]],
             Field(
                 description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
             ),
@@ -827,7 +827,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Dict[str, str]:
+    ) -> Dict[str, Optional[str]]:
         """Synchronous version of get_dependencies"""
         return async_to_sync(self._get_dependencies_async)(
             include=include,
@@ -842,7 +842,7 @@ class AdminApi:
     def _get_dependencies_sync_with_http_info(
         self,
         include: Annotated[
-            Optional[List[StrictStr]],
+            Optional[List[Optional[StrictStr]]],
             Field(
                 description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
             ),
@@ -858,7 +858,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Dict[str, str]]:
+    ) -> ApiResponse[Dict[str, Optional[str]]]:
         """Synchronous version of get_dependencies_with_http_info"""
         return async_to_sync(self._get_dependencies_async_with_http_info)(
             include=include,
@@ -873,7 +873,7 @@ class AdminApi:
     def _get_dependencies_sync_without_preload_content(
         self,
         include: Annotated[
-            Optional[List[StrictStr]],
+            Optional[List[Optional[StrictStr]]],
             Field(
                 description="List of regex patterns to match against package names. If not provided, all installed packages will be returned."
             ),
@@ -2011,8 +2011,7 @@ class AdminApi:
         )
         await response_data.read()
         return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
+            response_data=response_data, response_types_map=_response_types_map
         )
 
     @validate_call
