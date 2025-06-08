@@ -22,7 +22,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.pay.client.models.api_error_identifier import ApiErrorIdentifier
 from crypticorn.pay.client.models.api_error_level import ApiErrorLevel
 from crypticorn.pay.client.models.api_error_type import ApiErrorType
-from typing import Optional, Set
+from typing import Set
 from typing_extensions import Self
 
 

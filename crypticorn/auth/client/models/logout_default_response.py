@@ -22,7 +22,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.auth.client.models.logout_default_response_issues_inner import (
     LogoutDefaultResponseIssuesInner,
 )
-from typing import Optional, Set
+from typing import Set
 from typing_extensions import Self
 
 

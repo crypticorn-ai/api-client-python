@@ -21,7 +21,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from crypticorn.trade.client.models.strategy_exchange_info import StrategyExchangeInfo
-from typing import Optional, Set
+from typing import Set
 from typing_extensions import Self
 
 

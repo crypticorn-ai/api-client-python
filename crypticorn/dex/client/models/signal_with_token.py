@@ -21,7 +21,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, Stric
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from crypticorn.dex.client.models.signal_volume import SignalVolume
 from crypticorn.dex.client.models.token_data import TokenData
-from typing import Optional, Set
+from typing import Set
 from typing_extensions import Self
 
 

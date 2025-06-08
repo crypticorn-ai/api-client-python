@@ -200,7 +200,7 @@ def _enforce_field_type(model: Type[BaseModel], field_name: str, value: Any) -> 
 
     try:
         return expected_type(value)
-    except Exception as e:
+    except Exception:
         raise ValueError(
             f"Expected {expected_type} for field {field_name}, got {type(value)}"
         )

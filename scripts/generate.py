@@ -40,7 +40,7 @@ def main():
     if not module_name:
         print("Please provide the service name as an arg")
         print(f"Valid services: {', '.join(MODULES)}")
-        print(f"Example: python python/generate.py --service=trade")
+        print("Example: python python/generate.py --service=trade")
         sys.exit(1)
 
     # Validate service name
@@ -84,7 +84,7 @@ def main():
         "openapi-generator-cli",
         "generate",
         "-i",
-        f"{url or f'{ROOT_URL}/{module_name}/openapi.json'}",
+        f"{url or f'http://localhost:8000/openapi.json'}",
         "-g",
         "python",
         "--package-name",
@@ -154,9 +154,9 @@ __all__ = ["{upper_module_name}Client", ]
 
     print("========================IMPORTANT========================")
     print("If you are adding a new module, you need to do the following:")
-    print(f"- Edit the generated crypticorn/client.py file.")
+    print("- Edit the generated crypticorn/client.py file.")
     print(f"- Edit the generated crypticorn/{module_name}/main.py file.")
-    print(f"- Edit the crypticorn/common/urls.py file to add the new module.")
+    print("- Edit the crypticorn/common/urls.py file to add the new module.")
     print("=========================================================")
 
 

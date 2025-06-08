@@ -22,7 +22,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.hive.client.models.data_version import DataVersion
 from crypticorn.hive.client.models.target import Target
 from crypticorn.hive.client.models.target_type import TargetType
-from typing import Optional, Set
+from typing import Set
 from typing_extensions import Self
 
 
