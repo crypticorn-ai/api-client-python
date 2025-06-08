@@ -24,7 +24,7 @@ from crypticorn.trade.client.models.margin_mode import MarginMode
 from crypticorn.trade.client.models.market_type import MarketType
 from crypticorn.trade.client.models.tpsl_create import TPSLCreate
 from crypticorn.trade.client.models.trading_action_type import TradingActionType
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 
