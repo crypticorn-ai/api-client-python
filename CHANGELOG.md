@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v2.17.0-rc.5 (2025-06-08)
+
+### Features
+
+- Add new convenience classes for paginating, sorting and filtering query params
+  ([`854e3bb`](https://github.com/crypticorn-ai/api-client/commit/854e3bb459a8d76352ee9d9172f9578a045d1452))
+
+### Testing
+
+- Update pagination tests
+  ([`6378348`](https://github.com/crypticorn-ai/api-client/commit/6378348fa531e1d037f3373422b3ee7245ff2d08))
+
+
 ## v2.17.0-rc.4 (2025-06-06)
 
 ### Features
