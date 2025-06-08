@@ -9,7 +9,20 @@ T = TypeVar("T")
 
 class PaginatedResponse(BaseModel, Generic[T]):
     """Pydantic model for paginated response
-    >>> PaginatedResponse[ItemModel](data=items, total=total_items, page=1, size=10, prev=None, next=2)
+    >>> @router.get("", operation_id="getOrders")
+    >>> async def get_orders(
+    >>>     params: Annotated[PaginationParams, Query()],
+    >>> ) -> PaginatedResponse[Order]:
+    >>>     ...
+    >>> return PaginatedResponse[Order](
+            data=orders,
+            total=count,
+            page=params.page,
+            page_size=params.page_size,
+            prev=PaginatedResponse.get_prev_page(params.page),
+            next=PaginatedResponse.get_next_page(count, params.page_size, params.page),
+            last=PaginatedResponse.get_last_page(count, params.page_size),
+        )
     """
 
     data: list[T]
@@ -42,16 +55,16 @@ class PaginatedResponse(BaseModel, Generic[T]):
 
 class PaginationParams(BaseModel, Generic[T]):
     """Standard pagination parameters for usage in API endpoints. Check the [fastapi docs](https://fastapi.tiangolo.com/tutorial/query-param-models/?h=qu#query-parameters-with-a-pydantic-model) for usage examples.
-    Can only be used isolated, not in combination with other parameters. If you need to combine with other parameters, use `FilterComboParams` or refer to this [workaround](https://github.com/fastapi/fastapi/discussions/13448#discussioncomment-12440374).
+    You should inherit from this class when adding additional parameters. You should use this class in combination with `PaginatedResponse` to return the paginated response.
     Usage:
     >>> @router.get("", operation_id="getOrders")
     >>> async def get_orders(
-    >>>     paginate: Annotated[PaginationParams[Order], Query()],
+    >>>     params: Annotated[PaginationParams[Order], Query()],
     >>> ) -> PaginatedResponse[Order]:
     >>>     ...
 
     The default size is 10 items per page and there is a `HeavyPaginationParams` class with 100 items per page. You can override this default:
-    >>> class LightPaginationParams(PaginationParams[T]):
+    >>> class LightPaginationParams(PaginationParams):
     >>>     page_size: int = Field(default=5, description="The number of items per page")
     """
 
@@ -71,11 +84,11 @@ class HeavyPaginationParams(PaginationParams[T]):
 
 class SortParams(BaseModel, Generic[T]):
     """Standard sort parameters for usage in API endpoints. Check the [fastapi docs](https://fastapi.tiangolo.com/tutorial/query-param-models/?h=qu#query-parameters-with-a-pydantic-model) for usage examples.
-    Can only be used isolated, not in combination with other parameters. If you need to combine with other parameters, use `FilterComboParams` or refer to this [workaround](https://github.com/fastapi/fastapi/discussions/13448#discussioncomment-12440374).
+    You should inherit from this class when adding additional parameters.
     Usage:
     >>> @router.get("", operation_id="getOrders")
     >>> async def get_orders(
-    >>>     sort: Annotated[SortParams[Order], Query()],
+    >>>     params: Annotated[SortParams[Order], Query()],
     >>> ) -> PaginatedResponse[Order]:
     >>>     ...
     """
@@ -116,17 +129,17 @@ class SortParams(BaseModel, Generic[T]):
 
 class FilterParams(BaseModel, Generic[T]):
     """Standard filter parameters for usage in API endpoints. Check the [fastapi docs](https://fastapi.tiangolo.com/tutorial/query-param-models/?h=qu#query-parameters-with-a-pydantic-model) for usage examples.
-    Can only be used isolated, not in combination with other parameters. If you need to combine with other parameters, use `FilterComboParams` or refer to this [workaround](https://github.com/fastapi/fastapi/discussions/13448#discussioncomment-12440374).
+    You should inherit from this class when adding additional parameters.
     Usage:
     >>> @router.get("", operation_id="getOrders")
     >>> async def get_orders(
-    >>>     filter: Annotated[FilterParams[Order], Query()],
+    >>>     params: Annotated[FilterParams[Order], Query()],
     >>> ) -> PaginatedResponse[Order]:
     >>>     ...
     """
 
     filter_by: Optional[str] = Field(None, description="The field to filter by")
-    filter_value: Optional[Any] = Field(None, description="The value to filter with")
+    filter_value: Optional[str] = Field(None, description="The value to filter with")
 
     @model_validator(mode="after")
     def validate_filter(self):
@@ -151,34 +164,106 @@ class FilterParams(BaseModel, Generic[T]):
         return self
 
 
-class FilterComboParams(
-    PaginationParams[T],
-    SortParams[T],
-    FilterParams[T],
+class SortFilterParams(SortParams[T], FilterParams[T]):
+    """Combines sort and filter parameters. Just a convenience class for when you need to combine sort and filter parameters.
+    You should inherit from this class when adding additional parameters.
+    Usage:
+    >>> @router.get("", operation_id="getOrders")
+    >>> async def get_orders(
+    >>>     params: Annotated[SortFilterParams[Order], Query()],
+    >>> ) -> PaginatedResponse[Order]:
+    >>>     ...
+    """
+
+    @model_validator(mode="after")
+    def validate_sort_filter(self):
+        self.validate_sort()
+        self.validate_filter()
+        return self
+
+
+class PageFilterParams(PaginationParams[T], FilterParams[T]):
+    """Combines pagination and filter parameters. Just a convenience class for when you need to combine pagination and filter parameters.
+    You should inherit from this class when adding additional parameters.
+    Usage:
+    >>> @router.get("", operation_id="getOrders")
+    >>> async def get_orders(
+    >>>     params: Annotated[PageFilterParams[Order], Query()],
+    >>> ) -> PaginatedResponse[Order]:
+    >>>     ...
+    """
+
+    @model_validator(mode="after")
+    def validate_page_filter(self):
+        self.validate_filter()
+        return self
+
+
+class PageSortParams(PaginationParams[T], SortParams[T]):
+    """Combines pagination and sort parameters. Just a convenience class for when you need to combine pagination and sort parameters.
+    You should inherit from this class when adding additional parameters.
+    Usage:
+    >>> @router.get("", operation_id="getOrders")
+    >>> async def get_orders(
+    >>>     params: Annotated[PageSortParams[Order], Query()],
+    >>> ) -> PaginatedResponse[Order]:
+    >>>     ...
+    """
+
+    @model_validator(mode="after")
+    def validate_page_sort(self):
+        self.validate_sort()
+        return self
+
+
+class PageSortFilterParams(
+    PaginationParams,
+    SortParams,
+    FilterParams,
 ):
-    """Combines pagination, filter, and sort parameters.
+    """Combines pagination, filter, and sort parameters. Just a convenience class for when you need to combine pagination, filter, and sort parameters.
+    You should inherit from this class when adding additional parameters.
     Usage:
+    >>> class QueryParams(PageSortFilterParams):
+    >>>     my_param: int = Field(default=1, description="My parameter")
+
     >>> @router.get("", operation_id="getOrders")
     >>> async def get_orders(
-    >>>     filter_combo: Annotated[FilterComboParams[Order], Query()],
+    >>>     params: Annotated[PageSortFilterParams, Query()],
     >>> ) -> PaginatedResponse[Order]:
     >>>     ...
+    >>>     params.validate_page_sort_filter(Order)
     """
 
-    pass
+    @model_validator(mode="after")
+    def validate_filter_combo(self):
+        self.validate_filter()
+        self.validate_sort()
+        return self
 
 
-class HeavyFilterComboParams(HeavyPaginationParams[T], FilterParams[T], SortParams[T]):
-    """Combines pagination, filter, and sort parameters.
+class HeavyPageSortFilterParams(
+    HeavyPaginationParams[T], FilterParams[T], SortParams[T]
+):
+    """Combines heavy pagination, filter, and sort parameters. Just a convenience class for when you need to combine heavy pagination, filter, and sort parameters.
+    You should inherit from this class when adding additional parameters.
     Usage:
+    >>> class QueryParams(HeavyPageSortFilterParams):
+    >>>     my_param: int = Field(default=1, description="My parameter")
+
     >>> @router.get("", operation_id="getOrders")
     >>> async def get_orders(
-    >>>     filter_combo: Annotated[HeavyFilterComboParams[Order], Query()],
+    >>>     params: Annotated[HeavyPageSortFilterParams, Query()],
     >>> ) -> PaginatedResponse[Order]:
     >>>     ...
+    >>>     params.validate_heavy_page_sort_filter(Order)
     """
 
-    pass
+    @model_validator(mode="after")
+    def validate_heavy_page_sort_filter(self):
+        self.validate_filter()
+        self.validate_sort()
+        return self
 
 
 def _enforce_field_type(model: Type[BaseModel], field_name: str, value: Any) -> Any:
