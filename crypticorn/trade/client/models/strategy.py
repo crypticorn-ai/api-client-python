@@ -23,7 +23,7 @@ from typing_extensions import Annotated
 from crypticorn.trade.client.models.margin_mode import MarginMode
 from crypticorn.trade.client.models.market_type import MarketType
 from crypticorn.trade.client.models.strategy_exchange_info import StrategyExchangeInfo
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 
@@ -61,6 +61,7 @@ class Strategy(BaseModel):
         description="Leverage for the strategy"
     )
     market_type: MarketType = Field(description="Market of operation of the strategy")
+    additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "created_at",
         "updated_at",
@@ -105,8 +106,13 @@ class Strategy(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
         """
-        excluded_fields: Set[str] = set([])
+        excluded_fields: Set[str] = set(
+            [
+                "additional_properties",
+            ]
+        )
 
         _dict = self.model_dump(
             by_alias=True,
@@ -120,6 +126,11 @@ class Strategy(BaseModel):
                 if _item_exchanges:
                     _items.append(_item_exchanges.to_dict())
             _dict["exchanges"] = _items
+        # puts key-value pairs in additional_properties in the top level
+        if self.additional_properties is not None:
+            for _key, _value in self.additional_properties.items():
+                _dict[_key] = _value
+
         # set to None if margin_mode (nullable) is None
         # and model_fields_set contains the field
         if self.margin_mode is None and "margin_mode" in self.model_fields_set:
@@ -159,4 +170,9 @@ class Strategy(BaseModel):
                 "market_type": obj.get("market_type"),
             }
         )
+        # store additional fields in additional_properties
+        for _key in obj.keys():
+            if _key not in cls.__properties:
+                _obj.additional_properties[_key] = obj.get(_key)
+
         return _obj

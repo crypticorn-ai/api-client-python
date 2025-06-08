@@ -17,21 +17,34 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
+from crypticorn.trade.client.models.order import Order
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class NotificationUpdate(BaseModel):
+class PaginatedResponseOrder(BaseModel):
     """
-    Notification model for API update operations.
+    PaginatedResponseOrder
     """  # noqa: E501
 
-    viewed: Optional[StrictBool] = None
-    sent: Optional[StrictBool] = None
-    additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["viewed", "sent"]
+    data: List[Order]
+    total: StrictInt = Field(description="The total number of items")
+    page: StrictInt = Field(description="The current page number")
+    page_size: StrictInt = Field(description="The number of items per page")
+    prev: Optional[StrictInt] = None
+    next: Optional[StrictInt] = None
+    last: Optional[StrictInt] = None
+    __properties: ClassVar[List[str]] = [
+        "data",
+        "total",
+        "page",
+        "page_size",
+        "prev",
+        "next",
+        "last",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -50,7 +63,7 @@ class NotificationUpdate(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of NotificationUpdate from a JSON string"""
+        """Create an instance of PaginatedResponseOrder from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -62,39 +75,41 @@ class NotificationUpdate(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
-        * Fields in `self.additional_properties` are added to the output dict.
         """
-        excluded_fields: Set[str] = set(
-            [
-                "additional_properties",
-            ]
-        )
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # puts key-value pairs in additional_properties in the top level
-        if self.additional_properties is not None:
-            for _key, _value in self.additional_properties.items():
-                _dict[_key] = _value
-
-        # set to None if viewed (nullable) is None
+        # override the default output from pydantic by calling `to_dict()` of each item in data (list)
+        _items = []
+        if self.data:
+            for _item_data in self.data:
+                if _item_data:
+                    _items.append(_item_data.to_dict())
+            _dict["data"] = _items
+        # set to None if prev (nullable) is None
         # and model_fields_set contains the field
-        if self.viewed is None and "viewed" in self.model_fields_set:
-            _dict["viewed"] = None
+        if self.prev is None and "prev" in self.model_fields_set:
+            _dict["prev"] = None
 
-        # set to None if sent (nullable) is None
+        # set to None if next (nullable) is None
         # and model_fields_set contains the field
-        if self.sent is None and "sent" in self.model_fields_set:
-            _dict["sent"] = None
+        if self.next is None and "next" in self.model_fields_set:
+            _dict["next"] = None
+
+        # set to None if last (nullable) is None
+        # and model_fields_set contains the field
+        if self.last is None and "last" in self.model_fields_set:
+            _dict["last"] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of NotificationUpdate from a dict"""
+        """Create an instance of PaginatedResponseOrder from a dict"""
         if obj is None:
             return None
 
@@ -102,11 +117,18 @@ class NotificationUpdate(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {"viewed": obj.get("viewed"), "sent": obj.get("sent")}
+            {
+                "data": (
+                    [Order.from_dict(_item) for _item in obj["data"]]
+                    if obj.get("data") is not None
+                    else None
+                ),
+                "total": obj.get("total"),
+                "page": obj.get("page"),
+                "page_size": obj.get("page_size"),
+                "prev": obj.get("prev"),
+                "next": obj.get("next"),
+                "last": obj.get("last"),
+            }
         )
-        # store additional fields in additional_properties
-        for _key in obj.keys():
-            if _key not in cls.__properties:
-                _obj.additional_properties[_key] = obj.get(_key)
-
         return _obj
