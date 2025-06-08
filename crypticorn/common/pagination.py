@@ -139,7 +139,9 @@ class FilterParams(BaseModel, Generic[T]):
     """
 
     filter_by: Optional[str] = Field(None, description="The field to filter by")
-    filter_value: Optional[str] = Field(None, description="The value to filter with")
+    filter_value: Optional[str] = Field(None, description="The value to filter with") 
+    # currently openapi-gen does not support typing.Any in combo with None, so we use str
+    # this is fine since the input is a string anyways from the request and the correct type is enforced by the model validator from the filter_by field
 
     @model_validator(mode="after")
     def validate_filter(self):
@@ -217,22 +219,18 @@ class PageSortParams(PaginationParams[T], SortParams[T]):
 
 
 class PageSortFilterParams(
-    PaginationParams,
-    SortParams,
-    FilterParams,
+    PaginationParams[T],
+    SortParams[T],
+    FilterParams[T],
 ):
     """Combines pagination, filter, and sort parameters. Just a convenience class for when you need to combine pagination, filter, and sort parameters.
     You should inherit from this class when adding additional parameters.
     Usage:
-    >>> class QueryParams(PageSortFilterParams):
-    >>>     my_param: int = Field(default=1, description="My parameter")
-
     >>> @router.get("", operation_id="getOrders")
     >>> async def get_orders(
-    >>>     params: Annotated[PageSortFilterParams, Query()],
+    >>>     params: Annotated[PageSortFilterParams[Order], Query()],
     >>> ) -> PaginatedResponse[Order]:
     >>>     ...
-    >>>     params.validate_page_sort_filter(Order)
     """
 
     @model_validator(mode="after")
@@ -248,15 +246,11 @@ class HeavyPageSortFilterParams(
     """Combines heavy pagination, filter, and sort parameters. Just a convenience class for when you need to combine heavy pagination, filter, and sort parameters.
     You should inherit from this class when adding additional parameters.
     Usage:
-    >>> class QueryParams(HeavyPageSortFilterParams):
-    >>>     my_param: int = Field(default=1, description="My parameter")
-
     >>> @router.get("", operation_id="getOrders")
     >>> async def get_orders(
-    >>>     params: Annotated[HeavyPageSortFilterParams, Query()],
+    >>>     params: Annotated[HeavyPageSortFilterParams[Order], Query()],
     >>> ) -> PaginatedResponse[Order]:
     >>>     ...
-    >>>     params.validate_heavy_page_sort_filter(Order)
     """
 
     @model_validator(mode="after")

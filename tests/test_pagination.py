@@ -2,9 +2,14 @@ import pytest
 from pydantic import BaseModel, ValidationError
 from crypticorn.common import (
     PaginationParams,
+    HeavyPaginationParams,
     SortParams,
     FilterParams,
-    FilterComboParams,
+    SortFilterParams,
+    PageFilterParams,
+    PageSortParams,
+    PageSortFilterParams,
+    HeavyPageSortFilterParams,
 )
 
 
@@ -34,11 +39,31 @@ async def test_pagination_params():
 
 
 @pytest.mark.asyncio
+async def test_heavy_pagination_params():
+    # Test default values
+    params = HeavyPaginationParams[Item]()
+    assert params.page == 1
+    assert params.page_size == 100
+
+    # Test custom values
+    params = HeavyPaginationParams[Item](page=2, page_size=200)
+    assert params.page == 2
+    assert params.page_size == 200
+
+    # Test page_size validation (should be between 1 and 1000)
+    with pytest.raises(ValidationError):
+        HeavyPaginationParams[Item](page_size=0)
+
+    with pytest.raises(ValidationError):
+        HeavyPaginationParams[Item](page_size=1001)
+
+
+@pytest.mark.asyncio
 async def test_sort_params():
     # Test that SortParams requires BaseModel generic
     with pytest.raises(
         TypeError,
-        match="PaginationParams must be used with a Pydantic BaseModel as a generic parameter",
+        match="SortParams must be used with a Pydantic BaseModel as a generic parameter",
     ):
         SortParams[int]()
 
@@ -119,9 +144,99 @@ async def test_filter_params():
 
 
 @pytest.mark.asyncio
-async def test_filter_combo_params():
+async def test_sort_filter_params():
     # Test combined functionality
-    params = FilterComboParams[Item](
+    params = SortFilterParams[Item](
+        sort_by="value",
+        sort_order="desc",
+        filter_by="name",
+        filter_value="test",
+    )
+    assert params.sort_by == "value"
+    assert params.sort_order == "desc"
+    assert params.filter_by == "name"
+    assert params.filter_value == "test"
+
+    # Test default values
+    params = SortFilterParams[Item]()
+    assert params.sort_by is None
+    assert params.sort_order is None
+    assert params.filter_by is None
+    assert params.filter_value is None
+
+    # Test sort validation still works
+    with pytest.raises(
+        ValueError, match="sort_order and sort_by must be provided together"
+    ):
+        SortFilterParams[Item](sort_by="name")
+
+    # Test filter validation still works
+    with pytest.raises(
+        ValueError, match="filter_by and filter_value must be provided together"
+    ):
+        SortFilterParams[Item](filter_by="name")
+
+
+@pytest.mark.asyncio
+async def test_page_filter_params():
+    # Test combined functionality
+    params = PageFilterParams[Item](
+        page=2,
+        page_size=20,
+        filter_by="name",
+        filter_value="test",
+    )
+    assert params.page == 2
+    assert params.page_size == 20
+    assert params.filter_by == "name"
+    assert params.filter_value == "test"
+
+    # Test default values
+    params = PageFilterParams[Item]()
+    assert params.page == 1
+    assert params.page_size == 10
+    assert params.filter_by is None
+    assert params.filter_value is None
+
+    # Test filter validation still works
+    with pytest.raises(
+        ValueError, match="filter_by and filter_value must be provided together"
+    ):
+        PageFilterParams[Item](filter_by="name")
+
+
+@pytest.mark.asyncio
+async def test_page_sort_params():
+    # Test combined functionality
+    params = PageSortParams[Item](
+        page=2,
+        page_size=20,
+        sort_by="value",
+        sort_order="desc",
+    )
+    assert params.page == 2
+    assert params.page_size == 20
+    assert params.sort_by == "value"
+    assert params.sort_order == "desc"
+
+    # Test default values
+    params = PageSortParams[Item]()
+    assert params.page == 1
+    assert params.page_size == 10
+    assert params.sort_by is None
+    assert params.sort_order is None
+
+    # Test sort validation still works
+    with pytest.raises(
+        ValueError, match="sort_order and sort_by must be provided together"
+    ):
+        PageSortParams[Item](sort_by="name")
+
+
+@pytest.mark.asyncio
+async def test_page_sort_filter_params():
+    # Test combined functionality
+    params = PageSortFilterParams[Item](
         page=2,
         page_size=20,
         sort_by="value",
@@ -137,7 +252,7 @@ async def test_filter_combo_params():
     assert params.filter_value == "test"
 
     # Test default values
-    params = FilterComboParams[Item]()
+    params = PageSortFilterParams[Item]()
     assert params.page == 1
     assert params.page_size == 10
     assert params.sort_by is None
@@ -149,13 +264,48 @@ async def test_filter_combo_params():
     with pytest.raises(
         ValueError, match="sort_order and sort_by must be provided together"
     ):
-        FilterComboParams[Item](sort_by="name")
+        PageSortFilterParams[Item](sort_by="name")
 
-    # Test filter validation still works in combo params
+    # Test filter validation still works
     with pytest.raises(
         ValueError, match="filter_by and filter_value must be provided together"
     ):
-        FilterComboParams[Item](filter_by="name")
+        PageSortFilterParams[Item](filter_by="name")
+
+
+@pytest.mark.asyncio
+async def test_heavy_page_sort_filter_params():
+    # Test combined functionality
+    params = HeavyPageSortFilterParams[Item](
+        page=2,
+        page_size=200,
+        sort_by="value",
+        sort_order="desc",
+        filter_by="name",
+        filter_value="test",
+    )
+    assert params.page == 2
+    assert params.page_size == 200
+    assert params.sort_by == "value"
+    assert params.sort_order == "desc"
+    assert params.filter_by == "name"
+    assert params.filter_value == "test"
+
+    # Test default values
+    params = HeavyPageSortFilterParams[Item]()
+    assert params.page == 1
+    assert params.page_size == 100
+    assert params.sort_by is None
+    assert params.sort_order is None
+    assert params.filter_by is None
+    assert params.filter_value is None
+
+    # Test page_size validation (should be between 1 and 1000)
+    with pytest.raises(ValidationError):
+        HeavyPageSortFilterParams[Item](page_size=0)
+
+    with pytest.raises(ValidationError):
+        HeavyPageSortFilterParams[Item](page_size=1001)
 
 
 @pytest.mark.asyncio
@@ -164,19 +314,19 @@ async def test_field_type_validation():
     with pytest.raises(
         ValueError, match="Expected <class 'int'> for field value, got <class 'str'>"
     ):
-        FilterComboParams[Item](
+        PageSortFilterParams[Item](
             filter_by="value", filter_value="not_a_number"
         )  # tries to coerce to int, but fails
 
     # Test that valid type works
-    params = FilterComboParams[Item](filter_by="value", filter_value=42)
+    params = PageSortFilterParams[Item](filter_by="value", filter_value="42") # in fact it should be an int but it comes as a string anyways from the request. the type is enforced by the model validator
     assert params.filter_value == 42
 
     # Test type coercion
-    params = FilterComboParams[Item](filter_by="name", filter_value=1)
+    params = PageSortFilterParams[Item](filter_by="name", filter_value="1")
     assert (
         params.filter_value == "1"
     )  # since name is a str, it will be coerced to a string
 
-    params = FilterComboParams[Item](filter_by="name", filter_value="test")
+    params = PageSortFilterParams[Item](filter_by="name", filter_value="test")
     assert params.filter_value == "test"
