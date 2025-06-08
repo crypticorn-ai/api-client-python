@@ -1,5 +1,5 @@
 # metrics/registry.py
-from prometheus_client import Counter, Gauge, Histogram, Summary, CollectorRegistry
+from prometheus_client import Counter, Histogram, CollectorRegistry
 
 registry = CollectorRegistry()
 

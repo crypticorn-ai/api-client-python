@@ -20,7 +20,7 @@ import json
 from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.trade.client.models.bot_status import BotStatus
-from typing import Optional, Set
+from typing import Set
 from typing_extensions import Self
 
 

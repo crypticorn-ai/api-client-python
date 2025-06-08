@@ -1,5 +1,4 @@
 from typing import TypeVar, Optional
-import asyncio
 import warnings
 from aiohttp import ClientSession, ClientTimeout, TCPConnector
 from crypticorn.hive import HiveClient

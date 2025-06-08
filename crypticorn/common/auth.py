@@ -7,7 +7,6 @@ from crypticorn.common.exceptions import (
     ApiError,
     HTTPException,
     ExceptionContent,
-    WebSocketException,
 )
 from crypticorn.common.urls import BaseUrl, Service, ApiVersion
 from fastapi import Depends, Query

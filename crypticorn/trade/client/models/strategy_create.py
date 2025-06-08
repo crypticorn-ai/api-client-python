@@ -23,7 +23,7 @@ from typing_extensions import Annotated
 from crypticorn.trade.client.models.margin_mode import MarginMode
 from crypticorn.trade.client.models.market_type import MarketType
 from crypticorn.trade.client.models.strategy_exchange_info import StrategyExchangeInfo
-from typing import Optional, Set
+from typing import Set
 from typing_extensions import Self
 
 

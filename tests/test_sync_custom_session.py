@@ -1,6 +1,5 @@
 import gc
 import warnings
-import pytest
 import time
 from aiohttp import ClientSession
 from crypticorn.client import SyncClient, Service

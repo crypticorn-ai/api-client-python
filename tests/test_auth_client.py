@@ -5,7 +5,6 @@ from crypticorn.common import (
     Scope,
     HTTPException,
     ApiError,
-    WebSocketException,
 )
 from fastapi.security import HTTPAuthorizationCredentials
 

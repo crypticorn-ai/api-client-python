@@ -21,7 +21,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.hive.client.models.coins import Coins
 from crypticorn.hive.client.models.data_version import DataVersion
-from typing import Optional, Set
+from typing import Set
 from typing_extensions import Self
 
 

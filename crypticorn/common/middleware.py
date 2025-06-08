@@ -2,7 +2,6 @@ import time
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.requests import Request
 from crypticorn.common.logging import configure_logging
 from contextlib import asynccontextmanager
 from typing_extensions import deprecated

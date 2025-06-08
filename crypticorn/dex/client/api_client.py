@@ -33,11 +33,6 @@ from crypticorn.dex.client import rest
 from crypticorn.dex.client.exceptions import (
     ApiValueError,
     ApiException,
-    BadRequestException,
-    UnauthorizedException,
-    ForbiddenException,
-    NotFoundException,
-    ServiceException,
 )
 
 RequestSerialized = Tuple[str, str, Dict[str, str], Optional[str], List[str]]
