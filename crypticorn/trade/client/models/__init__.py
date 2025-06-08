@@ -41,7 +41,7 @@ from crypticorn.trade.client.models.notification_create import NotificationCreat
 from crypticorn.trade.client.models.notification_update import NotificationUpdate
 from crypticorn.trade.client.models.order import Order
 from crypticorn.trade.client.models.order_status import OrderStatus
-from crypticorn.trade.client.models.paginated_response_pn_l import PaginatedResponsePnL
+from crypticorn.trade.client.models.orders_count import OrdersCount
 from crypticorn.trade.client.models.pn_l import PnL
 from crypticorn.trade.client.models.post_futures_action import PostFuturesAction
 from crypticorn.trade.client.models.spot_balance import SpotBalance

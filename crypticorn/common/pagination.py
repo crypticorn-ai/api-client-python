@@ -91,7 +91,7 @@ class SortParams(BaseModel, Generic[T]):
         args: tuple = self.__pydantic_generic_metadata__.get("args")
         if not args or not issubclass(args[0], BaseModel):
             raise TypeError(
-                "PaginationParams must be used with a Pydantic BaseModel as a generic parameter"
+                "SortParams must be used with a Pydantic BaseModel as a generic parameter"
             )
         if self.sort_by:
             # check if the sort field is valid

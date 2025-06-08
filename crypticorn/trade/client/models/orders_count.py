@@ -17,25 +17,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class PnL(BaseModel):
+class OrdersCount(BaseModel):
     """
-    The profit and loss of a bot by timestamp. In the case of sampling, the PnL is the sum of the PnLs between the prior timestamp and the current timestamp.
+    The number of orders for a user by day
     """  # noqa: E501
 
-    timestamp: StrictInt = Field(description="Timestamp of the order")
-    pnl: Union[StrictFloat, StrictInt] = Field(
-        description="The profit and loss of the order"
+    timestamp: StrictInt = Field(
+        description="Timestamp of the latest order for the day"
     )
-    cum_pnl: Union[StrictFloat, StrictInt] = Field(
-        description="The cumulative profit and loss of the bot until the order (inclusive)"
-    )
-    __properties: ClassVar[List[str]] = ["timestamp", "pnl", "cum_pnl"]
+    count: StrictInt = Field(description="The number of orders for the day")
+    __properties: ClassVar[List[str]] = ["timestamp", "count"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -54,7 +51,7 @@ class PnL(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PnL from a JSON string"""
+        """Create an instance of OrdersCount from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,7 +75,7 @@ class PnL(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PnL from a dict"""
+        """Create an instance of OrdersCount from a dict"""
         if obj is None:
             return None
 
@@ -86,10 +83,6 @@ class PnL(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {
-                "timestamp": obj.get("timestamp"),
-                "pnl": obj.get("pnl"),
-                "cum_pnl": obj.get("cum_pnl"),
-            }
+            {"timestamp": obj.get("timestamp"), "count": obj.get("count")}
         )
         return _obj
