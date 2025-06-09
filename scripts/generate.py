@@ -84,7 +84,7 @@ def main():
         "openapi-generator-cli",
         "generate",
         "-i",
-        f"{url or f'http://localhost:8000/openapi.json'}",
+        f"{url or f'{ROOT_URL}/{module_name}/openapi.json'}",
         "-g",
         "python",
         "--package-name",

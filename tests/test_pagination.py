@@ -319,7 +319,9 @@ async def test_field_type_validation():
         )  # tries to coerce to int, but fails
 
     # Test that valid type works
-    params = PageSortFilterParams[Item](filter_by="value", filter_value="42") # in fact it should be an int but it comes as a string anyways from the request. the type is enforced by the model validator
+    params = PageSortFilterParams[Item](
+        filter_by="value", filter_value="42"
+    )  # in fact it should be an int but it comes as a string anyways from the request. the type is enforced by the model validator
     assert params.filter_value == 42
 
     # Test type coercion
