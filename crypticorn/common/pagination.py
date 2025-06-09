@@ -139,7 +139,7 @@ class FilterParams(BaseModel, Generic[T]):
     """
 
     filter_by: Optional[str] = Field(None, description="The field to filter by")
-    filter_value: Optional[str] = Field(None, description="The value to filter with") 
+    filter_value: Optional[str] = Field(None, description="The value to filter with")
     # currently openapi-gen does not support typing.Any in combo with None, so we use str
     # this is fine since the input is a string anyways from the request and the correct type is enforced by the model validator from the filter_by field
 
