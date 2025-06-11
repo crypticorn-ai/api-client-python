@@ -16,7 +16,7 @@ class Scope(StrEnum):
 
     # Scopes that can be purchased - these actually exist in the jwt token
     READ_PREDICTIONS = "read:predictions"
-    READ_DEXSIGNALS = "read:dexsignals"
+    READ_DEX_SIGNALS = "read:dex:signals"
 
     # Hive scopes
     READ_HIVE_MODEL = "read:hive:model"
@@ -88,5 +88,5 @@ class Scope(StrEnum):
             cls.READ_METRICS_MARKETS,
             cls.READ_KLINES,
             cls.READ_SENTIMENT,
-            cls.READ_DEXSIGNALS,
+            cls.READ_DEX_SIGNALS,
         ]
