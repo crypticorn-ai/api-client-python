@@ -85,10 +85,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> AddWallet200Response:
-        """Add a wallet to the user
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Add a wallet to the user"""
         if self.is_sync:
             return self._add_wallet_sync(
                 add_wallet_request=add_wallet_request,
@@ -131,10 +128,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[AddWallet200Response]:
-        """Add a wallet to the user with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Add a wallet to the user with HTTP info"""
         if self.is_sync:
             return self._add_wallet_sync_with_http_info(
                 add_wallet_request=add_wallet_request,
@@ -177,10 +171,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Add a wallet to the user without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Add a wallet to the user without preloading content"""
         if self.is_sync:
             return self._add_wallet_sync_without_preload_content(
                 add_wallet_request=add_wallet_request,
@@ -592,10 +583,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ListWallets200ResponseUserValue:
-        """Get the balances of the user
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get the balances of the user"""
         if self.is_sync:
             return self._get_balances_sync(
                 x_refresh_token=x_refresh_token,
@@ -635,10 +623,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ListWallets200ResponseUserValue]:
-        """Get the balances of the user with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get the balances of the user with HTTP info"""
         if self.is_sync:
             return self._get_balances_sync_with_http_info(
                 x_refresh_token=x_refresh_token,
@@ -678,10 +663,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get the balances of the user without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get the balances of the user without preloading content"""
         if self.is_sync:
             return self._get_balances_sync_without_preload_content(
                 x_refresh_token=x_refresh_token,
@@ -1067,10 +1049,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ListWallets200Response:
-        """List wallets
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """List wallets"""
         if self.is_sync:
             return self._list_wallets_sync(
                 x_refresh_token=x_refresh_token,
@@ -1121,10 +1100,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ListWallets200Response]:
-        """List wallets with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """List wallets with HTTP info"""
         if self.is_sync:
             return self._list_wallets_sync_with_http_info(
                 x_refresh_token=x_refresh_token,
@@ -1175,10 +1151,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List wallets without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """List wallets without preloading content"""
         if self.is_sync:
             return self._list_wallets_sync_without_preload_content(
                 x_refresh_token=x_refresh_token,
@@ -1638,10 +1611,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Unlink a wallet
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Unlink a wallet"""
         if self.is_sync:
             return self._unlink_wallet_sync(
                 unlink_wallet_request=unlink_wallet_request,
@@ -1684,10 +1654,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Unlink a wallet with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Unlink a wallet with HTTP info"""
         if self.is_sync:
             return self._unlink_wallet_sync_with_http_info(
                 unlink_wallet_request=unlink_wallet_request,
@@ -1730,10 +1697,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Unlink a wallet without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Unlink a wallet without preloading content"""
         if self.is_sync:
             return self._unlink_wallet_sync_without_preload_content(
                 unlink_wallet_request=unlink_wallet_request,
@@ -2146,10 +2110,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Verify a wallet
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Verify a wallet"""
         if self.is_sync:
             return self._verify_wallet_sync(
                 verify_wallet_request=verify_wallet_request,
@@ -2192,10 +2153,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Verify a wallet with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Verify a wallet with HTTP info"""
         if self.is_sync:
             return self._verify_wallet_sync_with_http_info(
                 verify_wallet_request=verify_wallet_request,
@@ -2238,10 +2196,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Verify a wallet without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Verify a wallet without preloading content"""
         if self.is_sync:
             return self._verify_wallet_sync_without_preload_content(
                 verify_wallet_request=verify_wallet_request,
@@ -2654,10 +2609,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> WalletVerified200Response:
-        """Check if a wallet is verified
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Check if a wallet is verified"""
         if self.is_sync:
             return self._wallet_verified_sync(
                 address=address,
@@ -2700,10 +2652,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[WalletVerified200Response]:
-        """Check if a wallet is verified with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Check if a wallet is verified with HTTP info"""
         if self.is_sync:
             return self._wallet_verified_sync_with_http_info(
                 address=address,
@@ -2746,10 +2695,7 @@ class WalletApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Check if a wallet is verified without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Check if a wallet is verified without preloading content"""
         if self.is_sync:
             return self._wallet_verified_sync_without_preload_content(
                 address=address,

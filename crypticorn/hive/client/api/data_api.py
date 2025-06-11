@@ -86,10 +86,7 @@ class DataApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> DataDownloadResponse:
-        """Download Data
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Download Data"""
         if self.is_sync:
             return self._download_data_sync(
                 model_id=model_id,
@@ -144,10 +141,7 @@ class DataApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[DataDownloadResponse]:
-        """Download Data with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Download Data with HTTP info"""
         if self.is_sync:
             return self._download_data_sync_with_http_info(
                 model_id=model_id,
@@ -202,10 +196,7 @@ class DataApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Download Data without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Download Data without preloading content"""
         if self.is_sync:
             return self._download_data_sync_without_preload_content(
                 model_id=model_id,
@@ -686,10 +677,7 @@ class DataApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> DataInfo:
-        """Get Data Info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Data Info"""
         if self.is_sync:
             return self._get_data_info_sync(
                 _request_timeout=_request_timeout,
@@ -723,10 +711,7 @@ class DataApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[DataInfo]:
-        """Get Data Info with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Data Info with HTTP info"""
         if self.is_sync:
             return self._get_data_info_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -760,10 +745,7 @@ class DataApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Data Info without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Data Info without preloading content"""
         if self.is_sync:
             return self._get_data_info_sync_without_preload_content(
                 _request_timeout=_request_timeout,

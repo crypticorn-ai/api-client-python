@@ -71,10 +71,7 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> NowCreateInvoiceRes:
-        """Create Invoice
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Invoice"""
         if self.is_sync:
             return self._create_now_invoice_sync(
                 now_create_invoice_req=now_create_invoice_req,
@@ -111,10 +108,7 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[NowCreateInvoiceRes]:
-        """Create Invoice with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Invoice with HTTP info"""
         if self.is_sync:
             return self._create_now_invoice_sync_with_http_info(
                 now_create_invoice_req=now_create_invoice_req,
@@ -151,10 +145,7 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create Invoice without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Invoice without preloading content"""
         if self.is_sync:
             return self._create_now_invoice_sync_without_preload_content(
                 now_create_invoice_req=now_create_invoice_req,
@@ -521,10 +512,7 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> str:
-        """Get Status
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Status"""
         if self.is_sync:
             return self._get_now_api_status_sync(
                 _request_timeout=_request_timeout,
@@ -558,10 +546,7 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[str]:
-        """Get Status with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Status with HTTP info"""
         if self.is_sync:
             return self._get_now_api_status_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -595,10 +580,7 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Status without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Status without preloading content"""
         if self.is_sync:
             return self._get_now_api_status_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -933,10 +915,7 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Payment:
-        """Get Now Payment By Invoice
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Now Payment By Invoice"""
         if self.is_sync:
             return self._get_now_payment_by_invoice_sync(
                 id=id,
@@ -973,10 +952,7 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Payment]:
-        """Get Now Payment By Invoice with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Now Payment By Invoice with HTTP info"""
         if self.is_sync:
             return self._get_now_payment_by_invoice_sync_with_http_info(
                 id=id,
@@ -1013,10 +989,7 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Now Payment By Invoice without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Now Payment By Invoice without preloading content"""
         if self.is_sync:
             return self._get_now_payment_by_invoice_sync_without_preload_content(
                 id=id,
@@ -1375,10 +1348,7 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Payment]:
-        """Get Now Payments
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Now Payments"""
         if self.is_sync:
             return self._get_now_payments_sync(
                 _request_timeout=_request_timeout,
@@ -1412,10 +1382,7 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Payment]]:
-        """Get Now Payments with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Now Payments with HTTP info"""
         if self.is_sync:
             return self._get_now_payments_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -1449,10 +1416,7 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Now Payments without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Now Payments without preloading content"""
         if self.is_sync:
             return self._get_now_payments_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -1786,10 +1750,7 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Handle Webhook
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Handle Webhook"""
         if self.is_sync:
             return self._handle_now_webhook_sync(
                 _request_timeout=_request_timeout,
@@ -1823,10 +1784,7 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Handle Webhook with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Handle Webhook with HTTP info"""
         if self.is_sync:
             return self._handle_now_webhook_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -1860,10 +1818,7 @@ class NOWPaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Handle Webhook without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Handle Webhook without preloading content"""
         if self.is_sync:
             return self._handle_now_webhook_sync_without_preload_content(
                 _request_timeout=_request_timeout,

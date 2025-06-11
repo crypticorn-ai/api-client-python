@@ -77,10 +77,7 @@ class MarketcapApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Dict[str, object]]:
-        """Get Current Marketcap
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Current Marketcap"""
         if self.is_sync:
             return self._get_current_marketcap_sync(
                 limit=limit,
@@ -120,10 +117,7 @@ class MarketcapApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Dict[str, object]]]:
-        """Get Current Marketcap with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Current Marketcap with HTTP info"""
         if self.is_sync:
             return self._get_current_marketcap_sync_with_http_info(
                 limit=limit,
@@ -163,10 +157,7 @@ class MarketcapApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Current Marketcap without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Current Marketcap without preloading content"""
         if self.is_sync:
             return self._get_current_marketcap_sync_without_preload_content(
                 limit=limit,
@@ -549,10 +540,7 @@ class MarketcapApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[MarketcapRanking]:
-        """Get Marketcap Between Timestamps
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Marketcap Between Timestamps"""
         if self.is_sync:
             return self._get_marketcap_between_timestamps_sync(
                 start_timestamp=start_timestamp,
@@ -596,10 +584,7 @@ class MarketcapApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[MarketcapRanking]]:
-        """Get Marketcap Between Timestamps with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Marketcap Between Timestamps with HTTP info"""
         if self.is_sync:
             return self._get_marketcap_between_timestamps_sync_with_http_info(
                 start_timestamp=start_timestamp,
@@ -643,10 +628,7 @@ class MarketcapApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Marketcap Between Timestamps without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Marketcap Between Timestamps without preloading content"""
         if self.is_sync:
             return self._get_marketcap_between_timestamps_sync_without_preload_content(
                 start_timestamp=start_timestamp,
@@ -1080,10 +1062,7 @@ class MarketcapApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[MarketcapSymbolRanking]:
-        """Get Symbols Marketcap Between Timestamps
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Symbols Marketcap Between Timestamps"""
         if self.is_sync:
             return self._get_marketcap_symbols_sync(
                 start_timestamp=start_timestamp,
@@ -1149,10 +1128,7 @@ class MarketcapApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[MarketcapSymbolRanking]]:
-        """Get Symbols Marketcap Between Timestamps with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Symbols Marketcap Between Timestamps with HTTP info"""
         if self.is_sync:
             return self._get_marketcap_symbols_sync_with_http_info(
                 start_timestamp=start_timestamp,
@@ -1218,10 +1194,7 @@ class MarketcapApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Symbols Marketcap Between Timestamps without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Symbols Marketcap Between Timestamps without preloading content"""
         if self.is_sync:
             return self._get_marketcap_symbols_sync_without_preload_content(
                 start_timestamp=start_timestamp,
@@ -1800,10 +1773,7 @@ class MarketcapApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Dict[str, List[OHLCV]]:
-        """Get Symbols Marketcap With Ohlcv
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Symbols Marketcap With Ohlcv"""
         if self.is_sync:
             return self._get_marketcap_symbols_with_ohlcv_sync(
                 timestamp=timestamp,
@@ -1865,10 +1835,7 @@ class MarketcapApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Dict[str, List[OHLCV]]]:
-        """Get Symbols Marketcap With Ohlcv with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Symbols Marketcap With Ohlcv with HTTP info"""
         if self.is_sync:
             return self._get_marketcap_symbols_with_ohlcv_sync_with_http_info(
                 timestamp=timestamp,
@@ -1930,10 +1897,7 @@ class MarketcapApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Symbols Marketcap With Ohlcv without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Symbols Marketcap With Ohlcv without preloading content"""
         if self.is_sync:
             return self._get_marketcap_symbols_with_ohlcv_sync_without_preload_content(
                 timestamp=timestamp,

@@ -67,10 +67,7 @@ class TokensApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Dict[str, object]]:
-        """Get Stable Tokens
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Stable Tokens"""
         if self.is_sync:
             return self._get_stable_tokens_sync(
                 _request_timeout=_request_timeout,
@@ -104,10 +101,7 @@ class TokensApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Dict[str, object]]]:
-        """Get Stable Tokens with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Stable Tokens with HTTP info"""
         if self.is_sync:
             return self._get_stable_tokens_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -141,10 +135,7 @@ class TokensApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Stable Tokens without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Stable Tokens without preloading content"""
         if self.is_sync:
             return self._get_stable_tokens_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -478,10 +469,7 @@ class TokensApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Dict[str, object]]:
-        """Get Wrapped Tokens
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Wrapped Tokens"""
         if self.is_sync:
             return self._get_wrapped_tokens_sync(
                 _request_timeout=_request_timeout,
@@ -515,10 +503,7 @@ class TokensApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Dict[str, object]]]:
-        """Get Wrapped Tokens with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Wrapped Tokens with HTTP info"""
         if self.is_sync:
             return self._get_wrapped_tokens_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -552,10 +537,7 @@ class TokensApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Wrapped Tokens without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Wrapped Tokens without preloading content"""
         if self.is_sync:
             return self._get_wrapped_tokens_sync_without_preload_content(
                 _request_timeout=_request_timeout,

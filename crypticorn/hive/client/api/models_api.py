@@ -74,10 +74,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ModelRead:
-        """Create Model
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Model"""
         if self.is_sync:
             return self._create_model_sync(
                 model_create=model_create,
@@ -114,10 +111,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ModelRead]:
-        """Create Model with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Model with HTTP info"""
         if self.is_sync:
             return self._create_model_sync_with_http_info(
                 model_create=model_create,
@@ -154,10 +148,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create Model without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Model without preloading content"""
         if self.is_sync:
             return self._create_model_sync_without_preload_content(
                 model_create=model_create,
@@ -525,10 +516,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Delete Model
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete Model"""
         if self.is_sync:
             return self._delete_model_sync(
                 id=id,
@@ -565,10 +553,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Delete Model with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete Model with HTTP info"""
         if self.is_sync:
             return self._delete_model_sync_with_http_info(
                 id=id,
@@ -605,10 +590,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Delete Model without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete Model without preloading content"""
         if self.is_sync:
             return self._delete_model_sync_without_preload_content(
                 id=id,
@@ -975,10 +957,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> EvaluationResponse:
-        """Evaluate Model
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Evaluate Model"""
         if self.is_sync:
             return self._evaluate_model_sync(
                 id=id,
@@ -1028,10 +1007,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[EvaluationResponse]:
-        """Evaluate Model with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Evaluate Model with HTTP info"""
         if self.is_sync:
             return self._evaluate_model_sync_with_http_info(
                 id=id,
@@ -1081,10 +1057,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Evaluate Model without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Evaluate Model without preloading content"""
         if self.is_sync:
             return self._evaluate_model_sync_without_preload_content(
                 id=id,
@@ -1544,10 +1517,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ModelRead:
-        """Get Model
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Model"""
         if self.is_sync:
             return self._get_model_sync(
                 id=id,
@@ -1584,10 +1554,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ModelRead]:
-        """Get Model with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Model with HTTP info"""
         if self.is_sync:
             return self._get_model_sync_with_http_info(
                 id=id,
@@ -1624,10 +1591,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Model without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Model without preloading content"""
         if self.is_sync:
             return self._get_model_sync_without_preload_content(
                 id=id,
@@ -1985,10 +1949,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ModelRead:
-        """Get Model By Name
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Model By Name"""
         if self.is_sync:
             return self._get_model_by_name_sync(
                 name=name,
@@ -2025,10 +1986,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ModelRead]:
-        """Get Model By Name with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Model By Name with HTTP info"""
         if self.is_sync:
             return self._get_model_by_name_sync_with_http_info(
                 name=name,
@@ -2065,10 +2023,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Model By Name without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Model By Name without preloading content"""
         if self.is_sync:
             return self._get_model_by_name_sync_without_preload_content(
                 name=name,
@@ -2437,10 +2392,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[ModelRead]:
-        """Get All Models
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get All Models"""
         if self.is_sync:
             return self._get_models_sync(
                 by_user=by_user,
@@ -2490,10 +2442,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[ModelRead]]:
-        """Get All Models with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get All Models with HTTP info"""
         if self.is_sync:
             return self._get_models_sync_with_http_info(
                 by_user=by_user,
@@ -2543,10 +2492,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get All Models without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get All Models without preloading content"""
         if self.is_sync:
             return self._get_models_sync_without_preload_content(
                 by_user=by_user,
@@ -2992,10 +2938,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Update Model
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Model"""
         if self.is_sync:
             return self._update_model_sync(
                 id=id,
@@ -3035,10 +2978,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Update Model with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Model with HTTP info"""
         if self.is_sync:
             return self._update_model_sync_with_http_info(
                 id=id,
@@ -3078,10 +3018,7 @@ class ModelsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update Model without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Model without preloading content"""
         if self.is_sync:
             return self._update_model_sync_without_preload_content(
                 id=id,

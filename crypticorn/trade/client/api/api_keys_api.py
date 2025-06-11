@@ -76,10 +76,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ExchangeKey:
-        """Post Exchange Key
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Post Exchange Key"""
         if self.is_sync:
             return self._create_exchange_key_sync(
                 exchange_key_create=exchange_key_create,
@@ -116,10 +113,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ExchangeKey]:
-        """Post Exchange Key with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Post Exchange Key with HTTP info"""
         if self.is_sync:
             return self._create_exchange_key_sync_with_http_info(
                 exchange_key_create=exchange_key_create,
@@ -156,10 +150,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Post Exchange Key without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Post Exchange Key without preloading content"""
         if self.is_sync:
             return self._create_exchange_key_sync_without_preload_content(
                 exchange_key_create=exchange_key_create,
@@ -527,10 +518,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Delete Exchange Key
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete Exchange Key"""
         if self.is_sync:
             return self._delete_exchange_key_sync(
                 id=id,
@@ -567,10 +555,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Delete Exchange Key with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete Exchange Key with HTTP info"""
         if self.is_sync:
             return self._delete_exchange_key_sync_with_http_info(
                 id=id,
@@ -607,10 +592,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Delete Exchange Key without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete Exchange Key without preloading content"""
         if self.is_sync:
             return self._delete_exchange_key_sync_without_preload_content(
                 id=id,
@@ -967,10 +949,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[ExchangeKeyBalance]:
-        """Get Exchange Key Balances
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange Key Balances"""
         if self.is_sync:
             return self._get_exchange_key_balances_sync(
                 _request_timeout=_request_timeout,
@@ -1004,10 +983,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[ExchangeKeyBalance]]:
-        """Get Exchange Key Balances with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange Key Balances with HTTP info"""
         if self.is_sync:
             return self._get_exchange_key_balances_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -1041,10 +1017,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Exchange Key Balances without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange Key Balances without preloading content"""
         if self.is_sync:
             return self._get_exchange_key_balances_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -1381,10 +1354,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ExchangeKey:
-        """Get Exchange Key By Id
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange Key By Id"""
         if self.is_sync:
             return self._get_exchange_key_by_id_sync(
                 id=id,
@@ -1421,10 +1391,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ExchangeKey]:
-        """Get Exchange Key By Id with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange Key By Id with HTTP info"""
         if self.is_sync:
             return self._get_exchange_key_by_id_sync_with_http_info(
                 id=id,
@@ -1461,10 +1428,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Exchange Key By Id without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange Key By Id without preloading content"""
         if self.is_sync:
             return self._get_exchange_key_by_id_sync_without_preload_content(
                 id=id,
@@ -1829,10 +1793,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[ExchangeKey]:
-        """Get Exchange Keys
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange Keys"""
         if self.is_sync:
             return self._get_exchange_keys_sync(
                 limit=limit,
@@ -1878,10 +1839,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[ExchangeKey]]:
-        """Get Exchange Keys with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange Keys with HTTP info"""
         if self.is_sync:
             return self._get_exchange_keys_sync_with_http_info(
                 limit=limit,
@@ -1927,10 +1885,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Exchange Keys without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange Keys without preloading content"""
         if self.is_sync:
             return self._get_exchange_keys_sync_without_preload_content(
                 limit=limit,
@@ -2359,10 +2314,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ExchangeKey:
-        """Put Exchange Key
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Put Exchange Key"""
         if self.is_sync:
             return self._update_exchange_key_sync(
                 id=id,
@@ -2402,10 +2354,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ExchangeKey]:
-        """Put Exchange Key with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Put Exchange Key with HTTP info"""
         if self.is_sync:
             return self._update_exchange_key_sync_with_http_info(
                 id=id,
@@ -2445,10 +2394,7 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Put Exchange Key without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Put Exchange Key without preloading content"""
         if self.is_sync:
             return self._update_exchange_key_sync_without_preload_content(
                 id=id,

@@ -81,10 +81,7 @@ class IndicatorsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Dict[str, object]:
-        """Get Ker Indicator
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Ker Indicator"""
         if self.is_sync:
             return self._get_ker_indicator_sync(
                 symbol=symbol,
@@ -139,10 +136,7 @@ class IndicatorsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Dict[str, object]]:
-        """Get Ker Indicator with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Ker Indicator with HTTP info"""
         if self.is_sync:
             return self._get_ker_indicator_sync_with_http_info(
                 symbol=symbol,
@@ -197,10 +191,7 @@ class IndicatorsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Ker Indicator without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Ker Indicator without preloading content"""
         if self.is_sync:
             return self._get_ker_indicator_sync_without_preload_content(
                 symbol=symbol,
@@ -703,10 +694,7 @@ class IndicatorsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Dict[str, object]:
-        """Get Sma Indicator
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Sma Indicator"""
         if self.is_sync:
             return self._get_sma_indicator_sync(
                 symbol=symbol,
@@ -763,10 +751,7 @@ class IndicatorsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Dict[str, object]]:
-        """Get Sma Indicator with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Sma Indicator with HTTP info"""
         if self.is_sync:
             return self._get_sma_indicator_sync_with_http_info(
                 symbol=symbol,
@@ -823,10 +808,7 @@ class IndicatorsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Sma Indicator without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Sma Indicator without preloading content"""
         if self.is_sync:
             return self._get_sma_indicator_sync_without_preload_content(
                 symbol=symbol,

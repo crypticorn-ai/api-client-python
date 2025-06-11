@@ -90,10 +90,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> AuthorizeUser200Response:
-        """Authorize a user
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Authorize a user"""
         if self.is_sync:
             return self._authorize_user_sync(
                 authorize_user_request=authorize_user_request,
@@ -130,10 +127,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[AuthorizeUser200Response]:
-        """Authorize a user with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Authorize a user with HTTP info"""
         if self.is_sync:
             return self._authorize_user_sync_with_http_info(
                 authorize_user_request=authorize_user_request,
@@ -170,10 +164,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Authorize a user without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Authorize a user without preloading content"""
         if self.is_sync:
             return self._authorize_user_sync_without_preload_content(
                 authorize_user_request=authorize_user_request,
@@ -541,10 +532,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> CreateApiKey200Response:
-        """Create API Key
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create API Key"""
         if self.is_sync:
             return self._create_api_key_sync(
                 create_api_key_request=create_api_key_request,
@@ -581,10 +569,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[CreateApiKey200Response]:
-        """Create API Key with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create API Key with HTTP info"""
         if self.is_sync:
             return self._create_api_key_sync_with_http_info(
                 create_api_key_request=create_api_key_request,
@@ -621,10 +606,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create API Key without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create API Key without preloading content"""
         if self.is_sync:
             return self._create_api_key_sync_without_preload_content(
                 create_api_key_request=create_api_key_request,
@@ -992,10 +974,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Delete API Key
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete API Key"""
         if self.is_sync:
             return self._delete_api_key_sync(
                 id=id,
@@ -1032,10 +1011,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Delete API Key with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete API Key with HTTP info"""
         if self.is_sync:
             return self._delete_api_key_sync_with_http_info(
                 id=id,
@@ -1072,10 +1048,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Delete API Key without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete API Key without preloading content"""
         if self.is_sync:
             return self._delete_api_key_sync_without_preload_content(
                 id=id,
@@ -1434,10 +1407,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[GetApiKeys200ResponseInner]:
-        """Get API Keys
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get API Keys"""
         if self.is_sync:
             return self._get_api_keys_sync(
                 _request_timeout=_request_timeout,
@@ -1471,10 +1441,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[GetApiKeys200ResponseInner]]:
-        """Get API Keys with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get API Keys with HTTP info"""
         if self.is_sync:
             return self._get_api_keys_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -1508,10 +1475,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get API Keys without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get API Keys without preloading content"""
         if self.is_sync:
             return self._get_api_keys_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -1846,10 +1810,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> str:
-        """Get Google Auth URL
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Google Auth URL"""
         if self.is_sync:
             return self._get_google_auth_url_sync(
                 origin=origin,
@@ -1886,10 +1847,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[str]:
-        """Get Google Auth URL with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Google Auth URL with HTTP info"""
         if self.is_sync:
             return self._get_google_auth_url_sync_with_http_info(
                 origin=origin,
@@ -1926,10 +1884,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Google Auth URL without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Google Auth URL without preloading content"""
         if self.is_sync:
             return self._get_google_auth_url_sync_without_preload_content(
                 origin=origin,
@@ -2293,10 +2248,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> OauthCallback200Response:
-        """OAuth Callback
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """OAuth Callback"""
         if self.is_sync:
             return self._oauth_callback_sync(
                 code=code,
@@ -2345,10 +2297,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[OauthCallback200Response]:
-        """OAuth Callback with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """OAuth Callback with HTTP info"""
         if self.is_sync:
             return self._oauth_callback_sync_with_http_info(
                 code=code,
@@ -2397,10 +2346,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """OAuth Callback without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """OAuth Callback without preloading content"""
         if self.is_sync:
             return self._oauth_callback_sync_without_preload_content(
                 code=code,
@@ -2863,10 +2809,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RefreshTokenInfo200Response:
-        """Refresh token info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Refresh token info"""
         if self.is_sync:
             return self._refresh_token_info_sync(
                 x_refresh_token=x_refresh_token,
@@ -2906,10 +2849,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[RefreshTokenInfo200Response]:
-        """Refresh token info with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Refresh token info with HTTP info"""
         if self.is_sync:
             return self._refresh_token_info_sync_with_http_info(
                 x_refresh_token=x_refresh_token,
@@ -2949,10 +2889,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Refresh token info without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Refresh token info without preloading content"""
         if self.is_sync:
             return self._refresh_token_info_sync_without_preload_content(
                 x_refresh_token=x_refresh_token,
@@ -3331,10 +3268,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RotateTokens200Response:
-        """Refresh token scopes
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Refresh token scopes"""
         if self.is_sync:
             return self._refresh_token_scopes_sync(
                 x_refresh_token=x_refresh_token,
@@ -3374,10 +3308,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[RotateTokens200Response]:
-        """Refresh token scopes with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Refresh token scopes with HTTP info"""
         if self.is_sync:
             return self._refresh_token_scopes_sync_with_http_info(
                 x_refresh_token=x_refresh_token,
@@ -3417,10 +3348,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Refresh token scopes without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Refresh token scopes without preloading content"""
         if self.is_sync:
             return self._refresh_token_scopes_sync_without_preload_content(
                 x_refresh_token=x_refresh_token,
@@ -3799,10 +3727,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RotateTokens200Response:
-        """Rotate tokens
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Rotate tokens"""
         if self.is_sync:
             return self._rotate_tokens_sync(
                 x_refresh_token=x_refresh_token,
@@ -3842,10 +3767,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[RotateTokens200Response]:
-        """Rotate tokens with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Rotate tokens with HTTP info"""
         if self.is_sync:
             return self._rotate_tokens_sync_with_http_info(
                 x_refresh_token=x_refresh_token,
@@ -3885,10 +3807,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Rotate tokens without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Rotate tokens without preloading content"""
         if self.is_sync:
             return self._rotate_tokens_sync_without_preload_content(
                 x_refresh_token=x_refresh_token,
@@ -4267,10 +4186,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> TokenInfo200Response:
-        """Token info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Token info"""
         if self.is_sync:
             return self._token_info_sync(
                 x_refresh_token=x_refresh_token,
@@ -4310,10 +4226,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[TokenInfo200Response]:
-        """Token info with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Token info with HTTP info"""
         if self.is_sync:
             return self._token_info_sync_with_http_info(
                 x_refresh_token=x_refresh_token,
@@ -4353,10 +4266,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Token info without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Token info without preloading content"""
         if self.is_sync:
             return self._token_info_sync_without_preload_content(
                 x_refresh_token=x_refresh_token,
@@ -4731,10 +4641,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Verify200Response:
-        """Verify Bearer Token
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Verify Bearer Token"""
         if self.is_sync:
             return self._verify_sync(
                 _request_timeout=_request_timeout,
@@ -4768,10 +4675,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Verify200Response]:
-        """Verify Bearer Token with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Verify Bearer Token with HTTP info"""
         if self.is_sync:
             return self._verify_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -4805,10 +4709,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Verify Bearer Token without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Verify Bearer Token without preloading content"""
         if self.is_sync:
             return self._verify_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -5143,10 +5044,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Verify200Response:
-        """Verify API Key
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Verify API Key"""
         if self.is_sync:
             return self._verify_api_key_sync(
                 api_key=api_key,
@@ -5183,10 +5081,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Verify200Response]:
-        """Verify API Key with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Verify API Key with HTTP info"""
         if self.is_sync:
             return self._verify_api_key_sync_with_http_info(
                 api_key=api_key,
@@ -5223,10 +5118,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Verify API Key without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Verify API Key without preloading content"""
         if self.is_sync:
             return self._verify_api_key_sync_without_preload_content(
                 api_key=api_key,

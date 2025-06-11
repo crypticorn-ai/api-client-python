@@ -75,10 +75,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> SymbolInfo:
-        """Get Symbol
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Symbol"""
         if self.is_sync:
             return self._get_symbol_sync(
                 symbol=symbol,
@@ -115,10 +112,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[SymbolInfo]:
-        """Get Symbol with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Symbol with HTTP info"""
         if self.is_sync:
             return self._get_symbol_sync_with_http_info(
                 symbol=symbol,
@@ -155,10 +149,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Symbol without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Symbol without preloading content"""
         if self.is_sync:
             return self._get_symbol_sync_without_preload_content(
                 symbol=symbol,
@@ -515,10 +506,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> SymbolGroup:
-        """Get Symbol Info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Symbol Info"""
         if self.is_sync:
             return self._get_symbol_info_sync(
                 group=group,
@@ -555,10 +543,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[SymbolGroup]:
-        """Get Symbol Info with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Symbol Info with HTTP info"""
         if self.is_sync:
             return self._get_symbol_info_sync_with_http_info(
                 group=group,
@@ -595,10 +580,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Symbol Info without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Symbol Info without preloading content"""
         if self.is_sync:
             return self._get_symbol_info_sync_without_preload_content(
                 group=group,
@@ -960,10 +942,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> UDFConfig:
-        """Get Config
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Config"""
         if self.is_sync:
             return self._get_udf_config_sync(
                 _request_timeout=_request_timeout,
@@ -997,10 +976,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[UDFConfig]:
-        """Get Config with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Config with HTTP info"""
         if self.is_sync:
             return self._get_udf_config_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -1034,10 +1010,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Config without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Config without preloading content"""
         if self.is_sync:
             return self._get_udf_config_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -1373,10 +1346,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> OHLCV:
-        """Get History
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get History"""
         if self.is_sync:
             return self._get_udf_history_sync(
                 symbol=symbol,
@@ -1425,10 +1395,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[OHLCV]:
-        """Get History with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get History with HTTP info"""
         if self.is_sync:
             return self._get_udf_history_sync_with_http_info(
                 symbol=symbol,
@@ -1477,10 +1444,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get History without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get History without preloading content"""
         if self.is_sync:
             return self._get_udf_history_sync_without_preload_content(
                 symbol=symbol,
@@ -1937,10 +1901,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Options Handler
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Options Handler"""
         if self.is_sync:
             return self._options_handler_sync(
                 path=path,
@@ -1977,10 +1938,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Options Handler with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Options Handler with HTTP info"""
         if self.is_sync:
             return self._options_handler_sync_with_http_info(
                 path=path,
@@ -2017,10 +1975,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Options Handler without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Options Handler without preloading content"""
         if self.is_sync:
             return self._options_handler_sync_without_preload_content(
                 path=path,
@@ -2379,10 +2334,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[SearchSymbol]:
-        """Search Symbols
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Search Symbols"""
         if self.is_sync:
             return self._search_symbols_sync(
                 query=query,
@@ -2422,10 +2374,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[SearchSymbol]]:
-        """Search Symbols with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Search Symbols with HTTP info"""
         if self.is_sync:
             return self._search_symbols_sync_with_http_info(
                 query=query,
@@ -2465,10 +2414,7 @@ class UDFApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Search Symbols without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Search Symbols without preloading content"""
         if self.is_sync:
             return self._search_symbols_sync_without_preload_content(
                 query=query,

@@ -84,10 +84,7 @@ class OrdersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[OrdersCount]:
-        """Get Orders Count
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Orders Count"""
         if self.is_sync:
             return self._get_orders_count_sync(
                 sort_order=sort_order,
@@ -139,10 +136,7 @@ class OrdersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[OrdersCount]]:
-        """Get Orders Count with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Orders Count with HTTP info"""
         if self.is_sync:
             return self._get_orders_count_sync_with_http_info(
                 sort_order=sort_order,
@@ -194,10 +188,7 @@ class OrdersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Orders Count without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Orders Count without preloading content"""
         if self.is_sync:
             return self._get_orders_count_sync_without_preload_content(
                 sort_order=sort_order,

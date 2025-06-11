@@ -75,10 +75,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> LogoutDefaultResponseIssuesInner:
-        """Revoke user tokens
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Revoke user tokens"""
         if self.is_sync:
             return self._revoke_user_tokens_sync(
                 revoke_user_tokens_request=revoke_user_tokens_request,
@@ -115,10 +112,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[LogoutDefaultResponseIssuesInner]:
-        """Revoke user tokens with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Revoke user tokens with HTTP info"""
         if self.is_sync:
             return self._revoke_user_tokens_sync_with_http_info(
                 revoke_user_tokens_request=revoke_user_tokens_request,
@@ -155,10 +149,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Revoke user tokens without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Revoke user tokens without preloading content"""
         if self.is_sync:
             return self._revoke_user_tokens_sync_without_preload_content(
                 revoke_user_tokens_request=revoke_user_tokens_request,
@@ -525,10 +516,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Whoami200Response]:
-        """User List
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """User List"""
         if self.is_sync:
             return self._user_list_sync(
                 _request_timeout=_request_timeout,
@@ -562,10 +550,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Whoami200Response]]:
-        """User List with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """User List with HTTP info"""
         if self.is_sync:
             return self._user_list_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -599,10 +584,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """User List without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """User List without preloading content"""
         if self.is_sync:
             return self._user_list_sync_without_preload_content(
                 _request_timeout=_request_timeout,

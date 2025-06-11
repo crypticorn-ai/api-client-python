@@ -78,10 +78,7 @@ class ChangeInTimeframeApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[ChangeInTimeframe]:
-        """Get Change In Timeframe
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Change In Timeframe"""
         if self.is_sync:
             return self._get_change_in_timeframe_sync(
                 market=market,
@@ -127,10 +124,7 @@ class ChangeInTimeframeApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[ChangeInTimeframe]]:
-        """Get Change In Timeframe with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Change In Timeframe with HTTP info"""
         if self.is_sync:
             return self._get_change_in_timeframe_sync_with_http_info(
                 market=market,
@@ -176,10 +170,7 @@ class ChangeInTimeframeApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Change In Timeframe without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Change In Timeframe without preloading content"""
         if self.is_sync:
             return self._get_change_in_timeframe_sync_without_preload_content(
                 market=market,

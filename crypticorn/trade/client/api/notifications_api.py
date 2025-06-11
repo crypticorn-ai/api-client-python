@@ -74,10 +74,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Create Notification
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Notification"""
         if self.is_sync:
             return self._create_notification_sync(
                 notification_create=notification_create,
@@ -114,10 +111,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Create Notification with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Notification with HTTP info"""
         if self.is_sync:
             return self._create_notification_sync_with_http_info(
                 notification_create=notification_create,
@@ -154,10 +148,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create Notification without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Notification without preloading content"""
         if self.is_sync:
             return self._create_notification_sync_without_preload_content(
                 notification_create=notification_create,
@@ -525,10 +516,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Delete Notification
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete Notification"""
         if self.is_sync:
             return self._delete_notification_sync(
                 id=id,
@@ -565,10 +553,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Delete Notification with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete Notification with HTTP info"""
         if self.is_sync:
             return self._delete_notification_sync_with_http_info(
                 id=id,
@@ -605,10 +590,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Delete Notification without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete Notification without preloading content"""
         if self.is_sync:
             return self._delete_notification_sync_without_preload_content(
                 id=id,
@@ -962,10 +944,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Delete Notifications
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete Notifications"""
         if self.is_sync:
             return self._delete_notifications_sync(
                 _request_timeout=_request_timeout,
@@ -999,10 +978,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Delete Notifications with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete Notifications with HTTP info"""
         if self.is_sync:
             return self._delete_notifications_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -1036,10 +1012,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Delete Notifications without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete Notifications without preloading content"""
         if self.is_sync:
             return self._delete_notifications_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -1375,10 +1348,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Notification]:
-        """Get Notifications
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Notifications"""
         if self.is_sync:
             return self._get_notifications_sync(
                 limit=limit,
@@ -1418,10 +1388,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Notification]]:
-        """Get Notifications with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Notifications with HTTP info"""
         if self.is_sync:
             return self._get_notifications_sync_with_http_info(
                 limit=limit,
@@ -1461,10 +1428,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Notifications without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Notifications without preloading content"""
         if self.is_sync:
             return self._get_notifications_sync_without_preload_content(
                 limit=limit,
@@ -1850,10 +1814,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Update Notification
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Notification"""
         if self.is_sync:
             return self._update_notification_sync(
                 id=id,
@@ -1893,10 +1854,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Update Notification with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Notification with HTTP info"""
         if self.is_sync:
             return self._update_notification_sync_with_http_info(
                 id=id,
@@ -1936,10 +1894,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update Notification without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Notification without preloading content"""
         if self.is_sync:
             return self._update_notification_sync_without_preload_content(
                 id=id,
@@ -2330,10 +2285,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Update Notifications
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Notifications"""
         if self.is_sync:
             return self._update_notifications_sync(
                 notification_update=notification_update,
@@ -2370,10 +2322,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Update Notifications with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Notifications with HTTP info"""
         if self.is_sync:
             return self._update_notifications_sync_with_http_info(
                 notification_update=notification_update,
@@ -2410,10 +2359,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update Notifications without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Notifications without preloading content"""
         if self.is_sync:
             return self._update_notifications_sync_without_preload_content(
                 notification_update=notification_update,

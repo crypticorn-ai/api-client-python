@@ -72,10 +72,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Dict[str, object]:
-        """Get Container Limits
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Container Limits"""
         if self.is_sync:
             return self._get_container_limits_sync(
                 _request_timeout=_request_timeout,
@@ -109,10 +106,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Dict[str, object]]:
-        """Get Container Limits with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Container Limits with HTTP info"""
         if self.is_sync:
             return self._get_container_limits_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -146,10 +140,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Container Limits without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Container Limits without preloading content"""
         if self.is_sync:
             return self._get_container_limits_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -489,10 +480,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Dict[str, Optional[str]]:
-        """List Installed Packages
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """List Installed Packages"""
         if self.is_sync:
             return self._get_dependencies_sync(
                 include=include,
@@ -534,10 +522,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Dict[str, Optional[str]]]:
-        """List Installed Packages with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """List Installed Packages with HTTP info"""
         if self.is_sync:
             return self._get_dependencies_sync_with_http_info(
                 include=include,
@@ -579,10 +564,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List Installed Packages without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """List Installed Packages without preloading content"""
         if self.is_sync:
             return self._get_dependencies_sync_without_preload_content(
                 include=include,
@@ -973,10 +955,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> LogLevel:
-        """Get Logging Level
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Logging Level"""
         if self.is_sync:
             return self._get_log_level_sync(
                 _request_timeout=_request_timeout,
@@ -1010,10 +989,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[LogLevel]:
-        """Get Logging Level with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Logging Level with HTTP info"""
         if self.is_sync:
             return self._get_log_level_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -1047,10 +1023,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Logging Level without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Logging Level without preloading content"""
         if self.is_sync:
             return self._get_log_level_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -1387,10 +1360,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> float:
-        """Get Memory Usage
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Memory Usage"""
         if self.is_sync:
             return self._get_memory_usage_sync(
                 _request_timeout=_request_timeout,
@@ -1424,10 +1394,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[float]:
-        """Get Memory Usage with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Memory Usage with HTTP info"""
         if self.is_sync:
             return self._get_memory_usage_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -1461,10 +1428,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Memory Usage without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Memory Usage without preloading content"""
         if self.is_sync:
             return self._get_memory_usage_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -1798,10 +1762,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Metrics
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Metrics"""
         if self.is_sync:
             return self._get_metrics_sync(
                 _request_timeout=_request_timeout,
@@ -1835,10 +1796,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Metrics with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Metrics with HTTP info"""
         if self.is_sync:
             return self._get_metrics_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -1872,10 +1830,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Metrics without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Metrics without preloading content"""
         if self.is_sync:
             return self._get_metrics_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -2209,10 +2164,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Dict[str, object]:
-        """Get Threads
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Threads"""
         if self.is_sync:
             return self._get_threads_sync(
                 _request_timeout=_request_timeout,
@@ -2246,10 +2198,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Dict[str, object]]:
-        """Get Threads with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Threads with HTTP info"""
         if self.is_sync:
             return self._get_threads_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -2283,10 +2232,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Threads without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Threads without preloading content"""
         if self.is_sync:
             return self._get_threads_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -2621,10 +2567,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> str:
-        """Get Uptime
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Uptime"""
         if self.is_sync:
             return self._get_uptime_sync(
                 type=type,
@@ -2661,10 +2604,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[str]:
-        """Get Uptime with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Uptime with HTTP info"""
         if self.is_sync:
             return self._get_uptime_sync_with_http_info(
                 type=type,
@@ -2701,10 +2641,7 @@ class AdminApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Uptime without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Uptime without preloading content"""
         if self.is_sync:
             return self._get_uptime_sync_without_preload_content(
                 type=type,

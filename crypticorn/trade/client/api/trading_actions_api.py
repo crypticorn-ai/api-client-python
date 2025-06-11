@@ -80,10 +80,7 @@ class TradingActionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[FuturesTradingAction]:
-        """Get Actions
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Actions"""
         if self.is_sync:
             return self._get_actions_sync(
                 limit=limit,
@@ -123,10 +120,7 @@ class TradingActionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[FuturesTradingAction]]:
-        """Get Actions with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Actions with HTTP info"""
         if self.is_sync:
             return self._get_actions_sync_with_http_info(
                 limit=limit,
@@ -166,10 +160,7 @@ class TradingActionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Actions without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Actions without preloading content"""
         if self.is_sync:
             return self._get_actions_sync_without_preload_content(
                 limit=limit,
@@ -551,10 +542,7 @@ class TradingActionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PostFuturesAction:
-        """Post Futures Action
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Post Futures Action"""
         if self.is_sync:
             return self._post_futures_action_sync(
                 futures_trading_action_create=futures_trading_action_create,
@@ -591,10 +579,7 @@ class TradingActionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PostFuturesAction]:
-        """Post Futures Action with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Post Futures Action with HTTP info"""
         if self.is_sync:
             return self._post_futures_action_sync_with_http_info(
                 futures_trading_action_create=futures_trading_action_create,
@@ -631,10 +616,7 @@ class TradingActionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Post Futures Action without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Post Futures Action without preloading content"""
         if self.is_sync:
             return self._post_futures_action_sync_without_preload_content(
                 futures_trading_action_create=futures_trading_action_create,
@@ -1002,10 +984,7 @@ class TradingActionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Post Spot Action
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Post Spot Action"""
         if self.is_sync:
             return self._post_spot_action_sync(
                 spot_trading_action_create=spot_trading_action_create,
@@ -1042,10 +1021,7 @@ class TradingActionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Post Spot Action with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Post Spot Action with HTTP info"""
         if self.is_sync:
             return self._post_spot_action_sync_with_http_info(
                 spot_trading_action_create=spot_trading_action_create,
@@ -1082,10 +1058,7 @@ class TradingActionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Post Spot Action without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Post Spot Action without preloading content"""
         if self.is_sync:
             return self._post_spot_action_sync_without_preload_content(
                 spot_trading_action_create=spot_trading_action_create,
