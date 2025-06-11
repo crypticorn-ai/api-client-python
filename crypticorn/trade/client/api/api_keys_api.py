@@ -16,7 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictBool, StrictInt, StrictStr
+from pydantic import Field, StrictStr, field_validator
 from typing import List, Optional
 from typing_extensions import Annotated
 from crypticorn.trade.client.models.exchange_key import ExchangeKey
@@ -1775,11 +1775,17 @@ class APIKeysApi:
     @validate_call
     def get_exchange_keys(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
-        include_deleted: Annotated[
-            Optional[StrictBool],
-            Field(description="Whether to include deleted API keys."),
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
         _request_timeout: Union[
             None,
@@ -1796,9 +1802,10 @@ class APIKeysApi:
         """Get Exchange Keys"""
         if self.is_sync:
             return self._get_exchange_keys_sync(
-                limit=limit,
-                offset=offset,
-                include_deleted=include_deleted,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                sort_order=sort_order,
+                sort_by=sort_by,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1808,9 +1815,10 @@ class APIKeysApi:
 
         else:
             return self._get_exchange_keys_async(
-                limit=limit,
-                offset=offset,
-                include_deleted=include_deleted,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                sort_order=sort_order,
+                sort_by=sort_by,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1821,11 +1829,17 @@ class APIKeysApi:
     @validate_call
     def get_exchange_keys_with_http_info(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
-        include_deleted: Annotated[
-            Optional[StrictBool],
-            Field(description="Whether to include deleted API keys."),
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
         _request_timeout: Union[
             None,
@@ -1842,9 +1856,10 @@ class APIKeysApi:
         """Get Exchange Keys with HTTP info"""
         if self.is_sync:
             return self._get_exchange_keys_sync_with_http_info(
-                limit=limit,
-                offset=offset,
-                include_deleted=include_deleted,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                sort_order=sort_order,
+                sort_by=sort_by,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1854,9 +1869,10 @@ class APIKeysApi:
 
         else:
             return self._get_exchange_keys_async_with_http_info(
-                limit=limit,
-                offset=offset,
-                include_deleted=include_deleted,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                sort_order=sort_order,
+                sort_by=sort_by,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1867,11 +1883,17 @@ class APIKeysApi:
     @validate_call
     def get_exchange_keys_without_preload_content(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
-        include_deleted: Annotated[
-            Optional[StrictBool],
-            Field(description="Whether to include deleted API keys."),
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
         _request_timeout: Union[
             None,
@@ -1888,9 +1910,10 @@ class APIKeysApi:
         """Get Exchange Keys without preloading content"""
         if self.is_sync:
             return self._get_exchange_keys_sync_without_preload_content(
-                limit=limit,
-                offset=offset,
-                include_deleted=include_deleted,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                sort_order=sort_order,
+                sort_by=sort_by,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1900,9 +1923,10 @@ class APIKeysApi:
 
         else:
             return self._get_exchange_keys_async_without_preload_content(
-                limit=limit,
-                offset=offset,
-                include_deleted=include_deleted,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                sort_order=sort_order,
+                sort_by=sort_by,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1914,11 +1938,17 @@ class APIKeysApi:
     @validate_call
     async def _get_exchange_keys_async(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
-        include_deleted: Annotated[
-            Optional[StrictBool],
-            Field(description="Whether to include deleted API keys."),
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
         _request_timeout: Union[
             None,
@@ -1934,14 +1964,16 @@ class APIKeysApi:
     ) -> List[ExchangeKey]:
         """Get Exchange Keys
 
-        Get all exchange keys. If include_deleted is true, all API keys will be returned, including deleted ones.
+        Get all exchange keys. Returns all non-deleted API keys by default.
 
-        :param limit:
-        :type limit: int
-        :param offset:
-        :type offset: int
-        :param include_deleted: Whether to include deleted API keys.
-        :type include_deleted: bool
+        :param filter_by: The field to filter by
+        :type filter_by: str
+        :param filter_value: The value to filter with
+        :type filter_value: str
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1965,9 +1997,10 @@ class APIKeysApi:
         """  # noqa: E501
 
         _param = self._get_exchange_keys_serialize(
-            limit=limit,
-            offset=offset,
-            include_deleted=include_deleted,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            sort_order=sort_order,
+            sort_by=sort_by,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1989,11 +2022,17 @@ class APIKeysApi:
     @validate_call
     async def _get_exchange_keys_async_with_http_info(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
-        include_deleted: Annotated[
-            Optional[StrictBool],
-            Field(description="Whether to include deleted API keys."),
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
         _request_timeout: Union[
             None,
@@ -2009,14 +2048,16 @@ class APIKeysApi:
     ) -> ApiResponse[List[ExchangeKey]]:
         """Get Exchange Keys
 
-        Get all exchange keys. If include_deleted is true, all API keys will be returned, including deleted ones.
+        Get all exchange keys. Returns all non-deleted API keys by default.
 
-        :param limit:
-        :type limit: int
-        :param offset:
-        :type offset: int
-        :param include_deleted: Whether to include deleted API keys.
-        :type include_deleted: bool
+        :param filter_by: The field to filter by
+        :type filter_by: str
+        :param filter_value: The value to filter with
+        :type filter_value: str
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2040,9 +2081,10 @@ class APIKeysApi:
         """  # noqa: E501
 
         _param = self._get_exchange_keys_serialize(
-            limit=limit,
-            offset=offset,
-            include_deleted=include_deleted,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            sort_order=sort_order,
+            sort_by=sort_by,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2063,11 +2105,17 @@ class APIKeysApi:
     @validate_call
     async def _get_exchange_keys_async_without_preload_content(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
-        include_deleted: Annotated[
-            Optional[StrictBool],
-            Field(description="Whether to include deleted API keys."),
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
         _request_timeout: Union[
             None,
@@ -2083,14 +2131,16 @@ class APIKeysApi:
     ) -> RESTResponseType:
         """Get Exchange Keys
 
-        Get all exchange keys. If include_deleted is true, all API keys will be returned, including deleted ones.
+        Get all exchange keys. Returns all non-deleted API keys by default.
 
-        :param limit:
-        :type limit: int
-        :param offset:
-        :type offset: int
-        :param include_deleted: Whether to include deleted API keys.
-        :type include_deleted: bool
+        :param filter_by: The field to filter by
+        :type filter_by: str
+        :param filter_value: The value to filter with
+        :type filter_value: str
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2114,9 +2164,10 @@ class APIKeysApi:
         """  # noqa: E501
 
         _param = self._get_exchange_keys_serialize(
-            limit=limit,
-            offset=offset,
-            include_deleted=include_deleted,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            sort_order=sort_order,
+            sort_by=sort_by,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2135,11 +2186,17 @@ class APIKeysApi:
     @validate_call
     def _get_exchange_keys_sync(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
-        include_deleted: Annotated[
-            Optional[StrictBool],
-            Field(description="Whether to include deleted API keys."),
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
         _request_timeout: Union[
             None,
@@ -2155,9 +2212,10 @@ class APIKeysApi:
     ) -> List[ExchangeKey]:
         """Synchronous version of get_exchange_keys"""
         return async_to_sync(self._get_exchange_keys_async)(
-            limit=limit,
-            offset=offset,
-            include_deleted=include_deleted,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            sort_order=sort_order,
+            sort_by=sort_by,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2168,11 +2226,17 @@ class APIKeysApi:
     @validate_call
     def _get_exchange_keys_sync_with_http_info(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
-        include_deleted: Annotated[
-            Optional[StrictBool],
-            Field(description="Whether to include deleted API keys."),
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
         _request_timeout: Union[
             None,
@@ -2188,9 +2252,10 @@ class APIKeysApi:
     ) -> ApiResponse[List[ExchangeKey]]:
         """Synchronous version of get_exchange_keys_with_http_info"""
         return async_to_sync(self._get_exchange_keys_async_with_http_info)(
-            limit=limit,
-            offset=offset,
-            include_deleted=include_deleted,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            sort_order=sort_order,
+            sort_by=sort_by,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2201,11 +2266,17 @@ class APIKeysApi:
     @validate_call
     def _get_exchange_keys_sync_without_preload_content(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
-        include_deleted: Annotated[
-            Optional[StrictBool],
-            Field(description="Whether to include deleted API keys."),
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
         _request_timeout: Union[
             None,
@@ -2221,9 +2292,10 @@ class APIKeysApi:
     ) -> RESTResponseType:
         """Synchronous version of get_exchange_keys_without_preload_content"""
         return async_to_sync(self._get_exchange_keys_async_without_preload_content)(
-            limit=limit,
-            offset=offset,
-            include_deleted=include_deleted,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            sort_order=sort_order,
+            sort_by=sort_by,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2233,9 +2305,10 @@ class APIKeysApi:
 
     def _get_exchange_keys_serialize(
         self,
-        limit,
-        offset,
-        include_deleted,
+        filter_by,
+        filter_value,
+        sort_order,
+        sort_by,
         _request_auth,
         _content_type,
         _headers,
@@ -2257,17 +2330,21 @@ class APIKeysApi:
 
         # process the path parameters
         # process the query parameters
-        if limit is not None:
+        if filter_by is not None:
 
-            _query_params.append(("limit", limit))
+            _query_params.append(("filter_by", filter_by))
 
-        if offset is not None:
+        if filter_value is not None:
 
-            _query_params.append(("offset", offset))
+            _query_params.append(("filter_value", filter_value))
 
-        if include_deleted is not None:
+        if sort_order is not None:
 
-            _query_params.append(("include_deleted", include_deleted))
+            _query_params.append(("sort_order", sort_order))
+
+        if sort_by is not None:
+
+            _query_params.append(("sort_by", sort_by))
 
         # process the header parameters
         # process the form parameters

@@ -16,11 +16,14 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictInt
-from typing import Any, List, Optional
-from crypticorn.trade.client.models.futures_trading_action import FuturesTradingAction
+from pydantic import Field, StrictInt, StrictStr, field_validator
+from typing import Any, Optional
+from typing_extensions import Annotated
 from crypticorn.trade.client.models.futures_trading_action_create import (
     FuturesTradingActionCreate,
+)
+from crypticorn.trade.client.models.paginated_response_union_futures_trading_action_spot_trading_action import (
+    PaginatedResponseUnionFuturesTradingActionSpotTradingAction,
 )
 from crypticorn.trade.client.models.post_futures_action import PostFuturesAction
 from crypticorn.trade.client.models.spot_trading_action_create import (
@@ -66,8 +69,33 @@ class TradingActionsApi:
     @validate_call
     def get_actions(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        user_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -79,12 +107,17 @@ class TradingActionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[FuturesTradingAction]:
+    ) -> PaginatedResponseUnionFuturesTradingActionSpotTradingAction:
         """Get Actions"""
         if self.is_sync:
             return self._get_actions_sync(
-                limit=limit,
-                offset=offset,
+                sort_order=sort_order,
+                sort_by=sort_by,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                page=page,
+                page_size=page_size,
+                user_id=user_id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -94,8 +127,13 @@ class TradingActionsApi:
 
         else:
             return self._get_actions_async(
-                limit=limit,
-                offset=offset,
+                sort_order=sort_order,
+                sort_by=sort_by,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                page=page,
+                page_size=page_size,
+                user_id=user_id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -106,8 +144,33 @@ class TradingActionsApi:
     @validate_call
     def get_actions_with_http_info(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        user_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -119,12 +182,17 @@ class TradingActionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[FuturesTradingAction]]:
+    ) -> ApiResponse[PaginatedResponseUnionFuturesTradingActionSpotTradingAction]:
         """Get Actions with HTTP info"""
         if self.is_sync:
             return self._get_actions_sync_with_http_info(
-                limit=limit,
-                offset=offset,
+                sort_order=sort_order,
+                sort_by=sort_by,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                page=page,
+                page_size=page_size,
+                user_id=user_id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -134,8 +202,13 @@ class TradingActionsApi:
 
         else:
             return self._get_actions_async_with_http_info(
-                limit=limit,
-                offset=offset,
+                sort_order=sort_order,
+                sort_by=sort_by,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                page=page,
+                page_size=page_size,
+                user_id=user_id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -146,8 +219,33 @@ class TradingActionsApi:
     @validate_call
     def get_actions_without_preload_content(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        user_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -163,8 +261,13 @@ class TradingActionsApi:
         """Get Actions without preloading content"""
         if self.is_sync:
             return self._get_actions_sync_without_preload_content(
-                limit=limit,
-                offset=offset,
+                sort_order=sort_order,
+                sort_by=sort_by,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                page=page,
+                page_size=page_size,
+                user_id=user_id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -174,8 +277,13 @@ class TradingActionsApi:
 
         else:
             return self._get_actions_async_without_preload_content(
-                limit=limit,
-                offset=offset,
+                sort_order=sort_order,
+                sort_by=sort_by,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                page=page,
+                page_size=page_size,
+                user_id=user_id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -187,8 +295,33 @@ class TradingActionsApi:
     @validate_call
     async def _get_actions_async(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        user_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -200,14 +333,25 @@ class TradingActionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[FuturesTradingAction]:
+    ) -> PaginatedResponseUnionFuturesTradingActionSpotTradingAction:
         """Get Actions
 
+        Get all trading actions
 
-        :param limit:
-        :type limit: int
-        :param offset:
-        :type offset: int
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
+        :param filter_by: The field to filter by
+        :type filter_by: str
+        :param filter_value: The value to filter with
+        :type filter_value: str
+        :param page: The current page number
+        :type page: int
+        :param page_size: The number of items per page. Default is 100, max is 1000.
+        :type page_size: int
+        :param user_id: The ID of the user. Overrides the authenticated user if provided and the user is an admin.
+        :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -231,8 +375,13 @@ class TradingActionsApi:
         """  # noqa: E501
 
         _param = self._get_actions_serialize(
-            limit=limit,
-            offset=offset,
+            sort_order=sort_order,
+            sort_by=sort_by,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            page=page,
+            page_size=page_size,
+            user_id=user_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -240,7 +389,7 @@ class TradingActionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[FuturesTradingAction]",
+            "200": "PaginatedResponseUnionFuturesTradingActionSpotTradingAction",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -254,8 +403,33 @@ class TradingActionsApi:
     @validate_call
     async def _get_actions_async_with_http_info(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        user_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -267,14 +441,25 @@ class TradingActionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[FuturesTradingAction]]:
+    ) -> ApiResponse[PaginatedResponseUnionFuturesTradingActionSpotTradingAction]:
         """Get Actions
 
+        Get all trading actions
 
-        :param limit:
-        :type limit: int
-        :param offset:
-        :type offset: int
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
+        :param filter_by: The field to filter by
+        :type filter_by: str
+        :param filter_value: The value to filter with
+        :type filter_value: str
+        :param page: The current page number
+        :type page: int
+        :param page_size: The number of items per page. Default is 100, max is 1000.
+        :type page_size: int
+        :param user_id: The ID of the user. Overrides the authenticated user if provided and the user is an admin.
+        :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -298,8 +483,13 @@ class TradingActionsApi:
         """  # noqa: E501
 
         _param = self._get_actions_serialize(
-            limit=limit,
-            offset=offset,
+            sort_order=sort_order,
+            sort_by=sort_by,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            page=page,
+            page_size=page_size,
+            user_id=user_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -307,7 +497,7 @@ class TradingActionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[FuturesTradingAction]",
+            "200": "PaginatedResponseUnionFuturesTradingActionSpotTradingAction",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -320,8 +510,33 @@ class TradingActionsApi:
     @validate_call
     async def _get_actions_async_without_preload_content(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        user_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -336,11 +551,22 @@ class TradingActionsApi:
     ) -> RESTResponseType:
         """Get Actions
 
+        Get all trading actions
 
-        :param limit:
-        :type limit: int
-        :param offset:
-        :type offset: int
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
+        :param filter_by: The field to filter by
+        :type filter_by: str
+        :param filter_value: The value to filter with
+        :type filter_value: str
+        :param page: The current page number
+        :type page: int
+        :param page_size: The number of items per page. Default is 100, max is 1000.
+        :type page_size: int
+        :param user_id: The ID of the user. Overrides the authenticated user if provided and the user is an admin.
+        :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -364,8 +590,13 @@ class TradingActionsApi:
         """  # noqa: E501
 
         _param = self._get_actions_serialize(
-            limit=limit,
-            offset=offset,
+            sort_order=sort_order,
+            sort_by=sort_by,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            page=page,
+            page_size=page_size,
+            user_id=user_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -373,7 +604,7 @@ class TradingActionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[FuturesTradingAction]",
+            "200": "PaginatedResponseUnionFuturesTradingActionSpotTradingAction",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -384,8 +615,33 @@ class TradingActionsApi:
     @validate_call
     def _get_actions_sync(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        user_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -397,11 +653,16 @@ class TradingActionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[FuturesTradingAction]:
+    ) -> PaginatedResponseUnionFuturesTradingActionSpotTradingAction:
         """Synchronous version of get_actions"""
         return async_to_sync(self._get_actions_async)(
-            limit=limit,
-            offset=offset,
+            sort_order=sort_order,
+            sort_by=sort_by,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            page=page,
+            page_size=page_size,
+            user_id=user_id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -412,8 +673,33 @@ class TradingActionsApi:
     @validate_call
     def _get_actions_sync_with_http_info(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        user_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -425,11 +711,16 @@ class TradingActionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[FuturesTradingAction]]:
+    ) -> ApiResponse[PaginatedResponseUnionFuturesTradingActionSpotTradingAction]:
         """Synchronous version of get_actions_with_http_info"""
         return async_to_sync(self._get_actions_async_with_http_info)(
-            limit=limit,
-            offset=offset,
+            sort_order=sort_order,
+            sort_by=sort_by,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            page=page,
+            page_size=page_size,
+            user_id=user_id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -440,8 +731,33 @@ class TradingActionsApi:
     @validate_call
     def _get_actions_sync_without_preload_content(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        user_id: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -456,8 +772,13 @@ class TradingActionsApi:
     ) -> RESTResponseType:
         """Synchronous version of get_actions_without_preload_content"""
         return async_to_sync(self._get_actions_async_without_preload_content)(
-            limit=limit,
-            offset=offset,
+            sort_order=sort_order,
+            sort_by=sort_by,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            page=page,
+            page_size=page_size,
+            user_id=user_id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -467,8 +788,13 @@ class TradingActionsApi:
 
     def _get_actions_serialize(
         self,
-        limit,
-        offset,
+        sort_order,
+        sort_by,
+        filter_by,
+        filter_value,
+        page,
+        page_size,
+        user_id,
         _request_auth,
         _content_type,
         _headers,
@@ -490,13 +816,33 @@ class TradingActionsApi:
 
         # process the path parameters
         # process the query parameters
-        if limit is not None:
+        if sort_order is not None:
 
-            _query_params.append(("limit", limit))
+            _query_params.append(("sort_order", sort_order))
 
-        if offset is not None:
+        if sort_by is not None:
 
-            _query_params.append(("offset", offset))
+            _query_params.append(("sort_by", sort_by))
+
+        if filter_by is not None:
+
+            _query_params.append(("filter_by", filter_by))
+
+        if filter_value is not None:
+
+            _query_params.append(("filter_value", filter_value))
+
+        if page is not None:
+
+            _query_params.append(("page", page))
+
+        if page_size is not None:
+
+            _query_params.append(("page_size", page_size))
+
+        if user_id is not None:
+
+            _query_params.append(("user_id", user_id))
 
         # process the header parameters
         # process the form parameters
@@ -509,7 +855,7 @@ class TradingActionsApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",

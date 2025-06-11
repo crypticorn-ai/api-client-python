@@ -42,12 +42,22 @@ from crypticorn.trade.client.models.notification_update import NotificationUpdat
 from crypticorn.trade.client.models.order import Order
 from crypticorn.trade.client.models.order_status import OrderStatus
 from crypticorn.trade.client.models.orders_count import OrdersCount
+from crypticorn.trade.client.models.paginated_response_futures_trading_action import (
+    PaginatedResponseFuturesTradingAction,
+)
 from crypticorn.trade.client.models.paginated_response_order import (
     PaginatedResponseOrder,
+)
+from crypticorn.trade.client.models.paginated_response_union_futures_trading_action_spot_trading_action import (
+    PaginatedResponseUnionFuturesTradingActionSpotTradingAction,
+)
+from crypticorn.trade.client.models.paginated_response_union_futures_trading_action_spot_trading_action_data_inner import (
+    PaginatedResponseUnionFuturesTradingActionSpotTradingActionDataInner,
 )
 from crypticorn.trade.client.models.pn_l import PnL
 from crypticorn.trade.client.models.post_futures_action import PostFuturesAction
 from crypticorn.trade.client.models.spot_balance import SpotBalance
+from crypticorn.trade.client.models.spot_trading_action import SpotTradingAction
 from crypticorn.trade.client.models.spot_trading_action_create import (
     SpotTradingActionCreate,
 )
