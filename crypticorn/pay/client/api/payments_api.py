@@ -81,10 +81,7 @@ class PaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Payment]:
-        """Get Payment History
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Payment History"""
         if self.is_sync:
             return self._get_payment_history_sync(
                 limit=limit,
@@ -134,10 +131,7 @@ class PaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Payment]]:
-        """Get Payment History with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Payment History with HTTP info"""
         if self.is_sync:
             return self._get_payment_history_sync_with_http_info(
                 limit=limit,
@@ -187,10 +181,7 @@ class PaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Payment History without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Payment History without preloading content"""
         if self.is_sync:
             return self._get_payment_history_sync_without_preload_content(
                 limit=limit,
@@ -646,10 +637,7 @@ class PaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Subscription]:
-        """Get Subscriptions
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Subscriptions"""
         if self.is_sync:
             return self._get_subscriptions_sync(
                 user_id=user_id,
@@ -699,10 +687,7 @@ class PaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Subscription]]:
-        """Get Subscriptions with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Subscriptions with HTTP info"""
         if self.is_sync:
             return self._get_subscriptions_sync_with_http_info(
                 user_id=user_id,
@@ -752,10 +737,7 @@ class PaymentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Subscriptions without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Subscriptions without preloading content"""
         if self.is_sync:
             return self._get_subscriptions_sync_without_preload_content(
                 user_id=user_id,

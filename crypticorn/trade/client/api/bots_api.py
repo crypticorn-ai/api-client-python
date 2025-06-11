@@ -80,10 +80,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Bot:
-        """Create Bot
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Bot"""
         if self.is_sync:
             return self._create_bot_sync(
                 bot_create=bot_create,
@@ -120,10 +117,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Bot]:
-        """Create Bot with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Bot with HTTP info"""
         if self.is_sync:
             return self._create_bot_sync_with_http_info(
                 bot_create=bot_create,
@@ -160,10 +154,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create Bot without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Bot without preloading content"""
         if self.is_sync:
             return self._create_bot_sync_without_preload_content(
                 bot_create=bot_create,
@@ -531,10 +522,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Delete Bot
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete Bot"""
         if self.is_sync:
             return self._delete_bot_sync(
                 id=id,
@@ -571,10 +559,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Delete Bot with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete Bot with HTTP info"""
         if self.is_sync:
             return self._delete_bot_sync_with_http_info(
                 id=id,
@@ -611,10 +596,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Delete Bot without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Delete Bot without preloading content"""
         if self.is_sync:
             return self._delete_bot_sync_without_preload_content(
                 id=id,
@@ -972,10 +954,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Bot:
-        """Get Bot
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bot"""
         if self.is_sync:
             return self._get_bot_sync(
                 id=id,
@@ -1012,10 +991,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Bot]:
-        """Get Bot with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bot with HTTP info"""
         if self.is_sync:
             return self._get_bot_sync_with_http_info(
                 id=id,
@@ -1052,10 +1028,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Bot without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bot without preloading content"""
         if self.is_sync:
             return self._get_bot_sync_without_preload_content(
                 id=id,
@@ -1437,10 +1410,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PaginatedResponseOrder:
-        """Get Bot Orders
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bot Orders"""
         if self.is_sync:
             return self._get_bot_orders_sync(
                 id=id,
@@ -1518,10 +1488,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PaginatedResponseOrder]:
-        """Get Bot Orders with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bot Orders with HTTP info"""
         if self.is_sync:
             return self._get_bot_orders_sync_with_http_info(
                 id=id,
@@ -1599,10 +1566,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Bot Orders without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bot Orders without preloading content"""
         if self.is_sync:
             return self._get_bot_orders_sync_without_preload_content(
                 id=id,
@@ -2267,10 +2231,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[OrdersCount]:
-        """Get Bot Orders Count
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bot Orders Count"""
         if self.is_sync:
             return self._get_bot_orders_count_sync(
                 id=id,
@@ -2325,10 +2286,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[OrdersCount]]:
-        """Get Bot Orders Count with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bot Orders Count with HTTP info"""
         if self.is_sync:
             return self._get_bot_orders_count_sync_with_http_info(
                 id=id,
@@ -2383,10 +2341,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Bot Orders Count without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bot Orders Count without preloading content"""
         if self.is_sync:
             return self._get_bot_orders_count_sync_without_preload_content(
                 id=id,
@@ -2903,10 +2858,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[PnL]:
-        """Get Bot Pnl
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bot Pnl"""
         if self.is_sync:
             return self._get_bot_orders_pnl_sync(
                 id=id,
@@ -2985,10 +2937,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[PnL]]:
-        """Get Bot Pnl with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bot Pnl with HTTP info"""
         if self.is_sync:
             return self._get_bot_orders_pnl_sync_with_http_info(
                 id=id,
@@ -3067,10 +3016,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Bot Pnl without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bot Pnl without preloading content"""
         if self.is_sync:
             return self._get_bot_orders_pnl_sync_without_preload_content(
                 id=id,
@@ -3727,10 +3673,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Bot]:
-        """Get Bots
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bots"""
         if self.is_sync:
             return self._get_bots_sync(
                 include_deleted=include_deleted,
@@ -3774,10 +3717,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Bot]]:
-        """Get Bots with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bots with HTTP info"""
         if self.is_sync:
             return self._get_bots_sync_with_http_info(
                 include_deleted=include_deleted,
@@ -3821,10 +3761,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Bots without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bots without preloading content"""
         if self.is_sync:
             return self._get_bots_sync_without_preload_content(
                 include_deleted=include_deleted,
@@ -4256,10 +4193,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PaginatedResponseOrder:
-        """Get Bots Orders
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bots Orders"""
         if self.is_sync:
             return self._get_bots_orders_sync(
                 sort_order=sort_order,
@@ -4334,10 +4268,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PaginatedResponseOrder]:
-        """Get Bots Orders with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bots Orders with HTTP info"""
         if self.is_sync:
             return self._get_bots_orders_sync_with_http_info(
                 sort_order=sort_order,
@@ -4412,10 +4343,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Bots Orders without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bots Orders without preloading content"""
         if self.is_sync:
             return self._get_bots_orders_sync_without_preload_content(
                 sort_order=sort_order,
@@ -5056,10 +4984,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[OrdersCount]:
-        """Get Bots Orders Count
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bots Orders Count"""
         if self.is_sync:
             return self._get_bots_orders_count_sync(
                 sort_order=sort_order,
@@ -5111,10 +5036,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[OrdersCount]]:
-        """Get Bots Orders Count with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bots Orders Count with HTTP info"""
         if self.is_sync:
             return self._get_bots_orders_count_sync_with_http_info(
                 sort_order=sort_order,
@@ -5166,10 +5088,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Bots Orders Count without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bots Orders Count without preloading content"""
         if self.is_sync:
             return self._get_bots_orders_count_sync_without_preload_content(
                 sort_order=sort_order,
@@ -5662,10 +5581,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[PnL]:
-        """Get Bots Pnl
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bots Pnl"""
         if self.is_sync:
             return self._get_bots_orders_pnl_sync(
                 sort_order=sort_order,
@@ -5741,10 +5657,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[PnL]]:
-        """Get Bots Pnl with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bots Pnl with HTTP info"""
         if self.is_sync:
             return self._get_bots_orders_pnl_sync_with_http_info(
                 sort_order=sort_order,
@@ -5820,10 +5733,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Bots Pnl without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Bots Pnl without preloading content"""
         if self.is_sync:
             return self._get_bots_orders_pnl_sync_without_preload_content(
                 sort_order=sort_order,
@@ -6453,10 +6363,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Bot:
-        """Update Bot
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Bot"""
         if self.is_sync:
             return self._update_bot_sync(
                 id=id,
@@ -6496,10 +6403,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Bot]:
-        """Update Bot with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Bot with HTTP info"""
         if self.is_sync:
             return self._update_bot_sync_with_http_info(
                 id=id,
@@ -6539,10 +6443,7 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update Bot without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Bot without preloading content"""
         if self.is_sync:
             return self._update_bot_sync_without_preload_content(
                 id=id,

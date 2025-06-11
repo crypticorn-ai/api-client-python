@@ -75,10 +75,7 @@ class ServiceApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ListWallets200ResponseUserValue:
-        """Get the balances of a user by email
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get the balances of a user by email"""
         if self.is_sync:
             return self._get_balances_by_email_sync(
                 email=email,
@@ -121,10 +118,7 @@ class ServiceApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ListWallets200ResponseUserValue]:
-        """Get the balances of a user by email with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get the balances of a user by email with HTTP info"""
         if self.is_sync:
             return self._get_balances_by_email_sync_with_http_info(
                 email=email,
@@ -167,10 +161,7 @@ class ServiceApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get the balances of a user by email without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get the balances of a user by email without preloading content"""
         if self.is_sync:
             return self._get_balances_by_email_sync_without_preload_content(
                 email=email,

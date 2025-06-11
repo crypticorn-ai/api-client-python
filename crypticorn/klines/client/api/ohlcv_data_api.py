@@ -92,10 +92,7 @@ class OHLCVDataApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[OHLCV]:
-        """Get Ohlcv
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Ohlcv"""
         if self.is_sync:
             return self._get_ohlcv_sync(
                 market=market,
@@ -164,10 +161,7 @@ class OHLCVDataApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[OHLCV]]:
-        """Get Ohlcv with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Ohlcv with HTTP info"""
         if self.is_sync:
             return self._get_ohlcv_sync_with_http_info(
                 market=market,
@@ -236,10 +230,7 @@ class OHLCVDataApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Ohlcv without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Ohlcv without preloading content"""
         if self.is_sync:
             return self._get_ohlcv_sync_without_preload_content(
                 market=market,

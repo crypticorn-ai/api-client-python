@@ -71,10 +71,7 @@ class ProductsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Product:
-        """Create Product
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Product"""
         if self.is_sync:
             return self._create_product_sync(
                 product_create=product_create,
@@ -111,10 +108,7 @@ class ProductsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Product]:
-        """Create Product with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Product with HTTP info"""
         if self.is_sync:
             return self._create_product_sync_with_http_info(
                 product_create=product_create,
@@ -151,10 +145,7 @@ class ProductsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create Product without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Product without preloading content"""
         if self.is_sync:
             return self._create_product_sync_without_preload_content(
                 product_create=product_create,
@@ -521,10 +512,7 @@ class ProductsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[List[object]]:
-        """Get Product Usage
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Product Usage"""
         if self.is_sync:
             return self._get_product_usage_sync(
                 _request_timeout=_request_timeout,
@@ -558,10 +546,7 @@ class ProductsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[List[object]]]:
-        """Get Product Usage with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Product Usage with HTTP info"""
         if self.is_sync:
             return self._get_product_usage_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -595,10 +580,7 @@ class ProductsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Product Usage without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Product Usage without preloading content"""
         if self.is_sync:
             return self._get_product_usage_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -944,10 +926,7 @@ class ProductsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Product]:
-        """Get Products
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Products"""
         if self.is_sync:
             return self._get_products_sync(
                 limit=limit,
@@ -997,10 +976,7 @@ class ProductsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Product]]:
-        """Get Products with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Products with HTTP info"""
         if self.is_sync:
             return self._get_products_sync_with_http_info(
                 limit=limit,
@@ -1050,10 +1026,7 @@ class ProductsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Products without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Products without preloading content"""
         if self.is_sync:
             return self._get_products_sync_without_preload_content(
                 limit=limit,
@@ -1499,10 +1472,7 @@ class ProductsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Product:
-        """Update Product
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Product"""
         if self.is_sync:
             return self._update_product_sync(
                 id=id,
@@ -1542,10 +1512,7 @@ class ProductsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Product]:
-        """Update Product with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Product with HTTP info"""
         if self.is_sync:
             return self._update_product_sync_with_http_info(
                 id=id,
@@ -1585,10 +1552,7 @@ class ProductsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update Product without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Product without preloading content"""
         if self.is_sync:
             return self._update_product_sync_without_preload_content(
                 id=id,

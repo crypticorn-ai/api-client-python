@@ -68,10 +68,7 @@ class StatusApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> str:
-        """Time
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Time"""
         if self.is_sync:
             return self._get_time_sync(
                 type=type,
@@ -108,10 +105,7 @@ class StatusApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[str]:
-        """Time with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Time with HTTP info"""
         if self.is_sync:
             return self._get_time_sync_with_http_info(
                 type=type,
@@ -148,10 +142,7 @@ class StatusApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Time without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Time without preloading content"""
         if self.is_sync:
             return self._get_time_sync_without_preload_content(
                 type=type,
@@ -510,10 +501,7 @@ class StatusApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> str:
-        """Ping
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Ping"""
         if self.is_sync:
             return self._ping_sync(
                 _request_timeout=_request_timeout,
@@ -547,10 +535,7 @@ class StatusApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[str]:
-        """Ping with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Ping with HTTP info"""
         if self.is_sync:
             return self._ping_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -584,10 +569,7 @@ class StatusApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Ping without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Ping without preloading content"""
         if self.is_sync:
             return self._ping_sync_without_preload_content(
                 _request_timeout=_request_timeout,

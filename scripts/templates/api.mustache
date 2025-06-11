@@ -47,10 +47,7 @@ class {{classname}}:
 
     @validate_call
     def {{operationId}}{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
-        """{{summary}}{{^summary}}{{operationId}}{{/summary}}
-        
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """{{summary}}{{^summary}}{{operationId}}{{/summary}}"""
         if self.is_sync:
             return self._{{operationId}}_sync{{>partial_api_args_call}}
         else:
@@ -59,10 +56,7 @@ class {{classname}}:
 
     @validate_call
     def {{operationId}}_with_http_info{{>partial_api_args}} -> ApiResponse[{{{returnType}}}{{^returnType}}None{{/returnType}}]:
-        """{{summary}}{{^summary}}{{operationId}}{{/summary}} with HTTP info
-        
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """{{summary}}{{^summary}}{{operationId}}{{/summary}} with HTTP info"""
         if self.is_sync:
             return self._{{operationId}}_sync_with_http_info{{>partial_api_args_call}}
         else:
@@ -71,10 +65,7 @@ class {{classname}}:
 
     @validate_call
     def {{operationId}}_without_preload_content{{>partial_api_args}} -> RESTResponseType:
-        """{{summary}}{{^summary}}{{operationId}}{{/summary}} without preloading content
-        
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """{{summary}}{{^summary}}{{operationId}}{{/summary}} without preloading content"""
         if self.is_sync:
             return self._{{operationId}}_sync_without_preload_content{{>partial_api_args_call}}
         else:

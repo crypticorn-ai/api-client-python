@@ -87,10 +87,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Create User
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create User"""
         if self.is_sync:
             return self._create_user_sync(
                 create_user_request=create_user_request,
@@ -127,10 +124,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Create User with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create User with HTTP info"""
         if self.is_sync:
             return self._create_user_sync_with_http_info(
                 create_user_request=create_user_request,
@@ -167,10 +161,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create User without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create User without preloading content"""
         if self.is_sync:
             return self._create_user_sync_without_preload_content(
                 create_user_request=create_user_request,
@@ -537,10 +528,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Logout
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Logout"""
         if self.is_sync:
             return self._logout_sync(
                 _request_timeout=_request_timeout,
@@ -574,10 +562,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Logout with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Logout with HTTP info"""
         if self.is_sync:
             return self._logout_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -611,10 +596,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Logout without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Logout without preloading content"""
         if self.is_sync:
             return self._logout_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -949,10 +931,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Resend Verification Email
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Resend Verification Email"""
         if self.is_sync:
             return self._resend_verification_email_sync(
                 resend_verification_email_request=resend_verification_email_request,
@@ -989,10 +968,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Resend Verification Email with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Resend Verification Email with HTTP info"""
         if self.is_sync:
             return self._resend_verification_email_sync_with_http_info(
                 resend_verification_email_request=resend_verification_email_request,
@@ -1029,10 +1005,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Resend Verification Email without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Resend Verification Email without preloading content"""
         if self.is_sync:
             return self._resend_verification_email_sync_without_preload_content(
                 resend_verification_email_request=resend_verification_email_request,
@@ -1402,10 +1375,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Send Password Reset Email
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Send Password Reset Email"""
         if self.is_sync:
             return self._send_password_reset_email_sync(
                 resend_verification_email_request=resend_verification_email_request,
@@ -1442,10 +1412,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Send Password Reset Email with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Send Password Reset Email with HTTP info"""
         if self.is_sync:
             return self._send_password_reset_email_sync_with_http_info(
                 resend_verification_email_request=resend_verification_email_request,
@@ -1482,10 +1449,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Send Password Reset Email without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Send Password Reset Email without preloading content"""
         if self.is_sync:
             return self._send_password_reset_email_sync_without_preload_content(
                 resend_verification_email_request=resend_verification_email_request,
@@ -1855,10 +1819,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Update User
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update User"""
         if self.is_sync:
             return self._update_user_sync(
                 update_user_request=update_user_request,
@@ -1895,10 +1856,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Update User with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update User with HTTP info"""
         if self.is_sync:
             return self._update_user_sync_with_http_info(
                 update_user_request=update_user_request,
@@ -1935,10 +1893,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update User without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update User without preloading content"""
         if self.is_sync:
             return self._update_user_sync_without_preload_content(
                 update_user_request=update_user_request,
@@ -2306,10 +2261,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Whoami200Response:
-        """User By Id
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """User By Id"""
         if self.is_sync:
             return self._user_by_id_sync(
                 id=id,
@@ -2346,10 +2298,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Whoami200Response]:
-        """User By Id with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """User By Id with HTTP info"""
         if self.is_sync:
             return self._user_by_id_sync_with_http_info(
                 id=id,
@@ -2386,10 +2335,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """User By Id without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """User By Id without preloading content"""
         if self.is_sync:
             return self._user_by_id_sync_without_preload_content(
                 id=id,
@@ -2749,10 +2695,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> UserByUsername200Response:
-        """User By Username
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """User By Username"""
         if self.is_sync:
             return self._user_by_username_sync(
                 username=username,
@@ -2789,10 +2732,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[UserByUsername200Response]:
-        """User By Username with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """User By Username with HTTP info"""
         if self.is_sync:
             return self._user_by_username_sync_with_http_info(
                 username=username,
@@ -2829,10 +2769,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """User By Username without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """User By Username without preloading content"""
         if self.is_sync:
             return self._user_by_username_sync_without_preload_content(
                 username=username,
@@ -3192,10 +3129,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> VerifyEmail200Response:
-        """User Reset Password
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """User Reset Password"""
         if self.is_sync:
             return self._user_reset_password_sync(
                 user_reset_password_request=user_reset_password_request,
@@ -3232,10 +3166,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[VerifyEmail200Response]:
-        """User Reset Password with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """User Reset Password with HTTP info"""
         if self.is_sync:
             return self._user_reset_password_sync_with_http_info(
                 user_reset_password_request=user_reset_password_request,
@@ -3272,10 +3203,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """User Reset Password without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """User Reset Password without preloading content"""
         if self.is_sync:
             return self._user_reset_password_sync_without_preload_content(
                 user_reset_password_request=user_reset_password_request,
@@ -3643,10 +3571,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """User Set Password
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """User Set Password"""
         if self.is_sync:
             return self._user_set_password_sync(
                 user_set_password_request=user_set_password_request,
@@ -3683,10 +3608,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """User Set Password with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """User Set Password with HTTP info"""
         if self.is_sync:
             return self._user_set_password_sync_with_http_info(
                 user_set_password_request=user_set_password_request,
@@ -3723,10 +3645,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """User Set Password without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """User Set Password without preloading content"""
         if self.is_sync:
             return self._user_set_password_sync_without_preload_content(
                 user_set_password_request=user_set_password_request,
@@ -4094,10 +4013,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> VerifyEmail200Response:
-        """Verify Email
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Verify Email"""
         if self.is_sync:
             return self._verify_email_sync(
                 verify_email_request=verify_email_request,
@@ -4134,10 +4050,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[VerifyEmail200Response]:
-        """Verify Email with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Verify Email with HTTP info"""
         if self.is_sync:
             return self._verify_email_sync_with_http_info(
                 verify_email_request=verify_email_request,
@@ -4174,10 +4087,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Verify Email without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Verify Email without preloading content"""
         if self.is_sync:
             return self._verify_email_sync_without_preload_content(
                 verify_email_request=verify_email_request,
@@ -4548,10 +4458,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Whoami200Response:
-        """Whoami
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Whoami"""
         if self.is_sync:
             return self._whoami_sync(
                 x_refresh_token=x_refresh_token,
@@ -4591,10 +4498,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Whoami200Response]:
-        """Whoami with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Whoami with HTTP info"""
         if self.is_sync:
             return self._whoami_sync_with_http_info(
                 x_refresh_token=x_refresh_token,
@@ -4634,10 +4538,7 @@ class UserApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Whoami without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Whoami without preloading content"""
         if self.is_sync:
             return self._whoami_sync_without_preload_content(
                 x_refresh_token=x_refresh_token,

@@ -81,10 +81,7 @@ class FundingRatesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> FundingRateResponse:
-        """Funding Rate
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Funding Rate"""
         if self.is_sync:
             return self._get_funding_rates_sync(
                 symbol=symbol,
@@ -139,10 +136,7 @@ class FundingRatesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[FundingRateResponse]:
-        """Funding Rate with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Funding Rate with HTTP info"""
         if self.is_sync:
             return self._get_funding_rates_sync_with_http_info(
                 symbol=symbol,
@@ -197,10 +191,7 @@ class FundingRatesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Funding Rate without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Funding Rate without preloading content"""
         if self.is_sync:
             return self._get_funding_rates_sync_without_preload_content(
                 symbol=symbol,

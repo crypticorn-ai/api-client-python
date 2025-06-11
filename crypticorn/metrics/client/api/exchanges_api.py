@@ -105,10 +105,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[ExchangeAvailability]:
-        """Get Available Exchanges
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Available Exchanges"""
         if self.is_sync:
             return self._get_available_exchanges_sync(
                 market=market,
@@ -188,10 +185,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[ExchangeAvailability]]:
-        """Get Available Exchanges with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Available Exchanges with HTTP info"""
         if self.is_sync:
             return self._get_available_exchanges_sync_with_http_info(
                 market=market,
@@ -271,10 +265,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Available Exchanges without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Available Exchanges without preloading content"""
         if self.is_sync:
             return self._get_available_exchanges_sync_without_preload_content(
                 market=market,
@@ -938,10 +929,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[str]:
-        """Get Exchange List
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange List"""
         if self.is_sync:
             return self._get_available_exchanges_for_market_sync(
                 market=market,
@@ -980,10 +968,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[str]]:
-        """Get Exchange List with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange List with HTTP info"""
         if self.is_sync:
             return self._get_available_exchanges_for_market_sync_with_http_info(
                 market=market,
@@ -1022,10 +1007,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Exchange List without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange List without preloading content"""
         if self.is_sync:
             return (
                 self._get_available_exchanges_for_market_sync_without_preload_content(
@@ -1411,10 +1393,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[ExchangeMapping]:
-        """Get Exchange Mappings
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange Mappings"""
         if self.is_sync:
             return self._get_exchange_mappings_sync(
                 market=market,
@@ -1459,10 +1438,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[ExchangeMapping]]:
-        """Get Exchange Mappings with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange Mappings with HTTP info"""
         if self.is_sync:
             return self._get_exchange_mappings_sync_with_http_info(
                 market=market,
@@ -1507,10 +1483,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Exchange Mappings without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange Mappings without preloading content"""
         if self.is_sync:
             return self._get_exchange_mappings_sync_without_preload_content(
                 market=market,
@@ -1944,10 +1917,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[ExchangeMapping]:
-        """Get Exchange Mappings For Pair
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange Mappings For Pair"""
         if self.is_sync:
             return self._get_exchange_mappings_for_pair_sync(
                 pair=pair,
@@ -2009,10 +1979,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[ExchangeMapping]]:
-        """Get Exchange Mappings For Pair with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange Mappings For Pair with HTTP info"""
         if self.is_sync:
             return self._get_exchange_mappings_for_pair_sync_with_http_info(
                 pair=pair,
@@ -2074,10 +2041,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Exchange Mappings For Pair without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Exchange Mappings For Pair without preloading content"""
         if self.is_sync:
             return self._get_exchange_mappings_for_pair_sync_without_preload_content(
                 pair=pair,

@@ -71,10 +71,7 @@ class QuoteCurrenciesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[str]:
-        """Get Quote Currencies
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Quote Currencies"""
         if self.is_sync:
             return self._get_quote_currencies_sync(
                 market=market,
@@ -113,10 +110,7 @@ class QuoteCurrenciesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[str]]:
-        """Get Quote Currencies with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Quote Currencies with HTTP info"""
         if self.is_sync:
             return self._get_quote_currencies_sync_with_http_info(
                 market=market,
@@ -155,10 +149,7 @@ class QuoteCurrenciesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Quote Currencies without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Quote Currencies without preloading content"""
         if self.is_sync:
             return self._get_quote_currencies_sync_without_preload_content(
                 market=market,

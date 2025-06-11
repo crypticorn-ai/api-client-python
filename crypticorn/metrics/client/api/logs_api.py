@@ -79,10 +79,7 @@ class LogsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Dict[str, object]]:
-        """Get Error Logs
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Error Logs"""
         if self.is_sync:
             return self._get_metrics_error_logs_sync(
                 severity=severity,
@@ -133,10 +130,7 @@ class LogsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Dict[str, object]]]:
-        """Get Error Logs with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Error Logs with HTTP info"""
         if self.is_sync:
             return self._get_metrics_error_logs_sync_with_http_info(
                 severity=severity,
@@ -187,10 +181,7 @@ class LogsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Error Logs without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Error Logs without preloading content"""
         if self.is_sync:
             return self._get_metrics_error_logs_sync_without_preload_content(
                 severity=severity,

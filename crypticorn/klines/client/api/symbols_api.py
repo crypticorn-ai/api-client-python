@@ -69,10 +69,7 @@ class SymbolsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[str]:
-        """Symbols
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Symbols"""
         if self.is_sync:
             return self._get_klines_symbols_sync(
                 market=market,
@@ -109,10 +106,7 @@ class SymbolsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[str]]:
-        """Symbols with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Symbols with HTTP info"""
         if self.is_sync:
             return self._get_klines_symbols_sync_with_http_info(
                 market=market,
@@ -149,10 +143,7 @@ class SymbolsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Symbols without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Symbols without preloading content"""
         if self.is_sync:
             return self._get_klines_symbols_sync_without_preload_content(
                 market=market,

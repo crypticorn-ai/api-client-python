@@ -75,10 +75,7 @@ class StrategiesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Strategy:
-        """Create Strategy
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Strategy"""
         if self.is_sync:
             return self._create_strategy_sync(
                 strategy_create=strategy_create,
@@ -115,10 +112,7 @@ class StrategiesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Strategy]:
-        """Create Strategy with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Strategy with HTTP info"""
         if self.is_sync:
             return self._create_strategy_sync_with_http_info(
                 strategy_create=strategy_create,
@@ -155,10 +149,7 @@ class StrategiesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create Strategy without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Create Strategy without preloading content"""
         if self.is_sync:
             return self._create_strategy_sync_without_preload_content(
                 strategy_create=strategy_create,
@@ -537,10 +528,7 @@ class StrategiesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Strategy]:
-        """Get Strategies
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Strategies"""
         if self.is_sync:
             return self._get_strategies_sync(
                 limit=limit,
@@ -590,10 +578,7 @@ class StrategiesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Strategy]]:
-        """Get Strategies with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Strategies with HTTP info"""
         if self.is_sync:
             return self._get_strategies_sync_with_http_info(
                 limit=limit,
@@ -643,10 +628,7 @@ class StrategiesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Strategies without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Strategies without preloading content"""
         if self.is_sync:
             return self._get_strategies_sync_without_preload_content(
                 limit=limit,
@@ -1090,10 +1072,7 @@ class StrategiesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[List[object]]:
-        """Get Strategy Usage
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Strategy Usage"""
         if self.is_sync:
             return self._get_strategy_usage_sync(
                 _request_timeout=_request_timeout,
@@ -1127,10 +1106,7 @@ class StrategiesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[List[object]]]:
-        """Get Strategy Usage with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Strategy Usage with HTTP info"""
         if self.is_sync:
             return self._get_strategy_usage_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -1164,10 +1140,7 @@ class StrategiesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Strategy Usage without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Strategy Usage without preloading content"""
         if self.is_sync:
             return self._get_strategy_usage_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -1502,10 +1475,7 @@ class StrategiesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Kill Strategy
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Kill Strategy"""
         if self.is_sync:
             return self._kill_strategy_sync(
                 id=id,
@@ -1542,10 +1512,7 @@ class StrategiesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Kill Strategy with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Kill Strategy with HTTP info"""
         if self.is_sync:
             return self._kill_strategy_sync_with_http_info(
                 id=id,
@@ -1582,10 +1549,7 @@ class StrategiesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Kill Strategy without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Kill Strategy without preloading content"""
         if self.is_sync:
             return self._kill_strategy_sync_without_preload_content(
                 id=id,
@@ -1946,10 +1910,7 @@ class StrategiesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Strategy:
-        """Update Strategy
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Strategy"""
         if self.is_sync:
             return self._update_strategy_sync(
                 id=id,
@@ -1991,10 +1952,7 @@ class StrategiesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Strategy]:
-        """Update Strategy with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Strategy with HTTP info"""
         if self.is_sync:
             return self._update_strategy_sync_with_http_info(
                 id=id,
@@ -2036,10 +1994,7 @@ class StrategiesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update Strategy without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Update Strategy without preloading content"""
         if self.is_sync:
             return self._update_strategy_sync_without_preload_content(
                 id=id,

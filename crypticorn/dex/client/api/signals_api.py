@@ -71,10 +71,7 @@ class SignalsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> SignalOverviewStats:
-        """Get Stats
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Stats"""
         if self.is_sync:
             return self._get_signal_stats_sync(
                 _request_timeout=_request_timeout,
@@ -108,10 +105,7 @@ class SignalsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[SignalOverviewStats]:
-        """Get Stats with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Stats with HTTP info"""
         if self.is_sync:
             return self._get_signal_stats_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -145,10 +139,7 @@ class SignalsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Stats without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Stats without preloading content"""
         if self.is_sync:
             return self._get_signal_stats_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -503,10 +494,7 @@ class SignalsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PaginatedResponseSignalWithToken:
-        """Get Signals
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Signals"""
         if self.is_sync:
             return self._get_signals_sync(
                 filter_by=filter_by,
@@ -573,10 +561,7 @@ class SignalsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PaginatedResponseSignalWithToken]:
-        """Get Signals with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Signals with HTTP info"""
         if self.is_sync:
             return self._get_signals_sync_with_http_info(
                 filter_by=filter_by,
@@ -643,10 +628,7 @@ class SignalsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Signals without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Signals without preloading content"""
         if self.is_sync:
             return self._get_signals_sync_without_preload_content(
                 filter_by=filter_by,
@@ -1235,10 +1217,7 @@ class SignalsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PaginatedResponseSignalWithToken:
-        """Get Top Signals
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Top Signals"""
         if self.is_sync:
             return self._get_top_signals_sync(
                 page=page,
@@ -1293,10 +1272,7 @@ class SignalsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PaginatedResponseSignalWithToken]:
-        """Get Top Signals with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Top Signals with HTTP info"""
         if self.is_sync:
             return self._get_top_signals_sync_with_http_info(
                 page=page,
@@ -1351,10 +1327,7 @@ class SignalsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Top Signals without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Top Signals without preloading content"""
         if self.is_sync:
             return self._get_top_signals_sync_without_preload_content(
                 page=page,

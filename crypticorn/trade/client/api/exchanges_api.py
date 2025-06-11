@@ -70,10 +70,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Exchange]:
-        """Get All Exchanges
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get All Exchanges"""
         if self.is_sync:
             return self._get_all_exchanges_sync(
                 _request_timeout=_request_timeout,
@@ -107,10 +104,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Exchange]]:
-        """Get All Exchanges with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get All Exchanges with HTTP info"""
         if self.is_sync:
             return self._get_all_exchanges_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -144,10 +138,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get All Exchanges without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get All Exchanges without preloading content"""
         if self.is_sync:
             return self._get_all_exchanges_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -481,10 +472,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Exchange]:
-        """Get Planned Exchanges
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Planned Exchanges"""
         if self.is_sync:
             return self._get_planned_exchanges_sync(
                 _request_timeout=_request_timeout,
@@ -518,10 +506,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Exchange]]:
-        """Get Planned Exchanges with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Planned Exchanges with HTTP info"""
         if self.is_sync:
             return self._get_planned_exchanges_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -555,10 +540,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Planned Exchanges without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Planned Exchanges without preloading content"""
         if self.is_sync:
             return self._get_planned_exchanges_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -892,10 +874,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Exchange]:
-        """Get Tradeable Exchanges
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Tradeable Exchanges"""
         if self.is_sync:
             return self._get_tradeable_exchanges_sync(
                 _request_timeout=_request_timeout,
@@ -929,10 +908,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Exchange]]:
-        """Get Tradeable Exchanges with HTTP info
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Tradeable Exchanges with HTTP info"""
         if self.is_sync:
             return self._get_tradeable_exchanges_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -966,10 +942,7 @@ class ExchangesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Tradeable Exchanges without preloading content
-
-        This method can work in both sync and async modes based on the is_sync flag.
-        """
+        """Get Tradeable Exchanges without preloading content"""
         if self.is_sync:
             return self._get_tradeable_exchanges_sync_without_preload_content(
                 _request_timeout=_request_timeout,
