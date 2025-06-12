@@ -19,14 +19,17 @@ WORKDIR /code
 # and to the workflow:
 # env:
 #     API_ENV: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
-ARG API_ENV
+# and in the docker build:
+#     build-args: |
+#       CACHEBUST=${{ github.run_id }} # invalidates dependency cache on every workflow run
 
-RUN pip install --no-cache-dir -r requirements.txt
+ARG API_ENV
 
 RUN if [ "$API_ENV" != "prod" ]; then \
     pip install --pre crypticorn; \
     fi
 
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./src /code/src
 
