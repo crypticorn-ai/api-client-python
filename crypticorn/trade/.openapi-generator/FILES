@@ -14,6 +14,7 @@ client/api_response.py
 client/configuration.py
 client/exceptions.py
 client/models/__init__.py
+client/models/actions_count.py
 client/models/api_error_identifier.py
 client/models/api_error_level.py
 client/models/api_error_type.py
@@ -42,12 +43,9 @@ client/models/order_status.py
 client/models/orders_count.py
 client/models/paginated_response_futures_trading_action.py
 client/models/paginated_response_order.py
-client/models/paginated_response_union_futures_trading_action_spot_trading_action.py
-client/models/paginated_response_union_futures_trading_action_spot_trading_action_data_inner.py
 client/models/pn_l.py
 client/models/post_futures_action.py
 client/models/spot_balance.py
-client/models/spot_trading_action.py
 client/models/spot_trading_action_create.py
 client/models/strategy.py
 client/models/strategy_create.py

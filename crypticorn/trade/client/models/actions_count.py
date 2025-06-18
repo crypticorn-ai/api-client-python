@@ -17,25 +17,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class ExecutionIds(BaseModel):
+class ActionsCount(BaseModel):
     """
-    Execution IDs for trading actions including main order and stop loss/take profit orders.
+    The number of actions for a user by day
     """  # noqa: E501
 
-    main: StrictStr = Field(description="Main execution ID.")
-    sl: List[StrictStr] = Field(
-        description="Stop loss execution IDs. List with multiple items ordered by the next stop loss, e.g. price = 10000 => SLs: ['900', '700', '500']."
+    timestamp: StrictInt = Field(
+        description="Timestamp of the latest action for the day"
     )
-    tp: List[StrictStr] = Field(
-        description="Take profit execution IDs. List with multiple items ordered by the next take profit, e.g. price = 10000 => TPs: ['1100', '1300', '1500']."
-    )
-    __properties: ClassVar[List[str]] = ["main", "sl", "tp"]
+    count: StrictInt = Field(description="The number of actions for the day")
+    __properties: ClassVar[List[str]] = ["timestamp", "count"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -54,7 +51,7 @@ class ExecutionIds(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ExecutionIds from a JSON string"""
+        """Create an instance of ActionsCount from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,7 +75,7 @@ class ExecutionIds(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ExecutionIds from a dict"""
+        """Create an instance of ActionsCount from a dict"""
         if obj is None:
             return None
 
@@ -86,6 +83,6 @@ class ExecutionIds(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {"main": obj.get("main"), "sl": obj.get("sl"), "tp": obj.get("tp")}
+            {"timestamp": obj.get("timestamp"), "count": obj.get("count")}
         )
         return _obj
