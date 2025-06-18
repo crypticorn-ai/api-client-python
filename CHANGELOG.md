@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.17.0-rc.6 (2025-06-18)
+
+### Features
+
+- Support basic auth authentication for special usecases
+  ([`1fca041`](https://github.com/crypticorn-ai/api-client/commit/1fca04140edac991257b9e1e43ebc0c3ad867454))
+
+
 ## v2.17.0-rc.5 (2025-06-08)
 
 ### Features
