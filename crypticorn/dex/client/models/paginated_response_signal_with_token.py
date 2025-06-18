@@ -20,7 +20,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.dex.client.models.signal_with_token import SignalWithToken
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 

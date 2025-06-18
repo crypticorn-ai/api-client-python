@@ -19,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 
@@ -28,7 +28,9 @@ class SignalOverviewStats(BaseModel):
     Model for signal statistics response
     """  # noqa: E501
 
-    timestamp: StrictInt = Field(description="The timestamp of the stats")
+    timestamp: StrictInt = Field(
+        description="The unix timestamp of the stats calculation"
+    )
     total: StrictInt = Field(description="Total number of tokens analyzed")
     win_rate: Union[StrictFloat, StrictInt] = Field(
         description="Overall win rate as a percentage"

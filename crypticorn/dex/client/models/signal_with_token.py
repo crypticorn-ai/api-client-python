@@ -21,13 +21,13 @@ from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, Stric
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from crypticorn.dex.client.models.signal_volume import SignalVolume
 from crypticorn.dex.client.models.token_data import TokenData
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 
 class SignalWithToken(BaseModel):
     """
-    Model for the signal with the token info
+    Trading signal enriched with comprehensive token metadata and information.
     """  # noqa: E501
 
     ca: StrictStr = Field(description="The contract address of the token")

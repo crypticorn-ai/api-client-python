@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
@@ -25,11 +25,11 @@ from typing_extensions import Self
 
 class SignalVolume(BaseModel):
     """
-    Model for the volume of the signal
+    Trading volume data for a signal over different time periods.
     """  # noqa: E501
 
-    day: StrictStr
-    hour: StrictStr
+    day: StrictStr = Field(description="24-hour trading volume")
+    hour: StrictStr = Field(description="1-hour trading volume")
     __properties: ClassVar[List[str]] = ["day", "hour"]
 
     model_config = ConfigDict(
