@@ -15,10 +15,10 @@ from typing import Annotated, Literal
 from fastapi import APIRouter, Response, Depends
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 from crypticorn.common.metrics import registry
-from crypticorn.common.auth import AuthHandler, basic_auth
+from crypticorn.common.auth import AuthHandler
 
 class EnhancedApiRouter(APIRouter):
-    def __init__(self, enable_metrics: bool = False, auth_handler: AuthHandler = None, *args, **kwargs):
+    def __init__(self, enable_metrics: bool = False, auth_handler: AuthHandler = AuthHandler(), *args, **kwargs):
         """
         Enhanced API Router that allows for metrics and authentication.
         If enable_metrics is True, the router will include the metrics endpoint.
@@ -28,10 +28,7 @@ class EnhancedApiRouter(APIRouter):
         self.enable_metrics = enable_metrics
         self.auth_handler = auth_handler
 
-        if self.enable_metrics and not self.auth_handler:
-            raise ValueError("auth_handler must be provided if enable_metrics is True")
-
-router = EnhancedApiRouter(tags=["Status"], prefix="", enable_metrics=False, auth_handler=None)
+router = EnhancedApiRouter(tags=["Status"], prefix="")
 
 
 @router.get("/", operation_id="ping")
@@ -54,7 +51,7 @@ async def time(type: Literal["iso", "unix"] = "iso") -> str:
 
 
 @router.get("/metrics", operation_id="getMetrics", include_in_schema=router.enable_metrics)
-def metrics(username: Annotated[str, Depends(basic_auth)]):
+def metrics(username: Annotated[str, Depends(router.auth_handler.basic_auth)]):
     """
     Get Prometheus metrics for the application. Returns plain text.
     """
