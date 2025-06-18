@@ -277,7 +277,7 @@ class AuthHandler:
             else None
         )
         return await self.combined_auth(bearer=credentials, api_key=api_key, sec=sec)
-    
+
     async def basic_auth(
         self,
         credentials: Annotated[HTTPBasicCredentials, Depends(basic_auth)],
@@ -286,7 +286,9 @@ class AuthHandler:
         Verifies the basic authentication credentials. This authentication method should just be used for special cases like /admin/metrics, where JWT and API key authentication are not desired or not possible.
         """
         try:
-            await self.client.login.verify_basic_auth(credentials.username, credentials.password)
+            await self.client.login.verify_basic_auth(
+                credentials.username, credentials.password
+            )
         except ApiException as e:
             raise HTTPException(
                 content=ExceptionContent(

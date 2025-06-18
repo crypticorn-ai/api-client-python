@@ -28,7 +28,7 @@ from typing_extensions import Self
 
 class NotificationCreate(BaseModel):
     """
-    Notification model for create operations.
+    Notification model for creating new system alerts and messages.
     """  # noqa: E501
 
     viewed: Optional[StrictBool] = Field(

@@ -27,7 +27,7 @@ from typing_extensions import Self
 
 class ExchangeKeyBalance(BaseModel):
     """
-    ExchangeKeyBalance
+    Balance information for an exchange API key including futures and spot balances.
     """  # noqa: E501
 
     api_key_id: StrictStr = Field(description="API key ID.")

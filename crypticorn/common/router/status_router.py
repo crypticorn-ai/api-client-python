@@ -17,8 +17,15 @@ from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 from crypticorn.common.metrics import registry
 from crypticorn.common.auth import AuthHandler
 
+
 class EnhancedApiRouter(APIRouter):
-    def __init__(self, enable_metrics: bool = False, auth_handler: AuthHandler = AuthHandler(), *args, **kwargs):
+    def __init__(
+        self,
+        enable_metrics: bool = False,
+        auth_handler: AuthHandler = AuthHandler(),
+        *args,
+        **kwargs
+    ):
         """
         Enhanced API Router that allows for metrics and authentication.
         If enable_metrics is True, the router will include the metrics endpoint.
@@ -27,6 +34,7 @@ class EnhancedApiRouter(APIRouter):
         super().__init__(*args, **kwargs)
         self.enable_metrics = enable_metrics
         self.auth_handler = auth_handler
+
 
 router = EnhancedApiRouter(tags=["Status"], prefix="")
 
@@ -50,10 +58,11 @@ async def time(type: Literal["iso", "unix"] = "iso") -> str:
         return str(int(datetime.now().timestamp()))
 
 
-@router.get("/metrics", operation_id="getMetrics", include_in_schema=router.enable_metrics)
+@router.get(
+    "/metrics", operation_id="getMetrics",
+)
 def metrics(username: Annotated[str, Depends(router.auth_handler.basic_auth)]):
     """
     Get Prometheus metrics for the application. Returns plain text.
     """
     return Response(generate_latest(registry), media_type=CONTENT_TYPE_LATEST)
-
