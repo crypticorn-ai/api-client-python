@@ -214,6 +214,8 @@ async def main():
 ```
 If you don’t pass a session, `AsyncClient` will create and manage one internally. In that case, it will be automatically closed when using `async with` or when calling `await client.close()` manually.
 
+**Note on Sync Client**: The `SyncClient` uses per-operation sessions (creates and closes a session for each API call) to ensure reliable synchronous behavior. Custom sessions are accepted but not used. This approach prevents event loop conflicts at the cost of slightly higher overhead per operation.
+
 ### Disable Logging
 
 In case you don't want any logging statements by the `crypticorn` logger to be logged to stdout, you can disable it with:
@@ -222,5 +224,3 @@ In case you don't want any logging statements by the `crypticorn` logger to be l
 from crypticorn.common import disable_logging
 disable_logging()
 ```
-
-**Note on Sync Client**: The `SyncClient` uses per-operation sessions (creates and closes a session for each API call) to ensure reliable synchronous behavior. Custom sessions are accepted but not used. This approach prevents event loop conflicts at the cost of slightly higher overhead per operation.
