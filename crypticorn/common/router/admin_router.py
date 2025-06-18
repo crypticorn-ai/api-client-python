@@ -13,10 +13,8 @@ import psutil
 import re
 import logging
 from typing import Literal
-from fastapi import APIRouter, Query, Response
-from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
+from fastapi import APIRouter, Query
 from crypticorn.common.logging import LogLevel
-from crypticorn.common.metrics import registry
 
 router = APIRouter(tags=["Admin"], prefix="/admin")
 
@@ -106,11 +104,3 @@ def list_installed_packages(
         or any(re.match(pattern, dist.metadata["Name"]) for pattern in include)
     }
     return dict(sorted(packages.items()))
-
-
-@router.get("/metrics", operation_id="getMetrics")
-def metrics():
-    """
-    Get Prometheus metrics for the application. Returns plain text.
-    """
-    return Response(generate_latest(registry), media_type=CONTENT_TYPE_LATEST)
