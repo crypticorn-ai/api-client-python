@@ -20,7 +20,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 
@@ -58,7 +58,7 @@ class GetApiKeys200ResponseInner(BaseModel):
             if i not in set(
                 [
                     "read:predictions",
-                    "read:dexsignals",
+                    "read:dex:signals",
                     "read:hive:model",
                     "read:hive:data",
                     "write:hive:model",
@@ -93,7 +93,7 @@ class GetApiKeys200ResponseInner(BaseModel):
                 ]
             ):
                 raise ValueError(
-                    "each list item must be one of ('read:predictions', 'read:dexsignals', 'read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:exchangekeys', 'write:trade:exchangekeys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'read:pay:now', 'write:pay:now', 'read:metrics:marketcap', 'read:metrics:indicators', 'read:metrics:exchanges', 'read:metrics:tokens', 'read:metrics:markets', 'read:sentiment', 'read:klines', 'read:admin', 'write:admin')"
+                    "each list item must be one of ('read:predictions', 'read:dex:signals', 'read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:exchangekeys', 'write:trade:exchangekeys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'read:pay:now', 'write:pay:now', 'read:metrics:marketcap', 'read:metrics:indicators', 'read:metrics:exchanges', 'read:metrics:tokens', 'read:metrics:markets', 'read:sentiment', 'read:klines', 'read:admin', 'write:admin')"
                 )
         return value
 

@@ -22,7 +22,7 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from crypticorn.auth.client.models.verify_email200_response_auth_auth import (
     VerifyEmail200ResponseAuthAuth,
 )
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 

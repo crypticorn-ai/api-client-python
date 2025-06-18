@@ -33,6 +33,11 @@ from crypticorn.auth.client import rest
 from crypticorn.auth.client.exceptions import (
     ApiValueError,
     ApiException,
+    BadRequestException,
+    UnauthorizedException,
+    ForbiddenException,
+    NotFoundException,
+    ServiceException,
 )
 
 RequestSerialized = Tuple[str, str, Dict[str, str], Optional[str], List[str]]
