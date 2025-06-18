@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.17.0-rc.7 (2025-06-18)
+
+### Bug Fixes
+
+- Fixes basic auth in metrics endpoint
+  ([`f31d689`](https://github.com/crypticorn-ai/api-client/commit/f31d68974c29815e4443ac35989187506c5231b6))
+
+
 ## v2.17.0-rc.6 (2025-06-18)
 
 ### Features
