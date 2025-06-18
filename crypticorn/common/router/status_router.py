@@ -59,7 +59,8 @@ async def time(type: Literal["iso", "unix"] = "iso") -> str:
 
 
 @router.get(
-    "/metrics", operation_id="getMetrics",
+    "/metrics",
+    operation_id="getMetrics",
 )
 def metrics(username: Annotated[str, Depends(router.auth_handler.basic_auth)]):
     """

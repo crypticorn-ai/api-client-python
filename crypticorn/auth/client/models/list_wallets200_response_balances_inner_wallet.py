@@ -22,7 +22,7 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from crypticorn.auth.client.models.list_wallets200_response_balances_inner_wallet_vesting_wallets_inner import (
     ListWallets200ResponseBalancesInnerWalletVestingWalletsInner,
 )
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 
