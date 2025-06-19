@@ -1,5 +1,5 @@
 import time
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 from crypticorn.common.logging import configure_logging
@@ -7,24 +7,72 @@ from contextlib import asynccontextmanager
 from typing_extensions import deprecated
 import warnings
 from crypticorn.common.warnings import CrypticornDeprecatedSince217
-from crypticorn.common.metrics import http_requests_total, http_request_duration_seconds
+from crypticorn.common.metrics import (
+    HTTP_REQUESTS_COUNT,
+    HTTP_REQUEST_DURATION,
+    REQUEST_SIZE,
+    RESPONSE_SIZE,
+)
 
 
 class PrometheusMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request, call_next):
+    async def dispatch(self, request: Request, call_next):
+
+        if "authorization" in request.headers:
+            auth_type = (
+                request.headers["authorization"].split()[0]
+                if " " in request.headers["authorization"]
+                else "none"
+            )
+        elif "x-api-key" in request.headers:
+            auth_type = "X-API-KEY"
+        else:
+            auth_type = "none"
+
+        try:
+            endpoint = request.get(
+                "route"
+            ).path  # use /time/{type} instead of dynamic route to avoid high cardinality
+        except Exception:
+            endpoint = request.url.path
+
         start = time.perf_counter()
         response = await call_next(request)
         duration = time.perf_counter() - start
 
-        http_requests_total.labels(
+        HTTP_REQUESTS_COUNT.labels(
             method=request.method,
-            endpoint=request.url.path,
+            endpoint=endpoint,
             status_code=response.status_code,
+            auth_type=auth_type,
         ).inc()
 
-        http_request_duration_seconds.labels(endpoint=request.url.path).observe(
-            duration
-        )
+        try:
+            body = await request.body()
+            size = len(body)
+        except Exception:
+            size = 0
+
+        REQUEST_SIZE.labels(
+            method=request.method,
+            endpoint=endpoint,
+        ).observe(size)
+
+        try:
+            body = await response.body()
+            size = len(body)
+        except Exception:
+            size = 0
+
+        RESPONSE_SIZE.labels(
+            method=request.method,
+            endpoint=endpoint,
+        ).observe(size)
+
+        HTTP_REQUEST_DURATION.labels(
+            endpoint=endpoint,
+            method=request.method,
+        ).observe(duration)
 
         return response
 
