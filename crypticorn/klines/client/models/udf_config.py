@@ -17,29 +17,47 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.klines.client.models.internal_exchange import InternalExchange
 from crypticorn.klines.client.models.symbol_type import SymbolType
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 
 class UDFConfig(BaseModel):
     """
-    UDFConfig
+    Universal Data Feed configuration for charting library compatibility.
     """  # noqa: E501
 
-    supported_resolutions: List[StrictStr]
-    supports_group_request: Optional[StrictBool] = False
-    supports_marks: Optional[StrictBool] = False
-    supports_search: Optional[StrictBool] = True
-    supports_timescale_marks: Optional[StrictBool] = False
-    supports_time: Optional[StrictBool] = True
-    exchanges: List[InternalExchange]
-    symbols_types: List[SymbolType]
-    currency_codes: List[StrictStr]
-    supported_markets: List[StrictStr]
+    supported_resolutions: List[StrictStr] = Field(
+        description="List of supported time resolutions"
+    )
+    supports_group_request: Optional[StrictBool] = Field(
+        default=False, description="Whether grouped symbol requests are supported"
+    )
+    supports_marks: Optional[StrictBool] = Field(
+        default=False, description="Whether chart marks are supported"
+    )
+    supports_search: Optional[StrictBool] = Field(
+        default=True, description="Whether symbol search is supported"
+    )
+    supports_timescale_marks: Optional[StrictBool] = Field(
+        default=False, description="Whether timescale marks are supported"
+    )
+    supports_time: Optional[StrictBool] = Field(
+        default=True, description="Whether server time is supported"
+    )
+    exchanges: List[InternalExchange] = Field(description="List of available exchanges")
+    symbols_types: List[SymbolType] = Field(
+        description="List of supported symbol types"
+    )
+    currency_codes: List[StrictStr] = Field(
+        description="List of supported currency codes"
+    )
+    supported_markets: List[StrictStr] = Field(
+        description="List of supported market types"
+    )
     __properties: ClassVar[List[str]] = [
         "supported_resolutions",
         "supports_group_request",

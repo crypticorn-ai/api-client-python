@@ -17,18 +17,20 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 
 class SymbolGroup(BaseModel):
     """
-    SymbolGroup
+    Group of symbols for batch operations in UDF requests.
     """  # noqa: E501
 
-    symbol: Optional[List[StrictStr]] = None
+    symbol: Optional[List[StrictStr]] = Field(
+        default=None, description="List of symbol identifiers in the group"
+    )
     __properties: ClassVar[List[str]] = ["symbol"]
 
     model_config = ConfigDict(

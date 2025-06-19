@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class SortDirection(str, Enum):
     """
-    SortDirection
+    Sort direction options for data ordering (ascending or descending).
     """
 
     """

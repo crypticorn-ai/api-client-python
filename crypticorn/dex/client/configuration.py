@@ -121,6 +121,7 @@ AuthSettings = TypedDict(
     {
         "HTTPBearer": BearerFormatAuthSetting,
         "APIKeyHeader": APIKeyAuthSetting,
+        "Basic": BasicAuthSetting,
     },
     total=False,
 )
@@ -191,6 +192,22 @@ class Configuration:
 
         The following cookie will be added to the HTTP request:
            Cookie: JSESSIONID abc123
+
+        HTTP Basic Authentication Example.
+        Given the following security scheme in the OpenAPI specification:
+          components:
+            securitySchemes:
+              http_basic_auth:
+                type: http
+                scheme: basic
+
+        Configure API client with HTTP basic authentication:
+
+    conf = client.Configuration(
+        username='the-user',
+        password='the-password',
+    )
+
     """
 
     _default: ClassVar[Optional[Self]] = None
@@ -215,7 +232,7 @@ class Configuration:
         debug: Optional[bool] = None,
     ) -> None:
         """Constructor"""
-        self._base_path = "https://api.crypticorn.dev/v1/dex" if host is None else host
+        self._base_path = "http://localhost/v1/dex" if host is None else host
         """Default Base url
         """
         self.server_index = 0 if server_index is None and host is None else server_index
@@ -535,6 +552,13 @@ class Configuration:
                     "APIKeyHeader",
                 ),
             }
+        if self.username is not None and self.password is not None:
+            auth["Basic"] = {
+                "type": "basic",
+                "in": "header",
+                "key": "Authorization",
+                "value": self.get_basic_auth_token(),
+            }
         return auth
 
     def to_debug_report(self) -> str:
@@ -557,7 +581,7 @@ class Configuration:
         """
         return [
             {
-                "url": "https://api.crypticorn.dev/v1/dex",
+                "url": "http://localhost/v1/dex",
                 "description": "No description provided",
             }
         ]

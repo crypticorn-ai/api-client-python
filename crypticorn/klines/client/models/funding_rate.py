@@ -25,7 +25,7 @@ from typing_extensions import Self
 
 class FundingRate(BaseModel):
     """
-    Model for a single funding rate
+    Individual funding rate entry with timestamp and rate value for futures trading.
     """  # noqa: E501
 
     timestamp: StrictInt = Field(description="The timestamp of the funding rate")

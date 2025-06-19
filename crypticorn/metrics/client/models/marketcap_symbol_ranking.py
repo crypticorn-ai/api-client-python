@@ -17,19 +17,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 
 class MarketcapSymbolRanking(BaseModel):
     """
-    A ranking of marketcap values at a given timestamp.
+    Symbol ranking ordered by market capitalization at a specific timestamp.
     """  # noqa: E501
 
-    timestamp: StrictInt
-    symbols: List[Optional[StrictStr]]
+    timestamp: StrictInt = Field(description="Unix timestamp of the ranking snapshot")
+    symbols: List[Optional[StrictStr]] = Field(
+        description="Ordered list of symbols ranked by market cap"
+    )
     __properties: ClassVar[List[str]] = ["timestamp", "symbols"]
 
     model_config = ConfigDict(
