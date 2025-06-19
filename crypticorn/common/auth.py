@@ -324,7 +324,7 @@ class AuthHandler:
         Use this function if you only want to allow access via the bearer token.
         This function is used for WebSocket connections.
         """
-        credentials = HTTPAuthorizationCredentials(scheme="Bearer", credentials=bearer)
+        credentials = HTTPAuthorizationCredentials(scheme="Bearer", credentials=bearer) if bearer else None
         return await self.bearer_auth(bearer=credentials, sec=sec)
 
     async def ws_combined_auth(

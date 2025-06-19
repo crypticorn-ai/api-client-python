@@ -81,8 +81,6 @@ class ApiErrorIdentifier(StrEnum):
     LIQUIDATION_PRICE_VIOLATION = "order_violates_liquidation_price_constraints"
     MARGIN_MODE_CLASH = "margin_mode_clash"
     NAME_NOT_UNIQUE = "name_not_unique"
-    NO_API_KEY = "no_api_key"
-    NO_BEARER = "no_bearer"
     NO_CREDENTIALS = "no_credentials"
     NOW_API_DOWN = "now_api_down"
     OBJECT_ALREADY_EXISTS = "object_already_exists"
@@ -354,16 +352,6 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
-    NO_API_KEY = (
-        ApiErrorIdentifier.NO_API_KEY,
-        ApiErrorType.USER_ERROR,
-        ApiErrorLevel.ERROR,
-    )
-    NO_BEARER = (
-        ApiErrorIdentifier.NO_BEARER,
-        ApiErrorType.USER_ERROR,
-        ApiErrorLevel.ERROR,
-    )
     NO_CREDENTIALS = (
         ApiErrorIdentifier.NO_CREDENTIALS,
         ApiErrorType.USER_ERROR,
@@ -600,14 +588,6 @@ class StatusCodeMapper:
             status.WS_1008_POLICY_VIOLATION,
         ),
         ApiError.NO_CREDENTIALS: (
-            status.HTTP_401_UNAUTHORIZED,
-            status.WS_1008_POLICY_VIOLATION,
-        ),
-        ApiError.NO_API_KEY: (
-            status.HTTP_401_UNAUTHORIZED,
-            status.WS_1008_POLICY_VIOLATION,
-        ),
-        ApiError.NO_BEARER: (
             status.HTTP_401_UNAUTHORIZED,
             status.WS_1008_POLICY_VIOLATION,
         ),
