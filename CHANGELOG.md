@@ -1,6 +1,27 @@
 # CHANGELOG
 
 
+## v2.18.0 (2025-06-19)
+
+### Features
+
+- Add basic authentication method
+  ([`2cc025b`](https://github.com/crypticorn-ai/api-client/commit/2cc025b462e6bdf1c2043440752be49e27560426))
+
+- Return authentication methods in response headers
+  ([`24082a8`](https://github.com/crypticorn-ai/api-client/commit/24082a8dea3431f14e375e6b9063d3be2fd9ec61))
+
+### Refactoring
+
+- Move metrics endpoint under admin route and allow jwt and api key auth
+  ([`cb88335`](https://github.com/crypticorn-ai/api-client/commit/cb8833537628510b6fe07f19fbfb7a79be5881a3))
+
+### Testing
+
+- Extend authentication tests
+  ([`d68b8be`](https://github.com/crypticorn-ai/api-client/commit/d68b8be3608cf9322dcd77a011abfab24cbcd9b2))
+
+
 ## v2.17.0 (2025-06-19)
 
 
