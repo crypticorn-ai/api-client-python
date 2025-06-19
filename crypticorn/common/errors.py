@@ -556,10 +556,8 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
 
     @classmethod
     def from_json(cls, data: dict) -> "ApiError":
-        """Load an ApiError from a dictionary. Must contain code, type and level."""
-        if "code" not in data or "type" not in data or "level" not in data:
-            raise ValueError("Invalid data")
-        return cls(data["code"], data["type"], data["level"])
+        """Load an ApiError from a dictionary. Must contain the identifier with the key 'code'."""
+        return next(error for error in cls if error.identifier == data["code"])
 
 
 class StatusCodeMapper:
