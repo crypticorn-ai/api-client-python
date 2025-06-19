@@ -2,7 +2,7 @@
 This module contains the admin router for the API.
 It provides endpoints for monitoring the server and getting information about the environment.
 ONLY ALLOW ACCESS TO THIS ROUTER WITH ADMIN SCOPES.
->>> app.include_router(admin_router, dependencies=[Security(auth_handler.combined_auth, scopes=[Scope.READ_ADMIN, Scope.WRITE_ADMIN])])
+>>> app.include_router(admin_router, dependencies=[Security(auth_handler.full_auth, scopes=[Scope.READ_ADMIN, Scope.WRITE_ADMIN])])
 """
 
 import os
@@ -13,8 +13,10 @@ import psutil
 import re
 import logging
 from typing import Literal
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Response
 from crypticorn.common.logging import LogLevel
+from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
+from crypticorn.common.metrics import registry
 
 router = APIRouter(tags=["Admin"], prefix="/admin")
 
@@ -104,3 +106,11 @@ def list_installed_packages(
         or any(re.match(pattern, dist.metadata["Name"]) for pattern in include)
     }
     return dict(sorted(packages.items()))
+
+
+@router.get("/metrics", operation_id="getMetrics")
+def metrics():
+    """
+    Get Prometheus metrics for the application. Returns plain text.
+    """
+    return Response(generate_latest(registry), media_type=CONTENT_TYPE_LATEST)
