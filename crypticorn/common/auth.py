@@ -21,6 +21,11 @@ from typing_extensions import Annotated
 from typing import Union
 from fastapi.security import HTTPBasicCredentials
 
+AUTHENTICATE_HEADER = "WWW-Authenticate"
+BEARER_AUTH_SCHEME = "Bearer"
+APIKEY_AUTH_SCHEME = "X-API-Key"
+BASIC_AUTH_SCHEME = "Basic"
+
 # Auth Schemes
 http_bearer = HTTPBearer(
     bearerFormat="JWT",
@@ -29,15 +34,15 @@ http_bearer = HTTPBearer(
 )
 
 apikey_header = APIKeyHeader(
-    name="X-API-Key",
+    name=APIKEY_AUTH_SCHEME,
     auto_error=False,
     description="The API key to use for authentication.",
 )
 
-basic_auth = HTTPBasic(
-    scheme_name="Basic",
+http_basic = HTTPBasic(
+    scheme_name=BASIC_AUTH_SCHEME,
     auto_error=False,
-    description="The username and password to use for authentication. Only used in /admin/metrics",
+    description="The username and password to use for authentication.",
 )
 
 
@@ -55,7 +60,7 @@ class AuthHandler:
         base_url: BaseUrl = BaseUrl.PROD,
     ):
         self.url = f"{base_url}/{ApiVersion.V1}/{Service.AUTH}"
-        self.client = AuthClient(Configuration(host=self.url))
+        self.client = AuthClient(Configuration(host=self.url), is_sync=False)
 
     async def _verify_api_key(self, api_key: str) -> Verify200Response:
         """
@@ -72,6 +77,14 @@ class AuthHandler:
         """
         self.client.config.access_token = bearer.credentials
         return await self.client.login.verify()
+
+    async def _verify_basic(self, basic: HTTPBasicCredentials) -> Verify200Response:
+        """
+        Verifies the basic authentication credentials.
+        """
+        return await self.client.login.verify_basic_auth(
+            basic.username, basic.password
+        )
 
     async def _validate_scopes(
         self, api_scopes: list[Scope], user_scopes: list[Scope]
@@ -118,6 +131,8 @@ class AuthHandler:
                 error = ApiError.EXPIRED_API_KEY
             elif message == "jwt expired":
                 error = ApiError.EXPIRED_BEARER
+            elif message == "Invalid basic authentication credentials":
+                error = ApiError.INVALID_BASIC_AUTH
             else:
                 message = "Invalid bearer token"
                 error = (
@@ -150,17 +165,17 @@ class AuthHandler:
         This function is used for HTTP connections.
         """
         try:
-            return await self.combined_auth(bearer=None, api_key=api_key, sec=sec)
+            return await self.full_auth(
+                bearer=None, api_key=api_key, basic=None, sec=sec
+            )
         except HTTPException as e:
-            if e.detail.get("code") == ApiError.NO_CREDENTIALS.identifier:
-                raise HTTPException(
-                    content=ExceptionContent(
-                        error=ApiError.NO_API_KEY,
-                        message="No credentials provided. API key is required",
-                    ),
-                    headers={"WWW-Authenticate": "X-API-Key"},
-                )
-            raise e
+            raise HTTPException(
+                content=ExceptionContent(
+                    error=ApiError.from_json(e.detail),
+                    message=e.detail.get("message"),
+                ),
+                headers={AUTHENTICATE_HEADER: APIKEY_AUTH_SCHEME},
+            )
 
     async def bearer_auth(
         self,
@@ -176,17 +191,37 @@ class AuthHandler:
         This function is used for HTTP connections.
         """
         try:
-            return await self.combined_auth(bearer=bearer, api_key=None, sec=sec)
+            return await self.full_auth(
+                bearer=bearer, api_key=None, basic=None, sec=sec
+            )
         except HTTPException as e:
-            if e.detail.get("code") == ApiError.NO_CREDENTIALS.identifier:
-                raise HTTPException(
-                    content=ExceptionContent(
-                        error=ApiError.NO_BEARER,
-                        message="No credentials provided. Bearer token is required",
-                    ),
-                    headers={"WWW-Authenticate": "Bearer"},
-                )
-            raise e
+            raise HTTPException(
+                content=ExceptionContent(
+                    error=ApiError.from_json(e.detail),
+                    message=e.detail.get("message"),
+                ),
+                headers={AUTHENTICATE_HEADER: BEARER_AUTH_SCHEME},
+            )
+
+    async def basic_auth(
+        self,
+        credentials: Annotated[Union[HTTPBasicCredentials, None], Depends(http_basic)],
+    ) -> Verify200Response:
+        """
+        Verifies the basic authentication credentials. This authentication method should just be used for special cases like /admin/metrics, where JWT and API key authentication are not desired or not possible.
+        """
+        try:
+            return await self.full_auth(
+                basic=credentials, bearer=None, api_key=None, sec=None
+            )
+        except HTTPException as e:
+            raise HTTPException(
+                content=ExceptionContent(
+                    error=ApiError.from_json(e.detail),
+                    message=e.detail.get("message"),
+                ),
+                headers={AUTHENTICATE_HEADER: BASIC_AUTH_SCHEME},
+            )
 
     async def combined_auth(
         self,
@@ -202,8 +237,38 @@ class AuthHandler:
         Use this function if you want to allow access via either the bearer token or the API key.
         This function is used for HTTP connections.
         """
-        tokens = [bearer, api_key]
+        try:
+            return await self.full_auth(
+                basic=None, bearer=bearer, api_key=api_key, sec=sec
+            )
+        except HTTPException as e:
+            raise HTTPException(
+                content=ExceptionContent(
+                    error=ApiError.from_json(e.detail),
+                    message=e.detail.get("message"),
+                ),
+                headers={
+                    AUTHENTICATE_HEADER: f"{BEARER_AUTH_SCHEME}, {APIKEY_AUTH_SCHEME}"
+                },
+            )
 
+    async def full_auth(
+        self,
+        basic: Annotated[Union[HTTPBasicCredentials, None], Depends(http_basic)] = None,
+        bearer: Annotated[
+            Union[HTTPAuthorizationCredentials, None], Depends(http_bearer)
+        ] = None,
+        api_key: Annotated[Union[str, None], Depends(apikey_header)] = None,
+        sec: SecurityScopes = SecurityScopes(),
+    ) -> Verify200Response:
+        """
+        IMPORTANT: combined_auth is sufficient for most use cases. This function adds basic auth to the mix, which is needed for external services like prometheus, but is not recommended for internal use.
+        Verifies the bearer token, API key and basic authentication credentials and checks the scopes.
+        Returns early on the first successful verification, otherwise tries all available tokens.
+        Use this function if you want to allow access via either the bearer token, the API key or the basic authentication credentials.
+        This function is used for HTTP connections.
+        """
+        tokens = [bearer, api_key, basic]
         last_error = None
         for token in tokens:
             try:
@@ -214,6 +279,8 @@ class AuthHandler:
                     res = await self._verify_api_key(token)
                 elif isinstance(token, HTTPAuthorizationCredentials):
                     res = await self._verify_bearer(token)
+                elif isinstance(token, HTTPBasicCredentials):
+                    res = await self._verify_basic(token)
                 if res is None:
                     continue
                 if sec:
@@ -230,9 +297,11 @@ class AuthHandler:
             raise HTTPException(
                 content=ExceptionContent(
                     error=ApiError.NO_CREDENTIALS,
-                    message="No credentials provided. Either API key or bearer token is required.",
+                    message="No credentials provided. Check the WWW-Authenticate header for the available authentication methods.",
                 ),
-                headers={"WWW-Authenticate": "Bearer, X-API-Key"},
+                headers={
+                    AUTHENTICATE_HEADER: f"{BEARER_AUTH_SCHEME}, {APIKEY_AUTH_SCHEME}, {BASIC_AUTH_SCHEME}"
+                },
             )
 
     async def ws_api_key_auth(
@@ -277,33 +346,3 @@ class AuthHandler:
             else None
         )
         return await self.combined_auth(bearer=credentials, api_key=api_key, sec=sec)
-
-    async def basic_auth(
-        self,
-        request: Request,
-        credentials: Annotated[Union[HTTPBasicCredentials, None], Depends(basic_auth)],
-    ):
-        """
-        Verifies the basic authentication credentials. This authentication method should just be used for special cases like /admin/metrics, where JWT and API key authentication are not desired or not possible.
-        """
-        if not credentials:
-            raise HTTPException(
-                content=ExceptionContent(
-                    error=ApiError.NO_CREDENTIALS,
-                    message="No credentials provided. Basic authentication credentials are required.",
-                ),
-            )
-
-        try:
-            await self.client.login.verify_basic_auth_without_preload_content(
-                credentials.username, credentials.password
-            )
-        except ApiException as e:
-            raise HTTPException(
-                content=ExceptionContent(
-                    error=ApiError.INVALID_BASIC_AUTH,
-                    message="Invalid basic authentication credentials",
-                ),
-                headers={"WWW-Authenticate": "Basic"},
-            )
-        return credentials.username
