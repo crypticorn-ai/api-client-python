@@ -21,7 +21,7 @@ from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.klines.client.models.internal_exchange import InternalExchange
 from crypticorn.klines.client.models.symbol_type import SymbolType
-from typing import Optional, Set
+from typing import Set
 from typing_extensions import Self
 
 

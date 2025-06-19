@@ -77,6 +77,7 @@ class RESTClientObject:
 
         self.pool_manager: Optional[aiohttp.ClientSession] = None
         self.retry_client: Optional[aiohttp_retry.RetryClient] = None
+        self.is_sync: bool = False  # Track whether this is sync or async mode
 
     async def close(self) -> None:
         if self.pool_manager:
@@ -170,7 +171,9 @@ class RESTClientObject:
 
         pool_manager: Union[aiohttp.ClientSession, aiohttp_retry.RetryClient]
 
-        # https pool manager
+        # For sync operations, always use a fresh session
+        should_close_session = False
+
         if self.pool_manager is None:
             self.pool_manager = aiohttp.ClientSession(
                 connector=aiohttp.TCPConnector(
@@ -178,6 +181,9 @@ class RESTClientObject:
                 ),
                 trust_env=True,
             )
+            # Only close session automatically in sync mode
+            should_close_session = self.is_sync
+
         pool_manager = self.pool_manager
 
         if self.retries is not None and method in ALLOW_RETRY_METHODS:
@@ -193,6 +199,19 @@ class RESTClientObject:
                 )
             pool_manager = self.retry_client
 
-        r = await pool_manager.request(**args)
-
-        return RESTResponse(r)
+        try:
+            r = await pool_manager.request(**args)
+            # For sessions we're about to close, read the data immediately
+            if should_close_session:
+                response = RESTResponse(r)
+                await response.read()  # Read data before closing session
+                return response
+            else:
+                return RESTResponse(r)
+        finally:
+            if should_close_session:
+                if self.retry_client is not None:
+                    await self.retry_client.close()
+                    self.retry_client = None
+                await self.pool_manager.close()
+                self.pool_manager = None

@@ -7,18 +7,19 @@ from crypticorn.common.exceptions import (
     ApiError,
     HTTPException,
     ExceptionContent,
-    WebSocketException,
 )
 from crypticorn.common.urls import BaseUrl, Service, ApiVersion
-from fastapi import Depends, Query
+from fastapi import Depends, Query, Request
 from fastapi.security import (
     HTTPAuthorizationCredentials,
     SecurityScopes,
     HTTPBearer,
     APIKeyHeader,
+    HTTPBasic,
 )
 from typing_extensions import Annotated
 from typing import Union
+from fastapi.security import HTTPBasicCredentials
 
 # Auth Schemes
 http_bearer = HTTPBearer(
@@ -31,6 +32,12 @@ apikey_header = APIKeyHeader(
     name="X-API-Key",
     auto_error=False,
     description="The API key to use for authentication.",
+)
+
+basic_auth = HTTPBasic(
+    scheme_name="Basic",
+    auto_error=False,
+    description="The username and password to use for authentication. Only used in /admin/metrics",
 )
 
 
@@ -112,6 +119,7 @@ class AuthHandler:
             elif message == "jwt expired":
                 error = ApiError.EXPIRED_BEARER
             else:
+                message = "Invalid bearer token"
                 error = (
                     ApiError.INVALID_BEARER
                 )  # jwt malformed, jwt not active (https://www.npmjs.com/package/jsonwebtoken#errors--codes)
@@ -150,6 +158,7 @@ class AuthHandler:
                         error=ApiError.NO_API_KEY,
                         message="No credentials provided. API key is required",
                     ),
+                    headers={"WWW-Authenticate": "X-API-Key"},
                 )
             raise e
 
@@ -175,6 +184,7 @@ class AuthHandler:
                         error=ApiError.NO_BEARER,
                         message="No credentials provided. Bearer token is required",
                     ),
+                    headers={"WWW-Authenticate": "Bearer"},
                 )
             raise e
 
@@ -222,6 +232,7 @@ class AuthHandler:
                     error=ApiError.NO_CREDENTIALS,
                     message="No credentials provided. Either API key or bearer token is required.",
                 ),
+                headers={"WWW-Authenticate": "Bearer, X-API-Key"},
             )
 
     async def ws_api_key_auth(
@@ -234,10 +245,7 @@ class AuthHandler:
         Use this function if you only want to allow access via the API key.
         This function is used for WebSocket connections.
         """
-        try:
-            return await self.api_key_auth(api_key=api_key, sec=sec)
-        except HTTPException as e:
-            raise WebSocketException.from_http_exception(e)
+        return await self.api_key_auth(api_key=api_key, sec=sec)
 
     async def ws_bearer_auth(
         self,
@@ -249,10 +257,8 @@ class AuthHandler:
         Use this function if you only want to allow access via the bearer token.
         This function is used for WebSocket connections.
         """
-        try:
-            return await self.bearer_auth(bearer=bearer, sec=sec)
-        except HTTPException as e:
-            raise WebSocketException.from_http_exception(e)
+        credentials = HTTPAuthorizationCredentials(scheme="Bearer", credentials=bearer)
+        return await self.bearer_auth(bearer=credentials, sec=sec)
 
     async def ws_combined_auth(
         self,
@@ -270,9 +276,34 @@ class AuthHandler:
             if bearer
             else None
         )
-        try:
-            return await self.combined_auth(
-                bearer=credentials, api_key=api_key, sec=sec
+        return await self.combined_auth(bearer=credentials, api_key=api_key, sec=sec)
+
+    async def basic_auth(
+        self,
+        request: Request,
+        credentials: Annotated[Union[HTTPBasicCredentials, None], Depends(basic_auth)],
+    ):
+        """
+        Verifies the basic authentication credentials. This authentication method should just be used for special cases like /admin/metrics, where JWT and API key authentication are not desired or not possible.
+        """
+        if not credentials:
+            raise HTTPException(
+                content=ExceptionContent(
+                    error=ApiError.NO_CREDENTIALS,
+                    message="No credentials provided. Basic authentication credentials are required.",
+                ),
             )
-        except HTTPException as e:
-            raise WebSocketException.from_http_exception(e)
+
+        try:
+            await self.client.login.verify_basic_auth_without_preload_content(
+                credentials.username, credentials.password
+            )
+        except ApiException as e:
+            raise HTTPException(
+                content=ExceptionContent(
+                    error=ApiError.INVALID_BASIC_AUTH,
+                    message="Invalid basic authentication credentials",
+                ),
+                headers={"WWW-Authenticate": "Basic"},
+            )
+        return credentials.username

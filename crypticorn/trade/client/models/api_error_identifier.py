@@ -65,6 +65,7 @@ class ApiErrorIdentifier(str, Enum):
     INSUFFICIENT_MARGIN = "insufficient_margin"
     INSUFFICIENT_SCOPES = "insufficient_scopes"
     INVALID_API_KEY = "invalid_api_key"
+    INVALID_BASIC_AUTH = "invalid_basic_auth"
     INVALID_BEARER = "invalid_bearer"
     INVALID_DATA = "invalid_data"
     INVALID_DATA_RESPONSE = "invalid_data_response"

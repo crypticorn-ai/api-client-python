@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from crypticorn.trade.client.models.margin_mode import MarginMode
@@ -41,15 +41,18 @@ class StrategyCreate(BaseModel):
         description="Whether the strategy is enabled. If false, no bots will be created or updated for this strategy, open trades will be rejected. Existing bots will be marked as stopping."
     )
     performance_fee: Union[
-        Annotated[float, Field(le=1.0, strict=True)],
-        Annotated[int, Field(le=1, strict=True)],
+        Annotated[float, Field(le=1.0, strict=True, ge=0.0)],
+        Annotated[int, Field(le=1, strict=True, ge=0)],
     ] = Field(description="Performance fee for the strategy")
     identifier: StrictStr = Field(
         description="Unique human readable identifier for the strategy e.g. 'daily_trend_momentum'"
     )
     margin_mode: Optional[MarginMode] = None
-    leverage: StrictInt = Field(description="Leverage for the strategy")
+    leverage: Annotated[int, Field(strict=True, ge=1)] = Field(
+        description="Leverage for the strategy"
+    )
     market_type: MarketType = Field(description="Market of operation of the strategy")
+    additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "name",
         "description",
@@ -91,8 +94,13 @@ class StrategyCreate(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
         """
-        excluded_fields: Set[str] = set([])
+        excluded_fields: Set[str] = set(
+            [
+                "additional_properties",
+            ]
+        )
 
         _dict = self.model_dump(
             by_alias=True,
@@ -106,6 +114,11 @@ class StrategyCreate(BaseModel):
                 if _item_exchanges:
                     _items.append(_item_exchanges.to_dict())
             _dict["exchanges"] = _items
+        # puts key-value pairs in additional_properties in the top level
+        if self.additional_properties is not None:
+            for _key, _value in self.additional_properties.items():
+                _dict[_key] = _value
+
         # set to None if margin_mode (nullable) is None
         # and model_fields_set contains the field
         if self.margin_mode is None and "margin_mode" in self.model_fields_set:
@@ -142,4 +155,9 @@ class StrategyCreate(BaseModel):
                 "market_type": obj.get("market_type"),
             }
         )
+        # store additional fields in additional_properties
+        for _key in obj.keys():
+            if _key not in cls.__properties:
+                _obj.additional_properties[_key] = obj.get(_key)
+
         return _obj

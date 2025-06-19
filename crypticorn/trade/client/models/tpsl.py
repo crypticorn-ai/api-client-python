@@ -28,18 +28,14 @@ class TPSL(BaseModel):
     Runtime fields for take profit and stop loss
     """  # noqa: E501
 
-    price_delta: Optional[StrictStr] = None
-    price: Optional[StrictStr] = None
+    price_delta: StrictStr = Field(
+        description="The price delta to calculate the limit price from the current market price, e.g. 1.01 for a TP of 1% on long"
+    )
     allocation: StrictStr = Field(
         description="Percentage of the open order to sell. All allocations must sum up to 1. Use this allocation again when closing the order."
     )
     execution_id: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = [
-        "price_delta",
-        "price",
-        "allocation",
-        "execution_id",
-    ]
+    __properties: ClassVar[List[str]] = ["price_delta", "allocation", "execution_id"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -78,16 +74,6 @@ class TPSL(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if price_delta (nullable) is None
-        # and model_fields_set contains the field
-        if self.price_delta is None and "price_delta" in self.model_fields_set:
-            _dict["price_delta"] = None
-
-        # set to None if price (nullable) is None
-        # and model_fields_set contains the field
-        if self.price is None and "price" in self.model_fields_set:
-            _dict["price"] = None
-
         # set to None if execution_id (nullable) is None
         # and model_fields_set contains the field
         if self.execution_id is None and "execution_id" in self.model_fields_set:
@@ -107,7 +93,6 @@ class TPSL(BaseModel):
         _obj = cls.model_validate(
             {
                 "price_delta": obj.get("price_delta"),
-                "price": obj.get("price"),
                 "allocation": obj.get("allocation"),
                 "execution_id": obj.get("execution_id"),
             }

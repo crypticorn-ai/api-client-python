@@ -63,6 +63,13 @@ class CrypticornDeprecatedSince215(CrypticornDeprecationWarning):
         super().__init__(message, *args, since=(2, 15), expected_removal=(3, 0))
 
 
+class CrypticornDeprecatedSince217(CrypticornDeprecationWarning):
+    """A specific `CrypticornDeprecationWarning` subclass defining functionality deprecated since Crypticorn 2.17."""
+
+    def __init__(self, message: str, *args: object) -> None:
+        super().__init__(message, *args, since=(2, 17), expected_removal=(3, 0))
+
+
 class CrypticornExperimentalWarning(Warning):
     """A Crypticorn specific experimental functionality warning.
 

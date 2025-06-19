@@ -33,11 +33,6 @@ from crypticorn.klines.client import rest
 from crypticorn.klines.client.exceptions import (
     ApiValueError,
     ApiException,
-    BadRequestException,
-    UnauthorizedException,
-    ForbiddenException,
-    NotFoundException,
-    ServiceException,
 )
 
 RequestSerialized = Tuple[str, str, Dict[str, str], Optional[str], List[str]]

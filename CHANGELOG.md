@@ -1,6 +1,94 @@
 # CHANGELOG
 
 
+## v2.17.0-rc.7 (2025-06-18)
+
+### Bug Fixes
+
+- Fixes basic auth in metrics endpoint
+  ([`f31d689`](https://github.com/crypticorn-ai/api-client/commit/f31d68974c29815e4443ac35989187506c5231b6))
+
+
+## v2.17.0-rc.6 (2025-06-18)
+
+### Features
+
+- Support basic auth authentication for special usecases
+  ([`1fca041`](https://github.com/crypticorn-ai/api-client/commit/1fca04140edac991257b9e1e43ebc0c3ad867454))
+
+
+## v2.17.0-rc.5 (2025-06-08)
+
+### Features
+
+- Add new convenience classes for paginating, sorting and filtering query params
+  ([`854e3bb`](https://github.com/crypticorn-ai/api-client/commit/854e3bb459a8d76352ee9d9172f9578a045d1452))
+
+### Testing
+
+- Update pagination tests
+  ([`6378348`](https://github.com/crypticorn-ai/api-client/commit/6378348fa531e1d037f3373422b3ee7245ff2d08))
+
+
+## v2.17.0-rc.4 (2025-06-06)
+
+### Features
+
+- Add `last` attribute and helper functions to paginated responses
+  ([`fe29d0c`](https://github.com/crypticorn-ai/api-client/commit/fe29d0cb1da60c0fa2dc86f9f0ec54e8d035293d))
+
+### Refactoring
+
+- Add message to invalid_bearer exception
+  ([`5578140`](https://github.com/crypticorn-ai/api-client/commit/557814099f6c37ce015c0ad8e5989266f332e834))
+
+### Testing
+
+- Update websocket authentication test
+  ([`4f727d5`](https://github.com/crypticorn-ai/api-client/commit/4f727d545ab7275e7f3dc8e45b1ed2f0270e4038))
+
+
+## v2.17.0-rc.3 (2025-06-05)
+
+### Bug Fixes
+
+- Fixes bearer auth in websocket
+  ([`cb2f5f0`](https://github.com/crypticorn-ai/api-client/commit/cb2f5f07be25b8009f734de0d4bfdd4dd8b5c357))
+
+
+## v2.17.0-rc.2 (2025-06-05)
+
+### Documentation
+
+- Document SyncClient support
+  ([`8935d22`](https://github.com/crypticorn-ai/api-client/commit/8935d221afe6cb6da2529a05341e104b98bb9fbb))
+
+### Features
+
+- Add support for pagination, sorting and filtering query parameters
+  ([`3afcf2b`](https://github.com/crypticorn-ai/api-client/commit/3afcf2bb8eff65a1c38c738f19e7480550f91798))
+
+- Add support for synchronous usage with `SyncClient`. Both API clients are compatible with each
+  other.
+  ([`02e7622`](https://github.com/crypticorn-ai/api-client/commit/02e7622669bd590a853b12c9aa10183db06a73f1))
+
+- Deprecate ApiClient for Async and SyncClient
+  ([`a00b450`](https://github.com/crypticorn-ai/api-client/commit/a00b4502197fb2287aca893042d197d5f9811076))
+
+### Testing
+
+- Improve tests for pagination query params
+  ([`de1f82a`](https://github.com/crypticorn-ai/api-client/commit/de1f82ae6f5461e172459ec4558dd29c0b2646ad))
+
+
+## v2.17.0-rc.1 (2025-06-01)
+
+### Features
+
+- Add metrics router
+  ([`9b4a9bd`](https://github.com/crypticorn-ai/api-client/commit/9b4a9bd33e16d70d4338f7d458e2d405cb1d22dd))
+
+
 ## v2.16.0 (2025-05-31)
 
 ### Features
