@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class Severity(str, Enum):
     """
-    Severity
+    Error severity levels for logging and monitoring systems.
     """
 
     """

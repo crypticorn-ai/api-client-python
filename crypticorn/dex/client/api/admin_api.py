@@ -442,7 +442,7 @@ class AdminApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
+        _auth_settings: List[str] = ["Basic", "APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -923,7 +923,7 @@ class AdminApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
+        _auth_settings: List[str] = ["Basic", "APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -1328,7 +1328,7 @@ class AdminApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
+        _auth_settings: List[str] = ["Basic", "APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -1730,7 +1730,7 @@ class AdminApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
+        _auth_settings: List[str] = ["Basic", "APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -2132,7 +2132,7 @@ class AdminApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
+        _auth_settings: List[str] = ["Basic", "APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -2534,7 +2534,7 @@ class AdminApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
+        _auth_settings: List[str] = ["Basic", "APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -2968,7 +2968,7 @@ class AdminApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
+        _auth_settings: List[str] = ["Basic", "APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",

@@ -17,23 +17,33 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 
 class OHLCV(BaseModel):
     """
-    OHLCV
+    Open, High, Low, Close, Volume candlestick data with optional market cap information.
     """  # noqa: E501
 
-    timestamp: StrictInt
-    open: Union[StrictFloat, StrictInt]
-    high: Union[StrictFloat, StrictInt]
-    low: Union[StrictFloat, StrictInt]
-    close: Union[StrictFloat, StrictInt]
-    volume: Union[StrictFloat, StrictInt]
+    timestamp: StrictInt = Field(description="Unix timestamp of the candle period")
+    open: Union[StrictFloat, StrictInt] = Field(
+        description="Opening price of the period"
+    )
+    high: Union[StrictFloat, StrictInt] = Field(
+        description="Highest price during the period"
+    )
+    low: Union[StrictFloat, StrictInt] = Field(
+        description="Lowest price during the period"
+    )
+    close: Union[StrictFloat, StrictInt] = Field(
+        description="Closing price of the period"
+    )
+    volume: Union[StrictFloat, StrictInt] = Field(
+        description="Trading volume during the period"
+    )
     marketcap: Optional[Union[StrictFloat, StrictInt]] = None
     __properties: ClassVar[List[str]] = [
         "timestamp",

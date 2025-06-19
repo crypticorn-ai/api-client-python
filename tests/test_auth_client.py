@@ -323,30 +323,34 @@ async def test_ws_api_key_auth_with_valid_key(auth_handler: AuthHandler):
 
 # SCOPE VALIDATION TESTS
 @pytest.mark.asyncio
-async def test_combined_auth_scope_validation_with_insufficient_scopes(auth_handler: AuthHandler):
+async def test_combined_auth_scope_validation_with_insufficient_scopes(
+    auth_handler: AuthHandler,
+):
     """Test scope validation with insufficient scopes"""
     from fastapi.security import SecurityScopes
-    
+
     with pytest.raises(HTTPException) as e:
         # Try to access with a token that has READ_TRADE_BOTS scope but require admin scope
         await auth_handler.combined_auth(
-            bearer=None, 
+            bearer=None,
             api_key=ONE_SCOPE_API_KEY,
-            sec=SecurityScopes(scopes=[Scope.READ_ADMIN])
+            sec=SecurityScopes(scopes=[Scope.READ_ADMIN]),
         )
     assert e.value.status_code == 403
     assert e.value.detail.get("code") == ApiError.INSUFFICIENT_SCOPES.identifier
 
 
 @pytest.mark.asyncio
-async def test_combined_auth_scope_validation_with_sufficient_scopes(auth_handler: AuthHandler):
+async def test_combined_auth_scope_validation_with_sufficient_scopes(
+    auth_handler: AuthHandler,
+):
     """Test scope validation with sufficient scopes"""
     from fastapi.security import SecurityScopes
-    
+
     # This should pass since we're requiring a scope that the API key has
     res = await auth_handler.combined_auth(
-        bearer=None, 
+        bearer=None,
         api_key=ONE_SCOPE_API_KEY,
-        sec=SecurityScopes(scopes=[ONE_SCOPE_API_KEY_SCOPE])
+        sec=SecurityScopes(scopes=[ONE_SCOPE_API_KEY_SCOPE]),
     )
     assert ONE_SCOPE_API_KEY_SCOPE in res.scopes

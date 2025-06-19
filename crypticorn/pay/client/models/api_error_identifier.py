@@ -65,6 +65,7 @@ class ApiErrorIdentifier(str, Enum):
     INSUFFICIENT_MARGIN = "insufficient_margin"
     INSUFFICIENT_SCOPES = "insufficient_scopes"
     INVALID_API_KEY = "invalid_api_key"
+    INVALID_BASIC_AUTH = "invalid_basic_auth"
     INVALID_BEARER = "invalid_bearer"
     INVALID_DATA = "invalid_data"
     INVALID_DATA_RESPONSE = "invalid_data_response"
@@ -76,8 +77,6 @@ class ApiErrorIdentifier(str, Enum):
     )
     MARGIN_MODE_CLASH = "margin_mode_clash"
     NAME_NOT_UNIQUE = "name_not_unique"
-    NO_API_KEY = "no_api_key"
-    NO_BEARER = "no_bearer"
     NO_CREDENTIALS = "no_credentials"
     NOW_API_DOWN = "now_api_down"
     OBJECT_ALREADY_EXISTS = "object_already_exists"

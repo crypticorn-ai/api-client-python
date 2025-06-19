@@ -22,13 +22,13 @@ from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.hive.client.models.data_version import DataVersion
 from crypticorn.hive.client.models.target import Target
 from crypticorn.hive.client.models.target_type import TargetType
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 
 class TargetInfo(BaseModel):
     """
-    Information about a target
+    Metadata about an AI prediction target including type and version availability.
     """  # noqa: E501
 
     name: Target = Field(description="The name of the target.")

@@ -119,6 +119,7 @@ HTTPSignatureAuthSetting = TypedDict(
 AuthSettings = TypedDict(
     "AuthSettings",
     {
+        "Basic": BasicAuthSetting,
         "HTTPBearer": BearerFormatAuthSetting,
         "APIKeyHeader": APIKeyAuthSetting,
     },
@@ -191,6 +192,22 @@ class Configuration:
 
         The following cookie will be added to the HTTP request:
            Cookie: JSESSIONID abc123
+
+        HTTP Basic Authentication Example.
+        Given the following security scheme in the OpenAPI specification:
+          components:
+            securitySchemes:
+              http_basic_auth:
+                type: http
+                scheme: basic
+
+        Configure API client with HTTP basic authentication:
+
+    conf = client.Configuration(
+        username='the-user',
+        password='the-password',
+    )
+
     """
 
     _default: ClassVar[Optional[Self]] = None
@@ -215,9 +232,7 @@ class Configuration:
         debug: Optional[bool] = None,
     ) -> None:
         """Constructor"""
-        self._base_path = (
-            "https://api.crypticorn.dev/v1/metrics" if host is None else host
-        )
+        self._base_path = "http://localhost/v1/metrics" if host is None else host
         """Default Base url
         """
         self.server_index = 0 if server_index is None and host is None else server_index
@@ -520,6 +535,13 @@ class Configuration:
         :return: The Auth Settings information dict.
         """
         auth: AuthSettings = {}
+        if self.username is not None and self.password is not None:
+            auth["Basic"] = {
+                "type": "basic",
+                "in": "header",
+                "key": "Authorization",
+                "value": self.get_basic_auth_token(),
+            }
         if self.access_token is not None:
             auth["HTTPBearer"] = {
                 "type": "bearer",
@@ -559,7 +581,7 @@ class Configuration:
         """
         return [
             {
-                "url": "https://api.crypticorn.dev/v1/metrics",
+                "url": "http://localhost/v1/metrics",
                 "description": "No description provided",
             }
         ]

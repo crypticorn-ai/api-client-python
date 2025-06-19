@@ -27,7 +27,7 @@ from pydantic import (
 )
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from crypticorn.pay.client.models.scope import Scope
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 

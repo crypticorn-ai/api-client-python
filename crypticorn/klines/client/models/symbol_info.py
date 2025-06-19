@@ -25,24 +25,30 @@ from typing_extensions import Self
 
 class SymbolInfo(BaseModel):
     """
-    SymbolInfo
+    Comprehensive symbol information for UDF charting library compatibility.
     """  # noqa: E501
 
-    name: StrictStr
-    exchange_traded: StrictStr = Field(alias="exchange-traded")
-    exchange_listed: StrictStr = Field(alias="exchange-listed")
-    timezone: StrictStr
-    minmov: StrictInt
-    minmov2: StrictInt
-    pointvalue: StrictInt
-    session: StrictStr
-    has_intraday: StrictBool
-    has_no_volume: StrictBool
-    description: StrictStr
-    type: StrictStr
-    supported_resolutions: List[StrictStr]
-    pricescale: StrictInt
-    ticker: StrictStr
+    name: StrictStr = Field(description="Symbol name identifier")
+    exchange_traded: StrictStr = Field(
+        description="Exchange where symbol is traded", alias="exchange-traded"
+    )
+    exchange_listed: StrictStr = Field(
+        description="Exchange where symbol is listed", alias="exchange-listed"
+    )
+    timezone: StrictStr = Field(description="Timezone for symbol trading hours")
+    minmov: StrictInt = Field(description="Minimum price movement")
+    minmov2: StrictInt = Field(description="Secondary minimum price movement")
+    pointvalue: StrictInt = Field(description="Point value for price calculations")
+    session: StrictStr = Field(description="Trading session hours")
+    has_intraday: StrictBool = Field(description="Whether intraday data is available")
+    has_no_volume: StrictBool = Field(description="Whether volume data is unavailable")
+    description: StrictStr = Field(description="Human-readable symbol description")
+    type: StrictStr = Field(description="Symbol type classification")
+    supported_resolutions: List[StrictStr] = Field(
+        description="List of supported time resolutions"
+    )
+    pricescale: StrictInt = Field(description="Price scale factor for decimal places")
+    ticker: StrictStr = Field(description="Symbol ticker identifier")
     __properties: ClassVar[List[str]] = [
         "name",
         "exchange-traded",

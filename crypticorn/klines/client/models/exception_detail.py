@@ -22,7 +22,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.klines.client.models.api_error_identifier import ApiErrorIdentifier
 from crypticorn.klines.client.models.api_error_level import ApiErrorLevel
 from crypticorn.klines.client.models.api_error_type import ApiErrorType
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 

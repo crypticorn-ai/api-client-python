@@ -25,7 +25,7 @@ from typing_extensions import Self
 
 class ChangeInTimeframe(BaseModel):
     """
-    ChangeInTimeframe
+    Price change data for a trading pair over a specific timeframe.
     """  # noqa: E501
 
     pair: StrictStr
