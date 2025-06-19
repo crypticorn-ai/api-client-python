@@ -2,7 +2,12 @@ import json
 import logging
 from typing import Any, Optional
 
-from crypticorn.common.errors import ApiError, ApiErrorIdentifier, ApiErrorLevel, ApiErrorType
+from crypticorn.common.errors import (
+    ApiError,
+    ApiErrorIdentifier,
+    ApiErrorLevel,
+    ApiErrorType,
+)
 from fastapi import FastAPI
 from fastapi import HTTPException as FastAPIHTTPException
 from fastapi import Request
