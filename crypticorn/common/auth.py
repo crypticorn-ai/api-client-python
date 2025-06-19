@@ -9,7 +9,7 @@ from crypticorn.common.exceptions import (
     ExceptionContent,
 )
 from crypticorn.common.urls import BaseUrl, Service, ApiVersion
-from fastapi import Depends, Query
+from fastapi import Depends, Query, Request
 from fastapi.security import (
     HTTPAuthorizationCredentials,
     SecurityScopes,
@@ -280,13 +280,22 @@ class AuthHandler:
 
     async def basic_auth(
         self,
-        credentials: Annotated[HTTPBasicCredentials, Depends(basic_auth)],
+        request: Request,
+        credentials: Annotated[Union[HTTPBasicCredentials, None], Depends(basic_auth)],
     ):
         """
         Verifies the basic authentication credentials. This authentication method should just be used for special cases like /admin/metrics, where JWT and API key authentication are not desired or not possible.
         """
+        if not credentials:
+            raise HTTPException(
+                content=ExceptionContent(
+                    error=ApiError.NO_CREDENTIALS,
+                    message="No credentials provided. Basic authentication credentials are required.",
+                ),
+            )
+
         try:
-            await self.client.login.verify_basic_auth(
+            await self.client.login.verify_basic_auth_without_preload_content(
                 credentials.username, credentials.password
             )
         except ApiException as e:

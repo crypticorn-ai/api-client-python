@@ -13,6 +13,7 @@ from datetime import datetime
 from fastapi import APIRouter, Request
 from typing import Annotated, Literal
 from fastapi import APIRouter, Response, Depends
+from fastapi.security import HTTPBasicCredentials
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 from crypticorn.common.metrics import registry
 from crypticorn.common.auth import AuthHandler
@@ -58,11 +59,10 @@ async def time(type: Literal["iso", "unix"] = "iso") -> str:
         return str(int(datetime.now().timestamp()))
 
 
-@router.get(
-    "/metrics",
-    operation_id="getMetrics",
-)
-def metrics(username: Annotated[str, Depends(router.auth_handler.basic_auth)]):
+@router.get("/metrics", operation_id="getMetrics", include_in_schema=True)
+def metrics(
+    username: Annotated[HTTPBasicCredentials, Depends(router.auth_handler.basic_auth)],
+):
     """
     Get Prometheus metrics for the application. Returns plain text.
     """
