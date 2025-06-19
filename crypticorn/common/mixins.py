@@ -1,6 +1,7 @@
-from enum import EnumMeta
 import logging
 import warnings
+from enum import EnumMeta
+
 from crypticorn.common.warnings import CrypticornDeprecatedSince28
 
 _logger = logging.getLogger("crypticorn")

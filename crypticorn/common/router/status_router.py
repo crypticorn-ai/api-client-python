@@ -10,8 +10,9 @@ Then include the router in the FastAPI app.
 """
 
 from datetime import datetime
-from fastapi import APIRouter, Request
 from typing import Literal
+
+from fastapi import APIRouter, Request
 
 router = APIRouter(tags=["Status"], prefix="")
 

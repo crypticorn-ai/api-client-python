@@ -5,18 +5,19 @@ ONLY ALLOW ACCESS TO THIS ROUTER WITH ADMIN SCOPES.
 >>> app.include_router(admin_router, dependencies=[Security(auth_handler.full_auth, scopes=[Scope.READ_ADMIN, Scope.WRITE_ADMIN])])
 """
 
-import os
 import importlib.metadata
+import logging
+import os
+import re
 import threading
 import time
-import psutil
-import re
-import logging
 from typing import Literal
-from fastapi import APIRouter, Query, Response
+
+import psutil
 from crypticorn.common.logging import LogLevel
-from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 from crypticorn.common.metrics import registry
+from fastapi import APIRouter, Query, Response
+from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 
 router = APIRouter(tags=["Admin"], prefix="/admin")
 

@@ -6,6 +6,7 @@ except ImportError:
     from strenum import StrEnum
 
 import warnings
+
 from crypticorn.common.mixins import ValidateEnumMixin
 from crypticorn.common.warnings import CrypticornDeprecatedSince215
 
