@@ -565,6 +565,13 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
         """WebSocket status code for the error."""
         return StatusCodeMapper.get_websocket_code(self)
 
+    @classmethod
+    def from_json(cls, data: dict) -> "ApiError":
+        """Load an ApiError from a dictionary. Must contain code, type and level."""
+        if "code" not in data or "type" not in data or "level" not in data:
+            raise ValueError("Invalid data")
+        return cls(data["code"], data["type"], data["level"])
+
 
 class StatusCodeMapper:
     """Mapping of API errors to HTTP/Websocket status codes."""
