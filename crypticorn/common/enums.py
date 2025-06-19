@@ -5,9 +5,7 @@ try:
 except ImportError:
     from strenum import StrEnum
 
-from enum import Enum
 import warnings
-import typing_extensions
 from crypticorn.common.mixins import ValidateEnumMixin
 from crypticorn.common.warnings import CrypticornDeprecatedSince215
 

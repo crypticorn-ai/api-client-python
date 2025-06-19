@@ -23,11 +23,15 @@ You can install extra dependencies grouped in the extras `extra`, `dev` (develop
 
 ## Structure
 
-Our API is available as an asynchronous Python SDK. The main entry point you need is the `ApiClient` class, which you would import like this:
+Our API is available as both an asynchronous and synchronous Python SDK. The main entry points are:
+
+- `AsyncClient` - Asynchronous client for async/await usage
+- `SyncClient` - Synchronous client for traditional blocking calls
+
 ```python
-from crypticorn import ApiClient
+from crypticorn import AsyncClient, SyncClient
 ```
-The ApiClient serves as the central interface for API operations. It instantiates multiple API wrappers corresponding to our micro services. These are structured the following:
+Both clients serve as the central interface for API operations and instantiate multiple API wrappers corresponding to our micro services. These are structured the following:
 
 <img src="static/pip-structure.svg" alt="pip package structure" />
 
@@ -55,20 +59,22 @@ There are scopes which don't follow this structure. Those are either scopes that
 
 ## Basic Usage
 
-You can use the client with the async context protocol...
+### Asynchronous Client
+
+You can use the async client with the context manager protocol...
 ```python
-async with ApiClient(api_key="your-api-key") as client:
-        await client.pay.products.get_products()
+async with AsyncClient(api_key="your-api-key") as client:
+    await client.pay.products.get_products()
 ```
 ...or without it like this...
 ```python
-client = ApiClient(api_key="your-api-key")
-asyncio.run(client.pay.models.get_products())
+client = AsyncClient(api_key="your-api-key")
+asyncio.run(client.pay.products.get_products())
 asyncio.run(client.close())
 ```
 ...or this.
 ```python
-client = ApiClient(api_key="your-api-key")
+client = AsyncClient(api_key="your-api-key")
 
 async def main():
     await client.pay.products.get_products()
@@ -77,6 +83,29 @@ asyncio.run(main())
 asyncio.run(client.close())
 ```
 
+### Synchronous Client
+
+For traditional synchronous usage without async/await, use the `SyncClient`:
+
+```python
+from crypticorn import SyncClient
+
+# With context manager (recommended)
+with SyncClient(api_key="your-api-key") as client:
+    products = client.pay.products.get_products()
+    status = client.trade.status.ping()
+
+# Or without context manager
+client = SyncClient(api_key="your-api-key")
+try:
+    products = client.pay.products.get_products()
+    status = client.trade.status.ping()
+finally:
+    client.close()  # Manual cleanup required
+```
+
+The sync client provides the same API surface as the async client, but all methods return results directly instead of coroutines. Under the hood, it uses `asgiref.async_to_sync` to bridge async operations to synchronous calls, ensuring reliable operation without requiring async/await syntax.
+
 ## Response Types
 
 There are three different available output formats you can choose from:
@@ -84,7 +113,10 @@ There are three different available output formats you can choose from:
 ### Serialized Response
 You can get fully serialized responses as pydantic models. Using this, you get the full benefits of pydantic's type checking.
 ```python
+# Async client
 res = await client.pay.products.get_products()
+# Sync client  
+res = client.pay.products.get_products()
 print(res)
 ```
 The output would look like this:
@@ -94,7 +126,10 @@ The output would look like this:
 
 ### Serialized Response with HTTP Info
 ```python
+# Async client
 res = await client.pay.products.get_products_with_http_info()
+# Sync client
+res = client.pay.products.get_products_with_http_info()
 print(res)
 ```
 The output would look like this:
@@ -115,8 +150,12 @@ print(res.headers)
 ### JSON Response
 You can receive a classical JSON response by suffixing the function name with `_without_preload_content`
 ```python
+# Async client
 response = await client.pay.products.get_products_without_preload_content()
 print(await response.json())
+
+# Sync client - Note: use regular methods instead as response.json() returns a coroutine
+response = client.pay.products.get_products_without_preload_content()
 ```
 The output would look like this:
 ```python
@@ -146,33 +185,36 @@ To override e.g. the host for the Hive client to connect to localhost:8000 inste
 from crypticorn.hive import Configuration as HiveConfig
 from crypticorn.common import Service
 
-async with ApiClient() as client:
+# Async client
+async with AsyncClient() as client:
+    client.configure(config=HiveConfig(host="http://localhost:8000"), service=Service.HIVE)
+
+# Sync client
+with SyncClient() as client:
     client.configure(config=HiveConfig(host="http://localhost:8000"), service=Service.HIVE)
 ```
 
 ### Session Management
 
-By default, `ApiClient` manages a single shared `aiohttp.ClientSession` for all service wrappers.  
+By default, `AsyncClient` manages a single shared `aiohttp.ClientSession` for all service wrappers.  
 However, you can pass your own pre-configured `aiohttp.ClientSession` if you need advanced control — for example, to add retries, custom headers, logging, or mocking behavior.
 
 When you inject a custom session, you are responsible for managing its lifecycle, including closing when you're done.
 
 ```python
 import aiohttp
-from crypticorn import ApiClient
+from crypticorn import AsyncClient
 
 async def main():
     custom_session = aiohttp.ClientSession()
-    async with ApiClient(api_key="your-key", http_client=custom_session) as client:
+    async with AsyncClient(api_key="your-key", http_client=custom_session) as client:
         await client.trade.status.ping()
     await custom_session.close()
-    # or
-    custom_session = aiohttp.ClientSession()
-    client = ApiClient(api_key="your-key", http_client=custom_session)
-    await client.trade.status.ping()
-    await custom_session.close()
+
 ```
-If you don’t pass a session, `ApiClient` will create and manage one internally. In that case, it will be automatically closed when using `async with` or when calling `await client.close()` manually.
+If you don’t pass a session, `AsyncClient` will create and manage one internally. In that case, it will be automatically closed when using `async with` or when calling `await client.close()` manually.
+
+**Note on Sync Client**: The `SyncClient` uses per-operation sessions (creates and closes a session for each API call) to ensure reliable synchronous behavior. Custom sessions are accepted but not used. This approach prevents event loop conflicts at the cost of slightly higher overhead per operation.
 
 ### Disable Logging
 

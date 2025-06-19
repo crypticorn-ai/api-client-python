@@ -70,6 +70,7 @@ class ApiErrorIdentifier(StrEnum):
     INSUFFICIENT_MARGIN = "insufficient_margin"
     INSUFFICIENT_SCOPES = "insufficient_scopes"
     INVALID_API_KEY = "invalid_api_key"
+    INVALID_BASIC_AUTH = "invalid_basic_auth"
     INVALID_BEARER = "invalid_bearer"
     INVALID_DATA_REQUEST = "invalid_data"
     INVALID_DATA_RESPONSE = "invalid_data_response"
@@ -299,6 +300,11 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
     )
     INVALID_API_KEY = (
         ApiErrorIdentifier.INVALID_API_KEY,
+        ApiErrorType.USER_ERROR,
+        ApiErrorLevel.ERROR,
+    )
+    INVALID_BASIC_AUTH = (
+        ApiErrorIdentifier.INVALID_BASIC_AUTH,
         ApiErrorType.USER_ERROR,
         ApiErrorLevel.ERROR,
     )
@@ -566,6 +572,10 @@ class StatusCodeMapper:
     _mapping = {
         # Authentication/Authorization
         ApiError.EXPIRED_BEARER: (
+            status.HTTP_401_UNAUTHORIZED,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
+        ApiError.INVALID_BASIC_AUTH: (
             status.HTTP_401_UNAUTHORIZED,
             status.WS_1008_POLICY_VIOLATION,
         ),

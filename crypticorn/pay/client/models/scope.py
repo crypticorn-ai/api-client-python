@@ -29,6 +29,7 @@ class Scope(str, Enum):
     WRITE_COLON_ADMIN = "write:admin"
     READ_COLON_ADMIN = "read:admin"
     READ_COLON_PREDICTIONS = "read:predictions"
+    READ_COLON_DEXSIGNALS = "read:dexsignals"
     READ_COLON_HIVE_COLON_MODEL = "read:hive:model"
     READ_COLON_HIVE_COLON_DATA = "read:hive:data"
     WRITE_COLON_HIVE_COLON_MODEL = "write:hive:model"

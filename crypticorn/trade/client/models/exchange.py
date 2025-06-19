@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class Exchange(str, Enum):
     """
-    Supported exchanges for trading
+    All exchanges used in the crypticorn ecosystem. Refer to the APIs for support for a specific usecase (data, trading, etc.).
     """
 
     """
@@ -28,7 +28,12 @@ class Exchange(str, Enum):
     """
     KUCOIN = "kucoin"
     BINGX = "bingx"
+    BINANCE = "binance"
+    BYBIT = "bybit"
     HYPERLIQUID = "hyperliquid"
+    BITGET = "bitget"
+    GATEIO = "gateio"
+    BITSTAMP = "bitstamp"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

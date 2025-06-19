@@ -4,7 +4,7 @@ import requests
 import subprocess
 
 # List of possible module names
-MODULES = ["trade", "klines", "hive", "pay", "auth", "metrics"]
+MODULES = ["trade", "klines", "hive", "pay", "auth", "metrics", "dex"]
 ENVIRONMENTS = ["local", "dev", "prod"]
 ENV_MAP = {
     "local": "http://localhost/v1",
@@ -40,7 +40,7 @@ def main():
     if not module_name:
         print("Please provide the service name as an arg")
         print(f"Valid services: {', '.join(MODULES)}")
-        print(f"Example: python python/generate.py --service=trade")
+        print("Example: python python/generate.py --service=trade")
         sys.exit(1)
 
     # Validate service name
@@ -100,6 +100,8 @@ def main():
         "--minimal-update",
         "--library",
         "asyncio",
+        "-t",
+        "python/scripts/templates",
     ]
     subprocess.run(generator_cmd, check=True)
 
@@ -152,9 +154,9 @@ __all__ = ["{upper_module_name}Client", ]
 
     print("========================IMPORTANT========================")
     print("If you are adding a new module, you need to do the following:")
-    print(f"- Edit the generated crypticorn/client.py file.")
+    print("- Edit the generated crypticorn/client.py file.")
     print(f"- Edit the generated crypticorn/{module_name}/main.py file.")
-    print(f"- Edit the crypticorn/common/urls.py file to add the new module.")
+    print("- Edit the crypticorn/common/urls.py file to add the new module.")
     print("=========================================================")
 
 

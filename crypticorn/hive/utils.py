@@ -28,7 +28,7 @@ async def download_file(
 
         if file_size < total_size:
             # Download incomplete
-            logger.info(f" resuming download")
+            logger.info(" resuming download")
             resume_header = {"Range": f"bytes={file_size}-"}
             req = requests.get(
                 url,
@@ -45,7 +45,7 @@ async def download_file(
             file_size = 0
     else:
         # File does not exist, starting download
-        logger.info(f" starting download")
+        logger.info(" starting download")
 
     # write dataset to file and show progress bar
     pbar = tqdm.tqdm(

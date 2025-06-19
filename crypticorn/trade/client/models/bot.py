@@ -18,8 +18,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
-from typing_extensions import Annotated
+from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.trade.client.models.api_error_identifier import ApiErrorIdentifier
 from crypticorn.trade.client.models.bot_status import BotStatus
 from typing import Optional, Set
@@ -49,22 +48,12 @@ class Bot(BaseModel):
     )
     api_key_id: StrictStr = Field(description="UID for the API key")
     status_code: Optional[ApiErrorIdentifier] = None
-    current_allocation: Optional[
-        Union[
-            Annotated[float, Field(strict=True, ge=0.0)],
-            Annotated[int, Field(strict=True, ge=0)],
-        ]
-    ] = Field(
-        default=0,
+    current_allocation: Optional[StrictStr] = Field(
+        default="0",
         description="Initial allocation for the bot + accumulated PnL of the orders after the last allocation change",
     )
-    current_exposure: Optional[
-        Union[
-            Annotated[float, Field(strict=True, ge=0.0)],
-            Annotated[int, Field(strict=True, ge=0)],
-        ]
-    ] = Field(
-        default=0,
+    current_exposure: Optional[StrictStr] = Field(
+        default="0",
         description="Current exposure of the bot, aka. the sum of the absolute values of the open positions",
     )
     __properties: ClassVar[List[str]] = [
@@ -150,12 +139,12 @@ class Bot(BaseModel):
                 "current_allocation": (
                     obj.get("current_allocation")
                     if obj.get("current_allocation") is not None
-                    else 0
+                    else "0"
                 ),
                 "current_exposure": (
                     obj.get("current_exposure")
                     if obj.get("current_exposure") is not None
-                    else 0
+                    else "0"
                 ),
             }
         )

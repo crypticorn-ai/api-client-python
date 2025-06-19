@@ -16,13 +16,32 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictInt
+from pydantic import Field, StrictStr, field_validator
 from typing import List, Optional
-from crypticorn.trade.client.models.order import Order
+from typing_extensions import Annotated
+from crypticorn.trade.client.models.orders_count import OrdersCount
 
 from crypticorn.trade.client.api_client import ApiClient, RequestSerialized
 from crypticorn.trade.client.api_response import ApiResponse
 from crypticorn.trade.client.rest import RESTResponseType
+
+# Import async_to_sync for sync methods
+try:
+    from asgiref.sync import async_to_sync
+
+    _HAS_ASGIREF = True
+except ImportError:
+    _HAS_ASGIREF = False
+
+    def async_to_sync(async_func):
+        """Fallback decorator that raises an error if asgiref is not available."""
+
+        def wrapper(*args, **kwargs):
+            raise ImportError(
+                "asgiref is required for sync methods. Install with: pip install asgiref"
+            )
+
+        return wrapper
 
 
 class OrdersApi:
@@ -32,16 +51,27 @@ class OrdersApi:
     Do not edit the class manually.
     """
 
-    def __init__(self, api_client=None) -> None:
+    def __init__(self, api_client=None, is_sync: bool = False) -> None:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+        self.is_sync = is_sync
 
     @validate_call
-    async def get_orders(
+    def get_orders_count(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        group_by: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The group by period for the orders count. Defaults to day."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -53,63 +83,47 @@ class OrdersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Order]:
-        """Get Orders
+    ) -> List[OrdersCount]:
+        """Get Orders Count"""
+        if self.is_sync:
+            return self._get_orders_count_sync(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                group_by=group_by,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
 
-        Get all orders for a user
-
-        :param limit:
-        :type limit: int
-        :param offset:
-        :type offset: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_orders_serialize(
-            limit=limit,
-            offset=offset,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Order]",
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
+        else:
+            return self._get_orders_count_async(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                group_by=group_by,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
 
     @validate_call
-    async def get_orders_with_http_info(
+    def get_orders_count_with_http_info(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        group_by: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The group by period for the orders count. Defaults to day."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -121,63 +135,47 @@ class OrdersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Order]]:
-        """Get Orders
+    ) -> ApiResponse[List[OrdersCount]]:
+        """Get Orders Count with HTTP info"""
+        if self.is_sync:
+            return self._get_orders_count_sync_with_http_info(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                group_by=group_by,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
 
-        Get all orders for a user
-
-        :param limit:
-        :type limit: int
-        :param offset:
-        :type offset: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_orders_serialize(
-            limit=limit,
-            offset=offset,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Order]",
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
+        else:
+            return self._get_orders_count_async_with_http_info(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                group_by=group_by,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
 
     @validate_call
-    async def get_orders_without_preload_content(
+    def get_orders_count_without_preload_content(
         self,
-        limit: Optional[StrictInt] = None,
-        offset: Optional[StrictInt] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        group_by: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The group by period for the orders count. Defaults to day."
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -190,14 +188,69 @@ class OrdersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Orders
+        """Get Orders Count without preloading content"""
+        if self.is_sync:
+            return self._get_orders_count_sync_without_preload_content(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                group_by=group_by,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
 
-        Get all orders for a user
+        else:
+            return self._get_orders_count_async_without_preload_content(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                group_by=group_by,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
 
-        :param limit:
-        :type limit: int
-        :param offset:
-        :type offset: int
+    # Private async implementation methods
+    @validate_call
+    async def _get_orders_count_async(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        group_by: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The group by period for the orders count. Defaults to day."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[OrdersCount]:
+        """Get Orders Count
+
+        Get the number of orders for all users by day, week, month, or year. The default sort is `timestamp` and the default order is `asc`..
+
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
+        :param group_by: The group by period for the orders count. Defaults to day.
+        :type group_by: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -220,9 +273,10 @@ class OrdersApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_orders_serialize(
-            limit=limit,
-            offset=offset,
+        _param = self._get_orders_count_serialize(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            group_by=group_by,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -230,17 +284,297 @@ class OrdersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Order]",
+            "200": "List[OrdersCount]",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
-        return response_data.response
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
 
-    def _get_orders_serialize(
+    @validate_call
+    async def _get_orders_count_async_with_http_info(
         self,
-        limit,
-        offset,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        group_by: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The group by period for the orders count. Defaults to day."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[OrdersCount]]:
+        """Get Orders Count
+
+        Get the number of orders for all users by day, week, month, or year. The default sort is `timestamp` and the default order is `asc`..
+
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
+        :param group_by: The group by period for the orders count. Defaults to day.
+        :type group_by: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_orders_count_serialize(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            group_by=group_by,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "List[OrdersCount]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data, response_types_map=_response_types_map
+        )
+
+    @validate_call
+    async def _get_orders_count_async_without_preload_content(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        group_by: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The group by period for the orders count. Defaults to day."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Orders Count
+
+        Get the number of orders for all users by day, week, month, or year. The default sort is `timestamp` and the default order is `asc`..
+
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
+        :param group_by: The group by period for the orders count. Defaults to day.
+        :type group_by: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_orders_count_serialize(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            group_by=group_by,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "List[OrdersCount]",
+        }
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _get_orders_count_sync(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        group_by: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The group by period for the orders count. Defaults to day."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[OrdersCount]:
+        """Synchronous version of get_orders_count"""
+        return async_to_sync(self._get_orders_count_async)(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            group_by=group_by,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_orders_count_sync_with_http_info(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        group_by: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The group by period for the orders count. Defaults to day."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[OrdersCount]]:
+        """Synchronous version of get_orders_count_with_http_info"""
+        return async_to_sync(self._get_orders_count_async_with_http_info)(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            group_by=group_by,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_orders_count_sync_without_preload_content(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        group_by: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="The group by period for the orders count. Defaults to day."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of get_orders_count_without_preload_content"""
+        return async_to_sync(self._get_orders_count_async_without_preload_content)(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            group_by=group_by,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    def _get_orders_count_serialize(
+        self,
+        sort_order,
+        sort_by,
+        group_by,
         _request_auth,
         _content_type,
         _headers,
@@ -262,13 +596,17 @@ class OrdersApi:
 
         # process the path parameters
         # process the query parameters
-        if limit is not None:
+        if sort_order is not None:
 
-            _query_params.append(("limit", limit))
+            _query_params.append(("sort_order", sort_order))
 
-        if offset is not None:
+        if sort_by is not None:
 
-            _query_params.append(("offset", offset))
+            _query_params.append(("sort_by", sort_by))
+
+        if group_by is not None:
+
+            _query_params.append(("group_by", group_by))
 
         # process the header parameters
         # process the form parameters
@@ -285,7 +623,7 @@ class OrdersApi:
 
         return self.api_client.param_serialize(
             method="GET",
-            resource_path="/orders",
+            resource_path="/orders/count",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

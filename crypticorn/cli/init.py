@@ -33,7 +33,7 @@ def copy_template(template_name: str, target_path: Path):
 
 def check_file_exists(path: Path, force: bool):
     if path.exists() and not force:
-        click.secho(f"File already exists, use --force / -f to overwrite", fg="red")
+        click.secho("File already exists, use --force / -f to overwrite", fg="red")
         return False
     return True
 

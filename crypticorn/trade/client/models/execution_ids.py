@@ -25,7 +25,7 @@ from typing_extensions import Self
 
 class ExecutionIds(BaseModel):
     """
-    ExecutionIds
+    Execution IDs for trading actions including main order and stop loss/take profit orders.
     """  # noqa: E501
 
     main: StrictStr = Field(description="Main execution ID.")

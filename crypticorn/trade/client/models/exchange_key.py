@@ -26,7 +26,7 @@ from typing_extensions import Self
 
 class ExchangeKey(BaseModel):
     """
-    Exchange key model not containing sensitive information for read operations.
+    Exchange API key model without sensitive credentials for safe read operations.
     """  # noqa: E501
 
     user_id: StrictStr = Field(description="UID for the user")

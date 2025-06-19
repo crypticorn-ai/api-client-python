@@ -26,7 +26,7 @@ from typing_extensions import Self
 
 class PostFuturesAction(BaseModel):
     """
-    PostFuturesAction
+    The response when posting a futures action
     """  # noqa: E501
 
     id: StrictStr = Field(description="Action ID.")

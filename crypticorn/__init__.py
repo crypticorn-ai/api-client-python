@@ -14,6 +14,6 @@ warnings.filterwarnings("default", "", DeprecationWarning)
 configure_logging()
 logging.captureWarnings(True)
 
-from crypticorn.client import ApiClient
+from crypticorn.client import AsyncClient, SyncClient, ApiClient
 
-__all__ = ["ApiClient"]
+__all__ = ["AsyncClient", "SyncClient", "ApiClient"]
