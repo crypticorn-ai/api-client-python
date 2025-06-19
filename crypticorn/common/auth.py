@@ -10,7 +10,7 @@ from crypticorn.common.exceptions import (
 )
 from crypticorn.common.scopes import Scope
 from crypticorn.common.urls import ApiVersion, BaseUrl, Service
-from fastapi import Depends, Query, Request
+from fastapi import Depends, Query
 from fastapi.security import (
     APIKeyHeader,
     HTTPAuthorizationCredentials,
