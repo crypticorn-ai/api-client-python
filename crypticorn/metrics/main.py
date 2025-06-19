@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, Optional, Union, Coroutine, Any
-from crypticorn.common import optional_import
+from crypticorn.common.utils import optional_import
 from crypticorn.metrics import (
     ApiClient,
     Configuration,
