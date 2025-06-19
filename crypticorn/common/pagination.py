@@ -1,8 +1,9 @@
 """Utilities for handling paginated API responses, cursor-based pagination, filtering, sorting, etc."""
 
-from typing import Annotated, Any, Generic, Type, TypeVar, Optional, Literal
-from pydantic import BaseModel, Field, model_validator
 import math
+from typing import Annotated, Any, Generic, Literal, Optional, Type, TypeVar
+
+from pydantic import BaseModel, Field, model_validator
 
 T = TypeVar("T")
 

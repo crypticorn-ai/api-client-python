@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 import logging
-from logging.handlers import RotatingFileHandler
-import sys
-from crypticorn.common.mixins import ValidateEnumMixin
-from crypticorn.common.ansi_colors import AnsiColors as C
-from datetime import datetime
 import os
+import sys
+from datetime import datetime
+from logging.handlers import RotatingFileHandler
+
+from crypticorn.common.ansi_colors import AnsiColors as C
+from crypticorn.common.mixins import ValidateEnumMixin
 
 try:
     from enum import StrEnum

@@ -1,25 +1,25 @@
 import json
+from typing import Union
 
-from crypticorn.auth import Verify200Response, AuthClient, Configuration
+from crypticorn.auth import AuthClient, Configuration, Verify200Response
 from crypticorn.auth.client.exceptions import ApiException
-from crypticorn.common.scopes import Scope
 from crypticorn.common.exceptions import (
     ApiError,
-    HTTPException,
     ExceptionContent,
+    HTTPException,
 )
-from crypticorn.common.urls import BaseUrl, Service, ApiVersion
+from crypticorn.common.scopes import Scope
+from crypticorn.common.urls import ApiVersion, BaseUrl, Service
 from fastapi import Depends, Query, Request
 from fastapi.security import (
-    HTTPAuthorizationCredentials,
-    SecurityScopes,
-    HTTPBearer,
     APIKeyHeader,
+    HTTPAuthorizationCredentials,
     HTTPBasic,
+    HTTPBasicCredentials,
+    HTTPBearer,
+    SecurityScopes,
 )
 from typing_extensions import Annotated
-from typing import Union
-from fastapi.security import HTTPBasicCredentials
 
 AUTHENTICATE_HEADER = "WWW-Authenticate"
 BEARER_AUTH_SCHEME = "Bearer"
@@ -82,9 +82,7 @@ class AuthHandler:
         """
         Verifies the basic authentication credentials.
         """
-        return await self.client.login.verify_basic_auth(
-            basic.username, basic.password
-        )
+        return await self.client.login.verify_basic_auth(basic.username, basic.password)
 
     async def _validate_scopes(
         self, api_scopes: list[Scope], user_scopes: list[Scope]

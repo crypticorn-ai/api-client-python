@@ -1,18 +1,19 @@
 import time
-from fastapi import FastAPI, Request
-from fastapi.middleware.cors import CORSMiddleware
-from starlette.middleware.base import BaseHTTPMiddleware
-from crypticorn.common.logging import configure_logging
-from contextlib import asynccontextmanager
-from typing_extensions import deprecated
 import warnings
-from crypticorn.common.warnings import CrypticornDeprecatedSince217
+from contextlib import asynccontextmanager
+
+from crypticorn.common.logging import configure_logging
 from crypticorn.common.metrics import (
-    HTTP_REQUESTS_COUNT,
     HTTP_REQUEST_DURATION,
+    HTTP_REQUESTS_COUNT,
     REQUEST_SIZE,
     RESPONSE_SIZE,
 )
+from crypticorn.common.warnings import CrypticornDeprecatedSince217
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
+from typing_extensions import deprecated
 
 
 class PrometheusMiddleware(BaseHTTPMiddleware):
