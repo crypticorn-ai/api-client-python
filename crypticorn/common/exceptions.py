@@ -1,4 +1,4 @@
-from typing import Optional, Dict, Any
+from typing import Optional, Any
 from pydantic import BaseModel, Field
 from fastapi import HTTPException as FastAPIHTTPException, Request, FastAPI
 from fastapi.exceptions import RequestValidationError, ResponseValidationError
@@ -66,7 +66,7 @@ class HTTPException(FastAPIHTTPException):
     def __init__(
         self,
         content: ExceptionContent,
-        headers: Optional[Dict[str, str]] = None,
+        headers: Optional[dict[str, str]] = None,
         _type: Optional[_ExceptionType] = _ExceptionType.HTTP,
     ):
         self.content = content
@@ -86,7 +86,7 @@ class WebSocketException(HTTPException):
     """
 
     def __init__(
-        self, content: ExceptionContent, headers: Optional[Dict[str, str]] = None
+        self, content: ExceptionContent, headers: Optional[dict[str, str]] = None
     ):
         super().__init__(content, headers, _type=_ExceptionType.WEBSOCKET)
 
@@ -102,11 +102,13 @@ class WebSocketException(HTTPException):
 async def general_handler(request: Request, exc: Exception) -> JSONResponse:
     """Default exception handler for all exceptions."""
     body = ExceptionContent(message=str(exc), error=ApiError.UNKNOWN_ERROR)
+    http_exc = HTTPException(content=body)
     res = JSONResponse(
-        status_code=body.enrich().status_code,
-        content=HTTPException(content=body).detail,
+        status_code=http_exc.status_code,
+        content=http_exc.detail,
+        headers=http_exc.headers,
     )
-    _logger.error(f"Response validation error: {json.loads(res.__dict__.get('body'))}")
+    _logger.error(f"General error: {json.loads(res.__dict__.get('body'))}")
     return res
 
 
@@ -115,11 +117,13 @@ async def request_validation_handler(
 ) -> JSONResponse:
     """Exception handler for all request validation errors."""
     body = ExceptionContent(message=str(exc), error=ApiError.INVALID_DATA_REQUEST)
+    http_exc = HTTPException(content=body)
     res = JSONResponse(
-        status_code=body.enrich().status_code,
-        content=HTTPException(content=body).detail,
+        status_code=http_exc.status_code,
+        content=http_exc.detail,
+        headers=http_exc.headers,
     )
-    _logger.error(f"Response validation error: {json.loads(res.__dict__.get('body'))}")
+    _logger.error(f"Request validation error: {json.loads(res.__dict__.get('body'))}")
     return res
 
 
@@ -128,9 +132,11 @@ async def response_validation_handler(
 ) -> JSONResponse:
     """Exception handler for all response validation errors."""
     body = ExceptionContent(message=str(exc), error=ApiError.INVALID_DATA_RESPONSE)
+    http_exc = HTTPException(content=body)
     res = JSONResponse(
-        status_code=body.enrich().status_code,
-        content=HTTPException(content=body).detail,
+        status_code=http_exc.status_code,
+        content=http_exc.detail,
+        headers=http_exc.headers,
     )
     _logger.error(f"Response validation error: {json.loads(res.__dict__.get('body'))}")
     return res
@@ -138,7 +144,9 @@ async def response_validation_handler(
 
 async def http_handler(request: Request, exc: HTTPException) -> JSONResponse:
     """Exception handler for HTTPExceptions. It unwraps the HTTPException and returns the detail in a flat JSON response."""
-    res = JSONResponse(status_code=exc.status_code, content=exc.detail)
+    res = JSONResponse(
+        status_code=exc.status_code, content=exc.detail, headers=exc.headers
+    )
     _logger.error(f"HTTP error: {json.loads(res.__dict__.get('body'))}")
     return res
 
