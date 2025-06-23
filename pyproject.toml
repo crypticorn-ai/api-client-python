@@ -14,6 +14,7 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -26,12 +27,12 @@ crypticorn = "crypticorn.cli.__main__:cli"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["crypticorn*"]
-exclude = ["static*"]
+include = ["crypticorn*", "static/pip-structure.svg"]
 
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements/main.txt"] }
 optional-dependencies.dev = { file = ["requirements/dev.txt"] }
+# TODO: remove this test extra in the next major release
 optional-dependencies.test = { file = ["requirements/test.txt"] }
 optional-dependencies.extra = { file = ["requirements/extra.txt"] }
 

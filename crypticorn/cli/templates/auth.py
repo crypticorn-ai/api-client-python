@@ -1,4 +1,4 @@
-from crypticorn.common import (
+from crypticorn_utils import (
     AuthHandler as AuthHandler,
     Scope as Scope,
     Verify200Response as Verify200Response,
