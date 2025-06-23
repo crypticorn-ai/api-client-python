@@ -1,4 +1,4 @@
-from typing import TypeVar, Optional
+from typing import Literal, TypeVar, Optional
 import warnings
 from aiohttp import ClientSession, ClientTimeout, TCPConnector
 from crypticorn.hive import HiveClient
@@ -8,13 +8,7 @@ from crypticorn.pay import PayClient
 from crypticorn.trade import TradeClient
 from crypticorn.metrics import MetricsClient
 from crypticorn.auth import AuthClient
-from crypticorn.common import (
-    BaseUrl,
-    ApiVersion,
-    Service,
-    apikey_header as aph,
-    CrypticornDeprecatedSince217,
-)
+from crypticorn._internal.warnings import CrypticornDeprecatedSince217, CrypticornDeprecatedSince219
 from importlib.metadata import version
 from typing_extensions import deprecated
 
@@ -31,7 +25,7 @@ class BaseAsyncClient:
         self,
         api_key: Optional[str] = None,
         jwt: Optional[str] = None,
-        base_url: BaseUrl = BaseUrl.PROD,
+        base_url: str = None,
         is_sync: bool = False,
         http_client: Optional[ClientSession] = None,
     ):
@@ -42,43 +36,43 @@ class BaseAsyncClient:
         :param is_sync: Whether this client should operate in synchronous mode.
         :param http_client: Optional aiohttp ClientSession to use for HTTP requests.
         """
-        self._base_url = base_url
+        self._base_url = base_url.rstrip("/") if base_url else "https://api.crypticorn.com"
         self._api_key = api_key
         self._jwt = jwt
         self._is_sync = is_sync
         self._http_client = http_client
         self._owns_http_client = http_client is None  # whether we own the http client
 
-        self._service_classes: dict[Service, type[SubClient]] = {
-            Service.HIVE: HiveClient,
-            Service.TRADE: TradeClient,
-            Service.KLINES: KlinesClient,
-            Service.PAY: PayClient,
-            Service.METRICS: MetricsClient,
-            Service.AUTH: AuthClient,
+        self._service_classes: dict[str, tuple[type[SubClient], str]] = {
+            'hive-v1': (HiveClient, "v1/hive"),
+            'trade-v1': (TradeClient, "v1/trade"),
+            'klines-v1': (KlinesClient, "v1/klines"),
+            'pay-v1': (PayClient, "v1/pay"),
+            'metrics-v1': (MetricsClient, "v1/metrics"),
+            'auth-v1': (AuthClient, "v1/auth"),
         }
 
-        self._services: dict[Service, SubClient] = self._create_services()
+        self._services: dict[str, SubClient] = self._create_services()
 
-    def _create_services(self) -> dict[Service, SubClient]:
+    def _create_services(self) -> dict[str, SubClient]:
         """Create services with the appropriate configuration based on sync/async mode."""
         services = {}
-        for service, client_class in self._service_classes.items():
-            config = self._get_default_config(service)
+        for name, (client_class, path) in self._service_classes.items():
+            config = self._get_default_config(client_class, path)
             # For sync clients, don't pass the persistent http_client
             # Let each operation manage its own session
             if self._is_sync:
-                services[service] = client_class(
+                services[name] = client_class(
                     config, http_client=None, is_sync=self._is_sync
                 )
             else:
-                services[service] = client_class(
+                services[name] = client_class(
                     config, http_client=self._http_client, is_sync=self._is_sync
                 )
         return services
 
     @property
-    def base_url(self) -> BaseUrl:
+    def base_url(self) -> str:
         """
         The base URL the client will use to connect to the API.
         """
@@ -174,13 +168,13 @@ class BaseAsyncClient:
         Example:
         >>> # For async client
         >>> async with AsyncClient() as client:
-        ...     client.configure(config=HiveConfig(host="http://localhost:8000"), service=Service.HIVE)
+        ...     client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive-v1')
         >>>
         >>> # For sync client
         >>> with SyncClient() as client:
-        ...     client.configure(config=HiveConfig(host="http://localhost:8000"), service=Service.HIVE)
+        ...     client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive-v1')
         """
-        assert Service.validate(service), f"Invalid service: {service}"
+        assert service in self._service_classes, f"Invalid service: {service}. Must be one of {list(self._service_classes.keys())}"
         client = self._services[service]
         new_config = client.config
         for attr in vars(config):
@@ -198,14 +192,12 @@ class BaseAsyncClient:
                 new_config, http_client=self._http_client
             )
 
-    def _get_default_config(self, service, version=None):
-        if version is None:
-            version = ApiVersion.V1
-        config_class = self._service_classes[service].config_class
+    def _get_default_config(self, client_class: type[SubClient], path: str):
+        config_class = client_class.config_class
         return config_class(
-            host=f"{self.base_url}/{version}/{service}",
+            host=f"{self.base_url}/{path.lstrip('/').rstrip('/')}",
             access_token=self.jwt,
-            api_key={aph.scheme_name: self.api_key} if self.api_key else None,
+            api_key={'APIKeyHeader': self.api_key} if self.api_key else None,
         )
 
     async def close(self):
@@ -247,7 +239,7 @@ class AsyncClient(BaseAsyncClient):
         self,
         api_key: Optional[str] = None,
         jwt: Optional[str] = None,
-        base_url: BaseUrl = BaseUrl.PROD,
+        base_url: str = None,
         *,
         http_client: Optional[ClientSession] = None,
     ):
@@ -290,7 +282,7 @@ class SyncClient(BaseAsyncClient):
         self,
         api_key: Optional[str] = None,
         jwt: Optional[str] = None,
-        base_url: BaseUrl = BaseUrl.PROD,
+        base_url: str = None,
         *,
         http_client: Optional[ClientSession] = None,
     ):
