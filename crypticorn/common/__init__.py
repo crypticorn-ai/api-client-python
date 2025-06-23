@@ -5,7 +5,6 @@ from crypticorn.common.enums import *
 from crypticorn.common.errors import *
 from crypticorn.common.exceptions import *
 from crypticorn.common.logging import *
-from crypticorn.common.metrics import *
 from crypticorn.common.middleware import *
 from crypticorn.common.mixins import *
 from crypticorn.common.openapi import *
@@ -16,3 +15,5 @@ from crypticorn.common.scopes import *
 from crypticorn.common.urls import *
 from crypticorn.common.utils import *
 from crypticorn.common.warnings import *
+
+# TODO: remove folder in next major release

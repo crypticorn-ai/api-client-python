@@ -14,24 +14,24 @@ from crypticorn.common.warnings import CrypticornDeprecatedSince25
 
 def throw_if_none(
     value: Any,
-    exception: ExceptionContent = ExceptionContent(error=ApiError.OBJECT_NOT_FOUND),
+    message: str = "Object not found",
 ) -> None:
     """Throws an FastAPI HTTPException if the value is None. https://docs.python.org/3/library/stdtypes.html#truth-value-testing"""
     if value is None:
-        raise HTTPException(content=exception)
+        raise HTTPException(content=ExceptionContent(error=ApiError.OBJECT_NOT_FOUND, message=message))
 
 
 def throw_if_falsy(
     value: Any,
-    exception: ExceptionContent = ExceptionContent(error=ApiError.OBJECT_NOT_FOUND),
+    message: str = "Object not found",
 ) -> None:
     """Throws an FastAPI HTTPException if the value is False. https://docs.python.org/3/library/stdtypes.html#truth-value-testing"""
     if not value:
-        raise HTTPException(content=exception)
+        raise HTTPException(content=ExceptionContent(error=ApiError.OBJECT_NOT_FOUND, message=message))
 
 
 def gen_random_id(length: int = 20) -> str:
-    """Generate a random base62 string (a-zA-Z0-9) of specified length.
+    """Generate a random base62 string (a-zA-Z0-9) of specified length. The max possible combinations is 62^length.
     Kucoin max 40, bingx max 40"""
     charset = string.ascii_letters + string.digits
     return "".join(random.choice(charset) for _ in range(length))

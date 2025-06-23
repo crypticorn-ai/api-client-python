@@ -15,7 +15,6 @@ from typing import Literal
 
 import psutil
 from crypticorn.common.logging import LogLevel
-from crypticorn.common.metrics import registry
 from fastapi import APIRouter, Query, Response
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 

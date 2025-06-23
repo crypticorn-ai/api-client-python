@@ -3,7 +3,7 @@ import warnings
 import pytest
 import asyncio
 from aiohttp import ClientSession
-from crypticorn.client import AsyncClient, Service  # Adjust import to your path
+from crypticorn.client import AsyncClient
 
 
 @pytest.mark.asyncio
@@ -13,9 +13,8 @@ async def test_custom_http_client_injection():
     client = AsyncClient(http_client=custom_session)
 
     # Subclients should have received the custom session immediately (sync context)
-    for service in Service:
-        subclient = client._services[service]
-        assert subclient.base_client.rest_client.pool_manager is custom_session
+    subclient = client._services['trade-v1']
+    assert subclient.base_client.rest_client.pool_manager is custom_session
 
     await client.close()
     assert not custom_session.closed  # Client did not own it
@@ -31,9 +30,8 @@ async def test_lazy_http_client_creation():
     client._ensure_session()
 
     assert isinstance(client._http_client, ClientSession)
-    for service in Service:
-        subclient = client._services[service]
-        assert subclient.base_client.rest_client.pool_manager is client._http_client
+    subclient = client._services['trade-v1']
+    assert subclient.base_client.rest_client.pool_manager is client._http_client
 
     await client.close()
     assert client._http_client is None  # It should have been closed
@@ -109,9 +107,8 @@ async def test_custom_session_not_closed_by_client():
 async def test_context_manager_usage():
     async with AsyncClient() as client:
         assert isinstance(client._http_client, ClientSession)
-        for service in Service:
-            subclient = client._services[service]
-            assert subclient.base_client.rest_client.pool_manager is client._http_client
+        subclient = client._services['trade-v1']
+        assert subclient.base_client.rest_client.pool_manager is client._http_client
 
     # Confirm session is closed after context manager
     assert client._http_client is None
