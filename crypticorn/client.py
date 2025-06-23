@@ -115,49 +115,93 @@ class BaseAsyncClient:
         """
         return self._http_client
 
+
     @property
+    @deprecated("The `hive` property is deprecated and will become a method in the next major release. Instead of `client.hive` you will need to use `client.hive(version='v1')`.", category=CrypticornDeprecatedSince219)
     def hive(self) -> HiveClient:
         """
         Entry point for the Hive AI API ([Docs](https://docs.crypticorn.com/api/?api=hive-ai-api)).
         """
-        return self._services[Service.HIVE]
+        return self._services['hive-v1']
 
     @property
+    @deprecated("The `trade` property is deprecated and will become a method in the next major release. Instead of `client.trade` you will need to use `client.trade(version='v1')`.", category=CrypticornDeprecatedSince219)
     def trade(self) -> TradeClient:
         """
         Entry point for the Trading API ([Docs](https://docs.crypticorn.com/api/?api=trading-api)).
         """
-        return self._services[Service.TRADE]
+        return self._services['trade-v1']
 
     @property
+    @deprecated("The `klines` property is deprecated and will become a method in the next major release. Instead of `client.klines` you will need to use `client.klines(version='v1')`.", category=CrypticornDeprecatedSince219)
     def klines(self) -> KlinesClient:
         """
         Entry point for the Klines API ([Docs](https://docs.crypticorn.com/api/?api=klines-api)).
         """
-        return self._services[Service.KLINES]
+        return self._services['klines-v1']
 
     @property
+    @deprecated("The `metrics` property is deprecated and will become a method in the next major release. Instead of `client.metrics` you will need to use `client.metrics(version='v1')`.", category=CrypticornDeprecatedSince219)
     def metrics(self) -> MetricsClient:
         """
         Entry point for the Metrics API ([Docs](https://docs.crypticorn.com/api/?api=metrics-api)).
         """
-        return self._services[Service.METRICS]
+        return self._services['metrics-v1']
 
     @property
+    @deprecated("The `pay` property is deprecated and will become a method in the next major release. Instead of `client.pay` you will need to use `client.pay(version='v1')`.", category=CrypticornDeprecatedSince219)
     def pay(self) -> PayClient:
         """
         Entry point for the Payment API ([Docs](https://docs.crypticorn.com/api/?api=payment-api)).
         """
-        return self._services[Service.PAY]
+        return self._services['pay-v1']
 
     @property
+    @deprecated("The `auth` property is deprecated and will become a method in the next major release. Instead of `client.auth` you will need to use `client.auth(version='v1')`.", category=CrypticornDeprecatedSince219)
     def auth(self) -> AuthClient:
         """
         Entry point for the Auth API ([Docs](https://docs.crypticorn.com/api/?api=auth-api)).
         """
-        return self._services[Service.AUTH]
+        return self._services['auth-v1']
+    
+    # TODO: add these as methods in the next major release and remove the properties
+    # def hive(self, version: Literal["v1"]) -> HiveClient:
+    #     """
+    #     Entry point for the Hive AI API ([Docs](https://docs.crypticorn.com/api/?api=hive-ai-api)).
+    #     """
+    #     return self._services[f"hive-{version}"]
 
-    def configure(self, config: ConfigT, service: Service) -> None:
+    # def trade(self, version: Literal["v1"]) -> TradeClient:
+    #     """
+    #     Entry point for the Trading API ([Docs](https://docs.crypticorn.com/api/?api=trading-api)).
+    #     """
+    #     return self._services[f"trade-{version}"]
+
+    # def klines(self, version: Literal["v1"]) -> KlinesClient:
+    #     """
+    #     Entry point for the Klines API ([Docs](https://docs.crypticorn.com/api/?api=klines-api)).
+    #     """
+    #     return self._services[f"klines-{version}"]
+
+    # def metrics(self, version: Literal["v1"]) -> MetricsClient:
+    #     """
+    #     Entry point for the Metrics API ([Docs](https://docs.crypticorn.com/api/?api=metrics-api)).
+    #     """
+    #     return self._services[f"metrics-{version}"]
+
+    # def pay(self, version: Literal["v1"]) -> PayClient:
+    #     """
+    #     Entry point for the Payment API ([Docs](https://docs.crypticorn.com/api/?api=payment-api)).
+    #     """
+    #     return self._services[f"pay-{version}"]
+
+    # def auth(self, version: Literal["v1"]) -> AuthClient:
+    #     """
+    #     Entry point for the Auth API ([Docs](https://docs.crypticorn.com/api/?api=auth-api)).
+    #     """
+    #     return self._services[f"auth-{version}"]
+
+    def configure(self, config: ConfigT, service: str) -> None:
         """
         Update a sub-client's configuration by overriding with the values set in the new config.
         Useful for testing a specific service against a local server instead of the default proxy.
