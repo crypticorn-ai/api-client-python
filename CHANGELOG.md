@@ -1,6 +1,26 @@
 # CHANGELOG
 
 
+## v2.19.0-rc.1 (2025-06-23)
+
+### Documentation
+
+- Document deprecation changes
+  ([`9b545d1`](https://github.com/crypticorn-ai/api-client/commit/9b545d1911a81b39c52352f4bb28a2d284268b13))
+
+### Features
+
+- Deprecate `common` module in favor for a new package
+  ([`5c29d01`](https://github.com/crypticorn-ai/api-client/commit/5c29d016db255dab5c92ddc3fdc636ea9c48e1f1))
+
+- Deprecate subclients access by property in favor for methods to support versioning. Supported in
+  the next major release
+  ([`8e6d826`](https://github.com/crypticorn-ai/api-client/commit/8e6d82666a056771ff3e14d0f8ee2bc147047c49))
+
+- Support versioned APIs
+  ([`4a95dac`](https://github.com/crypticorn-ai/api-client/commit/4a95dacd3fcfd3d78e1c216036e9f8e842d73a53))
+
+
 ## v2.18.0 (2025-06-19)
 
 ### Features
