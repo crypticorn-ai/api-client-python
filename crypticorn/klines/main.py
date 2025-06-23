@@ -9,7 +9,7 @@ from crypticorn.klines import (
     SymbolsApi,
     UDFApi,
 )
-from crypticorn.common.utils import optional_import
+from crypticorn._internal.utils import optional_import
 
 if TYPE_CHECKING:
     from aiohttp import ClientSession

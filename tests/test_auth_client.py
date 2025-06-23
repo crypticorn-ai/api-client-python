@@ -227,10 +227,10 @@ async def test_combined_auth_with_valid_admin_bearer_token(auth_handler: AuthHan
     ), "admin should have access to purchaseable scopes"
     assert all(
         [key in res.scopes for key in ADMIN_SCOPES]
-    ), "admin should have access to any of the admin keys"
+    ), "admin should have access to all of the admin scopes"
     assert all(
         [key not in res.scopes for key in INTERNAL_SCOPES]
-    ), "admin should not have access to any of the internal keys"
+    ), "admin should not have access to any of the internal scopes"
     assert res.admin, "admin should be true"
 
 

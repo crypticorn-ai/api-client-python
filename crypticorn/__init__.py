@@ -13,6 +13,7 @@ from crypticorn.common.logging import configure_logging
 warnings.filterwarnings("default", "", DeprecationWarning)
 configure_logging()
 logging.captureWarnings(True)
+# TODO: remove folder in next major release
 
 from crypticorn.client import AsyncClient, SyncClient, ApiClient
 
