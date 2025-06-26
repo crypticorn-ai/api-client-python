@@ -14,4 +14,3 @@ def optional_import(module_name: str, extra_name: str) -> Any:
             f"Optional dependency '{module_name}' is required for this feature. "
             f"Install it with: pip install crypticorn[{extra_name}]"
         ) from e
-

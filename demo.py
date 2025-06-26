@@ -24,7 +24,9 @@ JWT_TOKEN = ""
 
 async def main():
 
-    async with AsyncClient(base_url='https://api.crypticorn.dev', api_key=API_KEY) as client:
+    async with AsyncClient(
+        base_url="https://api.crypticorn.dev", api_key=API_KEY
+    ) as client:
         res = await client.trade.status.ping()
         print(res)
 
@@ -46,7 +48,7 @@ async def main():
 
 def main_sync():
 
-    with SyncClient(base_url='https://api.crypticorn.dev', api_key=API_KEY) as client:
+    with SyncClient(base_url="https://api.crypticorn.dev", api_key=API_KEY) as client:
         res = client.trade.status.ping()
         print(res)
         res = client.klines.ohlcv.get_ohlcv_data_fmt(
@@ -69,7 +71,9 @@ async def custom_session_example():
     )
 
     async with AsyncClient(
-        base_url='https://api.crypticorn.dev', api_key=API_KEY, http_client=custom_session
+        base_url="https://api.crypticorn.dev",
+        api_key=API_KEY,
+        http_client=custom_session,
     ) as client:
         res = await client.trade.status.ping()
         print(res)

@@ -17,10 +17,15 @@ Do not edit the class manually.
 from crypticorn.pay.client.models.api_error_identifier import ApiErrorIdentifier
 from crypticorn.pay.client.models.api_error_level import ApiErrorLevel
 from crypticorn.pay.client.models.api_error_type import ApiErrorType
+from crypticorn.pay.client.models.coupon import Coupon
+from crypticorn.pay.client.models.coupon_create import CouponCreate
+from crypticorn.pay.client.models.coupon_update import CouponUpdate
 from crypticorn.pay.client.models.exception_detail import ExceptionDetail
-from crypticorn.pay.client.models.log_level import LogLevel
-from crypticorn.pay.client.models.now_create_invoice_req import NowCreateInvoiceReq
-from crypticorn.pay.client.models.now_create_invoice_res import NowCreateInvoiceRes
+from crypticorn.pay.client.models.invoice import Invoice
+from crypticorn.pay.client.models.now_new_invoice_create import NowNewInvoiceCreate
+from crypticorn.pay.client.models.paginated_response_coupon import (
+    PaginatedResponseCoupon,
+)
 from crypticorn.pay.client.models.payment import Payment
 from crypticorn.pay.client.models.payment_status import PaymentStatus
 from crypticorn.pay.client.models.product import Product

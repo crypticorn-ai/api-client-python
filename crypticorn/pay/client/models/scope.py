@@ -52,6 +52,8 @@ class Scope(str, Enum):
     WRITE_COLON_PAY_COLON_PRODUCTS = "write:pay:products"
     READ_COLON_PAY_COLON_NOW = "read:pay:now"
     WRITE_COLON_PAY_COLON_NOW = "write:pay:now"
+    WRITE_COLON_PAY_COLON_COUPONS = "write:pay:coupons"
+    READ_COLON_PAY_COLON_COUPONS = "read:pay:coupons"
     READ_COLON_METRICS_COLON_MARKETCAP = "read:metrics:marketcap"
     READ_COLON_METRICS_COLON_INDICATORS = "read:metrics:indicators"
     READ_COLON_METRICS_COLON_EXCHANGES = "read:metrics:exchanges"

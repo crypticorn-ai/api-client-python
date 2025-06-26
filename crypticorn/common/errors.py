@@ -2,7 +2,7 @@
 
 from enum import Enum
 
-from crypticorn.common.mixins import ApiErrorFallback
+from crypticorn_utils.mixins import ApiErrorFallback
 from fastapi import status
 
 try:
@@ -46,6 +46,7 @@ class ApiErrorIdentifier(StrEnum):
     CANCELLED_OPEN_ORDER = "cancelled_open_order"
     CLIENT_ORDER_ID_REPEATED = "client_order_id_already_exists"
     CONTENT_TYPE_ERROR = "invalid_content_type"
+    COUPON_APPLIED = "coupon_applied"
     COUPON_INVALID = "coupon_invalid"
     DELETE_BOT_ERROR = "delete_bot_error"
     EXCHANGE_HTTP_ERROR = "exchange_http_request_error"
@@ -177,6 +178,11 @@ class ApiError(Enum, metaclass=ApiErrorFallback):
         ApiErrorIdentifier.CONTENT_TYPE_ERROR,
         ApiErrorType.SERVER_ERROR,
         ApiErrorLevel.ERROR,
+    )
+    COUPON_APPLIED = (
+        ApiErrorIdentifier.COUPON_APPLIED,
+        ApiErrorType.NO_ERROR,
+        ApiErrorLevel.SUCCESS,
     )
     COUPON_INVALID = (
         ApiErrorIdentifier.COUPON_INVALID,
@@ -866,6 +872,10 @@ class StatusCodeMapper:
             status.HTTP_400_BAD_REQUEST,
             status.WS_1008_POLICY_VIOLATION,
         ),
+        ApiError.COUPON_INVALID: (
+            status.HTTP_400_BAD_REQUEST,
+            status.WS_1008_POLICY_VIOLATION,
+        ),
         # Success cases
         ApiError.SUCCESS: (status.HTTP_200_OK, status.WS_1000_NORMAL_CLOSURE),
         ApiError.BOT_STOPPING_COMPLETED: (
@@ -893,7 +903,7 @@ class StatusCodeMapper:
             status.HTTP_200_OK,
             status.WS_1008_POLICY_VIOLATION,
         ),
-        ApiError.COUPON_INVALID: (
+        ApiError.COUPON_APPLIED: (
             status.HTTP_200_OK,
             status.WS_1000_NORMAL_CLOSURE,
         ),

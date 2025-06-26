@@ -19,8 +19,8 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt, StrictStr
 from typing import Any, List
 from typing_extensions import Annotated
-from crypticorn.pay.client.models.now_create_invoice_req import NowCreateInvoiceReq
-from crypticorn.pay.client.models.now_create_invoice_res import NowCreateInvoiceRes
+from crypticorn.pay.client.models.invoice import Invoice
+from crypticorn.pay.client.models.now_new_invoice_create import NowNewInvoiceCreate
 from crypticorn.pay.client.models.payment import Payment
 
 from crypticorn.pay.client.api_client import ApiClient, RequestSerialized
@@ -62,7 +62,7 @@ class NOWPaymentsApi:
     @validate_call
     def create_now_invoice(
         self,
-        now_create_invoice_req: NowCreateInvoiceReq,
+        now_new_invoice_create: NowNewInvoiceCreate,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -74,11 +74,11 @@ class NOWPaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> NowCreateInvoiceRes:
+    ) -> Invoice:
         """Create Invoice"""
         if self.is_sync:
             return self._create_now_invoice_sync(
-                now_create_invoice_req=now_create_invoice_req,
+                now_new_invoice_create=now_new_invoice_create,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -88,7 +88,7 @@ class NOWPaymentsApi:
 
         else:
             return self._create_now_invoice_async(
-                now_create_invoice_req=now_create_invoice_req,
+                now_new_invoice_create=now_new_invoice_create,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -99,7 +99,7 @@ class NOWPaymentsApi:
     @validate_call
     def create_now_invoice_with_http_info(
         self,
-        now_create_invoice_req: NowCreateInvoiceReq,
+        now_new_invoice_create: NowNewInvoiceCreate,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -111,11 +111,11 @@ class NOWPaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[NowCreateInvoiceRes]:
+    ) -> ApiResponse[Invoice]:
         """Create Invoice with HTTP info"""
         if self.is_sync:
             return self._create_now_invoice_sync_with_http_info(
-                now_create_invoice_req=now_create_invoice_req,
+                now_new_invoice_create=now_new_invoice_create,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -125,7 +125,7 @@ class NOWPaymentsApi:
 
         else:
             return self._create_now_invoice_async_with_http_info(
-                now_create_invoice_req=now_create_invoice_req,
+                now_new_invoice_create=now_new_invoice_create,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -136,7 +136,7 @@ class NOWPaymentsApi:
     @validate_call
     def create_now_invoice_without_preload_content(
         self,
-        now_create_invoice_req: NowCreateInvoiceReq,
+        now_new_invoice_create: NowNewInvoiceCreate,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -152,7 +152,7 @@ class NOWPaymentsApi:
         """Create Invoice without preloading content"""
         if self.is_sync:
             return self._create_now_invoice_sync_without_preload_content(
-                now_create_invoice_req=now_create_invoice_req,
+                now_new_invoice_create=now_new_invoice_create,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -162,7 +162,7 @@ class NOWPaymentsApi:
 
         else:
             return self._create_now_invoice_async_without_preload_content(
-                now_create_invoice_req=now_create_invoice_req,
+                now_new_invoice_create=now_new_invoice_create,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -174,7 +174,7 @@ class NOWPaymentsApi:
     @validate_call
     async def _create_now_invoice_async(
         self,
-        now_create_invoice_req: NowCreateInvoiceReq,
+        now_new_invoice_create: NowNewInvoiceCreate,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -186,13 +186,13 @@ class NOWPaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> NowCreateInvoiceRes:
+    ) -> Invoice:
         """Create Invoice
 
         Create a payment invoice with a payment link for customer completion. Only Bearer authentication is supported.
 
-        :param now_create_invoice_req: (required)
-        :type now_create_invoice_req: NowCreateInvoiceReq
+        :param now_new_invoice_create: (required)
+        :type now_new_invoice_create: NowNewInvoiceCreate
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -216,7 +216,7 @@ class NOWPaymentsApi:
         """  # noqa: E501
 
         _param = self._create_now_invoice_serialize(
-            now_create_invoice_req=now_create_invoice_req,
+            now_new_invoice_create=now_new_invoice_create,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -224,7 +224,7 @@ class NOWPaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "201": "NowCreateInvoiceRes",
+            "201": "Invoice",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -238,7 +238,7 @@ class NOWPaymentsApi:
     @validate_call
     async def _create_now_invoice_async_with_http_info(
         self,
-        now_create_invoice_req: NowCreateInvoiceReq,
+        now_new_invoice_create: NowNewInvoiceCreate,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -250,13 +250,13 @@ class NOWPaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[NowCreateInvoiceRes]:
+    ) -> ApiResponse[Invoice]:
         """Create Invoice
 
         Create a payment invoice with a payment link for customer completion. Only Bearer authentication is supported.
 
-        :param now_create_invoice_req: (required)
-        :type now_create_invoice_req: NowCreateInvoiceReq
+        :param now_new_invoice_create: (required)
+        :type now_new_invoice_create: NowNewInvoiceCreate
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -280,7 +280,7 @@ class NOWPaymentsApi:
         """  # noqa: E501
 
         _param = self._create_now_invoice_serialize(
-            now_create_invoice_req=now_create_invoice_req,
+            now_new_invoice_create=now_new_invoice_create,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -288,7 +288,7 @@ class NOWPaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "201": "NowCreateInvoiceRes",
+            "201": "Invoice",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -301,7 +301,7 @@ class NOWPaymentsApi:
     @validate_call
     async def _create_now_invoice_async_without_preload_content(
         self,
-        now_create_invoice_req: NowCreateInvoiceReq,
+        now_new_invoice_create: NowNewInvoiceCreate,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -318,8 +318,8 @@ class NOWPaymentsApi:
 
         Create a payment invoice with a payment link for customer completion. Only Bearer authentication is supported.
 
-        :param now_create_invoice_req: (required)
-        :type now_create_invoice_req: NowCreateInvoiceReq
+        :param now_new_invoice_create: (required)
+        :type now_new_invoice_create: NowNewInvoiceCreate
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -343,7 +343,7 @@ class NOWPaymentsApi:
         """  # noqa: E501
 
         _param = self._create_now_invoice_serialize(
-            now_create_invoice_req=now_create_invoice_req,
+            now_new_invoice_create=now_new_invoice_create,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -351,7 +351,7 @@ class NOWPaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "201": "NowCreateInvoiceRes",
+            "201": "Invoice",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -362,7 +362,7 @@ class NOWPaymentsApi:
     @validate_call
     def _create_now_invoice_sync(
         self,
-        now_create_invoice_req: NowCreateInvoiceReq,
+        now_new_invoice_create: NowNewInvoiceCreate,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -374,10 +374,10 @@ class NOWPaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> NowCreateInvoiceRes:
+    ) -> Invoice:
         """Synchronous version of create_now_invoice"""
         return async_to_sync(self._create_now_invoice_async)(
-            now_create_invoice_req=now_create_invoice_req,
+            now_new_invoice_create=now_new_invoice_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -388,7 +388,7 @@ class NOWPaymentsApi:
     @validate_call
     def _create_now_invoice_sync_with_http_info(
         self,
-        now_create_invoice_req: NowCreateInvoiceReq,
+        now_new_invoice_create: NowNewInvoiceCreate,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -400,10 +400,10 @@ class NOWPaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[NowCreateInvoiceRes]:
+    ) -> ApiResponse[Invoice]:
         """Synchronous version of create_now_invoice_with_http_info"""
         return async_to_sync(self._create_now_invoice_async_with_http_info)(
-            now_create_invoice_req=now_create_invoice_req,
+            now_new_invoice_create=now_new_invoice_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -414,7 +414,7 @@ class NOWPaymentsApi:
     @validate_call
     def _create_now_invoice_sync_without_preload_content(
         self,
-        now_create_invoice_req: NowCreateInvoiceReq,
+        now_new_invoice_create: NowNewInvoiceCreate,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -429,7 +429,7 @@ class NOWPaymentsApi:
     ) -> RESTResponseType:
         """Synchronous version of create_now_invoice_without_preload_content"""
         return async_to_sync(self._create_now_invoice_async_without_preload_content)(
-            now_create_invoice_req=now_create_invoice_req,
+            now_new_invoice_create=now_new_invoice_create,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -439,7 +439,7 @@ class NOWPaymentsApi:
 
     def _create_now_invoice_serialize(
         self,
-        now_create_invoice_req,
+        now_new_invoice_create,
         _request_auth,
         _content_type,
         _headers,
@@ -464,8 +464,8 @@ class NOWPaymentsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if now_create_invoice_req is not None:
-            _body_params = now_create_invoice_req
+        if now_new_invoice_create is not None:
+            _body_params = now_new_invoice_create
 
         # set the HTTP header `Accept`
         if "Accept" not in _header_params:
