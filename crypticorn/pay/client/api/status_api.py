@@ -440,7 +440,7 @@ class StatusApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["Basic"]
 
         return self.api_client.param_serialize(
             method="GET",

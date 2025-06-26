@@ -1571,6 +1571,10 @@ class ProductsApi:
             Optional[StrictStr],
             Field(description="The coupon code to apply to the products."),
         ] = None,
+        captcha_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The captcha token to verify the request."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1587,6 +1591,7 @@ class ProductsApi:
         if self.is_sync:
             return self._get_products_captcha_auth_sync(
                 coupon=coupon,
+                captcha_token=captcha_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1597,6 +1602,7 @@ class ProductsApi:
         else:
             return self._get_products_captcha_auth_async(
                 coupon=coupon,
+                captcha_token=captcha_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1610,6 +1616,10 @@ class ProductsApi:
         coupon: Annotated[
             Optional[StrictStr],
             Field(description="The coupon code to apply to the products."),
+        ] = None,
+        captcha_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The captcha token to verify the request."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -1627,6 +1637,7 @@ class ProductsApi:
         if self.is_sync:
             return self._get_products_captcha_auth_sync_with_http_info(
                 coupon=coupon,
+                captcha_token=captcha_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1637,6 +1648,7 @@ class ProductsApi:
         else:
             return self._get_products_captcha_auth_async_with_http_info(
                 coupon=coupon,
+                captcha_token=captcha_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1650,6 +1662,10 @@ class ProductsApi:
         coupon: Annotated[
             Optional[StrictStr],
             Field(description="The coupon code to apply to the products."),
+        ] = None,
+        captcha_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The captcha token to verify the request."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -1667,6 +1683,7 @@ class ProductsApi:
         if self.is_sync:
             return self._get_products_captcha_auth_sync_without_preload_content(
                 coupon=coupon,
+                captcha_token=captcha_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1677,6 +1694,7 @@ class ProductsApi:
         else:
             return self._get_products_captcha_auth_async_without_preload_content(
                 coupon=coupon,
+                captcha_token=captcha_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1691,6 +1709,10 @@ class ProductsApi:
         coupon: Annotated[
             Optional[StrictStr],
             Field(description="The coupon code to apply to the products."),
+        ] = None,
+        captcha_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The captcha token to verify the request."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -1710,6 +1732,8 @@ class ProductsApi:
 
         :param coupon: The coupon code to apply to the products.
         :type coupon: str
+        :param captcha_token: The captcha token to verify the request.
+        :type captcha_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1734,6 +1758,7 @@ class ProductsApi:
 
         _param = self._get_products_captcha_auth_serialize(
             coupon=coupon,
+            captcha_token=captcha_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1759,6 +1784,10 @@ class ProductsApi:
             Optional[StrictStr],
             Field(description="The coupon code to apply to the products."),
         ] = None,
+        captcha_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The captcha token to verify the request."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1777,6 +1806,8 @@ class ProductsApi:
 
         :param coupon: The coupon code to apply to the products.
         :type coupon: str
+        :param captcha_token: The captcha token to verify the request.
+        :type captcha_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1801,6 +1832,7 @@ class ProductsApi:
 
         _param = self._get_products_captcha_auth_serialize(
             coupon=coupon,
+            captcha_token=captcha_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1825,6 +1857,10 @@ class ProductsApi:
             Optional[StrictStr],
             Field(description="The coupon code to apply to the products."),
         ] = None,
+        captcha_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The captcha token to verify the request."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1843,6 +1879,8 @@ class ProductsApi:
 
         :param coupon: The coupon code to apply to the products.
         :type coupon: str
+        :param captcha_token: The captcha token to verify the request.
+        :type captcha_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1867,6 +1905,7 @@ class ProductsApi:
 
         _param = self._get_products_captcha_auth_serialize(
             coupon=coupon,
+            captcha_token=captcha_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1889,6 +1928,10 @@ class ProductsApi:
             Optional[StrictStr],
             Field(description="The coupon code to apply to the products."),
         ] = None,
+        captcha_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The captcha token to verify the request."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1904,6 +1947,7 @@ class ProductsApi:
         """Synchronous version of get_products_captcha_auth"""
         return async_to_sync(self._get_products_captcha_auth_async)(
             coupon=coupon,
+            captcha_token=captcha_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1917,6 +1961,10 @@ class ProductsApi:
         coupon: Annotated[
             Optional[StrictStr],
             Field(description="The coupon code to apply to the products."),
+        ] = None,
+        captcha_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The captcha token to verify the request."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -1933,6 +1981,7 @@ class ProductsApi:
         """Synchronous version of get_products_captcha_auth_with_http_info"""
         return async_to_sync(self._get_products_captcha_auth_async_with_http_info)(
             coupon=coupon,
+            captcha_token=captcha_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1946,6 +1995,10 @@ class ProductsApi:
         coupon: Annotated[
             Optional[StrictStr],
             Field(description="The coupon code to apply to the products."),
+        ] = None,
+        captcha_token: Annotated[
+            Optional[StrictStr],
+            Field(description="The captcha token to verify the request."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -1964,6 +2017,7 @@ class ProductsApi:
             self._get_products_captcha_auth_async_without_preload_content
         )(
             coupon=coupon,
+            captcha_token=captcha_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -1974,6 +2028,7 @@ class ProductsApi:
     def _get_products_captcha_auth_serialize(
         self,
         coupon,
+        captcha_token,
         _request_auth,
         _content_type,
         _headers,
@@ -1998,6 +2053,10 @@ class ProductsApi:
         if coupon is not None:
 
             _query_params.append(("coupon", coupon))
+
+        if captcha_token is not None:
+
+            _query_params.append(("captcha_token", captcha_token))
 
         # process the header parameters
         # process the form parameters

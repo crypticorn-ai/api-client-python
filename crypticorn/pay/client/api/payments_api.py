@@ -19,7 +19,9 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt, StrictStr, field_validator
 from typing import List, Optional
 from typing_extensions import Annotated
-from crypticorn.pay.client.models.payment import Payment
+from crypticorn.pay.client.models.paginated_response_payment import (
+    PaginatedResponsePayment,
+)
 from crypticorn.pay.client.models.subscription import Subscription
 
 from crypticorn.pay.client.api_client import ApiClient, RequestSerialized
@@ -61,16 +63,31 @@ class PaymentsApi:
     @validate_call
     def get_payment_history(
         self,
-        limit: Annotated[
-            Optional[StrictInt],
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=100, strict=True, ge=1)]],
             Field(
-                description="Limit the number of payments returned. 0 means no limit."
+                description="The number of items per page. Default is 10, max is 100."
             ),
         ] = None,
-        offset: Annotated[
-            Optional[StrictInt],
+        user_id: Annotated[
+            Optional[StrictStr],
             Field(
-                description="Offset the number of payments returned. 0 means no offset."
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         _request_timeout: Union[
@@ -84,12 +101,17 @@ class PaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Payment]:
+    ) -> PaginatedResponsePayment:
         """Get Payment History"""
         if self.is_sync:
             return self._get_payment_history_sync(
-                limit=limit,
-                offset=offset,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                sort_order=sort_order,
+                sort_by=sort_by,
+                page=page,
+                page_size=page_size,
+                user_id=user_id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -99,8 +121,13 @@ class PaymentsApi:
 
         else:
             return self._get_payment_history_async(
-                limit=limit,
-                offset=offset,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                sort_order=sort_order,
+                sort_by=sort_by,
+                page=page,
+                page_size=page_size,
+                user_id=user_id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -111,16 +138,31 @@ class PaymentsApi:
     @validate_call
     def get_payment_history_with_http_info(
         self,
-        limit: Annotated[
-            Optional[StrictInt],
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=100, strict=True, ge=1)]],
             Field(
-                description="Limit the number of payments returned. 0 means no limit."
+                description="The number of items per page. Default is 10, max is 100."
             ),
         ] = None,
-        offset: Annotated[
-            Optional[StrictInt],
+        user_id: Annotated[
+            Optional[StrictStr],
             Field(
-                description="Offset the number of payments returned. 0 means no offset."
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         _request_timeout: Union[
@@ -134,12 +176,17 @@ class PaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Payment]]:
+    ) -> ApiResponse[PaginatedResponsePayment]:
         """Get Payment History with HTTP info"""
         if self.is_sync:
             return self._get_payment_history_sync_with_http_info(
-                limit=limit,
-                offset=offset,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                sort_order=sort_order,
+                sort_by=sort_by,
+                page=page,
+                page_size=page_size,
+                user_id=user_id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -149,8 +196,13 @@ class PaymentsApi:
 
         else:
             return self._get_payment_history_async_with_http_info(
-                limit=limit,
-                offset=offset,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                sort_order=sort_order,
+                sort_by=sort_by,
+                page=page,
+                page_size=page_size,
+                user_id=user_id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -161,16 +213,31 @@ class PaymentsApi:
     @validate_call
     def get_payment_history_without_preload_content(
         self,
-        limit: Annotated[
-            Optional[StrictInt],
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=100, strict=True, ge=1)]],
             Field(
-                description="Limit the number of payments returned. 0 means no limit."
+                description="The number of items per page. Default is 10, max is 100."
             ),
         ] = None,
-        offset: Annotated[
-            Optional[StrictInt],
+        user_id: Annotated[
+            Optional[StrictStr],
             Field(
-                description="Offset the number of payments returned. 0 means no offset."
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         _request_timeout: Union[
@@ -188,8 +255,13 @@ class PaymentsApi:
         """Get Payment History without preloading content"""
         if self.is_sync:
             return self._get_payment_history_sync_without_preload_content(
-                limit=limit,
-                offset=offset,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                sort_order=sort_order,
+                sort_by=sort_by,
+                page=page,
+                page_size=page_size,
+                user_id=user_id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -199,8 +271,13 @@ class PaymentsApi:
 
         else:
             return self._get_payment_history_async_without_preload_content(
-                limit=limit,
-                offset=offset,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                sort_order=sort_order,
+                sort_by=sort_by,
+                page=page,
+                page_size=page_size,
+                user_id=user_id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -212,16 +289,31 @@ class PaymentsApi:
     @validate_call
     async def _get_payment_history_async(
         self,
-        limit: Annotated[
-            Optional[StrictInt],
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=100, strict=True, ge=1)]],
             Field(
-                description="Limit the number of payments returned. 0 means no limit."
+                description="The number of items per page. Default is 10, max is 100."
             ),
         ] = None,
-        offset: Annotated[
-            Optional[StrictInt],
+        user_id: Annotated[
+            Optional[StrictStr],
             Field(
-                description="Offset the number of payments returned. 0 means no offset."
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         _request_timeout: Union[
@@ -235,15 +327,25 @@ class PaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Payment]:
+    ) -> PaginatedResponsePayment:
         """Get Payment History
 
         Get the combined payment history for a user across all payment services.
 
-        :param limit: Limit the number of payments returned. 0 means no limit.
-        :type limit: int
-        :param offset: Offset the number of payments returned. 0 means no offset.
-        :type offset: int
+        :param filter_by: The field to filter by
+        :type filter_by: str
+        :param filter_value: The value to filter with
+        :type filter_value: str
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
+        :param page: The current page number
+        :type page: int
+        :param page_size: The number of items per page. Default is 10, max is 100.
+        :type page_size: int
+        :param user_id: The ID of the user. Overrides the authenticated user if provided and the user is an admin.
+        :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -267,8 +369,13 @@ class PaymentsApi:
         """  # noqa: E501
 
         _param = self._get_payment_history_serialize(
-            limit=limit,
-            offset=offset,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            sort_order=sort_order,
+            sort_by=sort_by,
+            page=page,
+            page_size=page_size,
+            user_id=user_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -276,7 +383,7 @@ class PaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Payment]",
+            "200": "PaginatedResponsePayment",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -290,16 +397,31 @@ class PaymentsApi:
     @validate_call
     async def _get_payment_history_async_with_http_info(
         self,
-        limit: Annotated[
-            Optional[StrictInt],
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=100, strict=True, ge=1)]],
             Field(
-                description="Limit the number of payments returned. 0 means no limit."
+                description="The number of items per page. Default is 10, max is 100."
             ),
         ] = None,
-        offset: Annotated[
-            Optional[StrictInt],
+        user_id: Annotated[
+            Optional[StrictStr],
             Field(
-                description="Offset the number of payments returned. 0 means no offset."
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         _request_timeout: Union[
@@ -313,15 +435,25 @@ class PaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Payment]]:
+    ) -> ApiResponse[PaginatedResponsePayment]:
         """Get Payment History
 
         Get the combined payment history for a user across all payment services.
 
-        :param limit: Limit the number of payments returned. 0 means no limit.
-        :type limit: int
-        :param offset: Offset the number of payments returned. 0 means no offset.
-        :type offset: int
+        :param filter_by: The field to filter by
+        :type filter_by: str
+        :param filter_value: The value to filter with
+        :type filter_value: str
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
+        :param page: The current page number
+        :type page: int
+        :param page_size: The number of items per page. Default is 10, max is 100.
+        :type page_size: int
+        :param user_id: The ID of the user. Overrides the authenticated user if provided and the user is an admin.
+        :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -345,8 +477,13 @@ class PaymentsApi:
         """  # noqa: E501
 
         _param = self._get_payment_history_serialize(
-            limit=limit,
-            offset=offset,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            sort_order=sort_order,
+            sort_by=sort_by,
+            page=page,
+            page_size=page_size,
+            user_id=user_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -354,7 +491,7 @@ class PaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Payment]",
+            "200": "PaginatedResponsePayment",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -367,16 +504,31 @@ class PaymentsApi:
     @validate_call
     async def _get_payment_history_async_without_preload_content(
         self,
-        limit: Annotated[
-            Optional[StrictInt],
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=100, strict=True, ge=1)]],
             Field(
-                description="Limit the number of payments returned. 0 means no limit."
+                description="The number of items per page. Default is 10, max is 100."
             ),
         ] = None,
-        offset: Annotated[
-            Optional[StrictInt],
+        user_id: Annotated[
+            Optional[StrictStr],
             Field(
-                description="Offset the number of payments returned. 0 means no offset."
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         _request_timeout: Union[
@@ -395,10 +547,20 @@ class PaymentsApi:
 
         Get the combined payment history for a user across all payment services.
 
-        :param limit: Limit the number of payments returned. 0 means no limit.
-        :type limit: int
-        :param offset: Offset the number of payments returned. 0 means no offset.
-        :type offset: int
+        :param filter_by: The field to filter by
+        :type filter_by: str
+        :param filter_value: The value to filter with
+        :type filter_value: str
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
+        :param page: The current page number
+        :type page: int
+        :param page_size: The number of items per page. Default is 10, max is 100.
+        :type page_size: int
+        :param user_id: The ID of the user. Overrides the authenticated user if provided and the user is an admin.
+        :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -422,8 +584,13 @@ class PaymentsApi:
         """  # noqa: E501
 
         _param = self._get_payment_history_serialize(
-            limit=limit,
-            offset=offset,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            sort_order=sort_order,
+            sort_by=sort_by,
+            page=page,
+            page_size=page_size,
+            user_id=user_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -431,7 +598,7 @@ class PaymentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Payment]",
+            "200": "PaginatedResponsePayment",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -442,16 +609,31 @@ class PaymentsApi:
     @validate_call
     def _get_payment_history_sync(
         self,
-        limit: Annotated[
-            Optional[StrictInt],
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=100, strict=True, ge=1)]],
             Field(
-                description="Limit the number of payments returned. 0 means no limit."
+                description="The number of items per page. Default is 10, max is 100."
             ),
         ] = None,
-        offset: Annotated[
-            Optional[StrictInt],
+        user_id: Annotated[
+            Optional[StrictStr],
             Field(
-                description="Offset the number of payments returned. 0 means no offset."
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         _request_timeout: Union[
@@ -465,11 +647,16 @@ class PaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Payment]:
+    ) -> PaginatedResponsePayment:
         """Synchronous version of get_payment_history"""
         return async_to_sync(self._get_payment_history_async)(
-            limit=limit,
-            offset=offset,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            sort_order=sort_order,
+            sort_by=sort_by,
+            page=page,
+            page_size=page_size,
+            user_id=user_id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -480,16 +667,31 @@ class PaymentsApi:
     @validate_call
     def _get_payment_history_sync_with_http_info(
         self,
-        limit: Annotated[
-            Optional[StrictInt],
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=100, strict=True, ge=1)]],
             Field(
-                description="Limit the number of payments returned. 0 means no limit."
+                description="The number of items per page. Default is 10, max is 100."
             ),
         ] = None,
-        offset: Annotated[
-            Optional[StrictInt],
+        user_id: Annotated[
+            Optional[StrictStr],
             Field(
-                description="Offset the number of payments returned. 0 means no offset."
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         _request_timeout: Union[
@@ -503,11 +705,16 @@ class PaymentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Payment]]:
+    ) -> ApiResponse[PaginatedResponsePayment]:
         """Synchronous version of get_payment_history_with_http_info"""
         return async_to_sync(self._get_payment_history_async_with_http_info)(
-            limit=limit,
-            offset=offset,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            sort_order=sort_order,
+            sort_by=sort_by,
+            page=page,
+            page_size=page_size,
+            user_id=user_id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -518,16 +725,31 @@ class PaymentsApi:
     @validate_call
     def _get_payment_history_sync_without_preload_content(
         self,
-        limit: Annotated[
-            Optional[StrictInt],
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=100, strict=True, ge=1)]],
             Field(
-                description="Limit the number of payments returned. 0 means no limit."
+                description="The number of items per page. Default is 10, max is 100."
             ),
         ] = None,
-        offset: Annotated[
-            Optional[StrictInt],
+        user_id: Annotated[
+            Optional[StrictStr],
             Field(
-                description="Offset the number of payments returned. 0 means no offset."
+                description="The ID of the user. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         _request_timeout: Union[
@@ -544,8 +766,13 @@ class PaymentsApi:
     ) -> RESTResponseType:
         """Synchronous version of get_payment_history_without_preload_content"""
         return async_to_sync(self._get_payment_history_async_without_preload_content)(
-            limit=limit,
-            offset=offset,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            sort_order=sort_order,
+            sort_by=sort_by,
+            page=page,
+            page_size=page_size,
+            user_id=user_id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -555,8 +782,13 @@ class PaymentsApi:
 
     def _get_payment_history_serialize(
         self,
-        limit,
-        offset,
+        filter_by,
+        filter_value,
+        sort_order,
+        sort_by,
+        page,
+        page_size,
+        user_id,
         _request_auth,
         _content_type,
         _headers,
@@ -578,13 +810,33 @@ class PaymentsApi:
 
         # process the path parameters
         # process the query parameters
-        if limit is not None:
+        if filter_by is not None:
 
-            _query_params.append(("limit", limit))
+            _query_params.append(("filter_by", filter_by))
 
-        if offset is not None:
+        if filter_value is not None:
 
-            _query_params.append(("offset", offset))
+            _query_params.append(("filter_value", filter_value))
+
+        if sort_order is not None:
+
+            _query_params.append(("sort_order", sort_order))
+
+        if sort_by is not None:
+
+            _query_params.append(("sort_by", sort_by))
+
+        if page is not None:
+
+            _query_params.append(("page", page))
+
+        if page_size is not None:
+
+            _query_params.append(("page_size", page_size))
+
+        if user_id is not None:
+
+            _query_params.append(("user_id", user_id))
 
         # process the header parameters
         # process the form parameters

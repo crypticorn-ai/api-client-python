@@ -20,6 +20,7 @@ client/models/exception_detail.py
 client/models/invoice.py
 client/models/now_new_invoice_create.py
 client/models/paginated_response_coupon.py
+client/models/paginated_response_payment.py
 client/models/payment.py
 client/models/payment_status.py
 client/models/product.py
