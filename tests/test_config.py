@@ -12,8 +12,6 @@ async def client():
 
 @pytest.mark.asyncio
 async def test_client_config(client: AsyncClient):
-    client.configure(config=HiveConfig(host="something"), service='hive-v1')
+    client.configure(config=HiveConfig(host="something"), service="hive-v1")
     assert client.hive.config.host == "something"  # overriden
-    assert client.hive.config.api_key == {
-        'APIKeyHeader': "test"
-    }  # not overriden
+    assert client.hive.config.api_key == {"APIKeyHeader": "test"}  # not overriden

@@ -58,7 +58,9 @@ class AuthHandler:
         self,
         base_url: str = None,
     ):
-        self.base_url = base_url.rstrip('/') if base_url else 'https://api.crypticorn.com'
+        self.base_url = (
+            base_url.rstrip("/") if base_url else "https://api.crypticorn.com"
+        )
         self.url = f"{self.base_url}/v1/auth"
         self.client = AuthClient(Configuration(host=self.url), is_sync=False)
 

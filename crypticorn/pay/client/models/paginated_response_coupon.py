@@ -17,49 +17,33 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    StrictBool,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
-)
-from typing import Any, ClassVar, Dict, List, Optional, Union
-from crypticorn.pay.client.models.scope import Scope
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from typing import Any, ClassVar, Dict, List, Optional
+from crypticorn.pay.client.models.coupon import Coupon
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class Product(BaseModel):
+class PaginatedResponseCoupon(BaseModel):
     """
-    Model for reading a product
+    PaginatedResponseCoupon
     """  # noqa: E501
 
-    id: StrictStr = Field(description="UID of the model")
-    created_at: StrictInt = Field(description="Timestamp of creation")
-    updated_at: StrictInt = Field(description="Timestamp of last update")
-    name: StrictStr = Field(description="Product name")
-    price: Union[StrictFloat, StrictInt] = Field(description="Product price")
-    scopes: Optional[List[Scope]]
-    duration: StrictInt = Field(
-        description="Product duration in days. 0 means forever."
-    )
-    description: StrictStr = Field(description="Product description")
-    is_active: StrictBool = Field(description="Product is active")
-    original_price: Optional[Union[StrictFloat, StrictInt]]
+    data: List[Coupon]
+    total: StrictInt = Field(description="The total number of items")
+    page: StrictInt = Field(description="The current page number")
+    page_size: StrictInt = Field(description="The number of items per page")
+    prev: Optional[StrictInt] = None
+    next: Optional[StrictInt] = None
+    last: Optional[StrictInt] = None
     __properties: ClassVar[List[str]] = [
-        "id",
-        "created_at",
-        "updated_at",
-        "name",
-        "price",
-        "scopes",
-        "duration",
-        "description",
-        "is_active",
-        "original_price",
+        "data",
+        "total",
+        "page",
+        "page_size",
+        "prev",
+        "next",
+        "last",
     ]
 
     model_config = ConfigDict(
@@ -79,7 +63,7 @@ class Product(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Product from a JSON string"""
+        """Create an instance of PaginatedResponseCoupon from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -99,21 +83,33 @@ class Product(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if scopes (nullable) is None
+        # override the default output from pydantic by calling `to_dict()` of each item in data (list)
+        _items = []
+        if self.data:
+            for _item_data in self.data:
+                if _item_data:
+                    _items.append(_item_data.to_dict())
+            _dict["data"] = _items
+        # set to None if prev (nullable) is None
         # and model_fields_set contains the field
-        if self.scopes is None and "scopes" in self.model_fields_set:
-            _dict["scopes"] = None
+        if self.prev is None and "prev" in self.model_fields_set:
+            _dict["prev"] = None
 
-        # set to None if original_price (nullable) is None
+        # set to None if next (nullable) is None
         # and model_fields_set contains the field
-        if self.original_price is None and "original_price" in self.model_fields_set:
-            _dict["original_price"] = None
+        if self.next is None and "next" in self.model_fields_set:
+            _dict["next"] = None
+
+        # set to None if last (nullable) is None
+        # and model_fields_set contains the field
+        if self.last is None and "last" in self.model_fields_set:
+            _dict["last"] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Product from a dict"""
+        """Create an instance of PaginatedResponseCoupon from a dict"""
         if obj is None:
             return None
 
@@ -122,16 +118,17 @@ class Product(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "id": obj.get("id"),
-                "created_at": obj.get("created_at"),
-                "updated_at": obj.get("updated_at"),
-                "name": obj.get("name"),
-                "price": obj.get("price"),
-                "scopes": obj.get("scopes"),
-                "duration": obj.get("duration"),
-                "description": obj.get("description"),
-                "is_active": obj.get("is_active"),
-                "original_price": obj.get("original_price"),
+                "data": (
+                    [Coupon.from_dict(_item) for _item in obj["data"]]
+                    if obj.get("data") is not None
+                    else None
+                ),
+                "total": obj.get("total"),
+                "page": obj.get("page"),
+                "page_size": obj.get("page_size"),
+                "prev": obj.get("prev"),
+                "next": obj.get("next"),
+                "last": obj.get("last"),
             }
         )
         return _obj

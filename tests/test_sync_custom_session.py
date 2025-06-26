@@ -17,7 +17,7 @@ def test_custom_http_client_injection():
             client = SyncClient(http_client=custom_session)
 
             # In sync mode, services should not have the custom session since sessions are created per operation
-            subclient = client._services['trade-v1']
+            subclient = client._services["trade-v1"]
             # Should be None since sync clients don't persist sessions
             assert subclient.base_client.rest_client.pool_manager is None
 
@@ -39,7 +39,7 @@ def test_lazy_http_client_creation():
     # Should still be None since sync clients don't persist sessions
     assert client._http_client is None
 
-    subclient = client._services['trade-v1']
+    subclient = client._services["trade-v1"]
     # Should be None since sessions are created per operation
     assert subclient.base_client.rest_client.pool_manager is None
 
@@ -92,7 +92,7 @@ def test_no_persistent_sessions_in_sync_mode():
         assert client._http_client is None
 
     # All services should still have None for pool_manager
-    subclient = client._services['trade-v1']
+    subclient = client._services["trade-v1"]
     assert subclient.base_client.rest_client.pool_manager is None
 
     client.close()
@@ -133,7 +133,7 @@ def test_context_manager_usage():
         # Still no persistent session
         assert client._http_client is None
 
-        subclient = client._services['trade-v1']
+        subclient = client._services["trade-v1"]
         # Should be None since sessions are per-operation
         assert subclient.base_client.rest_client.pool_manager is None
 

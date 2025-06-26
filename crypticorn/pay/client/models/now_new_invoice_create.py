@@ -17,35 +17,23 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class Subscription(BaseModel):
+class NowNewInvoiceCreate(BaseModel):
     """
-    Model for reading a product subscription
+    Request model for creating a payment invoice.  Creates a payment link where the customer can complete the payment. With this method, the customer is required to follow the generated url to complete the payment.  https://documenter.getpostman.com/view/7907941/2s93JusNJt#f5e4e645-dce2-4b06-b2ca-2a29aaa5e845
     """  # noqa: E501
 
-    id: StrictStr = Field(description="UID of the model")
-    created_at: StrictInt = Field(description="Timestamp of creation")
-    updated_at: StrictInt = Field(description="Timestamp of last update")
-    user_id: StrictStr = Field(description="User ID")
-    product_id: StrictStr = Field(description="Product ID")
-    access_from: StrictInt = Field(description="Access from timestamp in seconds")
-    access_until: StrictInt = Field(
-        description="Access until timestamp in seconds. 0 means unlimited."
+    user_id: StrictStr = Field(description="The user ID to associate with the purchase")
+    product_id: StrictStr = Field(
+        description="The product ID to associate with the purchase"
     )
-    __properties: ClassVar[List[str]] = [
-        "id",
-        "created_at",
-        "updated_at",
-        "user_id",
-        "product_id",
-        "access_from",
-        "access_until",
-    ]
+    coupon_id: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["user_id", "product_id", "coupon_id"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -64,7 +52,7 @@ class Subscription(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Subscription from a JSON string"""
+        """Create an instance of NowNewInvoiceCreate from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -84,11 +72,16 @@ class Subscription(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if coupon_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.coupon_id is None and "coupon_id" in self.model_fields_set:
+            _dict["coupon_id"] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Subscription from a dict"""
+        """Create an instance of NowNewInvoiceCreate from a dict"""
         if obj is None:
             return None
 
@@ -97,13 +90,9 @@ class Subscription(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "id": obj.get("id"),
-                "created_at": obj.get("created_at"),
-                "updated_at": obj.get("updated_at"),
                 "user_id": obj.get("user_id"),
                 "product_id": obj.get("product_id"),
-                "access_from": obj.get("access_from"),
-                "access_until": obj.get("access_until"),
+                "coupon_id": obj.get("coupon_id"),
             }
         )
         return _obj

@@ -18,7 +18,9 @@ def throw_if_none(
 ) -> None:
     """Throws an FastAPI HTTPException if the value is None. https://docs.python.org/3/library/stdtypes.html#truth-value-testing"""
     if value is None:
-        raise HTTPException(content=ExceptionContent(error=ApiError.OBJECT_NOT_FOUND, message=message))
+        raise HTTPException(
+            content=ExceptionContent(error=ApiError.OBJECT_NOT_FOUND, message=message)
+        )
 
 
 def throw_if_falsy(
@@ -27,7 +29,9 @@ def throw_if_falsy(
 ) -> None:
     """Throws an FastAPI HTTPException if the value is False. https://docs.python.org/3/library/stdtypes.html#truth-value-testing"""
     if not value:
-        raise HTTPException(content=ExceptionContent(error=ApiError.OBJECT_NOT_FOUND, message=message))
+        raise HTTPException(
+            content=ExceptionContent(error=ApiError.OBJECT_NOT_FOUND, message=message)
+        )
 
 
 def gen_random_id(length: int = 20) -> str:

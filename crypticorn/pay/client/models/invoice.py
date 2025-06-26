@@ -17,35 +17,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from crypticorn.pay.client.models.provider import Provider
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class Subscription(BaseModel):
+class Invoice(BaseModel):
     """
-    Model for reading a product subscription
+    Combined invoice model across all services
     """  # noqa: E501
 
-    id: StrictStr = Field(description="UID of the model")
-    created_at: StrictInt = Field(description="Timestamp of creation")
-    updated_at: StrictInt = Field(description="Timestamp of last update")
-    user_id: StrictStr = Field(description="User ID")
-    product_id: StrictStr = Field(description="Product ID")
-    access_from: StrictInt = Field(description="Access from timestamp in seconds")
-    access_until: StrictInt = Field(
-        description="Access until timestamp in seconds. 0 means unlimited."
-    )
-    __properties: ClassVar[List[str]] = [
-        "id",
-        "created_at",
-        "updated_at",
-        "user_id",
-        "product_id",
-        "access_from",
-        "access_until",
-    ]
+    id: StrictStr = Field(description="Invoice ID")
+    provider: Provider = Field(description="Payment provider")
+    url: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["id", "provider", "url"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -64,7 +51,7 @@ class Subscription(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Subscription from a JSON string"""
+        """Create an instance of Invoice from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -84,11 +71,16 @@ class Subscription(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if url (nullable) is None
+        # and model_fields_set contains the field
+        if self.url is None and "url" in self.model_fields_set:
+            _dict["url"] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Subscription from a dict"""
+        """Create an instance of Invoice from a dict"""
         if obj is None:
             return None
 
@@ -98,12 +90,8 @@ class Subscription(BaseModel):
         _obj = cls.model_validate(
             {
                 "id": obj.get("id"),
-                "created_at": obj.get("created_at"),
-                "updated_at": obj.get("updated_at"),
-                "user_id": obj.get("user_id"),
-                "product_id": obj.get("product_id"),
-                "access_from": obj.get("access_from"),
-                "access_until": obj.get("access_until"),
+                "provider": obj.get("provider"),
+                "url": obj.get("url"),
             }
         )
         return _obj

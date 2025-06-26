@@ -7,7 +7,7 @@ from crypticorn.pay import (
     StatusApi,
     PaymentsApi,
     ProductsApi,
-    AdminApi,
+    CouponsApi,
 )
 
 if TYPE_CHECKING:
@@ -37,4 +37,4 @@ class PayClient:
         self.status = StatusApi(self.base_client, is_sync=is_sync)
         self.payments = PaymentsApi(self.base_client, is_sync=is_sync)
         self.products = ProductsApi(self.base_client, is_sync=is_sync)
-        self.admin = AdminApi(self.base_client, is_sync=is_sync)
+        self.coupons = CouponsApi(self.base_client, is_sync=is_sync)
