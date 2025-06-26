@@ -2273,7 +2273,7 @@ class CouponsApi:
         )
 
     @validate_call
-    def list_coupons(
+    def get_coupons(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -2308,9 +2308,9 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PaginatedResponseCoupon:
-        """List Coupons"""
+        """Get Coupons"""
         if self.is_sync:
-            return self._list_coupons_sync(
+            return self._get_coupons_sync(
                 filter_by=filter_by,
                 filter_value=filter_value,
                 sort_order=sort_order,
@@ -2325,7 +2325,7 @@ class CouponsApi:
             )
 
         else:
-            return self._list_coupons_async(
+            return self._get_coupons_async(
                 filter_by=filter_by,
                 filter_value=filter_value,
                 sort_order=sort_order,
@@ -2340,7 +2340,7 @@ class CouponsApi:
             )
 
     @validate_call
-    def list_coupons_with_http_info(
+    def get_coupons_with_http_info(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -2375,9 +2375,9 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PaginatedResponseCoupon]:
-        """List Coupons with HTTP info"""
+        """Get Coupons with HTTP info"""
         if self.is_sync:
-            return self._list_coupons_sync_with_http_info(
+            return self._get_coupons_sync_with_http_info(
                 filter_by=filter_by,
                 filter_value=filter_value,
                 sort_order=sort_order,
@@ -2392,7 +2392,7 @@ class CouponsApi:
             )
 
         else:
-            return self._list_coupons_async_with_http_info(
+            return self._get_coupons_async_with_http_info(
                 filter_by=filter_by,
                 filter_value=filter_value,
                 sort_order=sort_order,
@@ -2407,7 +2407,7 @@ class CouponsApi:
             )
 
     @validate_call
-    def list_coupons_without_preload_content(
+    def get_coupons_without_preload_content(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -2442,9 +2442,9 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List Coupons without preloading content"""
+        """Get Coupons without preloading content"""
         if self.is_sync:
-            return self._list_coupons_sync_without_preload_content(
+            return self._get_coupons_sync_without_preload_content(
                 filter_by=filter_by,
                 filter_value=filter_value,
                 sort_order=sort_order,
@@ -2459,7 +2459,7 @@ class CouponsApi:
             )
 
         else:
-            return self._list_coupons_async_without_preload_content(
+            return self._get_coupons_async_without_preload_content(
                 filter_by=filter_by,
                 filter_value=filter_value,
                 sort_order=sort_order,
@@ -2475,7 +2475,7 @@ class CouponsApi:
 
     # Private async implementation methods
     @validate_call
-    async def _list_coupons_async(
+    async def _get_coupons_async(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -2510,7 +2510,7 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PaginatedResponseCoupon:
-        """List Coupons
+        """Get Coupons
 
         List all coupons
 
@@ -2548,7 +2548,7 @@ class CouponsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._list_coupons_serialize(
+        _param = self._get_coupons_serialize(
             filter_by=filter_by,
             filter_value=filter_value,
             sort_order=sort_order,
@@ -2574,7 +2574,7 @@ class CouponsApi:
         ).data
 
     @validate_call
-    async def _list_coupons_async_with_http_info(
+    async def _get_coupons_async_with_http_info(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -2609,7 +2609,7 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PaginatedResponseCoupon]:
-        """List Coupons
+        """Get Coupons
 
         List all coupons
 
@@ -2647,7 +2647,7 @@ class CouponsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._list_coupons_serialize(
+        _param = self._get_coupons_serialize(
             filter_by=filter_by,
             filter_value=filter_value,
             sort_order=sort_order,
@@ -2672,7 +2672,7 @@ class CouponsApi:
         )
 
     @validate_call
-    async def _list_coupons_async_without_preload_content(
+    async def _get_coupons_async_without_preload_content(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -2707,7 +2707,7 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List Coupons
+        """Get Coupons
 
         List all coupons
 
@@ -2745,7 +2745,7 @@ class CouponsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._list_coupons_serialize(
+        _param = self._get_coupons_serialize(
             filter_by=filter_by,
             filter_value=filter_value,
             sort_order=sort_order,
@@ -2768,7 +2768,7 @@ class CouponsApi:
 
     # Private sync implementation methods
     @validate_call
-    def _list_coupons_sync(
+    def _get_coupons_sync(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -2803,8 +2803,8 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PaginatedResponseCoupon:
-        """Synchronous version of list_coupons"""
-        return async_to_sync(self._list_coupons_async)(
+        """Synchronous version of get_coupons"""
+        return async_to_sync(self._get_coupons_async)(
             filter_by=filter_by,
             filter_value=filter_value,
             sort_order=sort_order,
@@ -2819,7 +2819,7 @@ class CouponsApi:
         )
 
     @validate_call
-    def _list_coupons_sync_with_http_info(
+    def _get_coupons_sync_with_http_info(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -2854,8 +2854,8 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PaginatedResponseCoupon]:
-        """Synchronous version of list_coupons_with_http_info"""
-        return async_to_sync(self._list_coupons_async_with_http_info)(
+        """Synchronous version of get_coupons_with_http_info"""
+        return async_to_sync(self._get_coupons_async_with_http_info)(
             filter_by=filter_by,
             filter_value=filter_value,
             sort_order=sort_order,
@@ -2870,7 +2870,7 @@ class CouponsApi:
         )
 
     @validate_call
-    def _list_coupons_sync_without_preload_content(
+    def _get_coupons_sync_without_preload_content(
         self,
         filter_by: Annotated[
             Optional[StrictStr], Field(description="The field to filter by")
@@ -2905,8 +2905,8 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Synchronous version of list_coupons_without_preload_content"""
-        return async_to_sync(self._list_coupons_async_without_preload_content)(
+        """Synchronous version of get_coupons_without_preload_content"""
+        return async_to_sync(self._get_coupons_async_without_preload_content)(
             filter_by=filter_by,
             filter_value=filter_value,
             sort_order=sort_order,
@@ -2920,7 +2920,7 @@ class CouponsApi:
             _host_index=_host_index,
         )
 
-    def _list_coupons_serialize(
+    def _get_coupons_serialize(
         self,
         filter_by,
         filter_value,

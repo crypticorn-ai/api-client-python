@@ -47,6 +47,9 @@ from crypticorn.pay.client.models.now_new_invoice_create import NowNewInvoiceCre
 from crypticorn.pay.client.models.paginated_response_coupon import (
     PaginatedResponseCoupon,
 )
+from crypticorn.pay.client.models.paginated_response_payment import (
+    PaginatedResponsePayment,
+)
 from crypticorn.pay.client.models.payment import Payment
 from crypticorn.pay.client.models.payment_status import PaymentStatus
 from crypticorn.pay.client.models.product import Product
