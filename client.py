@@ -4,13 +4,8 @@ from pandas import DataFrame
 from pydantic import BaseModel
 from typing import Optional, Union, List
 from urllib.parse import urljoin
-from datetime import datetime
-import requests
-
-from python.models import FuturesTradingAction
-from .public.crypticorn import Crypticorn
-from .public.crypticorn.utils import SingleModel, AccountInfo, ApiKeyGeneration, AllModels
-from datetime import timedelta
+from datetime import datetime, timedelta
+import os
 
 class PredictionData(BaseModel):
     id: Optional[int] = None
@@ -48,13 +43,37 @@ default_version = "1.5"
 
 class ApiClient:
     def __init__(
-        self, base_url: str = "https://api.crypticorn.com", api_key: str = None, token: str = None
+        self,
+        *,
+        base_url: str = os.getenv("CRYPTICORN_API_URL", "https://api.crypticorn.dev"),
+        metrics_api_key: str | None = None,
+        miners_api_key: str | None = None,
+        bearer_token: str | None = None,
     ):
-        self.base_url = base_url
-        self.api_key = api_key
-        self.token = token
+        """Create API client with separate keys for different services.
+
+        Parameters
+        ----------
+        base_url : str
+            Base endpoint (defaults to env *CRYPTICORN_API_URL* or official prod).
+        metrics_api_key : str | None
+            Key for metrics & klines services (sent via ``x-api-key``).
+        miners_api_key : str | None
+            Key for miners (FGI) endpoints.
+        token : str | None
+            Bearer token for private Data-Platform / Trade endpoints.
+        """
+
+        self.base_url = base_url.rstrip("/")
+        self.metrics_api_key = metrics_api_key or os.getenv("CRYPTICORN_API_KEY")
+        self.miners_api_key = miners_api_key or os.getenv("MINERS_API_KEY") or os.getenv("CRYPTICORN_MINERS_API_KEY")
+        self.bearer_token = bearer_token
+
+        # Pre-built header dicts for speed
+        self._hdr_metrics = {"x-api-key": self.metrics_api_key} if self.metrics_api_key else {}
+        self._hdr_miners = {"x-api-key": self.miners_api_key} if self.miners_api_key else {}
+
         self.client = httpx.Client()
-        self.hive = HiveClient(api_key)
 
     def get_response(
         self, endpoint: str, params: dict = None, dict_key: str = None
@@ -63,7 +82,7 @@ class ApiClient:
         print(full_url)
         print(params)
         try:
-            response = self.client.get(full_url, params=params, timeout=None)
+            response = self.client.get(full_url, params=params, headers=self._hdr_miners, timeout=None)
             response.raise_for_status()
         except httpx.HTTPStatusError as e:
             print(f"HTTP error occurred: {e}")
@@ -78,33 +97,7 @@ class ApiClient:
             return formatted_response.get(dict_key, {})
 
         return DataFrame(formatted_response)
-    
-    async def post_futures_action(self, signal: FuturesTradingAction):
-        url = f"{self.base_url}/v1/trade/actions/futures"
-        token = self.api_key
-        headers = {"Authorization": f"Bearer {token}"}
-        print(f"Posting futures action to {url} with signal: {signal}")
-        try:
-            async with httpx.AsyncClient(timeout=30) as http_client:
-                response = await http_client.post(
-                    url, headers=headers, json=signal.model_dump()
-                )
-            print(f"Response: {response}")
-            response.raise_for_status()
-            data = response.json()
-            print(f"Saved futures action: {data}")
-            return data
-        except httpx.HTTPStatusError as e:
-            error_detail = ""
-            try:
-                error_detail = e.response.json()
-            except Exception:
-                error_detail = e.response.text
-            print(f"HTTP error occurred: {e.response.text}. Details: {error_detail}")
-        except httpx.RequestError as e:
-            print(f"Request failed: {e.request.method} {e.request.url} - {e}")
-        return []
-
+ 
     # -------------------- START OF DATA PLATFORM SERVICE ------------------------ #
     def get_economics_news(self, entries: int, reverse: bool = False) -> DataFrame:
         class NewsData(BaseModel):
@@ -195,14 +188,14 @@ class ApiClient:
         response = self.client.post(
             urljoin(self.base_url, "/v1/predictions"),
             json=data.dict(),
-            headers={"Authorization": f"Bearer {self.api_key}"},
+            headers={"Authorization": f"Bearer {self.miners_api_key}"},
         )
         return response.json()
 
     def get_latest_predictions(self, version: str = default_version) -> DataFrame:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/predictions/latest?version={version}"),
-            headers={"Authorization": f"Bearer {self.api_key}"},
+            headers={"Authorization": f"Bearer {self.miners_api_key}"},
         )
         arr = response.json()
         flatarr = []
@@ -234,14 +227,14 @@ class ApiClient:
     def get_prediction(self, pair: str, version: str = default_version, limit: int = 1) -> PredictionData:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/predictions/symbol/{pair}?version={version}&limit={limit}"),
-            headers={"Authorization": f"Bearer {self.api_key}"},
+            headers={"Authorization": f"Bearer {self.miners_api_key}"},
         )
         return response.json()
 
     def get_prediction_time(self, id) -> DataFrame:
         response = self.client.get(
             urljoin(self.base_url, f"/v1/predictions/time/{id}"),
-            headers={"Authorization": f"Bearer {self.api_key}"},
+            headers={"Authorization": f"Bearer {self.miners_api_key}"},
         )
         arr = response.json()
         return DataFrame(arr)
@@ -250,7 +243,7 @@ class ApiClient:
         now = int(pd.Timestamp.now().timestamp())
         response = self.client.get(
             urljoin(self.base_url, "/v1/udf/history"),
-            headers={"Authorization": f"Bearer {self.api_key}"},
+            headers={"Authorization": f"Bearer {self.miners_api_key}"},
             params={
                 "from": now - (entries * 900),
                 "to": now,
@@ -271,14 +264,14 @@ class ApiClient:
         response = self.client.post(
             urljoin(self.base_url, "/v1/trends"),
             json=data.dict(),
-            headers={"Authorization": f"Bearer {self.api_key}"},
+            headers={"Authorization": f"Bearer {self.miners_api_key}"},
         )
         return response.json()
 
     def get_trends(self, query: TrendQuery):
         response = self.client.get(
             urljoin(self.base_url, "/v1/trends"),
-            headers={"Authorization": f"Bearer {self.api_key}"},
+            headers={"Authorization": f"Bearer {self.miners_api_key}"},
             params=query.dict(),
         )
         df = DataFrame(response.json())
@@ -288,141 +281,106 @@ class ApiClient:
 
     # -------------------- START OF KLINE SERVICE ------------------------ #
     def get_symbols(self, market: str) -> DataFrame:
-        """
-        get: symbol for futures or spot, as pandas dataframe
-        market: futures or spot
+        """Return the list of whitelisted symbols for *market* ('futures' or 'spot')."""
 
-        Returns:
-            DataFrame: A pandas DataFrame containing the symbols with columns:
-                - symbol: str (the trading pair symbol)
-        """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/klines/symbols/{market}"), timeout=None
+            urljoin("http://116.202.55.68:3030", "/v1/klines/symbols"), params={"market": market}, headers=self._hdr_metrics, timeout=None
         )
-        if response.status_code == 200:
-            json_response = response.json()
-            if json_response.get("success"):
-                # Convert the array of symbols to a DataFrame with a 'symbol' column
-                df = DataFrame(json_response["data"], columns=["symbol"])
-                return df
-            else:
-                raise Exception(f"API returned error: {json_response.get('message')}")
-        else:
+
+        if response.status_code != 200:
             raise Exception(f"Failed to get symbols: {response.json()}")
 
-    def get_klines(self, market: str, symbol: str, interval: str, limit: int, start_timestamp: int = None, end_timestamp: int = None, sort: str = "desc") -> DataFrame:
-        """
-        get: unix_time + OHLCV data , as pandas dataframe
-        symbol have to be in capital case e.g. (BTCUSDT)
-        market: futures or spot
-        interval: 1m, 3m, 5m, 15m, 30m, 1h, 4h, 1d
+        data = response.json()
+        # New API returns a plain list of strings; older variant wrapped it in {{success,data}}
+        if isinstance(data, list):
+            return DataFrame(data, columns=["symbol"])
+        if isinstance(data, dict) and data.get("success"):
+            return DataFrame(data["data"], columns=["symbol"])
+        raise Exception("Unexpected response format for get_symbols")
 
-        Returns:
-            DataFrame: A pandas DataFrame containing OHLCV data with columns:
-                - timestamp: datetime
-                - open: float
-                - high: float
-                - low: float
-                - close: float
-                - volume: float
-        """
-        params = {"limit": limit}
+    def get_klines(
+        self,
+        market: str,
+        symbol: str,
+        interval: str,
+        limit: int,
+        start_timestamp: int = None,
+        end_timestamp: int = None,
+        sort: str = "desc",
+    ) -> DataFrame:
+        """Fetch OHLCV rows for *symbol* via the new /ohlcv endpoint."""
+
+        params = {
+            "symbol": symbol,
+            "timeframe": interval,
+            "market": market,
+            "limit": limit,
+        }
         if start_timestamp is not None:
             params["start"] = start_timestamp
         if end_timestamp is not None:
             params["end"] = end_timestamp
-        if sort is not None:
+        if sort in {"asc", "desc"}:
             params["sort_direction"] = sort
 
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/klines/{market}/{interval}/{symbol}"),
-            params=params, timeout=None
+            urljoin("http://116.202.55.68:3030", "/v1/klines/ohlcv"), params=params, headers=self._hdr_metrics, timeout=None
         )
-        if response.status_code == 200:
-            json_response = response.json()
-            if json_response.get("success"):
-                # Extract the nested data structure
-                data = json_response["data"]
-                # Create DataFrame from the arrays
-                df = DataFrame({
-                    "timestamp": data["timestamp"],
-                    "open": data["open"],
-                    "high": data["high"],
-                    "low": data["low"],
-                    "close": data["close"],
-                    "volume": data["volume"]
-                })
-                # Convert timestamp strings to datetime then to unix timestamp
-                df['timestamp'] = pd.to_datetime(df['timestamp'])
-                df['timestamp'] = df['timestamp'].astype("int64") // 10 ** 9  # use int64 instead of int for windows
-                return df
-            else:
-                raise Exception(f"API returned error: {json_response.get('message')}")
-        else:
+
+        if response.status_code != 200:
             raise Exception(f"Failed to get klines: {response.json()}")
+
+        data = response.json()
+        # If wrapped in {{success,data}} keep compatible
+        if isinstance(data, dict) and data.get("success"):
+            data = data["data"]
+
+        df = DataFrame(data)
+        if "timestamp" in df.columns:
+            df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s")
+            df["timestamp"] = df["timestamp"].astype("int64") // 10 ** 9
+        return df
     
-    def get_funding_rate(self, symbol: str, start_timestamp: int = None, end_timestamp: int = None, limit: int = 2000) -> DataFrame:
-        """
-        Get funding rate data for a specific symbol.
+    def get_funding_rate(
+        self,
+        symbol: str,
+        start_timestamp: int = None,
+        end_timestamp: int = None,
+        limit: int = 2000,
+    ) -> DataFrame:
+        """Retrieve funding-rate rows via the /funding endpoint."""
 
-        Args:
-            symbol (str): Trading pair symbol in capital case (e.g., 'BTCUSDT')
-            start_timestamp (int, optional): Start time in unix timestamp
-            end_timestamp (int, optional): End time in unix timestamp
-            limit (int, optional): Number of records to return. Defaults to 2000.
-
-        Returns:
-            DataFrame: A pandas DataFrame containing funding rate data with columns:
-                - symbol: str
-                - timestamp: datetime
-                - funding_rate: float
-        """
-        params = {"limit": limit}
+        params = {"symbol": symbol, "limit": limit}
         if start_timestamp is not None:
             params["start"] = start_timestamp
         if end_timestamp is not None:
             params["end"] = end_timestamp
 
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/klines/funding_rates/{symbol}"),
-            params=params, timeout=None
+            urljoin("http://116.202.55.68:3030", "/v1/klines/funding"), params=params, headers=self._hdr_metrics, timeout=None
         )
-        if response.status_code == 200:
-            json_response = response.json()
-            if json_response.get("success"):
-                # Create DataFrame from the data array
-                df = DataFrame(json_response["data"])
-                # Convert timestamp strings to datetime then to unix timestamp
-                df['timestamp'] = pd.to_datetime(df['timestamp'])
-                df['timestamp'] = df['timestamp'].astype("int64") // 10 ** 9  # use int64 instead of int for windows
-                return df
-            else:
-                raise Exception(f"API returned error: {json_response.get('message')}")
-        else:
+
+        if response.status_code != 200:
             raise Exception(f"Failed to get funding rates: {response.json()}")
+
+        data = response.json()
+        if isinstance(data, dict) and data.get("funding_rates"):
+            # Flatten crypticorn's wrapped structure
+            rates = data["funding_rates"]
+            df = DataFrame(rates)
+            df.insert(0, "symbol", data.get("symbol", symbol))
+            df.insert(1, "funding_interval", data.get("funding_interval"))
+        elif isinstance(data, list):
+            df = DataFrame(data)
+        else:
+            raise Exception("Unexpected response format for funding rates")
+
+        if not df.empty and "timestamp" in df.columns:
+            df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s")
+            df["timestamp"] = df["timestamp"].astype("int64") // 10 ** 9
+        return df
     
     # -------------------- END OF KLINE SERVICE ------------------------ #
-    
-    # -------------------- START OF TRADE SERVICE ------------------------ #
-    def list_orders(self) -> DataFrame:
-        response = self.client.get(
-            urljoin(self.base_url, "/v1/trade/orders"),
-            headers={"Authorization": f"Bearer {self.api_key}"},
-        )
-        return DataFrame(response.json())
-    
-    def get_enabled_bots(self) -> DataFrame:
-        response = self.client.get(
-            urljoin(self.base_url, "/v1/trade/bots/enabled"),
-            headers={"Authorization": f"Bearer {self.api_key}"},
-        )
-        data = response.json()
-        return {
-            "bots": DataFrame(data["bots"]),
-            "api_keys": DataFrame(data["api_keys"])
-        }
-    
-    # -------------------- END OF TRADE SERVICE ------------------------ #
     
     # -------------------- START OF GOOGLE TRENDS ------------------------ #
     # Get all keywords available for Google Trends
@@ -534,33 +492,69 @@ class ApiClient:
         else:
             raise Exception(f"Failed to get cnn keywords: {response.json()}")
     
-    def get_economic_calendar_events(self, start_timestamp: int = None, end_timestamp: int = None, currency: str = 'EUR', country_code: str = 'DE') -> DataFrame:
+    def get_economic_calendar_events(self, start_timestamp: int = None, end_timestamp: int = None, currency: str = 'USD', country_code: str = 'US') -> DataFrame:
         """
-        Function returns a pandas dataframe with the economic calendar events for the specified currency and country code during given time period.
-        currency: EUR, CNY, NZD, AUD, USD, JPY, UAH, GBP, CHF, CAD
-        country_code: CA, UA, ES, US, FR, JP, IT, NZ, AU, CN, UK, CH, EMU, DE
+        Fetch economic-calendar events and return as pandas DataFrame.
+
+        Parameters
+        ----------
+        start_timestamp, end_timestamp : int | None
+            Epoch-seconds time window (UTC). If omitted, latest events are returned.
+        currency : str
+            Currency code filter (e.g. 'USD').
+        country_code : str
+            ISO country code filter (e.g. 'US').
         """
-        start_date = None
-        end_date = None
-        if isinstance(start_timestamp, int):
-            start_date = pd.to_datetime(start_timestamp, unit='s').strftime('%Y-%m-%d')
-        if isinstance(end_timestamp, int):
-            end_date = pd.to_datetime(end_timestamp, unit='s').strftime('%Y-%m-%d')
-            
-        params = {
+        # Convert epoch seconds → ISO date (YYYY-MM-DD) expected by public endpoint
+        start_date = pd.to_datetime(start_timestamp, unit='s').strftime('%Y-%m-%d') if isinstance(start_timestamp, int) else None
+        end_date = pd.to_datetime(end_timestamp, unit='s').strftime('%Y-%m-%d') if isinstance(end_timestamp, int) else None
+
+        params: dict = {
             "start_date": start_date,
             "end_date": end_date,
             "currency": currency,
-            "country_code": country_code
+            "country_code": country_code,
         }
+
+        # Call the public market endpoint (no auth required, but metrics key also works)
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/market/ecocal"), timeout=None, params=params
+            urljoin(self.base_url, "/v1/market/ecocal"),
+            params=params,
+            headers=self._hdr_metrics,
+            timeout=None,
         )
-        if response.status_code == 200:
-            df = pd.DataFrame(response.json())
-            return df
+        if response.status_code != 200:
+            raise Exception(f"Failed to get economic calendar events: {response.text}")
+
+        obj = response.json()
+
+        # Harmonise to a flat list of event dicts
+        if isinstance(obj, list):
+            events = obj
+        elif isinstance(obj, dict):
+            events = obj.get("data") or obj.get("events") or [obj]
+            if not isinstance(events, list):
+                events = [events]
         else:
-            raise Exception(f"Failed to get economic calendar events: {response.json()}")
+            events = []
+
+        # Convert to DataFrame (empty DataFrame if no events)
+        df = pd.DataFrame(events)
+        if df.empty:
+            return df
+
+        # Normalise column names to lowercase for convenience
+        df.rename(columns=lambda c: c.lower(), inplace=True)
+
+        # Convert ISO start time → epoch seconds timestamp column
+        if "start" in df.columns:
+            df["timestamp"] = pd.to_datetime(df["start"], utc=True).astype("int64") // 10 ** 9
+
+        # Sort by start time descending (most recent first)
+        if "timestamp" in df.columns:
+            df.sort_values("timestamp", ascending=False, inplace=True)
+
+        return df
     
     def get_bitstamp_symbols(self) -> List[str]:
         response = self.client.get(
@@ -620,31 +614,41 @@ class ApiClient:
                 - null values indicate the symbol was not ranked at that timestamp
         """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/marketcap/symbols"), 
+            urljoin(self.base_url, "/v1/metrics/marketcap/symbols"),
             timeout=None,
             params={
-                "start_timestamp": start_timestamp, 
-                "end_timestamp": end_timestamp, 
+                "start_timestamp": start_timestamp,
+                "end_timestamp": end_timestamp,
                 "interval": interval,
                 "market": market,
-                "exchange": exchange_name
-            }
+                "exchange": exchange_name,
+            },
+            headers=self._hdr_metrics,
         )
-        
-        if response.status_code == 200:
-            json_response = response.json()
-            if json_response.get("success"):
-                # Create DataFrame from the data array
-                df = pd.DataFrame(json_response["data"])
-                # Rename first column to timestamp
-                df.rename(columns={df.columns[0]: 'timestamp'}, inplace=True)
-                # Convert timestamp strings to unix timestamp
-                df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
-                return df
-            else:
-                raise Exception(f"API returned error: {json_response.get('message')}")
-        else:
+
+        if response.status_code != 200:
             raise Exception(f"Failed to get historical marketcap rankings: {response.json()}")
+
+        obj = response.json()
+
+        # New public API returns plain list
+        if isinstance(obj, list):
+            rows = []
+            for item in obj:
+                row = {"timestamp": item["timestamp"]}
+                row.update({i + 1: sym for i, sym in enumerate(item.get("symbols", []))})
+                rows.append(row)
+            df = pd.DataFrame(rows)
+            return df
+
+        # Legacy wrapper {success:bool,data:[...]} fallback
+        if isinstance(obj, dict) and obj.get("success"):
+            df = pd.DataFrame(obj["data"])
+            df.rename(columns={df.columns[0]: "timestamp"}, inplace=True)
+            df["timestamp"] = pd.to_datetime(df["timestamp"]).astype("int64") // 10**9
+            return df
+
+        raise Exception("Unexpected response format for marketcap rankings")
     
     def get_historical_marketcap_values_for_rankings(self, start_timestamp: int = None, end_timestamp: int = None) -> DataFrame:
         """
@@ -661,24 +665,30 @@ class ApiClient:
                 - Values are in USD
         """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/marketcap"), 
-            timeout=None, 
-            params={"start_timestamp": start_timestamp, "end_timestamp": end_timestamp}
+            urljoin(self.base_url, "/v1/metrics/marketcap"),
+            timeout=None,
+            params={"start_timestamp": start_timestamp, "end_timestamp": end_timestamp},
+            headers=self._hdr_metrics,
         )
-        if response.status_code == 200:
-            json_response = response.json()
-            if json_response.get("success"):
-                # Create DataFrame from the data array
-                df = pd.DataFrame(json_response["data"])
-                # Rename first column to timestamp
-                df.rename(columns={df.columns[0]: 'timestamp'}, inplace=True)
-                # Convert timestamp strings to unix timestamp
-                df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
-                return df
-            else:
-                raise Exception(f"API returned error: {json_response.get('message')}")
-        else:
+
+        if response.status_code != 200:
             raise Exception(f"Failed to get historical marketcap values for rankings: {response.json()}")
+
+        obj = response.json()
+
+        if isinstance(obj, list):
+            rows = []
+            for row in obj:
+                rows.append({"timestamp": row["timestamp"], **{i+1: v for i, v in enumerate(row.get("values", []))}})
+            return pd.DataFrame(rows)
+
+        if isinstance(obj, dict) and obj.get("success"):
+            df = pd.DataFrame(obj["data"])
+            df.rename(columns={df.columns[0]: "timestamp"}, inplace=True)
+            df["timestamp"] = pd.to_datetime(df["timestamp"]).astype("int64") // 10**9
+            return df
+
+        raise Exception("Unexpected response format for marketcap values")
     
     def get_marketcap_indicator_values(self, symbol: str, market: str, period: int, indicator_name: str, timestamp: int = None) -> float:
         """
@@ -698,23 +708,22 @@ class ApiClient:
             Exception: If the API request fails or returns an error
         """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/{indicator_name}/{symbol}"), 
-            timeout=None, 
-            params={
-                "market": market, 
-                "period": period, 
-                "timestamp": timestamp
-            }
+            urljoin(self.base_url, f"/v1/metrics/{indicator_name}/{symbol}"),
+            timeout=None,
+            params={"market": market, "period": period, "timestamp": timestamp},
+            headers=self._hdr_metrics,
         )
-        if response.status_code == 200:
-            json_response = response.json()
-            if json_response.get("success"):
-                # Extract the indicator value from the data object
-                return json_response["data"][indicator_name]
-            else:
-                raise Exception(f"API returned error: {json_response.get('message')}")
-        else:
+
+        if response.status_code != 200:
             raise Exception(f"Failed to get marketcap indicator values: {response.json()}")
+
+        obj = response.json()
+
+        if isinstance(obj, dict) and indicator_name in obj:
+            return obj[indicator_name]
+        if isinstance(obj, dict) and obj.get("success"):
+            return obj["data"].get(indicator_name)
+        raise Exception("Unexpected response format for indicator values")
     
     def get_exchanges_for_mc_symbol(self, symbol: str, market: str, interval: str = '1d', start_timestamp: int = None, end_timestamp: int = None, status: str = 'ACTIVE', quote_currency: str = 'USDT') -> DataFrame:
         """
@@ -752,35 +761,42 @@ class ApiClient:
         }
 
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/available_exchanges/{market}/{symbol}"), 
-            timeout=None, 
-            params=params
+            urljoin(self.base_url, "/v1/metrics/exchanges/available"),
+            timeout=None,
+            params={
+                **params,
+                "market": market,
+                "symbol": symbol,
+            },
+            headers=self._hdr_metrics,
         )
-        if response.status_code == 200:
-            json_response = response.json()
-            if json_response.get("success"):
-                # Process the data array into a DataFrame
-                processed_results = []
-                for row in json_response["data"]:
-                    data = {'timestamp': row['timestamp']}
-                    data.update(row['exchanges'])
-                    processed_results.append(data)
-                
-                # Create DataFrame and sort columns
-                df = pd.DataFrame(processed_results)
-                cols = ['timestamp'] + sorted([col for col in df.columns if col != 'timestamp'])
-                df = df[cols]
-                
-                # Convert timestamp to unix timestamp
-                df['timestamp'] = pd.to_datetime(df['timestamp']).astype("int64") // 10 ** 9
-                
-                # Convert exchange availability to boolean integers (0/1)
-                df = df.astype({'timestamp': 'int64', **{col: 'int8' for col in df.columns if col != 'timestamp'}})
-                return df
-            else:
-                raise Exception(f"API returned error: {json_response.get('message')}")
-        else:
+
+        if response.status_code != 200:
             raise Exception(f"Failed to get exchanges for mc symbol: {response.json()}")
+
+        obj = response.json()
+
+        if isinstance(obj, list):
+            processed = []
+            for row in obj:
+                r = {"timestamp": row["timestamp"]}
+                r.update(row.get("exchanges", {}))
+                processed.append(r)
+            df = pd.DataFrame(processed)
+        elif isinstance(obj, dict) and obj.get("success"):
+            processed = []
+            for row in obj["data"]:
+                r = {"timestamp": row["timestamp"]}
+                r.update(row["exchanges"])
+                processed.append(r)
+            df = pd.DataFrame(processed)
+        else:
+            raise Exception("Unexpected response format for exchange availability")
+
+        cols = ["timestamp"] + sorted([c for c in df.columns if c != "timestamp"])
+        df = df[cols]
+        df["timestamp"] = pd.to_datetime(df["timestamp"]).astype("int64") // 10**9
+        return df
     
     def get_marketcap_ranking_with_ohlcv(self, market: str, timeframe: str, top_n: int, ohlcv_limit: int, 
                                         timestamp: int = int((datetime.now() - timedelta(days=1, hours=0, minutes=0, seconds=0)).timestamp())) -> dict:
@@ -819,9 +835,10 @@ class ApiClient:
         }
         
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/marketcap/symbols/ohlcv"), 
+            urljoin(self.base_url, "/v1/metrics/marketcap/symbols/ohlcv"), 
             timeout=None, 
-            params=params
+            params=params,
+            headers=self._hdr_metrics,
         )
         
         if response.status_code == 200:
@@ -851,26 +868,29 @@ class ApiClient:
             ValueError: If token_type is not 'stable' or 'wrapped'
             Exception: If the API request fails or returns an error
         """
-        if token_type not in ['stable', 'wrapped']:
+        if token_type not in ["stable", "wrapped", "stables"]:
             raise ValueError("token_type must be either stable or wrapped")
             
+        endpoint = "stables" if token_type.startswith("stable") else "wrapped"
+            
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/tokens/{token_type}"), 
-            timeout=None
+            urljoin(self.base_url, f"/v1/metrics/tokens/{endpoint}"),
+            headers=self._hdr_metrics,
+            timeout=None,
         )
-        
-        if response.status_code == 200:
-            json_response = response.json()
-            if json_response.get("success"):
-                # Create DataFrame from the data array
-                df = pd.DataFrame(json_response["data"])
-                return df
-            else:
-                raise Exception(f"API returned error: {json_response.get('message')}")
-        else:
+
+        if response.status_code != 200:
             raise Exception(f"Failed to get stable or wrapped tokens: {response.json()}")
+
+        obj = response.json()
+
+        if isinstance(obj, list):
+            return pd.DataFrame(obj)
+        if isinstance(obj, dict) and obj.get("success"):
+            return pd.DataFrame(obj["data"])
+        raise Exception("Unexpected response format for tokens list")
     
-    def get_exchanges_mapping_for_specific_symbol(self, market: str, symbol: str, quote_currency: str = 'USDT', status: str = 'ACTIVE') -> DataFrame:
+    def get_exchange_mappings_for_specific_symbol(self, market: str, symbol: str, quote_currency: str = 'USDT', status: str = 'ACTIVE') -> DataFrame:
         """
         Get the exchanges and trading pairs information for a specific symbol and market.
 
@@ -943,21 +963,21 @@ class ApiClient:
         }
         
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/exchange_mappings/{market}"), 
-            timeout=None, 
-            params=params
+            urljoin(self.base_url, "/v1/metrics/exchanges/mappings"),
+            timeout=None,
+            params={"market": market, **params},
+            headers=self._hdr_metrics,
         )
         
-        if response.status_code == 200:
-            json_response = response.json()
-            if json_response.get("success"):
-                # Create DataFrame from the data array
-                df = pd.DataFrame(json_response["data"])
-                return df
-            else:
-                raise Exception(f"API returned error: {json_response.get('message')}")
-        else:
+        if response.status_code != 200:
             raise Exception(f"Failed to get exchange mappings: {response.json()}")
+
+        obj = response.json()
+        if isinstance(obj, list):
+            return pd.DataFrame(obj)
+        if isinstance(obj, dict) and obj.get("success"):
+            return pd.DataFrame(obj["data"])
+        raise Exception("Unexpected response format for exchange mappings")
     
     def get_unique_quote_currencies(self, market: str) -> List[str]:
         """
@@ -973,18 +993,21 @@ class ApiClient:
             Exception: If the API request fails or returns an error
         """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/quote_currencies/{market}"), 
-            timeout=None
+            urljoin(self.base_url, "/v1/metrics/quote-currencies"),
+            params={"market": market},
+            headers=self._hdr_metrics,
+            timeout=None,
         )
-        
-        if response.status_code == 200:
-            json_response = response.json()
-            if json_response.get("success"):
-                return json_response["data"]
-            else:
-                raise Exception(f"API returned error: {json_response.get('message')}")
-        else:
+
+        if response.status_code != 200:
             raise Exception(f"Failed to get unique quote currencies: {response.json()}")
+
+        obj = response.json()
+        if isinstance(obj, list):
+            return obj
+        if isinstance(obj, dict) and obj.get("success"):
+            return obj["data"]
+        raise Exception("Unexpected response format for quote currencies")
     
     def get_exchanges_list_for_specific_market(self, market: str) -> List[str]:
         """
@@ -1000,18 +1023,21 @@ class ApiClient:
             Exception: If the API request fails or returns an error
         """
         response = self.client.get(
-            urljoin(self.base_url, f"/v1/metrics/exchange_list/{market}"), 
-            timeout=None
+            urljoin(self.base_url, "/v1/metrics/exchanges/list"),
+            params={"market": market},
+            headers=self._hdr_metrics,
+            timeout=None,
         )
-        
-        if response.status_code == 200:
-            json_response = response.json()
-            if json_response.get("success"):
-                return json_response["data"]
-            else:
-                raise Exception(f"API returned error: {json_response.get('message')}")
-        else:
+
+        if response.status_code != 200:
             raise Exception(f"Failed to get exchanges list: {response.json()}")
+
+        obj = response.json()
+        if isinstance(obj, list):
+            return obj
+        if isinstance(obj, dict) and obj.get("success"):
+            return obj["data"]
+        raise Exception("Unexpected response format for exchanges list")
     
     # -------------------- END OF MARKETCAP METRICS SERVICE ------------------------ #
     
@@ -1067,116 +1093,151 @@ class ApiClient:
             return res['result']['data']['json']
         except:
             return None
-
-
-class HiveClient(Crypticorn):
-    """
-    An extension of the Crypticorn pip package to interact with the Crypticorn API via the Dashboard.
-
-    Inherits from Crypticorn and provides methods to create accounts, retrieve account
-    information, interact with models, regenerate API keys.
-
-    """
-
-    def __init__(self, token: str):
-        """
-        Initializes the API client with a bearer token.
-        :param token: The bearer token to be included in the headers.
-        """
-        self._headers = {"Authorization": f"Bearer {token}"}
-        super().__init__(api_key="", headers=self._headers)
-
-    def create_account(self, username: str = None) -> int:
-        """
-        Creates a new account with the specified username. Defaults to user id in jwt.
-        :param username: The username for the new account.
-        :return: The JSON response from the API.
-        """
-        endpoint = "/account"
-        response = requests.post(
-            url=self._base_url + endpoint,
-            params={"username": username},
-            headers=self._headers
-        )
-        return response.json()
-
-    def update_username(self, username: str) -> int:
-        """
-        Updates the username of the current account.
-        :param username: The new username.
-        :return: The JSON response from the API.
-        """
-        endpoint = "/account"
-        response = requests.patch(
-            url=self._base_url + endpoint,
-            params={"username": username},
-            headers=self._headers
-        )
-        return response.json()
-
-    def get_account_info(self, username: str = None, user_id: str = None) -> AccountInfo:
-        """
-        Retrieves information about a user (defaults to current user if no params defined).
-        :param username: The username of the account.
-        :param user_id: The id of the account.
-        :return: The JSON response from the API.
-        """
-        endpoint = "/account"
-        response = requests.get(
-            url=self._base_url + endpoint,
-            params={"username": username, "user_id": user_id},
-            headers=self._headers
-        )
-        return response.json()
-
-    def get_model(self, model_id: int = None) -> Union[SingleModel, AllModels]:
-        """
-        Retrieves all models or a specific model by id.
-        :param model_id: The id of the model to retrieve.
-        :return: The JSON response from the API.
-        """
-        endpoint = "/model"
-        response = requests.get(
-            url=self._base_url + endpoint,
-            params={"model_id": model_id},
-            headers=self._headers
-        )
-        return response.json()
-    
-    def delete_model(self, model_id: int) -> int:
-        """
-        Deletes a specific model by id.
-        :param model_id: The id of the model to delete.
-        :return: The JSON response from the API.
-        """
-        endpoint = "/model"
-        response = requests.delete(
-            url=self._base_url + endpoint,
-            params={"model_id": model_id},
-            headers=self._headers
-        )
-        return response.json()
-
-    def generate_api_key(self) -> ApiKeyGeneration:
-        """
-        Generates the API key for the current account.
-        :return: The JSON response from the API.
-        """
-        endpoint = "/apikey"
-        response = requests.post(
-            url=self._base_url + endpoint,
-            headers=self._headers
-        )
-        return response.json()
-
-    def delete_api_key(self) -> int:
-        """
-        Deletes the API key for the current account.
-        :return: The JSON response from the API.
-        """
-        endpoint = "/apikey"
-        response = requests.delete(
-            url=self._base_url + endpoint,
-            headers=self._headers
-        )
-        return response.json()
+        
+if __name__ == "__main__":
+    client = ApiClient(
+        base_url="https://api.crypticorn.dev", 
+        metrics_api_key="REDACTED",
+        miners_api_key="REDACTED",
+    )
+    # print("Latest Predictions")
+    # print("->")
+    # print(client.get_prediction("BTCUSDT", 1, 1))
+    # print("")
+    print("Economics News")
+    print("->")
+    print(client.get_economics_news(5))
+    print("")
+    print("Bitcoin Historical Data")
+    print("->")
+    # try 250000 there is no timeout
+    print(client.get_bc_historical("BTCUSDT", "15m", 25))
+    print("")
+    print("Fear and Greed Index Historical Data")
+    print("->")
+    print(client.get_fgi_historical(5))
+    print("")
+    print("Get UDF History")
+    print("->")
+    print(client.get_udf_history("BTCUSDT", 25))
+    # print("")
+    # print("Post Trend Data")
+    # print("->")
+    # print(
+    #     client.post_trend(
+    #         TrendData(
+    #             timestamps=[4, 8, 12, 16, 24, 32, 48, 64],
+    #             positive_prob=[0.1, 0.9, 0.2, 0.8, 0.3, 0.7, 0.4, 0.6],
+    #             symbol="BTCUSDT",
+    #             version="1",
+    #         )
+    #     )
+    # )
+    # # query trend data
+    # print("Get Trend Data")
+    # print("->")
+    # print(
+    #     client.get_trends(
+    #         TrendQuery(
+    #             symbol="BTCUSDT",
+    #             limit=10,
+    #             offset=0,
+    #             sort="timestamp",
+    #             dir="desc",
+    #             from_ts=1613225600,
+    #             to_ts=1812793600,
+    #         )
+    #     )
+    # )
+    # print("Kline Service")
+    # print("->")
+    print("Kline Symbols for Futures")
+    print("->")
+    print(client.get_symbols("futures"))
+    print("Kline Symbols for Spot")
+    print("->")
+    print(client.get_symbols("spot"))
+    print("Futures Klines")
+    print("->")
+    print(client.get_klines("futures", "BTCUSDT", "15m", 100, sort="desc"))
+    print("Spot Klines")
+    print("->")
+    print(client.get_klines("spot", "BTCUSDT", "15m", 100, sort="desc"))
+    print("Funding Rate")
+    print("->")
+    print(client.get_funding_rate(symbol="BTCUSDT"))
+    # print("Enabled Bots")
+    # print("->")
+    # bots_result = client.get_enabled_bots()
+    # print(bots_result["bots"])
+    # print("")
+    # print("API Keys")
+    # print(bots_result["api_keys"])
+    # print("Get Keywords for Google Trends")
+    # print("->")
+    # print(client.get_google_trend_keywords_available())
+    # print("Google Trend Keyword")
+    # print("->")
+    # print(client.get_google_trend_keyword("Bitcoin", limit=1000))
+    print("Get Historical Marketcap Rankings")
+    print("->")
+    rankings = client.get_historical_marketcap_rankings(1741219200, 1741519658, interval='1d', market="futures", exchange_name="binance")
+    print(rankings)
+    print("Get Historical Marketcap Values")
+    print("->")
+    print(client.get_historical_marketcap_values_for_rankings(1729422686, 1729595486))
+    # print("Get Marketcap Indicator Values")
+    # print("KER->")
+    # print(client.get_marketcap_indicator_values("BTC", "futures", 15, "ker", 1729422686))
+    # print("SMA->")
+    # print(client.get_marketcap_indicator_values("BTC", "futures", 15, "sma", 1729422686))
+    print("Exchanges for BTC")
+    print("->")
+    print(client.get_exchanges_for_mc_symbol("BTC", "futures", '1d', 1729382400, 1730047556, 'ACTIVE', 'USDT'))
+    # print("Marketcap Ranking with OHLCV")
+    # print("->")
+    # print(client.get_marketcap_ranking_with_ohlcv("futures", "1h", 20, 20, 1729454444))
+    print("Stable or Wrapped Tokens")
+    print("->")
+    print(client.get_stable_or_wrapped_tokens('stable'))
+    print(client.get_stable_or_wrapped_tokens('wrapped'))
+    print("Unique Quote Currencies")
+    print("->")
+    print(client.get_unique_quote_currencies("futures"))
+    print("Exchange Mappings")
+    print("->")
+    print(client.get_exchange_mappings_for_specific_exchange("spot", "Binance"))
+    print("Exchange List")
+    print("->")
+    print(client.get_exchanges_list_for_specific_market("spot"))
+    print("Exchange Data")
+    print("->")
+    print(client.get_exchange_all_symbols("Binance"))
+    print("Exchange Spot Symbol")
+    print("->")
+    print(client.get_symbol_info_exchange("Binance", "BTC-USDT", "spot"))
+    print("Exchange Futures Symbol")
+    print("->")
+    print(client.get_symbol_info_exchange("Binance", "BTC-USDT", "futures"))
+    print("Economic Calendar Events")
+    print("->")
+    print(client.get_economic_calendar_events(1748795773, 1750091773))
+    print("CNN Fear and Greed Indicators")
+    print("->")
+    print(client.get_cnn_keywords())
+    print("Fear and Greed Index for all Indicators")
+    print("->")
+    for index, row in client.get_cnn_keywords().iterrows():
+        print(client.get_cnn_sentiment(row['indicator_name'], limit=10))
+    # print("Bitstamp Symbols")
+    # print("->")
+    # print(client.get_bitstamp_symbols())
+    # print("Bitstamp OHLCV")
+    # print("->")
+    # print(client.get_bitstamp_ohlcv_spot("BTCUSDT", "15m", 100))
+    # print("Bingx Symbols")
+    # print("->")
+    # print(client.get_bingx_symbols())
+    # print("Bingx Klines")
+    # print("->")
+    # print(client.get_bingx_klines("BTC-USDT", "5m", 100, sort="desc"))
