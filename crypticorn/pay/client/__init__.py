@@ -18,6 +18,7 @@ __version__ = "1.0.0"
 
 # import apis into sdk package
 from crypticorn.pay.client.api.coupons_api import CouponsApi
+from crypticorn.pay.client.api.invoices_api import InvoicesApi
 from crypticorn.pay.client.api.now_payments_api import NOWPaymentsApi
 from crypticorn.pay.client.api.payments_api import PaymentsApi
 from crypticorn.pay.client.api.products_api import ProductsApi
@@ -42,8 +43,8 @@ from crypticorn.pay.client.models.coupon import Coupon
 from crypticorn.pay.client.models.coupon_create import CouponCreate
 from crypticorn.pay.client.models.coupon_update import CouponUpdate
 from crypticorn.pay.client.models.exception_detail import ExceptionDetail
-from crypticorn.pay.client.models.invoice import Invoice
-from crypticorn.pay.client.models.now_new_invoice_create import NowNewInvoiceCreate
+from crypticorn.pay.client.models.invoice_create import InvoiceCreate
+from crypticorn.pay.client.models.invoice_info import InvoiceInfo
 from crypticorn.pay.client.models.paginated_response_coupon import (
     PaginatedResponseCoupon,
 )

@@ -2,6 +2,7 @@
 
 # import apis into api package
 from crypticorn.pay.client.api.coupons_api import CouponsApi
+from crypticorn.pay.client.api.invoices_api import InvoicesApi
 from crypticorn.pay.client.api.now_payments_api import NOWPaymentsApi
 from crypticorn.pay.client.api.payments_api import PaymentsApi
 from crypticorn.pay.client.api.products_api import ProductsApi

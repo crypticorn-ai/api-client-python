@@ -1,6 +1,7 @@
 client/__init__.py
 client/api/__init__.py
 client/api/coupons_api.py
+client/api/invoices_api.py
 client/api/now_payments_api.py
 client/api/payments_api.py
 client/api/products_api.py
@@ -17,8 +18,8 @@ client/models/coupon.py
 client/models/coupon_create.py
 client/models/coupon_update.py
 client/models/exception_detail.py
-client/models/invoice.py
-client/models/now_new_invoice_create.py
+client/models/invoice_create.py
+client/models/invoice_info.py
 client/models/paginated_response_coupon.py
 client/models/paginated_response_payment.py
 client/models/payment.py

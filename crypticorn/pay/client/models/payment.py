@@ -34,6 +34,7 @@ class Payment(BaseModel):
     product_id: StrictStr = Field(description="Product purchased")
     coupon_id: Optional[StrictStr] = None
     user_id: StrictStr = Field(description="User ID the payment is for")
+    invoice_id: StrictStr = Field(description="Invoice ID")
     timestamp: StrictInt = Field(description="Payment timestamp in seconds")
     amount: Union[StrictFloat, StrictInt] = Field(description="Payment amount")
     currency: StrictStr = Field(description="Payment currency")
@@ -47,6 +48,7 @@ class Payment(BaseModel):
         "product_id",
         "coupon_id",
         "user_id",
+        "invoice_id",
         "timestamp",
         "amount",
         "currency",
@@ -116,6 +118,7 @@ class Payment(BaseModel):
                 "product_id": obj.get("product_id"),
                 "coupon_id": obj.get("coupon_id"),
                 "user_id": obj.get("user_id"),
+                "invoice_id": obj.get("invoice_id"),
                 "timestamp": obj.get("timestamp"),
                 "amount": obj.get("amount"),
                 "currency": obj.get("currency"),
