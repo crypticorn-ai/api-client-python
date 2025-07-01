@@ -27,6 +27,8 @@ class Provider(str, Enum):
     allowed enum values
     """
     NOW = "now"
+    STAKING = "staking"
+    STRIPE = "stripe"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

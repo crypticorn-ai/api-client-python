@@ -19,21 +19,28 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from crypticorn.pay.client.models.provider import Provider
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class NowNewInvoiceCreate(BaseModel):
+class InvoiceCreate(BaseModel):
     """
-    Request model for creating a payment invoice.  Creates a payment link where the customer can complete the payment. With this method, the customer is required to follow the generated url to complete the payment.  https://documenter.getpostman.com/view/7907941/2s93JusNJt#f5e4e645-dce2-4b06-b2ca-2a29aaa5e845
+    Model for creating an invoice
     """  # noqa: E501
 
-    user_id: StrictStr = Field(description="The user ID to associate with the purchase")
-    product_id: StrictStr = Field(
-        description="The product ID to associate with the purchase"
-    )
+    user_id: Optional[StrictStr] = None
+    product_id: StrictStr = Field(description="The ID of the product")
     coupon_id: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["user_id", "product_id", "coupon_id"]
+    provider: Provider = Field(description="The provider the invoice is created with")
+    address: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = [
+        "user_id",
+        "product_id",
+        "coupon_id",
+        "provider",
+        "address",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +59,7 @@ class NowNewInvoiceCreate(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of NowNewInvoiceCreate from a JSON string"""
+        """Create an instance of InvoiceCreate from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,16 +79,26 @@ class NowNewInvoiceCreate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if user_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.user_id is None and "user_id" in self.model_fields_set:
+            _dict["user_id"] = None
+
         # set to None if coupon_id (nullable) is None
         # and model_fields_set contains the field
         if self.coupon_id is None and "coupon_id" in self.model_fields_set:
             _dict["coupon_id"] = None
 
+        # set to None if address (nullable) is None
+        # and model_fields_set contains the field
+        if self.address is None and "address" in self.model_fields_set:
+            _dict["address"] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of NowNewInvoiceCreate from a dict"""
+        """Create an instance of InvoiceCreate from a dict"""
         if obj is None:
             return None
 
@@ -93,6 +110,8 @@ class NowNewInvoiceCreate(BaseModel):
                 "user_id": obj.get("user_id"),
                 "product_id": obj.get("product_id"),
                 "coupon_id": obj.get("coupon_id"),
+                "provider": obj.get("provider"),
+                "address": obj.get("address"),
             }
         )
         return _obj

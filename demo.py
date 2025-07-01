@@ -31,7 +31,7 @@ async def main():
         print(res)
 
         # Get OHLCV data
-        res = await client.klines.ohlcv.get_ohlcv_data_fmt(
+        res = await client.trade.strategies.kill_strategy(
             symbol="BTCUSDT",
             timeframe=Timeframe.ENUM_1H,
             market=MarketType.FUTURES,
