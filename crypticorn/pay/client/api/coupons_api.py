@@ -505,9 +505,9 @@ class CouponsApi:
         )
 
     @validate_call
-    def delete_coupon(
+    def deactivate_coupon(
         self,
-        id: Annotated[StrictStr, Field(description="The coupon to delete")],
+        id: Annotated[StrictStr, Field(description="The coupon to deactivate")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -520,9 +520,9 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Delete Coupon"""
+        """Deactivate Coupon"""
         if self.is_sync:
-            return self._delete_coupon_sync(
+            return self._deactivate_coupon_sync(
                 id=id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -532,7 +532,7 @@ class CouponsApi:
             )
 
         else:
-            return self._delete_coupon_async(
+            return self._deactivate_coupon_async(
                 id=id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -542,9 +542,9 @@ class CouponsApi:
             )
 
     @validate_call
-    def delete_coupon_with_http_info(
+    def deactivate_coupon_with_http_info(
         self,
-        id: Annotated[StrictStr, Field(description="The coupon to delete")],
+        id: Annotated[StrictStr, Field(description="The coupon to deactivate")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -557,9 +557,9 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Delete Coupon with HTTP info"""
+        """Deactivate Coupon with HTTP info"""
         if self.is_sync:
-            return self._delete_coupon_sync_with_http_info(
+            return self._deactivate_coupon_sync_with_http_info(
                 id=id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -569,7 +569,7 @@ class CouponsApi:
             )
 
         else:
-            return self._delete_coupon_async_with_http_info(
+            return self._deactivate_coupon_async_with_http_info(
                 id=id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -579,9 +579,9 @@ class CouponsApi:
             )
 
     @validate_call
-    def delete_coupon_without_preload_content(
+    def deactivate_coupon_without_preload_content(
         self,
-        id: Annotated[StrictStr, Field(description="The coupon to delete")],
+        id: Annotated[StrictStr, Field(description="The coupon to deactivate")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -594,9 +594,9 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Delete Coupon without preloading content"""
+        """Deactivate Coupon without preloading content"""
         if self.is_sync:
-            return self._delete_coupon_sync_without_preload_content(
+            return self._deactivate_coupon_sync_without_preload_content(
                 id=id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -606,7 +606,7 @@ class CouponsApi:
             )
 
         else:
-            return self._delete_coupon_async_without_preload_content(
+            return self._deactivate_coupon_async_without_preload_content(
                 id=id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -617,9 +617,9 @@ class CouponsApi:
 
     # Private async implementation methods
     @validate_call
-    async def _delete_coupon_async(
+    async def _deactivate_coupon_async(
         self,
-        id: Annotated[StrictStr, Field(description="The coupon to delete")],
+        id: Annotated[StrictStr, Field(description="The coupon to deactivate")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -632,11 +632,11 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Delete Coupon
+        """Deactivate Coupon
 
         Deactivate a coupon
 
-        :param id: The coupon to delete (required)
+        :param id: The coupon to deactivate (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -660,7 +660,7 @@ class CouponsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._delete_coupon_serialize(
+        _param = self._deactivate_coupon_serialize(
             id=id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -681,9 +681,9 @@ class CouponsApi:
         ).data
 
     @validate_call
-    async def _delete_coupon_async_with_http_info(
+    async def _deactivate_coupon_async_with_http_info(
         self,
-        id: Annotated[StrictStr, Field(description="The coupon to delete")],
+        id: Annotated[StrictStr, Field(description="The coupon to deactivate")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -696,11 +696,11 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Delete Coupon
+        """Deactivate Coupon
 
         Deactivate a coupon
 
-        :param id: The coupon to delete (required)
+        :param id: The coupon to deactivate (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -724,7 +724,7 @@ class CouponsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._delete_coupon_serialize(
+        _param = self._deactivate_coupon_serialize(
             id=id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -744,9 +744,9 @@ class CouponsApi:
         )
 
     @validate_call
-    async def _delete_coupon_async_without_preload_content(
+    async def _deactivate_coupon_async_without_preload_content(
         self,
-        id: Annotated[StrictStr, Field(description="The coupon to delete")],
+        id: Annotated[StrictStr, Field(description="The coupon to deactivate")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -759,11 +759,11 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Delete Coupon
+        """Deactivate Coupon
 
         Deactivate a coupon
 
-        :param id: The coupon to delete (required)
+        :param id: The coupon to deactivate (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -787,7 +787,7 @@ class CouponsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._delete_coupon_serialize(
+        _param = self._deactivate_coupon_serialize(
             id=id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -805,9 +805,9 @@ class CouponsApi:
 
     # Private sync implementation methods
     @validate_call
-    def _delete_coupon_sync(
+    def _deactivate_coupon_sync(
         self,
-        id: Annotated[StrictStr, Field(description="The coupon to delete")],
+        id: Annotated[StrictStr, Field(description="The coupon to deactivate")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -820,8 +820,8 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Synchronous version of delete_coupon"""
-        return async_to_sync(self._delete_coupon_async)(
+        """Synchronous version of deactivate_coupon"""
+        return async_to_sync(self._deactivate_coupon_async)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -831,9 +831,9 @@ class CouponsApi:
         )
 
     @validate_call
-    def _delete_coupon_sync_with_http_info(
+    def _deactivate_coupon_sync_with_http_info(
         self,
-        id: Annotated[StrictStr, Field(description="The coupon to delete")],
+        id: Annotated[StrictStr, Field(description="The coupon to deactivate")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -846,8 +846,8 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Synchronous version of delete_coupon_with_http_info"""
-        return async_to_sync(self._delete_coupon_async_with_http_info)(
+        """Synchronous version of deactivate_coupon_with_http_info"""
+        return async_to_sync(self._deactivate_coupon_async_with_http_info)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -857,9 +857,9 @@ class CouponsApi:
         )
 
     @validate_call
-    def _delete_coupon_sync_without_preload_content(
+    def _deactivate_coupon_sync_without_preload_content(
         self,
-        id: Annotated[StrictStr, Field(description="The coupon to delete")],
+        id: Annotated[StrictStr, Field(description="The coupon to deactivate")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -872,8 +872,8 @@ class CouponsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Synchronous version of delete_coupon_without_preload_content"""
-        return async_to_sync(self._delete_coupon_async_without_preload_content)(
+        """Synchronous version of deactivate_coupon_without_preload_content"""
+        return async_to_sync(self._deactivate_coupon_async_without_preload_content)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -882,7 +882,7 @@ class CouponsApi:
             _host_index=_host_index,
         )
 
-    def _delete_coupon_serialize(
+    def _deactivate_coupon_serialize(
         self,
         id,
         _request_auth,
@@ -1066,7 +1066,7 @@ class CouponsApi:
     ) -> Coupon:
         """Get Coupon By Code
 
-        Get a coupon by code
+        Get a coupon by code. Only bearer auth is supported.
 
         :param code: The coupon code to get (required)
         :type code: str
@@ -1130,7 +1130,7 @@ class CouponsApi:
     ) -> ApiResponse[Coupon]:
         """Get Coupon By Code
 
-        Get a coupon by code
+        Get a coupon by code. Only bearer auth is supported.
 
         :param code: The coupon code to get (required)
         :type code: str
@@ -1193,7 +1193,7 @@ class CouponsApi:
     ) -> RESTResponseType:
         """Get Coupon By Code
 
-        Get a coupon by code
+        Get a coupon by code. Only bearer auth is supported.
 
         :param code: The coupon code to get (required)
         :type code: str
@@ -2080,7 +2080,7 @@ class CouponsApi:
     ) -> PaginatedResponseCoupon:
         """Get Coupons
 
-        List all coupons
+        List all coupons. Only bearer auth is supported.
 
         :param filter_by: The field to filter by
         :type filter_by: str
@@ -2179,7 +2179,7 @@ class CouponsApi:
     ) -> ApiResponse[PaginatedResponseCoupon]:
         """Get Coupons
 
-        List all coupons
+        List all coupons. Only bearer auth is supported.
 
         :param filter_by: The field to filter by
         :type filter_by: str
@@ -2277,7 +2277,7 @@ class CouponsApi:
     ) -> RESTResponseType:
         """Get Coupons
 
-        List all coupons
+        List all coupons. Only bearer auth is supported.
 
         :param filter_by: The field to filter by
         :type filter_by: str
