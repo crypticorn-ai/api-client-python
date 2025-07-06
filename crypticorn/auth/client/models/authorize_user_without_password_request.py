@@ -17,32 +17,28 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Any, ClassVar, Dict, List
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class CreateUserRequest(BaseModel):
+class AuthorizeUserWithoutPasswordRequest(BaseModel):
     """
-    CreateUserRequest
+    AuthorizeUserWithoutPasswordRequest
     """  # noqa: E501
 
-    email: StrictStr
-    password: Annotated[str, Field(min_length=8, strict=True)]
-    username: Optional[StrictStr] = None
-    name: Optional[StrictStr] = None
-    picture: Optional[StrictStr] = None
-    oob: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = [
-        "email",
-        "password",
-        "username",
-        "name",
-        "picture",
-        "oob",
-    ]
+    email: Annotated[str, Field(min_length=1, strict=True)] = Field(
+        description="Email of the user"
+    )
+    oob: Annotated[str, Field(min_length=1, strict=True)] = Field(
+        description="OOB code of the user"
+    )
+    captcha_token: Annotated[str, Field(min_length=1, strict=True)] = Field(
+        description="Captcha token of the authorization request", alias="captchaToken"
+    )
+    __properties: ClassVar[List[str]] = ["email", "oob", "captchaToken"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -61,7 +57,7 @@ class CreateUserRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateUserRequest from a JSON string"""
+        """Create an instance of AuthorizeUserWithoutPasswordRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -85,7 +81,7 @@ class CreateUserRequest(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateUserRequest from a dict"""
+        """Create an instance of AuthorizeUserWithoutPasswordRequest from a dict"""
         if obj is None:
             return None
 
@@ -95,11 +91,8 @@ class CreateUserRequest(BaseModel):
         _obj = cls.model_validate(
             {
                 "email": obj.get("email"),
-                "password": obj.get("password"),
-                "username": obj.get("username"),
-                "name": obj.get("name"),
-                "picture": obj.get("picture"),
                 "oob": obj.get("oob"),
+                "captchaToken": obj.get("captchaToken"),
             }
         )
         return _obj

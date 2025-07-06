@@ -6,6 +6,7 @@ client/api/now_payments_api.py
 client/api/payments_api.py
 client/api/products_api.py
 client/api/status_api.py
+client/api/stripe_api.py
 client/api_client.py
 client/api_response.py
 client/configuration.py

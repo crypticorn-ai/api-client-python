@@ -27,6 +27,7 @@ from pydantic import (
     StrictStr,
 )
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
 from crypticorn.pay.client.models.scope import Scope
 from typing import Optional, Set
 from typing_extensions import Self
@@ -48,6 +49,7 @@ class Product(BaseModel):
     )
     description: StrictStr = Field(description="Product description")
     is_active: StrictBool = Field(description="Product is active")
+    images: Optional[List[Annotated[str, Field(min_length=1, strict=True)]]]
     original_price: Optional[Union[StrictFloat, StrictInt]]
     __properties: ClassVar[List[str]] = [
         "id",
@@ -59,6 +61,7 @@ class Product(BaseModel):
         "duration",
         "description",
         "is_active",
+        "images",
         "original_price",
     ]
 
@@ -104,6 +107,11 @@ class Product(BaseModel):
         if self.scopes is None and "scopes" in self.model_fields_set:
             _dict["scopes"] = None
 
+        # set to None if images (nullable) is None
+        # and model_fields_set contains the field
+        if self.images is None and "images" in self.model_fields_set:
+            _dict["images"] = None
+
         # set to None if original_price (nullable) is None
         # and model_fields_set contains the field
         if self.original_price is None and "original_price" in self.model_fields_set:
@@ -131,6 +139,7 @@ class Product(BaseModel):
                 "duration": obj.get("duration"),
                 "description": obj.get("description"),
                 "is_active": obj.get("is_active"),
+                "images": obj.get("images"),
                 "original_price": obj.get("original_price"),
             }
         )

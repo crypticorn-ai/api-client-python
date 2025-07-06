@@ -23,11 +23,27 @@ from crypticorn.auth.client.models.authorize_user200_response_auth import (
     AuthorizeUser200ResponseAuth,
 )
 from crypticorn.auth.client.models.authorize_user_request import AuthorizeUserRequest
+from crypticorn.auth.client.models.authorize_user_without_password_request import (
+    AuthorizeUserWithoutPasswordRequest,
+)
 from crypticorn.auth.client.models.create_api_key200_response import (
     CreateApiKey200Response,
 )
 from crypticorn.auth.client.models.create_api_key_request import CreateApiKeyRequest
 from crypticorn.auth.client.models.create_user_request import CreateUserRequest
+from crypticorn.auth.client.models.create_user_with_wallet_request import (
+    CreateUserWithWalletRequest,
+)
+from crypticorn.auth.client.models.create_user_without_password_request import (
+    CreateUserWithoutPasswordRequest,
+)
+from crypticorn.auth.client.models.error_badrequest import ErrorBADREQUEST
+from crypticorn.auth.client.models.error_forbidden import ErrorFORBIDDEN
+from crypticorn.auth.client.models.error_internalservererror import (
+    ErrorINTERNALSERVERERROR,
+)
+from crypticorn.auth.client.models.error_notfound import ErrorNOTFOUND
+from crypticorn.auth.client.models.error_unauthorized import ErrorUNAUTHORIZED
 from crypticorn.auth.client.models.get_api_keys200_response_inner import (
     GetApiKeys200ResponseInner,
 )
@@ -52,16 +68,6 @@ from crypticorn.auth.client.models.list_wallets200_response_data_inner import (
 from crypticorn.auth.client.models.list_wallets200_response_user_value import (
     ListWallets200ResponseUserValue,
 )
-from crypticorn.auth.client.models.logout_default_response import LogoutDefaultResponse
-from crypticorn.auth.client.models.logout_default_response_issues_inner import (
-    LogoutDefaultResponseIssuesInner,
-)
-from crypticorn.auth.client.models.oauth_callback200_response import (
-    OauthCallback200Response,
-)
-from crypticorn.auth.client.models.oauth_callback200_response_user import (
-    OauthCallback200ResponseUser,
-)
 from crypticorn.auth.client.models.refresh_token_info200_response import (
     RefreshTokenInfo200Response,
 )
@@ -70,6 +76,9 @@ from crypticorn.auth.client.models.refresh_token_info200_response_user_session i
 )
 from crypticorn.auth.client.models.resend_verification_email_request import (
     ResendVerificationEmailRequest,
+)
+from crypticorn.auth.client.models.revoke_user_tokens200_response import (
+    RevokeUserTokens200Response,
 )
 from crypticorn.auth.client.models.revoke_user_tokens_request import (
     RevokeUserTokensRequest,
@@ -89,7 +98,6 @@ from crypticorn.auth.client.models.user_reset_password_request import (
 from crypticorn.auth.client.models.user_set_password_request import (
     UserSetPasswordRequest,
 )
-from crypticorn.auth.client.models.verify200_response import Verify200Response
 from crypticorn.auth.client.models.verify_email200_response import (
     VerifyEmail200Response,
 )
@@ -101,6 +109,7 @@ from crypticorn.auth.client.models.verify_email200_response_auth_auth import (
 )
 from crypticorn.auth.client.models.verify_email_request import VerifyEmailRequest
 from crypticorn.auth.client.models.verify_wallet_request import VerifyWalletRequest
+from crypticorn.auth.client.models.wallet_nonce_request import WalletNonceRequest
 from crypticorn.auth.client.models.wallet_verified200_response import (
     WalletVerified200Response,
 )
