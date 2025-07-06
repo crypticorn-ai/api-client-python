@@ -17,32 +17,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
+from pydantic import BaseModel, ConfigDict, StrictStr
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class CreateUserRequest(BaseModel):
+class RevokeUserTokens200Response(BaseModel):
     """
-    CreateUserRequest
+    RevokeUserTokens200Response
     """  # noqa: E501
 
-    email: StrictStr
-    password: Annotated[str, Field(min_length=8, strict=True)]
-    username: Optional[StrictStr] = None
-    name: Optional[StrictStr] = None
-    picture: Optional[StrictStr] = None
-    oob: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = [
-        "email",
-        "password",
-        "username",
-        "name",
-        "picture",
-        "oob",
-    ]
+    message: StrictStr
+    __properties: ClassVar[List[str]] = ["message"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -61,7 +48,7 @@ class CreateUserRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateUserRequest from a JSON string"""
+        """Create an instance of RevokeUserTokens200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -85,21 +72,12 @@ class CreateUserRequest(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateUserRequest from a dict"""
+        """Create an instance of RevokeUserTokens200Response from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "email": obj.get("email"),
-                "password": obj.get("password"),
-                "username": obj.get("username"),
-                "name": obj.get("name"),
-                "picture": obj.get("picture"),
-                "oob": obj.get("oob"),
-            }
-        )
+        _obj = cls.model_validate({"message": obj.get("message")})
         return _obj

@@ -17,7 +17,6 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
@@ -39,7 +38,7 @@ class ListWallets200ResponseBalancesInnerSaleRound(BaseModel):
         default=None, alias="contractSalesToDate"
     )
     allocation: Union[StrictFloat, StrictInt]
-    start: datetime
+    start: StrictStr
     state: StrictStr
     __properties: ClassVar[List[str]] = [
         "id",

@@ -17,31 +17,32 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class CreateUserRequest(BaseModel):
+class WalletNonceRequest(BaseModel):
     """
-    CreateUserRequest
+    WalletNonceRequest
     """  # noqa: E501
 
-    email: StrictStr
-    password: Annotated[str, Field(min_length=8, strict=True)]
+    host: StrictStr
+    origin: StrictStr
+    address: StrictStr
+    chain_id: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=1, alias="chainId"
+    )
+    statement: Optional[StrictStr] = "Sign in with Ethereum wallet"
     username: Optional[StrictStr] = None
-    name: Optional[StrictStr] = None
-    picture: Optional[StrictStr] = None
-    oob: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = [
-        "email",
-        "password",
+        "host",
+        "origin",
+        "address",
+        "chainId",
+        "statement",
         "username",
-        "name",
-        "picture",
-        "oob",
     ]
 
     model_config = ConfigDict(
@@ -61,7 +62,7 @@ class CreateUserRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateUserRequest from a JSON string"""
+        """Create an instance of WalletNonceRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -85,7 +86,7 @@ class CreateUserRequest(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateUserRequest from a dict"""
+        """Create an instance of WalletNonceRequest from a dict"""
         if obj is None:
             return None
 
@@ -94,12 +95,16 @@ class CreateUserRequest(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "email": obj.get("email"),
-                "password": obj.get("password"),
+                "host": obj.get("host"),
+                "origin": obj.get("origin"),
+                "address": obj.get("address"),
+                "chainId": obj.get("chainId") if obj.get("chainId") is not None else 1,
+                "statement": (
+                    obj.get("statement")
+                    if obj.get("statement") is not None
+                    else "Sign in with Ethereum wallet"
+                ),
                 "username": obj.get("username"),
-                "name": obj.get("name"),
-                "picture": obj.get("picture"),
-                "oob": obj.get("oob"),
             }
         )
         return _obj

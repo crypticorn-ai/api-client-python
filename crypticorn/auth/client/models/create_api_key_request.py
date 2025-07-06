@@ -17,7 +17,6 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
@@ -34,7 +33,7 @@ class CreateApiKeyRequest(BaseModel):
     scopes: Annotated[List[StrictStr], Field(min_length=1)] = Field(
         description="Scopes of the API key"
     )
-    expires_at: Optional[datetime] = Field(
+    expires_at: Optional[StrictStr] = Field(
         default=None, description="Expiration time of the API key as a date"
     )
     ip_whitelist: Optional[List[StrictStr]] = Field(
@@ -73,6 +72,9 @@ class CreateApiKeyRequest(BaseModel):
                     "write:pay:products",
                     "read:pay:now",
                     "write:pay:now",
+                    "write:pay:coupons",
+                    "read:pay:coupons",
+                    "write:pay:invoices",
                     "read:metrics:marketcap",
                     "read:metrics:indicators",
                     "read:metrics:exchanges",
@@ -85,7 +87,7 @@ class CreateApiKeyRequest(BaseModel):
                 ]
             ):
                 raise ValueError(
-                    "each list item must be one of ('read:predictions', 'read:dex:signals', 'read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:exchangekeys', 'write:trade:exchangekeys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'read:pay:now', 'write:pay:now', 'read:metrics:marketcap', 'read:metrics:indicators', 'read:metrics:exchanges', 'read:metrics:tokens', 'read:metrics:markets', 'read:sentiment', 'read:klines', 'read:admin', 'write:admin')"
+                    "each list item must be one of ('read:predictions', 'read:dex:signals', 'read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:exchangekeys', 'write:trade:exchangekeys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'read:pay:now', 'write:pay:now', 'write:pay:coupons', 'read:pay:coupons', 'write:pay:invoices', 'read:metrics:marketcap', 'read:metrics:indicators', 'read:metrics:exchanges', 'read:metrics:tokens', 'read:metrics:markets', 'read:sentiment', 'read:klines', 'read:admin', 'write:admin')"
                 )
         return value
 

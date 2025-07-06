@@ -17,7 +17,6 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
@@ -32,12 +31,12 @@ class RefreshTokenInfo200ResponseUserSession(BaseModel):
     id: StrictStr = Field(description="ID of the user session")
     user_id: StrictStr = Field(description="User ID of the user session")
     token: StrictStr = Field(description="Token of the user session")
-    expires_at: datetime = Field(description="Expiration time of the user session")
+    expires_at: StrictStr = Field(description="Expiration time of the user session")
     client_ip: Optional[StrictStr] = Field(
-        default=None, description="Client IP address of the user session"
+        description="Client IP address of the user session"
     )
     user_agent: Optional[StrictStr] = Field(
-        default=None, description="User agent of the user session"
+        description="User agent of the user session"
     )
     __properties: ClassVar[List[str]] = [
         "id",
@@ -85,6 +84,16 @@ class RefreshTokenInfo200ResponseUserSession(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if client_ip (nullable) is None
+        # and model_fields_set contains the field
+        if self.client_ip is None and "client_ip" in self.model_fields_set:
+            _dict["client_ip"] = None
+
+        # set to None if user_agent (nullable) is None
+        # and model_fields_set contains the field
+        if self.user_agent is None and "user_agent" in self.model_fields_set:
+            _dict["user_agent"] = None
+
         return _dict
 
     @classmethod

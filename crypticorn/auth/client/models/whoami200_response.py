@@ -30,11 +30,11 @@ class Whoami200Response(BaseModel):
 
     email: StrictStr
     id: StrictStr
-    name: Optional[StrictStr] = None
-    picture: Optional[StrictStr] = None
-    username: Optional[StrictStr] = None
-    phone: Optional[StrictStr] = None
-    is_admin: Optional[StrictBool] = Field(default=False, alias="isAdmin")
+    name: Optional[StrictStr]
+    picture: Optional[StrictStr]
+    username: Optional[StrictStr]
+    phone: Optional[StrictStr]
+    is_admin: StrictBool = Field(alias="isAdmin")
     __properties: ClassVar[List[str]] = [
         "email",
         "id",
@@ -82,6 +82,26 @@ class Whoami200Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if name (nullable) is None
+        # and model_fields_set contains the field
+        if self.name is None and "name" in self.model_fields_set:
+            _dict["name"] = None
+
+        # set to None if picture (nullable) is None
+        # and model_fields_set contains the field
+        if self.picture is None and "picture" in self.model_fields_set:
+            _dict["picture"] = None
+
+        # set to None if username (nullable) is None
+        # and model_fields_set contains the field
+        if self.username is None and "username" in self.model_fields_set:
+            _dict["username"] = None
+
+        # set to None if phone (nullable) is None
+        # and model_fields_set contains the field
+        if self.phone is None and "phone" in self.model_fields_set:
+            _dict["phone"] = None
+
         return _dict
 
     @classmethod

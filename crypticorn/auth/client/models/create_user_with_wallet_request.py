@@ -19,30 +19,20 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class CreateUserRequest(BaseModel):
+class CreateUserWithWalletRequest(BaseModel):
     """
-    CreateUserRequest
+    CreateUserWithWalletRequest
     """  # noqa: E501
 
-    email: StrictStr
-    password: Annotated[str, Field(min_length=8, strict=True)]
+    oob_code: StrictStr = Field(alias="oobCode")
+    signature: StrictStr
+    message: StrictStr
     username: Optional[StrictStr] = None
-    name: Optional[StrictStr] = None
-    picture: Optional[StrictStr] = None
-    oob: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = [
-        "email",
-        "password",
-        "username",
-        "name",
-        "picture",
-        "oob",
-    ]
+    __properties: ClassVar[List[str]] = ["oobCode", "signature", "message", "username"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -61,7 +51,7 @@ class CreateUserRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateUserRequest from a JSON string"""
+        """Create an instance of CreateUserWithWalletRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -85,7 +75,7 @@ class CreateUserRequest(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateUserRequest from a dict"""
+        """Create an instance of CreateUserWithWalletRequest from a dict"""
         if obj is None:
             return None
 
@@ -94,12 +84,10 @@ class CreateUserRequest(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "email": obj.get("email"),
-                "password": obj.get("password"),
+                "oobCode": obj.get("oobCode"),
+                "signature": obj.get("signature"),
+                "message": obj.get("message"),
                 "username": obj.get("username"),
-                "name": obj.get("name"),
-                "picture": obj.get("picture"),
-                "oob": obj.get("oob"),
             }
         )
         return _obj

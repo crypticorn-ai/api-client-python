@@ -17,19 +17,27 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from crypticorn.auth.client.models.revoke_user_tokens200_response import (
+    RevokeUserTokens200Response,
+)
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class LogoutDefaultResponseIssuesInner(BaseModel):
+class ErrorNOTFOUND(BaseModel):
     """
-    LogoutDefaultResponseIssuesInner
+    The error information
     """  # noqa: E501
 
-    message: StrictStr
-    __properties: ClassVar[List[str]] = ["message"]
+    message: StrictStr = Field(description="The error message")
+    code: StrictStr = Field(description="The error code")
+    issues: Optional[List[RevokeUserTokens200Response]] = Field(
+        default=None,
+        description="An array of issues that were responsible for the error",
+    )
+    __properties: ClassVar[List[str]] = ["message", "code", "issues"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -48,7 +56,7 @@ class LogoutDefaultResponseIssuesInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of LogoutDefaultResponseIssuesInner from a JSON string"""
+        """Create an instance of ErrorNOTFOUND from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -68,16 +76,36 @@ class LogoutDefaultResponseIssuesInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in issues (list)
+        _items = []
+        if self.issues:
+            for _item_issues in self.issues:
+                if _item_issues:
+                    _items.append(_item_issues.to_dict())
+            _dict["issues"] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of LogoutDefaultResponseIssuesInner from a dict"""
+        """Create an instance of ErrorNOTFOUND from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({"message": obj.get("message")})
+        _obj = cls.model_validate(
+            {
+                "message": obj.get("message"),
+                "code": obj.get("code"),
+                "issues": (
+                    [
+                        RevokeUserTokens200Response.from_dict(_item)
+                        for _item in obj["issues"]
+                    ]
+                    if obj.get("issues") is not None
+                    else None
+                ),
+            }
+        )
         return _obj

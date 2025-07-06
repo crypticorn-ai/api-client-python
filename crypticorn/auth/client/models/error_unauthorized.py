@@ -17,26 +17,27 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List
-from crypticorn.auth.client.models.authorize_user200_response_auth import (
-    AuthorizeUser200ResponseAuth,
-)
-from crypticorn.auth.client.models.oauth_callback200_response_user import (
-    OauthCallback200ResponseUser,
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from crypticorn.auth.client.models.revoke_user_tokens200_response import (
+    RevokeUserTokens200Response,
 )
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class OauthCallback200Response(BaseModel):
+class ErrorUNAUTHORIZED(BaseModel):
     """
-    OauthCallback200Response
+    The error information
     """  # noqa: E501
 
-    user: OauthCallback200ResponseUser
-    auth: AuthorizeUser200ResponseAuth
-    __properties: ClassVar[List[str]] = ["user", "auth"]
+    message: StrictStr = Field(description="The error message")
+    code: StrictStr = Field(description="The error code")
+    issues: Optional[List[RevokeUserTokens200Response]] = Field(
+        default=None,
+        description="An array of issues that were responsible for the error",
+    )
+    __properties: ClassVar[List[str]] = ["message", "code", "issues"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -55,7 +56,7 @@ class OauthCallback200Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of OauthCallback200Response from a JSON string"""
+        """Create an instance of ErrorUNAUTHORIZED from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -75,17 +76,18 @@ class OauthCallback200Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of user
-        if self.user:
-            _dict["user"] = self.user.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of auth
-        if self.auth:
-            _dict["auth"] = self.auth.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in issues (list)
+        _items = []
+        if self.issues:
+            for _item_issues in self.issues:
+                if _item_issues:
+                    _items.append(_item_issues.to_dict())
+            _dict["issues"] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of OauthCallback200Response from a dict"""
+        """Create an instance of ErrorUNAUTHORIZED from a dict"""
         if obj is None:
             return None
 
@@ -94,14 +96,14 @@ class OauthCallback200Response(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "user": (
-                    OauthCallback200ResponseUser.from_dict(obj["user"])
-                    if obj.get("user") is not None
-                    else None
-                ),
-                "auth": (
-                    AuthorizeUser200ResponseAuth.from_dict(obj["auth"])
-                    if obj.get("auth") is not None
+                "message": obj.get("message"),
+                "code": obj.get("code"),
+                "issues": (
+                    [
+                        RevokeUserTokens200Response.from_dict(_item)
+                        for _item in obj["issues"]
+                    ]
+                    if obj.get("issues") is not None
                     else None
                 ),
             }
