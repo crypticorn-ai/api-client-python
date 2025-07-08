@@ -19,8 +19,8 @@ client/models/coupon.py
 client/models/coupon_create.py
 client/models/coupon_update.py
 client/models/exception_detail.py
+client/models/invoice.py
 client/models/invoice_create.py
-client/models/invoice_info.py
 client/models/paginated_response_coupon.py
 client/models/paginated_response_payment.py
 client/models/payment.py

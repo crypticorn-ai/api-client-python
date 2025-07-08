@@ -21,8 +21,8 @@ from crypticorn.pay.client.models.coupon import Coupon
 from crypticorn.pay.client.models.coupon_create import CouponCreate
 from crypticorn.pay.client.models.coupon_update import CouponUpdate
 from crypticorn.pay.client.models.exception_detail import ExceptionDetail
+from crypticorn.pay.client.models.invoice import Invoice
 from crypticorn.pay.client.models.invoice_create import InvoiceCreate
-from crypticorn.pay.client.models.invoice_info import InvoiceInfo
 from crypticorn.pay.client.models.paginated_response_coupon import (
     PaginatedResponseCoupon,
 )
