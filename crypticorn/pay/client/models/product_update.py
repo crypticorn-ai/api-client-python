@@ -20,14 +20,12 @@ import json
 from pydantic import (
     BaseModel,
     ConfigDict,
-    Field,
     StrictBool,
     StrictFloat,
     StrictInt,
     StrictStr,
 )
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from typing_extensions import Annotated
 from crypticorn.pay.client.models.scope import Scope
 from typing import Optional, Set
 from typing_extensions import Self
@@ -44,7 +42,7 @@ class ProductUpdate(BaseModel):
     duration: Optional[StrictInt] = None
     description: Optional[StrictStr] = None
     is_active: Optional[StrictBool] = None
-    images: Optional[List[Annotated[str, Field(min_length=1, strict=True)]]] = None
+    images: Optional[List[StrictStr]] = None
     __properties: ClassVar[List[str]] = [
         "name",
         "price",

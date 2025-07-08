@@ -17,17 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    StrictBool,
-    StrictInt,
-    StrictStr,
-    field_validator,
-)
-from typing import Any, ClassVar, Dict, List, Optional, Union
-from typing_extensions import Annotated
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -37,41 +28,16 @@ class CouponUpdate(BaseModel):
     Model for updating a coupon
     """  # noqa: E501
 
-    code: Optional[Annotated[str, Field(min_length=4, strict=True, max_length=32)]] = (
-        None
-    )
-    name: Optional[StrictStr] = None
-    discount: Optional[
-        Union[
-            Annotated[float, Field(le=1.0, strict=True, ge=0.0)],
-            Annotated[int, Field(le=1, strict=True, ge=0)],
-        ]
-    ] = None
     valid_until: Optional[StrictInt] = None
-    valid_from: Optional[StrictInt] = None
     usage_limit: Optional[StrictInt] = None
     products: Optional[List[StrictStr]] = None
-    is_active: Optional[StrictBool] = None
+    name: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = [
-        "code",
-        "name",
-        "discount",
         "valid_until",
-        "valid_from",
         "usage_limit",
         "products",
-        "is_active",
+        "name",
     ]
-
-    @field_validator("code")
-    def code_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if value is None:
-            return value
-
-        if not re.match(r"^[A-Z0-9]+$", value):
-            raise ValueError(r"must validate the regular expression /^[A-Z0-9]+$/")
-        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -110,30 +76,10 @@ class CouponUpdate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if code (nullable) is None
-        # and model_fields_set contains the field
-        if self.code is None and "code" in self.model_fields_set:
-            _dict["code"] = None
-
-        # set to None if name (nullable) is None
-        # and model_fields_set contains the field
-        if self.name is None and "name" in self.model_fields_set:
-            _dict["name"] = None
-
-        # set to None if discount (nullable) is None
-        # and model_fields_set contains the field
-        if self.discount is None and "discount" in self.model_fields_set:
-            _dict["discount"] = None
-
         # set to None if valid_until (nullable) is None
         # and model_fields_set contains the field
         if self.valid_until is None and "valid_until" in self.model_fields_set:
             _dict["valid_until"] = None
-
-        # set to None if valid_from (nullable) is None
-        # and model_fields_set contains the field
-        if self.valid_from is None and "valid_from" in self.model_fields_set:
-            _dict["valid_from"] = None
 
         # set to None if usage_limit (nullable) is None
         # and model_fields_set contains the field
@@ -145,10 +91,10 @@ class CouponUpdate(BaseModel):
         if self.products is None and "products" in self.model_fields_set:
             _dict["products"] = None
 
-        # set to None if is_active (nullable) is None
+        # set to None if name (nullable) is None
         # and model_fields_set contains the field
-        if self.is_active is None and "is_active" in self.model_fields_set:
-            _dict["is_active"] = None
+        if self.name is None and "name" in self.model_fields_set:
+            _dict["name"] = None
 
         return _dict
 
@@ -163,14 +109,10 @@ class CouponUpdate(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "code": obj.get("code"),
-                "name": obj.get("name"),
-                "discount": obj.get("discount"),
                 "valid_until": obj.get("valid_until"),
-                "valid_from": obj.get("valid_from"),
                 "usage_limit": obj.get("usage_limit"),
                 "products": obj.get("products"),
-                "is_active": obj.get("is_active"),
+                "name": obj.get("name"),
             }
         )
         return _obj

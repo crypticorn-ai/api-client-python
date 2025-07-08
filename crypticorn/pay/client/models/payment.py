@@ -35,7 +35,9 @@ class Payment(BaseModel):
     coupon_id: Optional[StrictStr] = None
     user_id: StrictStr = Field(description="User ID the payment is for")
     invoice_id: StrictStr = Field(description="Invoice ID")
-    timestamp: StrictInt = Field(description="Payment timestamp in seconds")
+    timestamp: StrictInt = Field(
+        description="Payment timestamp in seconds. Deprecated, use updated_at instead."
+    )
     amount: Union[StrictFloat, StrictInt] = Field(description="Payment amount")
     currency: StrictStr = Field(description="Payment currency")
     status: PaymentStatus
@@ -43,6 +45,9 @@ class Payment(BaseModel):
     market: StrictStr = Field(description="Payment market")
     updated_at: StrictInt = Field(description="Payment updated at timestamp in seconds")
     created_at: StrictInt = Field(description="Payment created at timestamp in seconds")
+    details: Optional[Dict[str, Any]] = Field(
+        default=None, description="Payment details specific to the provider"
+    )
     __properties: ClassVar[List[str]] = [
         "id",
         "product_id",
@@ -57,6 +62,7 @@ class Payment(BaseModel):
         "market",
         "updated_at",
         "created_at",
+        "details",
     ]
 
     model_config = ConfigDict(
@@ -127,6 +133,7 @@ class Payment(BaseModel):
                 "market": obj.get("market"),
                 "updated_at": obj.get("updated_at"),
                 "created_at": obj.get("created_at"),
+                "details": obj.get("details"),
             }
         )
         return _obj

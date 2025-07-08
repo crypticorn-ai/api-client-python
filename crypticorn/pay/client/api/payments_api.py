@@ -1307,7 +1307,7 @@ class PaymentsApi:
         user_id: Annotated[
             Optional[StrictStr],
             Field(
-                description="The user ID to get subscriptions for. Defaults to the authenticated user."
+                description="The ID of the user to get subscriptions for. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         state: Annotated[
@@ -1357,7 +1357,7 @@ class PaymentsApi:
         user_id: Annotated[
             Optional[StrictStr],
             Field(
-                description="The user ID to get subscriptions for. Defaults to the authenticated user."
+                description="The ID of the user to get subscriptions for. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         state: Annotated[
@@ -1407,7 +1407,7 @@ class PaymentsApi:
         user_id: Annotated[
             Optional[StrictStr],
             Field(
-                description="The user ID to get subscriptions for. Defaults to the authenticated user."
+                description="The ID of the user to get subscriptions for. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         state: Annotated[
@@ -1458,7 +1458,7 @@ class PaymentsApi:
         user_id: Annotated[
             Optional[StrictStr],
             Field(
-                description="The user ID to get subscriptions for. Defaults to the authenticated user."
+                description="The ID of the user to get subscriptions for. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         state: Annotated[
@@ -1483,7 +1483,7 @@ class PaymentsApi:
 
         Get all subscriptions for a user. Subscriptions are the products a user has subscribed to. Returns both active and inactive subscriptions.
 
-        :param user_id: The user ID to get subscriptions for. Defaults to the authenticated user.
+        :param user_id: The ID of the user to get subscriptions for. Overrides the authenticated user if provided and the user is an admin.
         :type user_id: str
         :param state: The state of the subscriptions to get. Defaults to all states.
         :type state: str
@@ -1536,7 +1536,7 @@ class PaymentsApi:
         user_id: Annotated[
             Optional[StrictStr],
             Field(
-                description="The user ID to get subscriptions for. Defaults to the authenticated user."
+                description="The ID of the user to get subscriptions for. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         state: Annotated[
@@ -1561,7 +1561,7 @@ class PaymentsApi:
 
         Get all subscriptions for a user. Subscriptions are the products a user has subscribed to. Returns both active and inactive subscriptions.
 
-        :param user_id: The user ID to get subscriptions for. Defaults to the authenticated user.
+        :param user_id: The ID of the user to get subscriptions for. Overrides the authenticated user if provided and the user is an admin.
         :type user_id: str
         :param state: The state of the subscriptions to get. Defaults to all states.
         :type state: str
@@ -1613,7 +1613,7 @@ class PaymentsApi:
         user_id: Annotated[
             Optional[StrictStr],
             Field(
-                description="The user ID to get subscriptions for. Defaults to the authenticated user."
+                description="The ID of the user to get subscriptions for. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         state: Annotated[
@@ -1638,7 +1638,7 @@ class PaymentsApi:
 
         Get all subscriptions for a user. Subscriptions are the products a user has subscribed to. Returns both active and inactive subscriptions.
 
-        :param user_id: The user ID to get subscriptions for. Defaults to the authenticated user.
+        :param user_id: The ID of the user to get subscriptions for. Overrides the authenticated user if provided and the user is an admin.
         :type user_id: str
         :param state: The state of the subscriptions to get. Defaults to all states.
         :type state: str
@@ -1688,7 +1688,7 @@ class PaymentsApi:
         user_id: Annotated[
             Optional[StrictStr],
             Field(
-                description="The user ID to get subscriptions for. Defaults to the authenticated user."
+                description="The ID of the user to get subscriptions for. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         state: Annotated[
@@ -1726,7 +1726,7 @@ class PaymentsApi:
         user_id: Annotated[
             Optional[StrictStr],
             Field(
-                description="The user ID to get subscriptions for. Defaults to the authenticated user."
+                description="The ID of the user to get subscriptions for. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         state: Annotated[
@@ -1764,7 +1764,7 @@ class PaymentsApi:
         user_id: Annotated[
             Optional[StrictStr],
             Field(
-                description="The user ID to get subscriptions for. Defaults to the authenticated user."
+                description="The ID of the user to get subscriptions for. Overrides the authenticated user if provided and the user is an admin."
             ),
         ] = None,
         state: Annotated[
