@@ -3,6 +3,7 @@ import psycopg2
 from psycopg2 import sql
 import os
 from dotenv import load_dotenv
+import io
 
 load_dotenv()
 
@@ -12,7 +13,7 @@ def fetch_data_from_postgres(query, params=None):
         'dbname': os.getenv('KLINES_DB_NAME'),
         'user': os.getenv('KLINES_DB_USER'),
         'password': os.getenv('KLINES_DB_PASSWORD'),
-        'host': os.getenv('KLINES_DB_HOST', 'eu.crypticorn.dev'),
+        'host': os.getenv('KLINES_DB_HOST', 'hz.crypticorn.dev'),
         'port': os.getenv('KLINES_DB_PORT')
     }
     
@@ -46,31 +47,59 @@ def fetch_data_from_postgres(query, params=None):
         if conn:
             conn.close()
 
-def fetch_ohlcv_data(pair, timeframe, market_type, limit=100):
-    query = sql.SQL("SELECT * FROM {} WHERE pair = %s ORDER BY timestamp DESC LIMIT %s").format(
-        sql.Identifier(f"ohlcv_{market_type}_{timeframe}")
-    )
-    params = (pair, limit)
-    df = fetch_data_from_postgres(query, params)
+def fetch_data_with_copy(query, db_params):
+    output = io.StringIO()
+    try:
+        conn = psycopg2.connect(**db_params)
+        with conn.cursor() as cur:
+            copy_sql = f"COPY ({query}) TO STDOUT WITH CSV HEADER"
+            cur.copy_expert(copy_sql, output)
+        output.seek(0)
+        df = pd.read_csv(output)
+        return df
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+    finally:
+        if conn:
+            conn.close()
+
+def fetch_ohlcv_data(pair, timeframe, market_type, limit=280000):
+    db_params = {
+        'dbname': os.getenv('KLINES_DB_NAME'),
+        'user': os.getenv('KLINES_DB_USER'),
+        'password': os.getenv('KLINES_DB_PASSWORD'),
+        'host': os.getenv('KLINES_DB_HOST', 'hz.crypticorn.dev'),
+        'port': os.getenv('KLINES_DB_PORT')
+    }
+    table_name = f"ohlcv_{market_type}_{timeframe}"
+    query = f"SELECT timestamp, pair, open, high, low, close, volume FROM {table_name} WHERE pair = '{pair}' ORDER BY timestamp DESC LIMIT {limit}"
+    df = fetch_data_with_copy(query, db_params)
     if df is not None:
         df['timestamp'] = pd.to_datetime(df['timestamp'])
         df['timestamp'] = df['timestamp'].astype(int) // 10 ** 9
     return df
 
 def fetch_funding_rate_data(pair, limit=100):
-    query = sql.SQL('SELECT * FROM funding_rate WHERE "Symbol" = %s ORDER BY "FundingTime" DESC LIMIT %s')
-    params = (pair, limit)
-    return fetch_data_from_postgres(query, params)
+    db_params = {
+        'dbname': os.getenv('KLINES_DB_NAME'),
+        'user': os.getenv('KLINES_DB_USER'),
+        'password': os.getenv('KLINES_DB_PASSWORD'),
+        'host': os.getenv('KLINES_DB_HOST', 'hz.crypticorn.dev'),
+        'port': os.getenv('KLINES_DB_PORT')
+    }
+    query = f"SELECT EXTRACT(EPOCH FROM funding_time)::BIGINT AS timestamp, symbol AS pair, funding_rate FROM funding_rate WHERE symbol = '{pair}' ORDER BY funding_time DESC LIMIT {limit}"
+    return fetch_data_with_copy(query, db_params)
 
 if __name__ == "__main__":
-    spot_df = fetch_ohlcv_data('BTCUSDT', '1m', 'spot')
+    spot_df = fetch_ohlcv_data('BTCUSDT', '15m', 'spot')
     if spot_df is not None:
         print(spot_df.head())
     
-    futures_df = fetch_ohlcv_data('BTCUSDT', '1m', 'futures')
+    futures_df = fetch_ohlcv_data('BTCUSDT', '15m', 'futures')
     if futures_df is not None:
         print(futures_df.head())
-
+    
     funding_rate_df = fetch_funding_rate_data('BTCUSDT')
     if funding_rate_df is not None:
         print(funding_rate_df.head())
