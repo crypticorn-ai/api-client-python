@@ -440,7 +440,7 @@ class NOWPaymentsApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
             method="GET",

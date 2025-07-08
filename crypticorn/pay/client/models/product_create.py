@@ -27,7 +27,6 @@ from pydantic import (
     StrictStr,
 )
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from typing_extensions import Annotated
 from crypticorn.pay.client.models.scope import Scope
 from typing import Optional, Set
 from typing_extensions import Self
@@ -46,7 +45,7 @@ class ProductCreate(BaseModel):
     )
     description: StrictStr = Field(description="Product description")
     is_active: StrictBool = Field(description="Product is active")
-    images: Optional[List[Annotated[str, Field(min_length=1, strict=True)]]] = None
+    images: Optional[List[StrictStr]] = None
     __properties: ClassVar[List[str]] = [
         "name",
         "price",
