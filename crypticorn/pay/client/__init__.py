@@ -41,8 +41,8 @@ __all__ = [
     "CouponCreate",
     "CouponUpdate",
     "ExceptionDetail",
+    "Invoice",
     "InvoiceCreate",
-    "InvoiceInfo",
     "PaginatedResponseCoupon",
     "PaginatedResponsePayment",
     "Payment",
@@ -87,8 +87,8 @@ from crypticorn.pay.client.models.coupon_update import CouponUpdate as CouponUpd
 from crypticorn.pay.client.models.exception_detail import (
     ExceptionDetail as ExceptionDetail,
 )
+from crypticorn.pay.client.models.invoice import Invoice as Invoice
 from crypticorn.pay.client.models.invoice_create import InvoiceCreate as InvoiceCreate
-from crypticorn.pay.client.models.invoice_info import InvoiceInfo as InvoiceInfo
 from crypticorn.pay.client.models.paginated_response_coupon import (
     PaginatedResponseCoupon as PaginatedResponseCoupon,
 )
