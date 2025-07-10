@@ -16,122 +16,210 @@ Do not edit the class manually.
 
 __version__ = "1.0.0"
 
+# Define package exports
+__all__ = [
+    "AdminApi",
+    "AuthApi",
+    "ServiceApi",
+    "UserApi",
+    "WalletApi",
+    "ApiResponse",
+    "ApiClient",
+    "Configuration",
+    "OpenApiException",
+    "ApiTypeError",
+    "ApiValueError",
+    "ApiKeyError",
+    "ApiAttributeError",
+    "ApiException",
+    "AddWallet200Response",
+    "AddWalletRequest",
+    "AuthorizeUser200Response",
+    "AuthorizeUserRequest",
+    "CreateApiKey200Response",
+    "CreateApiKeyRequest",
+    "CreateUser200Response",
+    "CreateUser200ResponseAuth",
+    "CreateUser200ResponseAuthAuth",
+    "CreateUserRequest",
+    "CreateUserWithWalletRequest",
+    "ErrorBADREQUEST",
+    "ErrorFORBIDDEN",
+    "ErrorINTERNALSERVERERROR",
+    "ErrorNOTFOUND",
+    "ErrorUNAUTHORIZED",
+    "GetApiKeys200ResponseInner",
+    "ListWallets200Response",
+    "ListWallets200ResponseBalancesInner",
+    "ListWallets200ResponseBalancesInnerSaleRound",
+    "ListWallets200ResponseBalancesInnerWallet",
+    "ListWallets200ResponseBalancesInnerWalletVestingWalletsInner",
+    "ListWallets200ResponseDataInner",
+    "ListWallets200ResponseUserValue",
+    "RefreshTokenInfo200Response",
+    "RefreshTokenInfo200ResponseUserSession",
+    "ResendVerificationEmailRequest",
+    "RevokeUserTokens200Response",
+    "RevokeUserTokensRequest",
+    "RotateTokens200Response",
+    "TokenInfo200Response",
+    "UnlinkWalletRequest",
+    "UpdateUserRequest",
+    "UserByUsername200Response",
+    "UserResetPasswordRequest",
+    "UserSetPasswordRequest",
+    "VerifyEmail200Response",
+    "VerifyEmail200ResponseAuth",
+    "VerifyEmailRequest",
+    "VerifyWalletRequest",
+    "WalletNonceRequest",
+    "WalletVerified200Response",
+    "Whoami200Response",
+]
+
 # import apis into sdk package
-from crypticorn.auth.client.api.admin_api import AdminApi
-from crypticorn.auth.client.api.auth_api import AuthApi
-from crypticorn.auth.client.api.service_api import ServiceApi
-from crypticorn.auth.client.api.user_api import UserApi
-from crypticorn.auth.client.api.wallet_api import WalletApi
+from crypticorn.auth.client.api.admin_api import AdminApi as AdminApi
+from crypticorn.auth.client.api.auth_api import AuthApi as AuthApi
+from crypticorn.auth.client.api.service_api import ServiceApi as ServiceApi
+from crypticorn.auth.client.api.user_api import UserApi as UserApi
+from crypticorn.auth.client.api.wallet_api import WalletApi as WalletApi
 
 # import ApiClient
-from crypticorn.auth.client.api_response import ApiResponse
-from crypticorn.auth.client.api_client import ApiClient
-from crypticorn.auth.client.configuration import Configuration
-from crypticorn.auth.client.exceptions import OpenApiException
-from crypticorn.auth.client.exceptions import ApiTypeError
-from crypticorn.auth.client.exceptions import ApiValueError
-from crypticorn.auth.client.exceptions import ApiKeyError
-from crypticorn.auth.client.exceptions import ApiAttributeError
-from crypticorn.auth.client.exceptions import ApiException
+from crypticorn.auth.client.api_response import ApiResponse as ApiResponse
+from crypticorn.auth.client.api_client import ApiClient as ApiClient
+from crypticorn.auth.client.configuration import Configuration as Configuration
+from crypticorn.auth.client.exceptions import OpenApiException as OpenApiException
+from crypticorn.auth.client.exceptions import ApiTypeError as ApiTypeError
+from crypticorn.auth.client.exceptions import ApiValueError as ApiValueError
+from crypticorn.auth.client.exceptions import ApiKeyError as ApiKeyError
+from crypticorn.auth.client.exceptions import ApiAttributeError as ApiAttributeError
+from crypticorn.auth.client.exceptions import ApiException as ApiException
 
 # import models into sdk package
-from crypticorn.auth.client.models.add_wallet200_response import AddWallet200Response
-from crypticorn.auth.client.models.add_wallet_request import AddWalletRequest
+from crypticorn.auth.client.models.add_wallet200_response import (
+    AddWallet200Response as AddWallet200Response,
+)
+from crypticorn.auth.client.models.add_wallet_request import (
+    AddWalletRequest as AddWalletRequest,
+)
 from crypticorn.auth.client.models.authorize_user200_response import (
-    AuthorizeUser200Response,
+    AuthorizeUser200Response as AuthorizeUser200Response,
 )
-from crypticorn.auth.client.models.authorize_user200_response_auth import (
-    AuthorizeUser200ResponseAuth,
-)
-from crypticorn.auth.client.models.authorize_user_request import AuthorizeUserRequest
-from crypticorn.auth.client.models.authorize_user_without_password_request import (
-    AuthorizeUserWithoutPasswordRequest,
+from crypticorn.auth.client.models.authorize_user_request import (
+    AuthorizeUserRequest as AuthorizeUserRequest,
 )
 from crypticorn.auth.client.models.create_api_key200_response import (
-    CreateApiKey200Response,
+    CreateApiKey200Response as CreateApiKey200Response,
 )
-from crypticorn.auth.client.models.create_api_key_request import CreateApiKeyRequest
-from crypticorn.auth.client.models.create_user_request import CreateUserRequest
+from crypticorn.auth.client.models.create_api_key_request import (
+    CreateApiKeyRequest as CreateApiKeyRequest,
+)
+from crypticorn.auth.client.models.create_user200_response import (
+    CreateUser200Response as CreateUser200Response,
+)
+from crypticorn.auth.client.models.create_user200_response_auth import (
+    CreateUser200ResponseAuth as CreateUser200ResponseAuth,
+)
+from crypticorn.auth.client.models.create_user200_response_auth_auth import (
+    CreateUser200ResponseAuthAuth as CreateUser200ResponseAuthAuth,
+)
+from crypticorn.auth.client.models.create_user_request import (
+    CreateUserRequest as CreateUserRequest,
+)
 from crypticorn.auth.client.models.create_user_with_wallet_request import (
-    CreateUserWithWalletRequest,
+    CreateUserWithWalletRequest as CreateUserWithWalletRequest,
 )
-from crypticorn.auth.client.models.create_user_without_password_request import (
-    CreateUserWithoutPasswordRequest,
+from crypticorn.auth.client.models.error_badrequest import (
+    ErrorBADREQUEST as ErrorBADREQUEST,
 )
-from crypticorn.auth.client.models.error_badrequest import ErrorBADREQUEST
-from crypticorn.auth.client.models.error_forbidden import ErrorFORBIDDEN
+from crypticorn.auth.client.models.error_forbidden import (
+    ErrorFORBIDDEN as ErrorFORBIDDEN,
+)
 from crypticorn.auth.client.models.error_internalservererror import (
-    ErrorINTERNALSERVERERROR,
+    ErrorINTERNALSERVERERROR as ErrorINTERNALSERVERERROR,
 )
-from crypticorn.auth.client.models.error_notfound import ErrorNOTFOUND
-from crypticorn.auth.client.models.error_unauthorized import ErrorUNAUTHORIZED
+from crypticorn.auth.client.models.error_notfound import ErrorNOTFOUND as ErrorNOTFOUND
+from crypticorn.auth.client.models.error_unauthorized import (
+    ErrorUNAUTHORIZED as ErrorUNAUTHORIZED,
+)
 from crypticorn.auth.client.models.get_api_keys200_response_inner import (
-    GetApiKeys200ResponseInner,
+    GetApiKeys200ResponseInner as GetApiKeys200ResponseInner,
 )
 from crypticorn.auth.client.models.list_wallets200_response import (
-    ListWallets200Response,
+    ListWallets200Response as ListWallets200Response,
 )
 from crypticorn.auth.client.models.list_wallets200_response_balances_inner import (
-    ListWallets200ResponseBalancesInner,
+    ListWallets200ResponseBalancesInner as ListWallets200ResponseBalancesInner,
 )
 from crypticorn.auth.client.models.list_wallets200_response_balances_inner_sale_round import (
-    ListWallets200ResponseBalancesInnerSaleRound,
+    ListWallets200ResponseBalancesInnerSaleRound as ListWallets200ResponseBalancesInnerSaleRound,
 )
 from crypticorn.auth.client.models.list_wallets200_response_balances_inner_wallet import (
-    ListWallets200ResponseBalancesInnerWallet,
+    ListWallets200ResponseBalancesInnerWallet as ListWallets200ResponseBalancesInnerWallet,
 )
 from crypticorn.auth.client.models.list_wallets200_response_balances_inner_wallet_vesting_wallets_inner import (
-    ListWallets200ResponseBalancesInnerWalletVestingWalletsInner,
+    ListWallets200ResponseBalancesInnerWalletVestingWalletsInner as ListWallets200ResponseBalancesInnerWalletVestingWalletsInner,
 )
 from crypticorn.auth.client.models.list_wallets200_response_data_inner import (
-    ListWallets200ResponseDataInner,
+    ListWallets200ResponseDataInner as ListWallets200ResponseDataInner,
 )
 from crypticorn.auth.client.models.list_wallets200_response_user_value import (
-    ListWallets200ResponseUserValue,
+    ListWallets200ResponseUserValue as ListWallets200ResponseUserValue,
 )
 from crypticorn.auth.client.models.refresh_token_info200_response import (
-    RefreshTokenInfo200Response,
+    RefreshTokenInfo200Response as RefreshTokenInfo200Response,
 )
 from crypticorn.auth.client.models.refresh_token_info200_response_user_session import (
-    RefreshTokenInfo200ResponseUserSession,
+    RefreshTokenInfo200ResponseUserSession as RefreshTokenInfo200ResponseUserSession,
 )
 from crypticorn.auth.client.models.resend_verification_email_request import (
-    ResendVerificationEmailRequest,
+    ResendVerificationEmailRequest as ResendVerificationEmailRequest,
 )
 from crypticorn.auth.client.models.revoke_user_tokens200_response import (
-    RevokeUserTokens200Response,
+    RevokeUserTokens200Response as RevokeUserTokens200Response,
 )
 from crypticorn.auth.client.models.revoke_user_tokens_request import (
-    RevokeUserTokensRequest,
+    RevokeUserTokensRequest as RevokeUserTokensRequest,
 )
 from crypticorn.auth.client.models.rotate_tokens200_response import (
-    RotateTokens200Response,
+    RotateTokens200Response as RotateTokens200Response,
 )
-from crypticorn.auth.client.models.token_info200_response import TokenInfo200Response
-from crypticorn.auth.client.models.unlink_wallet_request import UnlinkWalletRequest
-from crypticorn.auth.client.models.update_user_request import UpdateUserRequest
+from crypticorn.auth.client.models.token_info200_response import (
+    TokenInfo200Response as TokenInfo200Response,
+)
+from crypticorn.auth.client.models.unlink_wallet_request import (
+    UnlinkWalletRequest as UnlinkWalletRequest,
+)
+from crypticorn.auth.client.models.update_user_request import (
+    UpdateUserRequest as UpdateUserRequest,
+)
 from crypticorn.auth.client.models.user_by_username200_response import (
-    UserByUsername200Response,
+    UserByUsername200Response as UserByUsername200Response,
 )
 from crypticorn.auth.client.models.user_reset_password_request import (
-    UserResetPasswordRequest,
+    UserResetPasswordRequest as UserResetPasswordRequest,
 )
 from crypticorn.auth.client.models.user_set_password_request import (
-    UserSetPasswordRequest,
+    UserSetPasswordRequest as UserSetPasswordRequest,
 )
 from crypticorn.auth.client.models.verify_email200_response import (
-    VerifyEmail200Response,
+    VerifyEmail200Response as VerifyEmail200Response,
 )
 from crypticorn.auth.client.models.verify_email200_response_auth import (
-    VerifyEmail200ResponseAuth,
+    VerifyEmail200ResponseAuth as VerifyEmail200ResponseAuth,
 )
-from crypticorn.auth.client.models.verify_email200_response_auth_auth import (
-    VerifyEmail200ResponseAuthAuth,
+from crypticorn.auth.client.models.verify_email_request import (
+    VerifyEmailRequest as VerifyEmailRequest,
 )
-from crypticorn.auth.client.models.verify_email_request import VerifyEmailRequest
-from crypticorn.auth.client.models.verify_wallet_request import VerifyWalletRequest
-from crypticorn.auth.client.models.wallet_nonce_request import WalletNonceRequest
+from crypticorn.auth.client.models.verify_wallet_request import (
+    VerifyWalletRequest as VerifyWalletRequest,
+)
+from crypticorn.auth.client.models.wallet_nonce_request import (
+    WalletNonceRequest as WalletNonceRequest,
+)
 from crypticorn.auth.client.models.wallet_verified200_response import (
-    WalletVerified200Response,
+    WalletVerified200Response as WalletVerified200Response,
 )
-from crypticorn.auth.client.models.whoami200_response import Whoami200Response
+from crypticorn.auth.client.models.whoami200_response import (
+    Whoami200Response as Whoami200Response,
+)

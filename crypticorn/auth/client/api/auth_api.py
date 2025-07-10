@@ -22,13 +22,13 @@ from crypticorn.auth.client.models.authorize_user200_response import (
     AuthorizeUser200Response,
 )
 from crypticorn.auth.client.models.authorize_user_request import AuthorizeUserRequest
-from crypticorn.auth.client.models.authorize_user_without_password_request import (
-    AuthorizeUserWithoutPasswordRequest,
-)
 from crypticorn.auth.client.models.create_api_key200_response import (
     CreateApiKey200Response,
 )
 from crypticorn.auth.client.models.create_api_key_request import CreateApiKeyRequest
+from crypticorn.auth.client.models.create_user200_response_auth_auth import (
+    CreateUser200ResponseAuthAuth,
+)
 from crypticorn.auth.client.models.get_api_keys200_response_inner import (
     GetApiKeys200ResponseInner,
 )
@@ -39,9 +39,6 @@ from crypticorn.auth.client.models.rotate_tokens200_response import (
     RotateTokens200Response,
 )
 from crypticorn.auth.client.models.token_info200_response import TokenInfo200Response
-from crypticorn.auth.client.models.verify_email200_response_auth_auth import (
-    VerifyEmail200ResponseAuthAuth,
-)
 
 from crypticorn.auth.client.api_client import ApiClient, RequestSerialized
 from crypticorn.auth.client.api_response import ApiResponse
@@ -521,464 +518,6 @@ class AuthApi:
         return self.api_client.param_serialize(
             method="POST",
             resource_path="/authorize",
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth,
-        )
-
-    @validate_call
-    def authorize_user_without_password(
-        self,
-        authorize_user_without_password_request: AuthorizeUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> AuthorizeUser200Response:
-        """Authorize a user without password"""
-        if self.is_sync:
-            return self._authorize_user_without_password_sync(
-                authorize_user_without_password_request=authorize_user_without_password_request,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._authorize_user_without_password_async(
-                authorize_user_without_password_request=authorize_user_without_password_request,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def authorize_user_without_password_with_http_info(
-        self,
-        authorize_user_without_password_request: AuthorizeUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[AuthorizeUser200Response]:
-        """Authorize a user without password with HTTP info"""
-        if self.is_sync:
-            return self._authorize_user_without_password_sync_with_http_info(
-                authorize_user_without_password_request=authorize_user_without_password_request,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._authorize_user_without_password_async_with_http_info(
-                authorize_user_without_password_request=authorize_user_without_password_request,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def authorize_user_without_password_without_preload_content(
-        self,
-        authorize_user_without_password_request: AuthorizeUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Authorize a user without password without preloading content"""
-        if self.is_sync:
-            return self._authorize_user_without_password_sync_without_preload_content(
-                authorize_user_without_password_request=authorize_user_without_password_request,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._authorize_user_without_password_async_without_preload_content(
-                authorize_user_without_password_request=authorize_user_without_password_request,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    # Private async implementation methods
-    @validate_call
-    async def _authorize_user_without_password_async(
-        self,
-        authorize_user_without_password_request: AuthorizeUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> AuthorizeUser200Response:
-        """Authorize a user without password
-
-        Authorize a user with email and oob code from the checkout page, uses a captcha to prevent bots.
-
-        :param authorize_user_without_password_request: (required)
-        :type authorize_user_without_password_request: AuthorizeUserWithoutPasswordRequest
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._authorize_user_without_password_serialize(
-            authorize_user_without_password_request=authorize_user_without_password_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AuthorizeUser200Response",
-            "400": "ErrorBADREQUEST",
-            "401": "ErrorUNAUTHORIZED",
-            "403": "ErrorFORBIDDEN",
-            "500": "ErrorINTERNALSERVERERROR",
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-    @validate_call
-    async def _authorize_user_without_password_async_with_http_info(
-        self,
-        authorize_user_without_password_request: AuthorizeUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[AuthorizeUser200Response]:
-        """Authorize a user without password
-
-        Authorize a user with email and oob code from the checkout page, uses a captcha to prevent bots.
-
-        :param authorize_user_without_password_request: (required)
-        :type authorize_user_without_password_request: AuthorizeUserWithoutPasswordRequest
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._authorize_user_without_password_serialize(
-            authorize_user_without_password_request=authorize_user_without_password_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AuthorizeUser200Response",
-            "400": "ErrorBADREQUEST",
-            "401": "ErrorUNAUTHORIZED",
-            "403": "ErrorFORBIDDEN",
-            "500": "ErrorINTERNALSERVERERROR",
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data, response_types_map=_response_types_map
-        )
-
-    @validate_call
-    async def _authorize_user_without_password_async_without_preload_content(
-        self,
-        authorize_user_without_password_request: AuthorizeUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Authorize a user without password
-
-        Authorize a user with email and oob code from the checkout page, uses a captcha to prevent bots.
-
-        :param authorize_user_without_password_request: (required)
-        :type authorize_user_without_password_request: AuthorizeUserWithoutPasswordRequest
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._authorize_user_without_password_serialize(
-            authorize_user_without_password_request=authorize_user_without_password_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "AuthorizeUser200Response",
-            "400": "ErrorBADREQUEST",
-            "401": "ErrorUNAUTHORIZED",
-            "403": "ErrorFORBIDDEN",
-            "500": "ErrorINTERNALSERVERERROR",
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        return response_data
-
-    # Private sync implementation methods
-    @validate_call
-    def _authorize_user_without_password_sync(
-        self,
-        authorize_user_without_password_request: AuthorizeUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> AuthorizeUser200Response:
-        """Synchronous version of authorize_user_without_password"""
-        return async_to_sync(self._authorize_user_without_password_async)(
-            authorize_user_without_password_request=authorize_user_without_password_request,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _authorize_user_without_password_sync_with_http_info(
-        self,
-        authorize_user_without_password_request: AuthorizeUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[AuthorizeUser200Response]:
-        """Synchronous version of authorize_user_without_password_with_http_info"""
-        return async_to_sync(
-            self._authorize_user_without_password_async_with_http_info
-        )(
-            authorize_user_without_password_request=authorize_user_without_password_request,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _authorize_user_without_password_sync_without_preload_content(
-        self,
-        authorize_user_without_password_request: AuthorizeUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Synchronous version of authorize_user_without_password_without_preload_content"""
-        return async_to_sync(
-            self._authorize_user_without_password_async_without_preload_content
-        )(
-            authorize_user_without_password_request=authorize_user_without_password_request,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    def _authorize_user_without_password_serialize(
-        self,
-        authorize_user_without_password_request,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {}
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-        if authorize_user_without_password_request is not None:
-            _body_params = authorize_user_without_password_request
-
-        # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(
-                ["application/json"]
-            )
-
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params["Content-Type"] = _content_type
-        else:
-            _default_content_type = self.api_client.select_header_content_type(
-                ["application/json"]
-            )
-            if _default_content_type is not None:
-                _header_params["Content-Type"] = _default_content_type
-
-        # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
-
-        return self.api_client.param_serialize(
-            method="POST",
-            resource_path="/authorize-without-password",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -3205,7 +2744,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
-        oob: Optional[StrictStr] = None,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3226,7 +2765,7 @@ class AuthApi:
                 authuser=authuser,
                 prompt=prompt,
                 origin=origin,
-                oob=oob,
+                state=state,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3241,7 +2780,7 @@ class AuthApi:
                 authuser=authuser,
                 prompt=prompt,
                 origin=origin,
-                oob=oob,
+                state=state,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3257,7 +2796,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
-        oob: Optional[StrictStr] = None,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3278,7 +2817,7 @@ class AuthApi:
                 authuser=authuser,
                 prompt=prompt,
                 origin=origin,
-                oob=oob,
+                state=state,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3293,7 +2832,7 @@ class AuthApi:
                 authuser=authuser,
                 prompt=prompt,
                 origin=origin,
-                oob=oob,
+                state=state,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3309,7 +2848,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
-        oob: Optional[StrictStr] = None,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3330,7 +2869,7 @@ class AuthApi:
                 authuser=authuser,
                 prompt=prompt,
                 origin=origin,
-                oob=oob,
+                state=state,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3345,7 +2884,7 @@ class AuthApi:
                 authuser=authuser,
                 prompt=prompt,
                 origin=origin,
-                oob=oob,
+                state=state,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3362,7 +2901,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
-        oob: Optional[StrictStr] = None,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3389,8 +2928,8 @@ class AuthApi:
         :type prompt: str
         :param origin: (required)
         :type origin: str
-        :param oob:
-        :type oob: str
+        :param state:
+        :type state: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3419,7 +2958,7 @@ class AuthApi:
             authuser=authuser,
             prompt=prompt,
             origin=origin,
-            oob=oob,
+            state=state,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3451,7 +2990,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
-        oob: Optional[StrictStr] = None,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3478,8 +3017,8 @@ class AuthApi:
         :type prompt: str
         :param origin: (required)
         :type origin: str
-        :param oob:
-        :type oob: str
+        :param state:
+        :type state: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3508,7 +3047,7 @@ class AuthApi:
             authuser=authuser,
             prompt=prompt,
             origin=origin,
-            oob=oob,
+            state=state,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3539,7 +3078,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
-        oob: Optional[StrictStr] = None,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3566,8 +3105,8 @@ class AuthApi:
         :type prompt: str
         :param origin: (required)
         :type origin: str
-        :param oob:
-        :type oob: str
+        :param state:
+        :type state: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3596,7 +3135,7 @@ class AuthApi:
             authuser=authuser,
             prompt=prompt,
             origin=origin,
-            oob=oob,
+            state=state,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3625,7 +3164,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
-        oob: Optional[StrictStr] = None,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3645,7 +3184,7 @@ class AuthApi:
             authuser=authuser,
             prompt=prompt,
             origin=origin,
-            oob=oob,
+            state=state,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3661,7 +3200,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
-        oob: Optional[StrictStr] = None,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3681,7 +3220,7 @@ class AuthApi:
             authuser=authuser,
             prompt=prompt,
             origin=origin,
-            oob=oob,
+            state=state,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3697,7 +3236,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
-        oob: Optional[StrictStr] = None,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3717,7 +3256,7 @@ class AuthApi:
             authuser=authuser,
             prompt=prompt,
             origin=origin,
-            oob=oob,
+            state=state,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3732,7 +3271,7 @@ class AuthApi:
         authuser,
         prompt,
         origin,
-        oob,
+        state,
         _request_auth,
         _content_type,
         _headers,
@@ -3774,9 +3313,9 @@ class AuthApi:
 
             _query_params.append(("origin", origin))
 
-        if oob is not None:
+        if state is not None:
 
-            _query_params.append(("oob", oob))
+            _query_params.append(("state", state))
 
         # process the header parameters
         # process the form parameters
@@ -5464,7 +5003,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> VerifyEmail200ResponseAuthAuth:
+    ) -> CreateUser200ResponseAuthAuth:
         """Verify Bearer Token"""
         if self.is_sync:
             return self._verify_sync(
@@ -5498,7 +5037,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[VerifyEmail200ResponseAuthAuth]:
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
         """Verify Bearer Token with HTTP info"""
         if self.is_sync:
             return self._verify_sync_with_http_info(
@@ -5567,7 +5106,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> VerifyEmail200ResponseAuthAuth:
+    ) -> CreateUser200ResponseAuthAuth:
         """Verify Bearer Token
 
         Verifies the bearer token is valid.
@@ -5602,7 +5141,7 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "VerifyEmail200ResponseAuthAuth",
+            "200": "CreateUser200ResponseAuthAuth",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
@@ -5630,7 +5169,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[VerifyEmail200ResponseAuthAuth]:
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
         """Verify Bearer Token
 
         Verifies the bearer token is valid.
@@ -5665,7 +5204,7 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "VerifyEmail200ResponseAuthAuth",
+            "200": "CreateUser200ResponseAuthAuth",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
@@ -5727,7 +5266,7 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "VerifyEmail200ResponseAuthAuth",
+            "200": "CreateUser200ResponseAuthAuth",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
@@ -5752,7 +5291,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> VerifyEmail200ResponseAuthAuth:
+    ) -> CreateUser200ResponseAuthAuth:
         """Synchronous version of verify"""
         return async_to_sync(self._verify_async)(
             _request_timeout=_request_timeout,
@@ -5776,7 +5315,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[VerifyEmail200ResponseAuthAuth]:
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
         """Synchronous version of verify_with_http_info"""
         return async_to_sync(self._verify_async_with_http_info)(
             _request_timeout=_request_timeout,
@@ -5876,7 +5415,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> VerifyEmail200ResponseAuthAuth:
+    ) -> CreateUser200ResponseAuthAuth:
         """Verify API Key"""
         if self.is_sync:
             return self._verify_api_key_sync(
@@ -5913,7 +5452,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[VerifyEmail200ResponseAuthAuth]:
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
         """Verify API Key with HTTP info"""
         if self.is_sync:
             return self._verify_api_key_sync_with_http_info(
@@ -5988,7 +5527,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> VerifyEmail200ResponseAuthAuth:
+    ) -> CreateUser200ResponseAuthAuth:
         """Verify API Key
 
         Verifies the API key is valid.
@@ -6026,7 +5565,7 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "VerifyEmail200ResponseAuthAuth",
+            "200": "CreateUser200ResponseAuthAuth",
             "400": "ErrorBADREQUEST",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
@@ -6057,7 +5596,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[VerifyEmail200ResponseAuthAuth]:
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
         """Verify API Key
 
         Verifies the API key is valid.
@@ -6095,7 +5634,7 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "VerifyEmail200ResponseAuthAuth",
+            "200": "CreateUser200ResponseAuthAuth",
             "400": "ErrorBADREQUEST",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
@@ -6163,7 +5702,7 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "VerifyEmail200ResponseAuthAuth",
+            "200": "CreateUser200ResponseAuthAuth",
             "400": "ErrorBADREQUEST",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
@@ -6191,7 +5730,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> VerifyEmail200ResponseAuthAuth:
+    ) -> CreateUser200ResponseAuthAuth:
         """Synchronous version of verify_api_key"""
         return async_to_sync(self._verify_api_key_async)(
             api_key=api_key,
@@ -6217,7 +5756,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[VerifyEmail200ResponseAuthAuth]:
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
         """Synchronous version of verify_api_key_with_http_info"""
         return async_to_sync(self._verify_api_key_async_with_http_info)(
             api_key=api_key,
@@ -6326,7 +5865,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> VerifyEmail200ResponseAuthAuth:
+    ) -> CreateUser200ResponseAuthAuth:
         """Verify Basic Auth"""
         if self.is_sync:
             return self._verify_basic_auth_sync(
@@ -6366,7 +5905,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[VerifyEmail200ResponseAuthAuth]:
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
         """Verify Basic Auth with HTTP info"""
         if self.is_sync:
             return self._verify_basic_auth_sync_with_http_info(
@@ -6447,7 +5986,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> VerifyEmail200ResponseAuthAuth:
+    ) -> CreateUser200ResponseAuthAuth:
         """Verify Basic Auth
 
         Verifies the basic authentication credentials.
@@ -6488,7 +6027,7 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "VerifyEmail200ResponseAuthAuth",
+            "200": "CreateUser200ResponseAuthAuth",
             "400": "ErrorBADREQUEST",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
@@ -6520,7 +6059,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[VerifyEmail200ResponseAuthAuth]:
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
         """Verify Basic Auth
 
         Verifies the basic authentication credentials.
@@ -6561,7 +6100,7 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "VerifyEmail200ResponseAuthAuth",
+            "200": "CreateUser200ResponseAuthAuth",
             "400": "ErrorBADREQUEST",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
@@ -6633,7 +6172,7 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "VerifyEmail200ResponseAuthAuth",
+            "200": "CreateUser200ResponseAuthAuth",
             "400": "ErrorBADREQUEST",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
@@ -6662,7 +6201,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> VerifyEmail200ResponseAuthAuth:
+    ) -> CreateUser200ResponseAuthAuth:
         """Synchronous version of verify_basic_auth"""
         return async_to_sync(self._verify_basic_auth_async)(
             username=username,
@@ -6690,7 +6229,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[VerifyEmail200ResponseAuthAuth]:
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
         """Synchronous version of verify_basic_auth_with_http_info"""
         return async_to_sync(self._verify_basic_auth_async_with_http_info)(
             username=username,

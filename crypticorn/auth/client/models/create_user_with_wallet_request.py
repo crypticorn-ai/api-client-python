@@ -28,11 +28,37 @@ class CreateUserWithWalletRequest(BaseModel):
     CreateUserWithWalletRequest
     """  # noqa: E501
 
-    oob_code: StrictStr = Field(alias="oobCode")
-    signature: StrictStr
-    message: StrictStr
-    username: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["oobCode", "signature", "message", "username"]
+    oob_code: StrictStr = Field(
+        description="OOB Code returned from walletNonce. This method must be called before creating a user with a wallet.",
+        alias="oobCode",
+    )
+    signature: StrictStr = Field(
+        description="Signature returned from the EVM client when signing the message returned from walletNonce. This method must be called before creating a user with a wallet."
+    )
+    message: StrictStr = Field(
+        description="Message returned from walletNonce. This method must be called before creating a user with a wallet."
+    )
+    username: Optional[StrictStr] = Field(
+        default=None, description="Username for the user"
+    )
+    name: Optional[StrictStr] = Field(
+        default=None, description="Display name for the user"
+    )
+    picture: Optional[StrictStr] = Field(
+        default=None, description="Profile picture for the user"
+    )
+    phone: Optional[StrictStr] = Field(
+        default=None, description="Phone number for the user"
+    )
+    __properties: ClassVar[List[str]] = [
+        "oobCode",
+        "signature",
+        "message",
+        "username",
+        "name",
+        "picture",
+        "phone",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -88,6 +114,9 @@ class CreateUserWithWalletRequest(BaseModel):
                 "signature": obj.get("signature"),
                 "message": obj.get("message"),
                 "username": obj.get("username"),
+                "name": obj.get("name"),
+                "picture": obj.get("picture"),
+                "phone": obj.get("phone"),
             }
         )
         return _obj

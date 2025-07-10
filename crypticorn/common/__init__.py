@@ -1,3 +1,8 @@
+"""
+This module is deprecated and will be removed in a future release. The functionality has been moved to the 'crypticorn_utils' package,
+however not all functionality will be kept and breaking changes will occur.
+"""
+
 from crypticorn.common.ansi_colors import *
 from crypticorn.common.auth import *
 from crypticorn.common.decorators import *

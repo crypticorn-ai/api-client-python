@@ -13,14 +13,14 @@ client/models/__init__.py
 client/models/add_wallet200_response.py
 client/models/add_wallet_request.py
 client/models/authorize_user200_response.py
-client/models/authorize_user200_response_auth.py
 client/models/authorize_user_request.py
-client/models/authorize_user_without_password_request.py
 client/models/create_api_key200_response.py
 client/models/create_api_key_request.py
+client/models/create_user200_response.py
+client/models/create_user200_response_auth.py
+client/models/create_user200_response_auth_auth.py
 client/models/create_user_request.py
 client/models/create_user_with_wallet_request.py
-client/models/create_user_without_password_request.py
 client/models/error_badrequest.py
 client/models/error_forbidden.py
 client/models/error_internalservererror.py
@@ -48,7 +48,6 @@ client/models/user_reset_password_request.py
 client/models/user_set_password_request.py
 client/models/verify_email200_response.py
 client/models/verify_email200_response_auth.py
-client/models/verify_email200_response_auth_auth.py
 client/models/verify_email_request.py
 client/models/verify_wallet_request.py
 client/models/wallet_nonce_request.py

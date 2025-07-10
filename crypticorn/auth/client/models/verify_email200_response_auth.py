@@ -19,8 +19,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.auth.client.models.verify_email200_response_auth_auth import (
-    VerifyEmail200ResponseAuthAuth,
+from crypticorn.auth.client.models.create_user200_response_auth_auth import (
+    CreateUser200ResponseAuthAuth,
 )
 from typing import Optional, Set
 from typing_extensions import Self
@@ -33,7 +33,7 @@ class VerifyEmail200ResponseAuth(BaseModel):
 
     access_token: StrictStr = Field(alias="accessToken")
     refresh_token: StrictStr = Field(alias="refreshToken")
-    auth: Optional[VerifyEmail200ResponseAuthAuth] = None
+    auth: Optional[CreateUser200ResponseAuthAuth] = None
     __properties: ClassVar[List[str]] = ["accessToken", "refreshToken", "auth"]
 
     model_config = ConfigDict(
@@ -92,7 +92,7 @@ class VerifyEmail200ResponseAuth(BaseModel):
                 "accessToken": obj.get("accessToken"),
                 "refreshToken": obj.get("refreshToken"),
                 "auth": (
-                    VerifyEmail200ResponseAuthAuth.from_dict(obj["auth"])
+                    CreateUser200ResponseAuthAuth.from_dict(obj["auth"])
                     if obj.get("auth") is not None
                     else None
                 ),

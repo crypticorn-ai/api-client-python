@@ -19,8 +19,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from crypticorn.auth.client.models.authorize_user200_response_auth import (
-    AuthorizeUser200ResponseAuth,
+from crypticorn.auth.client.models.create_user200_response_auth import (
+    CreateUser200ResponseAuth,
 )
 from crypticorn.auth.client.models.whoami200_response import Whoami200Response
 from typing import Optional, Set
@@ -33,7 +33,7 @@ class AuthorizeUser200Response(BaseModel):
     """  # noqa: E501
 
     user: Whoami200Response
-    auth: AuthorizeUser200ResponseAuth
+    auth: CreateUser200ResponseAuth
     __properties: ClassVar[List[str]] = ["user", "auth"]
 
     model_config = ConfigDict(
@@ -98,7 +98,7 @@ class AuthorizeUser200Response(BaseModel):
                     else None
                 ),
                 "auth": (
-                    AuthorizeUser200ResponseAuth.from_dict(obj["auth"])
+                    CreateUser200ResponseAuth.from_dict(obj["auth"])
                     if obj.get("auth") is not None
                     else None
                 ),

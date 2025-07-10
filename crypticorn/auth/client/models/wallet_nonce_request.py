@@ -17,7 +17,15 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictBool,
+    StrictFloat,
+    StrictInt,
+    StrictStr,
+)
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
@@ -35,14 +43,18 @@ class WalletNonceRequest(BaseModel):
         default=1, alias="chainId"
     )
     statement: Optional[StrictStr] = "Sign in with Ethereum wallet"
-    username: Optional[StrictStr] = None
+    raise_if_new: Optional[StrictBool] = Field(
+        default=True,
+        description="If true, will raise an error if the wallet is not found",
+        alias="raiseIfNew",
+    )
     __properties: ClassVar[List[str]] = [
         "host",
         "origin",
         "address",
         "chainId",
         "statement",
-        "username",
+        "raiseIfNew",
     ]
 
     model_config = ConfigDict(
@@ -104,7 +116,9 @@ class WalletNonceRequest(BaseModel):
                     if obj.get("statement") is not None
                     else "Sign in with Ethereum wallet"
                 ),
-                "username": obj.get("username"),
+                "raiseIfNew": (
+                    obj.get("raiseIfNew") if obj.get("raiseIfNew") is not None else True
+                ),
             }
         )
         return _obj
