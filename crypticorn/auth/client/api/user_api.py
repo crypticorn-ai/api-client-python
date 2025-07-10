@@ -18,10 +18,8 @@ from typing_extensions import Annotated
 
 from pydantic import StrictStr
 from typing import Any
+from crypticorn.auth.client.models.create_user200_response import CreateUser200Response
 from crypticorn.auth.client.models.create_user_request import CreateUserRequest
-from crypticorn.auth.client.models.create_user_without_password_request import (
-    CreateUserWithoutPasswordRequest,
-)
 from crypticorn.auth.client.models.resend_verification_email_request import (
     ResendVerificationEmailRequest,
 )
@@ -92,7 +90,7 @@ class UserApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> CreateUser200Response:
         """Create User"""
         if self.is_sync:
             return self._create_user_sync(
@@ -129,7 +127,7 @@ class UserApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> ApiResponse[CreateUser200Response]:
         """Create User with HTTP info"""
         if self.is_sync:
             return self._create_user_sync_with_http_info(
@@ -204,10 +202,10 @@ class UserApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> CreateUser200Response:
         """Create User
 
-        Creates a new user.
+        Creates a new user. Can be created without a password, but requires an oob code to set one after. The oob code should be
 
         :param create_user_request: (required)
         :type create_user_request: CreateUserRequest
@@ -242,7 +240,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "200": "CreateUser200Response",
             "400": "ErrorBADREQUEST",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
@@ -272,10 +270,10 @@ class UserApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> ApiResponse[CreateUser200Response]:
         """Create User
 
-        Creates a new user.
+        Creates a new user. Can be created without a password, but requires an oob code to set one after. The oob code should be
 
         :param create_user_request: (required)
         :type create_user_request: CreateUserRequest
@@ -310,7 +308,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "200": "CreateUser200Response",
             "400": "ErrorBADREQUEST",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
@@ -342,7 +340,7 @@ class UserApi:
     ) -> RESTResponseType:
         """Create User
 
-        Creates a new user.
+        Creates a new user. Can be created without a password, but requires an oob code to set one after. The oob code should be
 
         :param create_user_request: (required)
         :type create_user_request: CreateUserRequest
@@ -377,7 +375,7 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "200": "CreateUser200Response",
             "400": "ErrorBADREQUEST",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
@@ -404,7 +402,7 @@ class UserApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> CreateUser200Response:
         """Synchronous version of create_user"""
         return async_to_sync(self._create_user_async)(
             create_user_request=create_user_request,
@@ -430,7 +428,7 @@ class UserApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> ApiResponse[CreateUser200Response]:
         """Synchronous version of create_user_with_http_info"""
         return async_to_sync(self._create_user_async_with_http_info)(
             create_user_request=create_user_request,
@@ -519,462 +517,6 @@ class UserApi:
         return self.api_client.param_serialize(
             method="POST",
             resource_path="/create-user",
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth,
-        )
-
-    @validate_call
-    def create_user_without_password(
-        self,
-        create_user_without_password_request: CreateUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> str:
-        """Create User Without Password"""
-        if self.is_sync:
-            return self._create_user_without_password_sync(
-                create_user_without_password_request=create_user_without_password_request,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._create_user_without_password_async(
-                create_user_without_password_request=create_user_without_password_request,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def create_user_without_password_with_http_info(
-        self,
-        create_user_without_password_request: CreateUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[str]:
-        """Create User Without Password with HTTP info"""
-        if self.is_sync:
-            return self._create_user_without_password_sync_with_http_info(
-                create_user_without_password_request=create_user_without_password_request,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._create_user_without_password_async_with_http_info(
-                create_user_without_password_request=create_user_without_password_request,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def create_user_without_password_without_preload_content(
-        self,
-        create_user_without_password_request: CreateUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Create User Without Password without preloading content"""
-        if self.is_sync:
-            return self._create_user_without_password_sync_without_preload_content(
-                create_user_without_password_request=create_user_without_password_request,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._create_user_without_password_async_without_preload_content(
-                create_user_without_password_request=create_user_without_password_request,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    # Private async implementation methods
-    @validate_call
-    async def _create_user_without_password_async(
-        self,
-        create_user_without_password_request: CreateUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> str:
-        """Create User Without Password
-
-        Creates a new user without a password. Returns the oob code to signup with.
-
-        :param create_user_without_password_request: (required)
-        :type create_user_without_password_request: CreateUserWithoutPasswordRequest
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._create_user_without_password_serialize(
-            create_user_without_password_request=create_user_without_password_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "str",
-            "400": "ErrorBADREQUEST",
-            "401": "ErrorUNAUTHORIZED",
-            "403": "ErrorFORBIDDEN",
-            "500": "ErrorINTERNALSERVERERROR",
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-    @validate_call
-    async def _create_user_without_password_async_with_http_info(
-        self,
-        create_user_without_password_request: CreateUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[str]:
-        """Create User Without Password
-
-        Creates a new user without a password. Returns the oob code to signup with.
-
-        :param create_user_without_password_request: (required)
-        :type create_user_without_password_request: CreateUserWithoutPasswordRequest
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._create_user_without_password_serialize(
-            create_user_without_password_request=create_user_without_password_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "str",
-            "400": "ErrorBADREQUEST",
-            "401": "ErrorUNAUTHORIZED",
-            "403": "ErrorFORBIDDEN",
-            "500": "ErrorINTERNALSERVERERROR",
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data, response_types_map=_response_types_map
-        )
-
-    @validate_call
-    async def _create_user_without_password_async_without_preload_content(
-        self,
-        create_user_without_password_request: CreateUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Create User Without Password
-
-        Creates a new user without a password. Returns the oob code to signup with.
-
-        :param create_user_without_password_request: (required)
-        :type create_user_without_password_request: CreateUserWithoutPasswordRequest
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._create_user_without_password_serialize(
-            create_user_without_password_request=create_user_without_password_request,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "str",
-            "400": "ErrorBADREQUEST",
-            "401": "ErrorUNAUTHORIZED",
-            "403": "ErrorFORBIDDEN",
-            "500": "ErrorINTERNALSERVERERROR",
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        return response_data
-
-    # Private sync implementation methods
-    @validate_call
-    def _create_user_without_password_sync(
-        self,
-        create_user_without_password_request: CreateUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> str:
-        """Synchronous version of create_user_without_password"""
-        return async_to_sync(self._create_user_without_password_async)(
-            create_user_without_password_request=create_user_without_password_request,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _create_user_without_password_sync_with_http_info(
-        self,
-        create_user_without_password_request: CreateUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[str]:
-        """Synchronous version of create_user_without_password_with_http_info"""
-        return async_to_sync(self._create_user_without_password_async_with_http_info)(
-            create_user_without_password_request=create_user_without_password_request,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _create_user_without_password_sync_without_preload_content(
-        self,
-        create_user_without_password_request: CreateUserWithoutPasswordRequest,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Synchronous version of create_user_without_password_without_preload_content"""
-        return async_to_sync(
-            self._create_user_without_password_async_without_preload_content
-        )(
-            create_user_without_password_request=create_user_without_password_request,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    def _create_user_without_password_serialize(
-        self,
-        create_user_without_password_request,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {}
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-        if create_user_without_password_request is not None:
-            _body_params = create_user_without_password_request
-
-        # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(
-                ["application/json"]
-            )
-
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params["Content-Type"] = _content_type
-        else:
-            _default_content_type = self.api_client.select_header_content_type(
-                ["application/json"]
-            )
-            if _default_content_type is not None:
-                _header_params["Content-Type"] = _default_content_type
-
-        # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
-
-        return self.api_client.param_serialize(
-            method="POST",
-            resource_path="/create-user-without-password",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

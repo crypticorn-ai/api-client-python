@@ -17,53 +17,29 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    StrictBool,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from crypticorn.auth.client.models.create_user200_response_auth import (
+    CreateUser200ResponseAuth,
 )
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from crypticorn.auth.client.models.whoami200_response import Whoami200Response
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class VerifyEmail200ResponseAuthAuth(BaseModel):
+class CreateUser200Response(BaseModel):
     """
-    VerifyEmail200ResponseAuthAuth
+    CreateUser200Response
     """  # noqa: E501
 
-    iss: Optional[StrictStr] = Field(default=None, description="Issuer")
-    sub: Optional[StrictStr] = Field(default=None, description="Subject")
-    aud: Optional[StrictStr] = Field(default=None, description="Audience")
-    exp: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, description="Expiration time"
+    user: Whoami200Response
+    auth: CreateUser200ResponseAuth
+    oob_code: Optional[StrictStr] = Field(
+        default=None,
+        description="The oob code to use when creating a password-less user. This is only returned if the user is created without a password.",
+        alias="oobCode",
     )
-    nbf: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, description="Not valid before time"
-    )
-    iat: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, description="Issued at time"
-    )
-    jti: Optional[StrictStr] = Field(default=None, description="JWT ID")
-    admin: Optional[StrictBool] = Field(
-        default=None, description="Whether the user is an admin"
-    )
-    scopes: Optional[List[StrictStr]] = Field(default=None, description="Scopes")
-    __properties: ClassVar[List[str]] = [
-        "iss",
-        "sub",
-        "aud",
-        "exp",
-        "nbf",
-        "iat",
-        "jti",
-        "admin",
-        "scopes",
-    ]
+    __properties: ClassVar[List[str]] = ["user", "auth", "oobCode"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -82,7 +58,7 @@ class VerifyEmail200ResponseAuthAuth(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of VerifyEmail200ResponseAuthAuth from a JSON string"""
+        """Create an instance of CreateUser200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -102,11 +78,17 @@ class VerifyEmail200ResponseAuthAuth(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of user
+        if self.user:
+            _dict["user"] = self.user.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of auth
+        if self.auth:
+            _dict["auth"] = self.auth.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of VerifyEmail200ResponseAuthAuth from a dict"""
+        """Create an instance of CreateUser200Response from a dict"""
         if obj is None:
             return None
 
@@ -115,15 +97,17 @@ class VerifyEmail200ResponseAuthAuth(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "iss": obj.get("iss"),
-                "sub": obj.get("sub"),
-                "aud": obj.get("aud"),
-                "exp": obj.get("exp"),
-                "nbf": obj.get("nbf"),
-                "iat": obj.get("iat"),
-                "jti": obj.get("jti"),
-                "admin": obj.get("admin"),
-                "scopes": obj.get("scopes"),
+                "user": (
+                    Whoami200Response.from_dict(obj["user"])
+                    if obj.get("user") is not None
+                    else None
+                ),
+                "auth": (
+                    CreateUser200ResponseAuth.from_dict(obj["auth"])
+                    if obj.get("auth") is not None
+                    else None
+                ),
+                "oobCode": obj.get("oobCode"),
             }
         )
         return _obj

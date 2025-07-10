@@ -2,7 +2,7 @@
 
 from enum import Enum
 
-from crypticorn_utils.mixins import ApiErrorFallback
+from crypticorn.common.mixins import ApiErrorFallback
 from fastapi import status
 
 try:

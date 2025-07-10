@@ -17,24 +17,53 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
-from crypticorn.auth.client.models.verify_email200_response_auth_auth import (
-    VerifyEmail200ResponseAuthAuth,
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictBool,
+    StrictFloat,
+    StrictInt,
+    StrictStr,
 )
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class AuthorizeUser200ResponseAuth(BaseModel):
+class CreateUser200ResponseAuthAuth(BaseModel):
     """
-    AuthorizeUser200ResponseAuth
+    CreateUser200ResponseAuthAuth
     """  # noqa: E501
 
-    access_token: StrictStr = Field(alias="accessToken")
-    refresh_token: StrictStr = Field(alias="refreshToken")
-    auth: VerifyEmail200ResponseAuthAuth
-    __properties: ClassVar[List[str]] = ["accessToken", "refreshToken", "auth"]
+    iss: Optional[StrictStr] = Field(default=None, description="Issuer")
+    sub: Optional[StrictStr] = Field(default=None, description="Subject")
+    aud: Optional[StrictStr] = Field(default=None, description="Audience")
+    exp: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, description="Expiration time"
+    )
+    nbf: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, description="Not valid before time"
+    )
+    iat: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=None, description="Issued at time"
+    )
+    jti: Optional[StrictStr] = Field(default=None, description="JWT ID")
+    admin: Optional[StrictBool] = Field(
+        default=None, description="Whether the user is an admin"
+    )
+    scopes: Optional[List[StrictStr]] = Field(default=None, description="Scopes")
+    __properties: ClassVar[List[str]] = [
+        "iss",
+        "sub",
+        "aud",
+        "exp",
+        "nbf",
+        "iat",
+        "jti",
+        "admin",
+        "scopes",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +82,7 @@ class AuthorizeUser200ResponseAuth(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of AuthorizeUser200ResponseAuth from a JSON string"""
+        """Create an instance of CreateUser200ResponseAuthAuth from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,14 +102,11 @@ class AuthorizeUser200ResponseAuth(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of auth
-        if self.auth:
-            _dict["auth"] = self.auth.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of AuthorizeUser200ResponseAuth from a dict"""
+        """Create an instance of CreateUser200ResponseAuthAuth from a dict"""
         if obj is None:
             return None
 
@@ -89,13 +115,15 @@ class AuthorizeUser200ResponseAuth(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "accessToken": obj.get("accessToken"),
-                "refreshToken": obj.get("refreshToken"),
-                "auth": (
-                    VerifyEmail200ResponseAuthAuth.from_dict(obj["auth"])
-                    if obj.get("auth") is not None
-                    else None
-                ),
+                "iss": obj.get("iss"),
+                "sub": obj.get("sub"),
+                "aud": obj.get("aud"),
+                "exp": obj.get("exp"),
+                "nbf": obj.get("nbf"),
+                "iat": obj.get("iat"),
+                "jti": obj.get("jti"),
+                "admin": obj.get("admin"),
+                "scopes": obj.get("scopes"),
             }
         )
         return _obj
