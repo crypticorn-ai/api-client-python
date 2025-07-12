@@ -6,6 +6,79 @@ from typing import Optional, Union, List
 from urllib.parse import urljoin
 from datetime import datetime, timedelta
 import os
+import psycopg2  # PostgreSQL driver
+import io  # For efficient COPY
+
+_DB_PARAMS: dict[str, str | None] = {
+    "dbname": os.getenv("KLINES_DB_NAME", "postgres"),
+    "user": os.getenv("KLINES_DB_USER", "postgres"),
+    "password": os.getenv("KLINES_DB_PASSWORD", "F4l77p9bVA7kaalF"),
+    "host": os.getenv("KLINES_DB_HOST", "hz.crypticorn.dev"),
+    "port": os.getenv("KLINES_DB_PORT", "5480"),
+}
+
+
+def fetch_data_from_postgres(query: str) -> DataFrame:  # type: ignore[name-defined]
+    """Run *query* and return a DataFrame with the results."""
+
+    conn = None
+    try:
+        conn = psycopg2.connect(**_DB_PARAMS)  # type: ignore[arg-type]
+        with conn.cursor() as cur:
+            cur.execute(query)
+            rows = cur.fetchall()
+            columns = [desc[0] for desc in cur.description]
+        return pd.DataFrame(rows, columns=columns)
+    finally:
+        if conn is not None:
+            conn.close()
+
+
+def _fetch_data_with_copy(query: str) -> DataFrame:  # type: ignore[name-defined]
+    """Use PostgreSQL COPY to efficiently stream large query results."""
+
+    output = io.StringIO()
+    conn = None
+    try:
+        conn = psycopg2.connect(**_DB_PARAMS)  # type: ignore[arg-type]
+        with conn.cursor() as cur:
+            cur.copy_expert(f"COPY ({query}) TO STDOUT WITH CSV HEADER", output)
+        output.seek(0)
+        return pd.read_csv(output)
+    finally:
+        if conn is not None:
+            conn.close()
+
+
+def fetch_ohlcv_data(pair: str, timeframe: str, market_type: str, *, limit: int) -> DataFrame:  # type: ignore[name-defined]
+    """Return OHLCV rows for *pair* from the time-series tables."""
+
+    table = f"ohlcv_{market_type}_{timeframe}"
+    query = (
+        f"SELECT timestamp, pair, open, high, low, close, volume "
+        f"FROM {table} "
+        f"WHERE pair = '{pair}' "
+        f"ORDER BY timestamp DESC "
+        f"LIMIT {limit}"
+    )
+    df = _fetch_data_with_copy(query)
+    df["timestamp"] = pd.to_datetime(df["timestamp"]).astype("int64") // 10 ** 9
+    return df
+
+
+def fetch_funding_rate_data(pair: str, *, limit: int) -> DataFrame:  # type: ignore[name-defined]
+    """Return funding-rate rows for *pair* from the database."""
+
+    query = (
+        "SELECT EXTRACT(EPOCH FROM funding_time)::BIGINT AS timestamp, "
+        "       symbol AS pair, funding_rate "
+        "FROM funding_rate "
+        f"WHERE symbol = '{pair}' "
+        "ORDER BY funding_time DESC "
+        f"LIMIT {limit}"
+    )
+    return _fetch_data_with_copy(query)
+
 
 class PredictionData(BaseModel):
     id: Optional[int] = None
@@ -281,22 +354,25 @@ class ApiClient:
 
     # -------------------- START OF KLINE SERVICE ------------------------ #
     def get_symbols(self, market: str) -> DataFrame:
-        """Return the list of whitelisted symbols for *market* ('futures' or 'spot')."""
+        """Return the list of distinct symbols available for *market* using Postgres.
 
-        response = self.client.get(
-            urljoin("http://116.202.55.68:3030", "/v1/klines/symbols"), params={"market": market}, headers=self._hdr_metrics, timeout=None
+        The function queries the ohlcv table for the given *market* (``spot`` or
+        ``futures``) and the default 15-minute timeframe. It returns a single-
+        column DataFrame named ``symbol`` sorted alphabetically.
+        """
+
+        if market not in {"spot", "futures"}:
+            raise ValueError("market must be either 'spot' or 'futures'")
+
+        query = (
+            f"SELECT DISTINCT pair AS symbol "
+            f"FROM ohlcv_{market}_15m "
+            f"ORDER BY symbol"
         )
-
-        if response.status_code != 200:
-            raise Exception(f"Failed to get symbols: {response.json()}")
-
-        data = response.json()
-        # New API returns a plain list of strings; older variant wrapped it in {{success,data}}
-        if isinstance(data, list):
-            return DataFrame(data, columns=["symbol"])
-        if isinstance(data, dict) and data.get("success"):
-            return DataFrame(data["data"], columns=["symbol"])
-        raise Exception("Unexpected response format for get_symbols")
+        df = fetch_data_from_postgres(query)
+        if df is None:
+            raise Exception("Failed to fetch symbols from database")
+        return df
 
     def get_klines(
         self,
@@ -304,80 +380,60 @@ class ApiClient:
         symbol: str,
         interval: str,
         limit: int,
-        start_timestamp: int = None,
-        end_timestamp: int = None,
+        start_timestamp: int | None = None,
+        end_timestamp: int | None = None,
         sort: str = "desc",
     ) -> DataFrame:
-        """Fetch OHLCV rows for *symbol* via the new /ohlcv endpoint."""
+        """Fetch OHLCV rows for *symbol* directly from Postgres.
 
-        params = {
-            "symbol": symbol,
-            "timeframe": interval,
-            "market": market,
-            "limit": limit,
-        }
+        Args:
+            market: ``spot`` or ``futures``.
+            symbol: Trading pair (e.g. ``BTCUSDT``).
+            interval: Timeframe such as ``15m``, ``1h``.
+            limit: Maximum number of rows to return.
+            start_timestamp: Optional UNIX-seconds lower bound (inclusive).
+            end_timestamp: Optional UNIX-seconds upper bound (inclusive).
+            sort: ``asc`` or ``desc`` by timestamp. Default **desc**.
+        """
+
+        if market not in {"spot", "futures"}:
+            raise ValueError("market must be either 'spot' or 'futures'")
+        if sort not in {"asc", "desc"}:
+            raise ValueError("sort must be 'asc' or 'desc'")
+
+        df = fetch_ohlcv_data(symbol, interval, market, limit=limit)
+        if df is None:
+            raise Exception("Failed to fetch OHLCV data from database")
+
         if start_timestamp is not None:
-            params["start"] = start_timestamp
+            df = df[df["timestamp"] >= start_timestamp]
         if end_timestamp is not None:
-            params["end"] = end_timestamp
-        if sort in {"asc", "desc"}:
-            params["sort_direction"] = sort
+            df = df[df["timestamp"] <= end_timestamp]
 
-        response = self.client.get(
-            urljoin("http://116.202.55.68:3030", "/v1/klines/ohlcv"), params=params, headers=self._hdr_metrics, timeout=None
-        )
-
-        if response.status_code != 200:
-            raise Exception(f"Failed to get klines: {response.json()}")
-
-        data = response.json()
-        # If wrapped in {{success,data}} keep compatible
-        if isinstance(data, dict) and data.get("success"):
-            data = data["data"]
-
-        df = DataFrame(data)
-        if "timestamp" in df.columns:
-            df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s")
-            df["timestamp"] = df["timestamp"].astype("int64") // 10 ** 9
+        df.sort_values("timestamp", ascending=(sort == "asc"), inplace=True)
+        df.reset_index(drop=True, inplace=True)
         return df
     
     def get_funding_rate(
         self,
         symbol: str,
-        start_timestamp: int = None,
-        end_timestamp: int = None,
+        start_timestamp: int | None = None,
+        end_timestamp: int | None = None,
         limit: int = 2000,
     ) -> DataFrame:
-        """Retrieve funding-rate rows via the /funding endpoint."""
+        """Retrieve funding-rate rows for *symbol* directly from Postgres."""
 
-        params = {"symbol": symbol, "limit": limit}
+        df = fetch_funding_rate_data(symbol, limit=limit)
+        if df is None:
+            raise Exception("Failed to fetch funding rate data from database")
+
         if start_timestamp is not None:
-            params["start"] = start_timestamp
+            df = df[df["timestamp"] >= start_timestamp]
         if end_timestamp is not None:
-            params["end"] = end_timestamp
+            df = df[df["timestamp"] <= end_timestamp]
 
-        response = self.client.get(
-            urljoin("http://116.202.55.68:3030", "/v1/klines/funding"), params=params, headers=self._hdr_metrics, timeout=None
-        )
-
-        if response.status_code != 200:
-            raise Exception(f"Failed to get funding rates: {response.json()}")
-
-        data = response.json()
-        if isinstance(data, dict) and data.get("funding_rates"):
-            # Flatten crypticorn's wrapped structure
-            rates = data["funding_rates"]
-            df = DataFrame(rates)
-            df.insert(0, "symbol", data.get("symbol", symbol))
-            df.insert(1, "funding_interval", data.get("funding_interval"))
-        elif isinstance(data, list):
-            df = DataFrame(data)
-        else:
-            raise Exception("Unexpected response format for funding rates")
-
-        if not df.empty and "timestamp" in df.columns:
-            df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s")
-            df["timestamp"] = df["timestamp"].astype("int64") // 10 ** 9
+        df.sort_values("timestamp", ascending=False, inplace=True)
+        df.reset_index(drop=True, inplace=True)
         return df
     
     # -------------------- END OF KLINE SERVICE ------------------------ #
@@ -457,7 +513,13 @@ class ApiClient:
         else:
             raise Exception(f"Failed to get symbol info: {response.json()}")
     
-    def get_cnn_sentiment(self, indicator_name: str, start_date: str = None, end_date: str = None, limit: int = None) -> DataFrame:
+    def get_cnn_sentiment(
+        self,
+        indicator_name: str,
+        start_date: str | None = None,
+        end_date: str | None = None,
+        limit: int | None = None,
+    ) -> DataFrame:
         """
         Retrieves Fear and Greed Index data for a specific indicator name.
 
@@ -492,7 +554,13 @@ class ApiClient:
         else:
             raise Exception(f"Failed to get cnn keywords: {response.json()}")
     
-    def get_economic_calendar_events(self, start_timestamp: int = None, end_timestamp: int = None, currency: str = 'USD', country_code: str = 'US') -> DataFrame:
+    def get_economic_calendar_events(
+        self,
+        start_timestamp: int | None = None,
+        end_timestamp: int | None = None,
+        currency: str = 'USD',
+        country_code: str = 'US',
+    ) -> DataFrame:
         """
         Fetch economic-calendar events and return as pandas DataFrame.
 
@@ -596,7 +664,14 @@ class ApiClient:
     
     # -------------------- START OF MARKETCAP METRICS SERVICE ------------------------ #
     # Get historical marketcap rankings for coins
-    def get_historical_marketcap_rankings(self, start_timestamp: int = None, end_timestamp: int = None, interval: str = "1d", market: str = None, exchange_name: str = None) -> DataFrame:
+    def get_historical_marketcap_rankings(
+        self,
+        start_timestamp: int | None = None,
+        end_timestamp: int | None = None,
+        interval: str = "1d",
+        market: str | None = None,
+        exchange_name: str | None = None,
+    ) -> DataFrame:
         """
         Get historical marketcap rankings and exchange availability for cryptocurrencies.
         
@@ -650,7 +725,11 @@ class ApiClient:
 
         raise Exception("Unexpected response format for marketcap rankings")
     
-    def get_historical_marketcap_values_for_rankings(self, start_timestamp: int = None, end_timestamp: int = None) -> DataFrame:
+    def get_historical_marketcap_values_for_rankings(
+        self,
+        start_timestamp: int | None = None,
+        end_timestamp: int | None = None,
+    ) -> DataFrame:
         """
         Get historical marketcap values for rankings.
 
