@@ -61,11 +61,6 @@ class Scope(StrEnum):
     # Klines scopes
     READ_KLINES = "read:klines"
 
-    # Notifications scopes
-    READ_NOTIFICATIONS = "read:notifications"
-    WRITE_NOTIFICATIONS = "write:notifications"
-    SEND_NOTIFICATIONS = "send:notifications"
-
     @classmethod
     def admin_scopes(cls) -> list["Scope"]:
         """Scopes that are only available to admins."""
