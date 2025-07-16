@@ -1,7 +1,11 @@
 import json
 from typing import Union
 
-from crypticorn.auth import AuthClient, Configuration, CreateUser200ResponseAuthAuth as Verify200Response
+from crypticorn.auth import (
+    AuthClient,
+    Configuration,
+    CreateUser200ResponseAuthAuth as Verify200Response,
+)
 from crypticorn.auth.client.exceptions import ApiException
 from crypticorn.common.exceptions import (
     ApiError,
