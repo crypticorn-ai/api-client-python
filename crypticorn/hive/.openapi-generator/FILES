@@ -1,6 +1,5 @@
 client/__init__.py
 client/api/__init__.py
-client/api/admin_api.py
 client/api/data_api.py
 client/api/models_api.py
 client/api/status_api.py
@@ -24,7 +23,6 @@ client/models/evaluation.py
 client/models/evaluation_response.py
 client/models/exception_detail.py
 client/models/feature_size.py
-client/models/log_level.py
 client/models/model_create.py
 client/models/model_read.py
 client/models/model_status.py

@@ -232,7 +232,7 @@ class Configuration:
         debug: Optional[bool] = None,
     ) -> None:
         """Constructor"""
-        self._base_path = "http://localhost/v1/hive" if host is None else host
+        self._base_path = "https://api.crypticorn.dev/v1/hive" if host is None else host
         """Default Base url
         """
         self.server_index = 0 if server_index is None and host is None else server_index
@@ -581,7 +581,7 @@ class Configuration:
         """
         return [
             {
-                "url": "http://localhost/v1/hive",
+                "url": "https://api.crypticorn.dev/v1/hive",
                 "description": "No description provided",
             }
         ]
