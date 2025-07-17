@@ -8,3 +8,4 @@ from crypticorn.pay.client.api.payments_api import PaymentsApi
 from crypticorn.pay.client.api.products_api import ProductsApi
 from crypticorn.pay.client.api.status_api import StatusApi
 from crypticorn.pay.client.api.stripe_api import StripeApi
+from crypticorn.pay.client.api.token_api import TokenApi
