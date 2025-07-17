@@ -25,6 +25,7 @@ __all__ = [
     "ProductsApi",
     "StatusApi",
     "StripeApi",
+    "TokenApi",
     "ApiResponse",
     "ApiClient",
     "Configuration",
@@ -63,6 +64,7 @@ from crypticorn.pay.client.api.payments_api import PaymentsApi as PaymentsApi
 from crypticorn.pay.client.api.products_api import ProductsApi as ProductsApi
 from crypticorn.pay.client.api.status_api import StatusApi as StatusApi
 from crypticorn.pay.client.api.stripe_api import StripeApi as StripeApi
+from crypticorn.pay.client.api.token_api import TokenApi as TokenApi
 
 # import ApiClient
 from crypticorn.pay.client.api_response import ApiResponse as ApiResponse

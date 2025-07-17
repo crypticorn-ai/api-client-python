@@ -8,6 +8,9 @@ from crypticorn.pay import (
     PaymentsApi,
     ProductsApi,
     CouponsApi,
+    TokenApi,
+    StripeApi,
+    InvoicesApi
 )
 
 if TYPE_CHECKING:
@@ -38,3 +41,6 @@ class PayClient:
         self.payments = PaymentsApi(self.base_client, is_sync=is_sync)
         self.products = ProductsApi(self.base_client, is_sync=is_sync)
         self.coupons = CouponsApi(self.base_client, is_sync=is_sync)
+        self.token = TokenApi(self.base_client, is_sync=is_sync)
+        self.invoices = InvoicesApi(self.base_client, is_sync=is_sync)
+        self.stripe = StripeApi(self.base_client, is_sync=is_sync)
