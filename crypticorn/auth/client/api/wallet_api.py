@@ -16,9 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, Optional, Union
-from typing_extensions import Annotated
+from pydantic import StrictStr
+from typing import Any, Optional
 from crypticorn.auth.client.models.add_wallet200_response import AddWallet200Response
 from crypticorn.auth.client.models.add_wallet_request import AddWalletRequest
 from crypticorn.auth.client.models.authorize_user200_response import (
@@ -29,9 +28,6 @@ from crypticorn.auth.client.models.create_user_with_wallet_request import (
 )
 from crypticorn.auth.client.models.list_wallets200_response import (
     ListWallets200Response,
-)
-from crypticorn.auth.client.models.list_wallets200_response_user_value import (
-    ListWallets200ResponseUserValue,
 )
 from crypticorn.auth.client.models.unlink_wallet_request import UnlinkWalletRequest
 from crypticorn.auth.client.models.verify_wallet_request import VerifyWalletRequest
@@ -543,7 +539,7 @@ class WalletApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -1027,7 +1023,7 @@ class WalletApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -1513,7 +1509,7 @@ class WalletApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -1531,426 +1527,9 @@ class WalletApi:
         )
 
     @validate_call
-    def get_balances(
-        self,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ListWallets200ResponseUserValue:
-        """Get the balances of the user"""
-        if self.is_sync:
-            return self._get_balances_sync(
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_balances_async(
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def get_balances_with_http_info(
-        self,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ListWallets200ResponseUserValue]:
-        """Get the balances of the user with HTTP info"""
-        if self.is_sync:
-            return self._get_balances_sync_with_http_info(
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_balances_async_with_http_info(
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def get_balances_without_preload_content(
-        self,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Get the balances of the user without preloading content"""
-        if self.is_sync:
-            return self._get_balances_sync_without_preload_content(
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_balances_async_without_preload_content(
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    # Private async implementation methods
-    @validate_call
-    async def _get_balances_async(
-        self,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ListWallets200ResponseUserValue:
-        """Get the balances of the user
-
-        Get the balances of the user
-
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_balances_serialize(
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "ListWallets200ResponseUserValue",
-            "401": "ErrorUNAUTHORIZED",
-            "403": "ErrorFORBIDDEN",
-            "500": "ErrorINTERNALSERVERERROR",
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-    @validate_call
-    async def _get_balances_async_with_http_info(
-        self,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ListWallets200ResponseUserValue]:
-        """Get the balances of the user
-
-        Get the balances of the user
-
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_balances_serialize(
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "ListWallets200ResponseUserValue",
-            "401": "ErrorUNAUTHORIZED",
-            "403": "ErrorFORBIDDEN",
-            "500": "ErrorINTERNALSERVERERROR",
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data, response_types_map=_response_types_map
-        )
-
-    @validate_call
-    async def _get_balances_async_without_preload_content(
-        self,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Get the balances of the user
-
-        Get the balances of the user
-
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_balances_serialize(
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "ListWallets200ResponseUserValue",
-            "401": "ErrorUNAUTHORIZED",
-            "403": "ErrorFORBIDDEN",
-            "500": "ErrorINTERNALSERVERERROR",
-        }
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        return response_data
-
-    # Private sync implementation methods
-    @validate_call
-    def _get_balances_sync(
-        self,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ListWallets200ResponseUserValue:
-        """Synchronous version of get_balances"""
-        return async_to_sync(self._get_balances_async)(
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _get_balances_sync_with_http_info(
-        self,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ListWallets200ResponseUserValue]:
-        """Synchronous version of get_balances_with_http_info"""
-        return async_to_sync(self._get_balances_async_with_http_info)(
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _get_balances_sync_without_preload_content(
-        self,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Synchronous version of get_balances_without_preload_content"""
-        return async_to_sync(self._get_balances_async_without_preload_content)(
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    def _get_balances_serialize(
-        self,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {}
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-        # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(
-                ["application/json"]
-            )
-
-        # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
-
-        return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/wallet/balances",
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth,
-        )
-
-    @validate_call
     def list_wallets(
         self,
-        limit: Optional[
-            Union[
-                Annotated[float, Field(le=100, strict=True)],
-                Annotated[int, Field(le=100, strict=True)],
-            ]
-        ] = None,
-        offset: Optional[Union[StrictFloat, StrictInt]] = None,
+        user_id: Optional[StrictStr] = None,
         x_refresh_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -1967,8 +1546,7 @@ class WalletApi:
         """List wallets"""
         if self.is_sync:
             return self._list_wallets_sync(
-                limit=limit,
-                offset=offset,
+                user_id=user_id,
                 x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -1979,8 +1557,7 @@ class WalletApi:
 
         else:
             return self._list_wallets_async(
-                limit=limit,
-                offset=offset,
+                user_id=user_id,
                 x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -1992,13 +1569,7 @@ class WalletApi:
     @validate_call
     def list_wallets_with_http_info(
         self,
-        limit: Optional[
-            Union[
-                Annotated[float, Field(le=100, strict=True)],
-                Annotated[int, Field(le=100, strict=True)],
-            ]
-        ] = None,
-        offset: Optional[Union[StrictFloat, StrictInt]] = None,
+        user_id: Optional[StrictStr] = None,
         x_refresh_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -2015,8 +1586,7 @@ class WalletApi:
         """List wallets with HTTP info"""
         if self.is_sync:
             return self._list_wallets_sync_with_http_info(
-                limit=limit,
-                offset=offset,
+                user_id=user_id,
                 x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -2027,8 +1597,7 @@ class WalletApi:
 
         else:
             return self._list_wallets_async_with_http_info(
-                limit=limit,
-                offset=offset,
+                user_id=user_id,
                 x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -2040,13 +1609,7 @@ class WalletApi:
     @validate_call
     def list_wallets_without_preload_content(
         self,
-        limit: Optional[
-            Union[
-                Annotated[float, Field(le=100, strict=True)],
-                Annotated[int, Field(le=100, strict=True)],
-            ]
-        ] = None,
-        offset: Optional[Union[StrictFloat, StrictInt]] = None,
+        user_id: Optional[StrictStr] = None,
         x_refresh_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -2063,8 +1626,7 @@ class WalletApi:
         """List wallets without preloading content"""
         if self.is_sync:
             return self._list_wallets_sync_without_preload_content(
-                limit=limit,
-                offset=offset,
+                user_id=user_id,
                 x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -2075,8 +1637,7 @@ class WalletApi:
 
         else:
             return self._list_wallets_async_without_preload_content(
-                limit=limit,
-                offset=offset,
+                user_id=user_id,
                 x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -2089,13 +1650,7 @@ class WalletApi:
     @validate_call
     async def _list_wallets_async(
         self,
-        limit: Optional[
-            Union[
-                Annotated[float, Field(le=100, strict=True)],
-                Annotated[int, Field(le=100, strict=True)],
-            ]
-        ] = None,
-        offset: Optional[Union[StrictFloat, StrictInt]] = None,
+        user_id: Optional[StrictStr] = None,
         x_refresh_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -2113,10 +1668,8 @@ class WalletApi:
 
         List the wallets of the user
 
-        :param limit:
-        :type limit: float
-        :param offset:
-        :type offset: float
+        :param user_id:
+        :type user_id: str
         :param x_refresh_token:
         :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
@@ -2142,8 +1695,7 @@ class WalletApi:
         """  # noqa: E501
 
         _param = self._list_wallets_serialize(
-            limit=limit,
-            offset=offset,
+            user_id=user_id,
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2171,13 +1723,7 @@ class WalletApi:
     @validate_call
     async def _list_wallets_async_with_http_info(
         self,
-        limit: Optional[
-            Union[
-                Annotated[float, Field(le=100, strict=True)],
-                Annotated[int, Field(le=100, strict=True)],
-            ]
-        ] = None,
-        offset: Optional[Union[StrictFloat, StrictInt]] = None,
+        user_id: Optional[StrictStr] = None,
         x_refresh_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -2195,10 +1741,8 @@ class WalletApi:
 
         List the wallets of the user
 
-        :param limit:
-        :type limit: float
-        :param offset:
-        :type offset: float
+        :param user_id:
+        :type user_id: str
         :param x_refresh_token:
         :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
@@ -2224,8 +1768,7 @@ class WalletApi:
         """  # noqa: E501
 
         _param = self._list_wallets_serialize(
-            limit=limit,
-            offset=offset,
+            user_id=user_id,
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2252,13 +1795,7 @@ class WalletApi:
     @validate_call
     async def _list_wallets_async_without_preload_content(
         self,
-        limit: Optional[
-            Union[
-                Annotated[float, Field(le=100, strict=True)],
-                Annotated[int, Field(le=100, strict=True)],
-            ]
-        ] = None,
-        offset: Optional[Union[StrictFloat, StrictInt]] = None,
+        user_id: Optional[StrictStr] = None,
         x_refresh_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -2276,10 +1813,8 @@ class WalletApi:
 
         List the wallets of the user
 
-        :param limit:
-        :type limit: float
-        :param offset:
-        :type offset: float
+        :param user_id:
+        :type user_id: str
         :param x_refresh_token:
         :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
@@ -2305,8 +1840,7 @@ class WalletApi:
         """  # noqa: E501
 
         _param = self._list_wallets_serialize(
-            limit=limit,
-            offset=offset,
+            user_id=user_id,
             x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2331,13 +1865,7 @@ class WalletApi:
     @validate_call
     def _list_wallets_sync(
         self,
-        limit: Optional[
-            Union[
-                Annotated[float, Field(le=100, strict=True)],
-                Annotated[int, Field(le=100, strict=True)],
-            ]
-        ] = None,
-        offset: Optional[Union[StrictFloat, StrictInt]] = None,
+        user_id: Optional[StrictStr] = None,
         x_refresh_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -2353,8 +1881,7 @@ class WalletApi:
     ) -> ListWallets200Response:
         """Synchronous version of list_wallets"""
         return async_to_sync(self._list_wallets_async)(
-            limit=limit,
-            offset=offset,
+            user_id=user_id,
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -2366,13 +1893,7 @@ class WalletApi:
     @validate_call
     def _list_wallets_sync_with_http_info(
         self,
-        limit: Optional[
-            Union[
-                Annotated[float, Field(le=100, strict=True)],
-                Annotated[int, Field(le=100, strict=True)],
-            ]
-        ] = None,
-        offset: Optional[Union[StrictFloat, StrictInt]] = None,
+        user_id: Optional[StrictStr] = None,
         x_refresh_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -2388,8 +1909,7 @@ class WalletApi:
     ) -> ApiResponse[ListWallets200Response]:
         """Synchronous version of list_wallets_with_http_info"""
         return async_to_sync(self._list_wallets_async_with_http_info)(
-            limit=limit,
-            offset=offset,
+            user_id=user_id,
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -2401,13 +1921,7 @@ class WalletApi:
     @validate_call
     def _list_wallets_sync_without_preload_content(
         self,
-        limit: Optional[
-            Union[
-                Annotated[float, Field(le=100, strict=True)],
-                Annotated[int, Field(le=100, strict=True)],
-            ]
-        ] = None,
-        offset: Optional[Union[StrictFloat, StrictInt]] = None,
+        user_id: Optional[StrictStr] = None,
         x_refresh_token: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -2423,8 +1937,7 @@ class WalletApi:
     ) -> RESTResponseType:
         """Synchronous version of list_wallets_without_preload_content"""
         return async_to_sync(self._list_wallets_async_without_preload_content)(
-            limit=limit,
-            offset=offset,
+            user_id=user_id,
             x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -2435,8 +1948,7 @@ class WalletApi:
 
     def _list_wallets_serialize(
         self,
-        limit,
-        offset,
+        user_id,
         x_refresh_token,
         _request_auth,
         _content_type,
@@ -2459,13 +1971,9 @@ class WalletApi:
 
         # process the path parameters
         # process the query parameters
-        if limit is not None:
+        if user_id is not None:
 
-            _query_params.append(("limit", limit))
-
-        if offset is not None:
-
-            _query_params.append(("offset", offset))
+            _query_params.append(("userId", user_id))
 
         # process the header parameters
         if x_refresh_token is not None:
@@ -2480,7 +1988,7 @@ class WalletApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -2964,7 +2472,7 @@ class WalletApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -3448,7 +2956,7 @@ class WalletApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -3932,7 +3440,7 @@ class WalletApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -4411,7 +3919,7 @@ class WalletApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",

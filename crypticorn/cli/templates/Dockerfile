@@ -25,6 +25,13 @@ WORKDIR /code
 
 ARG API_ENV
 
+# use this before code migration to crypticorn 3.x and crypticorn-utils 1.x
+# RUN if [ "$API_ENV" != "prod" ]; then \
+#     pip install --pre 'crypticorn<3.0.0'; \
+#     pip install --pre 'crypticorn-utils<1.0.0'; \
+#     fi
+
+# use this after code migration
 RUN if [ "$API_ENV" != "prod" ]; then \
     pip install --pre crypticorn; \
     pip install --pre crypticorn-utils; \

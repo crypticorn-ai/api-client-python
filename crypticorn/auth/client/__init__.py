@@ -20,7 +20,6 @@ __version__ = "1.0.0"
 __all__ = [
     "AdminApi",
     "AuthApi",
-    "ServiceApi",
     "UserApi",
     "WalletApi",
     "ApiResponse",
@@ -50,12 +49,7 @@ __all__ = [
     "ErrorUNAUTHORIZED",
     "GetApiKeys200ResponseInner",
     "ListWallets200Response",
-    "ListWallets200ResponseBalancesInner",
-    "ListWallets200ResponseBalancesInnerSaleRound",
-    "ListWallets200ResponseBalancesInnerWallet",
-    "ListWallets200ResponseBalancesInnerWalletVestingWalletsInner",
     "ListWallets200ResponseDataInner",
-    "ListWallets200ResponseUserValue",
     "RefreshTokenInfo200Response",
     "RefreshTokenInfo200ResponseUserSession",
     "ResendVerificationEmailRequest",
@@ -80,7 +74,6 @@ __all__ = [
 # import apis into sdk package
 from crypticorn.auth.client.api.admin_api import AdminApi as AdminApi
 from crypticorn.auth.client.api.auth_api import AuthApi as AuthApi
-from crypticorn.auth.client.api.service_api import ServiceApi as ServiceApi
 from crypticorn.auth.client.api.user_api import UserApi as UserApi
 from crypticorn.auth.client.api.wallet_api import WalletApi as WalletApi
 
@@ -148,23 +141,8 @@ from crypticorn.auth.client.models.get_api_keys200_response_inner import (
 from crypticorn.auth.client.models.list_wallets200_response import (
     ListWallets200Response as ListWallets200Response,
 )
-from crypticorn.auth.client.models.list_wallets200_response_balances_inner import (
-    ListWallets200ResponseBalancesInner as ListWallets200ResponseBalancesInner,
-)
-from crypticorn.auth.client.models.list_wallets200_response_balances_inner_sale_round import (
-    ListWallets200ResponseBalancesInnerSaleRound as ListWallets200ResponseBalancesInnerSaleRound,
-)
-from crypticorn.auth.client.models.list_wallets200_response_balances_inner_wallet import (
-    ListWallets200ResponseBalancesInnerWallet as ListWallets200ResponseBalancesInnerWallet,
-)
-from crypticorn.auth.client.models.list_wallets200_response_balances_inner_wallet_vesting_wallets_inner import (
-    ListWallets200ResponseBalancesInnerWalletVestingWalletsInner as ListWallets200ResponseBalancesInnerWalletVestingWalletsInner,
-)
 from crypticorn.auth.client.models.list_wallets200_response_data_inner import (
     ListWallets200ResponseDataInner as ListWallets200ResponseDataInner,
-)
-from crypticorn.auth.client.models.list_wallets200_response_user_value import (
-    ListWallets200ResponseUserValue as ListWallets200ResponseUserValue,
 )
 from crypticorn.auth.client.models.refresh_token_info200_response import (
     RefreshTokenInfo200Response as RefreshTokenInfo200Response,

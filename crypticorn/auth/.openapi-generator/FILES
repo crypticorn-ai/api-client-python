@@ -2,7 +2,6 @@ client/__init__.py
 client/api/__init__.py
 client/api/admin_api.py
 client/api/auth_api.py
-client/api/service_api.py
 client/api/user_api.py
 client/api/wallet_api.py
 client/api_client.py
@@ -28,12 +27,7 @@ client/models/error_notfound.py
 client/models/error_unauthorized.py
 client/models/get_api_keys200_response_inner.py
 client/models/list_wallets200_response.py
-client/models/list_wallets200_response_balances_inner.py
-client/models/list_wallets200_response_balances_inner_sale_round.py
-client/models/list_wallets200_response_balances_inner_wallet.py
-client/models/list_wallets200_response_balances_inner_wallet_vesting_wallets_inner.py
 client/models/list_wallets200_response_data_inner.py
-client/models/list_wallets200_response_user_value.py
 client/models/refresh_token_info200_response.py
 client/models/refresh_token_info200_response_user_session.py
 client/models/resend_verification_email_request.py
