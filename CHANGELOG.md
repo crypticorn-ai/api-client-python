@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v2.19.0-rc.2 (2025-07-18)
+
+### Bug Fixes
+
+- Change verify api key request
+  ([`bb0798b`](https://github.com/crypticorn-ai/api-client/commit/bb0798b14439a5681e267663ebca905d843cce7e))
+
+
 ## v2.19.0-rc.1 (2025-06-23)
 
 ### Documentation
