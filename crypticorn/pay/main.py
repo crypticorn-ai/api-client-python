@@ -11,6 +11,7 @@ from crypticorn.pay import (
     TokenApi,
     StripeApi,
     InvoicesApi,
+    AccessApi,
 )
 
 if TYPE_CHECKING:
@@ -44,3 +45,4 @@ class PayClient:
         self.token = TokenApi(self.base_client, is_sync=is_sync)
         self.invoices = InvoicesApi(self.base_client, is_sync=is_sync)
         self.stripe = StripeApi(self.base_client, is_sync=is_sync)
+        self.access = AccessApi(self.base_client, is_sync=is_sync)

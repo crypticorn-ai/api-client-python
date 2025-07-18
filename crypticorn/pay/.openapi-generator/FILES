@@ -1,5 +1,6 @@
 client/__init__.py
 client/api/__init__.py
+client/api/access_api.py
 client/api/coupons_api.py
 client/api/invoices_api.py
 client/api/now_payments_api.py
@@ -32,5 +33,7 @@ client/models/product_update.py
 client/models/provider.py
 client/models/scope.py
 client/models/subscription.py
+client/models/user_balance.py
+client/models/wallet_balance.py
 client/py.typed
 client/rest.py

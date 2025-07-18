@@ -18,6 +18,7 @@ __version__ = "1.0.0"
 
 # Define package exports
 __all__ = [
+    "AccessApi",
     "CouponsApi",
     "InvoicesApi",
     "NOWPaymentsApi",
@@ -54,9 +55,12 @@ __all__ = [
     "Provider",
     "Scope",
     "Subscription",
+    "UserBalance",
+    "WalletBalance",
 ]
 
 # import apis into sdk package
+from crypticorn.pay.client.api.access_api import AccessApi as AccessApi
 from crypticorn.pay.client.api.coupons_api import CouponsApi as CouponsApi
 from crypticorn.pay.client.api.invoices_api import InvoicesApi as InvoicesApi
 from crypticorn.pay.client.api.now_payments_api import NOWPaymentsApi as NOWPaymentsApi
@@ -105,3 +109,5 @@ from crypticorn.pay.client.models.product_update import ProductUpdate as Product
 from crypticorn.pay.client.models.provider import Provider as Provider
 from crypticorn.pay.client.models.scope import Scope as Scope
 from crypticorn.pay.client.models.subscription import Subscription as Subscription
+from crypticorn.pay.client.models.user_balance import UserBalance as UserBalance
+from crypticorn.pay.client.models.wallet_balance import WalletBalance as WalletBalance

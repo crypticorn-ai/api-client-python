@@ -37,3 +37,5 @@ from crypticorn.pay.client.models.product_update import ProductUpdate
 from crypticorn.pay.client.models.provider import Provider
 from crypticorn.pay.client.models.scope import Scope
 from crypticorn.pay.client.models.subscription import Subscription
+from crypticorn.pay.client.models.user_balance import UserBalance
+from crypticorn.pay.client.models.wallet_balance import WalletBalance
