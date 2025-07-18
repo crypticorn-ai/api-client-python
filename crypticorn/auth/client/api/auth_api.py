@@ -513,7 +513,7 @@ class AuthApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -967,7 +967,7 @@ class AuthApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -1416,7 +1416,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="DELETE",
@@ -1827,7 +1827,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -2308,7 +2308,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -2443,9 +2443,9 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[str]:
-        """Get User Scopes
+        """(Deprecated) Get User Scopes
 
-        Gets the scopes for the user.
+        Gets the scopes for the user. Deprecated, use /verify instead and get the scopes from the auth payload.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2468,6 +2468,7 @@ class AuthApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /get-user-scopes is deprecated.", DeprecationWarning)
 
         _param = self._get_user_scopes_serialize(
             _request_auth=_request_auth,
@@ -2506,9 +2507,9 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[str]]:
-        """Get User Scopes
+        """(Deprecated) Get User Scopes
 
-        Gets the scopes for the user.
+        Gets the scopes for the user. Deprecated, use /verify instead and get the scopes from the auth payload.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2531,6 +2532,7 @@ class AuthApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /get-user-scopes is deprecated.", DeprecationWarning)
 
         _param = self._get_user_scopes_serialize(
             _request_auth=_request_auth,
@@ -2568,9 +2570,9 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get User Scopes
+        """(Deprecated) Get User Scopes
 
-        Gets the scopes for the user.
+        Gets the scopes for the user. Deprecated, use /verify instead and get the scopes from the auth payload.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2593,6 +2595,7 @@ class AuthApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /get-user-scopes is deprecated.", DeprecationWarning)
 
         _param = self._get_user_scopes_serialize(
             _request_auth=_request_auth,
@@ -2719,7 +2722,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -3328,7 +3331,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -3739,7 +3742,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -4150,7 +4153,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -4561,7 +4564,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -4972,7 +4975,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -5004,7 +5007,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> CreateUser200ResponseAuthAuth:
-        """Verify Bearer Token"""
+        """Verify Authentication"""
         if self.is_sync:
             return self._verify_sync(
                 _request_timeout=_request_timeout,
@@ -5038,7 +5041,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
-        """Verify Bearer Token with HTTP info"""
+        """Verify Authentication with HTTP info"""
         if self.is_sync:
             return self._verify_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -5072,7 +5075,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Verify Bearer Token without preloading content"""
+        """Verify Authentication without preloading content"""
         if self.is_sync:
             return self._verify_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -5107,9 +5110,9 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> CreateUser200ResponseAuthAuth:
-        """Verify Bearer Token
+        """Verify Authentication
 
-        Verifies the bearer token is valid.
+        Verifies the authentication is valid. Returns the auth payload or raises an error.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -5170,9 +5173,9 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
-        """Verify Bearer Token
+        """Verify Authentication
 
-        Verifies the bearer token is valid.
+        Verifies the authentication is valid. Returns the auth payload or raises an error.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -5232,9 +5235,9 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Verify Bearer Token
+        """Verify Authentication
 
-        Verifies the bearer token is valid.
+        Verifies the authentication is valid. Returns the auth payload or raises an error.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -5383,7 +5386,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -5528,9 +5531,9 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> CreateUser200ResponseAuthAuth:
-        """Verify API Key
+        """(Deprecated) Verify API Key
 
-        Verifies the API key is valid.
+        Verifies the API key is valid. Deprecated, use /verify instead.
 
         :param api_key: (required)
         :type api_key: str
@@ -5555,6 +5558,7 @@ class AuthApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /verify-api-key is deprecated.", DeprecationWarning)
 
         _param = self._verify_api_key_serialize(
             api_key=api_key,
@@ -5597,9 +5601,9 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
-        """Verify API Key
+        """(Deprecated) Verify API Key
 
-        Verifies the API key is valid.
+        Verifies the API key is valid. Deprecated, use /verify instead.
 
         :param api_key: (required)
         :type api_key: str
@@ -5624,6 +5628,7 @@ class AuthApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /verify-api-key is deprecated.", DeprecationWarning)
 
         _param = self._verify_api_key_serialize(
             api_key=api_key,
@@ -5665,9 +5670,9 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Verify API Key
+        """(Deprecated) Verify API Key
 
-        Verifies the API key is valid.
+        Verifies the API key is valid. Deprecated, use /verify instead.
 
         :param api_key: (required)
         :type api_key: str
@@ -5692,6 +5697,7 @@ class AuthApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /verify-api-key is deprecated.", DeprecationWarning)
 
         _param = self._verify_api_key_serialize(
             api_key=api_key,
@@ -5832,7 +5838,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -6313,7 +6319,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",

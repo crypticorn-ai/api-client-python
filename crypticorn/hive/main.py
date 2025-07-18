@@ -9,7 +9,6 @@ from crypticorn.hive import (
     ModelsApi,
     DataApi,
     StatusApi,
-    AdminApi,
     DataVersion,
     FeatureSize,
 )
@@ -43,7 +42,6 @@ class HiveClient:
         self.models = ModelsApi(self.base_client, is_sync=is_sync)
         self.data = DataApiWrapper(self.base_client, is_sync=is_sync)
         self.status = StatusApi(self.base_client, is_sync=is_sync)
-        self.admin = AdminApi(self.base_client, is_sync=is_sync)
 
 
 class DataApiWrapper(DataApi):

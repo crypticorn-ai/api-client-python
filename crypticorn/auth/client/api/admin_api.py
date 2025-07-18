@@ -498,7 +498,7 @@ class AdminApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -909,7 +909,7 @@ class AdminApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",

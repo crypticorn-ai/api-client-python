@@ -80,12 +80,15 @@ class CreateApiKeyRequest(BaseModel):
                     "read:metrics:markets",
                     "read:sentiment",
                     "read:klines",
+                    "read:notifications",
+                    "write:notifications",
+                    "send:notifications",
                     "read:admin",
                     "write:admin",
                 ]
             ):
                 raise ValueError(
-                    "each list item must be one of ('read:predictions', 'read:dex:signals', 'read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:exchangekeys', 'write:trade:exchangekeys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'write:pay:coupons', 'read:pay:coupons', 'write:pay:invoices', 'read:metrics:marketcap', 'read:metrics:indicators', 'read:metrics:exchanges', 'read:metrics:tokens', 'read:metrics:markets', 'read:sentiment', 'read:klines', 'read:admin', 'write:admin')"
+                    "each list item must be one of ('read:predictions', 'read:dex:signals', 'read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:exchangekeys', 'write:trade:exchangekeys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'write:pay:coupons', 'read:pay:coupons', 'write:pay:invoices', 'read:metrics:marketcap', 'read:metrics:indicators', 'read:metrics:exchanges', 'read:metrics:tokens', 'read:metrics:markets', 'read:sentiment', 'read:klines', 'read:notifications', 'write:notifications', 'send:notifications', 'read:admin', 'write:admin')"
                 )
         return value
 

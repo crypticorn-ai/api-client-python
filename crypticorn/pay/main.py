@@ -10,7 +10,7 @@ from crypticorn.pay import (
     CouponsApi,
     TokenApi,
     StripeApi,
-    InvoicesApi
+    InvoicesApi,
 )
 
 if TYPE_CHECKING:
