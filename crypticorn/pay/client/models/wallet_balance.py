@@ -23,27 +23,15 @@ from typing import Optional, Set
 from typing_extensions import Self
 
 
-class Subscription(BaseModel):
+class WalletBalance(BaseModel):
     """
-    Model for reading a product subscription
+    Model for a user's balance for a specific wallet
     """  # noqa: E501
 
-    id: StrictStr = Field(description="UID of the model")
-    created_at: StrictInt = Field(description="Timestamp of creation")
-    updated_at: StrictInt = Field(description="Timestamp of last update")
-    user_id: StrictStr = Field(description="User ID")
-    product_id: StrictStr = Field(description="Product ID")
-    access_from: StrictInt = Field(description="Access from timestamp in seconds")
-    access_until: StrictInt = Field(description="Access until timestamp in seconds.")
-    __properties: ClassVar[List[str]] = [
-        "id",
-        "created_at",
-        "updated_at",
-        "user_id",
-        "product_id",
-        "access_from",
-        "access_until",
-    ]
+    address: StrictStr = Field(description="Wallet address")
+    balance: StrictInt = Field(description="Balance in wei of AIC")
+    staked: StrictInt = Field(description="Staked balance in wei of AIC")
+    __properties: ClassVar[List[str]] = ["address", "balance", "staked"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -62,7 +50,7 @@ class Subscription(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Subscription from a JSON string"""
+        """Create an instance of WalletBalance from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -86,7 +74,7 @@ class Subscription(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Subscription from a dict"""
+        """Create an instance of WalletBalance from a dict"""
         if obj is None:
             return None
 
@@ -95,13 +83,9 @@ class Subscription(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "id": obj.get("id"),
-                "created_at": obj.get("created_at"),
-                "updated_at": obj.get("updated_at"),
-                "user_id": obj.get("user_id"),
-                "product_id": obj.get("product_id"),
-                "access_from": obj.get("access_from"),
-                "access_until": obj.get("access_until"),
+                "address": obj.get("address"),
+                "balance": obj.get("balance"),
+                "staked": obj.get("staked"),
             }
         )
         return _obj
