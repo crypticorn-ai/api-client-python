@@ -36,6 +36,7 @@ __all__ = [
     "ApiKeyError",
     "ApiAttributeError",
     "ApiException",
+    "AccessThreshold",
     "ApiErrorIdentifier",
     "ApiErrorLevel",
     "ApiErrorType",
@@ -82,6 +83,9 @@ from crypticorn.pay.client.exceptions import ApiAttributeError as ApiAttributeEr
 from crypticorn.pay.client.exceptions import ApiException as ApiException
 
 # import models into sdk package
+from crypticorn.pay.client.models.access_threshold import (
+    AccessThreshold as AccessThreshold,
+)
 from crypticorn.pay.client.models.api_error_identifier import (
     ApiErrorIdentifier as ApiErrorIdentifier,
 )
