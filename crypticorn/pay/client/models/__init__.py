@@ -14,6 +14,7 @@ Do not edit the class manually.
 
 
 # import models into model package
+from crypticorn.pay.client.models.access_threshold import AccessThreshold
 from crypticorn.pay.client.models.api_error_identifier import ApiErrorIdentifier
 from crypticorn.pay.client.models.api_error_level import ApiErrorLevel
 from crypticorn.pay.client.models.api_error_type import ApiErrorType
