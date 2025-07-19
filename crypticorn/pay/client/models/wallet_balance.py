@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,8 +29,8 @@ class WalletBalance(BaseModel):
     """  # noqa: E501
 
     address: StrictStr = Field(description="Wallet address")
-    balance: StrictInt = Field(description="Balance in wei of AIC")
-    staked: StrictInt = Field(description="Staked balance in wei of AIC")
+    balance: StrictStr = Field(description="Balance in wei of AIC")
+    staked: StrictStr = Field(description="Staked balance in wei of AIC")
     __properties: ClassVar[List[str]] = ["address", "balance", "staked"]
 
     model_config = ConfigDict(

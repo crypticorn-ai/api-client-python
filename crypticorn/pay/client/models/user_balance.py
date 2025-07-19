@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
@@ -28,10 +28,10 @@ class UserBalance(BaseModel):
     Model for a user's balance
     """  # noqa: E501
 
-    balance: StrictInt = Field(
+    balance: StrictStr = Field(
         description="Total balance in wei of AIC over all connected wallets"
     )
-    staked: StrictInt = Field(description="Staked balance in wei of AIC")
+    staked: StrictStr = Field(description="Staked balance in wei of AIC")
     __properties: ClassVar[List[str]] = ["balance", "staked"]
 
     model_config = ConfigDict(
