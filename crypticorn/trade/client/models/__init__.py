@@ -34,7 +34,6 @@ from crypticorn.trade.client.models.futures_trading_action import FuturesTrading
 from crypticorn.trade.client.models.futures_trading_action_create import (
     FuturesTradingActionCreate,
 )
-from crypticorn.trade.client.models.log_level import LogLevel
 from crypticorn.trade.client.models.margin_mode import MarginMode
 from crypticorn.trade.client.models.market_type import MarketType
 from crypticorn.trade.client.models.notification import Notification

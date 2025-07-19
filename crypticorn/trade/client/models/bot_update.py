@@ -17,8 +17,9 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from crypticorn.trade.client.models.bot_status import BotStatus
 from typing import Optional, Set
 from typing_extensions import Self
@@ -26,13 +27,12 @@ from typing_extensions import Self
 
 class BotUpdate(BaseModel):
     """
-    Trading bot model for API update operations.
+    Trading bot model for API update operations. Fields cannot be unset.
     """  # noqa: E501
 
     name: Optional[StrictStr] = None
-    allocation: Optional[StrictInt] = None
+    allocation: Optional[Annotated[int, Field(strict=True, ge=1)]] = None
     status: Optional[BotStatus] = None
-    additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["name", "allocation", "status"]
 
     model_config = ConfigDict(
@@ -64,24 +64,14 @@ class BotUpdate(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
-        * Fields in `self.additional_properties` are added to the output dict.
         """
-        excluded_fields: Set[str] = set(
-            [
-                "additional_properties",
-            ]
-        )
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # puts key-value pairs in additional_properties in the top level
-        if self.additional_properties is not None:
-            for _key, _value in self.additional_properties.items():
-                _dict[_key] = _value
-
         # set to None if name (nullable) is None
         # and model_fields_set contains the field
         if self.name is None and "name" in self.model_fields_set:
@@ -115,9 +105,4 @@ class BotUpdate(BaseModel):
                 "status": obj.get("status"),
             }
         )
-        # store additional fields in additional_properties
-        for _key in obj.keys():
-            if _key not in cls.__properties:
-                _obj.additional_properties[_key] = obj.get(_key)
-
         return _obj

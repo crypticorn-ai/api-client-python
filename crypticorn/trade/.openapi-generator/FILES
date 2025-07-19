@@ -1,6 +1,5 @@
 client/__init__.py
 client/api/__init__.py
-client/api/admin_api.py
 client/api/api_keys_api.py
 client/api/bots_api.py
 client/api/exchanges_api.py
@@ -32,7 +31,6 @@ client/models/execution_ids.py
 client/models/futures_balance.py
 client/models/futures_trading_action.py
 client/models/futures_trading_action_create.py
-client/models/log_level.py
 client/models/margin_mode.py
 client/models/market_type.py
 client/models/notification.py
