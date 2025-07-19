@@ -19,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from crypticorn.trade.client.models.api_error_identifier import ApiErrorIdentifier
 from crypticorn.trade.client.models.bot_status import BotStatus
 from typing import Optional, Set
@@ -41,7 +42,9 @@ class Bot(BaseModel):
         default=None, description="Unique identifier for the resource"
     )
     name: StrictStr = Field(description="Name of the bot")
-    allocation: StrictInt = Field(description="Initial allocation for the bot")
+    allocation: Annotated[int, Field(strict=True, ge=1)] = Field(
+        description="Initial allocation for the bot"
+    )
     status: BotStatus = Field(description="Status of the bot")
     strategy_id: StrictStr = Field(
         description="UID for the trading strategy used by the bot"

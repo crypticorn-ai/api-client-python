@@ -37,7 +37,16 @@ class StrategyExchangeInfo(BaseModel):
     min_amount: StrictInt = Field(
         description="Minimum amount for the strategy on the exchange"
     )
-    __properties: ClassVar[List[str]] = ["exchange", "base_asset", "min_amount"]
+    max_amount: Optional[StrictInt] = Field(
+        default=100000,
+        description="Maximum amount for the strategy on the exchange, default is 100 thousand ",
+    )
+    __properties: ClassVar[List[str]] = [
+        "exchange",
+        "base_asset",
+        "min_amount",
+        "max_amount",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -96,6 +105,11 @@ class StrategyExchangeInfo(BaseModel):
                     else "USDT"
                 ),
                 "min_amount": obj.get("min_amount"),
+                "max_amount": (
+                    obj.get("max_amount")
+                    if obj.get("max_amount") is not None
+                    else 100000
+                ),
             }
         )
         return _obj

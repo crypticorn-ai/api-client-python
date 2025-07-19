@@ -56,7 +56,6 @@ class Notification(BaseModel):
     type: ApiErrorType = Field(
         description="Type of the notification. Of type ApiErrorType"
     )
-    additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "user_id",
         "created_at",
@@ -98,24 +97,14 @@ class Notification(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
-        * Fields in `self.additional_properties` are added to the output dict.
         """
-        excluded_fields: Set[str] = set(
-            [
-                "additional_properties",
-            ]
-        )
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # puts key-value pairs in additional_properties in the top level
-        if self.additional_properties is not None:
-            for _key, _value in self.additional_properties.items():
-                _dict[_key] = _value
-
         return _dict
 
     @classmethod
@@ -140,9 +129,4 @@ class Notification(BaseModel):
                 "type": obj.get("type"),
             }
         )
-        # store additional fields in additional_properties
-        for _key in obj.keys():
-            if _key not in cls.__properties:
-                _obj.additional_properties[_key] = obj.get(_key)
-
         return _obj
