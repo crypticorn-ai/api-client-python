@@ -5,7 +5,7 @@ readme = "README.md"
 license = "MIT"
 requires-python = ">=3.9"
 authors = [{name = "Crypticorn", email = "timon@crypticorn.com"}]
-version = "2.19.0-rc.2"
+version = "2.19.0"
 keywords = ["machine learning", "data science", "crypto", "modelling"]
 dynamic = ["dependencies", "optional-dependencies"]
 
