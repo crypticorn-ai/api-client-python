@@ -23,6 +23,7 @@ client/models/bot_status.py
 client/models/bot_update.py
 client/models/exception_detail.py
 client/models/exchange.py
+client/models/exchange_info.py
 client/models/exchange_key.py
 client/models/exchange_key_balance.py
 client/models/exchange_key_create.py
