@@ -4,7 +4,6 @@ from crypticorn.auth import (
     ApiClient,
     Configuration,
     AdminApi,
-    ServiceApi,
     UserApi,
     WalletApi,
     AuthApi,
@@ -35,7 +34,6 @@ class AuthClient:
         self.base_client.rest_client.is_sync = is_sync
         # Instantiate all the endpoint clients
         self.admin = AdminApi(self.base_client, is_sync=is_sync)
-        self.service = ServiceApi(self.base_client, is_sync=is_sync)
         self.user = UserApi(self.base_client, is_sync=is_sync)
         self.wallet = WalletApi(self.base_client, is_sync=is_sync)
         self.login = AuthApi(self.base_client, is_sync=is_sync)

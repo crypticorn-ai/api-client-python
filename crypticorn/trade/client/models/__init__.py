@@ -24,6 +24,7 @@ from crypticorn.trade.client.models.bot_status import BotStatus
 from crypticorn.trade.client.models.bot_update import BotUpdate
 from crypticorn.trade.client.models.exception_detail import ExceptionDetail
 from crypticorn.trade.client.models.exchange import Exchange
+from crypticorn.trade.client.models.exchange_info import ExchangeInfo
 from crypticorn.trade.client.models.exchange_key import ExchangeKey
 from crypticorn.trade.client.models.exchange_key_balance import ExchangeKeyBalance
 from crypticorn.trade.client.models.exchange_key_create import ExchangeKeyCreate
@@ -34,7 +35,6 @@ from crypticorn.trade.client.models.futures_trading_action import FuturesTrading
 from crypticorn.trade.client.models.futures_trading_action_create import (
     FuturesTradingActionCreate,
 )
-from crypticorn.trade.client.models.log_level import LogLevel
 from crypticorn.trade.client.models.margin_mode import MarginMode
 from crypticorn.trade.client.models.market_type import MarketType
 from crypticorn.trade.client.models.notification import Notification

@@ -202,7 +202,7 @@ async def test_combined_auth_with_valid_prediction_bearer_token(
         api_key=None,
     )
     assert all(
-        [key in res.scopes for key in PURCHASEABLE_SCOPES]
+        [key in res.scopes for key in ["read:predictions"]]
     ), "non admin which purchased predictions should have access to purchaseable scopes"
     assert all(
         [key not in res.scopes for key in ADMIN_SCOPES]
@@ -227,10 +227,10 @@ async def test_combined_auth_with_valid_admin_bearer_token(auth_handler: AuthHan
     ), "admin should have access to purchaseable scopes"
     assert all(
         [key in res.scopes for key in ADMIN_SCOPES]
-    ), "admin should have access to any of the admin keys"
+    ), "admin should have access to all of the admin scopes"
     assert all(
         [key not in res.scopes for key in INTERNAL_SCOPES]
-    ), "admin should not have access to any of the internal keys"
+    ), "admin should not have access to any of the internal scopes"
     assert res.admin, "admin should be true"
 
 
@@ -323,30 +323,34 @@ async def test_ws_api_key_auth_with_valid_key(auth_handler: AuthHandler):
 
 # SCOPE VALIDATION TESTS
 @pytest.mark.asyncio
-async def test_combined_auth_scope_validation_with_insufficient_scopes(auth_handler: AuthHandler):
+async def test_combined_auth_scope_validation_with_insufficient_scopes(
+    auth_handler: AuthHandler,
+):
     """Test scope validation with insufficient scopes"""
     from fastapi.security import SecurityScopes
-    
+
     with pytest.raises(HTTPException) as e:
         # Try to access with a token that has READ_TRADE_BOTS scope but require admin scope
         await auth_handler.combined_auth(
-            bearer=None, 
+            bearer=None,
             api_key=ONE_SCOPE_API_KEY,
-            sec=SecurityScopes(scopes=[Scope.READ_ADMIN])
+            sec=SecurityScopes(scopes=[Scope.READ_ADMIN]),
         )
     assert e.value.status_code == 403
     assert e.value.detail.get("code") == ApiError.INSUFFICIENT_SCOPES.identifier
 
 
 @pytest.mark.asyncio
-async def test_combined_auth_scope_validation_with_sufficient_scopes(auth_handler: AuthHandler):
+async def test_combined_auth_scope_validation_with_sufficient_scopes(
+    auth_handler: AuthHandler,
+):
     """Test scope validation with sufficient scopes"""
     from fastapi.security import SecurityScopes
-    
+
     # This should pass since we're requiring a scope that the API key has
     res = await auth_handler.combined_auth(
-        bearer=None, 
+        bearer=None,
         api_key=ONE_SCOPE_API_KEY,
-        sec=SecurityScopes(scopes=[ONE_SCOPE_API_KEY_SCOPE])
+        sec=SecurityScopes(scopes=[ONE_SCOPE_API_KEY_SCOPE]),
     )
     assert ONE_SCOPE_API_KEY_SCOPE in res.scopes

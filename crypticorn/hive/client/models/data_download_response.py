@@ -30,14 +30,14 @@ from typing_extensions import Self
 
 class DataDownloadResponse(BaseModel):
     """
-    The response for a data download request
+    Response model containing download links and metadata for requested training data.
     """  # noqa: E501
 
     coin: Coins = Field(description="The coin the data is for")
     feature_size: FeatureSize = Field(description="The feature size the data is for")
     version: DataVersion = Field(description="The version of the data")
     target: Target = Field(description="The target of the data")
-    links: DownloadLinks
+    links: DownloadLinks = Field(description="The download links for the data")
     __properties: ClassVar[List[str]] = [
         "coin",
         "feature_size",

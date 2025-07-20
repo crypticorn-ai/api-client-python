@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
 from crypticorn.klines.client.models.internal_exchange import InternalExchange
 from typing import Optional, Set
@@ -26,13 +26,13 @@ from typing_extensions import Self
 
 class SearchSymbol(BaseModel):
     """
-    SearchSymbol
+    Symbol search result for UDF symbol lookup functionality.
     """  # noqa: E501
 
-    symbol: StrictStr
-    description: StrictStr
-    exchange: InternalExchange
-    type: StrictStr
+    symbol: StrictStr = Field(description="Symbol identifier")
+    description: StrictStr = Field(description="Human-readable symbol description")
+    exchange: InternalExchange = Field(description="Exchange where symbol is traded")
+    type: StrictStr = Field(description="Symbol type classification")
     __properties: ClassVar[List[str]] = ["symbol", "description", "exchange", "type"]
 
     model_config = ConfigDict(

@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class Timeframe(str, Enum):
     """
-    Timeframe
+    Available timeframes for candlestick and technical analysis data.
     """
 
     """

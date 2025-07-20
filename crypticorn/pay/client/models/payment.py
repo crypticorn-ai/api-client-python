@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Union
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from crypticorn.pay.client.models.payment_status import PaymentStatus
 from crypticorn.pay.client.models.provider import Provider
 from typing import Optional, Set
@@ -31,22 +31,38 @@ class Payment(BaseModel):
     """  # noqa: E501
 
     id: StrictStr = Field(description="Payment ID")
-    product_id: StrictStr = Field(description="Product ID")
-    timestamp: StrictInt = Field(description="Payment timestamp in seconds")
+    product_id: StrictStr = Field(description="Product purchased")
+    coupon_id: Optional[StrictStr] = None
+    user_id: StrictStr = Field(description="User ID the payment is for")
+    invoice_id: StrictStr = Field(description="Invoice ID")
+    timestamp: StrictInt = Field(
+        description="Payment timestamp in seconds. Deprecated, use updated_at instead."
+    )
     amount: Union[StrictFloat, StrictInt] = Field(description="Payment amount")
     currency: StrictStr = Field(description="Payment currency")
     status: PaymentStatus
     provider: Provider = Field(description="Payment provider")
     market: StrictStr = Field(description="Payment market")
+    updated_at: StrictInt = Field(description="Payment updated at timestamp in seconds")
+    created_at: StrictInt = Field(description="Payment created at timestamp in seconds")
+    details: Optional[Dict[str, Any]] = Field(
+        default=None, description="Payment details specific to the provider"
+    )
     __properties: ClassVar[List[str]] = [
         "id",
         "product_id",
+        "coupon_id",
+        "user_id",
+        "invoice_id",
         "timestamp",
         "amount",
         "currency",
         "status",
         "provider",
         "market",
+        "updated_at",
+        "created_at",
+        "details",
     ]
 
     model_config = ConfigDict(
@@ -86,6 +102,11 @@ class Payment(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if coupon_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.coupon_id is None and "coupon_id" in self.model_fields_set:
+            _dict["coupon_id"] = None
+
         return _dict
 
     @classmethod
@@ -101,12 +122,18 @@ class Payment(BaseModel):
             {
                 "id": obj.get("id"),
                 "product_id": obj.get("product_id"),
+                "coupon_id": obj.get("coupon_id"),
+                "user_id": obj.get("user_id"),
+                "invoice_id": obj.get("invoice_id"),
                 "timestamp": obj.get("timestamp"),
                 "amount": obj.get("amount"),
                 "currency": obj.get("currency"),
                 "status": obj.get("status"),
                 "provider": obj.get("provider"),
                 "market": obj.get("market"),
+                "updated_at": obj.get("updated_at"),
+                "created_at": obj.get("created_at"),
+                "details": obj.get("details"),
             }
         )
         return _obj

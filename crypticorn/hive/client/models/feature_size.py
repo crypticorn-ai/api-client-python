@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class FeatureSize(str, Enum):
     """
-    All existing feature sizes. Some might no be available in the latest data version, but kept for older versions.
+    Dataset feature size options determining the complexity and scope of training data.
     """
 
     """

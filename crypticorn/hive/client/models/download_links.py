@@ -25,7 +25,7 @@ from typing_extensions import Self
 
 class DownloadLinks(BaseModel):
     """
-    The download links for the data
+    Collection of secure download URLs for different dataset splits.
     """  # noqa: E501
 
     y_train: StrictStr = Field(description="The download link for the y_train data")

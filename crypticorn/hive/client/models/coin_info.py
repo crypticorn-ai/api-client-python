@@ -21,13 +21,13 @@ from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.hive.client.models.coins import Coins
 from crypticorn.hive.client.models.data_version import DataVersion
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 
 class CoinInfo(BaseModel):
     """
-    Information about a coin
+    Metadata about a cryptocurrency including availability across data versions.
     """  # noqa: E501
 
     identifier: Coins = Field(

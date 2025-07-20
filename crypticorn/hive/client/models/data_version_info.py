@@ -26,7 +26,7 @@ from typing_extensions import Self
 
 class DataVersionInfo(BaseModel):
     """
-    DataVersionInfo
+    Information about a specific data version including release metadata.
     """  # noqa: E501
 
     version: DataVersion = Field(description="Data version")

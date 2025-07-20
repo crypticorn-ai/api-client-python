@@ -16,9 +16,9 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictStr
-from typing import Any, Optional
-from typing_extensions import Annotated
+from pydantic import StrictStr
+from typing import Any
+from crypticorn.auth.client.models.create_user200_response import CreateUser200Response
 from crypticorn.auth.client.models.create_user_request import CreateUserRequest
 from crypticorn.auth.client.models.resend_verification_email_request import (
     ResendVerificationEmailRequest,
@@ -90,7 +90,7 @@ class UserApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> CreateUser200Response:
         """Create User"""
         if self.is_sync:
             return self._create_user_sync(
@@ -127,7 +127,7 @@ class UserApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> ApiResponse[CreateUser200Response]:
         """Create User with HTTP info"""
         if self.is_sync:
             return self._create_user_sync_with_http_info(
@@ -202,10 +202,10 @@ class UserApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> CreateUser200Response:
         """Create User
 
-        Creates a new user.
+        Creates a new user. Can be created without a password, but requires an oob code to set one after. The oob code should be
 
         :param create_user_request: (required)
         :type create_user_request: CreateUserRequest
@@ -240,7 +240,11 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "200": "CreateUser200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -266,10 +270,10 @@ class UserApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> ApiResponse[CreateUser200Response]:
         """Create User
 
-        Creates a new user.
+        Creates a new user. Can be created without a password, but requires an oob code to set one after. The oob code should be
 
         :param create_user_request: (required)
         :type create_user_request: CreateUserRequest
@@ -304,7 +308,11 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "200": "CreateUser200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -332,7 +340,7 @@ class UserApi:
     ) -> RESTResponseType:
         """Create User
 
-        Creates a new user.
+        Creates a new user. Can be created without a password, but requires an oob code to set one after. The oob code should be
 
         :param create_user_request: (required)
         :type create_user_request: CreateUserRequest
@@ -367,7 +375,11 @@ class UserApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "object",
+            "200": "CreateUser200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -390,7 +402,7 @@ class UserApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> CreateUser200Response:
         """Synchronous version of create_user"""
         return async_to_sync(self._create_user_async)(
             create_user_request=create_user_request,
@@ -416,7 +428,7 @@ class UserApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> ApiResponse[CreateUser200Response]:
         """Synchronous version of create_user_with_http_info"""
         return async_to_sync(self._create_user_async_with_http_info)(
             create_user_request=create_user_request,
@@ -500,7 +512,7 @@ class UserApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -670,6 +682,9 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -730,6 +745,9 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -789,6 +807,9 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -902,7 +923,7 @@ class UserApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -1085,6 +1106,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1149,6 +1174,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1212,6 +1241,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1346,7 +1379,7 @@ class UserApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -1529,6 +1562,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1593,6 +1630,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1656,6 +1697,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1790,7 +1835,7 @@ class UserApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -1973,6 +2018,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -2037,6 +2086,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -2100,6 +2153,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -2232,7 +2289,7 @@ class UserApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -2415,6 +2472,11 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Whoami200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -2479,6 +2541,11 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Whoami200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -2542,6 +2609,11 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Whoami200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -2666,7 +2738,7 @@ class UserApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -2849,6 +2921,11 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "UserByUsername200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -2913,6 +2990,11 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "UserByUsername200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -2976,6 +3058,11 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "UserByUsername200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -3100,7 +3187,7 @@ class UserApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -3283,6 +3370,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "VerifyEmail200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -3347,6 +3438,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "VerifyEmail200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -3410,6 +3505,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "VerifyEmail200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -3542,7 +3641,7 @@ class UserApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -3725,6 +3824,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -3789,6 +3892,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -3852,6 +3959,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -3984,7 +4095,7 @@ class UserApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -4167,6 +4278,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "VerifyEmail200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -4231,6 +4346,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "VerifyEmail200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -4294,6 +4413,10 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "VerifyEmail200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -4426,7 +4549,7 @@ class UserApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -4446,10 +4569,6 @@ class UserApi:
     @validate_call
     def whoami(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4465,7 +4584,6 @@ class UserApi:
         """Whoami"""
         if self.is_sync:
             return self._whoami_sync(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4475,7 +4593,6 @@ class UserApi:
 
         else:
             return self._whoami_async(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4486,10 +4603,6 @@ class UserApi:
     @validate_call
     def whoami_with_http_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4505,7 +4618,6 @@ class UserApi:
         """Whoami with HTTP info"""
         if self.is_sync:
             return self._whoami_sync_with_http_info(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4515,7 +4627,6 @@ class UserApi:
 
         else:
             return self._whoami_async_with_http_info(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4526,10 +4637,6 @@ class UserApi:
     @validate_call
     def whoami_without_preload_content(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4545,7 +4652,6 @@ class UserApi:
         """Whoami without preloading content"""
         if self.is_sync:
             return self._whoami_sync_without_preload_content(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4555,7 +4661,6 @@ class UserApi:
 
         else:
             return self._whoami_async_without_preload_content(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4567,10 +4672,6 @@ class UserApi:
     @validate_call
     async def _whoami_async(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4587,8 +4688,6 @@ class UserApi:
 
         Returns the current user.
 
-        :param x_refresh_token: The refresh token for rotating the access token.
-        :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4612,7 +4711,6 @@ class UserApi:
         """  # noqa: E501
 
         _param = self._whoami_serialize(
-            x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4621,6 +4719,9 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Whoami200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -4634,10 +4735,6 @@ class UserApi:
     @validate_call
     async def _whoami_async_with_http_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4654,8 +4751,6 @@ class UserApi:
 
         Returns the current user.
 
-        :param x_refresh_token: The refresh token for rotating the access token.
-        :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4679,7 +4774,6 @@ class UserApi:
         """  # noqa: E501
 
         _param = self._whoami_serialize(
-            x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4688,6 +4782,9 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Whoami200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -4700,10 +4797,6 @@ class UserApi:
     @validate_call
     async def _whoami_async_without_preload_content(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4720,8 +4813,6 @@ class UserApi:
 
         Returns the current user.
 
-        :param x_refresh_token: The refresh token for rotating the access token.
-        :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4745,7 +4836,6 @@ class UserApi:
         """  # noqa: E501
 
         _param = self._whoami_serialize(
-            x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4754,6 +4844,9 @@ class UserApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Whoami200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -4764,10 +4857,6 @@ class UserApi:
     @validate_call
     def _whoami_sync(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4782,7 +4871,6 @@ class UserApi:
     ) -> Whoami200Response:
         """Synchronous version of whoami"""
         return async_to_sync(self._whoami_async)(
-            x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -4793,10 +4881,6 @@ class UserApi:
     @validate_call
     def _whoami_sync_with_http_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4811,7 +4895,6 @@ class UserApi:
     ) -> ApiResponse[Whoami200Response]:
         """Synchronous version of whoami_with_http_info"""
         return async_to_sync(self._whoami_async_with_http_info)(
-            x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -4822,10 +4905,6 @@ class UserApi:
     @validate_call
     def _whoami_sync_without_preload_content(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4840,7 +4919,6 @@ class UserApi:
     ) -> RESTResponseType:
         """Synchronous version of whoami_without_preload_content"""
         return async_to_sync(self._whoami_async_without_preload_content)(
-            x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -4850,7 +4928,6 @@ class UserApi:
 
     def _whoami_serialize(
         self,
-        x_refresh_token,
         _request_auth,
         _content_type,
         _headers,
@@ -4873,8 +4950,6 @@ class UserApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if x_refresh_token is not None:
-            _header_params["X-Refresh-Token"] = x_refresh_token
         # process the form parameters
         # process the body parameter
 
@@ -4885,7 +4960,7 @@ class UserApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",

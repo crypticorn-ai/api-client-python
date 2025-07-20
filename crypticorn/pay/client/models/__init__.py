@@ -14,13 +14,22 @@ Do not edit the class manually.
 
 
 # import models into model package
+from crypticorn.pay.client.models.access_threshold import AccessThreshold
 from crypticorn.pay.client.models.api_error_identifier import ApiErrorIdentifier
 from crypticorn.pay.client.models.api_error_level import ApiErrorLevel
 from crypticorn.pay.client.models.api_error_type import ApiErrorType
+from crypticorn.pay.client.models.coupon import Coupon
+from crypticorn.pay.client.models.coupon_create import CouponCreate
+from crypticorn.pay.client.models.coupon_update import CouponUpdate
 from crypticorn.pay.client.models.exception_detail import ExceptionDetail
-from crypticorn.pay.client.models.log_level import LogLevel
-from crypticorn.pay.client.models.now_create_invoice_req import NowCreateInvoiceReq
-from crypticorn.pay.client.models.now_create_invoice_res import NowCreateInvoiceRes
+from crypticorn.pay.client.models.invoice import Invoice
+from crypticorn.pay.client.models.invoice_create import InvoiceCreate
+from crypticorn.pay.client.models.paginated_response_coupon import (
+    PaginatedResponseCoupon,
+)
+from crypticorn.pay.client.models.paginated_response_payment import (
+    PaginatedResponsePayment,
+)
 from crypticorn.pay.client.models.payment import Payment
 from crypticorn.pay.client.models.payment_status import PaymentStatus
 from crypticorn.pay.client.models.product import Product
@@ -29,3 +38,5 @@ from crypticorn.pay.client.models.product_update import ProductUpdate
 from crypticorn.pay.client.models.provider import Provider
 from crypticorn.pay.client.models.scope import Scope
 from crypticorn.pay.client.models.subscription import Subscription
+from crypticorn.pay.client.models.user_balance import UserBalance
+from crypticorn.pay.client.models.wallet_balance import WalletBalance

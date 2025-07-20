@@ -17,7 +17,6 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
@@ -33,10 +32,10 @@ class GetApiKeys200ResponseInner(BaseModel):
     user_id: StrictStr = Field(description="User ID of the API key")
     scopes: List[StrictStr] = Field(description="Scopes of the API key")
     name: StrictStr = Field(description="Name of the API key")
-    expires_at: Optional[datetime] = Field(
+    expires_at: Optional[StrictStr] = Field(
         default=None, description="Expiration time of the API key as a date"
     )
-    created_at: datetime = Field(description="Creation time of the API key as a date")
+    created_at: StrictStr = Field(description="Creation time of the API key as a date")
     ip_whitelist: Optional[List[StrictStr]] = Field(
         default=None,
         description="IP addresses that can access the API key. If empty, the API key will be accessible from any IP address.",
@@ -79,8 +78,9 @@ class GetApiKeys200ResponseInner(BaseModel):
                     "read:pay:payments",
                     "read:pay:products",
                     "write:pay:products",
-                    "read:pay:now",
-                    "write:pay:now",
+                    "write:pay:coupons",
+                    "read:pay:coupons",
+                    "write:pay:invoices",
                     "read:metrics:marketcap",
                     "read:metrics:indicators",
                     "read:metrics:exchanges",
@@ -88,12 +88,15 @@ class GetApiKeys200ResponseInner(BaseModel):
                     "read:metrics:markets",
                     "read:sentiment",
                     "read:klines",
+                    "read:notifications",
+                    "write:notifications",
+                    "send:notifications",
                     "read:admin",
                     "write:admin",
                 ]
             ):
                 raise ValueError(
-                    "each list item must be one of ('read:predictions', 'read:dex:signals', 'read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:exchangekeys', 'write:trade:exchangekeys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'read:pay:now', 'write:pay:now', 'read:metrics:marketcap', 'read:metrics:indicators', 'read:metrics:exchanges', 'read:metrics:tokens', 'read:metrics:markets', 'read:sentiment', 'read:klines', 'read:admin', 'write:admin')"
+                    "each list item must be one of ('read:predictions', 'read:dex:signals', 'read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:exchangekeys', 'write:trade:exchangekeys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'write:pay:coupons', 'read:pay:coupons', 'write:pay:invoices', 'read:metrics:marketcap', 'read:metrics:indicators', 'read:metrics:exchanges', 'read:metrics:tokens', 'read:metrics:markets', 'read:sentiment', 'read:klines', 'read:notifications', 'write:notifications', 'send:notifications', 'read:admin', 'write:admin')"
                 )
         return value
 
@@ -134,6 +137,11 @@ class GetApiKeys200ResponseInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if expires_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.expires_at is None and "expires_at" in self.model_fields_set:
+            _dict["expires_at"] = None
+
         return _dict
 
     @classmethod

@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class TargetType(str, Enum):
     """
-    The type of the target
+    Type classification for AI prediction targets (continuous vs binary outcomes).
     """
 
     """

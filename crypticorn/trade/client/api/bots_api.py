@@ -3937,7 +3937,7 @@ class BotsApi:
     ) -> List[PnL]:
         """Get Bot Pnl
 
-        Returns a list of PnLs for a bot over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day.   To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
+        Returns a list of PnLs for a bot over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day. To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
 
         :param id: The ID of the bot (required)
         :type id: str
@@ -4049,7 +4049,7 @@ class BotsApi:
     ) -> ApiResponse[List[PnL]]:
         """Get Bot Pnl
 
-        Returns a list of PnLs for a bot over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day.   To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
+        Returns a list of PnLs for a bot over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day. To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
 
         :param id: The ID of the bot (required)
         :type id: str
@@ -4160,7 +4160,7 @@ class BotsApi:
     ) -> RESTResponseType:
         """Get Bot Pnl
 
-        Returns a list of PnLs for a bot over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day.   To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
+        Returns a list of PnLs for a bot over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day. To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
 
         :param id: The ID of the bot (required)
         :type id: str
@@ -7684,7 +7684,7 @@ class BotsApi:
     ) -> List[PnL]:
         """Get Bots Pnl
 
-        Returns a list of PnLs for all bots of the user over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day.   To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
+        Returns a list of PnLs for all bots of the user over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day. To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
 
         :param sort_order: The order to sort by
         :type sort_order: str
@@ -7792,7 +7792,7 @@ class BotsApi:
     ) -> ApiResponse[List[PnL]]:
         """Get Bots Pnl
 
-        Returns a list of PnLs for all bots of the user over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day.   To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
+        Returns a list of PnLs for all bots of the user over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day. To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
 
         :param sort_order: The order to sort by
         :type sort_order: str
@@ -7899,7 +7899,7 @@ class BotsApi:
     ) -> RESTResponseType:
         """Get Bots Pnl
 
-        Returns a list of PnLs for all bots of the user over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day.   To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
+        Returns a list of PnLs for all bots of the user over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day. To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
 
         :param sort_order: The order to sort by
         :type sort_order: str

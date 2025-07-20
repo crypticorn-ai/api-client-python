@@ -17,16 +17,10 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
+from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt
 from typing import Any, ClassVar, Dict, List, Union
-from crypticorn.auth.client.models.list_wallets200_response_balances_inner import (
-    ListWallets200ResponseBalancesInner,
-)
 from crypticorn.auth.client.models.list_wallets200_response_data_inner import (
     ListWallets200ResponseDataInner,
-)
-from crypticorn.auth.client.models.list_wallets200_response_user_value import (
-    ListWallets200ResponseUserValue,
 )
 from typing import Optional, Set
 from typing_extensions import Self
@@ -39,9 +33,7 @@ class ListWallets200Response(BaseModel):
 
     data: List[ListWallets200ResponseDataInner]
     count: Union[StrictFloat, StrictInt]
-    balances: List[ListWallets200ResponseBalancesInner]
-    user_value: ListWallets200ResponseUserValue = Field(alias="userValue")
-    __properties: ClassVar[List[str]] = ["data", "count", "balances", "userValue"]
+    __properties: ClassVar[List[str]] = ["data", "count"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -87,16 +79,6 @@ class ListWallets200Response(BaseModel):
                 if _item_data:
                     _items.append(_item_data.to_dict())
             _dict["data"] = _items
-        # override the default output from pydantic by calling `to_dict()` of each item in balances (list)
-        _items = []
-        if self.balances:
-            for _item_balances in self.balances:
-                if _item_balances:
-                    _items.append(_item_balances.to_dict())
-            _dict["balances"] = _items
-        # override the default output from pydantic by calling `to_dict()` of user_value
-        if self.user_value:
-            _dict["userValue"] = self.user_value.to_dict()
         return _dict
 
     @classmethod
@@ -119,19 +101,6 @@ class ListWallets200Response(BaseModel):
                     else None
                 ),
                 "count": obj.get("count"),
-                "balances": (
-                    [
-                        ListWallets200ResponseBalancesInner.from_dict(_item)
-                        for _item in obj["balances"]
-                    ]
-                    if obj.get("balances") is not None
-                    else None
-                ),
-                "userValue": (
-                    ListWallets200ResponseUserValue.from_dict(obj["userValue"])
-                    if obj.get("userValue") is not None
-                    else None
-                ),
             }
         )
         return _obj

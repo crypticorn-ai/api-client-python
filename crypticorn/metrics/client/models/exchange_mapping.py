@@ -21,7 +21,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.metrics.client.models.market_type import MarketType
 from crypticorn.metrics.client.models.trading_status import TradingStatus
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 

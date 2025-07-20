@@ -1,7 +1,11 @@
 import json
 from typing import Union
 
-from crypticorn.auth import AuthClient, Configuration, Verify200Response
+from crypticorn.auth import (
+    AuthClient,
+    Configuration,
+    CreateUser200ResponseAuthAuth as Verify200Response,
+)
 from crypticorn.auth.client.exceptions import ApiException
 from crypticorn.common.exceptions import (
     ApiError,
@@ -9,7 +13,6 @@ from crypticorn.common.exceptions import (
     HTTPException,
 )
 from crypticorn.common.scopes import Scope
-from crypticorn.common.urls import ApiVersion, BaseUrl, Service
 from fastapi import Depends, Query
 from fastapi.security import (
     APIKeyHeader,
@@ -57,17 +60,20 @@ class AuthHandler:
 
     def __init__(
         self,
-        base_url: BaseUrl = BaseUrl.PROD,
+        base_url: str = None,
     ):
-        self.url = f"{base_url}/{ApiVersion.V1}/{Service.AUTH}"
+        self.base_url = (
+            base_url.rstrip("/") if base_url else "https://api.crypticorn.com"
+        )
+        self.url = f"{self.base_url}/v1/auth"
         self.client = AuthClient(Configuration(host=self.url), is_sync=False)
 
     async def _verify_api_key(self, api_key: str) -> Verify200Response:
         """
         Verifies the API key.
         """
-        # self.client.config.api_key = {apikey_header.scheme_name: api_key}
-        return await self.client.login.verify_api_key(api_key)
+        self.client.config.api_key = {"APIKeyHeader": api_key}
+        return await self.client.login.verify()
 
     async def _verify_bearer(
         self, bearer: HTTPAuthorizationCredentials

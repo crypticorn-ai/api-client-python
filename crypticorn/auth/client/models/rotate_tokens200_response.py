@@ -19,8 +19,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from crypticorn.auth.client.models.verify_email200_response_auth_auth import (
-    VerifyEmail200ResponseAuthAuth,
+from crypticorn.auth.client.models.create_user200_response_auth_auth import (
+    CreateUser200ResponseAuthAuth,
 )
 from typing import Optional, Set
 from typing_extensions import Self
@@ -33,7 +33,7 @@ class RotateTokens200Response(BaseModel):
 
     access_token: Optional[StrictStr] = Field(default=None, alias="accessToken")
     refresh_token: Optional[StrictStr] = Field(default=None, alias="refreshToken")
-    auth: Optional[VerifyEmail200ResponseAuthAuth] = None
+    auth: Optional[CreateUser200ResponseAuthAuth] = None
     token_expires_at: Optional[Union[StrictFloat, StrictInt]] = Field(
         default=None, alias="tokenExpiresAt"
     )
@@ -100,7 +100,7 @@ class RotateTokens200Response(BaseModel):
                 "accessToken": obj.get("accessToken"),
                 "refreshToken": obj.get("refreshToken"),
                 "auth": (
-                    VerifyEmail200ResponseAuthAuth.from_dict(obj["auth"])
+                    CreateUser200ResponseAuthAuth.from_dict(obj["auth"])
                     if obj.get("auth") is not None
                     else None
                 ),

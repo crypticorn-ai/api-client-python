@@ -29,8 +29,8 @@ class UserByUsername200Response(BaseModel):
     """  # noqa: E501
 
     user_id: StrictStr = Field(alias="userId")
-    username: Optional[StrictStr] = None
-    name: Optional[StrictStr] = None
+    username: Optional[StrictStr]
+    name: Optional[StrictStr]
     __properties: ClassVar[List[str]] = ["userId", "username", "name"]
 
     model_config = ConfigDict(
@@ -70,6 +70,16 @@ class UserByUsername200Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if username (nullable) is None
+        # and model_fields_set contains the field
+        if self.username is None and "username" in self.model_fields_set:
+            _dict["username"] = None
+
+        # set to None if name (nullable) is None
+        # and model_fields_set contains the field
+        if self.name is None and "name" in self.model_fields_set:
+            _dict["name"] = None
+
         return _dict
 
     @classmethod

@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class DataVersion(str, Enum):
     """
-    All existing data versions
+    Available data versions for AI model training datasets.
     """
 
     """
