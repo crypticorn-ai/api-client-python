@@ -24,6 +24,7 @@ from crypticorn.trade.client.models.bot_status import BotStatus
 from crypticorn.trade.client.models.bot_update import BotUpdate
 from crypticorn.trade.client.models.exception_detail import ExceptionDetail
 from crypticorn.trade.client.models.exchange import Exchange
+from crypticorn.trade.client.models.exchange_info import ExchangeInfo
 from crypticorn.trade.client.models.exchange_key import ExchangeKey
 from crypticorn.trade.client.models.exchange_key_balance import ExchangeKeyBalance
 from crypticorn.trade.client.models.exchange_key_create import ExchangeKeyCreate
