@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
@@ -25,11 +25,13 @@ from typing_extensions import Self
 
 class SymbolType(BaseModel):
     """
-    SymbolType
+    Symbol type definition for UDF data feed configuration.
     """  # noqa: E501
 
-    name: StrictStr
-    value: StrictStr
+    name: StrictStr = Field(description="Display name of the symbol type")
+    value: StrictStr = Field(
+        description="Internal value identifier for the symbol type"
+    )
     __properties: ClassVar[List[str]] = ["name", "value"]
 
     model_config = ConfigDict(

@@ -17,31 +17,24 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List
+from crypticorn.auth.client.models.create_user200_response_auth_auth import (
+    CreateUser200ResponseAuthAuth,
+)
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class OauthCallback200ResponseUser(BaseModel):
+class CreateUser200ResponseAuth(BaseModel):
     """
-    OauthCallback200ResponseUser
+    CreateUser200ResponseAuth
     """  # noqa: E501
 
-    email: StrictStr
-    id: StrictStr
-    name: Optional[StrictStr] = None
-    picture: Optional[StrictStr] = None
-    username: Optional[StrictStr] = None
-    phone: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = [
-        "email",
-        "id",
-        "name",
-        "picture",
-        "username",
-        "phone",
-    ]
+    access_token: StrictStr = Field(alias="accessToken")
+    refresh_token: StrictStr = Field(alias="refreshToken")
+    auth: CreateUser200ResponseAuthAuth
+    __properties: ClassVar[List[str]] = ["accessToken", "refreshToken", "auth"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -60,7 +53,7 @@ class OauthCallback200ResponseUser(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of OauthCallback200ResponseUser from a JSON string"""
+        """Create an instance of CreateUser200ResponseAuth from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -80,11 +73,14 @@ class OauthCallback200ResponseUser(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of auth
+        if self.auth:
+            _dict["auth"] = self.auth.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of OauthCallback200ResponseUser from a dict"""
+        """Create an instance of CreateUser200ResponseAuth from a dict"""
         if obj is None:
             return None
 
@@ -93,12 +89,13 @@ class OauthCallback200ResponseUser(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "email": obj.get("email"),
-                "id": obj.get("id"),
-                "name": obj.get("name"),
-                "picture": obj.get("picture"),
-                "username": obj.get("username"),
-                "phone": obj.get("phone"),
+                "accessToken": obj.get("accessToken"),
+                "refreshToken": obj.get("refreshToken"),
+                "auth": (
+                    CreateUser200ResponseAuthAuth.from_dict(obj["auth"])
+                    if obj.get("auth") is not None
+                    else None
+                ),
             }
         )
         return _obj

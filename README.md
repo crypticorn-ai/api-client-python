@@ -40,12 +40,8 @@ You can either explore each API by clicking through the library or checkout the 
 Request and response models for API operations should be accessed through the sub package you are using for an operation. All symbols are re-exported at the sub package level for convenience.
 
 ```python
-from crypticorn.trade import BotStatus
-```
-
-The `common` submodule contains shared classes not bound to a specific API.
-```python
-from crypticorn.common import Scope, Exchange
+from crypticorn.trade import BotCreate
+from crypticorn.klines import MarketType
 ```
 
 ## Authentication
@@ -183,15 +179,14 @@ This might be of use if you are testing a specific API locally.
 To override e.g. the host for the Hive client to connect to localhost:8000 instead of the default proxy, you would do:
 ```python
 from crypticorn.hive import Configuration as HiveConfig
-from crypticorn.common import Service
 
 # Async client
 async with AsyncClient() as client:
-    client.configure(config=HiveConfig(host="http://localhost:8000"), service=Service.HIVE)
+    client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive-v1')
 
 # Sync client
 with SyncClient() as client:
-    client.configure(config=HiveConfig(host="http://localhost:8000"), service=Service.HIVE)
+    client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive-v1')
 ```
 
 ### Session Management
@@ -215,12 +210,3 @@ async def main():
 If you don’t pass a session, `AsyncClient` will create and manage one internally. In that case, it will be automatically closed when using `async with` or when calling `await client.close()` manually.
 
 **Note on Sync Client**: The `SyncClient` uses per-operation sessions (creates and closes a session for each API call) to ensure reliable synchronous behavior. Custom sessions are accepted but not used. This approach prevents event loop conflicts at the cost of slightly higher overhead per operation.
-
-### Disable Logging
-
-In case you don't want any logging statements by the `crypticorn` logger to be logged to stdout, you can disable it with:
-
-```python
-from crypticorn.common import disable_logging
-disable_logging()
-```

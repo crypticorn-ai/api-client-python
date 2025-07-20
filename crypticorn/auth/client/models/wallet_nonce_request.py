@@ -17,24 +17,45 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
-from crypticorn.auth.client.models.verify_email200_response_auth_auth import (
-    VerifyEmail200ResponseAuthAuth,
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictBool,
+    StrictFloat,
+    StrictInt,
+    StrictStr,
 )
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class AuthorizeUser200ResponseAuth(BaseModel):
+class WalletNonceRequest(BaseModel):
     """
-    AuthorizeUser200ResponseAuth
+    WalletNonceRequest
     """  # noqa: E501
 
-    access_token: StrictStr = Field(alias="accessToken")
-    refresh_token: StrictStr = Field(alias="refreshToken")
-    auth: VerifyEmail200ResponseAuthAuth
-    __properties: ClassVar[List[str]] = ["accessToken", "refreshToken", "auth"]
+    host: StrictStr
+    origin: StrictStr
+    address: StrictStr
+    chain_id: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=1, alias="chainId"
+    )
+    statement: Optional[StrictStr] = "Sign in with Ethereum wallet"
+    raise_if_new: Optional[StrictBool] = Field(
+        default=True,
+        description="If true, will raise an error if the wallet is not found",
+        alias="raiseIfNew",
+    )
+    __properties: ClassVar[List[str]] = [
+        "host",
+        "origin",
+        "address",
+        "chainId",
+        "statement",
+        "raiseIfNew",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +74,7 @@ class AuthorizeUser200ResponseAuth(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of AuthorizeUser200ResponseAuth from a JSON string"""
+        """Create an instance of WalletNonceRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,14 +94,11 @@ class AuthorizeUser200ResponseAuth(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of auth
-        if self.auth:
-            _dict["auth"] = self.auth.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of AuthorizeUser200ResponseAuth from a dict"""
+        """Create an instance of WalletNonceRequest from a dict"""
         if obj is None:
             return None
 
@@ -89,12 +107,17 @@ class AuthorizeUser200ResponseAuth(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "accessToken": obj.get("accessToken"),
-                "refreshToken": obj.get("refreshToken"),
-                "auth": (
-                    VerifyEmail200ResponseAuthAuth.from_dict(obj["auth"])
-                    if obj.get("auth") is not None
-                    else None
+                "host": obj.get("host"),
+                "origin": obj.get("origin"),
+                "address": obj.get("address"),
+                "chainId": obj.get("chainId") if obj.get("chainId") is not None else 1,
+                "statement": (
+                    obj.get("statement")
+                    if obj.get("statement") is not None
+                    else "Sign in with Ethereum wallet"
+                ),
+                "raiseIfNew": (
+                    obj.get("raiseIfNew") if obj.get("raiseIfNew") is not None else True
                 ),
             }
         )

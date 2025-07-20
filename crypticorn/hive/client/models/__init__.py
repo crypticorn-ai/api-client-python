@@ -29,7 +29,6 @@ from crypticorn.hive.client.models.evaluation import Evaluation
 from crypticorn.hive.client.models.evaluation_response import EvaluationResponse
 from crypticorn.hive.client.models.exception_detail import ExceptionDetail
 from crypticorn.hive.client.models.feature_size import FeatureSize
-from crypticorn.hive.client.models.log_level import LogLevel
 from crypticorn.hive.client.models.model_create import ModelCreate
 from crypticorn.hive.client.models.model_read import ModelRead
 from crypticorn.hive.client.models.model_status import ModelStatus

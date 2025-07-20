@@ -16,9 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictStr, field_validator
+from pydantic import StrictStr, field_validator
 from typing import Any, List, Optional
-from typing_extensions import Annotated
 from crypticorn.auth.client.models.authorize_user200_response import (
     AuthorizeUser200Response,
 )
@@ -27,11 +26,11 @@ from crypticorn.auth.client.models.create_api_key200_response import (
     CreateApiKey200Response,
 )
 from crypticorn.auth.client.models.create_api_key_request import CreateApiKeyRequest
+from crypticorn.auth.client.models.create_user200_response_auth_auth import (
+    CreateUser200ResponseAuthAuth,
+)
 from crypticorn.auth.client.models.get_api_keys200_response_inner import (
     GetApiKeys200ResponseInner,
-)
-from crypticorn.auth.client.models.oauth_callback200_response import (
-    OauthCallback200Response,
 )
 from crypticorn.auth.client.models.refresh_token_info200_response import (
     RefreshTokenInfo200Response,
@@ -40,7 +39,6 @@ from crypticorn.auth.client.models.rotate_tokens200_response import (
     RotateTokens200Response,
 )
 from crypticorn.auth.client.models.token_info200_response import TokenInfo200Response
-from crypticorn.auth.client.models.verify200_response import Verify200Response
 
 from crypticorn.auth.client.api_client import ApiClient, RequestSerialized
 from crypticorn.auth.client.api_response import ApiResponse
@@ -244,6 +242,10 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "AuthorizeUser200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -308,6 +310,10 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "AuthorizeUser200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -371,6 +377,10 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "AuthorizeUser200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -503,7 +513,7 @@ class AuthApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -686,6 +696,10 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CreateApiKey200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -750,6 +764,10 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CreateApiKey200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -813,6 +831,10 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "CreateApiKey200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -945,7 +967,7 @@ class AuthApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -1128,6 +1150,11 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1192,6 +1219,11 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1255,6 +1287,11 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1379,7 +1416,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="DELETE",
@@ -1549,6 +1586,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[GetApiKeys200ResponseInner]",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1609,6 +1649,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[GetApiKeys200ResponseInner]",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1668,6 +1711,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[GetApiKeys200ResponseInner]",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1781,7 +1827,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -1802,6 +1848,7 @@ class AuthApi:
     def get_google_auth_url(
         self,
         origin: StrictStr,
+        oob_code: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1818,6 +1865,7 @@ class AuthApi:
         if self.is_sync:
             return self._get_google_auth_url_sync(
                 origin=origin,
+                oob_code=oob_code,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1828,6 +1876,7 @@ class AuthApi:
         else:
             return self._get_google_auth_url_async(
                 origin=origin,
+                oob_code=oob_code,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1839,6 +1888,7 @@ class AuthApi:
     def get_google_auth_url_with_http_info(
         self,
         origin: StrictStr,
+        oob_code: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1855,6 +1905,7 @@ class AuthApi:
         if self.is_sync:
             return self._get_google_auth_url_sync_with_http_info(
                 origin=origin,
+                oob_code=oob_code,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1865,6 +1916,7 @@ class AuthApi:
         else:
             return self._get_google_auth_url_async_with_http_info(
                 origin=origin,
+                oob_code=oob_code,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1876,6 +1928,7 @@ class AuthApi:
     def get_google_auth_url_without_preload_content(
         self,
         origin: StrictStr,
+        oob_code: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1892,6 +1945,7 @@ class AuthApi:
         if self.is_sync:
             return self._get_google_auth_url_sync_without_preload_content(
                 origin=origin,
+                oob_code=oob_code,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1902,6 +1956,7 @@ class AuthApi:
         else:
             return self._get_google_auth_url_async_without_preload_content(
                 origin=origin,
+                oob_code=oob_code,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -1914,6 +1969,7 @@ class AuthApi:
     async def _get_google_auth_url_async(
         self,
         origin: StrictStr,
+        oob_code: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1932,6 +1988,8 @@ class AuthApi:
 
         :param origin: (required)
         :type origin: str
+        :param oob_code:
+        :type oob_code: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1956,6 +2014,7 @@ class AuthApi:
 
         _param = self._get_google_auth_url_serialize(
             origin=origin,
+            oob_code=oob_code,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1964,6 +2023,11 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "str",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -1978,6 +2042,7 @@ class AuthApi:
     async def _get_google_auth_url_async_with_http_info(
         self,
         origin: StrictStr,
+        oob_code: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1996,6 +2061,8 @@ class AuthApi:
 
         :param origin: (required)
         :type origin: str
+        :param oob_code:
+        :type oob_code: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2020,6 +2087,7 @@ class AuthApi:
 
         _param = self._get_google_auth_url_serialize(
             origin=origin,
+            oob_code=oob_code,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2028,6 +2096,11 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "str",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -2041,6 +2114,7 @@ class AuthApi:
     async def _get_google_auth_url_async_without_preload_content(
         self,
         origin: StrictStr,
+        oob_code: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2059,6 +2133,8 @@ class AuthApi:
 
         :param origin: (required)
         :type origin: str
+        :param oob_code:
+        :type oob_code: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2083,6 +2159,7 @@ class AuthApi:
 
         _param = self._get_google_auth_url_serialize(
             origin=origin,
+            oob_code=oob_code,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2091,6 +2168,11 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "str",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -2102,6 +2184,7 @@ class AuthApi:
     def _get_google_auth_url_sync(
         self,
         origin: StrictStr,
+        oob_code: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2117,6 +2200,7 @@ class AuthApi:
         """Synchronous version of get_google_auth_url"""
         return async_to_sync(self._get_google_auth_url_async)(
             origin=origin,
+            oob_code=oob_code,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2128,6 +2212,7 @@ class AuthApi:
     def _get_google_auth_url_sync_with_http_info(
         self,
         origin: StrictStr,
+        oob_code: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2143,6 +2228,7 @@ class AuthApi:
         """Synchronous version of get_google_auth_url_with_http_info"""
         return async_to_sync(self._get_google_auth_url_async_with_http_info)(
             origin=origin,
+            oob_code=oob_code,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2154,6 +2240,7 @@ class AuthApi:
     def _get_google_auth_url_sync_without_preload_content(
         self,
         origin: StrictStr,
+        oob_code: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2169,6 +2256,7 @@ class AuthApi:
         """Synchronous version of get_google_auth_url_without_preload_content"""
         return async_to_sync(self._get_google_auth_url_async_without_preload_content)(
             origin=origin,
+            oob_code=oob_code,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -2179,6 +2267,7 @@ class AuthApi:
     def _get_google_auth_url_serialize(
         self,
         origin,
+        oob_code,
         _request_auth,
         _content_type,
         _headers,
@@ -2204,6 +2293,10 @@ class AuthApi:
 
             _query_params.append(("origin", origin))
 
+        if oob_code is not None:
+
+            _query_params.append(("oobCode", oob_code))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -2215,7 +2308,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -2350,9 +2443,9 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[str]:
-        """Get User Scopes
+        """(Deprecated) Get User Scopes
 
-        Gets the scopes for the user.
+        Gets the scopes for the user. Deprecated, use /verify instead and get the scopes from the auth payload.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2375,6 +2468,7 @@ class AuthApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /get-user-scopes is deprecated.", DeprecationWarning)
 
         _param = self._get_user_scopes_serialize(
             _request_auth=_request_auth,
@@ -2385,6 +2479,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[str]",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -2410,9 +2507,9 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[str]]:
-        """Get User Scopes
+        """(Deprecated) Get User Scopes
 
-        Gets the scopes for the user.
+        Gets the scopes for the user. Deprecated, use /verify instead and get the scopes from the auth payload.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2435,6 +2532,7 @@ class AuthApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /get-user-scopes is deprecated.", DeprecationWarning)
 
         _param = self._get_user_scopes_serialize(
             _request_auth=_request_auth,
@@ -2445,6 +2543,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[str]",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -2469,9 +2570,9 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get User Scopes
+        """(Deprecated) Get User Scopes
 
-        Gets the scopes for the user.
+        Gets the scopes for the user. Deprecated, use /verify instead and get the scopes from the auth payload.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2494,6 +2595,7 @@ class AuthApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /get-user-scopes is deprecated.", DeprecationWarning)
 
         _param = self._get_user_scopes_serialize(
             _request_auth=_request_auth,
@@ -2504,6 +2606,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[str]",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -2617,7 +2722,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -2642,6 +2747,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2653,7 +2759,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> OauthCallback200Response:
+    ) -> AuthorizeUser200Response:
         """OAuth Callback"""
         if self.is_sync:
             return self._oauth_callback_sync(
@@ -2662,6 +2768,7 @@ class AuthApi:
                 authuser=authuser,
                 prompt=prompt,
                 origin=origin,
+                state=state,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -2676,6 +2783,7 @@ class AuthApi:
                 authuser=authuser,
                 prompt=prompt,
                 origin=origin,
+                state=state,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -2691,6 +2799,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2702,7 +2811,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[OauthCallback200Response]:
+    ) -> ApiResponse[AuthorizeUser200Response]:
         """OAuth Callback with HTTP info"""
         if self.is_sync:
             return self._oauth_callback_sync_with_http_info(
@@ -2711,6 +2820,7 @@ class AuthApi:
                 authuser=authuser,
                 prompt=prompt,
                 origin=origin,
+                state=state,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -2725,6 +2835,7 @@ class AuthApi:
                 authuser=authuser,
                 prompt=prompt,
                 origin=origin,
+                state=state,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -2740,6 +2851,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2760,6 +2872,7 @@ class AuthApi:
                 authuser=authuser,
                 prompt=prompt,
                 origin=origin,
+                state=state,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -2774,6 +2887,7 @@ class AuthApi:
                 authuser=authuser,
                 prompt=prompt,
                 origin=origin,
+                state=state,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -2790,6 +2904,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2801,7 +2916,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> OauthCallback200Response:
+    ) -> AuthorizeUser200Response:
         """OAuth Callback
 
         Handles the OAuth callback from Google.
@@ -2816,6 +2931,8 @@ class AuthApi:
         :type prompt: str
         :param origin: (required)
         :type origin: str
+        :param state:
+        :type state: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2844,6 +2961,7 @@ class AuthApi:
             authuser=authuser,
             prompt=prompt,
             origin=origin,
+            state=state,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2851,7 +2969,12 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "OauthCallback200Response",
+            "200": "AuthorizeUser200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -2870,6 +2993,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2881,7 +3005,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[OauthCallback200Response]:
+    ) -> ApiResponse[AuthorizeUser200Response]:
         """OAuth Callback
 
         Handles the OAuth callback from Google.
@@ -2896,6 +3020,8 @@ class AuthApi:
         :type prompt: str
         :param origin: (required)
         :type origin: str
+        :param state:
+        :type state: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2924,6 +3050,7 @@ class AuthApi:
             authuser=authuser,
             prompt=prompt,
             origin=origin,
+            state=state,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2931,7 +3058,12 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "OauthCallback200Response",
+            "200": "AuthorizeUser200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -2949,6 +3081,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2975,6 +3108,8 @@ class AuthApi:
         :type prompt: str
         :param origin: (required)
         :type origin: str
+        :param state:
+        :type state: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3003,6 +3138,7 @@ class AuthApi:
             authuser=authuser,
             prompt=prompt,
             origin=origin,
+            state=state,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3010,7 +3146,12 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "OauthCallback200Response",
+            "200": "AuthorizeUser200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -3026,6 +3167,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3037,7 +3179,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> OauthCallback200Response:
+    ) -> AuthorizeUser200Response:
         """Synchronous version of oauth_callback"""
         return async_to_sync(self._oauth_callback_async)(
             code=code,
@@ -3045,6 +3187,7 @@ class AuthApi:
             authuser=authuser,
             prompt=prompt,
             origin=origin,
+            state=state,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3060,6 +3203,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3071,7 +3215,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[OauthCallback200Response]:
+    ) -> ApiResponse[AuthorizeUser200Response]:
         """Synchronous version of oauth_callback_with_http_info"""
         return async_to_sync(self._oauth_callback_async_with_http_info)(
             code=code,
@@ -3079,6 +3223,7 @@ class AuthApi:
             authuser=authuser,
             prompt=prompt,
             origin=origin,
+            state=state,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3094,6 +3239,7 @@ class AuthApi:
         authuser: StrictStr,
         prompt: StrictStr,
         origin: StrictStr,
+        state: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3113,6 +3259,7 @@ class AuthApi:
             authuser=authuser,
             prompt=prompt,
             origin=origin,
+            state=state,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3127,6 +3274,7 @@ class AuthApi:
         authuser,
         prompt,
         origin,
+        state,
         _request_auth,
         _content_type,
         _headers,
@@ -3168,6 +3316,10 @@ class AuthApi:
 
             _query_params.append(("origin", origin))
 
+        if state is not None:
+
+            _query_params.append(("state", state))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -3179,7 +3331,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -3199,10 +3351,6 @@ class AuthApi:
     @validate_call
     def refresh_token_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3218,7 +3366,6 @@ class AuthApi:
         """Refresh token info"""
         if self.is_sync:
             return self._refresh_token_info_sync(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3228,7 +3375,6 @@ class AuthApi:
 
         else:
             return self._refresh_token_info_async(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3239,10 +3385,6 @@ class AuthApi:
     @validate_call
     def refresh_token_info_with_http_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3258,7 +3400,6 @@ class AuthApi:
         """Refresh token info with HTTP info"""
         if self.is_sync:
             return self._refresh_token_info_sync_with_http_info(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3268,7 +3409,6 @@ class AuthApi:
 
         else:
             return self._refresh_token_info_async_with_http_info(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3279,10 +3419,6 @@ class AuthApi:
     @validate_call
     def refresh_token_info_without_preload_content(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3298,7 +3434,6 @@ class AuthApi:
         """Refresh token info without preloading content"""
         if self.is_sync:
             return self._refresh_token_info_sync_without_preload_content(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3308,7 +3443,6 @@ class AuthApi:
 
         else:
             return self._refresh_token_info_async_without_preload_content(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3320,10 +3454,6 @@ class AuthApi:
     @validate_call
     async def _refresh_token_info_async(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3340,8 +3470,6 @@ class AuthApi:
 
         Returns the user session record of the refresh token.
 
-        :param x_refresh_token: The refresh token for rotating the access token.
-        :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3365,7 +3493,6 @@ class AuthApi:
         """  # noqa: E501
 
         _param = self._refresh_token_info_serialize(
-            x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3374,6 +3501,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "RefreshTokenInfo200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -3387,10 +3517,6 @@ class AuthApi:
     @validate_call
     async def _refresh_token_info_async_with_http_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3407,8 +3533,6 @@ class AuthApi:
 
         Returns the user session record of the refresh token.
 
-        :param x_refresh_token: The refresh token for rotating the access token.
-        :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3432,7 +3556,6 @@ class AuthApi:
         """  # noqa: E501
 
         _param = self._refresh_token_info_serialize(
-            x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3441,6 +3564,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "RefreshTokenInfo200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -3453,10 +3579,6 @@ class AuthApi:
     @validate_call
     async def _refresh_token_info_async_without_preload_content(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3473,8 +3595,6 @@ class AuthApi:
 
         Returns the user session record of the refresh token.
 
-        :param x_refresh_token: The refresh token for rotating the access token.
-        :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3498,7 +3618,6 @@ class AuthApi:
         """  # noqa: E501
 
         _param = self._refresh_token_info_serialize(
-            x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3507,6 +3626,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "RefreshTokenInfo200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -3517,10 +3639,6 @@ class AuthApi:
     @validate_call
     def _refresh_token_info_sync(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3535,7 +3653,6 @@ class AuthApi:
     ) -> RefreshTokenInfo200Response:
         """Synchronous version of refresh_token_info"""
         return async_to_sync(self._refresh_token_info_async)(
-            x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3546,10 +3663,6 @@ class AuthApi:
     @validate_call
     def _refresh_token_info_sync_with_http_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3564,7 +3677,6 @@ class AuthApi:
     ) -> ApiResponse[RefreshTokenInfo200Response]:
         """Synchronous version of refresh_token_info_with_http_info"""
         return async_to_sync(self._refresh_token_info_async_with_http_info)(
-            x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3575,10 +3687,6 @@ class AuthApi:
     @validate_call
     def _refresh_token_info_sync_without_preload_content(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3593,7 +3701,6 @@ class AuthApi:
     ) -> RESTResponseType:
         """Synchronous version of refresh_token_info_without_preload_content"""
         return async_to_sync(self._refresh_token_info_async_without_preload_content)(
-            x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3603,7 +3710,6 @@ class AuthApi:
 
     def _refresh_token_info_serialize(
         self,
-        x_refresh_token,
         _request_auth,
         _content_type,
         _headers,
@@ -3626,8 +3732,6 @@ class AuthApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if x_refresh_token is not None:
-            _header_params["X-Refresh-Token"] = x_refresh_token
         # process the form parameters
         # process the body parameter
 
@@ -3638,7 +3742,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -3658,10 +3762,6 @@ class AuthApi:
     @validate_call
     def refresh_token_scopes(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3677,7 +3777,6 @@ class AuthApi:
         """Refresh token scopes"""
         if self.is_sync:
             return self._refresh_token_scopes_sync(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3687,7 +3786,6 @@ class AuthApi:
 
         else:
             return self._refresh_token_scopes_async(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3698,10 +3796,6 @@ class AuthApi:
     @validate_call
     def refresh_token_scopes_with_http_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3717,7 +3811,6 @@ class AuthApi:
         """Refresh token scopes with HTTP info"""
         if self.is_sync:
             return self._refresh_token_scopes_sync_with_http_info(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3727,7 +3820,6 @@ class AuthApi:
 
         else:
             return self._refresh_token_scopes_async_with_http_info(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3738,10 +3830,6 @@ class AuthApi:
     @validate_call
     def refresh_token_scopes_without_preload_content(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3757,7 +3845,6 @@ class AuthApi:
         """Refresh token scopes without preloading content"""
         if self.is_sync:
             return self._refresh_token_scopes_sync_without_preload_content(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3767,7 +3854,6 @@ class AuthApi:
 
         else:
             return self._refresh_token_scopes_async_without_preload_content(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3779,10 +3865,6 @@ class AuthApi:
     @validate_call
     async def _refresh_token_scopes_async(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3799,8 +3881,6 @@ class AuthApi:
 
         Refresh token scopes for a given user and a valid access token and a valid refresh token. This manually re-creates the access token with the latest scopes, in case the user changed their subscription status, access to certain features.
 
-        :param x_refresh_token: The refresh token for rotating the access token.
-        :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3824,7 +3904,6 @@ class AuthApi:
         """  # noqa: E501
 
         _param = self._refresh_token_scopes_serialize(
-            x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3833,6 +3912,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "RotateTokens200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -3846,10 +3928,6 @@ class AuthApi:
     @validate_call
     async def _refresh_token_scopes_async_with_http_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3866,8 +3944,6 @@ class AuthApi:
 
         Refresh token scopes for a given user and a valid access token and a valid refresh token. This manually re-creates the access token with the latest scopes, in case the user changed their subscription status, access to certain features.
 
-        :param x_refresh_token: The refresh token for rotating the access token.
-        :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3891,7 +3967,6 @@ class AuthApi:
         """  # noqa: E501
 
         _param = self._refresh_token_scopes_serialize(
-            x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3900,6 +3975,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "RotateTokens200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -3912,10 +3990,6 @@ class AuthApi:
     @validate_call
     async def _refresh_token_scopes_async_without_preload_content(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3932,8 +4006,6 @@ class AuthApi:
 
         Refresh token scopes for a given user and a valid access token and a valid refresh token. This manually re-creates the access token with the latest scopes, in case the user changed their subscription status, access to certain features.
 
-        :param x_refresh_token: The refresh token for rotating the access token.
-        :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3957,7 +4029,6 @@ class AuthApi:
         """  # noqa: E501
 
         _param = self._refresh_token_scopes_serialize(
-            x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3966,6 +4037,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "RotateTokens200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -3976,10 +4050,6 @@ class AuthApi:
     @validate_call
     def _refresh_token_scopes_sync(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3994,7 +4064,6 @@ class AuthApi:
     ) -> RotateTokens200Response:
         """Synchronous version of refresh_token_scopes"""
         return async_to_sync(self._refresh_token_scopes_async)(
-            x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -4005,10 +4074,6 @@ class AuthApi:
     @validate_call
     def _refresh_token_scopes_sync_with_http_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4023,7 +4088,6 @@ class AuthApi:
     ) -> ApiResponse[RotateTokens200Response]:
         """Synchronous version of refresh_token_scopes_with_http_info"""
         return async_to_sync(self._refresh_token_scopes_async_with_http_info)(
-            x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -4034,10 +4098,6 @@ class AuthApi:
     @validate_call
     def _refresh_token_scopes_sync_without_preload_content(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4052,7 +4112,6 @@ class AuthApi:
     ) -> RESTResponseType:
         """Synchronous version of refresh_token_scopes_without_preload_content"""
         return async_to_sync(self._refresh_token_scopes_async_without_preload_content)(
-            x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -4062,7 +4121,6 @@ class AuthApi:
 
     def _refresh_token_scopes_serialize(
         self,
-        x_refresh_token,
         _request_auth,
         _content_type,
         _headers,
@@ -4085,8 +4143,6 @@ class AuthApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if x_refresh_token is not None:
-            _header_params["X-Refresh-Token"] = x_refresh_token
         # process the form parameters
         # process the body parameter
 
@@ -4097,7 +4153,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -4117,10 +4173,6 @@ class AuthApi:
     @validate_call
     def rotate_tokens(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4136,7 +4188,6 @@ class AuthApi:
         """Rotate tokens"""
         if self.is_sync:
             return self._rotate_tokens_sync(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4146,7 +4197,6 @@ class AuthApi:
 
         else:
             return self._rotate_tokens_async(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4157,10 +4207,6 @@ class AuthApi:
     @validate_call
     def rotate_tokens_with_http_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4176,7 +4222,6 @@ class AuthApi:
         """Rotate tokens with HTTP info"""
         if self.is_sync:
             return self._rotate_tokens_sync_with_http_info(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4186,7 +4231,6 @@ class AuthApi:
 
         else:
             return self._rotate_tokens_async_with_http_info(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4197,10 +4241,6 @@ class AuthApi:
     @validate_call
     def rotate_tokens_without_preload_content(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4216,7 +4256,6 @@ class AuthApi:
         """Rotate tokens without preloading content"""
         if self.is_sync:
             return self._rotate_tokens_sync_without_preload_content(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4226,7 +4265,6 @@ class AuthApi:
 
         else:
             return self._rotate_tokens_async_without_preload_content(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4238,10 +4276,6 @@ class AuthApi:
     @validate_call
     async def _rotate_tokens_async(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4258,8 +4292,6 @@ class AuthApi:
 
         Handles token rotation for user authentication. If access token is expired: Uses refresh token to generate a new access token. If access token is still valid: Extends (slides) the current token's expiration date. Returns both updated access and refresh tokens.
 
-        :param x_refresh_token: The refresh token for rotating the access token.
-        :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4283,7 +4315,6 @@ class AuthApi:
         """  # noqa: E501
 
         _param = self._rotate_tokens_serialize(
-            x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4292,6 +4323,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "RotateTokens200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -4305,10 +4339,6 @@ class AuthApi:
     @validate_call
     async def _rotate_tokens_async_with_http_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4325,8 +4355,6 @@ class AuthApi:
 
         Handles token rotation for user authentication. If access token is expired: Uses refresh token to generate a new access token. If access token is still valid: Extends (slides) the current token's expiration date. Returns both updated access and refresh tokens.
 
-        :param x_refresh_token: The refresh token for rotating the access token.
-        :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4350,7 +4378,6 @@ class AuthApi:
         """  # noqa: E501
 
         _param = self._rotate_tokens_serialize(
-            x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4359,6 +4386,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "RotateTokens200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -4371,10 +4401,6 @@ class AuthApi:
     @validate_call
     async def _rotate_tokens_async_without_preload_content(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4391,8 +4417,6 @@ class AuthApi:
 
         Handles token rotation for user authentication. If access token is expired: Uses refresh token to generate a new access token. If access token is still valid: Extends (slides) the current token's expiration date. Returns both updated access and refresh tokens.
 
-        :param x_refresh_token: The refresh token for rotating the access token.
-        :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4416,7 +4440,6 @@ class AuthApi:
         """  # noqa: E501
 
         _param = self._rotate_tokens_serialize(
-            x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4425,6 +4448,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "RotateTokens200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -4435,10 +4461,6 @@ class AuthApi:
     @validate_call
     def _rotate_tokens_sync(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4453,7 +4475,6 @@ class AuthApi:
     ) -> RotateTokens200Response:
         """Synchronous version of rotate_tokens"""
         return async_to_sync(self._rotate_tokens_async)(
-            x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -4464,10 +4485,6 @@ class AuthApi:
     @validate_call
     def _rotate_tokens_sync_with_http_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4482,7 +4499,6 @@ class AuthApi:
     ) -> ApiResponse[RotateTokens200Response]:
         """Synchronous version of rotate_tokens_with_http_info"""
         return async_to_sync(self._rotate_tokens_async_with_http_info)(
-            x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -4493,10 +4509,6 @@ class AuthApi:
     @validate_call
     def _rotate_tokens_sync_without_preload_content(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4511,7 +4523,6 @@ class AuthApi:
     ) -> RESTResponseType:
         """Synchronous version of rotate_tokens_without_preload_content"""
         return async_to_sync(self._rotate_tokens_async_without_preload_content)(
-            x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -4521,7 +4532,6 @@ class AuthApi:
 
     def _rotate_tokens_serialize(
         self,
-        x_refresh_token,
         _request_auth,
         _content_type,
         _headers,
@@ -4544,8 +4554,6 @@ class AuthApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if x_refresh_token is not None:
-            _header_params["X-Refresh-Token"] = x_refresh_token
         # process the form parameters
         # process the body parameter
 
@@ -4556,7 +4564,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -4576,10 +4584,6 @@ class AuthApi:
     @validate_call
     def token_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4595,7 +4599,6 @@ class AuthApi:
         """Token info"""
         if self.is_sync:
             return self._token_info_sync(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4605,7 +4608,6 @@ class AuthApi:
 
         else:
             return self._token_info_async(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4616,10 +4618,6 @@ class AuthApi:
     @validate_call
     def token_info_with_http_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4635,7 +4633,6 @@ class AuthApi:
         """Token info with HTTP info"""
         if self.is_sync:
             return self._token_info_sync_with_http_info(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4645,7 +4642,6 @@ class AuthApi:
 
         else:
             return self._token_info_async_with_http_info(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4656,10 +4652,6 @@ class AuthApi:
     @validate_call
     def token_info_without_preload_content(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4675,7 +4667,6 @@ class AuthApi:
         """Token info without preloading content"""
         if self.is_sync:
             return self._token_info_sync_without_preload_content(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4685,7 +4676,6 @@ class AuthApi:
 
         else:
             return self._token_info_async_without_preload_content(
-                x_refresh_token=x_refresh_token,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -4697,10 +4687,6 @@ class AuthApi:
     @validate_call
     async def _token_info_async(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4717,8 +4703,6 @@ class AuthApi:
 
         Returns the payload of the access token.
 
-        :param x_refresh_token: The refresh token for rotating the access token.
-        :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4742,7 +4726,6 @@ class AuthApi:
         """  # noqa: E501
 
         _param = self._token_info_serialize(
-            x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4751,6 +4734,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TokenInfo200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -4764,10 +4750,6 @@ class AuthApi:
     @validate_call
     async def _token_info_async_with_http_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4784,8 +4766,6 @@ class AuthApi:
 
         Returns the payload of the access token.
 
-        :param x_refresh_token: The refresh token for rotating the access token.
-        :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4809,7 +4789,6 @@ class AuthApi:
         """  # noqa: E501
 
         _param = self._token_info_serialize(
-            x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4818,6 +4797,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TokenInfo200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -4830,10 +4812,6 @@ class AuthApi:
     @validate_call
     async def _token_info_async_without_preload_content(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4850,8 +4828,6 @@ class AuthApi:
 
         Returns the payload of the access token.
 
-        :param x_refresh_token: The refresh token for rotating the access token.
-        :type x_refresh_token: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4875,7 +4851,6 @@ class AuthApi:
         """  # noqa: E501
 
         _param = self._token_info_serialize(
-            x_refresh_token=x_refresh_token,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4884,6 +4859,9 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "TokenInfo200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -4894,10 +4872,6 @@ class AuthApi:
     @validate_call
     def _token_info_sync(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4912,7 +4886,6 @@ class AuthApi:
     ) -> TokenInfo200Response:
         """Synchronous version of token_info"""
         return async_to_sync(self._token_info_async)(
-            x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -4923,10 +4896,6 @@ class AuthApi:
     @validate_call
     def _token_info_sync_with_http_info(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4941,7 +4910,6 @@ class AuthApi:
     ) -> ApiResponse[TokenInfo200Response]:
         """Synchronous version of token_info_with_http_info"""
         return async_to_sync(self._token_info_async_with_http_info)(
-            x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -4952,10 +4920,6 @@ class AuthApi:
     @validate_call
     def _token_info_sync_without_preload_content(
         self,
-        x_refresh_token: Annotated[
-            Optional[StrictStr],
-            Field(description="The refresh token for rotating the access token."),
-        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4970,7 +4934,6 @@ class AuthApi:
     ) -> RESTResponseType:
         """Synchronous version of token_info_without_preload_content"""
         return async_to_sync(self._token_info_async_without_preload_content)(
-            x_refresh_token=x_refresh_token,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -4980,7 +4943,6 @@ class AuthApi:
 
     def _token_info_serialize(
         self,
-        x_refresh_token,
         _request_auth,
         _content_type,
         _headers,
@@ -5003,8 +4965,6 @@ class AuthApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if x_refresh_token is not None:
-            _header_params["X-Refresh-Token"] = x_refresh_token
         # process the form parameters
         # process the body parameter
 
@@ -5015,7 +4975,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -5046,8 +5006,8 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Verify200Response:
-        """Verify Bearer Token"""
+    ) -> CreateUser200ResponseAuthAuth:
+        """Verify Authentication"""
         if self.is_sync:
             return self._verify_sync(
                 _request_timeout=_request_timeout,
@@ -5080,8 +5040,8 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Verify200Response]:
-        """Verify Bearer Token with HTTP info"""
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
+        """Verify Authentication with HTTP info"""
         if self.is_sync:
             return self._verify_sync_with_http_info(
                 _request_timeout=_request_timeout,
@@ -5115,7 +5075,7 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Verify Bearer Token without preloading content"""
+        """Verify Authentication without preloading content"""
         if self.is_sync:
             return self._verify_sync_without_preload_content(
                 _request_timeout=_request_timeout,
@@ -5149,10 +5109,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Verify200Response:
-        """Verify Bearer Token
+    ) -> CreateUser200ResponseAuthAuth:
+        """Verify Authentication
 
-        Verifies the bearer token is valid.
+        Verifies the authentication is valid. Returns the auth payload or raises an error.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -5184,7 +5144,10 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Verify200Response",
+            "200": "CreateUser200ResponseAuthAuth",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -5209,10 +5172,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Verify200Response]:
-        """Verify Bearer Token
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
+        """Verify Authentication
 
-        Verifies the bearer token is valid.
+        Verifies the authentication is valid. Returns the auth payload or raises an error.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -5244,7 +5207,10 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Verify200Response",
+            "200": "CreateUser200ResponseAuthAuth",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -5269,9 +5235,9 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Verify Bearer Token
+        """Verify Authentication
 
-        Verifies the bearer token is valid.
+        Verifies the authentication is valid. Returns the auth payload or raises an error.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -5303,7 +5269,10 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Verify200Response",
+            "200": "CreateUser200ResponseAuthAuth",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -5325,7 +5294,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Verify200Response:
+    ) -> CreateUser200ResponseAuthAuth:
         """Synchronous version of verify"""
         return async_to_sync(self._verify_async)(
             _request_timeout=_request_timeout,
@@ -5349,7 +5318,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Verify200Response]:
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
         """Synchronous version of verify_with_http_info"""
         return async_to_sync(self._verify_async_with_http_info)(
             _request_timeout=_request_timeout,
@@ -5417,7 +5386,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -5449,7 +5418,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Verify200Response:
+    ) -> CreateUser200ResponseAuthAuth:
         """Verify API Key"""
         if self.is_sync:
             return self._verify_api_key_sync(
@@ -5486,7 +5455,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Verify200Response]:
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
         """Verify API Key with HTTP info"""
         if self.is_sync:
             return self._verify_api_key_sync_with_http_info(
@@ -5561,10 +5530,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Verify200Response:
-        """Verify API Key
+    ) -> CreateUser200ResponseAuthAuth:
+        """(Deprecated) Verify API Key
 
-        Verifies the API key is valid.
+        Verifies the API key is valid. Deprecated, use /verify instead.
 
         :param api_key: (required)
         :type api_key: str
@@ -5589,6 +5558,7 @@ class AuthApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /verify-api-key is deprecated.", DeprecationWarning)
 
         _param = self._verify_api_key_serialize(
             api_key=api_key,
@@ -5599,7 +5569,12 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Verify200Response",
+            "200": "CreateUser200ResponseAuthAuth",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -5625,10 +5600,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Verify200Response]:
-        """Verify API Key
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
+        """(Deprecated) Verify API Key
 
-        Verifies the API key is valid.
+        Verifies the API key is valid. Deprecated, use /verify instead.
 
         :param api_key: (required)
         :type api_key: str
@@ -5653,6 +5628,7 @@ class AuthApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /verify-api-key is deprecated.", DeprecationWarning)
 
         _param = self._verify_api_key_serialize(
             api_key=api_key,
@@ -5663,7 +5639,12 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Verify200Response",
+            "200": "CreateUser200ResponseAuthAuth",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -5689,9 +5670,9 @@ class AuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Verify API Key
+        """(Deprecated) Verify API Key
 
-        Verifies the API key is valid.
+        Verifies the API key is valid. Deprecated, use /verify instead.
 
         :param api_key: (required)
         :type api_key: str
@@ -5716,6 +5697,7 @@ class AuthApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /verify-api-key is deprecated.", DeprecationWarning)
 
         _param = self._verify_api_key_serialize(
             api_key=api_key,
@@ -5726,7 +5708,12 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Verify200Response",
+            "200": "CreateUser200ResponseAuthAuth",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -5749,7 +5736,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Verify200Response:
+    ) -> CreateUser200ResponseAuthAuth:
         """Synchronous version of verify_api_key"""
         return async_to_sync(self._verify_api_key_async)(
             api_key=api_key,
@@ -5775,7 +5762,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Verify200Response]:
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
         """Synchronous version of verify_api_key_with_http_info"""
         return async_to_sync(self._verify_api_key_async_with_http_info)(
             api_key=api_key,
@@ -5851,7 +5838,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",
@@ -5884,7 +5871,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Verify200Response:
+    ) -> CreateUser200ResponseAuthAuth:
         """Verify Basic Auth"""
         if self.is_sync:
             return self._verify_basic_auth_sync(
@@ -5924,7 +5911,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Verify200Response]:
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
         """Verify Basic Auth with HTTP info"""
         if self.is_sync:
             return self._verify_basic_auth_sync_with_http_info(
@@ -6005,7 +5992,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Verify200Response:
+    ) -> CreateUser200ResponseAuthAuth:
         """Verify Basic Auth
 
         Verifies the basic authentication credentials.
@@ -6046,7 +6033,12 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Verify200Response",
+            "200": "CreateUser200ResponseAuthAuth",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -6073,7 +6065,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Verify200Response]:
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
         """Verify Basic Auth
 
         Verifies the basic authentication credentials.
@@ -6114,7 +6106,12 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Verify200Response",
+            "200": "CreateUser200ResponseAuthAuth",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -6181,7 +6178,12 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Verify200Response",
+            "200": "CreateUser200ResponseAuthAuth",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -6205,7 +6207,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Verify200Response:
+    ) -> CreateUser200ResponseAuthAuth:
         """Synchronous version of verify_basic_auth"""
         return async_to_sync(self._verify_basic_auth_async)(
             username=username,
@@ -6233,7 +6235,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Verify200Response]:
+    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
         """Synchronous version of verify_basic_auth_with_http_info"""
         return async_to_sync(self._verify_basic_auth_async_with_http_info)(
             username=username,
@@ -6317,7 +6319,7 @@ class AuthApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",

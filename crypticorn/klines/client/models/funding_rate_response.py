@@ -26,7 +26,7 @@ from typing_extensions import Self
 
 class FundingRateResponse(BaseModel):
     """
-    Response model for fetching funding rates
+    Response containing historical funding rates for a specific trading symbol.
     """  # noqa: E501
 
     symbol: StrictStr = Field(description="The symbol of the funding rate")

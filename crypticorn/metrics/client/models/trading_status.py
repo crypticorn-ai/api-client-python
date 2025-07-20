@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class TradingStatus(str, Enum):
     """
-    TradingStatus
+    Trading status indicators for market availability and lifecycle management.
     """
 
     """

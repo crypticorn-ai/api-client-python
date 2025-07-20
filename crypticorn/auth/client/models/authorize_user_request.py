@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Any, ClassVar, Dict, List
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
@@ -35,13 +35,10 @@ class AuthorizeUserRequest(BaseModel):
     password: Annotated[str, Field(min_length=1, strict=True)] = Field(
         description="Password of the user"
     )
-    admin: Optional[StrictBool] = Field(
-        default=None, description="Whether the user is an admin"
-    )
     captcha_token: Annotated[str, Field(min_length=1, strict=True)] = Field(
         description="Captcha token of the authorization request", alias="captchaToken"
     )
-    __properties: ClassVar[List[str]] = ["email", "password", "admin", "captchaToken"]
+    __properties: ClassVar[List[str]] = ["email", "password", "captchaToken"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -95,7 +92,6 @@ class AuthorizeUserRequest(BaseModel):
             {
                 "email": obj.get("email"),
                 "password": obj.get("password"),
-                "admin": obj.get("admin"),
                 "captchaToken": obj.get("captchaToken"),
             }
         )

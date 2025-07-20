@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class TimeInterval(str, Enum):
     """
-    TimeInterval
+    Time interval options for aggregating market data and technical indicators.
     """
 
     """

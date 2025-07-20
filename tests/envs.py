@@ -40,7 +40,7 @@ async def generate_api_key(
             CreateApiKeyRequest(
                 name=f"pytest-{gen_random_id()}",
                 scopes=scopes,
-                expires_at=expires_at,
+                expires_at=expires_at.isoformat() if expires_at else None,
             )
         )
         return res.api_key
@@ -73,7 +73,9 @@ VALID_JWT = asyncio.run(
     generate_valid_jwt(user_id="user-without-read-predictions")
 )  # dummy user since the USER_ID has access to the predictions ($300+)
 VALID_PREDICTION_JWT = asyncio.run(
-    generate_valid_jwt(user_id=USER_ID, scopes=Scope.purchaseable_scopes())
+    generate_valid_jwt(
+        user_id="user-with-read-predictions", scopes=[Scope.READ_PREDICTIONS]
+    )
 )
 VALID_ADMIN_JWT = asyncio.run(
     generate_valid_jwt(

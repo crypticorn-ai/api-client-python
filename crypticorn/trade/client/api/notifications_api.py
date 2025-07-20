@@ -630,6 +630,7 @@ class NotificationsApi:
     ) -> None:
         """Delete Notification
 
+        Delete a notification
 
         :param id: (required)
         :type id: str
@@ -693,6 +694,7 @@ class NotificationsApi:
     ) -> ApiResponse[None]:
         """Delete Notification
 
+        Delete a notification
 
         :param id: (required)
         :type id: str
@@ -755,6 +757,7 @@ class NotificationsApi:
     ) -> RESTResponseType:
         """Delete Notification
 
+        Delete a notification
 
         :param id: (required)
         :type id: str

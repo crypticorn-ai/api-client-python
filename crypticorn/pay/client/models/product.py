@@ -28,7 +28,7 @@ from pydantic import (
 )
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from crypticorn.pay.client.models.scope import Scope
-from typing import Set
+from typing import Optional, Set
 from typing_extensions import Self
 
 
@@ -37,23 +37,31 @@ class Product(BaseModel):
     Model for reading a product
     """  # noqa: E501
 
+    id: StrictStr = Field(description="UID of the model")
+    created_at: StrictInt = Field(description="Timestamp of creation")
+    updated_at: StrictInt = Field(description="Timestamp of last update")
     name: StrictStr = Field(description="Product name")
     price: Union[StrictFloat, StrictInt] = Field(description="Product price")
-    scopes: Optional[List[Scope]] = None
+    scopes: Optional[List[Scope]]
     duration: StrictInt = Field(
         description="Product duration in days. 0 means forever."
     )
     description: StrictStr = Field(description="Product description")
     is_active: StrictBool = Field(description="Product is active")
-    id: StrictStr = Field(description="UID of the product")
+    images: Optional[List[StrictStr]]
+    original_price: Optional[Union[StrictFloat, StrictInt]]
     __properties: ClassVar[List[str]] = [
+        "id",
+        "created_at",
+        "updated_at",
         "name",
         "price",
         "scopes",
         "duration",
         "description",
         "is_active",
-        "id",
+        "images",
+        "original_price",
     ]
 
     model_config = ConfigDict(
@@ -98,6 +106,16 @@ class Product(BaseModel):
         if self.scopes is None and "scopes" in self.model_fields_set:
             _dict["scopes"] = None
 
+        # set to None if images (nullable) is None
+        # and model_fields_set contains the field
+        if self.images is None and "images" in self.model_fields_set:
+            _dict["images"] = None
+
+        # set to None if original_price (nullable) is None
+        # and model_fields_set contains the field
+        if self.original_price is None and "original_price" in self.model_fields_set:
+            _dict["original_price"] = None
+
         return _dict
 
     @classmethod
@@ -111,13 +129,17 @@ class Product(BaseModel):
 
         _obj = cls.model_validate(
             {
+                "id": obj.get("id"),
+                "created_at": obj.get("created_at"),
+                "updated_at": obj.get("updated_at"),
                 "name": obj.get("name"),
                 "price": obj.get("price"),
                 "scopes": obj.get("scopes"),
                 "duration": obj.get("duration"),
                 "description": obj.get("description"),
                 "is_active": obj.get("is_active"),
-                "id": obj.get("id"),
+                "images": obj.get("images"),
+                "original_price": obj.get("original_price"),
             }
         )
         return _obj

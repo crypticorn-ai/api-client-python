@@ -16,6 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
+from pydantic import StrictInt, StrictStr
+from typing import Any, List, Optional
 from crypticorn.klines.client.models.ohlcv import OHLCV
 from crypticorn.klines.client.models.resolution import Resolution
 from crypticorn.klines.client.models.search_symbol import SearchSymbol

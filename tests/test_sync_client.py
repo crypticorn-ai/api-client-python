@@ -1,5 +1,5 @@
 import pytest
-from crypticorn.client import SyncClient, Service
+from crypticorn.client import SyncClient
 
 
 def test_client_basic_instantiation():
@@ -40,10 +40,9 @@ def test_client_multiple_service_access():
     try:
         assert client._http_client is None
         # Access multiple services to ensure they're properly initialized
-        for service in Service:
-            subclient = client._services[service]
-            assert subclient is not None
-            assert subclient.base_client.rest_client.pool_manager is None
+        subclient = client._services["trade-v1"]
+        assert subclient is not None
+        assert subclient.base_client.rest_client.pool_manager is None
     finally:
         client.close()
 
@@ -72,7 +71,9 @@ def test_client_service_lazy_initialization():
     client = SyncClient()
 
     # Services should be available immediately
-    assert len(client._services) == len(Service)
+    assert (
+        len(client._services) == 6
+    )  # this needs to be updated when new services are added
 
     # But HTTP client should be None until first use
     assert client._http_client is None

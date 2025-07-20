@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class Coins(str, Enum):
     """
-    All existing coins. Some might no be available in the latest data version, but kept for older versions.
+    Cryptocurrency identifiers for AI training data. Uses obfuscated identifiers for public API access.
     """
 
     """

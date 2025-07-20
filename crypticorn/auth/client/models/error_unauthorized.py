@@ -17,32 +17,27 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Union
-from crypticorn.auth.client.models.list_wallets200_response_balances_inner import (
-    ListWallets200ResponseBalancesInner,
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from crypticorn.auth.client.models.revoke_user_tokens200_response import (
+    RevokeUserTokens200Response,
 )
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class ListWallets200ResponseUserValue(BaseModel):
+class ErrorUNAUTHORIZED(BaseModel):
     """
-    ListWallets200ResponseUserValue
+    The error information
     """  # noqa: E501
 
-    sum: Union[StrictFloat, StrictInt]
-    usd: Union[StrictFloat, StrictInt]
-    balances: List[ListWallets200ResponseBalancesInner]
-    access_minimum_usd: Union[StrictFloat, StrictInt] = Field(alias="accessMinimumUSD")
-    has_access: StrictBool = Field(alias="hasAccess")
-    __properties: ClassVar[List[str]] = [
-        "sum",
-        "usd",
-        "balances",
-        "accessMinimumUSD",
-        "hasAccess",
-    ]
+    message: StrictStr = Field(description="The error message")
+    code: StrictStr = Field(description="The error code")
+    issues: Optional[List[RevokeUserTokens200Response]] = Field(
+        default=None,
+        description="An array of issues that were responsible for the error",
+    )
+    __properties: ClassVar[List[str]] = ["message", "code", "issues"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -61,7 +56,7 @@ class ListWallets200ResponseUserValue(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ListWallets200ResponseUserValue from a JSON string"""
+        """Create an instance of ErrorUNAUTHORIZED from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -81,18 +76,18 @@ class ListWallets200ResponseUserValue(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in balances (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in issues (list)
         _items = []
-        if self.balances:
-            for _item_balances in self.balances:
-                if _item_balances:
-                    _items.append(_item_balances.to_dict())
-            _dict["balances"] = _items
+        if self.issues:
+            for _item_issues in self.issues:
+                if _item_issues:
+                    _items.append(_item_issues.to_dict())
+            _dict["issues"] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ListWallets200ResponseUserValue from a dict"""
+        """Create an instance of ErrorUNAUTHORIZED from a dict"""
         if obj is None:
             return None
 
@@ -101,18 +96,16 @@ class ListWallets200ResponseUserValue(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "sum": obj.get("sum"),
-                "usd": obj.get("usd"),
-                "balances": (
+                "message": obj.get("message"),
+                "code": obj.get("code"),
+                "issues": (
                     [
-                        ListWallets200ResponseBalancesInner.from_dict(_item)
-                        for _item in obj["balances"]
+                        RevokeUserTokens200Response.from_dict(_item)
+                        for _item in obj["issues"]
                     ]
-                    if obj.get("balances") is not None
+                    if obj.get("issues") is not None
                     else None
                 ),
-                "accessMinimumUSD": obj.get("accessMinimumUSD"),
-                "hasAccess": obj.get("hasAccess"),
             }
         )
         return _obj

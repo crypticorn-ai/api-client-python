@@ -30,7 +30,7 @@ from typing_extensions import Self
 
 class DataInfo(BaseModel):
     """
-    The complete data information for all versions, coins, feature sizes and targets
+    Comprehensive data catalog including all available datasets, versions, and metadata.
     """  # noqa: E501
 
     data: Dict[str, Dict[str, DataOptions]] = Field(

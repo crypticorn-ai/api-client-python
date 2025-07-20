@@ -27,7 +27,7 @@ from typing_extensions import Self
 
 class DataOptions(BaseModel):
     """
-    DataOptions
+    Available options for targets and feature sizes in the latest data version.
     """  # noqa: E501
 
     targets: List[Target] = Field(

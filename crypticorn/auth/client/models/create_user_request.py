@@ -29,17 +29,34 @@ class CreateUserRequest(BaseModel):
     CreateUserRequest
     """  # noqa: E501
 
-    email: StrictStr
-    password: Annotated[str, Field(min_length=8, strict=True)]
-    username: Optional[StrictStr] = None
-    name: Optional[StrictStr] = None
-    picture: Optional[StrictStr] = None
+    email: StrictStr = Field(description="Email address for email signup")
+    password: Optional[Annotated[str, Field(min_length=8, strict=True)]] = Field(
+        default=None, description="Password for email signup."
+    )
+    username: Optional[StrictStr] = Field(
+        default=None, description="Username for the user"
+    )
+    name: Optional[StrictStr] = Field(
+        default=None, description="Display name for the user"
+    )
+    picture: Optional[StrictStr] = Field(
+        default=None, description="Profile picture for the user"
+    )
+    phone: Optional[StrictStr] = Field(
+        default=None, description="Phone number for the user"
+    )
+    oob: Optional[StrictStr] = Field(
+        default=None,
+        description="OOB code to use when overwriting a password-less account. This is only being returned when creating a user without a password.",
+    )
     __properties: ClassVar[List[str]] = [
         "email",
         "password",
         "username",
         "name",
         "picture",
+        "phone",
+        "oob",
     ]
 
     model_config = ConfigDict(
@@ -97,6 +114,8 @@ class CreateUserRequest(BaseModel):
                 "username": obj.get("username"),
                 "name": obj.get("name"),
                 "picture": obj.get("picture"),
+                "phone": obj.get("phone"),
+                "oob": obj.get("oob"),
             }
         )
         return _obj

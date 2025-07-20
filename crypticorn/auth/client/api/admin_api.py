@@ -17,8 +17,8 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from typing import List
-from crypticorn.auth.client.models.logout_default_response_issues_inner import (
-    LogoutDefaultResponseIssuesInner,
+from crypticorn.auth.client.models.revoke_user_tokens200_response import (
+    RevokeUserTokens200Response,
 )
 from crypticorn.auth.client.models.revoke_user_tokens_request import (
     RevokeUserTokensRequest,
@@ -76,7 +76,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> LogoutDefaultResponseIssuesInner:
+    ) -> RevokeUserTokens200Response:
         """Revoke user tokens"""
         if self.is_sync:
             return self._revoke_user_tokens_sync(
@@ -113,7 +113,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[LogoutDefaultResponseIssuesInner]:
+    ) -> ApiResponse[RevokeUserTokens200Response]:
         """Revoke user tokens with HTTP info"""
         if self.is_sync:
             return self._revoke_user_tokens_sync_with_http_info(
@@ -188,7 +188,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> LogoutDefaultResponseIssuesInner:
+    ) -> RevokeUserTokens200Response:
         """Revoke user tokens
 
         Revoke all tokens for a given user, this resets the authentication state and requires them to login again.
@@ -226,7 +226,11 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "LogoutDefaultResponseIssuesInner",
+            "200": "RevokeUserTokens200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -252,7 +256,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[LogoutDefaultResponseIssuesInner]:
+    ) -> ApiResponse[RevokeUserTokens200Response]:
         """Revoke user tokens
 
         Revoke all tokens for a given user, this resets the authentication state and requires them to login again.
@@ -290,7 +294,11 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "LogoutDefaultResponseIssuesInner",
+            "200": "RevokeUserTokens200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -353,7 +361,11 @@ class AdminApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "LogoutDefaultResponseIssuesInner",
+            "200": "RevokeUserTokens200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -376,7 +388,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> LogoutDefaultResponseIssuesInner:
+    ) -> RevokeUserTokens200Response:
         """Synchronous version of revoke_user_tokens"""
         return async_to_sync(self._revoke_user_tokens_async)(
             revoke_user_tokens_request=revoke_user_tokens_request,
@@ -402,7 +414,7 @@ class AdminApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[LogoutDefaultResponseIssuesInner]:
+    ) -> ApiResponse[RevokeUserTokens200Response]:
         """Synchronous version of revoke_user_tokens_with_http_info"""
         return async_to_sync(self._revoke_user_tokens_async_with_http_info)(
             revoke_user_tokens_request=revoke_user_tokens_request,
@@ -486,7 +498,7 @@ class AdminApi:
                 _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = []
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="POST",
@@ -656,6 +668,9 @@ class AdminApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Whoami200Response]",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -716,6 +731,9 @@ class AdminApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Whoami200Response]",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -775,6 +793,9 @@ class AdminApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Whoami200Response]",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
         }
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
@@ -888,7 +909,7 @@ class AdminApi:
             )
 
         # authentication setting
-        _auth_settings: List[str] = ["HTTPBearer"]
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
             method="GET",

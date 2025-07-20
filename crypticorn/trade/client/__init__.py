@@ -16,74 +16,168 @@ Do not edit the class manually.
 
 __version__ = "1.0.0"
 
+# Define package exports
+__all__ = [
+    "APIKeysApi",
+    "BotsApi",
+    "ExchangesApi",
+    "NotificationsApi",
+    "OrdersApi",
+    "StatusApi",
+    "StrategiesApi",
+    "TradingActionsApi",
+    "ApiResponse",
+    "ApiClient",
+    "Configuration",
+    "OpenApiException",
+    "ApiTypeError",
+    "ApiValueError",
+    "ApiKeyError",
+    "ApiAttributeError",
+    "ApiException",
+    "ActionsCount",
+    "ApiErrorIdentifier",
+    "ApiErrorLevel",
+    "ApiErrorType",
+    "Bot",
+    "BotCreate",
+    "BotStatus",
+    "BotUpdate",
+    "ExceptionDetail",
+    "Exchange",
+    "ExchangeInfo",
+    "ExchangeKey",
+    "ExchangeKeyBalance",
+    "ExchangeKeyCreate",
+    "ExchangeKeyUpdate",
+    "ExecutionIds",
+    "FuturesBalance",
+    "FuturesTradingAction",
+    "FuturesTradingActionCreate",
+    "MarginMode",
+    "MarketType",
+    "Notification",
+    "NotificationCreate",
+    "NotificationUpdate",
+    "Order",
+    "OrderStatus",
+    "OrdersCount",
+    "PaginatedResponseFuturesTradingAction",
+    "PaginatedResponseOrder",
+    "PnL",
+    "PostFuturesAction",
+    "SpotBalance",
+    "SpotTradingActionCreate",
+    "Strategy",
+    "StrategyCreate",
+    "StrategyExchangeInfo",
+    "StrategyUpdate",
+    "TPSL",
+    "TPSLCreate",
+    "TradingActionType",
+]
+
 # import apis into sdk package
-from crypticorn.trade.client.api.api_keys_api import APIKeysApi
-from crypticorn.trade.client.api.admin_api import AdminApi
-from crypticorn.trade.client.api.bots_api import BotsApi
-from crypticorn.trade.client.api.exchanges_api import ExchangesApi
-from crypticorn.trade.client.api.notifications_api import NotificationsApi
-from crypticorn.trade.client.api.orders_api import OrdersApi
-from crypticorn.trade.client.api.status_api import StatusApi
-from crypticorn.trade.client.api.strategies_api import StrategiesApi
-from crypticorn.trade.client.api.trading_actions_api import TradingActionsApi
+from crypticorn.trade.client.api.api_keys_api import APIKeysApi as APIKeysApi
+from crypticorn.trade.client.api.bots_api import BotsApi as BotsApi
+from crypticorn.trade.client.api.exchanges_api import ExchangesApi as ExchangesApi
+from crypticorn.trade.client.api.notifications_api import (
+    NotificationsApi as NotificationsApi,
+)
+from crypticorn.trade.client.api.orders_api import OrdersApi as OrdersApi
+from crypticorn.trade.client.api.status_api import StatusApi as StatusApi
+from crypticorn.trade.client.api.strategies_api import StrategiesApi as StrategiesApi
+from crypticorn.trade.client.api.trading_actions_api import (
+    TradingActionsApi as TradingActionsApi,
+)
 
 # import ApiClient
-from crypticorn.trade.client.api_response import ApiResponse
-from crypticorn.trade.client.api_client import ApiClient
-from crypticorn.trade.client.configuration import Configuration
-from crypticorn.trade.client.exceptions import OpenApiException
-from crypticorn.trade.client.exceptions import ApiTypeError
-from crypticorn.trade.client.exceptions import ApiValueError
-from crypticorn.trade.client.exceptions import ApiKeyError
-from crypticorn.trade.client.exceptions import ApiAttributeError
-from crypticorn.trade.client.exceptions import ApiException
+from crypticorn.trade.client.api_response import ApiResponse as ApiResponse
+from crypticorn.trade.client.api_client import ApiClient as ApiClient
+from crypticorn.trade.client.configuration import Configuration as Configuration
+from crypticorn.trade.client.exceptions import OpenApiException as OpenApiException
+from crypticorn.trade.client.exceptions import ApiTypeError as ApiTypeError
+from crypticorn.trade.client.exceptions import ApiValueError as ApiValueError
+from crypticorn.trade.client.exceptions import ApiKeyError as ApiKeyError
+from crypticorn.trade.client.exceptions import ApiAttributeError as ApiAttributeError
+from crypticorn.trade.client.exceptions import ApiException as ApiException
 
 # import models into sdk package
-from crypticorn.trade.client.models.actions_count import ActionsCount
-from crypticorn.trade.client.models.api_error_identifier import ApiErrorIdentifier
-from crypticorn.trade.client.models.api_error_level import ApiErrorLevel
-from crypticorn.trade.client.models.api_error_type import ApiErrorType
-from crypticorn.trade.client.models.bot import Bot
-from crypticorn.trade.client.models.bot_create import BotCreate
-from crypticorn.trade.client.models.bot_status import BotStatus
-from crypticorn.trade.client.models.bot_update import BotUpdate
-from crypticorn.trade.client.models.exception_detail import ExceptionDetail
-from crypticorn.trade.client.models.exchange import Exchange
-from crypticorn.trade.client.models.exchange_key import ExchangeKey
-from crypticorn.trade.client.models.exchange_key_balance import ExchangeKeyBalance
-from crypticorn.trade.client.models.exchange_key_create import ExchangeKeyCreate
-from crypticorn.trade.client.models.exchange_key_update import ExchangeKeyUpdate
-from crypticorn.trade.client.models.execution_ids import ExecutionIds
-from crypticorn.trade.client.models.futures_balance import FuturesBalance
-from crypticorn.trade.client.models.futures_trading_action import FuturesTradingAction
-from crypticorn.trade.client.models.futures_trading_action_create import (
-    FuturesTradingActionCreate,
+from crypticorn.trade.client.models.actions_count import ActionsCount as ActionsCount
+from crypticorn.trade.client.models.api_error_identifier import (
+    ApiErrorIdentifier as ApiErrorIdentifier,
 )
-from crypticorn.trade.client.models.log_level import LogLevel
-from crypticorn.trade.client.models.margin_mode import MarginMode
-from crypticorn.trade.client.models.market_type import MarketType
-from crypticorn.trade.client.models.notification import Notification
-from crypticorn.trade.client.models.notification_create import NotificationCreate
-from crypticorn.trade.client.models.notification_update import NotificationUpdate
-from crypticorn.trade.client.models.order import Order
-from crypticorn.trade.client.models.order_status import OrderStatus
-from crypticorn.trade.client.models.orders_count import OrdersCount
+from crypticorn.trade.client.models.api_error_level import (
+    ApiErrorLevel as ApiErrorLevel,
+)
+from crypticorn.trade.client.models.api_error_type import ApiErrorType as ApiErrorType
+from crypticorn.trade.client.models.bot import Bot as Bot
+from crypticorn.trade.client.models.bot_create import BotCreate as BotCreate
+from crypticorn.trade.client.models.bot_status import BotStatus as BotStatus
+from crypticorn.trade.client.models.bot_update import BotUpdate as BotUpdate
+from crypticorn.trade.client.models.exception_detail import (
+    ExceptionDetail as ExceptionDetail,
+)
+from crypticorn.trade.client.models.exchange import Exchange as Exchange
+from crypticorn.trade.client.models.exchange_info import ExchangeInfo as ExchangeInfo
+from crypticorn.trade.client.models.exchange_key import ExchangeKey as ExchangeKey
+from crypticorn.trade.client.models.exchange_key_balance import (
+    ExchangeKeyBalance as ExchangeKeyBalance,
+)
+from crypticorn.trade.client.models.exchange_key_create import (
+    ExchangeKeyCreate as ExchangeKeyCreate,
+)
+from crypticorn.trade.client.models.exchange_key_update import (
+    ExchangeKeyUpdate as ExchangeKeyUpdate,
+)
+from crypticorn.trade.client.models.execution_ids import ExecutionIds as ExecutionIds
+from crypticorn.trade.client.models.futures_balance import (
+    FuturesBalance as FuturesBalance,
+)
+from crypticorn.trade.client.models.futures_trading_action import (
+    FuturesTradingAction as FuturesTradingAction,
+)
+from crypticorn.trade.client.models.futures_trading_action_create import (
+    FuturesTradingActionCreate as FuturesTradingActionCreate,
+)
+from crypticorn.trade.client.models.margin_mode import MarginMode as MarginMode
+from crypticorn.trade.client.models.market_type import MarketType as MarketType
+from crypticorn.trade.client.models.notification import Notification as Notification
+from crypticorn.trade.client.models.notification_create import (
+    NotificationCreate as NotificationCreate,
+)
+from crypticorn.trade.client.models.notification_update import (
+    NotificationUpdate as NotificationUpdate,
+)
+from crypticorn.trade.client.models.order import Order as Order
+from crypticorn.trade.client.models.order_status import OrderStatus as OrderStatus
+from crypticorn.trade.client.models.orders_count import OrdersCount as OrdersCount
 from crypticorn.trade.client.models.paginated_response_futures_trading_action import (
-    PaginatedResponseFuturesTradingAction,
+    PaginatedResponseFuturesTradingAction as PaginatedResponseFuturesTradingAction,
 )
 from crypticorn.trade.client.models.paginated_response_order import (
-    PaginatedResponseOrder,
+    PaginatedResponseOrder as PaginatedResponseOrder,
 )
-from crypticorn.trade.client.models.pn_l import PnL
-from crypticorn.trade.client.models.post_futures_action import PostFuturesAction
-from crypticorn.trade.client.models.spot_balance import SpotBalance
+from crypticorn.trade.client.models.pn_l import PnL as PnL
+from crypticorn.trade.client.models.post_futures_action import (
+    PostFuturesAction as PostFuturesAction,
+)
+from crypticorn.trade.client.models.spot_balance import SpotBalance as SpotBalance
 from crypticorn.trade.client.models.spot_trading_action_create import (
-    SpotTradingActionCreate,
+    SpotTradingActionCreate as SpotTradingActionCreate,
 )
-from crypticorn.trade.client.models.strategy import Strategy
-from crypticorn.trade.client.models.strategy_create import StrategyCreate
-from crypticorn.trade.client.models.strategy_exchange_info import StrategyExchangeInfo
-from crypticorn.trade.client.models.strategy_update import StrategyUpdate
-from crypticorn.trade.client.models.tpsl import TPSL
-from crypticorn.trade.client.models.tpsl_create import TPSLCreate
-from crypticorn.trade.client.models.trading_action_type import TradingActionType
+from crypticorn.trade.client.models.strategy import Strategy as Strategy
+from crypticorn.trade.client.models.strategy_create import (
+    StrategyCreate as StrategyCreate,
+)
+from crypticorn.trade.client.models.strategy_exchange_info import (
+    StrategyExchangeInfo as StrategyExchangeInfo,
+)
+from crypticorn.trade.client.models.strategy_update import (
+    StrategyUpdate as StrategyUpdate,
+)
+from crypticorn.trade.client.models.tpsl import TPSL as TPSL
+from crypticorn.trade.client.models.tpsl_create import TPSLCreate as TPSLCreate
+from crypticorn.trade.client.models.trading_action_type import (
+    TradingActionType as TradingActionType,
+)

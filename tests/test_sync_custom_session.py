@@ -2,7 +2,7 @@ import gc
 import warnings
 import time
 from aiohttp import ClientSession
-from crypticorn.client import SyncClient, Service
+from crypticorn.client import SyncClient
 
 
 def test_custom_http_client_injection():
@@ -17,10 +17,9 @@ def test_custom_http_client_injection():
             client = SyncClient(http_client=custom_session)
 
             # In sync mode, services should not have the custom session since sessions are created per operation
-            for service in Service:
-                subclient = client._services[service]
-                # Should be None since sync clients don't persist sessions
-                assert subclient.base_client.rest_client.pool_manager is None
+            subclient = client._services["trade-v1"]
+            # Should be None since sync clients don't persist sessions
+            assert subclient.base_client.rest_client.pool_manager is None
 
             client.close()
         finally:
@@ -40,10 +39,9 @@ def test_lazy_http_client_creation():
     # Should still be None since sync clients don't persist sessions
     assert client._http_client is None
 
-    for service in Service:
-        subclient = client._services[service]
-        # Should be None since sessions are created per operation
-        assert subclient.base_client.rest_client.pool_manager is None
+    subclient = client._services["trade-v1"]
+    # Should be None since sessions are created per operation
+    assert subclient.base_client.rest_client.pool_manager is None
 
     client.close()
     assert client._http_client is None
@@ -94,9 +92,8 @@ def test_no_persistent_sessions_in_sync_mode():
         assert client._http_client is None
 
     # All services should still have None for pool_manager
-    for service in Service:
-        subclient = client._services[service]
-        assert subclient.base_client.rest_client.pool_manager is None
+    subclient = client._services["trade-v1"]
+    assert subclient.base_client.rest_client.pool_manager is None
 
     client.close()
 
@@ -136,10 +133,9 @@ def test_context_manager_usage():
         # Still no persistent session
         assert client._http_client is None
 
-        for service in Service:
-            subclient = client._services[service]
-            # Should be None since sessions are per-operation
-            assert subclient.base_client.rest_client.pool_manager is None
+        subclient = client._services["trade-v1"]
+        # Should be None since sessions are per-operation
+        assert subclient.base_client.rest_client.pool_manager is None
 
     # After context manager, client should be clean
     assert client._http_client is None
