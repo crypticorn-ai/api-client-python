@@ -17,24 +17,35 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
-from crypticorn.pay.client.models.stake_details import StakeDetails
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class WalletBalance(BaseModel):
+class TotalBalance(BaseModel):
     """
-    Model for a user's balance for a specific wallet
+    Model for a user's total balance
     """  # noqa: E501
 
-    address: StrictStr = Field(description="Wallet address")
-    balance: StrictStr = Field(description="Balance in wei of AIC")
-    staked: List[StakeDetails] = Field(
-        description="List of stake details for each pool"
+    staked: StrictStr = Field(description="Total staked balance in wei of AIC")
+    balance: StrictStr = Field(description="Total balance in wei of AIC")
+    reward_base: StrictStr = Field(description="Total reward base in wei of AIC")
+    pending_reward: StrictStr = Field(description="Total pending reward in wei of AIC")
+    pending_withdrawal: StrictStr = Field(
+        description="Total pending withdrawal in wei of AIC"
     )
-    __properties: ClassVar[List[str]] = ["address", "balance", "staked"]
+    average_apy: Union[StrictFloat, StrictInt] = Field(
+        description="The average APY on the staked balance calculated from the pool balances and their APYs. 1e18 = 100%"
+    )
+    __properties: ClassVar[List[str]] = [
+        "staked",
+        "balance",
+        "reward_base",
+        "pending_reward",
+        "pending_withdrawal",
+        "average_apy",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +64,7 @@ class WalletBalance(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of WalletBalance from a JSON string"""
+        """Create an instance of TotalBalance from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,18 +84,11 @@ class WalletBalance(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in staked (list)
-        _items = []
-        if self.staked:
-            for _item_staked in self.staked:
-                if _item_staked:
-                    _items.append(_item_staked.to_dict())
-            _dict["staked"] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of WalletBalance from a dict"""
+        """Create an instance of TotalBalance from a dict"""
         if obj is None:
             return None
 
@@ -93,13 +97,12 @@ class WalletBalance(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "address": obj.get("address"),
+                "staked": obj.get("staked"),
                 "balance": obj.get("balance"),
-                "staked": (
-                    [StakeDetails.from_dict(_item) for _item in obj["staked"]]
-                    if obj.get("staked") is not None
-                    else None
-                ),
+                "reward_base": obj.get("reward_base"),
+                "pending_reward": obj.get("pending_reward"),
+                "pending_withdrawal": obj.get("pending_withdrawal"),
+                "average_apy": obj.get("average_apy"),
             }
         )
         return _obj

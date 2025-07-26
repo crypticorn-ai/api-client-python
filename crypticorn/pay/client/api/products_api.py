@@ -621,7 +621,7 @@ class ProductsApi:
     ) -> List[List[object]]:
         """Get Product Usage
 
-        Get the usage count of each product.
+        Get the usage count of each product. Returns a list of tuples (product_id, usage_count).
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -681,7 +681,7 @@ class ProductsApi:
     ) -> ApiResponse[List[List[object]]]:
         """Get Product Usage
 
-        Get the usage count of each product.
+        Get the usage count of each product. Returns a list of tuples (product_id, usage_count).
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -740,7 +740,7 @@ class ProductsApi:
     ) -> RESTResponseType:
         """Get Product Usage
 
-        Get the usage count of each product.
+        Get the usage count of each product. Returns a list of tuples (product_id, usage_count).
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

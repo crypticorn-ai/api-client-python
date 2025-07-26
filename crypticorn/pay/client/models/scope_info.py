@@ -17,24 +17,42 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
-from crypticorn.pay.client.models.stake_details import StakeDetails
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictBool,
+    StrictInt,
+    StrictStr,
+    field_validator,
+)
+from typing import Any, ClassVar, Dict, List, Optional
+from crypticorn.pay.client.models.scope import Scope
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class WalletBalance(BaseModel):
+class ScopeInfo(BaseModel):
     """
-    Model for a user's balance for a specific wallet
+    Model for detailed scope access info for a user, for each access method.
     """  # noqa: E501
 
-    address: StrictStr = Field(description="Wallet address")
-    balance: StrictStr = Field(description="Balance in wei of AIC")
-    staked: List[StakeDetails] = Field(
-        description="List of stake details for each pool"
+    scope: Scope = Field(description="The scope affected")
+    expires_at: Optional[StrictInt] = None
+    has_expired: StrictBool = Field(description="Whether the scope has expired or not")
+    reason: StrictStr = Field(
+        description="Reason for access (allowlist, subscription, balance, etc.)"
     )
-    __properties: ClassVar[List[str]] = ["address", "balance", "staked"]
+    __properties: ClassVar[List[str]] = ["scope", "expires_at", "has_expired", "reason"]
+
+    @field_validator("reason")
+    def reason_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["allowlist", "subscription", "balance"]):
+            raise ValueError(
+                "must be one of enum values ('allowlist', 'subscription', 'balance')"
+            )
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +71,7 @@ class WalletBalance(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of WalletBalance from a JSON string"""
+        """Create an instance of ScopeInfo from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,18 +91,16 @@ class WalletBalance(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in staked (list)
-        _items = []
-        if self.staked:
-            for _item_staked in self.staked:
-                if _item_staked:
-                    _items.append(_item_staked.to_dict())
-            _dict["staked"] = _items
+        # set to None if expires_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.expires_at is None and "expires_at" in self.model_fields_set:
+            _dict["expires_at"] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of WalletBalance from a dict"""
+        """Create an instance of ScopeInfo from a dict"""
         if obj is None:
             return None
 
@@ -93,13 +109,10 @@ class WalletBalance(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "address": obj.get("address"),
-                "balance": obj.get("balance"),
-                "staked": (
-                    [StakeDetails.from_dict(_item) for _item in obj["staked"]]
-                    if obj.get("staked") is not None
-                    else None
-                ),
+                "scope": obj.get("scope"),
+                "expires_at": obj.get("expires_at"),
+                "has_expired": obj.get("has_expired"),
+                "reason": obj.get("reason"),
             }
         )
         return _obj
