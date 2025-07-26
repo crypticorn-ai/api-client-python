@@ -34,15 +34,13 @@ async def main():
         res = await client.trade.strategies.kill_strategy(
             symbol="BTCUSDT",
             timeframe=Timeframe.ENUM_1H,
-            market=MarketType.FUTURES,
+            market="futures",
             limit=10,
         )
         print(res)
 
         # Get exchange mappings
-        res = await client.metrics.exchanges.get_exchange_mappings(
-            market=MarketType.FUTURES
-        )
+        res = await client.metrics.exchanges.get_exchange_mappings(market="futures")
         print(res)
 
 
@@ -54,13 +52,13 @@ def main_sync():
         res = client.klines.ohlcv.get_ohlcv_data_fmt(
             symbol="BTCUSDT",
             timeframe=Timeframe.ENUM_1H,
-            market=MarketType.FUTURES,
+            market="futures",
             limit=10,
         )
         print(res)
 
         # Get exchange mappings
-        res = client.metrics.exchanges.get_exchange_mappings(market=MarketType.FUTURES)
+        res = client.metrics.exchanges.get_exchange_mappings(market="futures")
         print(res)
 
 

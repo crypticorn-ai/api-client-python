@@ -17,24 +17,24 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
-from crypticorn.pay.client.models.stake_details import StakeDetails
+from crypticorn.pay.client.models.scope import Scope
+from crypticorn.pay.client.models.scope_info import ScopeInfo
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class WalletBalance(BaseModel):
+class ScopesInfo(BaseModel):
     """
-    Model for a user's balance for a specific wallet
+    Model containing all scopes the user has access to, and detailed info for each access method (allowlist, subscription, balance).
     """  # noqa: E501
 
-    address: StrictStr = Field(description="Wallet address")
-    balance: StrictStr = Field(description="Balance in wei of AIC")
-    staked: List[StakeDetails] = Field(
-        description="List of stake details for each pool"
+    scopes: List[Scope] = Field(description="List of scopes")
+    info: List[ScopeInfo] = Field(
+        description="List of scope access info. Contains one entry for each scope, for each access method (allowlist, subscription, balance) if the user has (or had in the last 7 days) access to the scope."
     )
-    __properties: ClassVar[List[str]] = ["address", "balance", "staked"]
+    __properties: ClassVar[List[str]] = ["scopes", "info"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +53,7 @@ class WalletBalance(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of WalletBalance from a JSON string"""
+        """Create an instance of ScopesInfo from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,18 +73,18 @@ class WalletBalance(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in staked (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in info (list)
         _items = []
-        if self.staked:
-            for _item_staked in self.staked:
-                if _item_staked:
-                    _items.append(_item_staked.to_dict())
-            _dict["staked"] = _items
+        if self.info:
+            for _item_info in self.info:
+                if _item_info:
+                    _items.append(_item_info.to_dict())
+            _dict["info"] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of WalletBalance from a dict"""
+        """Create an instance of ScopesInfo from a dict"""
         if obj is None:
             return None
 
@@ -93,11 +93,10 @@ class WalletBalance(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "address": obj.get("address"),
-                "balance": obj.get("balance"),
-                "staked": (
-                    [StakeDetails.from_dict(_item) for _item in obj["staked"]]
-                    if obj.get("staked") is not None
+                "scopes": obj.get("scopes"),
+                "info": (
+                    [ScopeInfo.from_dict(_item) for _item in obj["info"]]
+                    if obj.get("info") is not None
                     else None
                 ),
             }

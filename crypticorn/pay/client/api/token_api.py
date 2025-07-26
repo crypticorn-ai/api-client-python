@@ -16,8 +16,9 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictFloat, StrictInt
-from typing import Union
+from pydantic import Field, StrictBool, StrictFloat, StrictInt
+from typing import Optional, Union
+from typing_extensions import Annotated
 
 from crypticorn.pay.client.api_client import ApiClient, RequestSerialized
 from crypticorn.pay.client.api_response import ApiResponse
@@ -58,6 +59,10 @@ class TokenApi:
     @validate_call
     def get_aic_price(
         self,
+        force: Annotated[
+            Optional[StrictBool],
+            Field(description="Force live fetch and update cache."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -73,6 +78,7 @@ class TokenApi:
         """Get Aic Price"""
         if self.is_sync:
             return self._get_aic_price_sync(
+                force=force,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -82,6 +88,7 @@ class TokenApi:
 
         else:
             return self._get_aic_price_async(
+                force=force,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -92,6 +99,10 @@ class TokenApi:
     @validate_call
     def get_aic_price_with_http_info(
         self,
+        force: Annotated[
+            Optional[StrictBool],
+            Field(description="Force live fetch and update cache."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -107,6 +118,7 @@ class TokenApi:
         """Get Aic Price with HTTP info"""
         if self.is_sync:
             return self._get_aic_price_sync_with_http_info(
+                force=force,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -116,6 +128,7 @@ class TokenApi:
 
         else:
             return self._get_aic_price_async_with_http_info(
+                force=force,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -126,6 +139,10 @@ class TokenApi:
     @validate_call
     def get_aic_price_without_preload_content(
         self,
+        force: Annotated[
+            Optional[StrictBool],
+            Field(description="Force live fetch and update cache."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -141,6 +158,7 @@ class TokenApi:
         """Get Aic Price without preloading content"""
         if self.is_sync:
             return self._get_aic_price_sync_without_preload_content(
+                force=force,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -150,6 +168,7 @@ class TokenApi:
 
         else:
             return self._get_aic_price_async_without_preload_content(
+                force=force,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -161,6 +180,10 @@ class TokenApi:
     @validate_call
     async def _get_aic_price_async(
         self,
+        force: Annotated[
+            Optional[StrictBool],
+            Field(description="Force live fetch and update cache."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -177,6 +200,8 @@ class TokenApi:
 
         Return the current price of 1 AIC token in USD.
 
+        :param force: Force live fetch and update cache.
+        :type force: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -200,6 +225,7 @@ class TokenApi:
         """  # noqa: E501
 
         _param = self._get_aic_price_serialize(
+            force=force,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -221,6 +247,10 @@ class TokenApi:
     @validate_call
     async def _get_aic_price_async_with_http_info(
         self,
+        force: Annotated[
+            Optional[StrictBool],
+            Field(description="Force live fetch and update cache."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -237,6 +267,8 @@ class TokenApi:
 
         Return the current price of 1 AIC token in USD.
 
+        :param force: Force live fetch and update cache.
+        :type force: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -260,6 +292,7 @@ class TokenApi:
         """  # noqa: E501
 
         _param = self._get_aic_price_serialize(
+            force=force,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -280,6 +313,10 @@ class TokenApi:
     @validate_call
     async def _get_aic_price_async_without_preload_content(
         self,
+        force: Annotated[
+            Optional[StrictBool],
+            Field(description="Force live fetch and update cache."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -296,6 +333,8 @@ class TokenApi:
 
         Return the current price of 1 AIC token in USD.
 
+        :param force: Force live fetch and update cache.
+        :type force: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -319,6 +358,7 @@ class TokenApi:
         """  # noqa: E501
 
         _param = self._get_aic_price_serialize(
+            force=force,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -337,6 +377,10 @@ class TokenApi:
     @validate_call
     def _get_aic_price_sync(
         self,
+        force: Annotated[
+            Optional[StrictBool],
+            Field(description="Force live fetch and update cache."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -351,6 +395,7 @@ class TokenApi:
     ) -> float:
         """Synchronous version of get_aic_price"""
         return async_to_sync(self._get_aic_price_async)(
+            force=force,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -361,6 +406,10 @@ class TokenApi:
     @validate_call
     def _get_aic_price_sync_with_http_info(
         self,
+        force: Annotated[
+            Optional[StrictBool],
+            Field(description="Force live fetch and update cache."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -375,6 +424,7 @@ class TokenApi:
     ) -> ApiResponse[float]:
         """Synchronous version of get_aic_price_with_http_info"""
         return async_to_sync(self._get_aic_price_async_with_http_info)(
+            force=force,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -385,6 +435,10 @@ class TokenApi:
     @validate_call
     def _get_aic_price_sync_without_preload_content(
         self,
+        force: Annotated[
+            Optional[StrictBool],
+            Field(description="Force live fetch and update cache."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -399,6 +453,7 @@ class TokenApi:
     ) -> RESTResponseType:
         """Synchronous version of get_aic_price_without_preload_content"""
         return async_to_sync(self._get_aic_price_async_without_preload_content)(
+            force=force,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -408,6 +463,7 @@ class TokenApi:
 
     def _get_aic_price_serialize(
         self,
+        force,
         _request_auth,
         _content_type,
         _headers,
@@ -429,6 +485,10 @@ class TokenApi:
 
         # process the path parameters
         # process the query parameters
+        if force is not None:
+
+            _query_params.append(("force", force))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
