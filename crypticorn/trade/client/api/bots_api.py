@@ -1071,6 +1071,7 @@ class BotsApi:
     ) -> Bot:
         """Get Bot
 
+        Returns a bot for the user.
 
         :param id: The ID of the bot (required)
         :type id: str
@@ -1134,6 +1135,7 @@ class BotsApi:
     ) -> ApiResponse[Bot]:
         """Get Bot
 
+        Returns a bot for the user.
 
         :param id: The ID of the bot (required)
         :type id: str
@@ -1196,6 +1198,7 @@ class BotsApi:
     ) -> RESTResponseType:
         """Get Bot
 
+        Returns a bot for the user.
 
         :param id: The ID of the bot (required)
         :type id: str
@@ -2486,7 +2489,7 @@ class BotsApi:
     ) -> PaginatedResponseOrder:
         """Get Bot Orders
 
-        Get all orders for a bot of the user
+        Get all orders for a bot of the user. Default sort is `created_at` and default order is `desc`.
 
         :param id: The ID of the bot (required)
         :type id: str
@@ -2598,7 +2601,7 @@ class BotsApi:
     ) -> ApiResponse[PaginatedResponseOrder]:
         """Get Bot Orders
 
-        Get all orders for a bot of the user
+        Get all orders for a bot of the user. Default sort is `created_at` and default order is `desc`.
 
         :param id: The ID of the bot (required)
         :type id: str
@@ -2709,7 +2712,7 @@ class BotsApi:
     ) -> RESTResponseType:
         """Get Bot Orders
 
-        Get all orders for a bot of the user
+        Get all orders for a bot of the user. Default sort is `created_at` and default order is `desc`.
 
         :param id: The ID of the bot (required)
         :type id: str
@@ -4509,11 +4512,12 @@ class BotsApi:
         include_deleted: Annotated[
             Optional[StrictBool],
             Field(
-                description="Whether to include deleted bots. Filter by status takes precedence over this."
+                description="Whether to include deleted bots. Filter by status takes precedence over this. Defaults to True."
             ),
         ] = None,
         should_validate: Annotated[
-            Optional[StrictBool], Field(description="Whether to validate the bots")
+            Optional[StrictBool],
+            Field(description="Whether to validate the bots. Defaults to True."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -4576,11 +4580,12 @@ class BotsApi:
         include_deleted: Annotated[
             Optional[StrictBool],
             Field(
-                description="Whether to include deleted bots. Filter by status takes precedence over this."
+                description="Whether to include deleted bots. Filter by status takes precedence over this. Defaults to True."
             ),
         ] = None,
         should_validate: Annotated[
-            Optional[StrictBool], Field(description="Whether to validate the bots")
+            Optional[StrictBool],
+            Field(description="Whether to validate the bots. Defaults to True."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -4643,11 +4648,12 @@ class BotsApi:
         include_deleted: Annotated[
             Optional[StrictBool],
             Field(
-                description="Whether to include deleted bots. Filter by status takes precedence over this."
+                description="Whether to include deleted bots. Filter by status takes precedence over this. Defaults to True."
             ),
         ] = None,
         should_validate: Annotated[
-            Optional[StrictBool], Field(description="Whether to validate the bots")
+            Optional[StrictBool],
+            Field(description="Whether to validate the bots. Defaults to True."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -4711,11 +4717,12 @@ class BotsApi:
         include_deleted: Annotated[
             Optional[StrictBool],
             Field(
-                description="Whether to include deleted bots. Filter by status takes precedence over this."
+                description="Whether to include deleted bots. Filter by status takes precedence over this. Defaults to True."
             ),
         ] = None,
         should_validate: Annotated[
-            Optional[StrictBool], Field(description="Whether to validate the bots")
+            Optional[StrictBool],
+            Field(description="Whether to validate the bots. Defaults to True."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -4731,6 +4738,7 @@ class BotsApi:
     ) -> List[Bot]:
         """Get Bots
 
+        Returns all bots for the user. Default sort is by created_at, descending. Deleted bots are included by default.
 
         :param filter_by: The field to filter by
         :type filter_by: str
@@ -4740,9 +4748,9 @@ class BotsApi:
         :type sort_order: str
         :param sort_by: The field to sort by
         :type sort_by: str
-        :param include_deleted: Whether to include deleted bots. Filter by status takes precedence over this.
+        :param include_deleted: Whether to include deleted bots. Filter by status takes precedence over this. Defaults to True.
         :type include_deleted: bool
-        :param should_validate: Whether to validate the bots
+        :param should_validate: Whether to validate the bots. Defaults to True.
         :type should_validate: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -4809,11 +4817,12 @@ class BotsApi:
         include_deleted: Annotated[
             Optional[StrictBool],
             Field(
-                description="Whether to include deleted bots. Filter by status takes precedence over this."
+                description="Whether to include deleted bots. Filter by status takes precedence over this. Defaults to True."
             ),
         ] = None,
         should_validate: Annotated[
-            Optional[StrictBool], Field(description="Whether to validate the bots")
+            Optional[StrictBool],
+            Field(description="Whether to validate the bots. Defaults to True."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -4829,6 +4838,7 @@ class BotsApi:
     ) -> ApiResponse[List[Bot]]:
         """Get Bots
 
+        Returns all bots for the user. Default sort is by created_at, descending. Deleted bots are included by default.
 
         :param filter_by: The field to filter by
         :type filter_by: str
@@ -4838,9 +4848,9 @@ class BotsApi:
         :type sort_order: str
         :param sort_by: The field to sort by
         :type sort_by: str
-        :param include_deleted: Whether to include deleted bots. Filter by status takes precedence over this.
+        :param include_deleted: Whether to include deleted bots. Filter by status takes precedence over this. Defaults to True.
         :type include_deleted: bool
-        :param should_validate: Whether to validate the bots
+        :param should_validate: Whether to validate the bots. Defaults to True.
         :type should_validate: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -4906,11 +4916,12 @@ class BotsApi:
         include_deleted: Annotated[
             Optional[StrictBool],
             Field(
-                description="Whether to include deleted bots. Filter by status takes precedence over this."
+                description="Whether to include deleted bots. Filter by status takes precedence over this. Defaults to True."
             ),
         ] = None,
         should_validate: Annotated[
-            Optional[StrictBool], Field(description="Whether to validate the bots")
+            Optional[StrictBool],
+            Field(description="Whether to validate the bots. Defaults to True."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -4926,6 +4937,7 @@ class BotsApi:
     ) -> RESTResponseType:
         """Get Bots
 
+        Returns all bots for the user. Default sort is by created_at, descending. Deleted bots are included by default.
 
         :param filter_by: The field to filter by
         :type filter_by: str
@@ -4935,9 +4947,9 @@ class BotsApi:
         :type sort_order: str
         :param sort_by: The field to sort by
         :type sort_by: str
-        :param include_deleted: Whether to include deleted bots. Filter by status takes precedence over this.
+        :param include_deleted: Whether to include deleted bots. Filter by status takes precedence over this. Defaults to True.
         :type include_deleted: bool
-        :param should_validate: Whether to validate the bots
+        :param should_validate: Whether to validate the bots. Defaults to True.
         :type should_validate: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -5001,11 +5013,12 @@ class BotsApi:
         include_deleted: Annotated[
             Optional[StrictBool],
             Field(
-                description="Whether to include deleted bots. Filter by status takes precedence over this."
+                description="Whether to include deleted bots. Filter by status takes precedence over this. Defaults to True."
             ),
         ] = None,
         should_validate: Annotated[
-            Optional[StrictBool], Field(description="Whether to validate the bots")
+            Optional[StrictBool],
+            Field(description="Whether to validate the bots. Defaults to True."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -5052,11 +5065,12 @@ class BotsApi:
         include_deleted: Annotated[
             Optional[StrictBool],
             Field(
-                description="Whether to include deleted bots. Filter by status takes precedence over this."
+                description="Whether to include deleted bots. Filter by status takes precedence over this. Defaults to True."
             ),
         ] = None,
         should_validate: Annotated[
-            Optional[StrictBool], Field(description="Whether to validate the bots")
+            Optional[StrictBool],
+            Field(description="Whether to validate the bots. Defaults to True."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -5103,11 +5117,12 @@ class BotsApi:
         include_deleted: Annotated[
             Optional[StrictBool],
             Field(
-                description="Whether to include deleted bots. Filter by status takes precedence over this."
+                description="Whether to include deleted bots. Filter by status takes precedence over this. Defaults to True."
             ),
         ] = None,
         should_validate: Annotated[
-            Optional[StrictBool], Field(description="Whether to validate the bots")
+            Optional[StrictBool],
+            Field(description="Whether to validate the bots. Defaults to True."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -6293,7 +6308,7 @@ class BotsApi:
     ) -> PaginatedResponseOrder:
         """Get Bots Orders
 
-        Get all orders for all bots of the user
+        Get all orders for all bots of the user. Default sort is `created_at` and default order is `desc`.
 
         :param sort_order: The order to sort by
         :type sort_order: str
@@ -6401,7 +6416,7 @@ class BotsApi:
     ) -> ApiResponse[PaginatedResponseOrder]:
         """Get Bots Orders
 
-        Get all orders for all bots of the user
+        Get all orders for all bots of the user. Default sort is `created_at` and default order is `desc`.
 
         :param sort_order: The order to sort by
         :type sort_order: str
@@ -6508,7 +6523,7 @@ class BotsApi:
     ) -> RESTResponseType:
         """Get Bots Orders
 
-        Get all orders for all bots of the user
+        Get all orders for all bots of the user. Default sort is `created_at` and default order is `desc`.
 
         :param sort_order: The order to sort by
         :type sort_order: str

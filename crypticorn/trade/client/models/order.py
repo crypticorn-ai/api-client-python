@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.trade.client.models.api_error_identifier import ApiErrorIdentifier
 from crypticorn.trade.client.models.exchange import Exchange
@@ -31,7 +31,7 @@ from typing_extensions import Self
 
 class Order(BaseModel):
     """
-    Response model for orders. All optional as the model is built step by step.
+    Response model for orders. Fields are marked as required if they are always set on initial creation.
     """  # noqa: E501
 
     created_at: Optional[StrictInt] = Field(
@@ -43,6 +43,17 @@ class Order(BaseModel):
     id: Optional[StrictStr] = Field(
         default=None, description="Unique identifier for the resource"
     )
+    exchange: Exchange = Field(description="Exchange name. Of type Exchange")
+    symbol: StrictStr = Field(description="Trading symbol on exchange")
+    action_type: TradingActionType = Field(
+        description="Type of trading action. Of type TradingActionType"
+    )
+    status: OrderStatus = Field(
+        description="Trade status of the order. Of type OrderStatus"
+    )
+    market_type: MarketType = Field(
+        description="Market type of the order. Of type MarketType"
+    )
     trading_action_id: Optional[StrictStr] = None
     execution_id: Optional[StrictStr] = None
     exchange_order_id: Optional[StrictStr] = None
@@ -51,15 +62,10 @@ class Order(BaseModel):
     user_id: Optional[StrictStr] = None
     bot_id: Optional[StrictStr] = None
     client_order_id: Optional[StrictStr] = None
-    exchange: Optional[Exchange] = None
-    symbol: Optional[StrictStr] = None
     common_symbol: Optional[StrictStr] = None
     price: Optional[StrictStr] = None
-    action_type: Optional[TradingActionType] = None
-    market_type: Optional[MarketType] = None
     margin_mode: Optional[MarginMode] = None
     status_code: Optional[ApiErrorIdentifier] = None
-    status: Optional[OrderStatus] = None
     filled_perc: Optional[StrictStr] = None
     filled_qty: Optional[StrictStr] = None
     sent_qty: Optional[StrictStr] = None
@@ -70,10 +76,16 @@ class Order(BaseModel):
     )
     pnl: Optional[StrictStr] = None
     order_time: Optional[StrictInt] = None
+    is_lost: Optional[StrictBool] = None
     __properties: ClassVar[List[str]] = [
         "created_at",
         "updated_at",
         "id",
+        "exchange",
+        "symbol",
+        "action_type",
+        "status",
+        "market_type",
         "trading_action_id",
         "execution_id",
         "exchange_order_id",
@@ -82,15 +94,10 @@ class Order(BaseModel):
         "user_id",
         "bot_id",
         "client_order_id",
-        "exchange",
-        "symbol",
         "common_symbol",
         "price",
-        "action_type",
-        "market_type",
         "margin_mode",
         "status_code",
-        "status",
         "filled_perc",
         "filled_qty",
         "sent_qty",
@@ -99,6 +106,7 @@ class Order(BaseModel):
         "order_details",
         "pnl",
         "order_time",
+        "is_lost",
     ]
 
     model_config = ConfigDict(
@@ -184,16 +192,6 @@ class Order(BaseModel):
         if self.client_order_id is None and "client_order_id" in self.model_fields_set:
             _dict["client_order_id"] = None
 
-        # set to None if exchange (nullable) is None
-        # and model_fields_set contains the field
-        if self.exchange is None and "exchange" in self.model_fields_set:
-            _dict["exchange"] = None
-
-        # set to None if symbol (nullable) is None
-        # and model_fields_set contains the field
-        if self.symbol is None and "symbol" in self.model_fields_set:
-            _dict["symbol"] = None
-
         # set to None if common_symbol (nullable) is None
         # and model_fields_set contains the field
         if self.common_symbol is None and "common_symbol" in self.model_fields_set:
@@ -204,16 +202,6 @@ class Order(BaseModel):
         if self.price is None and "price" in self.model_fields_set:
             _dict["price"] = None
 
-        # set to None if action_type (nullable) is None
-        # and model_fields_set contains the field
-        if self.action_type is None and "action_type" in self.model_fields_set:
-            _dict["action_type"] = None
-
-        # set to None if market_type (nullable) is None
-        # and model_fields_set contains the field
-        if self.market_type is None and "market_type" in self.model_fields_set:
-            _dict["market_type"] = None
-
         # set to None if margin_mode (nullable) is None
         # and model_fields_set contains the field
         if self.margin_mode is None and "margin_mode" in self.model_fields_set:
@@ -223,11 +211,6 @@ class Order(BaseModel):
         # and model_fields_set contains the field
         if self.status_code is None and "status_code" in self.model_fields_set:
             _dict["status_code"] = None
-
-        # set to None if status (nullable) is None
-        # and model_fields_set contains the field
-        if self.status is None and "status" in self.model_fields_set:
-            _dict["status"] = None
 
         # set to None if filled_perc (nullable) is None
         # and model_fields_set contains the field
@@ -264,6 +247,11 @@ class Order(BaseModel):
         if self.order_time is None and "order_time" in self.model_fields_set:
             _dict["order_time"] = None
 
+        # set to None if is_lost (nullable) is None
+        # and model_fields_set contains the field
+        if self.is_lost is None and "is_lost" in self.model_fields_set:
+            _dict["is_lost"] = None
+
         return _dict
 
     @classmethod
@@ -280,6 +268,11 @@ class Order(BaseModel):
                 "created_at": obj.get("created_at"),
                 "updated_at": obj.get("updated_at"),
                 "id": obj.get("id"),
+                "exchange": obj.get("exchange"),
+                "symbol": obj.get("symbol"),
+                "action_type": obj.get("action_type"),
+                "status": obj.get("status"),
+                "market_type": obj.get("market_type"),
                 "trading_action_id": obj.get("trading_action_id"),
                 "execution_id": obj.get("execution_id"),
                 "exchange_order_id": obj.get("exchange_order_id"),
@@ -288,15 +281,10 @@ class Order(BaseModel):
                 "user_id": obj.get("user_id"),
                 "bot_id": obj.get("bot_id"),
                 "client_order_id": obj.get("client_order_id"),
-                "exchange": obj.get("exchange"),
-                "symbol": obj.get("symbol"),
                 "common_symbol": obj.get("common_symbol"),
                 "price": obj.get("price"),
-                "action_type": obj.get("action_type"),
-                "market_type": obj.get("market_type"),
                 "margin_mode": obj.get("margin_mode"),
                 "status_code": obj.get("status_code"),
-                "status": obj.get("status"),
                 "filled_perc": obj.get("filled_perc"),
                 "filled_qty": obj.get("filled_qty"),
                 "sent_qty": obj.get("sent_qty"),
@@ -305,6 +293,7 @@ class Order(BaseModel):
                 "order_details": obj.get("order_details"),
                 "pnl": obj.get("pnl"),
                 "order_time": obj.get("order_time"),
+                "is_lost": obj.get("is_lost"),
             }
         )
         return _obj
