@@ -32,20 +32,14 @@ class Notification(BaseModel):
     """  # noqa: E501
 
     user_id: StrictStr = Field(description="UID for the user")
-    created_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of creation"
+    created_at: Optional[StrictInt]
+    updated_at: Optional[StrictInt]
+    id: Optional[StrictStr]
+    viewed: StrictBool = Field(
+        description="Whether the notification has been marked as seen"
     )
-    updated_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of last update"
-    )
-    id: Optional[StrictStr] = Field(
-        default=None, description="Unique identifier for the resource"
-    )
-    viewed: Optional[StrictBool] = Field(
-        default=False, description="Whether the notification has been marked as seen"
-    )
-    sent: Optional[StrictBool] = Field(
-        default=False, description="Whether the notification has been sent as an email"
+    sent: StrictBool = Field(
+        description="Whether the notification has been sent as an email"
     )
     identifier: ApiErrorIdentifier = Field(
         description="Identifier string. Must match the mapping key in the frontend."
@@ -105,6 +99,21 @@ class Notification(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if created_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.created_at is None and "created_at" in self.model_fields_set:
+            _dict["created_at"] = None
+
+        # set to None if updated_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.updated_at is None and "updated_at" in self.model_fields_set:
+            _dict["updated_at"] = None
+
+        # set to None if id (nullable) is None
+        # and model_fields_set contains the field
+        if self.id is None and "id" in self.model_fields_set:
+            _dict["id"] = None
+
         return _dict
 
     @classmethod
