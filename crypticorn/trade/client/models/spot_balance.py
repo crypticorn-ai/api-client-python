@@ -36,9 +36,7 @@ class SpotBalance(BaseModel):
     frozen: Union[StrictFloat, StrictInt] = Field(
         description="Frozen funds not available for use"
     )
-    allocated: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=0, description="Allocated balance for bots. Added on runtime."
-    )
+    allocated: Optional[Union[StrictFloat, StrictInt]] = None
     __properties: ClassVar[List[str]] = [
         "asset",
         "balance",
@@ -84,6 +82,11 @@ class SpotBalance(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if allocated (nullable) is None
+        # and model_fields_set contains the field
+        if self.allocated is None and "allocated" in self.model_fields_set:
+            _dict["allocated"] = None
+
         return _dict
 
     @classmethod
@@ -101,9 +104,7 @@ class SpotBalance(BaseModel):
                 "balance": obj.get("balance"),
                 "available": obj.get("available"),
                 "frozen": obj.get("frozen"),
-                "allocated": (
-                    obj.get("allocated") if obj.get("allocated") is not None else 0
-                ),
+                "allocated": obj.get("allocated"),
             }
         )
         return _obj

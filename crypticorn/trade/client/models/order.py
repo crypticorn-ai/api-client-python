@@ -31,18 +31,12 @@ from typing_extensions import Self
 
 class Order(BaseModel):
     """
-    Response model for orders. Fields are marked as required if they are always set on initial creation.
+    Response model for orders. This is the model that is returned by the API and the database.
     """  # noqa: E501
 
-    created_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of creation"
-    )
-    updated_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of last update"
-    )
-    id: Optional[StrictStr] = Field(
-        default=None, description="Unique identifier for the resource"
-    )
+    created_at: Optional[StrictInt]
+    updated_at: Optional[StrictInt]
+    id: Optional[StrictStr]
     exchange: Exchange = Field(description="Exchange name. Of type Exchange")
     symbol: StrictStr = Field(description="Trading symbol on exchange")
     action_type: TradingActionType = Field(
@@ -54,29 +48,33 @@ class Order(BaseModel):
     market_type: MarketType = Field(
         description="Market type of the order. Of type MarketType"
     )
-    trading_action_id: Optional[StrictStr] = None
-    execution_id: Optional[StrictStr] = None
-    exchange_order_id: Optional[StrictStr] = None
-    position_id: Optional[StrictStr] = None
-    api_key_id: Optional[StrictStr] = None
-    user_id: Optional[StrictStr] = None
-    bot_id: Optional[StrictStr] = None
-    client_order_id: Optional[StrictStr] = None
-    common_symbol: Optional[StrictStr] = None
-    price: Optional[StrictStr] = None
-    margin_mode: Optional[MarginMode] = None
-    status_code: Optional[ApiErrorIdentifier] = None
-    filled_perc: Optional[StrictStr] = None
-    filled_qty: Optional[StrictStr] = None
-    sent_qty: Optional[StrictStr] = None
-    fee: Optional[StrictStr] = None
-    leverage: Optional[StrictInt] = None
-    order_details: Optional[Dict[str, Any]] = Field(
-        default=None, description="Exchange specific details of the order"
+    trading_action_id: Optional[StrictStr]
+    execution_id: Optional[StrictStr]
+    exchange_order_id: Optional[StrictStr]
+    position_id: Optional[StrictStr]
+    api_key_id: Optional[StrictStr]
+    user_id: Optional[StrictStr]
+    bot_id: Optional[StrictStr]
+    client_order_id: Optional[StrictStr]
+    common_symbol: Optional[StrictStr]
+    price: StrictStr = Field(description="Price of the order")
+    margin_mode: Optional[MarginMode]
+    status_code: Optional[ApiErrorIdentifier]
+    filled_perc: StrictStr = Field(description="Percentage of the order filled")
+    filled_qty: StrictStr = Field(
+        description="Quantity filled. Needed for pnl calculation. In the symbol's base currency."
     )
-    pnl: Optional[StrictStr] = None
-    order_time: Optional[StrictInt] = None
-    is_lost: Optional[StrictBool] = None
+    sent_qty: StrictStr = Field(
+        description="Quantity sent to the exchange. In the symbol's base currency."
+    )
+    fee: Optional[StrictStr]
+    leverage: Optional[StrictInt]
+    order_details: Dict[str, Any] = Field(
+        description="Exchange specific details of the order"
+    )
+    pnl: Optional[StrictStr]
+    order_time: Optional[StrictInt]
+    is_lost: Optional[StrictBool]
     __properties: ClassVar[List[str]] = [
         "created_at",
         "updated_at",
@@ -146,6 +144,21 @@ class Order(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if created_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.created_at is None and "created_at" in self.model_fields_set:
+            _dict["created_at"] = None
+
+        # set to None if updated_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.updated_at is None and "updated_at" in self.model_fields_set:
+            _dict["updated_at"] = None
+
+        # set to None if id (nullable) is None
+        # and model_fields_set contains the field
+        if self.id is None and "id" in self.model_fields_set:
+            _dict["id"] = None
+
         # set to None if trading_action_id (nullable) is None
         # and model_fields_set contains the field
         if (
@@ -197,11 +210,6 @@ class Order(BaseModel):
         if self.common_symbol is None and "common_symbol" in self.model_fields_set:
             _dict["common_symbol"] = None
 
-        # set to None if price (nullable) is None
-        # and model_fields_set contains the field
-        if self.price is None and "price" in self.model_fields_set:
-            _dict["price"] = None
-
         # set to None if margin_mode (nullable) is None
         # and model_fields_set contains the field
         if self.margin_mode is None and "margin_mode" in self.model_fields_set:
@@ -211,21 +219,6 @@ class Order(BaseModel):
         # and model_fields_set contains the field
         if self.status_code is None and "status_code" in self.model_fields_set:
             _dict["status_code"] = None
-
-        # set to None if filled_perc (nullable) is None
-        # and model_fields_set contains the field
-        if self.filled_perc is None and "filled_perc" in self.model_fields_set:
-            _dict["filled_perc"] = None
-
-        # set to None if filled_qty (nullable) is None
-        # and model_fields_set contains the field
-        if self.filled_qty is None and "filled_qty" in self.model_fields_set:
-            _dict["filled_qty"] = None
-
-        # set to None if sent_qty (nullable) is None
-        # and model_fields_set contains the field
-        if self.sent_qty is None and "sent_qty" in self.model_fields_set:
-            _dict["sent_qty"] = None
 
         # set to None if fee (nullable) is None
         # and model_fields_set contains the field
@@ -285,9 +278,17 @@ class Order(BaseModel):
                 "price": obj.get("price"),
                 "margin_mode": obj.get("margin_mode"),
                 "status_code": obj.get("status_code"),
-                "filled_perc": obj.get("filled_perc"),
-                "filled_qty": obj.get("filled_qty"),
-                "sent_qty": obj.get("sent_qty"),
+                "filled_perc": (
+                    obj.get("filled_perc")
+                    if obj.get("filled_perc") is not None
+                    else "0"
+                ),
+                "filled_qty": (
+                    obj.get("filled_qty") if obj.get("filled_qty") is not None else "0"
+                ),
+                "sent_qty": (
+                    obj.get("sent_qty") if obj.get("sent_qty") is not None else "0"
+                ),
                 "fee": obj.get("fee"),
                 "leverage": obj.get("leverage"),
                 "order_details": obj.get("order_details"),

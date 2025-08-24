@@ -33,37 +33,31 @@ class FuturesTradingAction(BaseModel):
     Model for futures trading actions
     """  # noqa: E501
 
-    leverage: Optional[Annotated[int, Field(strict=True, ge=1)]] = Field(
-        default=1, description="Leverage to use for futures trades. Default is 1."
+    leverage: Annotated[int, Field(strict=True, ge=1)] = Field(
+        description="Leverage to use for futures trades. Default is 1."
     )
-    margin_mode: Optional[MarginMode] = Field(
-        default=None, description="Margin mode for futures trades. Default is isolated."
+    margin_mode: MarginMode = Field(
+        description="Margin mode for futures trades. Default is isolated."
     )
-    created_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of creation"
-    )
-    updated_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of last update"
-    )
-    id: Optional[StrictStr] = Field(
-        default=None, description="Unique identifier for the resource"
-    )
-    execution_id: Optional[StrictStr] = None
-    open_order_execution_id: Optional[StrictStr] = None
+    created_at: Optional[StrictInt]
+    updated_at: Optional[StrictInt]
+    id: Optional[StrictStr]
+    execution_id: Optional[StrictStr]
+    open_order_execution_id: Optional[StrictStr]
     action_type: TradingActionType = Field(description="The type of action.")
     market_type: MarketType = Field(description="The type of market the action is for.")
     strategy_id: StrictStr = Field(description="UID for the strategy.")
     symbol: StrictStr = Field(
         description="Trading symbol or asset pair in format: 'symbol/quote_currency' (see market service for valid symbols)"
     )
-    is_limit: Optional[StrictBool] = None
-    limit_price: Optional[StrictStr] = None
+    is_limit: Optional[StrictBool]
+    limit_price: Optional[StrictStr]
     allocation: StrictStr = Field(
         description="How much of bot's balance to use for the order (for open actions). How much of the reference open order (open_order_execution_id) to close (for close actions). 0=0%, 1=100%."
     )
-    take_profit: Optional[List[TPSL]] = None
-    stop_loss: Optional[List[TPSL]] = None
-    expiry_timestamp: Optional[StrictInt] = None
+    take_profit: Optional[List[TPSL]]
+    stop_loss: Optional[List[TPSL]]
+    expiry_timestamp: Optional[StrictInt]
     __properties: ClassVar[List[str]] = [
         "leverage",
         "margin_mode",
@@ -135,6 +129,21 @@ class FuturesTradingAction(BaseModel):
                 if _item_stop_loss:
                     _items.append(_item_stop_loss.to_dict())
             _dict["stop_loss"] = _items
+        # set to None if created_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.created_at is None and "created_at" in self.model_fields_set:
+            _dict["created_at"] = None
+
+        # set to None if updated_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.updated_at is None and "updated_at" in self.model_fields_set:
+            _dict["updated_at"] = None
+
+        # set to None if id (nullable) is None
+        # and model_fields_set contains the field
+        if self.id is None and "id" in self.model_fields_set:
+            _dict["id"] = None
+
         # set to None if execution_id (nullable) is None
         # and model_fields_set contains the field
         if self.execution_id is None and "execution_id" in self.model_fields_set:

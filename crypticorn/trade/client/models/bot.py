@@ -32,15 +32,9 @@ class Bot(BaseModel):
     """  # noqa: E501
 
     user_id: StrictStr = Field(description="UID for the user")
-    created_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of creation"
-    )
-    updated_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of last update"
-    )
-    id: Optional[StrictStr] = Field(
-        default=None, description="Unique identifier for the resource"
-    )
+    created_at: Optional[StrictInt]
+    updated_at: Optional[StrictInt]
+    id: Optional[StrictStr]
     name: StrictStr = Field(description="Name of the bot")
     allocation: Annotated[int, Field(strict=True, ge=1)] = Field(
         description="Initial allocation for the bot"
@@ -50,14 +44,12 @@ class Bot(BaseModel):
         description="UID for the trading strategy used by the bot"
     )
     api_key_id: StrictStr = Field(description="UID for the API key")
-    status_code: Optional[ApiErrorIdentifier] = None
-    current_allocation: Optional[StrictStr] = Field(
-        default="0",
-        description="Initial allocation for the bot + accumulated PnL of the orders after the last allocation change",
+    status_code: Optional[ApiErrorIdentifier]
+    current_allocation: StrictStr = Field(
+        description="Initial allocation for the bot + accumulated PnL of the orders after the last allocation change"
     )
-    current_exposure: Optional[StrictStr] = Field(
-        default="0",
-        description="Current exposure of the bot, aka. the sum of the absolute values of the open positions",
+    current_exposure: StrictStr = Field(
+        description="Current exposure of the bot, aka. the sum of the absolute values of the open positions"
     )
     __properties: ClassVar[List[str]] = [
         "user_id",
@@ -111,6 +103,21 @@ class Bot(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if created_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.created_at is None and "created_at" in self.model_fields_set:
+            _dict["created_at"] = None
+
+        # set to None if updated_at (nullable) is None
+        # and model_fields_set contains the field
+        if self.updated_at is None and "updated_at" in self.model_fields_set:
+            _dict["updated_at"] = None
+
+        # set to None if id (nullable) is None
+        # and model_fields_set contains the field
+        if self.id is None and "id" in self.model_fields_set:
+            _dict["id"] = None
+
         # set to None if status_code (nullable) is None
         # and model_fields_set contains the field
         if self.status_code is None and "status_code" in self.model_fields_set:

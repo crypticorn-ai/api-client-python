@@ -30,7 +30,7 @@ from typing_extensions import Self
 
 class FuturesTradingActionCreate(BaseModel):
     """
-    Model for sending futures trading actions
+    Model for sending futures trading actions to the API
     """  # noqa: E501
 
     leverage: Optional[Annotated[int, Field(strict=True, ge=1)]] = Field(
