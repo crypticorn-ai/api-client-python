@@ -186,7 +186,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Create Notification
+        """(Deprecated) Create Notification
 
         Create a new notification
 
@@ -213,6 +213,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("POST /notifications is deprecated.", DeprecationWarning)
 
         _param = self._create_notification_serialize(
             notification_create=notification_create,
@@ -250,7 +251,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Create Notification
+        """(Deprecated) Create Notification
 
         Create a new notification
 
@@ -277,6 +278,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("POST /notifications is deprecated.", DeprecationWarning)
 
         _param = self._create_notification_serialize(
             notification_create=notification_create,
@@ -313,7 +315,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create Notification
+        """(Deprecated) Create Notification
 
         Create a new notification
 
@@ -340,6 +342,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("POST /notifications is deprecated.", DeprecationWarning)
 
         _param = self._create_notification_serialize(
             notification_create=notification_create,
@@ -628,7 +631,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Delete Notification
+        """(Deprecated) Delete Notification
 
         Delete a notification
 
@@ -655,6 +658,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("DELETE /notifications/{id} is deprecated.", DeprecationWarning)
 
         _param = self._delete_notification_serialize(
             id=id,
@@ -692,7 +696,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Delete Notification
+        """(Deprecated) Delete Notification
 
         Delete a notification
 
@@ -719,6 +723,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("DELETE /notifications/{id} is deprecated.", DeprecationWarning)
 
         _param = self._delete_notification_serialize(
             id=id,
@@ -755,7 +760,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Delete Notification
+        """(Deprecated) Delete Notification
 
         Delete a notification
 
@@ -782,6 +787,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("DELETE /notifications/{id} is deprecated.", DeprecationWarning)
 
         _param = self._delete_notification_serialize(
             id=id,
@@ -1050,7 +1056,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Delete Notifications
+        """(Deprecated) Delete Notifications
 
         Delete all notifications for the authenticated user
 
@@ -1075,6 +1081,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("DELETE /notifications is deprecated.", DeprecationWarning)
 
         _param = self._delete_notifications_serialize(
             _request_auth=_request_auth,
@@ -1110,7 +1117,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Delete Notifications
+        """(Deprecated) Delete Notifications
 
         Delete all notifications for the authenticated user
 
@@ -1135,6 +1142,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("DELETE /notifications is deprecated.", DeprecationWarning)
 
         _param = self._delete_notifications_serialize(
             _request_auth=_request_auth,
@@ -1169,7 +1177,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Delete Notifications
+        """(Deprecated) Delete Notifications
 
         Delete all notifications for the authenticated user
 
@@ -1194,6 +1202,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("DELETE /notifications is deprecated.", DeprecationWarning)
 
         _param = self._delete_notifications_serialize(
             _request_auth=_request_auth,
@@ -1472,7 +1481,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[Notification]:
-        """Get Notifications
+        """(Deprecated) Get Notifications
 
         Get all notifications for the authenticated user
 
@@ -1501,6 +1510,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /notifications is deprecated.", DeprecationWarning)
 
         _param = self._get_notifications_serialize(
             limit=limit,
@@ -1540,7 +1550,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[Notification]]:
-        """Get Notifications
+        """(Deprecated) Get Notifications
 
         Get all notifications for the authenticated user
 
@@ -1569,6 +1579,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /notifications is deprecated.", DeprecationWarning)
 
         _param = self._get_notifications_serialize(
             limit=limit,
@@ -1607,7 +1618,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Notifications
+        """(Deprecated) Get Notifications
 
         Get all notifications for the authenticated user
 
@@ -1636,6 +1647,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("GET /notifications is deprecated.", DeprecationWarning)
 
         _param = self._get_notifications_serialize(
             limit=limit,
@@ -1938,7 +1950,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Update Notification
+        """(Deprecated) Update Notification
 
         Update a notification's viewed status
 
@@ -1967,6 +1979,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("PUT /notifications/{id} is deprecated.", DeprecationWarning)
 
         _param = self._update_notification_serialize(
             id=id,
@@ -2006,7 +2019,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Update Notification
+        """(Deprecated) Update Notification
 
         Update a notification's viewed status
 
@@ -2035,6 +2048,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("PUT /notifications/{id} is deprecated.", DeprecationWarning)
 
         _param = self._update_notification_serialize(
             id=id,
@@ -2073,7 +2087,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update Notification
+        """(Deprecated) Update Notification
 
         Update a notification's viewed status
 
@@ -2102,6 +2116,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("PUT /notifications/{id} is deprecated.", DeprecationWarning)
 
         _param = self._update_notification_serialize(
             id=id,
@@ -2400,7 +2415,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Update Notifications
+        """(Deprecated) Update Notifications
 
         Bulk update notifications
 
@@ -2427,6 +2442,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("PUT /notifications is deprecated.", DeprecationWarning)
 
         _param = self._update_notifications_serialize(
             notification_update=notification_update,
@@ -2464,7 +2480,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Update Notifications
+        """(Deprecated) Update Notifications
 
         Bulk update notifications
 
@@ -2491,6 +2507,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("PUT /notifications is deprecated.", DeprecationWarning)
 
         _param = self._update_notifications_serialize(
             notification_update=notification_update,
@@ -2527,7 +2544,7 @@ class NotificationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update Notifications
+        """(Deprecated) Update Notifications
 
         Bulk update notifications
 
@@ -2554,6 +2571,7 @@ class NotificationsApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """  # noqa: E501
+        warnings.warn("PUT /notifications is deprecated.", DeprecationWarning)
 
         _param = self._update_notifications_serialize(
             notification_update=notification_update,

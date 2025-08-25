@@ -28,17 +28,17 @@ class Subscription(BaseModel):
     Model for reading a product subscription
     """  # noqa: E501
 
-    id: StrictStr = Field(description="UID of the model")
     created_at: StrictInt = Field(description="Timestamp of creation")
     updated_at: StrictInt = Field(description="Timestamp of last update")
+    id: StrictStr = Field(description="Unique identifier for the resource")
     user_id: StrictStr = Field(description="User ID")
     product_id: StrictStr = Field(description="Product ID")
     access_from: StrictInt = Field(description="Access from timestamp in seconds")
     access_until: StrictInt = Field(description="Access until timestamp in seconds.")
     __properties: ClassVar[List[str]] = [
-        "id",
         "created_at",
         "updated_at",
+        "id",
         "user_id",
         "product_id",
         "access_from",
@@ -95,9 +95,9 @@ class Subscription(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "id": obj.get("id"),
                 "created_at": obj.get("created_at"),
                 "updated_at": obj.get("updated_at"),
+                "id": obj.get("id"),
                 "user_id": obj.get("user_id"),
                 "product_id": obj.get("product_id"),
                 "access_from": obj.get("access_from"),

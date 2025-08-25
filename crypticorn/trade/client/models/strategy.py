@@ -32,9 +32,9 @@ class Strategy(BaseModel):
     Strategy model for read operations.
     """  # noqa: E501
 
-    created_at: Optional[StrictInt]
-    updated_at: Optional[StrictInt]
-    id: Optional[StrictStr]
+    created_at: StrictInt = Field(description="Timestamp of creation")
+    updated_at: StrictInt = Field(description="Timestamp of last update")
+    id: StrictStr = Field(description="Unique identifier for the resource")
     name: StrictStr = Field(description="Name of the strategy")
     description: StrictStr = Field(description="Description of the strategy")
     exchanges: List[StrategyExchangeInfo] = Field(
@@ -50,7 +50,7 @@ class Strategy(BaseModel):
     identifier: StrictStr = Field(
         description="Unique human readable identifier for the strategy e.g. 'daily_trend_momentum'"
     )
-    margin_mode: Optional[MarginMode]
+    margin_mode: Optional[MarginMode] = None
     leverage: Annotated[int, Field(strict=True, ge=1)] = Field(
         description="Leverage for the strategy"
     )
@@ -114,21 +114,6 @@ class Strategy(BaseModel):
                 if _item_exchanges:
                     _items.append(_item_exchanges.to_dict())
             _dict["exchanges"] = _items
-        # set to None if created_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.created_at is None and "created_at" in self.model_fields_set:
-            _dict["created_at"] = None
-
-        # set to None if updated_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.updated_at is None and "updated_at" in self.model_fields_set:
-            _dict["updated_at"] = None
-
-        # set to None if id (nullable) is None
-        # and model_fields_set contains the field
-        if self.id is None and "id" in self.model_fields_set:
-            _dict["id"] = None
-
         # set to None if margin_mode (nullable) is None
         # and model_fields_set contains the field
         if self.margin_mode is None and "margin_mode" in self.model_fields_set:

@@ -37,23 +37,23 @@ class Product(BaseModel):
     Model for reading a product
     """  # noqa: E501
 
-    id: StrictStr = Field(description="UID of the model")
     created_at: StrictInt = Field(description="Timestamp of creation")
     updated_at: StrictInt = Field(description="Timestamp of last update")
+    id: StrictStr = Field(description="Unique identifier for the resource")
     name: StrictStr = Field(description="Product name")
     price: Union[StrictFloat, StrictInt] = Field(description="Product price")
-    scopes: Optional[List[Scope]]
+    scopes: Optional[List[Scope]] = None
     duration: StrictInt = Field(
         description="Product duration in days. 0 means forever."
     )
     description: StrictStr = Field(description="Product description")
     is_active: StrictBool = Field(description="Product is active")
-    images: Optional[List[StrictStr]]
-    original_price: Optional[Union[StrictFloat, StrictInt]]
+    images: Optional[List[StrictStr]] = None
+    original_price: Optional[Union[StrictFloat, StrictInt]] = None
     __properties: ClassVar[List[str]] = [
-        "id",
         "created_at",
         "updated_at",
+        "id",
         "name",
         "price",
         "scopes",
@@ -129,9 +129,9 @@ class Product(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "id": obj.get("id"),
                 "created_at": obj.get("created_at"),
                 "updated_at": obj.get("updated_at"),
+                "id": obj.get("id"),
                 "name": obj.get("name"),
                 "price": obj.get("price"),
                 "scopes": obj.get("scopes"),

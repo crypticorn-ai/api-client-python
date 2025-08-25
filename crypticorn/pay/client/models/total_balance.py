@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -35,7 +35,7 @@ class TotalBalance(BaseModel):
     pending_withdrawal: StrictStr = Field(
         description="Total pending withdrawal in wei of AIC"
     )
-    average_apy: Union[StrictFloat, StrictInt] = Field(
+    average_apy: StrictStr = Field(
         description="The average APY on the staked balance calculated from the pool balances and their APYs. 1e18 = 100%"
     )
     __properties: ClassVar[List[str]] = [
