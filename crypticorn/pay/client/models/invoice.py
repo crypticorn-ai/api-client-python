@@ -29,29 +29,29 @@ class Invoice(BaseModel):
     Model for reading an invoice
     """  # noqa: E501
 
-    id: StrictStr = Field(description="UID of the model")
     created_at: StrictInt = Field(description="Timestamp of creation")
     updated_at: StrictInt = Field(description="Timestamp of last update")
-    user_id: Optional[StrictStr]
+    id: StrictStr = Field(description="Unique identifier for the resource")
     product_id: StrictStr = Field(description="The ID of the product")
-    coupon_id: Optional[StrictStr]
+    coupon_id: Optional[StrictStr] = None
     provider: Provider = Field(description="The provider the invoice is created with")
-    address: Optional[StrictStr]
-    oob: Optional[StrictStr]
+    address: Optional[StrictStr] = None
+    oob: Optional[StrictStr] = None
+    user_id: StrictStr = Field(description="The ID of the user")
     usd_amount: Union[StrictFloat, StrictInt] = Field(
         description="The amount of the invoice in USD"
     )
-    url: Optional[StrictStr]
+    url: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = [
-        "id",
         "created_at",
         "updated_at",
-        "user_id",
+        "id",
         "product_id",
         "coupon_id",
         "provider",
         "address",
         "oob",
+        "user_id",
         "usd_amount",
         "url",
     ]
@@ -93,11 +93,6 @@ class Invoice(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if user_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.user_id is None and "user_id" in self.model_fields_set:
-            _dict["user_id"] = None
-
         # set to None if coupon_id (nullable) is None
         # and model_fields_set contains the field
         if self.coupon_id is None and "coupon_id" in self.model_fields_set:
@@ -131,15 +126,15 @@ class Invoice(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "id": obj.get("id"),
                 "created_at": obj.get("created_at"),
                 "updated_at": obj.get("updated_at"),
-                "user_id": obj.get("user_id"),
+                "id": obj.get("id"),
                 "product_id": obj.get("product_id"),
                 "coupon_id": obj.get("coupon_id"),
                 "provider": obj.get("provider"),
                 "address": obj.get("address"),
                 "oob": obj.get("oob"),
+                "user_id": obj.get("user_id"),
                 "usd_amount": obj.get("usd_amount"),
                 "url": obj.get("url"),
             }

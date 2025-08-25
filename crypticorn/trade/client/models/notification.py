@@ -32,15 +32,9 @@ class Notification(BaseModel):
     """  # noqa: E501
 
     user_id: StrictStr = Field(description="UID for the user")
-    created_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of creation"
-    )
-    updated_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of last update"
-    )
-    id: Optional[StrictStr] = Field(
-        default=None, description="Unique identifier for the resource"
-    )
+    created_at: StrictInt = Field(description="Timestamp of creation")
+    updated_at: StrictInt = Field(description="Timestamp of last update")
+    id: StrictStr = Field(description="Unique identifier for the resource")
     viewed: Optional[StrictBool] = Field(
         default=False, description="Whether the notification has been marked as seen"
     )

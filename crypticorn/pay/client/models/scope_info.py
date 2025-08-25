@@ -17,32 +17,42 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictBool,
+    StrictInt,
+    StrictStr,
+    field_validator,
+)
 from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.pay.client.models.provider import Provider
+from crypticorn.pay.client.models.scope import Scope
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class InvoiceCreate(BaseModel):
+class ScopeInfo(BaseModel):
     """
-    Model for creating an invoice
+    Model for detailed scope access info for a user, for each access method.
     """  # noqa: E501
 
-    product_id: StrictStr = Field(description="The ID of the product")
-    coupon_id: Optional[StrictStr] = None
-    provider: Provider = Field(description="The provider the invoice is created with")
-    address: Optional[StrictStr] = None
-    oob: Optional[StrictStr] = None
-    user_id: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = [
-        "product_id",
-        "coupon_id",
-        "provider",
-        "address",
-        "oob",
-        "user_id",
-    ]
+    scope: Scope = Field(description="The scope affected")
+    expires_at: Optional[StrictInt] = None
+    has_expired: StrictBool = Field(description="Whether the scope has expired or not")
+    reason: StrictStr = Field(
+        description="Reason for access (allowlist, subscription, balance, etc.)"
+    )
+    __properties: ClassVar[List[str]] = ["scope", "expires_at", "has_expired", "reason"]
+
+    @field_validator("reason")
+    def reason_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["allowlist", "subscription", "balance"]):
+            raise ValueError(
+                "must be one of enum values ('allowlist', 'subscription', 'balance')"
+            )
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -61,7 +71,7 @@ class InvoiceCreate(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of InvoiceCreate from a JSON string"""
+        """Create an instance of ScopeInfo from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -81,31 +91,16 @@ class InvoiceCreate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if coupon_id (nullable) is None
+        # set to None if expires_at (nullable) is None
         # and model_fields_set contains the field
-        if self.coupon_id is None and "coupon_id" in self.model_fields_set:
-            _dict["coupon_id"] = None
-
-        # set to None if address (nullable) is None
-        # and model_fields_set contains the field
-        if self.address is None and "address" in self.model_fields_set:
-            _dict["address"] = None
-
-        # set to None if oob (nullable) is None
-        # and model_fields_set contains the field
-        if self.oob is None and "oob" in self.model_fields_set:
-            _dict["oob"] = None
-
-        # set to None if user_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.user_id is None and "user_id" in self.model_fields_set:
-            _dict["user_id"] = None
+        if self.expires_at is None and "expires_at" in self.model_fields_set:
+            _dict["expires_at"] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of InvoiceCreate from a dict"""
+        """Create an instance of ScopeInfo from a dict"""
         if obj is None:
             return None
 
@@ -114,12 +109,10 @@ class InvoiceCreate(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "product_id": obj.get("product_id"),
-                "coupon_id": obj.get("coupon_id"),
-                "provider": obj.get("provider"),
-                "address": obj.get("address"),
-                "oob": obj.get("oob"),
-                "user_id": obj.get("user_id"),
+                "scope": obj.get("scope"),
+                "expires_at": obj.get("expires_at"),
+                "has_expired": obj.get("has_expired"),
+                "reason": obj.get("reason"),
             }
         )
         return _obj

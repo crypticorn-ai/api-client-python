@@ -27,7 +27,7 @@ from typing_extensions import Self
 
 class StrategyUpdate(BaseModel):
     """
-    Strategy model for API update operations.
+    Strategy model for API update operations. Fields cannot be unset.
     """  # noqa: E501
 
     name: Optional[StrictStr] = None

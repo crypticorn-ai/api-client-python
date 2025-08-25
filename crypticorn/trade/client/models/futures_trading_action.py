@@ -33,22 +33,19 @@ class FuturesTradingAction(BaseModel):
     Model for futures trading actions
     """  # noqa: E501
 
+    created_at: StrictInt = Field(description="Timestamp of creation")
+    updated_at: StrictInt = Field(description="Timestamp of last update")
+    id: StrictStr = Field(description="Unique identifier for the resource")
     leverage: Optional[Annotated[int, Field(strict=True, ge=1)]] = Field(
         default=1, description="Leverage to use for futures trades. Default is 1."
     )
     margin_mode: Optional[MarginMode] = Field(
         default=None, description="Margin mode for futures trades. Default is isolated."
     )
-    created_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of creation"
+    execution_id: Optional[StrictStr] = Field(
+        default=None,
+        description="UID for the execution of the order. A specific TP/SL execution ID of the opening order.",
     )
-    updated_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of last update"
-    )
-    id: Optional[StrictStr] = Field(
-        default=None, description="Unique identifier for the resource"
-    )
-    execution_id: Optional[StrictStr] = None
     open_order_execution_id: Optional[StrictStr] = None
     action_type: TradingActionType = Field(description="The type of action.")
     market_type: MarketType = Field(description="The type of market the action is for.")
@@ -65,11 +62,11 @@ class FuturesTradingAction(BaseModel):
     stop_loss: Optional[List[TPSL]] = None
     expiry_timestamp: Optional[StrictInt] = None
     __properties: ClassVar[List[str]] = [
-        "leverage",
-        "margin_mode",
         "created_at",
         "updated_at",
         "id",
+        "leverage",
+        "margin_mode",
         "execution_id",
         "open_order_execution_id",
         "action_type",
@@ -135,11 +132,6 @@ class FuturesTradingAction(BaseModel):
                 if _item_stop_loss:
                     _items.append(_item_stop_loss.to_dict())
             _dict["stop_loss"] = _items
-        # set to None if execution_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.execution_id is None and "execution_id" in self.model_fields_set:
-            _dict["execution_id"] = None
-
         # set to None if open_order_execution_id (nullable) is None
         # and model_fields_set contains the field
         if (
@@ -189,13 +181,13 @@ class FuturesTradingAction(BaseModel):
 
         _obj = cls.model_validate(
             {
+                "created_at": obj.get("created_at"),
+                "updated_at": obj.get("updated_at"),
+                "id": obj.get("id"),
                 "leverage": (
                     obj.get("leverage") if obj.get("leverage") is not None else 1
                 ),
                 "margin_mode": obj.get("margin_mode"),
-                "created_at": obj.get("created_at"),
-                "updated_at": obj.get("updated_at"),
-                "id": obj.get("id"),
                 "execution_id": obj.get("execution_id"),
                 "open_order_execution_id": obj.get("open_order_execution_id"),
                 "action_type": obj.get("action_type"),

@@ -28,7 +28,7 @@ from typing_extensions import Self
 
 class SpotTradingActionCreate(BaseModel):
     """
-    Model for sending spot trading actions
+    Model for sending spot trading actions to the API
     """  # noqa: E501
 
     execution_id: Optional[StrictStr] = None

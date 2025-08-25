@@ -17,8 +17,11 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List
+from crypticorn.pay.client.models.stake_details import StakeDetails
+from crypticorn.pay.client.models.total_balance import TotalBalance
+from crypticorn.pay.client.models.wallet_balance import WalletBalance
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,11 +31,15 @@ class UserBalance(BaseModel):
     Model for a user's balance
     """  # noqa: E501
 
-    balance: StrictStr = Field(
-        description="Total balance in wei of AIC over all connected wallets"
+    wallets: List[WalletBalance] = Field(description="List of wallet balances")
+    updated_at: StrictInt = Field(description="Timestamp of last update")
+    total: TotalBalance = Field(
+        description="Combined balance information computed from the wallet balances"
     )
-    staked: StrictStr = Field(description="Staked balance in wei of AIC")
-    __properties: ClassVar[List[str]] = ["balance", "staked"]
+    pools: List[StakeDetails] = Field(
+        description="List of pool balances computed from the wallet balances"
+    )
+    __properties: ClassVar[List[str]] = ["wallets", "updated_at", "total", "pools"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -63,14 +70,36 @@ class UserBalance(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
         """
-        excluded_fields: Set[str] = set([])
+        excluded_fields: Set[str] = set(
+            [
+                "total",
+            ]
+        )
 
         _dict = self.model_dump(
             by_alias=True,
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in wallets (list)
+        _items = []
+        if self.wallets:
+            for _item_wallets in self.wallets:
+                if _item_wallets:
+                    _items.append(_item_wallets.to_dict())
+            _dict["wallets"] = _items
+        # override the default output from pydantic by calling `to_dict()` of total
+        if self.total:
+            _dict["total"] = self.total.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in pools (list)
+        _items = []
+        if self.pools:
+            for _item_pools in self.pools:
+                if _item_pools:
+                    _items.append(_item_pools.to_dict())
+            _dict["pools"] = _items
         return _dict
 
     @classmethod
@@ -83,6 +112,23 @@ class UserBalance(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {"balance": obj.get("balance"), "staked": obj.get("staked")}
+            {
+                "wallets": (
+                    [WalletBalance.from_dict(_item) for _item in obj["wallets"]]
+                    if obj.get("wallets") is not None
+                    else None
+                ),
+                "updated_at": obj.get("updated_at"),
+                "total": (
+                    TotalBalance.from_dict(obj["total"])
+                    if obj.get("total") is not None
+                    else None
+                ),
+                "pools": (
+                    [StakeDetails.from_dict(_item) for _item in obj["pools"]]
+                    if obj.get("pools") is not None
+                    else None
+                ),
+            }
         )
         return _obj

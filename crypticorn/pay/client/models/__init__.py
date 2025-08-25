@@ -37,6 +37,10 @@ from crypticorn.pay.client.models.product_create import ProductCreate
 from crypticorn.pay.client.models.product_update import ProductUpdate
 from crypticorn.pay.client.models.provider import Provider
 from crypticorn.pay.client.models.scope import Scope
+from crypticorn.pay.client.models.scope_info import ScopeInfo
+from crypticorn.pay.client.models.scopes_info import ScopesInfo
+from crypticorn.pay.client.models.stake_details import StakeDetails
 from crypticorn.pay.client.models.subscription import Subscription
+from crypticorn.pay.client.models.total_balance import TotalBalance
 from crypticorn.pay.client.models.user_balance import UserBalance
 from crypticorn.pay.client.models.wallet_balance import WalletBalance

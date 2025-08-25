@@ -55,7 +55,11 @@ __all__ = [
     "ProductUpdate",
     "Provider",
     "Scope",
+    "ScopeInfo",
+    "ScopesInfo",
+    "StakeDetails",
     "Subscription",
+    "TotalBalance",
     "UserBalance",
     "WalletBalance",
 ]
@@ -112,6 +116,10 @@ from crypticorn.pay.client.models.product_create import ProductCreate as Product
 from crypticorn.pay.client.models.product_update import ProductUpdate as ProductUpdate
 from crypticorn.pay.client.models.provider import Provider as Provider
 from crypticorn.pay.client.models.scope import Scope as Scope
+from crypticorn.pay.client.models.scope_info import ScopeInfo as ScopeInfo
+from crypticorn.pay.client.models.scopes_info import ScopesInfo as ScopesInfo
+from crypticorn.pay.client.models.stake_details import StakeDetails as StakeDetails
 from crypticorn.pay.client.models.subscription import Subscription as Subscription
+from crypticorn.pay.client.models.total_balance import TotalBalance as TotalBalance
 from crypticorn.pay.client.models.user_balance import UserBalance as UserBalance
 from crypticorn.pay.client.models.wallet_balance import WalletBalance as WalletBalance

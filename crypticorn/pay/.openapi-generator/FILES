@@ -33,7 +33,11 @@ client/models/product_create.py
 client/models/product_update.py
 client/models/provider.py
 client/models/scope.py
+client/models/scope_info.py
+client/models/scopes_info.py
+client/models/stake_details.py
 client/models/subscription.py
+client/models/total_balance.py
 client/models/user_balance.py
 client/models/wallet_balance.py
 client/py.typed
