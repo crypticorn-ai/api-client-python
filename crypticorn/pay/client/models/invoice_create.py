@@ -29,19 +29,19 @@ class InvoiceCreate(BaseModel):
     Model for creating an invoice
     """  # noqa: E501
 
-    user_id: Optional[StrictStr] = None
     product_id: StrictStr = Field(description="The ID of the product")
     coupon_id: Optional[StrictStr] = None
     provider: Provider = Field(description="The provider the invoice is created with")
     address: Optional[StrictStr] = None
     oob: Optional[StrictStr] = None
+    user_id: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = [
-        "user_id",
         "product_id",
         "coupon_id",
         "provider",
         "address",
         "oob",
+        "user_id",
     ]
 
     model_config = ConfigDict(
@@ -81,11 +81,6 @@ class InvoiceCreate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if user_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.user_id is None and "user_id" in self.model_fields_set:
-            _dict["user_id"] = None
-
         # set to None if coupon_id (nullable) is None
         # and model_fields_set contains the field
         if self.coupon_id is None and "coupon_id" in self.model_fields_set:
@@ -101,6 +96,11 @@ class InvoiceCreate(BaseModel):
         if self.oob is None and "oob" in self.model_fields_set:
             _dict["oob"] = None
 
+        # set to None if user_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.user_id is None and "user_id" in self.model_fields_set:
+            _dict["user_id"] = None
+
         return _dict
 
     @classmethod
@@ -114,12 +114,12 @@ class InvoiceCreate(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "user_id": obj.get("user_id"),
                 "product_id": obj.get("product_id"),
                 "coupon_id": obj.get("coupon_id"),
                 "provider": obj.get("provider"),
                 "address": obj.get("address"),
                 "oob": obj.get("oob"),
+                "user_id": obj.get("user_id"),
             }
         )
         return _obj

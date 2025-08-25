@@ -34,7 +34,9 @@ class TPSL(BaseModel):
     allocation: StrictStr = Field(
         description="Percentage of the open order to sell. All allocations must sum up to 1. Use this allocation again when closing the order."
     )
-    execution_id: Optional[StrictStr] = None
+    execution_id: Optional[StrictStr] = Field(
+        default=None, description="Execution ID of the order."
+    )
     __properties: ClassVar[List[str]] = ["price_delta", "allocation", "execution_id"]
 
     model_config = ConfigDict(
@@ -74,11 +76,6 @@ class TPSL(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if execution_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.execution_id is None and "execution_id" in self.model_fields_set:
-            _dict["execution_id"] = None
-
         return _dict
 
     @classmethod

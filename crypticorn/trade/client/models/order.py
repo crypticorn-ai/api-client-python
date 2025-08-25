@@ -34,9 +34,9 @@ class Order(BaseModel):
     Response model for orders. This is the model that is returned by the API and the database.
     """  # noqa: E501
 
-    created_at: Optional[StrictInt]
-    updated_at: Optional[StrictInt]
-    id: Optional[StrictStr]
+    created_at: StrictInt = Field(description="Timestamp of creation")
+    updated_at: StrictInt = Field(description="Timestamp of last update")
+    id: StrictStr = Field(description="Unique identifier for the resource")
     exchange: Exchange = Field(description="Exchange name. Of type Exchange")
     symbol: StrictStr = Field(description="Trading symbol on exchange")
     action_type: TradingActionType = Field(
@@ -48,33 +48,37 @@ class Order(BaseModel):
     market_type: MarketType = Field(
         description="Market type of the order. Of type MarketType"
     )
-    trading_action_id: Optional[StrictStr]
-    execution_id: Optional[StrictStr]
-    exchange_order_id: Optional[StrictStr]
-    position_id: Optional[StrictStr]
-    api_key_id: Optional[StrictStr]
-    user_id: Optional[StrictStr]
-    bot_id: Optional[StrictStr]
-    client_order_id: Optional[StrictStr]
-    common_symbol: Optional[StrictStr]
+    trading_action_id: Optional[StrictStr] = None
+    execution_id: Optional[StrictStr] = None
+    exchange_order_id: Optional[StrictStr] = None
+    position_id: Optional[StrictStr] = None
+    api_key_id: Optional[StrictStr] = None
+    user_id: Optional[StrictStr] = None
+    bot_id: Optional[StrictStr] = None
+    client_order_id: Optional[StrictStr] = None
+    common_symbol: Optional[StrictStr] = None
     price: StrictStr = Field(description="Price of the order")
-    margin_mode: Optional[MarginMode]
-    status_code: Optional[ApiErrorIdentifier]
-    filled_perc: StrictStr = Field(description="Percentage of the order filled")
-    filled_qty: StrictStr = Field(
-        description="Quantity filled. Needed for pnl calculation. In the symbol's base currency."
+    margin_mode: Optional[MarginMode] = None
+    status_code: Optional[ApiErrorIdentifier] = None
+    filled_perc: Optional[StrictStr] = Field(
+        default="0", description="Percentage of the order filled"
     )
-    sent_qty: StrictStr = Field(
-        description="Quantity sent to the exchange. In the symbol's base currency."
+    filled_qty: Optional[StrictStr] = Field(
+        default="0",
+        description="Quantity filled. Needed for pnl calculation. In the symbol's base currency.",
     )
-    fee: Optional[StrictStr]
-    leverage: Optional[StrictInt]
-    order_details: Dict[str, Any] = Field(
-        description="Exchange specific details of the order"
+    sent_qty: Optional[StrictStr] = Field(
+        default="0",
+        description="Quantity sent to the exchange. In the symbol's base currency.",
     )
-    pnl: Optional[StrictStr]
-    order_time: Optional[StrictInt]
-    is_lost: Optional[StrictBool]
+    fee: Optional[StrictStr] = None
+    leverage: Optional[StrictInt] = None
+    order_details: Optional[Dict[str, Any]] = Field(
+        default=None, description="Exchange specific details of the order"
+    )
+    pnl: Optional[StrictStr] = None
+    order_time: Optional[StrictInt] = None
+    is_lost: Optional[StrictBool] = None
     __properties: ClassVar[List[str]] = [
         "created_at",
         "updated_at",
@@ -144,21 +148,6 @@ class Order(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if created_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.created_at is None and "created_at" in self.model_fields_set:
-            _dict["created_at"] = None
-
-        # set to None if updated_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.updated_at is None and "updated_at" in self.model_fields_set:
-            _dict["updated_at"] = None
-
-        # set to None if id (nullable) is None
-        # and model_fields_set contains the field
-        if self.id is None and "id" in self.model_fields_set:
-            _dict["id"] = None
-
         # set to None if trading_action_id (nullable) is None
         # and model_fields_set contains the field
         if (
