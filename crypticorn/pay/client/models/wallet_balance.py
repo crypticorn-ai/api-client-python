@@ -19,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
+from crypticorn.pay.client.models.stake_details import StakeDetails
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,7 +31,9 @@ class WalletBalance(BaseModel):
 
     address: StrictStr = Field(description="Wallet address")
     balance: StrictStr = Field(description="Balance in wei of AIC")
-    staked: StrictStr = Field(description="Staked balance in wei of AIC")
+    staked: List[StakeDetails] = Field(
+        description="List of stake details for each pool"
+    )
     __properties: ClassVar[List[str]] = ["address", "balance", "staked"]
 
     model_config = ConfigDict(
@@ -70,6 +73,13 @@ class WalletBalance(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in staked (list)
+        _items = []
+        if self.staked:
+            for _item_staked in self.staked:
+                if _item_staked:
+                    _items.append(_item_staked.to_dict())
+            _dict["staked"] = _items
         return _dict
 
     @classmethod
@@ -85,7 +95,11 @@ class WalletBalance(BaseModel):
             {
                 "address": obj.get("address"),
                 "balance": obj.get("balance"),
-                "staked": obj.get("staked"),
+                "staked": (
+                    [StakeDetails.from_dict(_item) for _item in obj["staked"]]
+                    if obj.get("staked") is not None
+                    else None
+                ),
             }
         )
         return _obj

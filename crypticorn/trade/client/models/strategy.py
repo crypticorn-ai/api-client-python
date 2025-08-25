@@ -32,15 +32,9 @@ class Strategy(BaseModel):
     Strategy model for read operations.
     """  # noqa: E501
 
-    created_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of creation"
-    )
-    updated_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of last update"
-    )
-    id: Optional[StrictStr] = Field(
-        default=None, description="Unique identifier for the resource"
-    )
+    created_at: StrictInt = Field(description="Timestamp of creation")
+    updated_at: StrictInt = Field(description="Timestamp of last update")
+    id: StrictStr = Field(description="Unique identifier for the resource")
     name: StrictStr = Field(description="Name of the strategy")
     description: StrictStr = Field(description="Description of the strategy")
     exchanges: List[StrategyExchangeInfo] = Field(

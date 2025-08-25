@@ -18,30 +18,33 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.pay.client.models.provider import Provider
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class InvoiceCreate(BaseModel):
+class TotalBalance(BaseModel):
     """
-    Model for creating an invoice
+    Model for a user's total balance
     """  # noqa: E501
 
-    product_id: StrictStr = Field(description="The ID of the product")
-    coupon_id: Optional[StrictStr] = None
-    provider: Provider = Field(description="The provider the invoice is created with")
-    address: Optional[StrictStr] = None
-    oob: Optional[StrictStr] = None
-    user_id: Optional[StrictStr] = None
+    staked: StrictStr = Field(description="Total staked balance in wei of AIC")
+    balance: StrictStr = Field(description="Total balance in wei of AIC")
+    reward_base: StrictStr = Field(description="Total reward base in wei of AIC")
+    pending_reward: StrictStr = Field(description="Total pending reward in wei of AIC")
+    pending_withdrawal: StrictStr = Field(
+        description="Total pending withdrawal in wei of AIC"
+    )
+    average_apy: StrictStr = Field(
+        description="The average APY on the staked balance calculated from the pool balances and their APYs. 1e18 = 100%"
+    )
     __properties: ClassVar[List[str]] = [
-        "product_id",
-        "coupon_id",
-        "provider",
-        "address",
-        "oob",
-        "user_id",
+        "staked",
+        "balance",
+        "reward_base",
+        "pending_reward",
+        "pending_withdrawal",
+        "average_apy",
     ]
 
     model_config = ConfigDict(
@@ -61,7 +64,7 @@ class InvoiceCreate(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of InvoiceCreate from a JSON string"""
+        """Create an instance of TotalBalance from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -81,31 +84,11 @@ class InvoiceCreate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if coupon_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.coupon_id is None and "coupon_id" in self.model_fields_set:
-            _dict["coupon_id"] = None
-
-        # set to None if address (nullable) is None
-        # and model_fields_set contains the field
-        if self.address is None and "address" in self.model_fields_set:
-            _dict["address"] = None
-
-        # set to None if oob (nullable) is None
-        # and model_fields_set contains the field
-        if self.oob is None and "oob" in self.model_fields_set:
-            _dict["oob"] = None
-
-        # set to None if user_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.user_id is None and "user_id" in self.model_fields_set:
-            _dict["user_id"] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of InvoiceCreate from a dict"""
+        """Create an instance of TotalBalance from a dict"""
         if obj is None:
             return None
 
@@ -114,12 +97,12 @@ class InvoiceCreate(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "product_id": obj.get("product_id"),
-                "coupon_id": obj.get("coupon_id"),
-                "provider": obj.get("provider"),
-                "address": obj.get("address"),
-                "oob": obj.get("oob"),
-                "user_id": obj.get("user_id"),
+                "staked": obj.get("staked"),
+                "balance": obj.get("balance"),
+                "reward_base": obj.get("reward_base"),
+                "pending_reward": obj.get("pending_reward"),
+                "pending_withdrawal": obj.get("pending_withdrawal"),
+                "average_apy": obj.get("average_apy"),
             }
         )
         return _obj

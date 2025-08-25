@@ -37,10 +37,12 @@ class Coupon(BaseModel):
     Model for reading a coupon
     """  # noqa: E501
 
-    id: StrictStr = Field(description="UID of the model")
     created_at: StrictInt = Field(description="Timestamp of creation")
     updated_at: StrictInt = Field(description="Timestamp of last update")
-    code: Optional[Annotated[str, Field(min_length=4, strict=True, max_length=32)]]
+    id: StrictStr = Field(description="Unique identifier for the resource")
+    code: Optional[Annotated[str, Field(min_length=4, strict=True, max_length=32)]] = (
+        None
+    )
     name: StrictStr = Field(
         description="A name for the coupon, e.g. 'Black Friday 2025'"
     )
@@ -48,11 +50,13 @@ class Coupon(BaseModel):
         Annotated[float, Field(le=1.0, strict=True, ge=0.0)],
         Annotated[int, Field(le=1, strict=True, ge=0)],
     ] = Field(description="Discount percentage as a decimal")
-    valid_until: Optional[StrictInt]
-    valid_from: Optional[StrictInt]
-    usage_limit: Optional[StrictInt]
-    products: Optional[List[StrictStr]]
-    is_active: StrictBool = Field(description="Coupon is active")
+    valid_until: Optional[StrictInt] = None
+    valid_from: Optional[StrictInt] = None
+    usage_limit: Optional[StrictInt] = None
+    products: Optional[List[StrictStr]] = None
+    is_active: Optional[StrictBool] = Field(
+        default=True, description="Coupon is active"
+    )
     usage_count: StrictInt = Field(description="Coupon usage count")
     payment_required: StrictBool = Field(
         description="Whether the coupon requires a payment. If the discount is not 100%, the coupon requires a payment."
@@ -61,9 +65,9 @@ class Coupon(BaseModel):
         description="Coupon is valid if it is active, not expired, and has not reached the usage limit"
     )
     __properties: ClassVar[List[str]] = [
-        "id",
         "created_at",
         "updated_at",
+        "id",
         "code",
         "name",
         "discount",
@@ -169,9 +173,9 @@ class Coupon(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "id": obj.get("id"),
                 "created_at": obj.get("created_at"),
                 "updated_at": obj.get("updated_at"),
+                "id": obj.get("id"),
                 "code": obj.get("code"),
                 "name": obj.get("name"),
                 "discount": obj.get("discount"),

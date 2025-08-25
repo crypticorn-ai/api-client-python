@@ -32,15 +32,9 @@ class Bot(BaseModel):
     """  # noqa: E501
 
     user_id: StrictStr = Field(description="UID for the user")
-    created_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of creation"
-    )
-    updated_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of last update"
-    )
-    id: Optional[StrictStr] = Field(
-        default=None, description="Unique identifier for the resource"
-    )
+    created_at: StrictInt = Field(description="Timestamp of creation")
+    updated_at: StrictInt = Field(description="Timestamp of last update")
+    id: StrictStr = Field(description="Unique identifier for the resource")
     name: StrictStr = Field(description="Name of the bot")
     allocation: Annotated[int, Field(strict=True, ge=1)] = Field(
         description="Initial allocation for the bot"

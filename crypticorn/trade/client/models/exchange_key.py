@@ -30,28 +30,22 @@ class ExchangeKey(BaseModel):
     """  # noqa: E501
 
     user_id: StrictStr = Field(description="UID for the user")
-    created_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of creation"
-    )
-    updated_at: Optional[StrictInt] = Field(
-        default=None, description="Timestamp of last update"
-    )
-    id: Optional[StrictStr] = Field(
-        default=None, description="Unique identifier for the resource"
-    )
+    created_at: StrictInt = Field(description="Timestamp of creation")
+    updated_at: StrictInt = Field(description="Timestamp of last update")
+    id: StrictStr = Field(description="Unique identifier for the resource")
     label: StrictStr = Field(description="Label for the API key")
+    exchange: Exchange = Field(description="The exchange the API key is for.")
     deleted: Optional[StrictBool] = Field(
         default=False, description="Whether the API key has been deleted."
     )
-    exchange: Exchange = Field(description="The exchange the API key is for.")
     __properties: ClassVar[List[str]] = [
         "user_id",
         "created_at",
         "updated_at",
         "id",
         "label",
-        "deleted",
         "exchange",
+        "deleted",
     ]
 
     model_config = ConfigDict(
@@ -109,10 +103,10 @@ class ExchangeKey(BaseModel):
                 "updated_at": obj.get("updated_at"),
                 "id": obj.get("id"),
                 "label": obj.get("label"),
+                "exchange": obj.get("exchange"),
                 "deleted": (
                     obj.get("deleted") if obj.get("deleted") is not None else False
                 ),
-                "exchange": obj.get("exchange"),
             }
         )
         return _obj

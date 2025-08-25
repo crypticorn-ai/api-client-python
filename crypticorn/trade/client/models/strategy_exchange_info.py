@@ -35,11 +35,11 @@ class StrategyExchangeInfo(BaseModel):
         description="Base asset for the strategy. This is the asset that will be used to trade with. Default is USDT.",
     )
     min_amount: StrictInt = Field(
-        description="Minimum amount for the strategy on the exchange"
+        description="Minimum amount for the strategy on the exchange in the base asset."
     )
     max_amount: Optional[StrictInt] = Field(
         default=100000,
-        description="Maximum amount for the strategy on the exchange, default is 100 thousand ",
+        description="Maximum amount for the strategy on the exchange in the base asset.",
     )
     __properties: ClassVar[List[str]] = [
         "exchange",

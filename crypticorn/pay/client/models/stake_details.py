@@ -17,33 +17,56 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class Subscription(BaseModel):
+class StakeDetails(BaseModel):
     """
-    Model for reading a product subscription
+    Details of a staking pool
     """  # noqa: E501
 
-    created_at: StrictInt = Field(description="Timestamp of creation")
-    updated_at: StrictInt = Field(description="Timestamp of last update")
-    id: StrictStr = Field(description="Unique identifier for the resource")
-    user_id: StrictStr = Field(description="User ID")
-    product_id: StrictStr = Field(description="Product ID")
-    access_from: StrictInt = Field(description="Access from timestamp in seconds")
-    access_until: StrictInt = Field(description="Access until timestamp in seconds.")
+    pool_id: StrictInt = Field(description="The ID of the staking pool.")
+    reward_base: StrictStr = Field(
+        description="The base reward amount accumulated so far, in wei (1 ETH = 1e18 wei)."
+    )
+    current_stake: StrictStr = Field(
+        description="The amount currently staked by the user, in wei."
+    )
+    start_time: StrictStr = Field(
+        description="The Unix timestamp (in seconds) when the stake was created."
+    )
+    lock_period: StrictStr = Field(
+        description="The duration the stake is locked for, in seconds (e.g., 5184000 = 60 days)."
+    )
+    apy: StrictStr = Field(
+        description="The annual percentage yield (APY), represented in wei format (e.g., 1e18 = 100%)."
+    )
+    pending_reward: StrictStr = Field(
+        description="The reward currently available to claim, in wei."
+    )
+    pending_withdrawal: StrictStr = Field(
+        description="The amount currently pending to withdraw, in wei."
+    )
     __properties: ClassVar[List[str]] = [
-        "created_at",
-        "updated_at",
-        "id",
-        "user_id",
-        "product_id",
-        "access_from",
-        "access_until",
+        "pool_id",
+        "reward_base",
+        "current_stake",
+        "start_time",
+        "lock_period",
+        "apy",
+        "pending_reward",
+        "pending_withdrawal",
     ]
+
+    @field_validator("pool_id")
+    def pool_id_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set([1, 2, 3, 4]):
+            raise ValueError("must be one of enum values (1, 2, 3, 4)")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -62,7 +85,7 @@ class Subscription(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Subscription from a JSON string"""
+        """Create an instance of StakeDetails from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -86,7 +109,7 @@ class Subscription(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Subscription from a dict"""
+        """Create an instance of StakeDetails from a dict"""
         if obj is None:
             return None
 
@@ -95,13 +118,14 @@ class Subscription(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "created_at": obj.get("created_at"),
-                "updated_at": obj.get("updated_at"),
-                "id": obj.get("id"),
-                "user_id": obj.get("user_id"),
-                "product_id": obj.get("product_id"),
-                "access_from": obj.get("access_from"),
-                "access_until": obj.get("access_until"),
+                "pool_id": obj.get("pool_id"),
+                "reward_base": obj.get("reward_base"),
+                "current_stake": obj.get("current_stake"),
+                "start_time": obj.get("start_time"),
+                "lock_period": obj.get("lock_period"),
+                "apy": obj.get("apy"),
+                "pending_reward": obj.get("pending_reward"),
+                "pending_withdrawal": obj.get("pending_withdrawal"),
             }
         )
         return _obj

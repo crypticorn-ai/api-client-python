@@ -17,32 +17,24 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.pay.client.models.provider import Provider
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Any, ClassVar, Dict, List
+from crypticorn.pay.client.models.scope import Scope
+from crypticorn.pay.client.models.scope_info import ScopeInfo
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class InvoiceCreate(BaseModel):
+class ScopesInfo(BaseModel):
     """
-    Model for creating an invoice
+    Model containing all scopes the user has access to, and detailed info for each access method (allowlist, subscription, balance).
     """  # noqa: E501
 
-    product_id: StrictStr = Field(description="The ID of the product")
-    coupon_id: Optional[StrictStr] = None
-    provider: Provider = Field(description="The provider the invoice is created with")
-    address: Optional[StrictStr] = None
-    oob: Optional[StrictStr] = None
-    user_id: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = [
-        "product_id",
-        "coupon_id",
-        "provider",
-        "address",
-        "oob",
-        "user_id",
-    ]
+    scopes: List[Scope] = Field(description="List of scopes")
+    info: List[ScopeInfo] = Field(
+        description="List of scope access info. Contains one entry for each scope, for each access method (allowlist, subscription, balance) if the user has (or had in the last 7 days) access to the scope."
+    )
+    __properties: ClassVar[List[str]] = ["scopes", "info"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -61,7 +53,7 @@ class InvoiceCreate(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of InvoiceCreate from a JSON string"""
+        """Create an instance of ScopesInfo from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -81,31 +73,18 @@ class InvoiceCreate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if coupon_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.coupon_id is None and "coupon_id" in self.model_fields_set:
-            _dict["coupon_id"] = None
-
-        # set to None if address (nullable) is None
-        # and model_fields_set contains the field
-        if self.address is None and "address" in self.model_fields_set:
-            _dict["address"] = None
-
-        # set to None if oob (nullable) is None
-        # and model_fields_set contains the field
-        if self.oob is None and "oob" in self.model_fields_set:
-            _dict["oob"] = None
-
-        # set to None if user_id (nullable) is None
-        # and model_fields_set contains the field
-        if self.user_id is None and "user_id" in self.model_fields_set:
-            _dict["user_id"] = None
-
+        # override the default output from pydantic by calling `to_dict()` of each item in info (list)
+        _items = []
+        if self.info:
+            for _item_info in self.info:
+                if _item_info:
+                    _items.append(_item_info.to_dict())
+            _dict["info"] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of InvoiceCreate from a dict"""
+        """Create an instance of ScopesInfo from a dict"""
         if obj is None:
             return None
 
@@ -114,12 +93,12 @@ class InvoiceCreate(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "product_id": obj.get("product_id"),
-                "coupon_id": obj.get("coupon_id"),
-                "provider": obj.get("provider"),
-                "address": obj.get("address"),
-                "oob": obj.get("oob"),
-                "user_id": obj.get("user_id"),
+                "scopes": obj.get("scopes"),
+                "info": (
+                    [ScopeInfo.from_dict(_item) for _item in obj["info"]]
+                    if obj.get("info") is not None
+                    else None
+                ),
             }
         )
         return _obj
