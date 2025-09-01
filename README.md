@@ -1,3 +1,5 @@
+![Crypticorn Logo](https://crypticorn-public.s3.eu-west-1.amazonaws.com/logo-full.svg)
+
 ## What is Crypticorn?
 
 Crypticorn is at the forefront of cutting-edge crypto trading with Machine Learning.
@@ -33,7 +35,7 @@ from crypticorn import AsyncClient, SyncClient
 ```
 Both clients serve as the central interface for API operations and instantiate multiple API wrappers corresponding to our micro services. These are structured the following:
 
-<img src="static/pip-structure.svg" alt="pip package structure" />
+<img src="https://crypticorn-public.s3.eu-west-1.amazonaws.com/api-client-python-structure.svg" alt="pip package structure" />
 
 You can either explore each API by clicking through the library or checkout the [API Documentation](https://docs.crypticorn.com/api).
 
