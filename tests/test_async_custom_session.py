@@ -1,8 +1,10 @@
+import asyncio
 import gc
 import warnings
+
 import pytest
-import asyncio
 from aiohttp import ClientSession
+
 from crypticorn.client import AsyncClient
 
 

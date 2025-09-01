@@ -1,6 +1,8 @@
-import pytest
-from crypticorn.common.enums import MarketType, ValidateEnumMixin
 from enum import IntEnum
+
+import pytest
+
+from crypticorn.common.enums import MarketType, ValidateEnumMixin
 
 
 class MockInt(ValidateEnumMixin, IntEnum):
