@@ -5,7 +5,7 @@ import sys
 import requests
 
 # List of possible module names
-MODULES = ["trade", "klines", "hive", "pay", "auth", "metrics", "dex", "notifications"]
+MODULES = ["trade", "klines", "hive", "pay", "auth", "metrics", "dex", "notification"]
 ENVIRONMENTS = ["local", "dev", "prod"]
 ENV_MAP = {
     "local": "http://localhost/v1",
@@ -110,7 +110,7 @@ def main():
         init_content = f"""from crypticorn.{module_name}.client import *
 from crypticorn.{module_name}.main import {upper_module_name}Client
 
-__all__ = ["{upper_module_name}Client", ]
+__all__ = ["{upper_module_name}Client"]
 """
         with open(init_path, "w") as f:
             f.write(init_content)
