@@ -19,43 +19,17 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Dict, List, Optional, Set, Union
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    StrictBool,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
-)
+from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt
 from typing_extensions import Self
 
 
-class WalletNonceRequest(BaseModel):
+class RevokeAllSessions200Response(BaseModel):
     """
-    WalletNonceRequest
+    RevokeAllSessions200Response
     """  # noqa: E501
 
-    host: StrictStr
-    origin: StrictStr
-    address: StrictStr
-    chain_id: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=56, alias="chainId"
-    )
-    statement: Optional[StrictStr] = "Sign in with Binance Smart Chain wallet"
-    raise_if_new: Optional[StrictBool] = Field(
-        default=True,
-        description="If true, will raise an error if the wallet is not found",
-        alias="raiseIfNew",
-    )
-    __properties: ClassVar[List[str]] = [
-        "host",
-        "origin",
-        "address",
-        "chainId",
-        "statement",
-        "raiseIfNew",
-    ]
+    count: Union[StrictFloat, StrictInt]
+    __properties: ClassVar[List[str]] = ["count"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -74,7 +48,7 @@ class WalletNonceRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of WalletNonceRequest from a JSON string"""
+        """Create an instance of RevokeAllSessions200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -98,27 +72,12 @@ class WalletNonceRequest(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of WalletNonceRequest from a dict"""
+        """Create an instance of RevokeAllSessions200Response from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "host": obj.get("host"),
-                "origin": obj.get("origin"),
-                "address": obj.get("address"),
-                "chainId": obj.get("chainId") if obj.get("chainId") is not None else 56,
-                "statement": (
-                    obj.get("statement")
-                    if obj.get("statement") is not None
-                    else "Sign in with Binance Smart Chain wallet"
-                ),
-                "raiseIfNew": (
-                    obj.get("raiseIfNew") if obj.get("raiseIfNew") is not None else True
-                ),
-            }
-        )
+        _obj = cls.model_validate({"count": obj.get("count")})
         return _obj

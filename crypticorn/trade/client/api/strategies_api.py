@@ -222,6 +222,7 @@ class StrategiesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "201": "Strategy",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -286,6 +287,7 @@ class StrategiesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "201": "Strategy",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -349,6 +351,7 @@ class StrategiesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "201": "Strategy",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -717,6 +720,7 @@ class StrategiesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Strategy]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -795,6 +799,7 @@ class StrategiesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Strategy]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -872,6 +877,7 @@ class StrategiesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Strategy]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1207,6 +1213,7 @@ class StrategiesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[List[object]]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1267,6 +1274,7 @@ class StrategiesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[List[object]]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1326,6 +1334,7 @@ class StrategiesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[List[object]]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1622,6 +1631,7 @@ class StrategiesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "204": None,
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1686,6 +1696,7 @@ class StrategiesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "204": None,
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1749,6 +1760,7 @@ class StrategiesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "204": None,
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2075,6 +2087,7 @@ class StrategiesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Strategy",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2145,6 +2158,7 @@ class StrategiesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Strategy",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2214,6 +2228,7 @@ class StrategiesApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Strategy",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )

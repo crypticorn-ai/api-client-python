@@ -31,10 +31,7 @@ from crypticorn.trade.client import rest
 from crypticorn.trade.client.api_response import ApiResponse
 from crypticorn.trade.client.api_response import T as ApiResponseT
 from crypticorn.trade.client.configuration import Configuration
-from crypticorn.trade.client.exceptions import (
-    ApiException,
-    ApiValueError,
-)
+from crypticorn.trade.client.exceptions import ApiException, ApiValueError
 
 RequestSerialized = Tuple[str, str, Dict[str, str], Optional[str], List[str]]
 

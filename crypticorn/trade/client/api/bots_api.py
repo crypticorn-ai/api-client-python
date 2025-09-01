@@ -13,14 +13,7 @@ Do not edit the class manually.
 
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-from pydantic import (
-    Field,
-    StrictBool,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
-    validate_call,
-)
+from pydantic import Field, StrictBool, StrictFloat, StrictInt, StrictStr, validate_call
 from typing_extensions import Annotated
 
 from crypticorn.trade.client.api_client import ApiClient, RequestSerialized
@@ -237,6 +230,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "201": "Bot",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -301,6 +295,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "201": "Bot",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -364,6 +359,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "201": "Bot",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -679,6 +675,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "204": None,
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -743,6 +740,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "204": None,
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -806,6 +804,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "204": None,
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1111,6 +1110,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Bot",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1175,6 +1175,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Bot",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1238,6 +1239,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Bot",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1714,6 +1716,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponseFuturesTradingAction",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1826,6 +1829,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponseFuturesTradingAction",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1937,6 +1941,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponseFuturesTradingAction",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2550,6 +2555,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponseOrder",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2662,6 +2668,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponseOrder",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2773,6 +2780,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponseOrder",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3290,6 +3298,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[OrdersCount]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3375,6 +3384,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[OrdersCount]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3459,6 +3469,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[OrdersCount]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3998,6 +4009,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[PnL]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -4110,6 +4122,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[PnL]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -4221,6 +4234,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[PnL]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -4793,6 +4807,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Bot]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -4893,6 +4908,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Bot]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -4992,6 +5008,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Bot]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -5560,6 +5577,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponseFuturesTradingAction",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -5668,6 +5686,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponseFuturesTradingAction",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -5775,6 +5794,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponseFuturesTradingAction",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -6366,6 +6386,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponseOrder",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -6474,6 +6495,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponseOrder",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -6581,6 +6603,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponseOrder",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -7076,6 +7099,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[OrdersCount]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -7157,6 +7181,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[OrdersCount]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -7237,6 +7262,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[OrdersCount]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -7754,6 +7780,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[PnL]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -7862,6 +7889,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[PnL]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -7969,6 +7997,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[PnL]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -8416,6 +8445,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Bot",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -8484,6 +8514,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Bot",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -8551,6 +8582,7 @@ class BotsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Bot",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
