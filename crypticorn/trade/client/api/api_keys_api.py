@@ -13,13 +13,7 @@ Do not edit the class manually.
 
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-from pydantic import (
-    Field,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
-    validate_call,
-)
+from pydantic import Field, StrictFloat, StrictInt, StrictStr, validate_call
 from typing_extensions import Annotated
 
 from crypticorn.trade.client.api_client import ApiClient, RequestSerialized
@@ -229,6 +223,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "201": "ExchangeKey",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -293,6 +288,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "201": "ExchangeKey",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -356,6 +352,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "201": "ExchangeKey",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -671,6 +668,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "204": None,
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -735,6 +733,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "204": None,
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -798,6 +797,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "204": None,
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1090,6 +1090,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[ExchangeKeyBalance]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1150,6 +1151,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[ExchangeKeyBalance]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1209,6 +1211,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[ExchangeKeyBalance]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1507,6 +1510,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "ExchangeKey",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1571,6 +1575,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "ExchangeKey",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1634,6 +1639,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "ExchangeKey",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2012,6 +2018,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[ExchangeKey]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2096,6 +2103,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[ExchangeKey]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2179,6 +2187,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[ExchangeKey]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2556,6 +2565,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "ExchangeKey",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2624,6 +2634,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "ExchangeKey",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2691,6 +2702,7 @@ class APIKeysApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "ExchangeKey",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )

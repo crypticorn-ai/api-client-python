@@ -30,11 +30,12 @@ from crypticorn.auth.client.models.list_wallets200_response import (
     ListWallets200Response,
 )
 from crypticorn.auth.client.models.unlink_wallet_request import UnlinkWalletRequest
+from crypticorn.auth.client.models.update_wallet_request import UpdateWalletRequest
+from crypticorn.auth.client.models.verify_otp_code200_response import (
+    VerifyOtpCode200Response,
+)
 from crypticorn.auth.client.models.verify_wallet_request import VerifyWalletRequest
 from crypticorn.auth.client.models.wallet_nonce_request import WalletNonceRequest
-from crypticorn.auth.client.models.wallet_verified200_response import (
-    WalletVerified200Response,
-)
 from crypticorn.auth.client.rest import RESTResponseType
 
 # Import async_to_sync for sync methods
@@ -253,6 +254,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -325,6 +327,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -396,6 +399,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -737,6 +741,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -809,6 +814,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -880,6 +886,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1221,6 +1228,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1293,6 +1301,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1364,6 +1373,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1708,6 +1718,7 @@ class WalletApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1781,6 +1792,7 @@ class WalletApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1853,6 +1865,7 @@ class WalletApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2186,6 +2199,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2258,6 +2272,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2329,6 +2344,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2474,6 +2490,496 @@ class WalletApi:
         return self.api_client.param_serialize(
             method="POST",
             resource_path="/wallet/unlink",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
+    def update_wallet(
+        self,
+        update_wallet_request: UpdateWalletRequest,
+        x_refresh_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Update a wallet"""
+        if self.is_sync:
+            return self._update_wallet_sync(
+                update_wallet_request=update_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_wallet_async(
+                update_wallet_request=update_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def update_wallet_with_http_info(
+        self,
+        update_wallet_request: UpdateWalletRequest,
+        x_refresh_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Update a wallet with HTTP info"""
+        if self.is_sync:
+            return self._update_wallet_sync_with_http_info(
+                update_wallet_request=update_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_wallet_async_with_http_info(
+                update_wallet_request=update_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def update_wallet_without_preload_content(
+        self,
+        update_wallet_request: UpdateWalletRequest,
+        x_refresh_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Update a wallet without preloading content"""
+        if self.is_sync:
+            return self._update_wallet_sync_without_preload_content(
+                update_wallet_request=update_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._update_wallet_async_without_preload_content(
+                update_wallet_request=update_wallet_request,
+                x_refresh_token=x_refresh_token,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _update_wallet_async(
+        self,
+        update_wallet_request: UpdateWalletRequest,
+        x_refresh_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Update a wallet
+
+        Update a wallet
+
+        :param update_wallet_request: (required)
+        :type update_wallet_request: UpdateWalletRequest
+        :param x_refresh_token:
+        :type x_refresh_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._update_wallet_serialize(
+            update_wallet_request=update_wallet_request,
+            x_refresh_token=x_refresh_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    async def _update_wallet_async_with_http_info(
+        self,
+        update_wallet_request: UpdateWalletRequest,
+        x_refresh_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Update a wallet
+
+        Update a wallet
+
+        :param update_wallet_request: (required)
+        :type update_wallet_request: UpdateWalletRequest
+        :param x_refresh_token:
+        :type x_refresh_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._update_wallet_serialize(
+            update_wallet_request=update_wallet_request,
+            x_refresh_token=x_refresh_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data, response_types_map=_response_types_map
+        )
+
+    @validate_call
+    async def _update_wallet_async_without_preload_content(
+        self,
+        update_wallet_request: UpdateWalletRequest,
+        x_refresh_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Update a wallet
+
+        Update a wallet
+
+        :param update_wallet_request: (required)
+        :type update_wallet_request: UpdateWalletRequest
+        :param x_refresh_token:
+        :type x_refresh_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._update_wallet_serialize(
+            update_wallet_request=update_wallet_request,
+            x_refresh_token=x_refresh_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "404": "ErrorNOTFOUND",
+            "500": "ErrorINTERNALSERVERERROR",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _update_wallet_sync(
+        self,
+        update_wallet_request: UpdateWalletRequest,
+        x_refresh_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Synchronous version of update_wallet"""
+        return async_to_sync(self._update_wallet_async)(
+            update_wallet_request=update_wallet_request,
+            x_refresh_token=x_refresh_token,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _update_wallet_sync_with_http_info(
+        self,
+        update_wallet_request: UpdateWalletRequest,
+        x_refresh_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Synchronous version of update_wallet_with_http_info"""
+        return async_to_sync(self._update_wallet_async_with_http_info)(
+            update_wallet_request=update_wallet_request,
+            x_refresh_token=x_refresh_token,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _update_wallet_sync_without_preload_content(
+        self,
+        update_wallet_request: UpdateWalletRequest,
+        x_refresh_token: Optional[StrictStr] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of update_wallet_without_preload_content"""
+        return async_to_sync(self._update_wallet_async_without_preload_content)(
+            update_wallet_request=update_wallet_request,
+            x_refresh_token=x_refresh_token,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    def _update_wallet_serialize(
+        self,
+        update_wallet_request,
+        x_refresh_token,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        if x_refresh_token is not None:
+            _header_params["X-Refresh-Token"] = x_refresh_token
+        # process the form parameters
+        # process the body parameter
+        if update_wallet_request is not None:
+            _body_params = update_wallet_request
+
+        # set the HTTP header `Accept`
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params["Content-Type"] = _content_type
+        else:
+            _default_content_type = self.api_client.select_header_content_type(
+                ["application/json"]
+            )
+            if _default_content_type is not None:
+                _header_params["Content-Type"] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
+
+        return self.api_client.param_serialize(
+            method="PUT",
+            resource_path="/wallet",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -2670,6 +3176,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2742,6 +3249,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2813,6 +3321,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3154,6 +3663,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3226,6 +3736,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3297,6 +3808,7 @@ class WalletApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3470,7 +3982,7 @@ class WalletApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> WalletVerified200Response:
+    ) -> VerifyOtpCode200Response:
         """Check if a wallet is verified"""
         if self.is_sync:
             return self._wallet_verified_sync(
@@ -3510,7 +4022,7 @@ class WalletApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[WalletVerified200Response]:
+    ) -> ApiResponse[VerifyOtpCode200Response]:
         """Check if a wallet is verified with HTTP info"""
         if self.is_sync:
             return self._wallet_verified_sync_with_http_info(
@@ -3591,7 +4103,7 @@ class WalletApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> WalletVerified200Response:
+    ) -> VerifyOtpCode200Response:
         """Check if a wallet is verified
 
         Check if a wallet is verified
@@ -3632,13 +4144,14 @@ class WalletApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "WalletVerified200Response",
+            "200": "VerifyOtpCode200Response",
             "400": "ErrorBADREQUEST",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3664,7 +4177,7 @@ class WalletApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[WalletVerified200Response]:
+    ) -> ApiResponse[VerifyOtpCode200Response]:
         """Check if a wallet is verified
 
         Check if a wallet is verified
@@ -3705,13 +4218,14 @@ class WalletApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "WalletVerified200Response",
+            "200": "VerifyOtpCode200Response",
             "400": "ErrorBADREQUEST",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3777,13 +4291,14 @@ class WalletApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "WalletVerified200Response",
+            "200": "VerifyOtpCode200Response",
             "400": "ErrorBADREQUEST",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3806,7 +4321,7 @@ class WalletApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> WalletVerified200Response:
+    ) -> VerifyOtpCode200Response:
         """Synchronous version of wallet_verified"""
         return async_to_sync(self._wallet_verified_async)(
             address=address,
@@ -3834,7 +4349,7 @@ class WalletApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[WalletVerified200Response]:
+    ) -> ApiResponse[VerifyOtpCode200Response]:
         """Synchronous version of wallet_verified_with_http_info"""
         return async_to_sync(self._wallet_verified_async_with_http_info)(
             address=address,

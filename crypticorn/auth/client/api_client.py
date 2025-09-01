@@ -31,10 +31,7 @@ from crypticorn.auth.client import rest
 from crypticorn.auth.client.api_response import ApiResponse
 from crypticorn.auth.client.api_response import T as ApiResponseT
 from crypticorn.auth.client.configuration import Configuration
-from crypticorn.auth.client.exceptions import (
-    ApiException,
-    ApiValueError,
-)
+from crypticorn.auth.client.exceptions import ApiException, ApiValueError
 
 RequestSerialized = Tuple[str, str, Dict[str, str], Optional[str], List[str]]
 

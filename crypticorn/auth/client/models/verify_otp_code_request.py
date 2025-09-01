@@ -17,33 +17,22 @@ from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set, Union
+from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing_extensions import Self
 
-from crypticorn.auth.client.models.create_user200_response_auth_auth import (
-    CreateUser200ResponseAuthAuth,
-)
 
-
-class RotateTokens200Response(BaseModel):
+class VerifyOtpCodeRequest(BaseModel):
     """
-    RotateTokens200Response
+    VerifyOtpCodeRequest
     """  # noqa: E501
 
-    access_token: Optional[StrictStr] = Field(default=None, alias="accessToken")
-    refresh_token: Optional[StrictStr] = Field(default=None, alias="refreshToken")
-    auth: Optional[CreateUser200ResponseAuthAuth] = None
-    token_expires_at: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=None, alias="tokenExpiresAt"
+    user_id: StrictStr = Field(
+        description="The user id to verify the OTP code for.", alias="userId"
     )
-    __properties: ClassVar[List[str]] = [
-        "accessToken",
-        "refreshToken",
-        "auth",
-        "tokenExpiresAt",
-    ]
+    otp_code: StrictStr = Field(description="The OTP code to verify.", alias="otpCode")
+    __properties: ClassVar[List[str]] = ["userId", "otpCode"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -62,7 +51,7 @@ class RotateTokens200Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of RotateTokens200Response from a JSON string"""
+        """Create an instance of VerifyOtpCodeRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -82,14 +71,11 @@ class RotateTokens200Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of auth
-        if self.auth:
-            _dict["auth"] = self.auth.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of RotateTokens200Response from a dict"""
+        """Create an instance of VerifyOtpCodeRequest from a dict"""
         if obj is None:
             return None
 
@@ -97,15 +83,6 @@ class RotateTokens200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {
-                "accessToken": obj.get("accessToken"),
-                "refreshToken": obj.get("refreshToken"),
-                "auth": (
-                    CreateUser200ResponseAuthAuth.from_dict(obj["auth"])
-                    if obj.get("auth") is not None
-                    else None
-                ),
-                "tokenExpiresAt": obj.get("tokenExpiresAt"),
-            }
+            {"userId": obj.get("userId"), "otpCode": obj.get("otpCode")}
         )
         return _obj
