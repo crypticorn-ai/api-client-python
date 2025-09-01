@@ -4,25 +4,6 @@ The changelog only documents changes to the client code. For changes to the unde
 
 <!-- changelog-insertion -->
 
-## v2.19.0-rc.3 (2025-09-01)
-
-### Chores
-
-- Update changelog configuration for semantic release
-  ([`58d3610`](https://github.com/crypticorn-ai/api-client/commit/58d3610029f006269d29408abfe32e57ebf6362e))
-
-### Documentation
-
-- Add versioning section with SDK version details
-  ([`e482dda`](https://github.com/crypticorn-ai/api-client/commit/e482ddaa8c99f965c3f57f589438354fe9d82c1b))
-
-### Refactoring
-
-- Remove deprecation notices in client service properties (they won't be refactor to methods, see
-  versioning section)
-  ([`4c01eba`](https://github.com/crypticorn-ai/api-client/commit/4c01eba3970533fc156f84c59e6203a093ed535d))
-
-
 ## v2.19.0 (2025-07-20)
 
 
