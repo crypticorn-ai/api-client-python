@@ -111,7 +111,7 @@ class {{classname}}:
 
 
     # Private sync implementation methods
-    @validate_call  
+    @validate_call
     def _{{operationId}}_sync{{>partial_api_args}} -> {{{returnType}}}{{^returnType}}None{{/returnType}}:
         """Synchronous version of {{operationId}}"""
         return async_to_sync(self._{{operationId}}_async){{>partial_api_args_call}}

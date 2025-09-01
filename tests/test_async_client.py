@@ -1,6 +1,8 @@
-import pytest
 import asyncio
+
+import pytest
 from aiohttp import ClientSession
+
 from crypticorn.client import AsyncClient
 
 
@@ -156,7 +158,7 @@ async def test_client_context_manager_with_exception():
         async with AsyncClient() as client:
             # Simulate some work
             client._ensure_session()
-            session = client._http_client
+            client._http_client
 
             # Raise an exception
             raise ValueError("Test exception")

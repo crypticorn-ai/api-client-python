@@ -1,19 +1,21 @@
 from __future__ import annotations
+
 import os
-import asyncio
 from pathlib import Path
-from typing import TYPE_CHECKING, Optional, Union, Coroutine, Any
+from typing import TYPE_CHECKING, Any, Coroutine, Optional, Union
+
+from pydantic import StrictInt
+
 from crypticorn.hive import (
     ApiClient,
     Configuration,
-    ModelsApi,
     DataApi,
-    StatusApi,
     DataVersion,
     FeatureSize,
+    ModelsApi,
+    StatusApi,
 )
 from crypticorn.hive.utils import download_file
-from pydantic import StrictInt
 
 if TYPE_CHECKING:
     from aiohttp import ClientSession
@@ -49,13 +51,12 @@ class DataApiWrapper(DataApi):
     A wrapper for the DataApi class.
     """
 
-    def download_data(
+    def download_data(  # type: ignore[override]
         self,
         model_id: StrictInt,
         folder: Path = Path("data"),
         version: Optional[DataVersion] = None,
         feature_size: Optional[FeatureSize] = None,
-        *args,
         **kwargs,
     ) -> Union[list[Path], Coroutine[Any, Any, list[Path]]]:
         """
@@ -74,7 +75,6 @@ class DataApiWrapper(DataApi):
                 folder=folder,
                 version=version,
                 feature_size=feature_size,
-                *args,
                 **kwargs,
             )
         else:
@@ -83,7 +83,6 @@ class DataApiWrapper(DataApi):
                 folder=folder,
                 version=version,
                 feature_size=feature_size,
-                *args,
                 **kwargs,
             )
 
@@ -93,7 +92,6 @@ class DataApiWrapper(DataApi):
         folder: Path = Path("data"),
         version: Optional[DataVersion] = None,
         feature_size: Optional[FeatureSize] = None,
-        *args,
         **kwargs,
     ) -> list[Path]:
         """
@@ -103,7 +101,6 @@ class DataApiWrapper(DataApi):
             model_id=model_id,
             version=version,
             feature_size=feature_size,
-            *args,
             **kwargs,
         )
         base_path = f"{folder}/v{response.version.value}/coin_{response.coin.value}/"
@@ -112,15 +109,19 @@ class DataApiWrapper(DataApi):
         return [
             download_file(
                 url=response.links.y_train,
-                dest_path=base_path + "y_train_" + response.target + ".feather",
+                dest_path=Path(base_path + "y_train_" + response.target + ".feather"),
             ),
             download_file(
                 url=response.links.x_test,
-                dest_path=base_path + "x_test_" + response.feature_size + ".feather",
+                dest_path=Path(
+                    base_path + "x_test_" + response.feature_size + ".feather"
+                ),
             ),
             download_file(
                 url=response.links.x_train,
-                dest_path=base_path + "x_train_" + response.feature_size + ".feather",
+                dest_path=Path(
+                    base_path + "x_train_" + response.feature_size + ".feather"
+                ),
             ),
         ]
 
@@ -130,7 +131,6 @@ class DataApiWrapper(DataApi):
         folder: Path = Path("data"),
         version: Optional[DataVersion] = None,
         feature_size: Optional[FeatureSize] = None,
-        *args,
         **kwargs,
     ) -> list[Path]:
         """
@@ -140,31 +140,26 @@ class DataApiWrapper(DataApi):
             model_id=model_id,
             version=version,
             feature_size=feature_size,
-            *args,
             **kwargs,
         )
         base_path = f"{folder}/v{response.version.value}/coin_{response.coin.value}/"
         os.makedirs(base_path, exist_ok=True)
 
-        return await asyncio.gather(
-            *[
-                download_file(
-                    url=response.links.y_train,
-                    dest_path=base_path + "y_train_" + response.target + ".feather",
+        return [
+            download_file(
+                url=response.links.y_train,
+                dest_path=Path(base_path + "y_train_" + response.target + ".feather"),
+            ),
+            download_file(
+                url=response.links.x_test,
+                dest_path=Path(
+                    base_path + "x_test_" + response.feature_size + ".feather"
                 ),
-                download_file(
-                    url=response.links.x_test,
-                    dest_path=base_path
-                    + "x_test_"
-                    + response.feature_size
-                    + ".feather",
+            ),
+            download_file(
+                url=response.links.x_train,
+                dest_path=Path(
+                    base_path + "x_train_" + response.feature_size + ".feather"
                 ),
-                download_file(
-                    url=response.links.x_train,
-                    dest_path=base_path
-                    + "x_train_"
-                    + response.feature_size
-                    + ".feather",
-                ),
-            ]
-        )
+            ),
+        ]

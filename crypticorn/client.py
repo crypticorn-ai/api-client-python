@@ -1,19 +1,19 @@
-from typing import Literal, TypeVar, Optional
 import warnings
-from aiohttp import ClientSession, ClientTimeout, TCPConnector
-from crypticorn.hive import HiveClient
-from crypticorn.klines import KlinesClient
-from crypticorn.pay import PayClient
+from importlib.metadata import version
+from typing import Optional, TypeVar
 
-from crypticorn.trade import TradeClient
-from crypticorn.metrics import MetricsClient
-from crypticorn.auth import AuthClient
+from aiohttp import ClientSession, ClientTimeout, TCPConnector
+from typing_extensions import deprecated
+
 from crypticorn._internal.warnings import (
     CrypticornDeprecatedSince217,
-    CrypticornDeprecatedSince219,
 )
-from importlib.metadata import version
-from typing_extensions import deprecated
+from crypticorn.auth import AuthClient
+from crypticorn.hive import HiveClient
+from crypticorn.klines import KlinesClient
+from crypticorn.metrics import MetricsClient
+from crypticorn.pay import PayClient
+from crypticorn.trade import TradeClient
 
 ConfigT = TypeVar("ConfigT")
 SubClient = TypeVar("SubClient")
@@ -28,7 +28,7 @@ class BaseAsyncClient:
         self,
         api_key: Optional[str] = None,
         jwt: Optional[str] = None,
-        base_url: str = None,
+        base_url: Optional[str] = None,
         is_sync: bool = False,
         http_client: Optional[ClientSession] = None,
     ):
@@ -48,7 +48,7 @@ class BaseAsyncClient:
         self._http_client = http_client
         self._owns_http_client = http_client is None  # whether we own the http client
 
-        self._service_classes: dict[str, tuple[type[SubClient], str]] = {
+        self._service_classes: dict[str, tuple[SubClient, str]] = {
             "hive-v1": (HiveClient, "v1/hive"),
             "trade-v1": (TradeClient, "v1/trade"),
             "klines-v1": (KlinesClient, "v1/klines"),
@@ -57,7 +57,7 @@ class BaseAsyncClient:
             "auth-v1": (AuthClient, "v1/auth"),
         }
 
-        self._services: dict[str, SubClient] = self._create_services()
+        self._services = self._create_services()
 
     def _create_services(self) -> dict[str, SubClient]:
         """Create services with the appropriate configuration based on sync/async mode."""
@@ -121,10 +121,6 @@ class BaseAsyncClient:
         return self._http_client
 
     @property
-    @deprecated(
-        "The `hive` property is deprecated and will become a method in the next major release. Instead of `client.hive` you will need to use `client.hive(version='v1')`.",
-        category=CrypticornDeprecatedSince219,
-    )
     def hive(self) -> HiveClient:
         """
         Entry point for the Hive AI API ([Docs](https://docs.crypticorn.com/api/?api=hive-ai-api)).
@@ -132,10 +128,6 @@ class BaseAsyncClient:
         return self._services["hive-v1"]
 
     @property
-    @deprecated(
-        "The `trade` property is deprecated and will become a method in the next major release. Instead of `client.trade` you will need to use `client.trade(version='v1')`.",
-        category=CrypticornDeprecatedSince219,
-    )
     def trade(self) -> TradeClient:
         """
         Entry point for the Trading API ([Docs](https://docs.crypticorn.com/api/?api=trading-api)).
@@ -143,10 +135,6 @@ class BaseAsyncClient:
         return self._services["trade-v1"]
 
     @property
-    @deprecated(
-        "The `klines` property is deprecated and will become a method in the next major release. Instead of `client.klines` you will need to use `client.klines(version='v1')`.",
-        category=CrypticornDeprecatedSince219,
-    )
     def klines(self) -> KlinesClient:
         """
         Entry point for the Klines API ([Docs](https://docs.crypticorn.com/api/?api=klines-api)).
@@ -154,10 +142,6 @@ class BaseAsyncClient:
         return self._services["klines-v1"]
 
     @property
-    @deprecated(
-        "The `metrics` property is deprecated and will become a method in the next major release. Instead of `client.metrics` you will need to use `client.metrics(version='v1')`.",
-        category=CrypticornDeprecatedSince219,
-    )
     def metrics(self) -> MetricsClient:
         """
         Entry point for the Metrics API ([Docs](https://docs.crypticorn.com/api/?api=metrics-api)).
@@ -165,10 +149,6 @@ class BaseAsyncClient:
         return self._services["metrics-v1"]
 
     @property
-    @deprecated(
-        "The `pay` property is deprecated and will become a method in the next major release. Instead of `client.pay` you will need to use `client.pay(version='v1')`.",
-        category=CrypticornDeprecatedSince219,
-    )
     def pay(self) -> PayClient:
         """
         Entry point for the Payment API ([Docs](https://docs.crypticorn.com/api/?api=payment-api)).
@@ -176,52 +156,11 @@ class BaseAsyncClient:
         return self._services["pay-v1"]
 
     @property
-    @deprecated(
-        "The `auth` property is deprecated and will become a method in the next major release. Instead of `client.auth` you will need to use `client.auth(version='v1')`.",
-        category=CrypticornDeprecatedSince219,
-    )
     def auth(self) -> AuthClient:
         """
         Entry point for the Auth API ([Docs](https://docs.crypticorn.com/api/?api=auth-api)).
         """
         return self._services["auth-v1"]
-
-    # TODO: add these as methods in the next major release and remove the properties
-    # def hive(self, version: Literal["v1"]) -> HiveClient:
-    #     """
-    #     Entry point for the Hive AI API ([Docs](https://docs.crypticorn.com/api/?api=hive-ai-api)).
-    #     """
-    #     return self._services[f"hive-{version}"]
-
-    # def trade(self, version: Literal["v1"]) -> TradeClient:
-    #     """
-    #     Entry point for the Trading API ([Docs](https://docs.crypticorn.com/api/?api=trading-api)).
-    #     """
-    #     return self._services[f"trade-{version}"]
-
-    # def klines(self, version: Literal["v1"]) -> KlinesClient:
-    #     """
-    #     Entry point for the Klines API ([Docs](https://docs.crypticorn.com/api/?api=klines-api)).
-    #     """
-    #     return self._services[f"klines-{version}"]
-
-    # def metrics(self, version: Literal["v1"]) -> MetricsClient:
-    #     """
-    #     Entry point for the Metrics API ([Docs](https://docs.crypticorn.com/api/?api=metrics-api)).
-    #     """
-    #     return self._services[f"metrics-{version}"]
-
-    # def pay(self, version: Literal["v1"]) -> PayClient:
-    #     """
-    #     Entry point for the Payment API ([Docs](https://docs.crypticorn.com/api/?api=payment-api)).
-    #     """
-    #     return self._services[f"pay-{version}"]
-
-    # def auth(self, version: Literal["v1"]) -> AuthClient:
-    #     """
-    #     Entry point for the Auth API ([Docs](https://docs.crypticorn.com/api/?api=auth-api)).
-    #     """
-    #     return self._services[f"auth-{version}"]
 
     def configure(self, config: ConfigT, service: str) -> None:
         """
@@ -251,16 +190,17 @@ class BaseAsyncClient:
                 setattr(new_config, attr, new_value)
 
         # Recreate service with new config and appropriate parameters
+        client_class = type(client)
         if self._is_sync:
-            self._services[service] = type(client)(
+            self._services[service] = client_class(
                 new_config, is_sync=self._is_sync, http_client=self._http_client
             )
         else:
-            self._services[service] = type(client)(
+            self._services[service] = client_class(
                 new_config, http_client=self._http_client
             )
 
-    def _get_default_config(self, client_class: type[SubClient], path: str):
+    def _get_default_config(self, client_class: SubClient, path: str):
         config_class = client_class.config_class
         return config_class(
             host=f"{self.base_url}/{path.lstrip('/').rstrip('/')}",
@@ -307,7 +247,7 @@ class AsyncClient(BaseAsyncClient):
         self,
         api_key: Optional[str] = None,
         jwt: Optional[str] = None,
-        base_url: str = None,
+        base_url: Optional[str] = None,
         *,
         http_client: Optional[ClientSession] = None,
     ):
@@ -350,7 +290,7 @@ class SyncClient(BaseAsyncClient):
         self,
         api_key: Optional[str] = None,
         jwt: Optional[str] = None,
-        base_url: str = None,
+        base_url: Optional[str] = None,
         *,
         http_client: Optional[ClientSession] = None,
     ):

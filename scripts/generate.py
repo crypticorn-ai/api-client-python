@@ -1,7 +1,8 @@
 import os
-import sys
-import requests
 import subprocess
+import sys
+
+import requests
 
 # List of possible module names
 MODULES = ["trade", "klines", "hive", "pay", "auth", "metrics", "dex"]
@@ -26,15 +27,12 @@ def main():
     # Initialize variables
     module_name = None
     environment = None
-    url = None  # overrides the environment variable
     # Parse command-line arguments
     for arg in sys.argv[1:]:
         if arg.startswith("--service="):
             module_name = arg.split("=")[1]
         elif arg.startswith("--env="):
             environment = arg.split("=")[1]
-        elif arg.startswith("--url="):
-            url = arg.split("=")[1]
 
     # Check if service is provided
     if not module_name:
@@ -84,7 +82,7 @@ def main():
         "openapi-generator-cli",
         "generate",
         "-i",
-        f"{url or f'{ROOT_URL}/{module_name}/openapi.json'}",
+        f"{ROOT_URL}/{module_name}/openapi.json",
         "-g",
         "python",
         "--package-name",
@@ -162,4 +160,3 @@ __all__ = ["{upper_module_name}Client", ]
 
 if __name__ == "__main__":
     main()
-    subprocess.run(["black", ".", "-q"])
