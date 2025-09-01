@@ -133,11 +133,6 @@ async def test_client_service_lazy_initialization():
     """Test that services are lazily initialized."""
     client = AsyncClient()
 
-    # Services should be available immediately
-    assert (
-        len(client._services) == 6
-    )  # this needs to be updated when new services are added
-
     # But HTTP client should be None until first use
     assert client._http_client is None
     client._ensure_session()

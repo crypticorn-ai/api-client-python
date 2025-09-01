@@ -206,6 +206,7 @@ class StatusApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -266,6 +267,7 @@ class StatusApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -325,6 +327,7 @@ class StatusApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "object",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -608,6 +611,7 @@ class StatusApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "str",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -668,6 +672,7 @@ class StatusApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "str",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -727,6 +732,7 @@ class StatusApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "str",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
