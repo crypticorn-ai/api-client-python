@@ -4,6 +4,38 @@ The changelog only documents changes to the client code. For changes to the unde
 
 <!-- changelog-insertion -->
 
+## v2.20.0-rc.1 (2025-09-01)
+
+### Bug Fixes
+
+- Pin openapi-generator to 7.14 resolving import errors
+  ([`6037037`](https://github.com/crypticorn-ai/api-client-python/commit/60370371e3c80cca0e073f460f7ab198b732800b))
+
+### Chores
+
+- Update changelog configuration for semantic release
+  ([`0e948a1`](https://github.com/crypticorn-ai/api-client-python/commit/0e948a132678b4df995bd76e6cfd326f19aaa13a))
+
+### Documentation
+
+- Add versioning section with SDK version details
+  ([`c7b46ad`](https://github.com/crypticorn-ai/api-client-python/commit/c7b46ad3774d8d78ca61f34999e9129b45da20cc))
+
+### Features
+
+- Add dex API support
+  ([`b78b7e4`](https://github.com/crypticorn-ai/api-client-python/commit/b78b7e4837fa89d71c0552e6845e7301920ed91e))
+
+- Add notification API support
+  ([`b038b6f`](https://github.com/crypticorn-ai/api-client-python/commit/b038b6f8135f994e3e6f570b95bc030e39975805))
+
+### Refactoring
+
+- Remove deprecation notices in client service properties (they won't be refactor to methods, see
+  versioning section)
+  ([`954ff4b`](https://github.com/crypticorn-ai/api-client-python/commit/954ff4b75985dc7db91ba72053f315cc8b01f1ed))
+
+
 ## v2.19.0 (2025-07-20)
 
 
