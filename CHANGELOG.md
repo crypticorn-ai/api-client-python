@@ -1,5 +1,4 @@
-# CHANGELOG
-
+<!-- changelog-insertion -->
 
 ## v2.19.0 (2025-07-20)
 
