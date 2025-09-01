@@ -13,9 +13,11 @@ Do not edit the class manually.
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List, Optional, Set, Union
 
 from pydantic import (
     BaseModel,
@@ -26,8 +28,6 @@ from pydantic import (
     StrictInt,
     StrictStr,
 )
-from typing import Any, ClassVar, Dict, List, Optional, Union
-from typing import Optional, Set
 from typing_extensions import Self
 
 

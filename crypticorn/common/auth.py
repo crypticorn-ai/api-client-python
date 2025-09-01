@@ -1,18 +1,6 @@
 import json
 from typing import Union
 
-from crypticorn.auth import (
-    AuthClient,
-    Configuration,
-    CreateUser200ResponseAuthAuth as Verify200Response,
-)
-from crypticorn.auth.client.exceptions import ApiException
-from crypticorn.common.exceptions import (
-    ApiError,
-    ExceptionContent,
-    HTTPException,
-)
-from crypticorn.common.scopes import Scope
 from fastapi import Depends, Query
 from fastapi.security import (
     APIKeyHeader,
@@ -23,6 +11,19 @@ from fastapi.security import (
     SecurityScopes,
 )
 from typing_extensions import Annotated
+
+from crypticorn.auth import (
+    AuthClient,
+    Configuration,
+)
+from crypticorn.auth import CreateUser200ResponseAuthAuth as Verify200Response
+from crypticorn.auth.client.exceptions import ApiException
+from crypticorn.common.exceptions import (
+    ApiError,
+    ExceptionContent,
+    HTTPException,
+)
+from crypticorn.common.scopes import Scope
 
 AUTHENTICATE_HEADER = "WWW-Authenticate"
 BEARER_AUTH_SCHEME = "Bearer"

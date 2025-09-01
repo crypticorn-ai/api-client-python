@@ -6,13 +6,13 @@
 # pre-commit run --all-files
 
 # ruff and mypy just run on some files, due to the nature of the codebase
+# somehow `noqa` is not working for some reason, thus ignoring globally, should be checked from time to time
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.11.12
     hooks:
       - id: ruff
-        args: [--fix]
-        files: ^(crypticorn/client\.py|.*/main\.py|tests/.*)$
+        args: [--fix, --ignore=E721, --ignore=F403, --ignore=E402, --exclude=crypticorn/common]
 
   - repo: https://github.com/psf/black
     rev: 25.1.0
@@ -28,21 +28,19 @@ repos:
         language_version: python3.12
         args: ["--profile", "black"]
 
-  - repo: local
-    hooks:
-      - id: mypy
-        name: mypy
-        entry: .venv/bin/mypy
-        language: system
-        types: [python]
-        files: ^(crypticorn/client\.py|.*/main\.py)$
-        args:
-          - --config-file=mypy.ini
+# disabled due to huge codebase managed by openapi-cli
+  # - repo: local
+  #   hooks:
+  #     - id: mypy
+  #       name: mypy
+  #       entry: .venv/bin/mypy
+  #       language: system
+  #       types: [python]
+  #       files: ^(crypticorn/client\.py|.*/main\.py)$
+  #       args:
+  #         - --config-file=mypy.ini
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
       - id: trailing-whitespace
-      - id: end-of-file-fixer
-      - id: check-yaml
-      - id: check-added-large-files

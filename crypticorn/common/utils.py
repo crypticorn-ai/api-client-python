@@ -8,6 +8,7 @@ from decimal import Decimal
 from typing import Any, Union
 
 import typing_extensions
+
 from crypticorn.common.exceptions import ApiError, ExceptionContent, HTTPException
 from crypticorn.common.warnings import CrypticornDeprecatedSince25
 

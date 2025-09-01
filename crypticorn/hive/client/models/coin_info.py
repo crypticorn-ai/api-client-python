@@ -13,16 +13,17 @@ Do not edit the class manually.
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List, Optional, Set
 
 from pydantic import BaseModel, ConfigDict, Field
-from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Self
+
 from crypticorn.hive.client.models.coins import Coins
 from crypticorn.hive.client.models.data_version import DataVersion
-from typing import Optional, Set
-from typing_extensions import Self
 
 
 class CoinInfo(BaseModel):

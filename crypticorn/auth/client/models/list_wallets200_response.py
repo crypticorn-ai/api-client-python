@@ -13,17 +13,18 @@ Do not edit the class manually.
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List, Optional, Set, Union
 
 from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Union
+from typing_extensions import Self
+
 from crypticorn.auth.client.models.list_wallets200_response_data_inner import (
     ListWallets200ResponseDataInner,
 )
-from typing import Optional, Set
-from typing_extensions import Self
 
 
 class ListWallets200Response(BaseModel):

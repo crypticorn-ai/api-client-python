@@ -1,6 +1,7 @@
 # crypticorn/cli.py
 
 import click
+
 from crypticorn.cli import init_group, version
 
 

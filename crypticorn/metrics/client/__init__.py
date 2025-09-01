@@ -26,17 +26,19 @@ from crypticorn.metrics.client.api.markets_api import MarketsApi
 from crypticorn.metrics.client.api.quote_currencies_api import QuoteCurrenciesApi
 from crypticorn.metrics.client.api.status_api import StatusApi
 from crypticorn.metrics.client.api.tokens_api import TokensApi
+from crypticorn.metrics.client.api_client import ApiClient
 
 # import ApiClient
 from crypticorn.metrics.client.api_response import ApiResponse
-from crypticorn.metrics.client.api_client import ApiClient
 from crypticorn.metrics.client.configuration import Configuration
-from crypticorn.metrics.client.exceptions import OpenApiException
-from crypticorn.metrics.client.exceptions import ApiTypeError
-from crypticorn.metrics.client.exceptions import ApiValueError
-from crypticorn.metrics.client.exceptions import ApiKeyError
-from crypticorn.metrics.client.exceptions import ApiAttributeError
-from crypticorn.metrics.client.exceptions import ApiException
+from crypticorn.metrics.client.exceptions import (
+    ApiAttributeError,
+    ApiException,
+    ApiKeyError,
+    ApiTypeError,
+    ApiValueError,
+    OpenApiException,
+)
 
 # import models into sdk package
 from crypticorn.metrics.client.models.api_error_identifier import ApiErrorIdentifier

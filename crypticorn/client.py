@@ -9,16 +9,17 @@ from crypticorn._internal.warnings import (
     CrypticornDeprecatedSince217,
 )
 from crypticorn.auth import AuthClient
+from crypticorn.dex import DexClient
 from crypticorn.hive import HiveClient
 from crypticorn.klines import KlinesClient
 from crypticorn.metrics import MetricsClient
 from crypticorn.pay import PayClient
 from crypticorn.trade import TradeClient
-from crypticorn.dex import DexClient
 
 ConfigT = TypeVar("ConfigT")
 SubClient = TypeVar("SubClient")
 _SERVICES = Literal["hive", "trade", "klines", "pay", "metrics", "auth", "dex"]
+
 
 class BaseAsyncClient:
     """
