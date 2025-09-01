@@ -13,13 +13,7 @@ Do not edit the class manually.
 
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-from pydantic import (
-    Field,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
-    validate_call,
-)
+from pydantic import Field, StrictFloat, StrictInt, StrictStr, validate_call
 from typing_extensions import Annotated
 
 from crypticorn.pay.client.api_client import ApiClient, RequestSerialized
@@ -231,6 +225,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "201": "Coupon",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -295,6 +290,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "201": "Coupon",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -358,6 +354,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "201": "Coupon",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -673,6 +670,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "204": None,
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -737,6 +735,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "204": None,
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -800,6 +799,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "204": None,
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1105,6 +1105,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Coupon",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1169,6 +1170,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Coupon",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1232,6 +1234,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Coupon",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1552,6 +1555,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Coupon",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1620,6 +1624,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Coupon",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1687,6 +1692,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "Coupon",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2134,6 +2140,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponseCoupon",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2233,6 +2240,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponseCoupon",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2331,6 +2339,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponseCoupon",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2751,6 +2760,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "201": "Coupon",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2819,6 +2829,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "201": "Coupon",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2886,6 +2897,7 @@ class CouponsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "201": "Coupon",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )

@@ -13,13 +13,7 @@ Do not edit the class manually.
 
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-from pydantic import (
-    Field,
-    StrictFloat,
-    StrictInt,
-    StrictStr,
-    validate_call,
-)
+from pydantic import Field, StrictFloat, StrictInt, StrictStr, validate_call
 from typing_extensions import Annotated
 
 from crypticorn.pay.client.api_client import ApiClient, RequestSerialized
@@ -388,6 +382,7 @@ class PaymentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponsePayment",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -496,6 +491,7 @@ class PaymentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponsePayment",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -603,6 +599,7 @@ class PaymentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "PaginatedResponsePayment",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1036,6 +1033,7 @@ class PaymentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Payment]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1100,6 +1098,7 @@ class PaymentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Payment]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1163,6 +1162,7 @@ class PaymentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Payment]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1523,6 +1523,7 @@ class PaymentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Subscription]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1601,6 +1602,7 @@ class PaymentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Subscription]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1678,6 +1680,7 @@ class PaymentsApi:
         _response_types_map: Dict[str, Optional[str]] = {
             "200": "List[Subscription]",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )

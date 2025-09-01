@@ -31,10 +31,7 @@ from crypticorn.pay.client import rest
 from crypticorn.pay.client.api_response import ApiResponse
 from crypticorn.pay.client.api_response import T as ApiResponseT
 from crypticorn.pay.client.configuration import Configuration
-from crypticorn.pay.client.exceptions import (
-    ApiException,
-    ApiValueError,
-)
+from crypticorn.pay.client.exceptions import ApiException, ApiValueError
 
 RequestSerialized = Tuple[str, str, Dict[str, str], Optional[str], List[str]]
 
