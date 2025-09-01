@@ -192,11 +192,11 @@ from crypticorn.hive import Configuration as HiveConfig
 
 # Async client
 async with AsyncClient() as client:
-    client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive-v1')
+    client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive')
 
 # Sync client
 with SyncClient() as client:
-    client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive-v1')
+    client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive')
 ```
 
 ### Session Management
