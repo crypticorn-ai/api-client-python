@@ -4,6 +4,14 @@ The changelog only documents changes to the client code. For changes to the unde
 
 <!-- changelog-insertion -->
 
+## v2.20.0-rc.2 (2025-09-01)
+
+### Features
+
+- Latest auth api changes
+  ([`e9f12fb`](https://github.com/crypticorn-ai/api-client-python/commit/e9f12fb7a484850084bfc0ad2ae7ebc1fbd80bef))
+
+
 ## v2.20.0-rc.1 (2025-09-01)
 
 ### Bug Fixes
