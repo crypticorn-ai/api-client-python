@@ -1,12 +1,14 @@
 from __future__ import annotations
+
 from typing import TYPE_CHECKING, Optional
+
 from crypticorn.auth import (
-    ApiClient,
-    Configuration,
     AdminApi,
+    ApiClient,
+    AuthApi,
+    Configuration,
     UserApi,
     WalletApi,
-    AuthApi,
 )
 
 if TYPE_CHECKING:

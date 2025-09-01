@@ -1,19 +1,19 @@
-from typing import Literal, TypeVar, Optional
 import warnings
-from aiohttp import ClientSession, ClientTimeout, TCPConnector
-from crypticorn.hive import HiveClient
-from crypticorn.klines import KlinesClient
-from crypticorn.pay import PayClient
+from importlib.metadata import version
+from typing import Optional, TypeVar
 
-from crypticorn.trade import TradeClient
-from crypticorn.metrics import MetricsClient
-from crypticorn.auth import AuthClient
+from aiohttp import ClientSession, ClientTimeout, TCPConnector
+from typing_extensions import deprecated
+
 from crypticorn._internal.warnings import (
     CrypticornDeprecatedSince217,
-    CrypticornDeprecatedSince219,
 )
-from importlib.metadata import version
-from typing_extensions import deprecated
+from crypticorn.auth import AuthClient
+from crypticorn.hive import HiveClient
+from crypticorn.klines import KlinesClient
+from crypticorn.metrics import MetricsClient
+from crypticorn.pay import PayClient
+from crypticorn.trade import TradeClient
 
 ConfigT = TypeVar("ConfigT")
 SubClient = TypeVar("SubClient")
@@ -28,7 +28,7 @@ class BaseAsyncClient:
         self,
         api_key: Optional[str] = None,
         jwt: Optional[str] = None,
-        base_url: str = None,
+        base_url: Optional[str] = None,
         is_sync: bool = False,
         http_client: Optional[ClientSession] = None,
     ):
@@ -48,7 +48,7 @@ class BaseAsyncClient:
         self._http_client = http_client
         self._owns_http_client = http_client is None  # whether we own the http client
 
-        self._service_classes: dict[str, tuple[type[SubClient], str]] = {
+        self._service_classes: dict[str, tuple[SubClient, str]] = {
             "hive-v1": (HiveClient, "v1/hive"),
             "trade-v1": (TradeClient, "v1/trade"),
             "klines-v1": (KlinesClient, "v1/klines"),
@@ -57,7 +57,7 @@ class BaseAsyncClient:
             "auth-v1": (AuthClient, "v1/auth"),
         }
 
-        self._services: dict[str, SubClient] = self._create_services()
+        self._services = self._create_services()
 
     def _create_services(self) -> dict[str, SubClient]:
         """Create services with the appropriate configuration based on sync/async mode."""
@@ -190,16 +190,17 @@ class BaseAsyncClient:
                 setattr(new_config, attr, new_value)
 
         # Recreate service with new config and appropriate parameters
+        client_class = type(client)
         if self._is_sync:
-            self._services[service] = type(client)(
+            self._services[service] = client_class(
                 new_config, is_sync=self._is_sync, http_client=self._http_client
             )
         else:
-            self._services[service] = type(client)(
+            self._services[service] = client_class(
                 new_config, http_client=self._http_client
             )
 
-    def _get_default_config(self, client_class: type[SubClient], path: str):
+    def _get_default_config(self, client_class: SubClient, path: str):
         config_class = client_class.config_class
         return config_class(
             host=f"{self.base_url}/{path.lstrip('/').rstrip('/')}",
@@ -246,7 +247,7 @@ class AsyncClient(BaseAsyncClient):
         self,
         api_key: Optional[str] = None,
         jwt: Optional[str] = None,
-        base_url: str = None,
+        base_url: Optional[str] = None,
         *,
         http_client: Optional[ClientSession] = None,
     ):
@@ -289,7 +290,7 @@ class SyncClient(BaseAsyncClient):
         self,
         api_key: Optional[str] = None,
         jwt: Optional[str] = None,
-        base_url: str = None,
+        base_url: Optional[str] = None,
         *,
         http_client: Optional[ClientSession] = None,
     ):

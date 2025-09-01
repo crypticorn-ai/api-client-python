@@ -1,12 +1,14 @@
+from typing import AsyncGenerator
+
 import httpx
 import pytest
 import pytest_asyncio
+from fastapi import FastAPI
+
+from crypticorn.common.auth import AuthHandler
 from crypticorn.common.router.admin_router import router as admin_router
 from crypticorn.common.router.status_router import router as status_router
-from fastapi import FastAPI
-from crypticorn.common.auth import AuthHandler
 from crypticorn.common.urls import BaseUrl
-from typing import AsyncGenerator
 from tests.envs import API_ENV
 
 
