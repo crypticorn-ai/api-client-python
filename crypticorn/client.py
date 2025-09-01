@@ -13,12 +13,15 @@ from crypticorn.dex import DexClient
 from crypticorn.hive import HiveClient
 from crypticorn.klines import KlinesClient
 from crypticorn.metrics import MetricsClient
+from crypticorn.notification import NotificationClient
 from crypticorn.pay import PayClient
 from crypticorn.trade import TradeClient
 
 ConfigT = TypeVar("ConfigT")
 SubClient = TypeVar("SubClient")
-_SERVICES = Literal["hive", "trade", "klines", "pay", "metrics", "auth", "dex"]
+_SERVICES = Literal[
+    "hive", "trade", "klines", "pay", "metrics", "auth", "dex", "notification"
+]
 
 
 class BaseAsyncClient:
@@ -58,6 +61,7 @@ class BaseAsyncClient:
             "metrics": (MetricsClient, "v1/metrics"),
             "auth": (AuthClient, "v1/auth"),
             "dex": (DexClient, "v1/dex"),
+            "notification": (NotificationClient, "v1/notification"),
         }
 
         self._services = self._create_services()
@@ -164,6 +168,20 @@ class BaseAsyncClient:
         Entry point for the Auth API ([Docs](https://docs.crypticorn.com/api/?api=auth-api)).
         """
         return self._services["auth"]
+
+    @property
+    def notification(self) -> NotificationClient:
+        """
+        Entry point for the Notification API ([Docs](https://docs.crypticorn.com/api/?api=notification-api)).
+        """
+        return self._services["notification"]
+
+    @property
+    def dex(self) -> DexClient:
+        """
+        Entry point for the DEX API ([Docs](https://docs.crypticorn.com/api/?api=dex-api)).
+        """
+        return self._services["dex"]
 
     def configure(self, config: ConfigT, service: _SERVICES) -> None:
         """
