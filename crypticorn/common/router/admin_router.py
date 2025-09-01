@@ -14,9 +14,10 @@ import time
 from typing import Literal
 
 import psutil
-from crypticorn.common.logging import LogLevel
 from fastapi import APIRouter, Query, Response
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
+
+from crypticorn.common.logging import LogLevel
 
 router = APIRouter(tags=["Admin"], prefix="/admin")
 
@@ -73,9 +74,10 @@ def get_container_limits() -> dict:
         limits["memory_limit_MB"] = "N/A"
 
     try:
-        with open("/sys/fs/cgroup/cpu/cpu.cfs_quota_us") as f1, open(
-            "/sys/fs/cgroup/cpu/cpu.cfs_period_us"
-        ) as f2:
+        with (
+            open("/sys/fs/cgroup/cpu/cpu.cfs_quota_us") as f1,
+            open("/sys/fs/cgroup/cpu/cpu.cfs_period_us") as f2,
+        ):
             quota = int(f1.read().strip())
             period = int(f2.read().strip())
             limits["cpu_limit_cores"] = quota / period if quota > 0 else "N/A"

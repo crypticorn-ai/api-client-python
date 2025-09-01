@@ -12,18 +12,16 @@ Do not edit the class manually.
 """  # noqa: E501
 
 import warnings
-from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
-from typing_extensions import Annotated
 
-from pydantic import StrictInt, StrictStr
-from typing import Any, List, Optional
-from crypticorn.trade.client.models.notification import Notification
-from crypticorn.trade.client.models.notification_create import NotificationCreate
-from crypticorn.trade.client.models.notification_update import NotificationUpdate
+from pydantic import Field, StrictFloat, StrictInt, StrictStr, validate_call
+from typing_extensions import Annotated
 
 from crypticorn.trade.client.api_client import ApiClient, RequestSerialized
 from crypticorn.trade.client.api_response import ApiResponse
+from crypticorn.trade.client.models.notification import Notification
+from crypticorn.trade.client.models.notification_create import NotificationCreate
+from crypticorn.trade.client.models.notification_update import NotificationUpdate
 from crypticorn.trade.client.rest import RESTResponseType
 
 # Import async_to_sync for sync methods

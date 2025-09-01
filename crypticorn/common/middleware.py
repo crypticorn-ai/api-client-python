@@ -1,12 +1,12 @@
-import time
 import warnings
 from contextlib import asynccontextmanager
 
-from crypticorn.common.logging import configure_logging
-from crypticorn.common.warnings import CrypticornDeprecatedSince217
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from typing_extensions import deprecated
+
+from crypticorn.common.logging import configure_logging
+from crypticorn.common.warnings import CrypticornDeprecatedSince217
 
 
 @deprecated("Use add_middleware instead", category=None)

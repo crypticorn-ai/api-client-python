@@ -9,13 +9,12 @@ This script demonstrates:
 """
 
 import asyncio
+
 import aiohttp
 from aiohttp import ClientSession
 
-from crypticorn import AsyncClient, SyncClient, ApiClient
+from crypticorn import AsyncClient, SyncClient
 from crypticorn.klines import Timeframe
-from crypticorn.trade import BotCreate
-from crypticorn.auth import CreateApiKeyRequest
 
 # Add your credentials here
 API_KEY = "2SaU1KRUecTAHQBTDFxPo2MJ5pA9Sm"

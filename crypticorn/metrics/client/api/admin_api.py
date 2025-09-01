@@ -12,17 +12,20 @@ Do not edit the class manually.
 """  # noqa: E501
 
 import warnings
-from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
-from typing_extensions import Annotated
 
-from pydantic import Field, StrictFloat, StrictInt, StrictStr, field_validator
-from typing import Any, Dict, List, Optional, Union
+from pydantic import (
+    Field,
+    StrictFloat,
+    StrictInt,
+    StrictStr,
+    validate_call,
+)
 from typing_extensions import Annotated
-from crypticorn.metrics.client.models.log_level import LogLevel
 
 from crypticorn.metrics.client.api_client import ApiClient, RequestSerialized
 from crypticorn.metrics.client.api_response import ApiResponse
+from crypticorn.metrics.client.models.log_level import LogLevel
 from crypticorn.metrics.client.rest import RESTResponseType
 
 # Import async_to_sync for sync methods

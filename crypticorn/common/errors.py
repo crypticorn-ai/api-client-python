@@ -2,8 +2,9 @@
 
 from enum import Enum
 
-from crypticorn.common.mixins import ApiErrorFallback
 from fastapi import status
+
+from crypticorn.common.mixins import ApiErrorFallback
 
 try:
     from enum import StrEnum
