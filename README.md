@@ -44,6 +44,14 @@ from crypticorn.trade import BotCreate
 from crypticorn.klines import MarketType
 ```
 
+## Versioning
+
+The SDK major version tracks the highest supported API version. A new API major bump always triggers a new major release. Minor and patch versions only add non-breaking changes.
+
+| SDK Version | Auth | Trade | Klines | Metrics | Hive | Dex | Pay | Notification |
+| ----------------- | ---- | ----- | ------ | ------- | ---- | --- | --- | ------------ |
+| v2.x                 | v1   | v1    | v1     | v1      | v1   | v1  | v1  | v1           |
+
 ## Authentication
 
 To get started, [create an API key in your dashboard](https://app.crypticorn.com/account/developer). 
