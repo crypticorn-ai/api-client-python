@@ -1,3 +1,7 @@
+## Python API Client Changelog
+
+The changelog only documents changes to the client code. For changes to the underlying APIs, see the API Changelogs.
+
 <!-- changelog-insertion -->
 
 ## v2.19.0-rc.3 (2025-09-01)
