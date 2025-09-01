@@ -1,19 +1,26 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Optional, Union, Coroutine, Any
+
+from typing import TYPE_CHECKING, Any, Coroutine, Optional, Union
+
 from crypticorn._internal.utils import optional_import
 from crypticorn.metrics import (
+    AdminApi,
     ApiClient,
     Configuration,
     ExchangesApi,
-    StatusApi,
     IndicatorsApi,
     LogsApi,
     MarketcapApi,
     MarketsApi,
-    TokensApi,
-    AdminApi,
     QuoteCurrenciesApi,
+    StatusApi,
+    TokensApi,
 )
+
+try:
+    import pandas as pd
+except ImportError:
+    pd = None
 
 if TYPE_CHECKING:
     from aiohttp import ClientSession
@@ -55,7 +62,9 @@ class MarketcapApiWrapper(MarketcapApi):
     A wrapper for the MarketcapApi class.
     """
 
-    def get_marketcap_symbols_fmt(self, *args, **kwargs) -> Union[pd.DataFrame, Coroutine[Any, Any, pd.DataFrame]]:  # type: ignore
+    def get_marketcap_symbols_fmt(
+        self, *args, **kwargs
+    ) -> Union["pd.DataFrame", Coroutine[Any, Any, "pd.DataFrame"]]:
         """
         Get the marketcap symbols in a pandas dataframe
         Works in both sync and async contexts.
@@ -65,7 +74,7 @@ class MarketcapApiWrapper(MarketcapApi):
         else:
             return self._get_marketcap_symbols_fmt_async(*args, **kwargs)
 
-    def _get_marketcap_symbols_fmt_sync(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    def _get_marketcap_symbols_fmt_sync(self, *args, **kwargs) -> "pd.DataFrame":
         """
         Get the marketcap symbols in a pandas dataframe (sync version)
         """
@@ -73,13 +82,15 @@ class MarketcapApiWrapper(MarketcapApi):
         response = self._get_marketcap_symbols_sync(*args, **kwargs)
         rows = []
         for item in response:
-            row = {"timestamp": item.timestamp}
+            row: dict[Union[int, str], Union[int, str, None]] = {
+                "timestamp": item.timestamp
+            }
             row.update({i + 1: sym for i, sym in enumerate(item.symbols)})
             rows.append(row)
         df = pd.DataFrame(rows)
         return df
 
-    async def _get_marketcap_symbols_fmt_async(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    async def _get_marketcap_symbols_fmt_async(self, *args, **kwargs) -> "pd.DataFrame":
         """
         Get the marketcap symbols in a pandas dataframe (async version)
         """
@@ -87,7 +98,9 @@ class MarketcapApiWrapper(MarketcapApi):
         response = await self._get_marketcap_symbols_async(*args, **kwargs)
         rows = []
         for item in response:
-            row = {"timestamp": item.timestamp}
+            row: dict[Union[int, str], Union[int, str, None]] = {
+                "timestamp": item.timestamp
+            }
             row.update({i + 1: sym for i, sym in enumerate(item.symbols)})
             rows.append(row)
         df = pd.DataFrame(rows)
@@ -99,7 +112,9 @@ class TokensApiWrapper(TokensApi):
     A wrapper for the TokensApi class.
     """
 
-    def get_stable_tokens_fmt(self, *args, **kwargs) -> Union[pd.DataFrame, Coroutine[Any, Any, pd.DataFrame]]:  # type: ignore
+    def get_stable_tokens_fmt(
+        self, *args, **kwargs
+    ) -> Union["pd.DataFrame", Coroutine[Any, Any, "pd.DataFrame"]]:
         """
         Get the tokens in a pandas dataframe
         Works in both sync and async contexts.
@@ -109,7 +124,7 @@ class TokensApiWrapper(TokensApi):
         else:
             return self._get_stable_tokens_fmt_async(*args, **kwargs)
 
-    def _get_stable_tokens_fmt_sync(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    def _get_stable_tokens_fmt_sync(self, *args, **kwargs) -> "pd.DataFrame":
         """
         Get the tokens in a pandas dataframe (sync version)
         """
@@ -117,7 +132,7 @@ class TokensApiWrapper(TokensApi):
         response = self._get_stable_tokens_sync(*args, **kwargs)
         return pd.DataFrame(response)
 
-    async def _get_stable_tokens_fmt_async(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    async def _get_stable_tokens_fmt_async(self, *args, **kwargs) -> "pd.DataFrame":
         """
         Get the tokens in a pandas dataframe (async version)
         """
@@ -125,7 +140,9 @@ class TokensApiWrapper(TokensApi):
         response = await self._get_stable_tokens_async(*args, **kwargs)
         return pd.DataFrame(response)
 
-    def get_wrapped_tokens_fmt(self, *args, **kwargs) -> Union[pd.DataFrame, Coroutine[Any, Any, pd.DataFrame]]:  # type: ignore
+    def get_wrapped_tokens_fmt(
+        self, *args, **kwargs
+    ) -> Union["pd.DataFrame", Coroutine[Any, Any, "pd.DataFrame"]]:
         """
         Get the wrapped tokens in a pandas dataframe
         Works in both sync and async contexts.
@@ -135,7 +152,7 @@ class TokensApiWrapper(TokensApi):
         else:
             return self._get_wrapped_tokens_fmt_async(*args, **kwargs)
 
-    def _get_wrapped_tokens_fmt_sync(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    def _get_wrapped_tokens_fmt_sync(self, *args, **kwargs) -> "pd.DataFrame":
         """
         Get the wrapped tokens in a pandas dataframe (sync version)
         """
@@ -143,7 +160,7 @@ class TokensApiWrapper(TokensApi):
         response = self._get_wrapped_tokens_sync(*args, **kwargs)
         return pd.DataFrame(response)
 
-    async def _get_wrapped_tokens_fmt_async(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    async def _get_wrapped_tokens_fmt_async(self, *args, **kwargs) -> "pd.DataFrame":
         """
         Get the wrapped tokens in a pandas dataframe (async version)
         """
@@ -157,7 +174,9 @@ class ExchangesApiWrapper(ExchangesApi):
     A wrapper for the ExchangesApi class.
     """
 
-    def get_available_exchanges_fmt(self, *args, **kwargs) -> Union[pd.DataFrame, Coroutine[Any, Any, pd.DataFrame]]:  # type: ignore
+    def get_available_exchanges_fmt(
+        self, *args, **kwargs
+    ) -> Union["pd.DataFrame", Coroutine[Any, Any, "pd.DataFrame"]]:
         """
         Get the exchanges in a pandas dataframe
         Works in both sync and async contexts.
@@ -167,7 +186,9 @@ class ExchangesApiWrapper(ExchangesApi):
         else:
             return self._get_available_exchanges_fmt_async(*args, **kwargs)
 
-    def _get_available_exchanges_fmt_sync(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    def _get_available_exchanges_fmt_sync(
+        self, *args, **kwargs
+    ) -> "pd.DataFrame":  # noqa: F821
         """
         Get the exchanges in a pandas dataframe (sync version)
         """
@@ -177,7 +198,7 @@ class ExchangesApiWrapper(ExchangesApi):
         # Create list of dictionaries with timestamp and flattened exchange data
         rows = []
         for item in response:
-            row = {"timestamp": item.timestamp}
+            row: dict[str, Union[int, bool]] = {"timestamp": item.timestamp}
             row.update(
                 item.exchanges
             )  # This spreads the exchanges dict into individual columns
@@ -186,7 +207,9 @@ class ExchangesApiWrapper(ExchangesApi):
         df = pd.DataFrame(rows)
         return df
 
-    async def _get_available_exchanges_fmt_async(self, *args, **kwargs) -> pd.DataFrame:  # type: ignore
+    async def _get_available_exchanges_fmt_async(
+        self, *args, **kwargs
+    ) -> "pd.DataFrame":  # noqa: F821
         """
         Get the exchanges in a pandas dataframe (async version)
         """
@@ -196,7 +219,7 @@ class ExchangesApiWrapper(ExchangesApi):
         # Create list of dictionaries with timestamp and flattened exchange data
         rows = []
         for item in response:
-            row = {"timestamp": item.timestamp}
+            row: dict[str, Union[int, bool]] = {"timestamp": item.timestamp}
             row.update(
                 item.exchanges
             )  # This spreads the exchanges dict into individual columns

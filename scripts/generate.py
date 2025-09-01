@@ -1,7 +1,8 @@
 import os
-import sys
-import requests
 import subprocess
+import sys
+
+import requests
 
 # List of possible module names
 MODULES = ["trade", "klines", "hive", "pay", "auth", "metrics", "dex"]
@@ -159,4 +160,3 @@ __all__ = ["{upper_module_name}Client", ]
 
 if __name__ == "__main__":
     main()
-    subprocess.run(["black", ".", "-q"])

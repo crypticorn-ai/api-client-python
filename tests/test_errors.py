@@ -1,4 +1,5 @@
 import pytest
+
 from crypticorn.common import ApiError, ApiErrorIdentifier, StatusCodeMapper
 
 

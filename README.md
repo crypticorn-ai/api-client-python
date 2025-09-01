@@ -56,9 +56,9 @@ The SDK major version tracks the highest supported API version. A new API major 
 
 ## Authentication
 
-To get started, [create an API key in your dashboard](https://app.crypticorn.com/account/developer). 
+To get started, [create an API key in your dashboard](https://app.crypticorn.com/account/developer).
 
-The scopes you can assign, resemble the [package structure](#structure). The first part defines if the scopes is for reading or writing a ressource, the second matches the API, the third the ROUTER being used. `read` scopes gives access to GET, `write` to PUT, PATCH, POST, DELETE endpoints. 
+The scopes you can assign, resemble the [package structure](#structure). The first part defines if the scopes is for reading or writing a ressource, the second matches the API, the third the ROUTER being used. `read` scopes gives access to GET, `write` to PUT, PATCH, POST, DELETE endpoints.
 
 There are scopes which don't follow this structure. Those are either scopes that must be purchased (e.g. `read:predictions`), give access to endpoints existing in all APIs (e.g. `read:admin`) or provide access to an entire service (e.g. `read:sentiment`).
 
@@ -121,7 +121,7 @@ You can get fully serialized responses as pydantic models. Using this, you get t
 ```python
 # Async client
 res = await client.pay.products.get_products()
-# Sync client  
+# Sync client
 res = client.pay.products.get_products()
 print(res)
 ```
@@ -201,7 +201,7 @@ with SyncClient() as client:
 
 ### Session Management
 
-By default, `AsyncClient` manages a single shared `aiohttp.ClientSession` for all service wrappers.  
+By default, `AsyncClient` manages a single shared `aiohttp.ClientSession` for all service wrappers.
 However, you can pass your own pre-configured `aiohttp.ClientSession` if you need advanced control — for example, to add retries, custom headers, logging, or mocking behavior.
 
 When you inject a custom session, you are responsible for managing its lifecycle, including closing when you're done.

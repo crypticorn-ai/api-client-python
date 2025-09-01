@@ -1,5 +1,6 @@
 import pytest
 import pytest_asyncio
+
 from crypticorn import AsyncClient
 from crypticorn.hive import Configuration as HiveConfig
 

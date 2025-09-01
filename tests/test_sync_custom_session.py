@@ -1,7 +1,9 @@
 import gc
-import warnings
 import time
+import warnings
+
 from aiohttp import ClientSession
+
 from crypticorn.client import SyncClient
 
 
