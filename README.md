@@ -48,7 +48,7 @@ from crypticorn.klines import MarketType
 
 ## Versioning
 
-The SDK major version tracks the highest supported API version. A new API major bump always triggers a new major release. Minor and patch versions only add non-breaking changes.
+The SDK major version tracks the highest supported API version. A new API major bump always triggers a new major release of this package. Minor and patch versions only add non-breaking changes. We follow [Semantic Versioning](https://semver.org/).
 
 | SDK Version | Auth | Trade | Klines | Metrics | Hive | Dex | Pay | Notification |
 | ----------------- | ---- | ----- | ------ | ------- | ---- | --- | --- | ------------ |
