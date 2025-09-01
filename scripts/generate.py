@@ -5,7 +5,7 @@ import sys
 import requests
 
 # List of possible module names
-MODULES = ["trade", "klines", "hive", "pay", "auth", "metrics", "dex"]
+MODULES = ["trade", "klines", "hive", "pay", "auth", "metrics", "dex", "notifications"]
 ENVIRONMENTS = ["local", "dev", "prod"]
 ENV_MAP = {
     "local": "http://localhost/v1",
@@ -17,7 +17,7 @@ ENV_MAP = {
 def main():
     print(sys.argv)
     # Check if script is run from the root directory
-    if not os.path.exists("python/crypticorn"):
+    if not os.path.exists("crypticorn"):
         print("Please run the script from the root directory")
         sys.exit(1)
 
@@ -38,7 +38,7 @@ def main():
     if not module_name:
         print("Please provide the service name as an arg")
         print(f"Valid services: {', '.join(MODULES)}")
-        print("Example: python python/generate.py --service=trade")
+        print("Example: python scripts/generate.py --service=trade")
         sys.exit(1)
 
     # Validate service name
@@ -71,7 +71,7 @@ def main():
         sys.exit(1)
 
     print("Deleting existing packages's client folder")
-    subprocess.run(["rm", "-rf", f"python/crypticorn/{module_name}/client"], check=True)
+    subprocess.run(["rm", "-rf", f"crypticorn/{module_name}/client"], check=True)
 
     print(
         f"Generating {module_name} client using {ROOT_URL}/{module_name}/openapi.json"
@@ -92,19 +92,19 @@ def main():
         "--additional-properties",
         "pipPackageName=crypticorn,mainClientName=CrypticornClient",
         "-o",
-        f"python/crypticorn/{module_name}",
+        f"crypticorn/{module_name}",
         "--openapi-generator-ignore-list",
         "setup.py,setup.cfg,pyproject.toml,tox.ini,py.typed,.gitignore,.gitlab-ci.yml,.github/,git_push.sh,test/,docs/,.travis.yml,test-requirements.txt,requirements.txt,README.md,.openapi-generator-ignore",
         "--minimal-update",
         "--library",
         "asyncio",
         "-t",
-        "python/scripts/templates",
+        "scripts/templates",
     ]
     subprocess.run(generator_cmd, check=True)
 
     # Create __init__.py file if it doesn't exist
-    init_path = f"python/crypticorn/{module_name}/__init__.py"
+    init_path = f"crypticorn/{module_name}/__init__.py"
     if not os.path.exists(init_path):
         print(f"Creating {init_path} file")
         init_content = f"""from crypticorn.{module_name}.client import *
@@ -116,14 +116,14 @@ __all__ = ["{upper_module_name}Client", ]
             f.write(init_content)
 
     # Create main.py file if it doesn't exist
-    main_path = f"python/crypticorn/{module_name}/main.py"
+    main_path = f"crypticorn/{module_name}/main.py"
     if not os.path.exists(main_path):
         with open(main_path, "w") as f:
             f.write("# Edit this file. You can look in the other modules for examples.")
 
     # Update imports to use fully qualified package name
     print("Updating imports to use fully qualified package name")
-    for root, _, files in os.walk(f"python/crypticorn/{module_name}"):
+    for root, _, files in os.walk(f"crypticorn/{module_name}"):
         for file in files:
             if file.endswith(".py"):
                 file_path = os.path.join(root, file)

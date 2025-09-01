@@ -15,7 +15,7 @@ async def test_custom_http_client_injection():
     client = AsyncClient(http_client=custom_session)
 
     # Subclients should have received the custom session immediately (sync context)
-    subclient = client._services["trade-v1"]
+    subclient = client._services["trade"]
     assert subclient.base_client.rest_client.pool_manager is custom_session
 
     await client.close()
@@ -32,7 +32,7 @@ async def test_lazy_http_client_creation():
     client._ensure_session()
 
     assert isinstance(client._http_client, ClientSession)
-    subclient = client._services["trade-v1"]
+    subclient = client._services["trade"]
     assert subclient.base_client.rest_client.pool_manager is client._http_client
 
     await client.close()
@@ -109,7 +109,7 @@ async def test_custom_session_not_closed_by_client():
 async def test_context_manager_usage():
     async with AsyncClient() as client:
         assert isinstance(client._http_client, ClientSession)
-        subclient = client._services["trade-v1"]
+        subclient = client._services["trade"]
         assert subclient.base_client.rest_client.pool_manager is client._http_client
 
     # Confirm session is closed after context manager

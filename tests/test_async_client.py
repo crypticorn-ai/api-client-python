@@ -73,7 +73,7 @@ async def test_client_multiple_service_access():
     try:
         assert client._http_client is None
         # Access multiple services to ensure they're properly initialized
-        subclient = client._services["trade-v1"]
+        subclient = client._services["trade"]
         assert subclient is not None
         assert subclient.base_client.rest_client.pool_manager is None
 
@@ -81,7 +81,7 @@ async def test_client_multiple_service_access():
         client._ensure_session()
         session = client._http_client
 
-        subclient = client._services["trade-v1"]
+        subclient = client._services["trade"]
         assert subclient.base_client.rest_client.pool_manager is session
 
     finally:
