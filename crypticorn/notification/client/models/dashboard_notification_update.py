@@ -19,14 +19,7 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    StrictBool,
-    StrictStr,
-    field_validator,
-)
+from pydantic import BaseModel, ConfigDict, StrictBool
 from typing_extensions import Self
 
 
@@ -35,39 +28,8 @@ class DashboardNotificationUpdate(BaseModel):
     DashboardNotificationUpdate
     """  # noqa: E501
 
-    user_id: StrictStr = Field(description="User ID")
-    template_id: StrictStr = Field(description="Template ID of the notification")
     viewed: Optional[StrictBool] = None
-    variables: Dict[str, Any] = Field(description="Variables of the notification")
-    __properties: ClassVar[List[str]] = [
-        "user_id",
-        "template_id",
-        "viewed",
-        "variables",
-    ]
-
-    @field_validator("template_id")
-    def template_id_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(
-            [
-                "subscription_predictions_welcome",
-                "subscription_dex_signals_welcome",
-                "subscription_combo_welcome",
-                "new_member",
-                "exchange_api_key_expiring",
-                "test",
-                "new_dex_ai_call",
-                "new_dex_ai_call_incognito",
-                "order_completion",
-                "trading_agent_execution_alert",
-                "otp_code",
-            ]
-        ):
-            raise ValueError(
-                "must be one of enum values ('subscription_predictions_welcome', 'subscription_dex_signals_welcome', 'subscription_combo_welcome', 'new_member', 'exchange_api_key_expiring', 'test', 'new_dex_ai_call', 'new_dex_ai_call_incognito', 'order_completion', 'trading_agent_execution_alert', 'otp_code')"
-            )
-        return value
+    __properties: ClassVar[List[str]] = ["viewed"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -122,12 +84,5 @@ class DashboardNotificationUpdate(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "user_id": obj.get("user_id"),
-                "template_id": obj.get("template_id"),
-                "viewed": obj.get("viewed"),
-                "variables": obj.get("variables"),
-            }
-        )
+        _obj = cls.model_validate({"viewed": obj.get("viewed")})
         return _obj

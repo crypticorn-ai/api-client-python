@@ -38,24 +38,24 @@ class DashboardNotification(BaseModel):
     DashboardNotification
     """  # noqa: E501
 
-    id: Optional[StrictStr]
-    created_at: Optional[StrictInt]
-    updated_at: Optional[StrictInt]
-    user_id: StrictStr = Field(description="User ID")
+    id: StrictStr = Field(description="Unique identifier for the resource")
+    created_at: StrictInt = Field(description="Timestamp of creation")
+    updated_at: StrictInt = Field(description="Timestamp of last update")
     template_id: StrictStr = Field(description="Template ID of the notification")
-    viewed: StrictBool = Field(
-        description="Whether the notification has been marked as seen"
+    viewed: Optional[StrictBool] = Field(
+        default=False, description="Whether the notification has been marked as seen"
     )
     variables: Dict[str, Any] = Field(description="Variables of the notification")
+    user_id: StrictStr = Field(description="User ID")
     rendered: UITemplate = Field(description="Rendered notification")
     __properties: ClassVar[List[str]] = [
         "id",
         "created_at",
         "updated_at",
-        "user_id",
         "template_id",
         "viewed",
         "variables",
+        "user_id",
         "rendered",
     ]
 
@@ -122,21 +122,6 @@ class DashboardNotification(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of rendered
         if self.rendered:
             _dict["rendered"] = self.rendered.to_dict()
-        # set to None if id (nullable) is None
-        # and model_fields_set contains the field
-        if self.id is None and "id" in self.model_fields_set:
-            _dict["id"] = None
-
-        # set to None if created_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.created_at is None and "created_at" in self.model_fields_set:
-            _dict["created_at"] = None
-
-        # set to None if updated_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.updated_at is None and "updated_at" in self.model_fields_set:
-            _dict["updated_at"] = None
-
         return _dict
 
     @classmethod
@@ -153,10 +138,10 @@ class DashboardNotification(BaseModel):
                 "id": obj.get("id"),
                 "created_at": obj.get("created_at"),
                 "updated_at": obj.get("updated_at"),
-                "user_id": obj.get("user_id"),
                 "template_id": obj.get("template_id"),
                 "viewed": obj.get("viewed") if obj.get("viewed") is not None else False,
                 "variables": obj.get("variables"),
+                "user_id": obj.get("user_id"),
                 "rendered": (
                     UITemplate.from_dict(obj["rendered"])
                     if obj.get("rendered") is not None

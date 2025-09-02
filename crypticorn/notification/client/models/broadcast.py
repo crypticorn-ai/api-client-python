@@ -28,9 +28,9 @@ class Broadcast(BaseModel):
     Broadcast with communication preferences
     """  # noqa: E501
 
-    id: Optional[StrictStr]
-    created_at: Optional[StrictInt]
-    updated_at: Optional[StrictInt]
+    id: StrictStr = Field(description="Unique identifier for the resource")
+    created_at: StrictInt = Field(description="Timestamp of creation")
+    updated_at: StrictInt = Field(description="Timestamp of last update")
     template_preferences: List[
         Annotated[List[Any], Field(min_length=2, max_length=2)]
     ] = Field(
@@ -88,21 +88,6 @@ class Broadcast(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if id (nullable) is None
-        # and model_fields_set contains the field
-        if self.id is None and "id" in self.model_fields_set:
-            _dict["id"] = None
-
-        # set to None if created_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.created_at is None and "created_at" in self.model_fields_set:
-            _dict["created_at"] = None
-
-        # set to None if updated_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.updated_at is None and "updated_at" in self.model_fields_set:
-            _dict["updated_at"] = None
-
         return _dict
 
     @classmethod
