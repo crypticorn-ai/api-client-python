@@ -56,7 +56,7 @@ The SDK major version tracks the highest supported API version. A new API major 
 
 ## Authentication
 
-To get started, [create an API key in your dashboard](https://app.crypticorn.com/account/developer).
+To get started, [create an API key in your dashboard](https://app.crypticorn.com/account/settings).
 
 The scopes you can assign, resemble the [package structure](#structure). The first part defines if the scopes is for reading or writing a ressource, the second matches the API, the third the ROUTER being used. `read` scopes gives access to GET, `write` to PUT, PATCH, POST, DELETE endpoints.
 
