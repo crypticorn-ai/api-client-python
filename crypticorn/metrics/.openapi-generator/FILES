@@ -1,6 +1,5 @@
 client/__init__.py
 client/api/__init__.py
-client/api/admin_api.py
 client/api/exchanges_api.py
 client/api/indicators_api.py
 client/api/logs_api.py
@@ -21,7 +20,6 @@ client/models/exception_detail.py
 client/models/exchange_availability.py
 client/models/exchange_mapping.py
 client/models/internal_exchange.py
-client/models/log_level.py
 client/models/market_type.py
 client/models/marketcap_ranking.py
 client/models/marketcap_symbol_ranking.py

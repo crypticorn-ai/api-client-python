@@ -57,7 +57,7 @@ def main_sync():
         print(res)
 
         # Get exchange mappings
-        res = client.metrics.exchanges.get_exchange_mappings(market="futures")
+        res = client.notification.notifications.get_notifications(market="futures")
         print(res)
 
 

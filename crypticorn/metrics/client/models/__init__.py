@@ -21,7 +21,6 @@ from crypticorn.metrics.client.models.exception_detail import ExceptionDetail
 from crypticorn.metrics.client.models.exchange_availability import ExchangeAvailability
 from crypticorn.metrics.client.models.exchange_mapping import ExchangeMapping
 from crypticorn.metrics.client.models.internal_exchange import InternalExchange
-from crypticorn.metrics.client.models.log_level import LogLevel
 from crypticorn.metrics.client.models.market_type import MarketType
 from crypticorn.metrics.client.models.marketcap_ranking import MarketcapRanking
 from crypticorn.metrics.client.models.marketcap_symbol_ranking import (

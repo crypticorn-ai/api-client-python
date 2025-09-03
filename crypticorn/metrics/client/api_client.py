@@ -31,10 +31,7 @@ from crypticorn.metrics.client import rest
 from crypticorn.metrics.client.api_response import ApiResponse
 from crypticorn.metrics.client.api_response import T as ApiResponseT
 from crypticorn.metrics.client.configuration import Configuration
-from crypticorn.metrics.client.exceptions import (
-    ApiException,
-    ApiValueError,
-)
+from crypticorn.metrics.client.exceptions import ApiException, ApiValueError
 
 RequestSerialized = Tuple[str, str, Dict[str, str], Optional[str], List[str]]
 
@@ -371,6 +368,10 @@ class ApiClient:
                 obj_dict = obj.to_dict()
             else:
                 obj_dict = obj.__dict__
+
+        if isinstance(obj_dict, list):
+            # here we handle instances that can either be a list or something else, and only became a real list by calling to_dict()
+            return self.sanitize_for_serialization(obj_dict)
 
         return {
             key: self.sanitize_for_serialization(val) for key, val in obj_dict.items()

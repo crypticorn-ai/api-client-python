@@ -68,10 +68,12 @@ class Template(BaseModel):
                 "order_completion",
                 "trading_agent_execution_alert",
                 "otp_code",
+                "subscription_expiring",
+                "subscription_expired",
             ]
         ):
             raise ValueError(
-                "must be one of enum values ('subscription_predictions_welcome', 'subscription_dex_signals_welcome', 'subscription_combo_welcome', 'new_member', 'exchange_api_key_expiring', 'test', 'new_dex_ai_call', 'new_dex_ai_call_incognito', 'order_completion', 'trading_agent_execution_alert', 'otp_code')"
+                "must be one of enum values ('subscription_predictions_welcome', 'subscription_dex_signals_welcome', 'subscription_combo_welcome', 'new_member', 'exchange_api_key_expiring', 'test', 'new_dex_ai_call', 'new_dex_ai_call_incognito', 'order_completion', 'trading_agent_execution_alert', 'otp_code', 'subscription_expiring', 'subscription_expired')"
             )
         return value
 
