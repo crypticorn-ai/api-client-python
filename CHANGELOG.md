@@ -4,6 +4,19 @@ The changelog only documents changes to the client code. For changes to the unde
 
 <!-- changelog-insertion -->
 
+## v2.20.0-rc.3 (2025-09-03)
+
+### Bug Fixes
+
+- Update API template return types to support sync/async
+  ([`87623a6`](https://github.com/crypticorn-ai/api-client-python/commit/87623a63de0647c034b93ce442e90fdcb396405f))
+
+### Documentation
+
+- Add typing notes for sync/async client usage in README
+  ([`ff82459`](https://github.com/crypticorn-ai/api-client-python/commit/ff824596dbf47dd8529dc7fff2c693d0d64ec1ca))
+
+
 ## v2.20.0-rc.2 (2025-09-01)
 
 ### Features
