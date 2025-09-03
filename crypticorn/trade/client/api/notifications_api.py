@@ -12,7 +12,7 @@ Do not edit the class manually.
 """  # noqa: E501
 
 import warnings
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Awaitable, Dict, List, Optional, Tuple, Union
 
 from pydantic import Field, StrictFloat, StrictInt, StrictStr, validate_call
 from typing_extensions import Annotated
@@ -71,7 +71,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> Union[object, Awaitable[object]]:
         """Create Notification"""
         if self.is_sync:
             return self._create_notification_sync(
@@ -108,7 +108,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> Union[ApiResponse[object], Awaitable[ApiResponse[object]]]:
         """Create Notification with HTTP info"""
         if self.is_sync:
             return self._create_notification_sync_with_http_info(
@@ -145,7 +145,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Create Notification without preloading content"""
         if self.is_sync:
             return self._create_notification_sync_without_preload_content(
@@ -519,7 +519,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> Union[None, Awaitable[None]]:
         """Delete Notification"""
         if self.is_sync:
             return self._delete_notification_sync(
@@ -556,7 +556,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> Union[ApiResponse[None], Awaitable[ApiResponse[None]]]:
         """Delete Notification with HTTP info"""
         if self.is_sync:
             return self._delete_notification_sync_with_http_info(
@@ -593,7 +593,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Delete Notification without preloading content"""
         if self.is_sync:
             return self._delete_notification_sync_without_preload_content(
@@ -956,7 +956,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> Union[None, Awaitable[None]]:
         """Delete Notifications"""
         if self.is_sync:
             return self._delete_notifications_sync(
@@ -990,7 +990,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> Union[ApiResponse[None], Awaitable[ApiResponse[None]]]:
         """Delete Notifications with HTTP info"""
         if self.is_sync:
             return self._delete_notifications_sync_with_http_info(
@@ -1024,7 +1024,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Delete Notifications without preloading content"""
         if self.is_sync:
             return self._delete_notifications_sync_without_preload_content(
@@ -1366,7 +1366,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Notification]:
+    ) -> Union[List[Notification], Awaitable[List[Notification]]]:
         """Get Notifications"""
         if self.is_sync:
             return self._get_notifications_sync(
@@ -1406,7 +1406,9 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Notification]]:
+    ) -> Union[
+        ApiResponse[List[Notification]], Awaitable[ApiResponse[List[Notification]]]
+    ]:
         """Get Notifications with HTTP info"""
         if self.is_sync:
             return self._get_notifications_sync_with_http_info(
@@ -1446,7 +1448,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Get Notifications without preloading content"""
         if self.is_sync:
             return self._get_notifications_sync_without_preload_content(
@@ -1838,7 +1840,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> Union[None, Awaitable[None]]:
         """Update Notification"""
         if self.is_sync:
             return self._update_notification_sync(
@@ -1878,7 +1880,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> Union[ApiResponse[None], Awaitable[ApiResponse[None]]]:
         """Update Notification with HTTP info"""
         if self.is_sync:
             return self._update_notification_sync_with_http_info(
@@ -1918,7 +1920,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Update Notification without preloading content"""
         if self.is_sync:
             return self._update_notification_sync_without_preload_content(
@@ -2315,7 +2317,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> Union[None, Awaitable[None]]:
         """Update Notifications"""
         if self.is_sync:
             return self._update_notifications_sync(
@@ -2352,7 +2354,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> Union[ApiResponse[None], Awaitable[ApiResponse[None]]]:
         """Update Notifications with HTTP info"""
         if self.is_sync:
             return self._update_notifications_sync_with_http_info(
@@ -2389,7 +2391,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Update Notifications without preloading content"""
         if self.is_sync:
             return self._update_notifications_sync_without_preload_content(

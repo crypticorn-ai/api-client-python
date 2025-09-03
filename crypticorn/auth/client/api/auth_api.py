@@ -12,7 +12,7 @@ Do not edit the class manually.
 """  # noqa: E501
 
 import warnings
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Awaitable, Dict, List, Optional, Tuple, Union
 
 from pydantic import Field, StrictFloat, StrictInt, StrictStr, validate_call
 from typing_extensions import Annotated
@@ -99,7 +99,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> AuthorizeUser200Response:
+    ) -> Union[AuthorizeUser200Response, Awaitable[AuthorizeUser200Response]]:
         """Authorize a user"""
         if self.is_sync:
             return self._authorize_user_sync(
@@ -136,7 +136,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[AuthorizeUser200Response]:
+    ) -> Union[
+        ApiResponse[AuthorizeUser200Response],
+        Awaitable[ApiResponse[AuthorizeUser200Response]],
+    ]:
         """Authorize a user with HTTP info"""
         if self.is_sync:
             return self._authorize_user_sync_with_http_info(
@@ -173,7 +176,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Authorize a user without preloading content"""
         if self.is_sync:
             return self._authorize_user_sync_without_preload_content(
@@ -556,7 +559,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateApiKey200Response:
+    ) -> Union[CreateApiKey200Response, Awaitable[CreateApiKey200Response]]:
         """Create API Key"""
         if self.is_sync:
             return self._create_api_key_sync(
@@ -593,7 +596,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateApiKey200Response]:
+    ) -> Union[
+        ApiResponse[CreateApiKey200Response],
+        Awaitable[ApiResponse[CreateApiKey200Response]],
+    ]:
         """Create API Key with HTTP info"""
         if self.is_sync:
             return self._create_api_key_sync_with_http_info(
@@ -630,7 +636,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Create API Key without preloading content"""
         if self.is_sync:
             return self._create_api_key_sync_without_preload_content(
@@ -1013,7 +1019,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> Union[object, Awaitable[object]]:
         """Delete API Key"""
         if self.is_sync:
             return self._delete_api_key_sync(
@@ -1050,7 +1056,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> Union[ApiResponse[object], Awaitable[ApiResponse[object]]]:
         """Delete API Key with HTTP info"""
         if self.is_sync:
             return self._delete_api_key_sync_with_http_info(
@@ -1087,7 +1093,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Delete API Key without preloading content"""
         if self.is_sync:
             return self._delete_api_key_sync_without_preload_content(
@@ -1465,7 +1471,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> Union[object, Awaitable[object]]:
         """Generate OTP Code"""
         if self.is_sync:
             return self._generate_otp_code_sync(
@@ -1502,7 +1508,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> Union[ApiResponse[object], Awaitable[ApiResponse[object]]]:
         """Generate OTP Code with HTTP info"""
         if self.is_sync:
             return self._generate_otp_code_sync_with_http_info(
@@ -1539,7 +1545,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Generate OTP Code without preloading content"""
         if self.is_sync:
             return self._generate_otp_code_sync_without_preload_content(
@@ -1921,7 +1927,9 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[GetApiKeys200ResponseInner]:
+    ) -> Union[
+        List[GetApiKeys200ResponseInner], Awaitable[List[GetApiKeys200ResponseInner]]
+    ]:
         """Get API Keys"""
         if self.is_sync:
             return self._get_api_keys_sync(
@@ -1955,7 +1963,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[GetApiKeys200ResponseInner]]:
+    ) -> Union[
+        ApiResponse[List[GetApiKeys200ResponseInner]],
+        Awaitable[ApiResponse[List[GetApiKeys200ResponseInner]]],
+    ]:
         """Get API Keys with HTTP info"""
         if self.is_sync:
             return self._get_api_keys_sync_with_http_info(
@@ -1989,7 +2000,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Get API Keys without preloading content"""
         if self.is_sync:
             return self._get_api_keys_sync_without_preload_content(
@@ -2337,7 +2348,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> str:
+    ) -> Union[str, Awaitable[str]]:
         """Get Google Auth URL"""
         if self.is_sync:
             return self._get_google_auth_url_sync(
@@ -2377,7 +2388,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[str]:
+    ) -> Union[ApiResponse[str], Awaitable[ApiResponse[str]]]:
         """Get Google Auth URL with HTTP info"""
         if self.is_sync:
             return self._get_google_auth_url_sync_with_http_info(
@@ -2417,7 +2428,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Get Google Auth URL without preloading content"""
         if self.is_sync:
             return self._get_google_auth_url_sync_without_preload_content(
@@ -2819,7 +2830,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[str]:
+    ) -> Union[List[str], Awaitable[List[str]]]:
         """Get User Scopes"""
         if self.is_sync:
             return self._get_user_scopes_sync(
@@ -2853,7 +2864,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[str]]:
+    ) -> Union[ApiResponse[List[str]], Awaitable[ApiResponse[List[str]]]]:
         """Get User Scopes with HTTP info"""
         if self.is_sync:
             return self._get_user_scopes_sync_with_http_info(
@@ -2887,7 +2898,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Get User Scopes without preloading content"""
         if self.is_sync:
             return self._get_user_scopes_sync_without_preload_content(
@@ -3242,7 +3253,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> AuthorizeUser200Response:
+    ) -> Union[AuthorizeUser200Response, Awaitable[AuthorizeUser200Response]]:
         """OAuth Callback"""
         if self.is_sync:
             return self._oauth_callback_sync(
@@ -3294,7 +3305,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[AuthorizeUser200Response]:
+    ) -> Union[
+        ApiResponse[AuthorizeUser200Response],
+        Awaitable[ApiResponse[AuthorizeUser200Response]],
+    ]:
         """OAuth Callback with HTTP info"""
         if self.is_sync:
             return self._oauth_callback_sync_with_http_info(
@@ -3346,7 +3360,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """OAuth Callback without preloading content"""
         if self.is_sync:
             return self._oauth_callback_sync_without_preload_content(
@@ -3848,7 +3862,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RefreshTokenInfo200Response:
+    ) -> Union[RefreshTokenInfo200Response, Awaitable[RefreshTokenInfo200Response]]:
         """Refresh token info"""
         if self.is_sync:
             return self._refresh_token_info_sync(
@@ -3882,7 +3896,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[RefreshTokenInfo200Response]:
+    ) -> Union[
+        ApiResponse[RefreshTokenInfo200Response],
+        Awaitable[ApiResponse[RefreshTokenInfo200Response]],
+    ]:
         """Refresh token info with HTTP info"""
         if self.is_sync:
             return self._refresh_token_info_sync_with_http_info(
@@ -3916,7 +3933,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Refresh token info without preloading content"""
         if self.is_sync:
             return self._refresh_token_info_sync_without_preload_content(
@@ -4262,7 +4279,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateUser200ResponseAuth:
+    ) -> Union[CreateUser200ResponseAuth, Awaitable[CreateUser200ResponseAuth]]:
         """Refresh token scopes"""
         if self.is_sync:
             return self._refresh_token_scopes_sync(
@@ -4296,7 +4313,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateUser200ResponseAuth]:
+    ) -> Union[
+        ApiResponse[CreateUser200ResponseAuth],
+        Awaitable[ApiResponse[CreateUser200ResponseAuth]],
+    ]:
         """Refresh token scopes with HTTP info"""
         if self.is_sync:
             return self._refresh_token_scopes_sync_with_http_info(
@@ -4330,7 +4350,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Refresh token scopes without preloading content"""
         if self.is_sync:
             return self._refresh_token_scopes_sync_without_preload_content(
@@ -4676,7 +4696,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RevokeAllSessions200Response:
+    ) -> Union[RevokeAllSessions200Response, Awaitable[RevokeAllSessions200Response]]:
         """Revoke all sessions"""
         if self.is_sync:
             return self._revoke_all_sessions_sync(
@@ -4710,7 +4730,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[RevokeAllSessions200Response]:
+    ) -> Union[
+        ApiResponse[RevokeAllSessions200Response],
+        Awaitable[ApiResponse[RevokeAllSessions200Response]],
+    ]:
         """Revoke all sessions with HTTP info"""
         if self.is_sync:
             return self._revoke_all_sessions_sync_with_http_info(
@@ -4744,7 +4767,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Revoke all sessions without preloading content"""
         if self.is_sync:
             return self._revoke_all_sessions_sync_without_preload_content(
@@ -5090,7 +5113,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateUser200ResponseAuth:
+    ) -> Union[CreateUser200ResponseAuth, Awaitable[CreateUser200ResponseAuth]]:
         """Rotate tokens"""
         if self.is_sync:
             return self._rotate_tokens_sync(
@@ -5124,7 +5147,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateUser200ResponseAuth]:
+    ) -> Union[
+        ApiResponse[CreateUser200ResponseAuth],
+        Awaitable[ApiResponse[CreateUser200ResponseAuth]],
+    ]:
         """Rotate tokens with HTTP info"""
         if self.is_sync:
             return self._rotate_tokens_sync_with_http_info(
@@ -5158,7 +5184,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Rotate tokens without preloading content"""
         if self.is_sync:
             return self._rotate_tokens_sync_without_preload_content(
@@ -5504,7 +5530,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> TokenInfo200Response:
+    ) -> Union[TokenInfo200Response, Awaitable[TokenInfo200Response]]:
         """Token info"""
         if self.is_sync:
             return self._token_info_sync(
@@ -5538,7 +5564,9 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[TokenInfo200Response]:
+    ) -> Union[
+        ApiResponse[TokenInfo200Response], Awaitable[ApiResponse[TokenInfo200Response]]
+    ]:
         """Token info with HTTP info"""
         if self.is_sync:
             return self._token_info_sync_with_http_info(
@@ -5572,7 +5600,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Token info without preloading content"""
         if self.is_sync:
             return self._token_info_sync_without_preload_content(
@@ -5918,7 +5946,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateUser200ResponseAuthAuth:
+    ) -> Union[CreateUser200ResponseAuthAuth, Awaitable[CreateUser200ResponseAuthAuth]]:
         """Verify Authentication"""
         if self.is_sync:
             return self._verify_sync(
@@ -5952,7 +5980,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
+    ) -> Union[
+        ApiResponse[CreateUser200ResponseAuthAuth],
+        Awaitable[ApiResponse[CreateUser200ResponseAuthAuth]],
+    ]:
         """Verify Authentication with HTTP info"""
         if self.is_sync:
             return self._verify_sync_with_http_info(
@@ -5986,7 +6017,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Verify Authentication without preloading content"""
         if self.is_sync:
             return self._verify_sync_without_preload_content(
@@ -6333,7 +6364,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateUser200ResponseAuthAuth:
+    ) -> Union[CreateUser200ResponseAuthAuth, Awaitable[CreateUser200ResponseAuthAuth]]:
         """Verify API Key"""
         if self.is_sync:
             return self._verify_api_key_sync(
@@ -6370,7 +6401,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
+    ) -> Union[
+        ApiResponse[CreateUser200ResponseAuthAuth],
+        Awaitable[ApiResponse[CreateUser200ResponseAuthAuth]],
+    ]:
         """Verify API Key with HTTP info"""
         if self.is_sync:
             return self._verify_api_key_sync_with_http_info(
@@ -6407,7 +6441,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Verify API Key without preloading content"""
         if self.is_sync:
             return self._verify_api_key_sync_without_preload_content(
@@ -6789,7 +6823,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateUser200ResponseAuthAuth:
+    ) -> Union[CreateUser200ResponseAuthAuth, Awaitable[CreateUser200ResponseAuthAuth]]:
         """Verify Basic Auth"""
         if self.is_sync:
             return self._verify_basic_auth_sync(
@@ -6829,7 +6863,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
+    ) -> Union[
+        ApiResponse[CreateUser200ResponseAuthAuth],
+        Awaitable[ApiResponse[CreateUser200ResponseAuthAuth]],
+    ]:
         """Verify Basic Auth with HTTP info"""
         if self.is_sync:
             return self._verify_basic_auth_sync_with_http_info(
@@ -6869,7 +6906,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Verify Basic Auth without preloading content"""
         if self.is_sync:
             return self._verify_basic_auth_sync_without_preload_content(
@@ -7272,7 +7309,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> VerifyOtpCode200Response:
+    ) -> Union[VerifyOtpCode200Response, Awaitable[VerifyOtpCode200Response]]:
         """Verify OTP Code"""
         if self.is_sync:
             return self._verify_otp_code_sync(
@@ -7309,7 +7346,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[VerifyOtpCode200Response]:
+    ) -> Union[
+        ApiResponse[VerifyOtpCode200Response],
+        Awaitable[ApiResponse[VerifyOtpCode200Response]],
+    ]:
         """Verify OTP Code with HTTP info"""
         if self.is_sync:
             return self._verify_otp_code_sync_with_http_info(
@@ -7346,7 +7386,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Verify OTP Code without preloading content"""
         if self.is_sync:
             return self._verify_otp_code_sync_without_preload_content(

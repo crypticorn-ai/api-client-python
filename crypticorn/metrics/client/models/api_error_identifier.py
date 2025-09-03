@@ -38,6 +38,7 @@ class ApiErrorIdentifier(str, Enum):
     CANCELLED_OPEN_ORDER = "cancelled_open_order"
     CLIENT_ORDER_ID_ALREADY_EXISTS = "client_order_id_already_exists"
     INVALID_CONTENT_TYPE = "invalid_content_type"
+    COUPON_INVALID = "coupon_invalid"
     DELETE_BOT_ERROR = "delete_bot_error"
     EXCHANGE_HTTP_REQUEST_ERROR = "exchange_http_request_error"
     EXCHANGE_INVALID_PARAMETER = "exchange_invalid_parameter"

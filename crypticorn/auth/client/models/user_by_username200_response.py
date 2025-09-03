@@ -19,7 +19,7 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictStr
 from typing_extensions import Self
 
 
@@ -28,10 +28,8 @@ class UserByUsername200Response(BaseModel):
     UserByUsername200Response
     """  # noqa: E501
 
-    user_id: StrictStr = Field(alias="userId")
     username: Optional[StrictStr]
-    name: Optional[StrictStr]
-    __properties: ClassVar[List[str]] = ["userId", "username", "name"]
+    __properties: ClassVar[List[str]] = ["username"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -75,11 +73,6 @@ class UserByUsername200Response(BaseModel):
         if self.username is None and "username" in self.model_fields_set:
             _dict["username"] = None
 
-        # set to None if name (nullable) is None
-        # and model_fields_set contains the field
-        if self.name is None and "name" in self.model_fields_set:
-            _dict["name"] = None
-
         return _dict
 
     @classmethod
@@ -91,11 +84,5 @@ class UserByUsername200Response(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "userId": obj.get("userId"),
-                "username": obj.get("username"),
-                "name": obj.get("name"),
-            }
-        )
+        _obj = cls.model_validate({"username": obj.get("username")})
         return _obj

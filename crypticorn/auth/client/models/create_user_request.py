@@ -46,7 +46,7 @@ class CreateUserRequest(BaseModel):
     )
     oob: Optional[StrictStr] = Field(
         default=None,
-        description="OOB code to use when overwriting a password-less account. This is only being returned when creating a user without a password.",
+        description="OOB code to use when overwriting a password-less account.",
     )
     __properties: ClassVar[List[str]] = [
         "email",

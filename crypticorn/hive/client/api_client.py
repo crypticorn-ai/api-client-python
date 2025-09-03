@@ -31,10 +31,7 @@ from crypticorn.hive.client import rest
 from crypticorn.hive.client.api_response import ApiResponse
 from crypticorn.hive.client.api_response import T as ApiResponseT
 from crypticorn.hive.client.configuration import Configuration
-from crypticorn.hive.client.exceptions import (
-    ApiException,
-    ApiValueError,
-)
+from crypticorn.hive.client.exceptions import ApiException, ApiValueError
 
 RequestSerialized = Tuple[str, str, Dict[str, str], Optional[str], List[str]]
 

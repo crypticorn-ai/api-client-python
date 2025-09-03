@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Coroutine, Optional, Union
+from typing import TYPE_CHECKING, Awaitable, Optional, Union
 
 from crypticorn._internal.utils import optional_import
 from crypticorn.klines import (
@@ -56,7 +56,7 @@ class FundingRatesApiWrapper(FundingRatesApi):
 
     def get_funding_rates_fmt(
         self, *args, **kwargs
-    ) -> Union["pd.DataFrame", Coroutine[Any, Any, "pd.DataFrame"]]:
+    ) -> Union["pd.DataFrame", Awaitable["pd.DataFrame"]]:
         """
         Get the funding rates in a pandas DataFrame.
         Works in both sync and async contexts.
@@ -106,7 +106,7 @@ class OHLCVDataApiWrapper(OHLCVDataApi):
 
     def get_ohlcv_data_fmt(
         self, *args, **kwargs
-    ) -> Union["pd.DataFrame", Coroutine[Any, Any, "pd.DataFrame"]]:
+    ) -> Union["pd.DataFrame", Awaitable["pd.DataFrame"]]:
         """
         Get the OHLCV data in a pandas DataFrame.
         Works in both sync and async contexts.
@@ -164,7 +164,7 @@ class SymbolsApiWrapper(SymbolsApi):
 
     def get_symbols_fmt(
         self, *args, **kwargs
-    ) -> Union["pd.DataFrame", Coroutine[Any, Any, "pd.DataFrame"]]:
+    ) -> Union["pd.DataFrame", Awaitable["pd.DataFrame"]]:
         """
         Get the symbols in a pandas DataFrame.
         Works in both sync and async contexts.
