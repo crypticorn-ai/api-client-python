@@ -29,7 +29,8 @@ class VerifyOtpCodeRequest(BaseModel):
     """  # noqa: E501
 
     user_id: StrictStr = Field(
-        description="The user id to verify the OTP code for.", alias="userId"
+        description="The user id to verify the OTP code for. Only respected if the user is an admin. Default is the current user.",
+        alias="userId",
     )
     otp_code: StrictStr = Field(description="The OTP code to verify.", alias="otpCode")
     __properties: ClassVar[List[str]] = ["userId", "otpCode"]

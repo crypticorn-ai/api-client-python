@@ -49,11 +49,9 @@ __all__ = [
     "PaginatedResponseCoupon",
     "PaginatedResponsePayment",
     "Payment",
-    "PaymentStatus",
     "Product",
     "ProductCreate",
     "ProductUpdate",
-    "Provider",
     "Scope",
     "ScopeInfo",
     "ScopesInfo",
@@ -110,11 +108,9 @@ from crypticorn.pay.client.models.paginated_response_payment import (
     PaginatedResponsePayment as PaginatedResponsePayment,
 )
 from crypticorn.pay.client.models.payment import Payment as Payment
-from crypticorn.pay.client.models.payment_status import PaymentStatus as PaymentStatus
 from crypticorn.pay.client.models.product import Product as Product
 from crypticorn.pay.client.models.product_create import ProductCreate as ProductCreate
 from crypticorn.pay.client.models.product_update import ProductUpdate as ProductUpdate
-from crypticorn.pay.client.models.provider import Provider as Provider
 from crypticorn.pay.client.models.scope import Scope as Scope
 from crypticorn.pay.client.models.scope_info import ScopeInfo as ScopeInfo
 from crypticorn.pay.client.models.scopes_info import ScopesInfo as ScopesInfo
