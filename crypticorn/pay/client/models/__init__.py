@@ -31,11 +31,9 @@ from crypticorn.pay.client.models.paginated_response_payment import (
     PaginatedResponsePayment,
 )
 from crypticorn.pay.client.models.payment import Payment
-from crypticorn.pay.client.models.payment_status import PaymentStatus
 from crypticorn.pay.client.models.product import Product
 from crypticorn.pay.client.models.product_create import ProductCreate
 from crypticorn.pay.client.models.product_update import ProductUpdate
-from crypticorn.pay.client.models.provider import Provider
 from crypticorn.pay.client.models.scope import Scope
 from crypticorn.pay.client.models.scope_info import ScopeInfo
 from crypticorn.pay.client.models.scopes_info import ScopesInfo
