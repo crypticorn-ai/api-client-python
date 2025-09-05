@@ -5,7 +5,7 @@ import sys
 import requests
 
 # List of possible module names
-MODULES = ["trade", "klines", "hive", "pay", "auth", "metrics", "dex", "notification"]
+MODULES = ["trade", "hive", "pay", "auth", "metrics", "dex", "notification", "all"]
 ENVIRONMENTS = ["local", "dev", "prod"]
 ENV_MAP = {
     "local": "http://localhost/v1",
@@ -14,47 +14,7 @@ ENV_MAP = {
 }
 
 
-def main():
-    print(sys.argv)
-    # Check if script is run from the root directory
-    if not os.path.exists("crypticorn"):
-        print("Please run the script from the root directory")
-        sys.exit(1)
-
-    if "-m" in sys.argv:
-        sys.argv.remove("-m")
-
-    # Initialize variables
-    module_name = None
-    environment = None
-    # Parse command-line arguments
-    for arg in sys.argv[1:]:
-        if arg.startswith("--service="):
-            module_name = arg.split("=")[1]
-        elif arg.startswith("--env="):
-            environment = arg.split("=")[1]
-
-    # Check if service is provided
-    if not module_name:
-        print("Please provide the service name as an arg")
-        print(f"Valid services: {', '.join(MODULES)}")
-        print("Example: python scripts/generate.py --service=trade")
-        sys.exit(1)
-
-    # Validate service name
-    if module_name not in MODULES:
-        print(f"Invalid service: {module_name}")
-        print(f"Valid services: {', '.join(MODULES)}")
-        sys.exit(1)
-
-    if environment is None:
-        environment = "local"
-    # Validate environment
-    if environment not in ENVIRONMENTS:
-        print(f"Invalid environment: {environment}")
-        print(f"Valid environments: {', '.join(ENVIRONMENTS)}")
-        sys.exit(1)
-
+def main(module_name: str, environment: str):
     ROOT_URL = ENV_MAP[environment]
     upper_module_name = module_name[0].upper() + module_name[1:]
 
@@ -159,4 +119,47 @@ __all__ = ["{upper_module_name}Client"]
 
 
 if __name__ == "__main__":
-    main()
+    print(sys.argv)
+    # Check if script is run from the root directory
+    if not os.path.exists("crypticorn"):
+        print("Please run the script from the root directory")
+        sys.exit(1)
+
+    if "-m" in sys.argv:
+        sys.argv.remove("-m")
+
+    # Initialize variables
+    module_name = None
+    environment = None
+    # Parse command-line arguments
+    for arg in sys.argv[1:]:
+        if arg.startswith("--service="):
+            module_name = arg.split("=")[1]
+        elif arg.startswith("--env="):
+            environment = arg.split("=")[1]
+
+    # Check if service is provided
+    if not module_name:
+        print("Please provide the service name as an arg")
+        print(f"Valid services: {', '.join(MODULES)}")
+        print("Example: python scripts/generate.py --service=trade")
+        sys.exit(1)
+
+    # Validate service name
+    if module_name not in MODULES:
+        print(f"Invalid service: {module_name}")
+        print(f"Valid services: {', '.join(MODULES)}")
+        sys.exit(1)
+
+    if environment is None:
+        environment = "local"
+    # Validate environment
+    if environment not in ENVIRONMENTS:
+        print(f"Invalid environment: {environment}")
+        print(f"Valid environments: {', '.join(ENVIRONMENTS)}")
+        sys.exit(1)
+    if module_name == "all":
+        for module in MODULES:
+            main(module, environment)
+        sys.exit(0)
+    main(module_name, environment)
