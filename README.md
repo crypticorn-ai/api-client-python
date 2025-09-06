@@ -56,7 +56,7 @@ The SDK major version tracks the highest supported API version. A new API major 
 
 ## Authentication
 
-To get started, [create an API key in your dashboard](https://app.crypticorn.com/account/developer).
+To get started, [create an API key in your dashboard](https://app.crypticorn.com/account/settings).
 
 The scopes you can assign, resemble the [package structure](#structure). The first part defines if the scopes is for reading or writing a ressource, the second matches the API, the third the ROUTER being used. `read` scopes gives access to GET, `write` to PUT, PATCH, POST, DELETE endpoints.
 
@@ -192,11 +192,11 @@ from crypticorn.hive import Configuration as HiveConfig
 
 # Async client
 async with AsyncClient() as client:
-    client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive-v1')
+    client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive')
 
 # Sync client
 with SyncClient() as client:
-    client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive-v1')
+    client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive')
 ```
 
 ### Session Management
@@ -220,3 +220,17 @@ async def main():
 If you don’t pass a session, `AsyncClient` will create and manage one internally. In that case, it will be automatically closed when using `async with` or when calling `await client.close()` manually.
 
 **Note on Sync Client**: The `SyncClient` uses per-operation sessions (creates and closes a session for each API call) to ensure reliable synchronous behavior. Custom sessions are accepted but not used. This approach prevents event loop conflicts at the cost of slightly higher overhead per operation.
+
+## Typing Notes
+
+This client supports both **sync** and **async** usage from the same API
+surface.
+
+Because of this, method return types are annotated as:
+
+``` python
+Union[T, Awaitable[T]]
+```
+
+If you're using static type checking, you may see type errors due to this. This is intentional and reflects the dual sync/async support.
+You can safely ignore the union type or use `typing.cast` to enforce the type. Otherwise, Python itself will do the right thing at runtime.

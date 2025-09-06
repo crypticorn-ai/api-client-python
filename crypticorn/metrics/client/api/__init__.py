@@ -1,7 +1,6 @@
 # flake8: noqa
 
 # import apis into api package
-from crypticorn.metrics.client.api.admin_api import AdminApi
 from crypticorn.metrics.client.api.exchanges_api import ExchangesApi
 from crypticorn.metrics.client.api.indicators_api import IndicatorsApi
 from crypticorn.metrics.client.api.logs_api import LogsApi

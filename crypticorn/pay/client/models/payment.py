@@ -13,15 +13,21 @@ Do not edit the class manually.
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List, Optional, Set, Union
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
-from crypticorn.pay.client.models.payment_status import PaymentStatus
-from crypticorn.pay.client.models.provider import Provider
-from typing import Optional, Set
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictFloat,
+    StrictInt,
+    StrictStr,
+    field_validator,
+)
 from typing_extensions import Self
 
 
@@ -37,8 +43,8 @@ class Payment(BaseModel):
     invoice_id: StrictStr = Field(description="Invoice ID")
     amount: Union[StrictFloat, StrictInt] = Field(description="Payment amount")
     currency: StrictStr = Field(description="Payment currency")
-    status: PaymentStatus
-    provider: Provider = Field(description="Payment provider")
+    status: StrictStr = Field(description="Payment status")
+    provider: StrictStr = Field(description="Payment provider")
     market: StrictStr = Field(description="Payment market")
     updated_at: StrictInt = Field(description="Payment updated at timestamp in seconds")
     created_at: StrictInt = Field(description="Payment created at timestamp in seconds")
@@ -60,6 +66,39 @@ class Payment(BaseModel):
         "created_at",
         "details",
     ]
+
+    @field_validator("status")
+    def status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(
+            [
+                "waiting",
+                "processing",
+                "paid",
+                "partially_paid",
+                "refunded",
+                "failed",
+                "cancelled",
+            ]
+        ):
+            raise ValueError(
+                "must be one of enum values ('waiting', 'processing', 'paid', 'partially_paid', 'refunded', 'failed', 'cancelled')"
+            )
+        return value
+
+    @field_validator("provider")
+    def provider_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["now", "staking", "stripe"]):
+            raise ValueError("must be one of enum values ('now', 'staking', 'stripe')")
+        return value
+
+    @field_validator("market")
+    def market_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["crypto", "fiat"]):
+            raise ValueError("must be one of enum values ('crypto', 'fiat')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

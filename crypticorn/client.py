@@ -1,6 +1,6 @@
 import warnings
 from importlib.metadata import version
-from typing import Optional, TypeVar
+from typing import Literal, Optional, TypeVar
 
 from aiohttp import ClientSession, ClientTimeout, TCPConnector
 from typing_extensions import deprecated
@@ -9,14 +9,19 @@ from crypticorn._internal.warnings import (
     CrypticornDeprecatedSince217,
 )
 from crypticorn.auth import AuthClient
+from crypticorn.dex import DexClient
 from crypticorn.hive import HiveClient
 from crypticorn.klines import KlinesClient
 from crypticorn.metrics import MetricsClient
+from crypticorn.notification import NotificationClient
 from crypticorn.pay import PayClient
 from crypticorn.trade import TradeClient
 
 ConfigT = TypeVar("ConfigT")
 SubClient = TypeVar("SubClient")
+_SERVICES = Literal[
+    "hive", "trade", "klines", "pay", "metrics", "auth", "dex", "notification"
+]
 
 
 class BaseAsyncClient:
@@ -48,18 +53,20 @@ class BaseAsyncClient:
         self._http_client = http_client
         self._owns_http_client = http_client is None  # whether we own the http client
 
-        self._service_classes: dict[str, tuple[SubClient, str]] = {
-            "hive-v1": (HiveClient, "v1/hive"),
-            "trade-v1": (TradeClient, "v1/trade"),
-            "klines-v1": (KlinesClient, "v1/klines"),
-            "pay-v1": (PayClient, "v1/pay"),
-            "metrics-v1": (MetricsClient, "v1/metrics"),
-            "auth-v1": (AuthClient, "v1/auth"),
+        self._service_classes: dict[_SERVICES, tuple[SubClient, str]] = {
+            "hive": (HiveClient, "v1/hive"),
+            "trade": (TradeClient, "v1/trade"),
+            "klines": (KlinesClient, "v1/klines"),
+            "pay": (PayClient, "v1/pay"),
+            "metrics": (MetricsClient, "v1/metrics"),
+            "auth": (AuthClient, "v1/auth"),
+            "dex": (DexClient, "v1/dex"),
+            "notification": (NotificationClient, "v1/notification"),
         }
 
         self._services = self._create_services()
 
-    def _create_services(self) -> dict[str, SubClient]:
+    def _create_services(self) -> dict[_SERVICES, SubClient]:
         """Create services with the appropriate configuration based on sync/async mode."""
         services = {}
         for name, (client_class, path) in self._service_classes.items():
@@ -125,44 +132,58 @@ class BaseAsyncClient:
         """
         Entry point for the Hive AI API ([Docs](https://docs.crypticorn.com/api/?api=hive-ai-api)).
         """
-        return self._services["hive-v1"]
+        return self._services["hive"]
 
     @property
     def trade(self) -> TradeClient:
         """
         Entry point for the Trading API ([Docs](https://docs.crypticorn.com/api/?api=trading-api)).
         """
-        return self._services["trade-v1"]
+        return self._services["trade"]
 
     @property
     def klines(self) -> KlinesClient:
         """
         Entry point for the Klines API ([Docs](https://docs.crypticorn.com/api/?api=klines-api)).
         """
-        return self._services["klines-v1"]
+        return self._services["klines"]
 
     @property
     def metrics(self) -> MetricsClient:
         """
         Entry point for the Metrics API ([Docs](https://docs.crypticorn.com/api/?api=metrics-api)).
         """
-        return self._services["metrics-v1"]
+        return self._services["metrics"]
 
     @property
     def pay(self) -> PayClient:
         """
         Entry point for the Payment API ([Docs](https://docs.crypticorn.com/api/?api=payment-api)).
         """
-        return self._services["pay-v1"]
+        return self._services["pay"]
 
     @property
     def auth(self) -> AuthClient:
         """
         Entry point for the Auth API ([Docs](https://docs.crypticorn.com/api/?api=auth-api)).
         """
-        return self._services["auth-v1"]
+        return self._services["auth"]
 
-    def configure(self, config: ConfigT, service: str) -> None:
+    @property
+    def notification(self) -> NotificationClient:
+        """
+        Entry point for the Notification API ([Docs](https://docs.crypticorn.com/api/?api=notification-api)).
+        """
+        return self._services["notification"]
+
+    @property
+    def dex(self) -> DexClient:
+        """
+        Entry point for the DEX API ([Docs](https://docs.crypticorn.com/api/?api=dex-api)).
+        """
+        return self._services["dex"]
+
+    def configure(self, config: ConfigT, service: _SERVICES) -> None:
         """
         Update a sub-client's configuration by overriding with the values set in the new config.
         Useful for testing a specific service against a local server instead of the default proxy.
@@ -173,11 +194,11 @@ class BaseAsyncClient:
         Example:
         >>> # For async client
         >>> async with AsyncClient() as client:
-        ...     client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive-v1')
+        ...     client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive')
         >>>
         >>> # For sync client
         >>> with SyncClient() as client:
-        ...     client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive-v1')
+        ...     client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive')
         """
         assert (
             service in self._service_classes

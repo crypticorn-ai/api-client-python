@@ -47,27 +47,30 @@ __all__ = [
     "ErrorINTERNALSERVERERROR",
     "ErrorNOTFOUND",
     "ErrorUNAUTHORIZED",
+    "GenerateOtpCodeRequest",
     "GetApiKeys200ResponseInner",
     "ListWallets200Response",
     "ListWallets200ResponseDataInner",
     "RefreshTokenInfo200Response",
     "RefreshTokenInfo200ResponseUserSession",
     "ResendVerificationEmailRequest",
+    "RevokeAllSessions200Response",
     "RevokeUserTokens200Response",
     "RevokeUserTokensRequest",
-    "RotateTokens200Response",
     "TokenInfo200Response",
     "UnlinkWalletRequest",
     "UpdateUserRequest",
+    "UpdateWalletRequest",
     "UserByUsername200Response",
     "UserResetPasswordRequest",
     "UserSetPasswordRequest",
     "VerifyEmail200Response",
     "VerifyEmail200ResponseAuth",
     "VerifyEmailRequest",
+    "VerifyOtpCode200Response",
+    "VerifyOtpCodeRequest",
     "VerifyWalletRequest",
     "WalletNonceRequest",
-    "WalletVerified200Response",
     "Whoami200Response",
 ]
 
@@ -76,17 +79,17 @@ from crypticorn.auth.client.api.admin_api import AdminApi as AdminApi
 from crypticorn.auth.client.api.auth_api import AuthApi as AuthApi
 from crypticorn.auth.client.api.user_api import UserApi as UserApi
 from crypticorn.auth.client.api.wallet_api import WalletApi as WalletApi
+from crypticorn.auth.client.api_client import ApiClient as ApiClient
 
 # import ApiClient
 from crypticorn.auth.client.api_response import ApiResponse as ApiResponse
-from crypticorn.auth.client.api_client import ApiClient as ApiClient
 from crypticorn.auth.client.configuration import Configuration as Configuration
-from crypticorn.auth.client.exceptions import OpenApiException as OpenApiException
-from crypticorn.auth.client.exceptions import ApiTypeError as ApiTypeError
-from crypticorn.auth.client.exceptions import ApiValueError as ApiValueError
-from crypticorn.auth.client.exceptions import ApiKeyError as ApiKeyError
 from crypticorn.auth.client.exceptions import ApiAttributeError as ApiAttributeError
 from crypticorn.auth.client.exceptions import ApiException as ApiException
+from crypticorn.auth.client.exceptions import ApiKeyError as ApiKeyError
+from crypticorn.auth.client.exceptions import ApiTypeError as ApiTypeError
+from crypticorn.auth.client.exceptions import ApiValueError as ApiValueError
+from crypticorn.auth.client.exceptions import OpenApiException as OpenApiException
 
 # import models into sdk package
 from crypticorn.auth.client.models.add_wallet200_response import (
@@ -135,6 +138,9 @@ from crypticorn.auth.client.models.error_notfound import ErrorNOTFOUND as ErrorN
 from crypticorn.auth.client.models.error_unauthorized import (
     ErrorUNAUTHORIZED as ErrorUNAUTHORIZED,
 )
+from crypticorn.auth.client.models.generate_otp_code_request import (
+    GenerateOtpCodeRequest as GenerateOtpCodeRequest,
+)
 from crypticorn.auth.client.models.get_api_keys200_response_inner import (
     GetApiKeys200ResponseInner as GetApiKeys200ResponseInner,
 )
@@ -153,14 +159,14 @@ from crypticorn.auth.client.models.refresh_token_info200_response_user_session i
 from crypticorn.auth.client.models.resend_verification_email_request import (
     ResendVerificationEmailRequest as ResendVerificationEmailRequest,
 )
+from crypticorn.auth.client.models.revoke_all_sessions200_response import (
+    RevokeAllSessions200Response as RevokeAllSessions200Response,
+)
 from crypticorn.auth.client.models.revoke_user_tokens200_response import (
     RevokeUserTokens200Response as RevokeUserTokens200Response,
 )
 from crypticorn.auth.client.models.revoke_user_tokens_request import (
     RevokeUserTokensRequest as RevokeUserTokensRequest,
-)
-from crypticorn.auth.client.models.rotate_tokens200_response import (
-    RotateTokens200Response as RotateTokens200Response,
 )
 from crypticorn.auth.client.models.token_info200_response import (
     TokenInfo200Response as TokenInfo200Response,
@@ -170,6 +176,9 @@ from crypticorn.auth.client.models.unlink_wallet_request import (
 )
 from crypticorn.auth.client.models.update_user_request import (
     UpdateUserRequest as UpdateUserRequest,
+)
+from crypticorn.auth.client.models.update_wallet_request import (
+    UpdateWalletRequest as UpdateWalletRequest,
 )
 from crypticorn.auth.client.models.user_by_username200_response import (
     UserByUsername200Response as UserByUsername200Response,
@@ -189,14 +198,17 @@ from crypticorn.auth.client.models.verify_email200_response_auth import (
 from crypticorn.auth.client.models.verify_email_request import (
     VerifyEmailRequest as VerifyEmailRequest,
 )
+from crypticorn.auth.client.models.verify_otp_code200_response import (
+    VerifyOtpCode200Response as VerifyOtpCode200Response,
+)
+from crypticorn.auth.client.models.verify_otp_code_request import (
+    VerifyOtpCodeRequest as VerifyOtpCodeRequest,
+)
 from crypticorn.auth.client.models.verify_wallet_request import (
     VerifyWalletRequest as VerifyWalletRequest,
 )
 from crypticorn.auth.client.models.wallet_nonce_request import (
     WalletNonceRequest as WalletNonceRequest,
-)
-from crypticorn.auth.client.models.wallet_verified200_response import (
-    WalletVerified200Response as WalletVerified200Response,
 )
 from crypticorn.auth.client.models.whoami200_response import (
     Whoami200Response as Whoami200Response,

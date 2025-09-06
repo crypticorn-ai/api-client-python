@@ -13,17 +13,18 @@ Do not edit the class manually.
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List, Optional, Set
 
 from pydantic import BaseModel, ConfigDict, Field
-from typing import Any, ClassVar, Dict, List
+from typing_extensions import Self
+
 from crypticorn.auth.client.models.refresh_token_info200_response_user_session import (
     RefreshTokenInfo200ResponseUserSession,
 )
-from typing import Optional, Set
-from typing_extensions import Self
 
 
 class RefreshTokenInfo200Response(BaseModel):

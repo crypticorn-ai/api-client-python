@@ -13,13 +13,13 @@ Do not edit the class manually.
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List, Optional, Set, Union
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
-from typing import Optional, Set
 from typing_extensions import Self
 
 
@@ -32,9 +32,9 @@ class AddWalletRequest(BaseModel):
     origin: StrictStr
     address: StrictStr
     chain_id: Optional[Union[StrictFloat, StrictInt]] = Field(
-        default=1, alias="chainId"
+        default=56, alias="chainId"
     )
-    statement: Optional[StrictStr] = "Sign in with Ethereum wallet"
+    statement: Optional[StrictStr] = "Sign in with Binance Smart Chain wallet"
     __properties: ClassVar[List[str]] = [
         "host",
         "origin",
@@ -96,11 +96,11 @@ class AddWalletRequest(BaseModel):
                 "host": obj.get("host"),
                 "origin": obj.get("origin"),
                 "address": obj.get("address"),
-                "chainId": obj.get("chainId") if obj.get("chainId") is not None else 1,
+                "chainId": obj.get("chainId") if obj.get("chainId") is not None else 56,
                 "statement": (
                     obj.get("statement")
                     if obj.get("statement") is not None
-                    else "Sign in with Ethereum wallet"
+                    else "Sign in with Binance Smart Chain wallet"
                 ),
             }
         )

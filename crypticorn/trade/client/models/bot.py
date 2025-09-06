@@ -13,17 +13,17 @@ Do not edit the class manually.
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List, Optional, Set
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
+from typing_extensions import Annotated, Self
+
 from crypticorn.trade.client.models.api_error_identifier import ApiErrorIdentifier
 from crypticorn.trade.client.models.bot_status import BotStatus
-from typing import Optional, Set
-from typing_extensions import Self
 
 
 class Bot(BaseModel):

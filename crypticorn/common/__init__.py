@@ -3,6 +3,10 @@ This module is deprecated and will be removed in a future release. The functiona
 however not all functionality will be kept and breaking changes will occur.
 """
 
+# TODO: remove folder in next major release
+import warnings
+
+from crypticorn._internal.warnings import CrypticornDeprecatedSince219
 from crypticorn.common.ansi_colors import *
 from crypticorn.common.auth import *
 from crypticorn.common.decorators import *
@@ -20,11 +24,6 @@ from crypticorn.common.scopes import *
 from crypticorn.common.urls import *
 from crypticorn.common.utils import *
 from crypticorn.common.warnings import *
-
-# TODO: remove folder in next major release
-import warnings
-
-from crypticorn._internal.warnings import CrypticornDeprecatedSince219
 
 warnings.warn(
     """The 'crypticorn.common' module is deprecated and will be removed in a future release. The functionality has been moved to the 'crypticorn_utils' package,

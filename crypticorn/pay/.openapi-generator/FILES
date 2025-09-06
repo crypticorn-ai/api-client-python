@@ -27,11 +27,9 @@ client/models/invoice_create.py
 client/models/paginated_response_coupon.py
 client/models/paginated_response_payment.py
 client/models/payment.py
-client/models/payment_status.py
 client/models/product.py
 client/models/product_create.py
 client/models/product_update.py
-client/models/provider.py
 client/models/scope.py
 client/models/scope_info.py
 client/models/scopes_info.py

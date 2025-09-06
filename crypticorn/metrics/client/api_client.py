@@ -13,32 +13,25 @@ Do not edit the class manually.
 
 
 import datetime
-from dateutil.parser import parse
-from enum import Enum
 import decimal
 import json
 import mimetypes
 import os
 import re
 import tempfile
-
+from enum import Enum
+from typing import Dict, List, Optional, Tuple, Union
 from urllib.parse import quote
-from typing import Tuple, Optional, List, Dict, Union
+
+from dateutil.parser import parse
 from pydantic import SecretStr
 
-from crypticorn.metrics.client.configuration import Configuration
-from crypticorn.metrics.client.api_response import ApiResponse, T as ApiResponseT
 import crypticorn.metrics.client.models
 from crypticorn.metrics.client import rest
-from crypticorn.metrics.client.exceptions import (
-    ApiValueError,
-    ApiException,
-    BadRequestException,
-    UnauthorizedException,
-    ForbiddenException,
-    NotFoundException,
-    ServiceException,
-)
+from crypticorn.metrics.client.api_response import ApiResponse
+from crypticorn.metrics.client.api_response import T as ApiResponseT
+from crypticorn.metrics.client.configuration import Configuration
+from crypticorn.metrics.client.exceptions import ApiException, ApiValueError
 
 RequestSerialized = Tuple[str, str, Dict[str, str], Optional[str], List[str]]
 
@@ -375,6 +368,10 @@ class ApiClient:
                 obj_dict = obj.to_dict()
             else:
                 obj_dict = obj.__dict__
+
+        if isinstance(obj_dict, list):
+            # here we handle instances that can either be a list or something else, and only became a real list by calling to_dict()
+            return self.sanitize_for_serialization(obj_dict)
 
         return {
             key: self.sanitize_for_serialization(val) for key, val in obj_dict.items()

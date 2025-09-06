@@ -1,7 +1,9 @@
-import click
-from pathlib import Path
-import subprocess
 import importlib.resources
+import subprocess
+from pathlib import Path
+
+import click
+
 import crypticorn.cli.templates as templates
 
 
@@ -19,9 +21,11 @@ def get_git_root() -> Path:
 
 def copy_template(template_name: str, target_path: Path):
     """Copy a template file to the target path."""
-    with importlib.resources.files(templates).joinpath(template_name).open(
-        "r"
-    ) as template_file:
+    with (
+        importlib.resources.files(templates)
+        .joinpath(template_name)
+        .open("r") as template_file
+    ):
         content = template_file.read()
 
     target_path.parent.mkdir(parents=True, exist_ok=True)

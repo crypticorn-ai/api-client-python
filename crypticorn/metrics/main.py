@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Coroutine, Optional, Union
+from typing import TYPE_CHECKING, Awaitable, Optional, Union
 
 from crypticorn._internal.utils import optional_import
 from crypticorn.metrics import (
-    AdminApi,
     ApiClient,
     Configuration,
     ExchangesApi,
@@ -54,7 +53,6 @@ class MetricsClient:
         self.tokens = TokensApiWrapper(self.base_client, is_sync=is_sync)
         self.exchanges = ExchangesApiWrapper(self.base_client, is_sync=is_sync)
         self.quote_currencies = QuoteCurrenciesApi(self.base_client, is_sync=is_sync)
-        self.admin = AdminApi(self.base_client, is_sync=is_sync)
 
 
 class MarketcapApiWrapper(MarketcapApi):
@@ -64,7 +62,7 @@ class MarketcapApiWrapper(MarketcapApi):
 
     def get_marketcap_symbols_fmt(
         self, *args, **kwargs
-    ) -> Union["pd.DataFrame", Coroutine[Any, Any, "pd.DataFrame"]]:
+    ) -> Union["pd.DataFrame", Awaitable["pd.DataFrame"]]:
         """
         Get the marketcap symbols in a pandas dataframe
         Works in both sync and async contexts.
@@ -114,7 +112,7 @@ class TokensApiWrapper(TokensApi):
 
     def get_stable_tokens_fmt(
         self, *args, **kwargs
-    ) -> Union["pd.DataFrame", Coroutine[Any, Any, "pd.DataFrame"]]:
+    ) -> Union["pd.DataFrame", Awaitable["pd.DataFrame"]]:
         """
         Get the tokens in a pandas dataframe
         Works in both sync and async contexts.
@@ -142,7 +140,7 @@ class TokensApiWrapper(TokensApi):
 
     def get_wrapped_tokens_fmt(
         self, *args, **kwargs
-    ) -> Union["pd.DataFrame", Coroutine[Any, Any, "pd.DataFrame"]]:
+    ) -> Union["pd.DataFrame", Awaitable["pd.DataFrame"]]:
         """
         Get the wrapped tokens in a pandas dataframe
         Works in both sync and async contexts.
@@ -176,7 +174,7 @@ class ExchangesApiWrapper(ExchangesApi):
 
     def get_available_exchanges_fmt(
         self, *args, **kwargs
-    ) -> Union["pd.DataFrame", Coroutine[Any, Any, "pd.DataFrame"]]:
+    ) -> Union["pd.DataFrame", Awaitable["pd.DataFrame"]]:
         """
         Get the exchanges in a pandas dataframe
         Works in both sync and async contexts.

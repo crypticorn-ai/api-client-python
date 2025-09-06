@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Coroutine, Optional, Union
+from typing import TYPE_CHECKING, Awaitable, Optional, Union
 
 from pydantic import StrictInt
 
@@ -58,7 +58,7 @@ class DataApiWrapper(DataApi):
         version: Optional[DataVersion] = None,
         feature_size: Optional[FeatureSize] = None,
         **kwargs,
-    ) -> Union[list[Path], Coroutine[Any, Any, list[Path]]]:
+    ) -> Union[list[Path], Awaitable[list[Path]]]:
         """
         Download data for model training. All three files (y_train, x_test, x_train) are downloaded and saved under e.g. FOLDER/v1/coin_1/*.feather.
         The folder will be created if it doesn't exist.

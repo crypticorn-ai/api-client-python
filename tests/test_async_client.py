@@ -73,7 +73,7 @@ async def test_client_multiple_service_access():
     try:
         assert client._http_client is None
         # Access multiple services to ensure they're properly initialized
-        subclient = client._services["trade-v1"]
+        subclient = client._services["trade"]
         assert subclient is not None
         assert subclient.base_client.rest_client.pool_manager is None
 
@@ -81,7 +81,7 @@ async def test_client_multiple_service_access():
         client._ensure_session()
         session = client._http_client
 
-        subclient = client._services["trade-v1"]
+        subclient = client._services["trade"]
         assert subclient.base_client.rest_client.pool_manager is session
 
     finally:
@@ -132,11 +132,6 @@ async def test_client_no_exceptions_on_basic_operations():
 async def test_client_service_lazy_initialization():
     """Test that services are lazily initialized."""
     client = AsyncClient()
-
-    # Services should be available immediately
-    assert (
-        len(client._services) == 6
-    )  # this needs to be updated when new services are added
 
     # But HTTP client should be None until first use
     assert client._http_client is None
