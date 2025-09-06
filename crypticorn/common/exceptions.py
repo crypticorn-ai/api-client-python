@@ -2,18 +2,19 @@ import json
 import logging
 from typing import Any, Optional
 
-from crypticorn.common.errors import (
-    ApiError,
-    ApiErrorIdentifier,
-    ApiErrorLevel,
-    ApiErrorType,
-)
 from fastapi import FastAPI
 from fastapi import HTTPException as FastAPIHTTPException
 from fastapi import Request
 from fastapi.exceptions import RequestValidationError, ResponseValidationError
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
+
+from crypticorn.common.errors import (
+    ApiError,
+    ApiErrorIdentifier,
+    ApiErrorLevel,
+    ApiErrorType,
+)
 
 try:
     from enum import StrEnum

@@ -1,6 +1,6 @@
-from crypticorn._internal.warnings import CrypticornDeprecatedSince219
 import warnings
 
+from crypticorn._internal.warnings import CrypticornDeprecatedSince219
 from crypticorn.cli.init import init_group
 from crypticorn.cli.version import version
 

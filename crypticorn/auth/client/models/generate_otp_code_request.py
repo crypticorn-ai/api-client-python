@@ -13,23 +13,25 @@ Do not edit the class manually.
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from pydantic import BaseModel, ConfigDict, StrictBool
-from typing import Any, ClassVar, Dict, List
-from typing import Optional, Set
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing_extensions import Self
 
 
-class WalletVerified200Response(BaseModel):
+class GenerateOtpCodeRequest(BaseModel):
     """
-    WalletVerified200Response
+    GenerateOtpCodeRequest
     """  # noqa: E501
 
-    verified: StrictBool
-    __properties: ClassVar[List[str]] = ["verified"]
+    user_id: StrictStr = Field(
+        description="The user id to generate the OTP code for.", alias="userId"
+    )
+    __properties: ClassVar[List[str]] = ["userId"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -48,7 +50,7 @@ class WalletVerified200Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of WalletVerified200Response from a JSON string"""
+        """Create an instance of GenerateOtpCodeRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,12 +74,12 @@ class WalletVerified200Response(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of WalletVerified200Response from a dict"""
+        """Create an instance of GenerateOtpCodeRequest from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({"verified": obj.get("verified")})
+        _obj = cls.model_validate({"userId": obj.get("userId")})
         return _obj

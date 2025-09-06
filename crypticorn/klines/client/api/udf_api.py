@@ -12,21 +12,19 @@ Do not edit the class manually.
 """  # noqa: E501
 
 import warnings
-from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
+
+from pydantic import Field, StrictFloat, StrictInt, StrictStr, validate_call
 from typing_extensions import Annotated
 
-from pydantic import StrictInt, StrictStr
-from typing import Any, List, Optional
+from crypticorn.klines.client.api_client import ApiClient, RequestSerialized
+from crypticorn.klines.client.api_response import ApiResponse
 from crypticorn.klines.client.models.ohlcv import OHLCV
 from crypticorn.klines.client.models.resolution import Resolution
 from crypticorn.klines.client.models.search_symbol import SearchSymbol
 from crypticorn.klines.client.models.symbol_group import SymbolGroup
 from crypticorn.klines.client.models.symbol_info import SymbolInfo
 from crypticorn.klines.client.models.udf_config import UDFConfig
-
-from crypticorn.klines.client.api_client import ApiClient, RequestSerialized
-from crypticorn.klines.client.api_response import ApiResponse
 from crypticorn.klines.client.rest import RESTResponseType
 
 # Import async_to_sync for sync methods

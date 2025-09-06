@@ -18,7 +18,6 @@ from crypticorn.dex.client.models.api_error_identifier import ApiErrorIdentifier
 from crypticorn.dex.client.models.api_error_level import ApiErrorLevel
 from crypticorn.dex.client.models.api_error_type import ApiErrorType
 from crypticorn.dex.client.models.exception_detail import ExceptionDetail
-from crypticorn.dex.client.models.log_level import LogLevel
 from crypticorn.dex.client.models.paginated_response_signal_with_token import (
     PaginatedResponseSignalWithToken,
 )

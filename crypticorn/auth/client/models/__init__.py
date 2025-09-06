@@ -42,6 +42,9 @@ from crypticorn.auth.client.models.error_internalservererror import (
 )
 from crypticorn.auth.client.models.error_notfound import ErrorNOTFOUND
 from crypticorn.auth.client.models.error_unauthorized import ErrorUNAUTHORIZED
+from crypticorn.auth.client.models.generate_otp_code_request import (
+    GenerateOtpCodeRequest,
+)
 from crypticorn.auth.client.models.get_api_keys200_response_inner import (
     GetApiKeys200ResponseInner,
 )
@@ -60,18 +63,19 @@ from crypticorn.auth.client.models.refresh_token_info200_response_user_session i
 from crypticorn.auth.client.models.resend_verification_email_request import (
     ResendVerificationEmailRequest,
 )
+from crypticorn.auth.client.models.revoke_all_sessions200_response import (
+    RevokeAllSessions200Response,
+)
 from crypticorn.auth.client.models.revoke_user_tokens200_response import (
     RevokeUserTokens200Response,
 )
 from crypticorn.auth.client.models.revoke_user_tokens_request import (
     RevokeUserTokensRequest,
 )
-from crypticorn.auth.client.models.rotate_tokens200_response import (
-    RotateTokens200Response,
-)
 from crypticorn.auth.client.models.token_info200_response import TokenInfo200Response
 from crypticorn.auth.client.models.unlink_wallet_request import UnlinkWalletRequest
 from crypticorn.auth.client.models.update_user_request import UpdateUserRequest
+from crypticorn.auth.client.models.update_wallet_request import UpdateWalletRequest
 from crypticorn.auth.client.models.user_by_username200_response import (
     UserByUsername200Response,
 )
@@ -88,9 +92,10 @@ from crypticorn.auth.client.models.verify_email200_response_auth import (
     VerifyEmail200ResponseAuth,
 )
 from crypticorn.auth.client.models.verify_email_request import VerifyEmailRequest
+from crypticorn.auth.client.models.verify_otp_code200_response import (
+    VerifyOtpCode200Response,
+)
+from crypticorn.auth.client.models.verify_otp_code_request import VerifyOtpCodeRequest
 from crypticorn.auth.client.models.verify_wallet_request import VerifyWalletRequest
 from crypticorn.auth.client.models.wallet_nonce_request import WalletNonceRequest
-from crypticorn.auth.client.models.wallet_verified200_response import (
-    WalletVerified200Response,
-)
 from crypticorn.auth.client.models.whoami200_response import Whoami200Response

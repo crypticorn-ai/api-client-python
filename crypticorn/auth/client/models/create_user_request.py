@@ -13,15 +13,14 @@ Do not edit the class manually.
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List, Optional, Set
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
-from typing import Optional, Set
-from typing_extensions import Self
+from typing_extensions import Annotated, Self
 
 
 class CreateUserRequest(BaseModel):
@@ -47,7 +46,7 @@ class CreateUserRequest(BaseModel):
     )
     oob: Optional[StrictStr] = Field(
         default=None,
-        description="OOB code to use when overwriting a password-less account. This is only being returned when creating a user without a password.",
+        description="OOB code to use when overwriting a password-less account.",
     )
     __properties: ClassVar[List[str]] = [
         "email",

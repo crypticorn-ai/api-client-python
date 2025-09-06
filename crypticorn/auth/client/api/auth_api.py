@@ -12,12 +12,13 @@ Do not edit the class manually.
 """  # noqa: E501
 
 import warnings
-from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Awaitable, Dict, List, Optional, Tuple, Union
+
+from pydantic import Field, StrictFloat, StrictInt, StrictStr, validate_call
 from typing_extensions import Annotated
 
-from pydantic import StrictStr, field_validator
-from typing import Any, List, Optional
+from crypticorn.auth.client.api_client import ApiClient, RequestSerialized
+from crypticorn.auth.client.api_response import ApiResponse
 from crypticorn.auth.client.models.authorize_user200_response import (
     AuthorizeUser200Response,
 )
@@ -26,8 +27,14 @@ from crypticorn.auth.client.models.create_api_key200_response import (
     CreateApiKey200Response,
 )
 from crypticorn.auth.client.models.create_api_key_request import CreateApiKeyRequest
+from crypticorn.auth.client.models.create_user200_response_auth import (
+    CreateUser200ResponseAuth,
+)
 from crypticorn.auth.client.models.create_user200_response_auth_auth import (
     CreateUser200ResponseAuthAuth,
+)
+from crypticorn.auth.client.models.generate_otp_code_request import (
+    GenerateOtpCodeRequest,
 )
 from crypticorn.auth.client.models.get_api_keys200_response_inner import (
     GetApiKeys200ResponseInner,
@@ -35,13 +42,14 @@ from crypticorn.auth.client.models.get_api_keys200_response_inner import (
 from crypticorn.auth.client.models.refresh_token_info200_response import (
     RefreshTokenInfo200Response,
 )
-from crypticorn.auth.client.models.rotate_tokens200_response import (
-    RotateTokens200Response,
+from crypticorn.auth.client.models.revoke_all_sessions200_response import (
+    RevokeAllSessions200Response,
 )
 from crypticorn.auth.client.models.token_info200_response import TokenInfo200Response
-
-from crypticorn.auth.client.api_client import ApiClient, RequestSerialized
-from crypticorn.auth.client.api_response import ApiResponse
+from crypticorn.auth.client.models.verify_otp_code200_response import (
+    VerifyOtpCode200Response,
+)
+from crypticorn.auth.client.models.verify_otp_code_request import VerifyOtpCodeRequest
 from crypticorn.auth.client.rest import RESTResponseType
 
 # Import async_to_sync for sync methods
@@ -91,7 +99,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> AuthorizeUser200Response:
+    ) -> Union[AuthorizeUser200Response, Awaitable[AuthorizeUser200Response]]:
         """Authorize a user"""
         if self.is_sync:
             return self._authorize_user_sync(
@@ -128,7 +136,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[AuthorizeUser200Response]:
+    ) -> Union[
+        ApiResponse[AuthorizeUser200Response],
+        Awaitable[ApiResponse[AuthorizeUser200Response]],
+    ]:
         """Authorize a user with HTTP info"""
         if self.is_sync:
             return self._authorize_user_sync_with_http_info(
@@ -165,7 +176,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Authorize a user without preloading content"""
         if self.is_sync:
             return self._authorize_user_sync_without_preload_content(
@@ -247,6 +258,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -315,6 +327,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -382,6 +395,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -545,7 +559,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateApiKey200Response:
+    ) -> Union[CreateApiKey200Response, Awaitable[CreateApiKey200Response]]:
         """Create API Key"""
         if self.is_sync:
             return self._create_api_key_sync(
@@ -582,7 +596,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateApiKey200Response]:
+    ) -> Union[
+        ApiResponse[CreateApiKey200Response],
+        Awaitable[ApiResponse[CreateApiKey200Response]],
+    ]:
         """Create API Key with HTTP info"""
         if self.is_sync:
             return self._create_api_key_sync_with_http_info(
@@ -619,7 +636,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Create API Key without preloading content"""
         if self.is_sync:
             return self._create_api_key_sync_without_preload_content(
@@ -701,6 +718,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -769,6 +787,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -836,6 +855,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -999,7 +1019,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> Union[object, Awaitable[object]]:
         """Delete API Key"""
         if self.is_sync:
             return self._delete_api_key_sync(
@@ -1036,7 +1056,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> Union[ApiResponse[object], Awaitable[ApiResponse[object]]]:
         """Delete API Key with HTTP info"""
         if self.is_sync:
             return self._delete_api_key_sync_with_http_info(
@@ -1073,7 +1093,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Delete API Key without preloading content"""
         if self.is_sync:
             return self._delete_api_key_sync_without_preload_content(
@@ -1156,6 +1176,7 @@ class AuthApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1225,6 +1246,7 @@ class AuthApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1293,6 +1315,7 @@ class AuthApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1434,6 +1457,463 @@ class AuthApi:
         )
 
     @validate_call
+    def generate_otp_code(
+        self,
+        generate_otp_code_request: GenerateOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[object, Awaitable[object]]:
+        """Generate OTP Code"""
+        if self.is_sync:
+            return self._generate_otp_code_sync(
+                generate_otp_code_request=generate_otp_code_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._generate_otp_code_async(
+                generate_otp_code_request=generate_otp_code_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def generate_otp_code_with_http_info(
+        self,
+        generate_otp_code_request: GenerateOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[ApiResponse[object], Awaitable[ApiResponse[object]]]:
+        """Generate OTP Code with HTTP info"""
+        if self.is_sync:
+            return self._generate_otp_code_sync_with_http_info(
+                generate_otp_code_request=generate_otp_code_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._generate_otp_code_async_with_http_info(
+                generate_otp_code_request=generate_otp_code_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def generate_otp_code_without_preload_content(
+        self,
+        generate_otp_code_request: GenerateOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
+        """Generate OTP Code without preloading content"""
+        if self.is_sync:
+            return self._generate_otp_code_sync_without_preload_content(
+                generate_otp_code_request=generate_otp_code_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._generate_otp_code_async_without_preload_content(
+                generate_otp_code_request=generate_otp_code_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _generate_otp_code_async(
+        self,
+        generate_otp_code_request: GenerateOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Generate OTP Code
+
+        Generates a new OTP code for the user.
+
+        :param generate_otp_code_request: (required)
+        :type generate_otp_code_request: GenerateOtpCodeRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._generate_otp_code_serialize(
+            generate_otp_code_request=generate_otp_code_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    async def _generate_otp_code_async_with_http_info(
+        self,
+        generate_otp_code_request: GenerateOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Generate OTP Code
+
+        Generates a new OTP code for the user.
+
+        :param generate_otp_code_request: (required)
+        :type generate_otp_code_request: GenerateOtpCodeRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._generate_otp_code_serialize(
+            generate_otp_code_request=generate_otp_code_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data, response_types_map=_response_types_map
+        )
+
+    @validate_call
+    async def _generate_otp_code_async_without_preload_content(
+        self,
+        generate_otp_code_request: GenerateOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Generate OTP Code
+
+        Generates a new OTP code for the user.
+
+        :param generate_otp_code_request: (required)
+        :type generate_otp_code_request: GenerateOtpCodeRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._generate_otp_code_serialize(
+            generate_otp_code_request=generate_otp_code_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "object",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _generate_otp_code_sync(
+        self,
+        generate_otp_code_request: GenerateOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> object:
+        """Synchronous version of generate_otp_code"""
+        return async_to_sync(self._generate_otp_code_async)(
+            generate_otp_code_request=generate_otp_code_request,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _generate_otp_code_sync_with_http_info(
+        self,
+        generate_otp_code_request: GenerateOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[object]:
+        """Synchronous version of generate_otp_code_with_http_info"""
+        return async_to_sync(self._generate_otp_code_async_with_http_info)(
+            generate_otp_code_request=generate_otp_code_request,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _generate_otp_code_sync_without_preload_content(
+        self,
+        generate_otp_code_request: GenerateOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of generate_otp_code_without_preload_content"""
+        return async_to_sync(self._generate_otp_code_async_without_preload_content)(
+            generate_otp_code_request=generate_otp_code_request,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    def _generate_otp_code_serialize(
+        self,
+        generate_otp_code_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if generate_otp_code_request is not None:
+            _body_params = generate_otp_code_request
+
+        # set the HTTP header `Accept`
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params["Content-Type"] = _content_type
+        else:
+            _default_content_type = self.api_client.select_header_content_type(
+                ["application/json"]
+            )
+            if _default_content_type is not None:
+                _header_params["Content-Type"] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
+
+        return self.api_client.param_serialize(
+            method="POST",
+            resource_path="/otp/generate",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
     def get_api_keys(
         self,
         _request_timeout: Union[
@@ -1447,7 +1927,9 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[GetApiKeys200ResponseInner]:
+    ) -> Union[
+        List[GetApiKeys200ResponseInner], Awaitable[List[GetApiKeys200ResponseInner]]
+    ]:
         """Get API Keys"""
         if self.is_sync:
             return self._get_api_keys_sync(
@@ -1481,7 +1963,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[GetApiKeys200ResponseInner]]:
+    ) -> Union[
+        ApiResponse[List[GetApiKeys200ResponseInner]],
+        Awaitable[ApiResponse[List[GetApiKeys200ResponseInner]]],
+    ]:
         """Get API Keys with HTTP info"""
         if self.is_sync:
             return self._get_api_keys_sync_with_http_info(
@@ -1515,7 +2000,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Get API Keys without preloading content"""
         if self.is_sync:
             return self._get_api_keys_sync_without_preload_content(
@@ -1590,6 +2075,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1653,6 +2139,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1715,6 +2202,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -1860,7 +2348,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> str:
+    ) -> Union[str, Awaitable[str]]:
         """Get Google Auth URL"""
         if self.is_sync:
             return self._get_google_auth_url_sync(
@@ -1900,7 +2388,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[str]:
+    ) -> Union[ApiResponse[str], Awaitable[ApiResponse[str]]]:
         """Get Google Auth URL with HTTP info"""
         if self.is_sync:
             return self._get_google_auth_url_sync_with_http_info(
@@ -1940,7 +2428,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Get Google Auth URL without preloading content"""
         if self.is_sync:
             return self._get_google_auth_url_sync_without_preload_content(
@@ -2029,6 +2517,7 @@ class AuthApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2102,6 +2591,7 @@ class AuthApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2174,6 +2664,7 @@ class AuthApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2339,7 +2830,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[str]:
+    ) -> Union[List[str], Awaitable[List[str]]]:
         """Get User Scopes"""
         if self.is_sync:
             return self._get_user_scopes_sync(
@@ -2373,7 +2864,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[str]]:
+    ) -> Union[ApiResponse[List[str]], Awaitable[ApiResponse[List[str]]]]:
         """Get User Scopes with HTTP info"""
         if self.is_sync:
             return self._get_user_scopes_sync_with_http_info(
@@ -2407,7 +2898,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Get User Scopes without preloading content"""
         if self.is_sync:
             return self._get_user_scopes_sync_without_preload_content(
@@ -2483,6 +2974,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2547,6 +3039,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2610,6 +3103,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -2759,7 +3253,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> AuthorizeUser200Response:
+    ) -> Union[AuthorizeUser200Response, Awaitable[AuthorizeUser200Response]]:
         """OAuth Callback"""
         if self.is_sync:
             return self._oauth_callback_sync(
@@ -2811,7 +3305,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[AuthorizeUser200Response]:
+    ) -> Union[
+        ApiResponse[AuthorizeUser200Response],
+        Awaitable[ApiResponse[AuthorizeUser200Response]],
+    ]:
         """OAuth Callback with HTTP info"""
         if self.is_sync:
             return self._oauth_callback_sync_with_http_info(
@@ -2863,7 +3360,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """OAuth Callback without preloading content"""
         if self.is_sync:
             return self._oauth_callback_sync_without_preload_content(
@@ -2976,6 +3473,7 @@ class AuthApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3065,6 +3563,7 @@ class AuthApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3153,6 +3652,7 @@ class AuthApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3362,7 +3862,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RefreshTokenInfo200Response:
+    ) -> Union[RefreshTokenInfo200Response, Awaitable[RefreshTokenInfo200Response]]:
         """Refresh token info"""
         if self.is_sync:
             return self._refresh_token_info_sync(
@@ -3396,7 +3896,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[RefreshTokenInfo200Response]:
+    ) -> Union[
+        ApiResponse[RefreshTokenInfo200Response],
+        Awaitable[ApiResponse[RefreshTokenInfo200Response]],
+    ]:
         """Refresh token info with HTTP info"""
         if self.is_sync:
             return self._refresh_token_info_sync_with_http_info(
@@ -3430,7 +3933,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Refresh token info without preloading content"""
         if self.is_sync:
             return self._refresh_token_info_sync_without_preload_content(
@@ -3505,6 +4008,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3568,6 +4072,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3630,6 +4135,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3773,7 +4279,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RotateTokens200Response:
+    ) -> Union[CreateUser200ResponseAuth, Awaitable[CreateUser200ResponseAuth]]:
         """Refresh token scopes"""
         if self.is_sync:
             return self._refresh_token_scopes_sync(
@@ -3807,7 +4313,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[RotateTokens200Response]:
+    ) -> Union[
+        ApiResponse[CreateUser200ResponseAuth],
+        Awaitable[ApiResponse[CreateUser200ResponseAuth]],
+    ]:
         """Refresh token scopes with HTTP info"""
         if self.is_sync:
             return self._refresh_token_scopes_sync_with_http_info(
@@ -3841,7 +4350,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Refresh token scopes without preloading content"""
         if self.is_sync:
             return self._refresh_token_scopes_sync_without_preload_content(
@@ -3876,10 +4385,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RotateTokens200Response:
+    ) -> CreateUser200ResponseAuth:
         """Refresh token scopes
 
-        Refresh token scopes for a given user and a valid access token and a valid refresh token. This manually re-creates the access token with the latest scopes, in case the user changed their subscription status, access to certain features.
+        Refresh token scopes for a given user and a valid access token and a valid refresh token. This manually re-creates the access token with the latest scopes, in case the user changed their subscription status, access to certain features. Only works with a valid jwt token.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -3911,11 +4420,12 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "RotateTokens200Response",
+            "200": "CreateUser200ResponseAuth",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -3939,10 +4449,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[RotateTokens200Response]:
+    ) -> ApiResponse[CreateUser200ResponseAuth]:
         """Refresh token scopes
 
-        Refresh token scopes for a given user and a valid access token and a valid refresh token. This manually re-creates the access token with the latest scopes, in case the user changed their subscription status, access to certain features.
+        Refresh token scopes for a given user and a valid access token and a valid refresh token. This manually re-creates the access token with the latest scopes, in case the user changed their subscription status, access to certain features. Only works with a valid jwt token.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -3974,11 +4484,12 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "RotateTokens200Response",
+            "200": "CreateUser200ResponseAuth",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -4004,7 +4515,7 @@ class AuthApi:
     ) -> RESTResponseType:
         """Refresh token scopes
 
-        Refresh token scopes for a given user and a valid access token and a valid refresh token. This manually re-creates the access token with the latest scopes, in case the user changed their subscription status, access to certain features.
+        Refresh token scopes for a given user and a valid access token and a valid refresh token. This manually re-creates the access token with the latest scopes, in case the user changed their subscription status, access to certain features. Only works with a valid jwt token.
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -4036,11 +4547,12 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "RotateTokens200Response",
+            "200": "CreateUser200ResponseAuth",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -4061,7 +4573,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RotateTokens200Response:
+    ) -> CreateUser200ResponseAuth:
         """Synchronous version of refresh_token_scopes"""
         return async_to_sync(self._refresh_token_scopes_async)(
             _request_timeout=_request_timeout,
@@ -4085,7 +4597,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[RotateTokens200Response]:
+    ) -> ApiResponse[CreateUser200ResponseAuth]:
         """Synchronous version of refresh_token_scopes_with_http_info"""
         return async_to_sync(self._refresh_token_scopes_async_with_http_info)(
             _request_timeout=_request_timeout,
@@ -4171,6 +4683,423 @@ class AuthApi:
         )
 
     @validate_call
+    def revoke_all_sessions(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[RevokeAllSessions200Response, Awaitable[RevokeAllSessions200Response]]:
+        """Revoke all sessions"""
+        if self.is_sync:
+            return self._revoke_all_sessions_sync(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._revoke_all_sessions_async(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def revoke_all_sessions_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[
+        ApiResponse[RevokeAllSessions200Response],
+        Awaitable[ApiResponse[RevokeAllSessions200Response]],
+    ]:
+        """Revoke all sessions with HTTP info"""
+        if self.is_sync:
+            return self._revoke_all_sessions_sync_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._revoke_all_sessions_async_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def revoke_all_sessions_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
+        """Revoke all sessions without preloading content"""
+        if self.is_sync:
+            return self._revoke_all_sessions_sync_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._revoke_all_sessions_async_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _revoke_all_sessions_async(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RevokeAllSessions200Response:
+        """Revoke all sessions
+
+        Revoke all sessions for the current user.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._revoke_all_sessions_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "RevokeAllSessions200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    async def _revoke_all_sessions_async_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[RevokeAllSessions200Response]:
+        """Revoke all sessions
+
+        Revoke all sessions for the current user.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._revoke_all_sessions_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "RevokeAllSessions200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data, response_types_map=_response_types_map
+        )
+
+    @validate_call
+    async def _revoke_all_sessions_async_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Revoke all sessions
+
+        Revoke all sessions for the current user.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._revoke_all_sessions_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "RevokeAllSessions200Response",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _revoke_all_sessions_sync(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RevokeAllSessions200Response:
+        """Synchronous version of revoke_all_sessions"""
+        return async_to_sync(self._revoke_all_sessions_async)(
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _revoke_all_sessions_sync_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[RevokeAllSessions200Response]:
+        """Synchronous version of revoke_all_sessions_with_http_info"""
+        return async_to_sync(self._revoke_all_sessions_async_with_http_info)(
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _revoke_all_sessions_sync_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of revoke_all_sessions_without_preload_content"""
+        return async_to_sync(self._revoke_all_sessions_async_without_preload_content)(
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    def _revoke_all_sessions_serialize(
+        self,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+        # set the HTTP header `Accept`
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
+            )
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
+
+        return self.api_client.param_serialize(
+            method="POST",
+            resource_path="/revoke-all-sessions",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
     def rotate_tokens(
         self,
         _request_timeout: Union[
@@ -4184,7 +5113,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RotateTokens200Response:
+    ) -> Union[CreateUser200ResponseAuth, Awaitable[CreateUser200ResponseAuth]]:
         """Rotate tokens"""
         if self.is_sync:
             return self._rotate_tokens_sync(
@@ -4218,7 +5147,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[RotateTokens200Response]:
+    ) -> Union[
+        ApiResponse[CreateUser200ResponseAuth],
+        Awaitable[ApiResponse[CreateUser200ResponseAuth]],
+    ]:
         """Rotate tokens with HTTP info"""
         if self.is_sync:
             return self._rotate_tokens_sync_with_http_info(
@@ -4252,7 +5184,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Rotate tokens without preloading content"""
         if self.is_sync:
             return self._rotate_tokens_sync_without_preload_content(
@@ -4287,7 +5219,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RotateTokens200Response:
+    ) -> CreateUser200ResponseAuth:
         """Rotate tokens
 
         Handles token rotation for user authentication. If access token is expired: Uses refresh token to generate a new access token. If access token is still valid: Extends (slides) the current token's expiration date. Returns both updated access and refresh tokens.
@@ -4322,11 +5254,12 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "RotateTokens200Response",
+            "200": "CreateUser200ResponseAuth",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -4350,7 +5283,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[RotateTokens200Response]:
+    ) -> ApiResponse[CreateUser200ResponseAuth]:
         """Rotate tokens
 
         Handles token rotation for user authentication. If access token is expired: Uses refresh token to generate a new access token. If access token is still valid: Extends (slides) the current token's expiration date. Returns both updated access and refresh tokens.
@@ -4385,11 +5318,12 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "RotateTokens200Response",
+            "200": "CreateUser200ResponseAuth",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -4447,11 +5381,12 @@ class AuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "RotateTokens200Response",
+            "200": "CreateUser200ResponseAuth",
             "401": "ErrorUNAUTHORIZED",
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -4472,7 +5407,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RotateTokens200Response:
+    ) -> CreateUser200ResponseAuth:
         """Synchronous version of rotate_tokens"""
         return async_to_sync(self._rotate_tokens_async)(
             _request_timeout=_request_timeout,
@@ -4496,7 +5431,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[RotateTokens200Response]:
+    ) -> ApiResponse[CreateUser200ResponseAuth]:
         """Synchronous version of rotate_tokens_with_http_info"""
         return async_to_sync(self._rotate_tokens_async_with_http_info)(
             _request_timeout=_request_timeout,
@@ -4595,7 +5530,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> TokenInfo200Response:
+    ) -> Union[TokenInfo200Response, Awaitable[TokenInfo200Response]]:
         """Token info"""
         if self.is_sync:
             return self._token_info_sync(
@@ -4629,7 +5564,9 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[TokenInfo200Response]:
+    ) -> Union[
+        ApiResponse[TokenInfo200Response], Awaitable[ApiResponse[TokenInfo200Response]]
+    ]:
         """Token info with HTTP info"""
         if self.is_sync:
             return self._token_info_sync_with_http_info(
@@ -4663,7 +5600,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Token info without preloading content"""
         if self.is_sync:
             return self._token_info_sync_without_preload_content(
@@ -4738,6 +5675,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -4801,6 +5739,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -4863,6 +5802,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -5006,7 +5946,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateUser200ResponseAuthAuth:
+    ) -> Union[CreateUser200ResponseAuthAuth, Awaitable[CreateUser200ResponseAuthAuth]]:
         """Verify Authentication"""
         if self.is_sync:
             return self._verify_sync(
@@ -5040,7 +5980,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
+    ) -> Union[
+        ApiResponse[CreateUser200ResponseAuthAuth],
+        Awaitable[ApiResponse[CreateUser200ResponseAuthAuth]],
+    ]:
         """Verify Authentication with HTTP info"""
         if self.is_sync:
             return self._verify_sync_with_http_info(
@@ -5074,7 +6017,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Verify Authentication without preloading content"""
         if self.is_sync:
             return self._verify_sync_without_preload_content(
@@ -5149,6 +6092,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -5212,6 +6156,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -5274,6 +6219,7 @@ class AuthApi:
             "403": "ErrorFORBIDDEN",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -5418,7 +6364,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateUser200ResponseAuthAuth:
+    ) -> Union[CreateUser200ResponseAuthAuth, Awaitable[CreateUser200ResponseAuthAuth]]:
         """Verify API Key"""
         if self.is_sync:
             return self._verify_api_key_sync(
@@ -5455,7 +6401,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
+    ) -> Union[
+        ApiResponse[CreateUser200ResponseAuthAuth],
+        Awaitable[ApiResponse[CreateUser200ResponseAuthAuth]],
+    ]:
         """Verify API Key with HTTP info"""
         if self.is_sync:
             return self._verify_api_key_sync_with_http_info(
@@ -5492,7 +6441,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Verify API Key without preloading content"""
         if self.is_sync:
             return self._verify_api_key_sync_without_preload_content(
@@ -5576,6 +6525,7 @@ class AuthApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -5646,6 +6596,7 @@ class AuthApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -5715,6 +6666,7 @@ class AuthApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -5871,7 +6823,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> CreateUser200ResponseAuthAuth:
+    ) -> Union[CreateUser200ResponseAuthAuth, Awaitable[CreateUser200ResponseAuthAuth]]:
         """Verify Basic Auth"""
         if self.is_sync:
             return self._verify_basic_auth_sync(
@@ -5911,7 +6863,10 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[CreateUser200ResponseAuthAuth]:
+    ) -> Union[
+        ApiResponse[CreateUser200ResponseAuthAuth],
+        Awaitable[ApiResponse[CreateUser200ResponseAuthAuth]],
+    ]:
         """Verify Basic Auth with HTTP info"""
         if self.is_sync:
             return self._verify_basic_auth_sync_with_http_info(
@@ -5951,7 +6906,7 @@ class AuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Verify Basic Auth without preloading content"""
         if self.is_sync:
             return self._verify_basic_auth_sync_without_preload_content(
@@ -6040,6 +6995,7 @@ class AuthApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -6113,6 +7069,7 @@ class AuthApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -6185,6 +7142,7 @@ class AuthApi:
             "404": "ErrorNOTFOUND",
             "500": "ErrorINTERNALSERVERERROR",
         }
+
         response_data = await self.api_client.call_api(
             *_param, _request_timeout=_request_timeout
         )
@@ -6324,6 +7282,466 @@ class AuthApi:
         return self.api_client.param_serialize(
             method="GET",
             resource_path="/verify-basic-auth",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
+    def verify_otp_code(
+        self,
+        verify_otp_code_request: VerifyOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[VerifyOtpCode200Response, Awaitable[VerifyOtpCode200Response]]:
+        """Verify OTP Code"""
+        if self.is_sync:
+            return self._verify_otp_code_sync(
+                verify_otp_code_request=verify_otp_code_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._verify_otp_code_async(
+                verify_otp_code_request=verify_otp_code_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def verify_otp_code_with_http_info(
+        self,
+        verify_otp_code_request: VerifyOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[
+        ApiResponse[VerifyOtpCode200Response],
+        Awaitable[ApiResponse[VerifyOtpCode200Response]],
+    ]:
+        """Verify OTP Code with HTTP info"""
+        if self.is_sync:
+            return self._verify_otp_code_sync_with_http_info(
+                verify_otp_code_request=verify_otp_code_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._verify_otp_code_async_with_http_info(
+                verify_otp_code_request=verify_otp_code_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def verify_otp_code_without_preload_content(
+        self,
+        verify_otp_code_request: VerifyOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
+        """Verify OTP Code without preloading content"""
+        if self.is_sync:
+            return self._verify_otp_code_sync_without_preload_content(
+                verify_otp_code_request=verify_otp_code_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._verify_otp_code_async_without_preload_content(
+                verify_otp_code_request=verify_otp_code_request,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _verify_otp_code_async(
+        self,
+        verify_otp_code_request: VerifyOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> VerifyOtpCode200Response:
+        """Verify OTP Code
+
+        Verifies a new OTP code for the user and deletes the code.
+
+        :param verify_otp_code_request: (required)
+        :type verify_otp_code_request: VerifyOtpCodeRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._verify_otp_code_serialize(
+            verify_otp_code_request=verify_otp_code_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "VerifyOtpCode200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    async def _verify_otp_code_async_with_http_info(
+        self,
+        verify_otp_code_request: VerifyOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[VerifyOtpCode200Response]:
+        """Verify OTP Code
+
+        Verifies a new OTP code for the user and deletes the code.
+
+        :param verify_otp_code_request: (required)
+        :type verify_otp_code_request: VerifyOtpCodeRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._verify_otp_code_serialize(
+            verify_otp_code_request=verify_otp_code_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "VerifyOtpCode200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data, response_types_map=_response_types_map
+        )
+
+    @validate_call
+    async def _verify_otp_code_async_without_preload_content(
+        self,
+        verify_otp_code_request: VerifyOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Verify OTP Code
+
+        Verifies a new OTP code for the user and deletes the code.
+
+        :param verify_otp_code_request: (required)
+        :type verify_otp_code_request: VerifyOtpCodeRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._verify_otp_code_serialize(
+            verify_otp_code_request=verify_otp_code_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "VerifyOtpCode200Response",
+            "400": "ErrorBADREQUEST",
+            "401": "ErrorUNAUTHORIZED",
+            "403": "ErrorFORBIDDEN",
+            "500": "ErrorINTERNALSERVERERROR",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _verify_otp_code_sync(
+        self,
+        verify_otp_code_request: VerifyOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> VerifyOtpCode200Response:
+        """Synchronous version of verify_otp_code"""
+        return async_to_sync(self._verify_otp_code_async)(
+            verify_otp_code_request=verify_otp_code_request,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _verify_otp_code_sync_with_http_info(
+        self,
+        verify_otp_code_request: VerifyOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[VerifyOtpCode200Response]:
+        """Synchronous version of verify_otp_code_with_http_info"""
+        return async_to_sync(self._verify_otp_code_async_with_http_info)(
+            verify_otp_code_request=verify_otp_code_request,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _verify_otp_code_sync_without_preload_content(
+        self,
+        verify_otp_code_request: VerifyOtpCodeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of verify_otp_code_without_preload_content"""
+        return async_to_sync(self._verify_otp_code_async_without_preload_content)(
+            verify_otp_code_request=verify_otp_code_request,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    def _verify_otp_code_serialize(
+        self,
+        verify_otp_code_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if verify_otp_code_request is not None:
+            _body_params = verify_otp_code_request
+
+        # set the HTTP header `Accept`
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params["Content-Type"] = _content_type
+        else:
+            _default_content_type = self.api_client.select_header_content_type(
+                ["application/json"]
+            )
+            if _default_content_type is not None:
+                _header_params["Content-Type"] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
+
+        return self.api_client.param_serialize(
+            method="POST",
+            resource_path="/otp/verify",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

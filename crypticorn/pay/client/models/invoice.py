@@ -13,14 +13,21 @@ Do not edit the class manually.
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List, Optional, Set, Union
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
-from crypticorn.pay.client.models.provider import Provider
-from typing import Optional, Set
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictFloat,
+    StrictInt,
+    StrictStr,
+    field_validator,
+)
 from typing_extensions import Self
 
 
@@ -34,7 +41,7 @@ class Invoice(BaseModel):
     id: StrictStr = Field(description="Unique identifier for the resource")
     product_id: StrictStr = Field(description="The ID of the product")
     coupon_id: Optional[StrictStr] = None
-    provider: Provider = Field(description="The provider the invoice is created with")
+    provider: StrictStr = Field(description="The provider the invoice is created with")
     address: Optional[StrictStr] = None
     oob: Optional[StrictStr] = None
     user_id: StrictStr = Field(description="The ID of the user")
@@ -55,6 +62,13 @@ class Invoice(BaseModel):
         "usd_amount",
         "url",
     ]
+
+    @field_validator("provider")
+    def provider_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["now", "staking", "stripe"]):
+            raise ValueError("must be one of enum values ('now', 'staking', 'stripe')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
