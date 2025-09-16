@@ -1,29 +1,45 @@
 import os
 import subprocess
 import sys
+from typing import Final, Literal, Optional, Union
 
 import requests
 
 # List of possible module names
-MODULES = ["trade", "hive", "pay", "auth", "metrics", "dex", "notification", "all"]
-ENVIRONMENTS = ["local", "dev", "prod"]
+MODULE_TYPE = Literal[
+    "trade", "hive", "pay", "auth", "metrics", "dex", "notification", "all"
+]
+MODULES: Final[tuple[MODULE_TYPE, ...]] = (
+    "trade",
+    "hive",
+    "pay",
+    "auth",
+    "metrics",
+    "dex",
+    "notification",
+    "all",
+)
+VERSION_TYPE = Literal["v1", "v2"]
+VERSIONS: Final[tuple[VERSION_TYPE, ...]] = ("v1", "v2")
+ENVIRONMENT_TYPE = Literal["local", "dev", "prod"]
+ENVIRONMENTS: Final[tuple[ENVIRONMENT_TYPE, ...]] = ("local", "dev", "prod")
 ENV_MAP = {
-    "local": "http://localhost/v1",
-    "dev": "https://api.crypticorn.dev/v1",
-    "prod": "https://api.crypticorn.com/v1",
+    "local": "http://localhost",
+    "dev": "https://api.crypticorn.dev",
+    "prod": "https://api.crypticorn.com",
 }
 
 
-def main(module_name: str, environment: str):
+def main(module_name: str, environment: str, version: str):
     ROOT_URL = ENV_MAP[environment]
     upper_module_name = module_name[0].upper() + module_name[1:]
 
     # ping the api to check if it's running
     try:
-        response = requests.get(f"{ROOT_URL}/{module_name}/openapi.json")
+        response = requests.get(f"{ROOT_URL}/{version}/{module_name}/openapi.json")
         if response.status_code != 200:
             print(
-                f"No openapi.json file found for {module_name} module at path {ROOT_URL}/{module_name}/openapi.json"
+                f"No openapi.json file found for {module_name} module at path {ROOT_URL}/{version}/{module_name}/openapi.json"
             )
             sys.exit(1)
     except requests.RequestException:
@@ -34,7 +50,7 @@ def main(module_name: str, environment: str):
     subprocess.run(["rm", "-rf", f"crypticorn/{module_name}/client"], check=True)
 
     print(
-        f"Generating {module_name} client using {ROOT_URL}/{module_name}/openapi.json"
+        f"Generating {module_name} client using {ROOT_URL}/{version}/{module_name}/openapi.json"
     )
 
     # Run the OpenAPI generator
@@ -42,7 +58,7 @@ def main(module_name: str, environment: str):
         "openapi-generator-cli",
         "generate",
         "-i",
-        f"{ROOT_URL}/{module_name}/openapi.json",
+        f"{ROOT_URL}/{version}/{module_name}/openapi.json",
         "-g",
         "python",
         "--package-name",
@@ -50,7 +66,7 @@ def main(module_name: str, environment: str):
         "--global-property",
         "supportingFiles,models,apis",
         "--additional-properties",
-        "pipPackageName=crypticorn,mainClientName=CrypticornClient",
+        "pipPackageName=crypticorn",
         "-o",
         f"crypticorn/{module_name}",
         "--openapi-generator-ignore-list",
@@ -126,24 +142,27 @@ if __name__ == "__main__":
         sys.exit(1)
 
     if "-m" in sys.argv:
-        sys.argv.remove("-m")
+        print("Please run as a python script instead of a module.")
 
     # Initialize variables
-    module_name = None
-    environment = None
+    module_name: Optional[Union[MODULE_TYPE, str]] = None
+    version: Optional[Union[VERSION_TYPE, str]] = None
+    environment: Optional[Union[ENVIRONMENT_TYPE, str]] = None
     # Parse command-line arguments
     for arg in sys.argv[1:]:
         if arg.startswith("--service="):
             module_name = arg.split("=")[1]
         elif arg.startswith("--env="):
             environment = arg.split("=")[1]
+        elif arg.startswith("--version="):
+            version = arg.split("=")[1]
 
     # Check if service is provided
-    if not module_name:
-        print("Please provide the service name as an arg")
-        print(f"Valid services: {', '.join(MODULES)}")
-        print("Example: python scripts/generate.py --service=trade")
-        sys.exit(1)
+    if module_name is None:
+        print(
+            "No service specified, generating all clients for the given environmnet and version"
+        )
+        module_name = "all"
 
     # Validate service name
     if module_name not in MODULES:
@@ -153,10 +172,24 @@ if __name__ == "__main__":
 
     if environment is None:
         environment = "local"
+        print(
+            f"No environment specified, generating client for the given service and version from {environment.upper()} environment"
+        )
     # Validate environment
     if environment not in ENVIRONMENTS:
         print(f"Invalid environment: {environment}")
         print(f"Valid environments: {', '.join(ENVIRONMENTS)}")
+        sys.exit(1)
+
+    if version is None:
+        version = "v1"
+        print(
+            f"No version specified, generating client for the given service and environemnt from {version.upper()} version"
+        )
+    # Validate environment
+    if version not in VERSIONS:
+        print(f"Invalid version: {version}")
+        print(f"Valid versions: {', '.join(VERSIONS)}")
         sys.exit(1)
     if module_name == "all":
         for module in MODULES:
