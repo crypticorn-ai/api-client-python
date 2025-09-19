@@ -53,6 +53,7 @@ The SDK major version tracks the highest supported API version. A new API major 
 | SDK Version | Auth | Trade | Klines | Metrics | Hive | Dex | Pay | Notification |
 | ----------------- | ---- | ----- | ------ | ------- | ---- | --- | --- | ------------ |
 | v2.x                 | v1   | v1    | v1     | v1      | v1   | v1  | v1  | v1           |
+| v3.x                 | v2   | v1    | v1     | v1      | v1   | v1  | v1  | v1           |
 
 ## Authentication
 
