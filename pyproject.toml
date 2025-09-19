@@ -29,8 +29,6 @@ include = ["crypticorn*"]
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements/main.txt"] }
 optional-dependencies.dev = { file = ["requirements/dev.txt"] }
-# TODO: remove this test extra in the next major release
-optional-dependencies.test = { file = ["requirements/test.txt"] }
 optional-dependencies.extra = { file = ["requirements/extra.txt"] }
 
 [tool.semantic_release]

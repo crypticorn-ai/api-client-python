@@ -21,7 +21,7 @@ If you want the latest version, which could be a pre release, run:
 pip install --pre crypticorn
 ```
 
-You can install extra dependencies grouped in the extras `extra`, `dev` (development) and `test` (testing). The `extra` dependencies include heavy libraries like `pandas`, which is only used in a few custom API operations (see [data processing](#data-preprocessing)), which preprocess the response data as a pandas Dataframe for convenience.
+You can install extra dependencies grouped in the extras `extra`, `dev` (development). The `extra` dependencies include heavy libraries like `pandas`, which is only used in a few custom API operations (see [data processing](#data-preprocessing)), which preprocess the response data as a pandas Dataframe for convenience.
 
 ## Structure
 
