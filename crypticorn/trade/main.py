@@ -7,9 +7,6 @@ from crypticorn.trade.client import (
     APIKeysApi,
     BotsApi,
     Configuration,
-    ExchangesApi,
-    NotificationsApi,
-    OrdersApi,
     StatusApi,
     StrategiesApi,
     TradingActionsApi,
@@ -40,9 +37,6 @@ class TradeClient:
         self.base_client.rest_client.is_sync = is_sync
         # Instantiate all the endpoint clients
         self.bots = BotsApi(self.base_client, is_sync=is_sync)
-        self.exchanges = ExchangesApi(self.base_client, is_sync=is_sync)
-        self.notifications = NotificationsApi(self.base_client, is_sync=is_sync)
-        self.orders = OrdersApi(self.base_client, is_sync=is_sync)
         self.status = StatusApi(self.base_client, is_sync=is_sync)
         self.strategies = StrategiesApi(self.base_client, is_sync=is_sync)
         self.actions = TradingActionsApi(self.base_client, is_sync=is_sync)

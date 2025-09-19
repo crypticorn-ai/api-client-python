@@ -1,13 +1,8 @@
-import warnings
 from importlib.metadata import version
 from typing import Literal, Optional, TypeVar
 
 from aiohttp import ClientSession, ClientTimeout, TCPConnector
-from typing_extensions import deprecated
 
-from crypticorn._internal.warnings import (
-    CrypticornDeprecatedSince217,
-)
 from crypticorn.auth import AuthClient
 from crypticorn.dex import DexClient
 from crypticorn.hive import HiveClient
@@ -290,16 +285,6 @@ class AsyncClient(BaseAsyncClient):
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         await self.close()
-
-
-@deprecated("Use AsyncClient instead", category=None)
-class ApiClient(AsyncClient):
-    def __init__(self, *args, **kwargs):
-        warnings.warn(
-            "ApiClient is deprecated. Use AsyncClient instead.",
-            CrypticornDeprecatedSince217,
-        )
-        super().__init__(*args, **kwargs)
 
 
 class SyncClient(BaseAsyncClient):
