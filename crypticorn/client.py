@@ -55,7 +55,7 @@ class BaseAsyncClient:
 
         self._service_classes: dict[_SERVICES, tuple[SubClient, str]] = {
             "hive": (HiveClient, "v1/hive"),
-            "trade": (TradeClient, "v1/trade"),
+            "trade": (TradeClient, "v2/trade"),
             "klines": (KlinesClient, "v1/klines"),
             "pay": (PayClient, "v1/pay"),
             "metrics": (MetricsClient, "v1/metrics"),
