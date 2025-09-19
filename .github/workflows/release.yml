@@ -1,14 +1,11 @@
 name: Release to PyPI
 
 on:
-  push:
-    branches:
-      - main
-      - dev
   workflow_run:
-    workflows: Test and Coverage # only run if the test and coverage workflow has completed successfully
-    types:
-      - completed
+    workflows: [Test and Coverage] # only run if the test and coverage workflow has completed successfully
+    types: [completed]
+    branches: [v3,v3-dev]
+
 
 jobs:
   release:
