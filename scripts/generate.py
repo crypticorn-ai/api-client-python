@@ -193,6 +193,6 @@ if __name__ == "__main__":
         sys.exit(1)
     if module_name == "all":
         for module in MODULES:
-            main(module, environment)
+            main(module, environment, version)
         sys.exit(0)
-    main(module_name, environment)
+    main(module_name, environment, version)
