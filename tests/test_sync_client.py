@@ -27,7 +27,7 @@ def test_client_ping_functionality():
     client = SyncClient()
 
     try:
-        response = client.trade.status.ping()
+        response = client.hive.status.ping()
         # Should not raise any exceptions
         assert response is not None
     finally:
@@ -41,7 +41,7 @@ def test_client_multiple_service_access():
     try:
         assert client._http_client is None
         # Access multiple services to ensure they're properly initialized
-        subclient = client._services["trade"]
+        subclient = client._services["hive"]
         assert subclient is not None
         assert subclient.base_client.rest_client.pool_manager is None
     finally:
@@ -54,11 +54,11 @@ def test_client_no_exceptions_on_basic_operations():
 
     try:
         # Access a service
-        trade_client = client.trade
-        assert trade_client is not None
+        hive_client = client.hive
+        assert hive_client is not None
 
         # Ping should work
-        response = client.trade.status.ping()
+        response = client.hive.status.ping()
         assert response is not None
 
     except Exception as e:
@@ -74,7 +74,7 @@ def test_client_service_lazy_initialization():
     # But HTTP client should be None until first use
     assert client._http_client is None
     # First access should create the session
-    client.trade.status.ping()
+    client.hive.status.ping()
     assert client._http_client is None
 
     client.close()
@@ -87,7 +87,7 @@ def test_client_concurrent_operations():
 
     responses = []
     for _ in range(5):
-        responses.append(client.trade.status.ping())  # ✅ Each call properly managed
+        responses.append(client.hive.status.ping())  # ✅ Each call properly managed
 
     client.close()  # ✅ Reliable cleanup
     assert client._http_client is None

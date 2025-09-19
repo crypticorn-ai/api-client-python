@@ -34,7 +34,7 @@ async def test_client_context_manager():
         assert isinstance(client._http_client, ClientSession)
 
         # Test ping to ensure it works
-        response = await client.trade.status.ping()
+        response = await client.hive.status.ping()
         assert response is not None
 
 
@@ -58,7 +58,7 @@ async def test_client_ping_functionality():
     client = AsyncClient()
 
     try:
-        response = await client.trade.status.ping()
+        response = await client.hive.status.ping()
         # Should not raise any exceptions
         assert response is not None
     finally:
@@ -73,7 +73,7 @@ async def test_client_multiple_service_access():
     try:
         assert client._http_client is None
         # Access multiple services to ensure they're properly initialized
-        subclient = client._services["trade"]
+        subclient = client._services["hive"]
         assert subclient is not None
         assert subclient.base_client.rest_client.pool_manager is None
 
@@ -81,7 +81,7 @@ async def test_client_multiple_service_access():
         client._ensure_session()
         session = client._http_client
 
-        subclient = client._services["trade"]
+        subclient = client._services["hive"]
         assert subclient.base_client.rest_client.pool_manager is session
 
     finally:
@@ -115,11 +115,11 @@ async def test_client_no_exceptions_on_basic_operations():
 
     try:
         # Access a service
-        trade_client = client.trade
-        assert trade_client is not None
+        hive_client = client.hive
+        assert hive_client is not None
 
         # Ping should work
-        response = await client.trade.status.ping()
+        response = await client.hive.status.ping()
         assert response is not None
 
     except Exception as e:
@@ -139,7 +139,7 @@ async def test_client_service_lazy_initialization():
     assert client._http_client is not None
 
     # First access should create the session
-    await client.trade.status.ping()
+    await client.hive.status.ping()
     assert client._http_client is not None
 
     await client.close()
@@ -173,7 +173,7 @@ async def test_client_concurrent_operations():
 
     try:
         # Run multiple ping operations concurrently
-        tasks = [client.trade.status.ping() for _ in range(5)]
+        tasks = [client.hive.status.ping() for _ in range(5)]
         responses = await asyncio.gather(*tasks)
 
         # All responses should be valid

@@ -22,12 +22,9 @@ classifiers = [
     "Typing :: Typed",
 ]
 
-[project.scripts]
-crypticorn = "crypticorn.cli.__main__:cli"
-
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["crypticorn*", "static/pip-structure.svg"]
+include = ["crypticorn*"]
 
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements/main.txt"] }

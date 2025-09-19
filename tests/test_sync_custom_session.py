@@ -19,7 +19,7 @@ def test_custom_http_client_injection():
             client = SyncClient(http_client=custom_session)
 
             # In sync mode, services should not have the custom session since sessions are created per operation
-            subclient = client._services["trade"]
+            subclient = client._services["hive"]
             # Should be None since sync clients don't persist sessions
             assert subclient.base_client.rest_client.pool_manager is None
 
@@ -41,7 +41,7 @@ def test_lazy_http_client_creation():
     # Should still be None since sync clients don't persist sessions
     assert client._http_client is None
 
-    subclient = client._services["trade"]
+    subclient = client._services["hive"]
     # Should be None since sessions are created per operation
     assert subclient.base_client.rest_client.pool_manager is None
 
@@ -73,7 +73,7 @@ def test_close_owned_http_client():
     client = SyncClient()
 
     # Trigger some operation that would create sessions
-    client.trade.status.ping()
+    client.hive.status.ping()
 
     # Should still be None since sessions are created and closed per operation
     assert client._http_client is None
@@ -88,13 +88,13 @@ def test_no_persistent_sessions_in_sync_mode():
 
     # Make multiple calls
     for _ in range(3):
-        response = client.trade.status.ping()
+        response = client.hive.status.ping()
         assert response is not None
         # Should still be None after each call
         assert client._http_client is None
 
     # All services should still have None for pool_manager
-    subclient = client._services["trade"]
+    subclient = client._services["hive"]
     assert subclient.base_client.rest_client.pool_manager is None
 
     client.close()
@@ -108,7 +108,7 @@ def test_sync_client_operations_work():
         # Multiple operations should all work
         responses = []
         for _ in range(3):
-            responses.append(client.trade.status.ping())
+            responses.append(client.hive.status.ping())
 
         # All responses should be valid
         assert len(responses) == 3
@@ -129,13 +129,13 @@ def test_context_manager_usage():
         assert client._http_client is None
 
         # Operations should work
-        response = client.trade.status.ping()
+        response = client.hive.status.ping()
         assert response is not None
 
         # Still no persistent session
         assert client._http_client is None
 
-        subclient = client._services["trade"]
+        subclient = client._services["hive"]
         # Should be None since sessions are per-operation
         assert subclient.base_client.rest_client.pool_manager is None
 
@@ -151,7 +151,7 @@ def test_concurrent_operations():
         # Run multiple operations that would each create their own session
         responses = []
         for i in range(5):
-            response = client.trade.status.ping()
+            response = client.hive.status.ping()
             responses.append(response)
             # Verify no session persistence
             assert client._http_client is None
@@ -171,7 +171,7 @@ def test_no_session_warnings_in_sync_mode():
         warnings.simplefilter("always")
 
         client = SyncClient()
-        client.trade.status.ping()
+        client.hive.status.ping()
 
         # Intentionally don't close manually to test cleanup
         del client
