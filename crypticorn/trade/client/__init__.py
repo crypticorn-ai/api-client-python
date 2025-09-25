@@ -54,6 +54,8 @@ __all__ = [
     "TPSL",
     "TPSLCreate",
     "TradingActionType",
+    "VaultBot",
+    "VaultDetails",
 ]
 
 # import apis into sdk package
@@ -121,3 +123,5 @@ from crypticorn.trade.client.models.tpsl_create import TPSLCreate as TPSLCreate
 from crypticorn.trade.client.models.trading_action_type import (
     TradingActionType as TradingActionType,
 )
+from crypticorn.trade.client.models.vault_bot import VaultBot as VaultBot
+from crypticorn.trade.client.models.vault_details import VaultDetails as VaultDetails

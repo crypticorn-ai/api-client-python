@@ -30,10 +30,10 @@ class PnL(BaseModel):
 
     timestamp: StrictInt = Field(description="Timestamp of the order")
     pnl: Union[StrictFloat, StrictInt] = Field(
-        description="The profit and loss of the order"
+        description="The profit and loss, either absolute or relative depending on the request"
     )
     cum_pnl: Union[StrictFloat, StrictInt] = Field(
-        description="The cumulative profit and loss of the bot until the order (inclusive)"
+        description="The cumulative profit and loss of the bot until the order (inclusive), either absolute or relative depending on the request"
     )
     __properties: ClassVar[List[str]] = ["timestamp", "pnl", "cum_pnl"]
 

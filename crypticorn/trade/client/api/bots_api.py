@@ -29,6 +29,7 @@ from crypticorn.trade.client.models.paginated_response_order import (
     PaginatedResponseOrder,
 )
 from crypticorn.trade.client.models.pn_l import PnL
+from crypticorn.trade.client.models.vault_bot import VaultBot
 from crypticorn.trade.client.rest import RESTResponseType
 
 # Import async_to_sync for sync methods
@@ -523,7 +524,7 @@ class BotsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[Bot, Awaitable[Bot]]:
+    ) -> Union[VaultBot, Awaitable[VaultBot]]:
         """Get Bot"""
         if self.is_sync:
             return self._get_bot_sync(
@@ -560,7 +561,7 @@ class BotsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[ApiResponse[Bot], Awaitable[ApiResponse[Bot]]]:
+    ) -> Union[ApiResponse[VaultBot], Awaitable[ApiResponse[VaultBot]]]:
         """Get Bot with HTTP info"""
         if self.is_sync:
             return self._get_bot_sync_with_http_info(
@@ -635,7 +636,7 @@ class BotsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Bot:
+    ) -> VaultBot:
         """Get Bot
 
         Returns a bot.
@@ -673,7 +674,7 @@ class BotsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Bot",
+            "200": "VaultBot",
         }
 
         response_data = await self.api_client.call_api(
@@ -700,7 +701,7 @@ class BotsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Bot]:
+    ) -> ApiResponse[VaultBot]:
         """Get Bot
 
         Returns a bot.
@@ -738,7 +739,7 @@ class BotsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Bot",
+            "200": "VaultBot",
         }
 
         response_data = await self.api_client.call_api(
@@ -802,7 +803,7 @@ class BotsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "Bot",
+            "200": "VaultBot",
         }
 
         response_data = await self.api_client.call_api(
@@ -826,7 +827,7 @@ class BotsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Bot:
+    ) -> VaultBot:
         """Synchronous version of get_bot"""
         return async_to_sync(self._get_bot_async)(
             id=id,
@@ -852,7 +853,7 @@ class BotsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[Bot]:
+    ) -> ApiResponse[VaultBot]:
         """Synchronous version of get_bot_with_http_info"""
         return async_to_sync(self._get_bot_async_with_http_info)(
             id=id,
@@ -3091,7 +3092,7 @@ class BotsApi:
         )
 
     @validate_call
-    def get_bot_orders_pnl(
+    def get_bot_pnl(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the bot")],
         sort_order: Annotated[
@@ -3117,6 +3118,10 @@ class BotsApi:
             Field(
                 description="The number of items to return. Defaults to None, meaning no limit."
             ),
+        ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -3132,13 +3137,14 @@ class BotsApi:
     ) -> Union[List[PnL], Awaitable[List[PnL]]]:
         """Get Bot Pnl"""
         if self.is_sync:
-            return self._get_bot_orders_pnl_sync(
+            return self._get_bot_pnl_sync(
                 id=id,
                 sort_order=sort_order,
                 sort_by=sort_by,
                 window=window,
                 period=period,
                 limit=limit,
+                type=type,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3147,13 +3153,14 @@ class BotsApi:
             )
 
         else:
-            return self._get_bot_orders_pnl_async(
+            return self._get_bot_pnl_async(
                 id=id,
                 sort_order=sort_order,
                 sort_by=sort_by,
                 window=window,
                 period=period,
                 limit=limit,
+                type=type,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3162,7 +3169,7 @@ class BotsApi:
             )
 
     @validate_call
-    def get_bot_orders_pnl_with_http_info(
+    def get_bot_pnl_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the bot")],
         sort_order: Annotated[
@@ -3188,6 +3195,10 @@ class BotsApi:
             Field(
                 description="The number of items to return. Defaults to None, meaning no limit."
             ),
+        ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -3203,13 +3214,14 @@ class BotsApi:
     ) -> Union[ApiResponse[List[PnL]], Awaitable[ApiResponse[List[PnL]]]]:
         """Get Bot Pnl with HTTP info"""
         if self.is_sync:
-            return self._get_bot_orders_pnl_sync_with_http_info(
+            return self._get_bot_pnl_sync_with_http_info(
                 id=id,
                 sort_order=sort_order,
                 sort_by=sort_by,
                 window=window,
                 period=period,
                 limit=limit,
+                type=type,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3218,13 +3230,14 @@ class BotsApi:
             )
 
         else:
-            return self._get_bot_orders_pnl_async_with_http_info(
+            return self._get_bot_pnl_async_with_http_info(
                 id=id,
                 sort_order=sort_order,
                 sort_by=sort_by,
                 window=window,
                 period=period,
                 limit=limit,
+                type=type,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3233,7 +3246,7 @@ class BotsApi:
             )
 
     @validate_call
-    def get_bot_orders_pnl_without_preload_content(
+    def get_bot_pnl_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the bot")],
         sort_order: Annotated[
@@ -3259,6 +3272,10 @@ class BotsApi:
             Field(
                 description="The number of items to return. Defaults to None, meaning no limit."
             ),
+        ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -3274,13 +3291,14 @@ class BotsApi:
     ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
         """Get Bot Pnl without preloading content"""
         if self.is_sync:
-            return self._get_bot_orders_pnl_sync_without_preload_content(
+            return self._get_bot_pnl_sync_without_preload_content(
                 id=id,
                 sort_order=sort_order,
                 sort_by=sort_by,
                 window=window,
                 period=period,
                 limit=limit,
+                type=type,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3289,13 +3307,14 @@ class BotsApi:
             )
 
         else:
-            return self._get_bot_orders_pnl_async_without_preload_content(
+            return self._get_bot_pnl_async_without_preload_content(
                 id=id,
                 sort_order=sort_order,
                 sort_by=sort_by,
                 window=window,
                 period=period,
                 limit=limit,
+                type=type,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -3305,7 +3324,7 @@ class BotsApi:
 
     # Private async implementation methods
     @validate_call
-    async def _get_bot_orders_pnl_async(
+    async def _get_bot_pnl_async(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the bot")],
         sort_order: Annotated[
@@ -3332,6 +3351,10 @@ class BotsApi:
                 description="The number of items to return. Defaults to None, meaning no limit."
             ),
         ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3346,7 +3369,7 @@ class BotsApi:
     ) -> List[PnL]:
         """Get Bot Pnl
 
-        Returns a list of PnLs for a bot over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day. To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
+        Returns a list of PnLs for a bot over time, sorted by `timestamp` ascending by default.  If more than 1000 data points exist, PnLs are grouped by day.  For relative type, uses TWR-style cumulative percentage returns. For absolute type, uses traditional cumulative PnL calculation.
 
         :param id: The ID of the bot (required)
         :type id: str
@@ -3360,6 +3383,8 @@ class BotsApi:
         :type period: int
         :param limit: The number of items to return. Defaults to None, meaning no limit.
         :type limit: int
+        :param type: The type of PnL to return. Defaults to relative.
+        :type type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3382,13 +3407,14 @@ class BotsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_bot_orders_pnl_serialize(
+        _param = self._get_bot_pnl_serialize(
             id=id,
             sort_order=sort_order,
             sort_by=sort_by,
             window=window,
             period=period,
             limit=limit,
+            type=type,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3409,7 +3435,7 @@ class BotsApi:
         ).data
 
     @validate_call
-    async def _get_bot_orders_pnl_async_with_http_info(
+    async def _get_bot_pnl_async_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the bot")],
         sort_order: Annotated[
@@ -3436,6 +3462,10 @@ class BotsApi:
                 description="The number of items to return. Defaults to None, meaning no limit."
             ),
         ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3450,7 +3480,7 @@ class BotsApi:
     ) -> ApiResponse[List[PnL]]:
         """Get Bot Pnl
 
-        Returns a list of PnLs for a bot over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day. To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
+        Returns a list of PnLs for a bot over time, sorted by `timestamp` ascending by default.  If more than 1000 data points exist, PnLs are grouped by day.  For relative type, uses TWR-style cumulative percentage returns. For absolute type, uses traditional cumulative PnL calculation.
 
         :param id: The ID of the bot (required)
         :type id: str
@@ -3464,6 +3494,8 @@ class BotsApi:
         :type period: int
         :param limit: The number of items to return. Defaults to None, meaning no limit.
         :type limit: int
+        :param type: The type of PnL to return. Defaults to relative.
+        :type type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3486,13 +3518,14 @@ class BotsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_bot_orders_pnl_serialize(
+        _param = self._get_bot_pnl_serialize(
             id=id,
             sort_order=sort_order,
             sort_by=sort_by,
             window=window,
             period=period,
             limit=limit,
+            type=type,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3512,7 +3545,7 @@ class BotsApi:
         )
 
     @validate_call
-    async def _get_bot_orders_pnl_async_without_preload_content(
+    async def _get_bot_pnl_async_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the bot")],
         sort_order: Annotated[
@@ -3539,6 +3572,10 @@ class BotsApi:
                 description="The number of items to return. Defaults to None, meaning no limit."
             ),
         ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3553,7 +3590,7 @@ class BotsApi:
     ) -> RESTResponseType:
         """Get Bot Pnl
 
-        Returns a list of PnLs for a bot over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day. To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
+        Returns a list of PnLs for a bot over time, sorted by `timestamp` ascending by default.  If more than 1000 data points exist, PnLs are grouped by day.  For relative type, uses TWR-style cumulative percentage returns. For absolute type, uses traditional cumulative PnL calculation.
 
         :param id: The ID of the bot (required)
         :type id: str
@@ -3567,6 +3604,8 @@ class BotsApi:
         :type period: int
         :param limit: The number of items to return. Defaults to None, meaning no limit.
         :type limit: int
+        :param type: The type of PnL to return. Defaults to relative.
+        :type type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3589,13 +3628,14 @@ class BotsApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_bot_orders_pnl_serialize(
+        _param = self._get_bot_pnl_serialize(
             id=id,
             sort_order=sort_order,
             sort_by=sort_by,
             window=window,
             period=period,
             limit=limit,
+            type=type,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3613,7 +3653,7 @@ class BotsApi:
 
     # Private sync implementation methods
     @validate_call
-    def _get_bot_orders_pnl_sync(
+    def _get_bot_pnl_sync(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the bot")],
         sort_order: Annotated[
@@ -3639,6 +3679,10 @@ class BotsApi:
             Field(
                 description="The number of items to return. Defaults to None, meaning no limit."
             ),
+        ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -3652,14 +3696,15 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[PnL]:
-        """Synchronous version of get_bot_orders_pnl"""
-        return async_to_sync(self._get_bot_orders_pnl_async)(
+        """Synchronous version of get_bot_pnl"""
+        return async_to_sync(self._get_bot_pnl_async)(
             id=id,
             sort_order=sort_order,
             sort_by=sort_by,
             window=window,
             period=period,
             limit=limit,
+            type=type,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3668,7 +3713,7 @@ class BotsApi:
         )
 
     @validate_call
-    def _get_bot_orders_pnl_sync_with_http_info(
+    def _get_bot_pnl_sync_with_http_info(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the bot")],
         sort_order: Annotated[
@@ -3694,6 +3739,10 @@ class BotsApi:
             Field(
                 description="The number of items to return. Defaults to None, meaning no limit."
             ),
+        ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -3707,14 +3756,15 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[PnL]]:
-        """Synchronous version of get_bot_orders_pnl_with_http_info"""
-        return async_to_sync(self._get_bot_orders_pnl_async_with_http_info)(
+        """Synchronous version of get_bot_pnl_with_http_info"""
+        return async_to_sync(self._get_bot_pnl_async_with_http_info)(
             id=id,
             sort_order=sort_order,
             sort_by=sort_by,
             window=window,
             period=period,
             limit=limit,
+            type=type,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3723,7 +3773,7 @@ class BotsApi:
         )
 
     @validate_call
-    def _get_bot_orders_pnl_sync_without_preload_content(
+    def _get_bot_pnl_sync_without_preload_content(
         self,
         id: Annotated[StrictStr, Field(description="The ID of the bot")],
         sort_order: Annotated[
@@ -3750,6 +3800,10 @@ class BotsApi:
                 description="The number of items to return. Defaults to None, meaning no limit."
             ),
         ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3762,14 +3816,15 @@ class BotsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Synchronous version of get_bot_orders_pnl_without_preload_content"""
-        return async_to_sync(self._get_bot_orders_pnl_async_without_preload_content)(
+        """Synchronous version of get_bot_pnl_without_preload_content"""
+        return async_to_sync(self._get_bot_pnl_async_without_preload_content)(
             id=id,
             sort_order=sort_order,
             sort_by=sort_by,
             window=window,
             period=period,
             limit=limit,
+            type=type,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3777,7 +3832,7 @@ class BotsApi:
             _host_index=_host_index,
         )
 
-    def _get_bot_orders_pnl_serialize(
+    def _get_bot_pnl_serialize(
         self,
         id,
         sort_order,
@@ -3785,6 +3840,7 @@ class BotsApi:
         window,
         period,
         limit,
+        type,
         _request_auth,
         _content_type,
         _headers,
@@ -3827,6 +3883,10 @@ class BotsApi:
         if limit is not None:
 
             _query_params.append(("limit", limit))
+
+        if type is not None:
+
+            _query_params.append(("type", type))
 
         # process the header parameters
         # process the form parameters
@@ -3888,7 +3948,7 @@ class BotsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[List[Bot], Awaitable[List[Bot]]]:
+    ) -> Union[List[VaultBot], Awaitable[List[VaultBot]]]:
         """Get Bots"""
         if self.is_sync:
             return self._get_bots_sync(
@@ -3950,7 +4010,7 @@ class BotsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[ApiResponse[List[Bot]], Awaitable[ApiResponse[List[Bot]]]]:
+    ) -> Union[ApiResponse[List[VaultBot]], Awaitable[ApiResponse[List[VaultBot]]]]:
         """Get Bots with HTTP info"""
         if self.is_sync:
             return self._get_bots_sync_with_http_info(
@@ -4075,7 +4135,7 @@ class BotsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Bot]:
+    ) -> List[VaultBot]:
         """Get Bots
 
         Returns all bots. Default sort is by created_at, descending. Deleted bots are included by default.
@@ -4125,7 +4185,7 @@ class BotsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Bot]",
+            "200": "List[VaultBot]",
         }
 
         response_data = await self.api_client.call_api(
@@ -4169,7 +4229,7 @@ class BotsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Bot]]:
+    ) -> ApiResponse[List[VaultBot]]:
         """Get Bots
 
         Returns all bots. Default sort is by created_at, descending. Deleted bots are included by default.
@@ -4219,7 +4279,7 @@ class BotsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Bot]",
+            "200": "List[VaultBot]",
         }
 
         response_data = await self.api_client.call_api(
@@ -4312,7 +4372,7 @@ class BotsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[Bot]",
+            "200": "List[VaultBot]",
         }
 
         response_data = await self.api_client.call_api(
@@ -4353,7 +4413,7 @@ class BotsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[Bot]:
+    ) -> List[VaultBot]:
         """Synchronous version of get_bots"""
         return async_to_sync(self._get_bots_async)(
             filter_by=filter_by,
@@ -4400,7 +4460,7 @@ class BotsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[Bot]]:
+    ) -> ApiResponse[List[VaultBot]]:
         """Synchronous version of get_bots_with_http_info"""
         return async_to_sync(self._get_bots_async_with_http_info)(
             filter_by=filter_by,
@@ -4526,2799 +4586,6 @@ class BotsApi:
         return self.api_client.param_serialize(
             method="GET",
             resource_path="/bots",
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth,
-        )
-
-    @validate_call
-    def get_bots_actions(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[
-        PaginatedResponseFuturesTradingAction,
-        Awaitable[PaginatedResponseFuturesTradingAction],
-    ]:
-        """Get Bots Actions"""
-        if self.is_sync:
-            return self._get_bots_actions_sync(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                filter_by=filter_by,
-                filter_value=filter_value,
-                page=page,
-                page_size=page_size,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bots_actions_async(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                filter_by=filter_by,
-                filter_value=filter_value,
-                page=page,
-                page_size=page_size,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def get_bots_actions_with_http_info(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[
-        ApiResponse[PaginatedResponseFuturesTradingAction],
-        Awaitable[ApiResponse[PaginatedResponseFuturesTradingAction]],
-    ]:
-        """Get Bots Actions with HTTP info"""
-        if self.is_sync:
-            return self._get_bots_actions_sync_with_http_info(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                filter_by=filter_by,
-                filter_value=filter_value,
-                page=page,
-                page_size=page_size,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bots_actions_async_with_http_info(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                filter_by=filter_by,
-                filter_value=filter_value,
-                page=page,
-                page_size=page_size,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def get_bots_actions_without_preload_content(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
-        """Get Bots Actions without preloading content"""
-        if self.is_sync:
-            return self._get_bots_actions_sync_without_preload_content(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                filter_by=filter_by,
-                filter_value=filter_value,
-                page=page,
-                page_size=page_size,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bots_actions_async_without_preload_content(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                filter_by=filter_by,
-                filter_value=filter_value,
-                page=page,
-                page_size=page_size,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    # Private async implementation methods
-    @validate_call
-    async def _get_bots_actions_async(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> PaginatedResponseFuturesTradingAction:
-        """Get Bots Actions
-
-        Get all actions for all bots
-
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param filter_by: The field to filter by
-        :type filter_by: str
-        :param filter_value: The value to filter with
-        :type filter_value: str
-        :param page: The current page number
-        :type page: int
-        :param page_size: The number of items per page. Default is 100, max is 1000.
-        :type page_size: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bots_actions_serialize(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            filter_by=filter_by,
-            filter_value=filter_value,
-            page=page,
-            page_size=page_size,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PaginatedResponseFuturesTradingAction",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-    @validate_call
-    async def _get_bots_actions_async_with_http_info(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[PaginatedResponseFuturesTradingAction]:
-        """Get Bots Actions
-
-        Get all actions for all bots
-
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param filter_by: The field to filter by
-        :type filter_by: str
-        :param filter_value: The value to filter with
-        :type filter_value: str
-        :param page: The current page number
-        :type page: int
-        :param page_size: The number of items per page. Default is 100, max is 1000.
-        :type page_size: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bots_actions_serialize(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            filter_by=filter_by,
-            filter_value=filter_value,
-            page=page,
-            page_size=page_size,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PaginatedResponseFuturesTradingAction",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data, response_types_map=_response_types_map
-        )
-
-    @validate_call
-    async def _get_bots_actions_async_without_preload_content(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Get Bots Actions
-
-        Get all actions for all bots
-
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param filter_by: The field to filter by
-        :type filter_by: str
-        :param filter_value: The value to filter with
-        :type filter_value: str
-        :param page: The current page number
-        :type page: int
-        :param page_size: The number of items per page. Default is 100, max is 1000.
-        :type page_size: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bots_actions_serialize(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            filter_by=filter_by,
-            filter_value=filter_value,
-            page=page,
-            page_size=page_size,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PaginatedResponseFuturesTradingAction",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        return response_data
-
-    # Private sync implementation methods
-    @validate_call
-    def _get_bots_actions_sync(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> PaginatedResponseFuturesTradingAction:
-        """Synchronous version of get_bots_actions"""
-        return async_to_sync(self._get_bots_actions_async)(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            filter_by=filter_by,
-            filter_value=filter_value,
-            page=page,
-            page_size=page_size,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _get_bots_actions_sync_with_http_info(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[PaginatedResponseFuturesTradingAction]:
-        """Synchronous version of get_bots_actions_with_http_info"""
-        return async_to_sync(self._get_bots_actions_async_with_http_info)(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            filter_by=filter_by,
-            filter_value=filter_value,
-            page=page,
-            page_size=page_size,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _get_bots_actions_sync_without_preload_content(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Synchronous version of get_bots_actions_without_preload_content"""
-        return async_to_sync(self._get_bots_actions_async_without_preload_content)(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            filter_by=filter_by,
-            filter_value=filter_value,
-            page=page,
-            page_size=page_size,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    def _get_bots_actions_serialize(
-        self,
-        sort_order,
-        sort_by,
-        filter_by,
-        filter_value,
-        page,
-        page_size,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {}
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        # process the query parameters
-        if sort_order is not None:
-
-            _query_params.append(("sort_order", sort_order))
-
-        if sort_by is not None:
-
-            _query_params.append(("sort_by", sort_by))
-
-        if filter_by is not None:
-
-            _query_params.append(("filter_by", filter_by))
-
-        if filter_value is not None:
-
-            _query_params.append(("filter_value", filter_value))
-
-        if page is not None:
-
-            _query_params.append(("page", page))
-
-        if page_size is not None:
-
-            _query_params.append(("page_size", page_size))
-
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-        # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(
-                ["application/json"]
-            )
-
-        # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
-
-        return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/bots/actions",
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth,
-        )
-
-    @validate_call
-    def get_bots_orders(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[PaginatedResponseOrder, Awaitable[PaginatedResponseOrder]]:
-        """Get Bots Orders"""
-        if self.is_sync:
-            return self._get_bots_orders_sync(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                filter_by=filter_by,
-                filter_value=filter_value,
-                page=page,
-                page_size=page_size,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bots_orders_async(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                filter_by=filter_by,
-                filter_value=filter_value,
-                page=page,
-                page_size=page_size,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def get_bots_orders_with_http_info(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[
-        ApiResponse[PaginatedResponseOrder],
-        Awaitable[ApiResponse[PaginatedResponseOrder]],
-    ]:
-        """Get Bots Orders with HTTP info"""
-        if self.is_sync:
-            return self._get_bots_orders_sync_with_http_info(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                filter_by=filter_by,
-                filter_value=filter_value,
-                page=page,
-                page_size=page_size,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bots_orders_async_with_http_info(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                filter_by=filter_by,
-                filter_value=filter_value,
-                page=page,
-                page_size=page_size,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def get_bots_orders_without_preload_content(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
-        """Get Bots Orders without preloading content"""
-        if self.is_sync:
-            return self._get_bots_orders_sync_without_preload_content(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                filter_by=filter_by,
-                filter_value=filter_value,
-                page=page,
-                page_size=page_size,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bots_orders_async_without_preload_content(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                filter_by=filter_by,
-                filter_value=filter_value,
-                page=page,
-                page_size=page_size,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    # Private async implementation methods
-    @validate_call
-    async def _get_bots_orders_async(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> PaginatedResponseOrder:
-        """Get Bots Orders
-
-        Get all orders for all bots. Default sort is `created_at` and default order is `desc`.
-
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param filter_by: The field to filter by
-        :type filter_by: str
-        :param filter_value: The value to filter with
-        :type filter_value: str
-        :param page: The current page number
-        :type page: int
-        :param page_size: The number of items per page. Default is 100, max is 1000.
-        :type page_size: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bots_orders_serialize(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            filter_by=filter_by,
-            filter_value=filter_value,
-            page=page,
-            page_size=page_size,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PaginatedResponseOrder",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-    @validate_call
-    async def _get_bots_orders_async_with_http_info(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[PaginatedResponseOrder]:
-        """Get Bots Orders
-
-        Get all orders for all bots. Default sort is `created_at` and default order is `desc`.
-
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param filter_by: The field to filter by
-        :type filter_by: str
-        :param filter_value: The value to filter with
-        :type filter_value: str
-        :param page: The current page number
-        :type page: int
-        :param page_size: The number of items per page. Default is 100, max is 1000.
-        :type page_size: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bots_orders_serialize(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            filter_by=filter_by,
-            filter_value=filter_value,
-            page=page,
-            page_size=page_size,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PaginatedResponseOrder",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data, response_types_map=_response_types_map
-        )
-
-    @validate_call
-    async def _get_bots_orders_async_without_preload_content(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Get Bots Orders
-
-        Get all orders for all bots. Default sort is `created_at` and default order is `desc`.
-
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param filter_by: The field to filter by
-        :type filter_by: str
-        :param filter_value: The value to filter with
-        :type filter_value: str
-        :param page: The current page number
-        :type page: int
-        :param page_size: The number of items per page. Default is 100, max is 1000.
-        :type page_size: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bots_orders_serialize(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            filter_by=filter_by,
-            filter_value=filter_value,
-            page=page,
-            page_size=page_size,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "PaginatedResponseOrder",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        return response_data
-
-    # Private sync implementation methods
-    @validate_call
-    def _get_bots_orders_sync(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> PaginatedResponseOrder:
-        """Synchronous version of get_bots_orders"""
-        return async_to_sync(self._get_bots_orders_async)(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            filter_by=filter_by,
-            filter_value=filter_value,
-            page=page,
-            page_size=page_size,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _get_bots_orders_sync_with_http_info(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[PaginatedResponseOrder]:
-        """Synchronous version of get_bots_orders_with_http_info"""
-        return async_to_sync(self._get_bots_orders_async_with_http_info)(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            filter_by=filter_by,
-            filter_value=filter_value,
-            page=page,
-            page_size=page_size,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _get_bots_orders_sync_without_preload_content(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        filter_by: Annotated[
-            Optional[StrictStr], Field(description="The field to filter by")
-        ] = None,
-        filter_value: Annotated[
-            Optional[StrictStr], Field(description="The value to filter with")
-        ] = None,
-        page: Annotated[
-            Optional[StrictInt], Field(description="The current page number")
-        ] = None,
-        page_size: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items per page. Default is 100, max is 1000."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Synchronous version of get_bots_orders_without_preload_content"""
-        return async_to_sync(self._get_bots_orders_async_without_preload_content)(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            filter_by=filter_by,
-            filter_value=filter_value,
-            page=page,
-            page_size=page_size,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    def _get_bots_orders_serialize(
-        self,
-        sort_order,
-        sort_by,
-        filter_by,
-        filter_value,
-        page,
-        page_size,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {}
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        # process the query parameters
-        if sort_order is not None:
-
-            _query_params.append(("sort_order", sort_order))
-
-        if sort_by is not None:
-
-            _query_params.append(("sort_by", sort_by))
-
-        if filter_by is not None:
-
-            _query_params.append(("filter_by", filter_by))
-
-        if filter_value is not None:
-
-            _query_params.append(("filter_value", filter_value))
-
-        if page is not None:
-
-            _query_params.append(("page", page))
-
-        if page_size is not None:
-
-            _query_params.append(("page_size", page_size))
-
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-        # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(
-                ["application/json"]
-            )
-
-        # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
-
-        return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/bots/orders",
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth,
-        )
-
-    @validate_call
-    def get_bots_orders_count(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[List[OrdersCount], Awaitable[List[OrdersCount]]]:
-        """Get Bots Orders Count"""
-        if self.is_sync:
-            return self._get_bots_orders_count_sync(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                group_by=group_by,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bots_orders_count_async(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                group_by=group_by,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def get_bots_orders_count_with_http_info(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[
-        ApiResponse[List[OrdersCount]], Awaitable[ApiResponse[List[OrdersCount]]]
-    ]:
-        """Get Bots Orders Count with HTTP info"""
-        if self.is_sync:
-            return self._get_bots_orders_count_sync_with_http_info(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                group_by=group_by,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bots_orders_count_async_with_http_info(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                group_by=group_by,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def get_bots_orders_count_without_preload_content(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
-        """Get Bots Orders Count without preloading content"""
-        if self.is_sync:
-            return self._get_bots_orders_count_sync_without_preload_content(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                group_by=group_by,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bots_orders_count_async_without_preload_content(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                group_by=group_by,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    # Private async implementation methods
-    @validate_call
-    async def _get_bots_orders_count_async(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[OrdersCount]:
-        """Get Bots Orders Count
-
-        Get the number of orders for all bots by day, week, month, or year. The default sort is `timestamp` and the default order is `asc`.
-
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param group_by: The group by period for the orders count. Defaults to day.
-        :type group_by: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bots_orders_count_serialize(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            group_by=group_by,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[OrdersCount]",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-    @validate_call
-    async def _get_bots_orders_count_async_with_http_info(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[OrdersCount]]:
-        """Get Bots Orders Count
-
-        Get the number of orders for all bots by day, week, month, or year. The default sort is `timestamp` and the default order is `asc`.
-
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param group_by: The group by period for the orders count. Defaults to day.
-        :type group_by: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bots_orders_count_serialize(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            group_by=group_by,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[OrdersCount]",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data, response_types_map=_response_types_map
-        )
-
-    @validate_call
-    async def _get_bots_orders_count_async_without_preload_content(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Get Bots Orders Count
-
-        Get the number of orders for all bots by day, week, month, or year. The default sort is `timestamp` and the default order is `asc`.
-
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param group_by: The group by period for the orders count. Defaults to day.
-        :type group_by: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bots_orders_count_serialize(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            group_by=group_by,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[OrdersCount]",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        return response_data
-
-    # Private sync implementation methods
-    @validate_call
-    def _get_bots_orders_count_sync(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[OrdersCount]:
-        """Synchronous version of get_bots_orders_count"""
-        return async_to_sync(self._get_bots_orders_count_async)(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            group_by=group_by,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _get_bots_orders_count_sync_with_http_info(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[OrdersCount]]:
-        """Synchronous version of get_bots_orders_count_with_http_info"""
-        return async_to_sync(self._get_bots_orders_count_async_with_http_info)(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            group_by=group_by,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _get_bots_orders_count_sync_without_preload_content(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Synchronous version of get_bots_orders_count_without_preload_content"""
-        return async_to_sync(self._get_bots_orders_count_async_without_preload_content)(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            group_by=group_by,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    def _get_bots_orders_count_serialize(
-        self,
-        sort_order,
-        sort_by,
-        group_by,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {}
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        # process the query parameters
-        if sort_order is not None:
-
-            _query_params.append(("sort_order", sort_order))
-
-        if sort_by is not None:
-
-            _query_params.append(("sort_by", sort_by))
-
-        if group_by is not None:
-
-            _query_params.append(("group_by", group_by))
-
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-        # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(
-                ["application/json"]
-            )
-
-        # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
-
-        return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/bots/orders/count",
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth,
-        )
-
-    @validate_call
-    def get_bots_orders_pnl(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[List[PnL], Awaitable[List[PnL]]]:
-        """Get Bots Pnl"""
-        if self.is_sync:
-            return self._get_bots_orders_pnl_sync(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                window=window,
-                period=period,
-                limit=limit,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bots_orders_pnl_async(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                window=window,
-                period=period,
-                limit=limit,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def get_bots_orders_pnl_with_http_info(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[ApiResponse[List[PnL]], Awaitable[ApiResponse[List[PnL]]]]:
-        """Get Bots Pnl with HTTP info"""
-        if self.is_sync:
-            return self._get_bots_orders_pnl_sync_with_http_info(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                window=window,
-                period=period,
-                limit=limit,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bots_orders_pnl_async_with_http_info(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                window=window,
-                period=period,
-                limit=limit,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def get_bots_orders_pnl_without_preload_content(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
-        """Get Bots Pnl without preloading content"""
-        if self.is_sync:
-            return self._get_bots_orders_pnl_sync_without_preload_content(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                window=window,
-                period=period,
-                limit=limit,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bots_orders_pnl_async_without_preload_content(
-                sort_order=sort_order,
-                sort_by=sort_by,
-                window=window,
-                period=period,
-                limit=limit,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    # Private async implementation methods
-    @validate_call
-    async def _get_bots_orders_pnl_async(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[PnL]:
-        """Get Bots Pnl
-
-        Returns a list of PnLs for all bots over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day. To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
-
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param window: Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range.
-        :type window: str
-        :param period: The number of days to return the PnL for. Only used if `window` is `period`. Default is 30.
-        :type period: int
-        :param limit: The number of items to return. Defaults to None, meaning no limit.
-        :type limit: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bots_orders_pnl_serialize(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            window=window,
-            period=period,
-            limit=limit,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[PnL]",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-    @validate_call
-    async def _get_bots_orders_pnl_async_with_http_info(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[PnL]]:
-        """Get Bots Pnl
-
-        Returns a list of PnLs for all bots over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day. To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
-
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param window: Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range.
-        :type window: str
-        :param period: The number of days to return the PnL for. Only used if `window` is `period`. Default is 30.
-        :type period: int
-        :param limit: The number of items to return. Defaults to None, meaning no limit.
-        :type limit: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bots_orders_pnl_serialize(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            window=window,
-            period=period,
-            limit=limit,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[PnL]",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data, response_types_map=_response_types_map
-        )
-
-    @validate_call
-    async def _get_bots_orders_pnl_async_without_preload_content(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Get Bots Pnl
-
-        Returns a list of PnLs for all bots over time, sorted by `timestamp` ascending by default.  If more than 1000 points exist, PnLs are grouped by day. To get the latest cumulative PnL in a time window, use `sort_by=timestamp`, `sort_order=desc`, and `limit=1`.
-
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param window: Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range.
-        :type window: str
-        :param period: The number of days to return the PnL for. Only used if `window` is `period`. Default is 30.
-        :type period: int
-        :param limit: The number of items to return. Defaults to None, meaning no limit.
-        :type limit: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bots_orders_pnl_serialize(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            window=window,
-            period=period,
-            limit=limit,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[PnL]",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        return response_data
-
-    # Private sync implementation methods
-    @validate_call
-    def _get_bots_orders_pnl_sync(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[PnL]:
-        """Synchronous version of get_bots_orders_pnl"""
-        return async_to_sync(self._get_bots_orders_pnl_async)(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            window=window,
-            period=period,
-            limit=limit,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _get_bots_orders_pnl_sync_with_http_info(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[PnL]]:
-        """Synchronous version of get_bots_orders_pnl_with_http_info"""
-        return async_to_sync(self._get_bots_orders_pnl_async_with_http_info)(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            window=window,
-            period=period,
-            limit=limit,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _get_bots_orders_pnl_sync_without_preload_content(
-        self,
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Synchronous version of get_bots_orders_pnl_without_preload_content"""
-        return async_to_sync(self._get_bots_orders_pnl_async_without_preload_content)(
-            sort_order=sort_order,
-            sort_by=sort_by,
-            window=window,
-            period=period,
-            limit=limit,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    def _get_bots_orders_pnl_serialize(
-        self,
-        sort_order,
-        sort_by,
-        window,
-        period,
-        limit,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {}
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        # process the query parameters
-        if sort_order is not None:
-
-            _query_params.append(("sort_order", sort_order))
-
-        if sort_by is not None:
-
-            _query_params.append(("sort_by", sort_by))
-
-        if window is not None:
-
-            _query_params.append(("window", window))
-
-        if period is not None:
-
-            _query_params.append(("period", period))
-
-        if limit is not None:
-
-            _query_params.append(("limit", limit))
-
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-        # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(
-                ["application/json"]
-            )
-
-        # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
-
-        return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/bots/orders/pnl",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

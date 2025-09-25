@@ -44,3 +44,5 @@ from crypticorn.trade.client.models.strategy_update import StrategyUpdate
 from crypticorn.trade.client.models.tpsl import TPSL
 from crypticorn.trade.client.models.tpsl_create import TPSLCreate
 from crypticorn.trade.client.models.trading_action_type import TradingActionType
+from crypticorn.trade.client.models.vault_bot import VaultBot
+from crypticorn.trade.client.models.vault_details import VaultDetails
