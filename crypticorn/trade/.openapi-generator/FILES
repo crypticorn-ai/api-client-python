@@ -32,5 +32,7 @@ client/models/strategy_update.py
 client/models/tpsl.py
 client/models/tpsl_create.py
 client/models/trading_action_type.py
+client/models/vault_bot.py
+client/models/vault_details.py
 client/py.typed
 client/rest.py
