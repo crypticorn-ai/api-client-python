@@ -6,7 +6,6 @@ from aiohttp import ClientSession, ClientTimeout, TCPConnector
 from crypticorn.auth import AuthClient
 from crypticorn.dex import DexClient
 from crypticorn.hive import HiveClient
-from crypticorn.klines import KlinesClient
 from crypticorn.metrics import MetricsClient
 from crypticorn.notification import NotificationClient
 from crypticorn.pay import PayClient
@@ -14,9 +13,7 @@ from crypticorn.trade import TradeClient
 
 ConfigT = TypeVar("ConfigT")
 SubClient = TypeVar("SubClient")
-_SERVICES = Literal[
-    "hive", "trade", "klines", "pay", "metrics", "auth", "dex", "notification"
-]
+_SERVICES = Literal["hive", "trade", "pay", "metrics", "auth", "dex", "notification"]
 
 
 class BaseAsyncClient:
@@ -51,7 +48,6 @@ class BaseAsyncClient:
         self._service_classes: dict[_SERVICES, tuple[SubClient, str]] = {
             "hive": (HiveClient, "v1/hive"),
             "trade": (TradeClient, "v2/trade"),
-            "klines": (KlinesClient, "v1/klines"),
             "pay": (PayClient, "v1/pay"),
             "metrics": (MetricsClient, "v1/metrics"),
             "auth": (AuthClient, "v1/auth"),
@@ -135,13 +131,6 @@ class BaseAsyncClient:
         Entry point for the Trading API ([Docs](https://docs.crypticorn.com/api/?api=trading-api)).
         """
         return self._services["trade"]
-
-    @property
-    def klines(self) -> KlinesClient:
-        """
-        Entry point for the Klines API ([Docs](https://docs.crypticorn.com/api/?api=klines-api)).
-        """
-        return self._services["klines"]
 
     @property
     def metrics(self) -> MetricsClient:
