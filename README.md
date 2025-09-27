@@ -50,9 +50,9 @@ from crypticorn.trade import BotCreate
 The SDK major version tracks the highest supported API version. A new API major bump always triggers a new major release of this package. Minor and patch versions only add non-breaking changes. We follow [Semantic Versioning](https://semver.org/).
 
 | SDK Version | Auth | Trade | Klines | Metrics | Hive | Dex | Pay | Notification |
-| ----------------- | ---- | ----- | ------ | ------- | ---- | --- | --- | ------------ |
-| v2.x                 | v1   | v1    | v1     | v1      | v1   | v1  | v1  | v1           |
-| v3.x                 | v2   | v1    | -     | v1      | v1   | v1  | v1  | v1           |
+| ----------- | ---- | ----- | ------ | ------- | ---- | --- | --- | ------------ |
+| v2.x        | v1   | v1    | v1     | v1      | v1   | v1  | v1  | v1           |
+| v3.x        | v1   | v2    | -      | v1      | v1   | v1  | v1  | v1           |
 
 ## Authentication
 
