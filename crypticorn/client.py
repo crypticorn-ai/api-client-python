@@ -23,6 +23,7 @@ class BaseAsyncClient:
 
     def __init__(
         self,
+        *,
         api_key: Optional[str] = None,
         jwt: Optional[str] = None,
         base_url: Optional[str] = None,
@@ -250,10 +251,10 @@ class AsyncClient(BaseAsyncClient):
 
     def __init__(
         self,
+        *,
         api_key: Optional[str] = None,
         jwt: Optional[str] = None,
         base_url: Optional[str] = None,
-        *,
         http_client: Optional[ClientSession] = None,
     ):
         """
@@ -263,7 +264,13 @@ class AsyncClient(BaseAsyncClient):
         :param http_client: The HTTP client to use for the client.
         """
         # Initialize as async client
-        super().__init__(api_key, jwt, base_url, is_sync=False, http_client=http_client)
+        super().__init__(
+            api_key=api_key,
+            jwt=jwt,
+            base_url=base_url,
+            is_sync=False,
+            http_client=http_client,
+        )
 
     async def close(self):
         await super().close()
@@ -283,17 +290,23 @@ class SyncClient(BaseAsyncClient):
 
     def __init__(
         self,
+        *,
         api_key: Optional[str] = None,
         jwt: Optional[str] = None,
         base_url: Optional[str] = None,
-        *,
         http_client: Optional[ClientSession] = None,
     ):
         """
         :param http_client: Optional aiohttp ClientSession to use for HTTP requests.
                           Note: For sync client, session management is handled automatically.
         """
-        super().__init__(api_key, jwt, base_url, is_sync=True, http_client=http_client)
+        super().__init__(
+            api_key=api_key,
+            jwt=jwt,
+            base_url=base_url,
+            is_sync=True,
+            http_client=http_client,
+        )
 
     def close(self):
         """Close the client and clean up resources."""
