@@ -14,7 +14,6 @@ import aiohttp
 from aiohttp import ClientSession
 
 from crypticorn import AsyncClient, SyncClient
-from crypticorn.klines import Timeframe
 
 # Add your credentials here
 API_KEY = "2SaU1KRUecTAHQBTDFxPo2MJ5pA9Sm"
@@ -29,15 +28,6 @@ async def main():
         res = await client.trade.status.ping()
         print(res)
 
-        # Get OHLCV data
-        res = await client.trade.strategies.kill_strategy(
-            symbol="BTCUSDT",
-            timeframe=Timeframe.ENUM_1H,
-            market="futures",
-            limit=10,
-        )
-        print(res)
-
         # Get exchange mappings
         res = await client.metrics.exchanges.get_exchange_mappings(market="futures")
         print(res)
@@ -47,13 +37,6 @@ def main_sync():
 
     with SyncClient(base_url="https://api.crypticorn.dev", api_key=API_KEY) as client:
         res = client.trade.status.ping()
-        print(res)
-        res = client.klines.ohlcv.get_ohlcv_data_fmt(
-            symbol="BTCUSDT",
-            timeframe=Timeframe.ENUM_1H,
-            market="futures",
-            limit=10,
-        )
         print(res)
 
         # Get exchange mappings
