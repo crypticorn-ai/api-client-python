@@ -8,29 +8,22 @@ This script demonstrates:
 - Error handling
 """
 
-import asyncio
-
 import aiohttp
 from aiohttp import ClientSession
 
 from crypticorn import AsyncClient, SyncClient
 
 # Add your credentials here
-API_KEY = "2SaU1KRUecTAHQBTDFxPo2MJ5pA9Sm"
+API_KEY = ""
 JWT_TOKEN = ""
 
 
-async def main():
+def main():
 
-    async with AsyncClient(
-        base_url="https://api.crypticorn.dev", api_key=API_KEY
-    ) as client:
-        res = await client.trade.status.ping()
-        print(res)
+    api = SyncClient(base_url="https://api.crypticorn.dev", api_key=API_KEY)
 
-        # Get exchange mappings
-        res = await client.metrics.exchanges.get_exchange_mappings(market="futures")
-        print(res)
+    res = api.auth.login.verify()
+    print(res)
 
 
 def main_sync():
@@ -62,7 +55,7 @@ async def custom_session_example():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
     # main_sync()
     # asyncio.run(custom_session_example())
 
