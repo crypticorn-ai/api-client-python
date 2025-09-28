@@ -37,7 +37,10 @@ class CouponCreate(BaseModel):
     """  # noqa: E501
 
     code: Optional[Annotated[str, Field(min_length=4, strict=True, max_length=32)]] = (
-        None
+        Field(
+            default=None,
+            description="Coupon code. If not specified, a random code is generated.",
+        )
     )
     name: StrictStr = Field(
         description="A name for the coupon, e.g. 'Black Friday 2025'"
@@ -47,7 +50,10 @@ class CouponCreate(BaseModel):
         Annotated[int, Field(le=1, strict=True, ge=0)],
     ] = Field(description="Discount percentage as a decimal")
     valid_until: Optional[StrictInt] = None
-    valid_from: Optional[StrictInt] = None
+    valid_from: Optional[StrictInt] = Field(
+        default=None,
+        description="Coupon valid from timestamp in seconds. If not specified, the coupon is valid from the current time.",
+    )
     usage_limit: Optional[StrictInt] = None
     products: Optional[List[StrictStr]] = None
     is_active: Optional[StrictBool] = Field(
@@ -111,20 +117,10 @@ class CouponCreate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if code (nullable) is None
-        # and model_fields_set contains the field
-        if self.code is None and "code" in self.model_fields_set:
-            _dict["code"] = None
-
         # set to None if valid_until (nullable) is None
         # and model_fields_set contains the field
         if self.valid_until is None and "valid_until" in self.model_fields_set:
             _dict["valid_until"] = None
-
-        # set to None if valid_from (nullable) is None
-        # and model_fields_set contains the field
-        if self.valid_from is None and "valid_from" in self.model_fields_set:
-            _dict["valid_from"] = None
 
         # set to None if usage_limit (nullable) is None
         # and model_fields_set contains the field

@@ -19,6 +19,7 @@ from typing_extensions import Annotated
 from crypticorn.trade.client.api_client import ApiClient, RequestSerialized
 from crypticorn.trade.client.api_response import ApiResponse
 from crypticorn.trade.client.models.exchange_key import ExchangeKey
+from crypticorn.trade.client.models.exchange_key_balance import ExchangeKeyBalance
 from crypticorn.trade.client.models.exchange_key_create import ExchangeKeyCreate
 from crypticorn.trade.client.models.exchange_key_update import ExchangeKeyUpdate
 from crypticorn.trade.client.rest import RESTResponseType
@@ -501,9 +502,9 @@ class APIKeysApi:
         )
 
     @validate_call
-    def get_exchange_key_by_id(
+    def delete_exchange_key(
         self,
-        id: Annotated[StrictStr, Field(description="The ID of the API key to get.")],
+        id: Annotated[StrictStr, Field(description="The ID of the API key to delete.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -515,10 +516,10 @@ class APIKeysApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[ExchangeKey, Awaitable[ExchangeKey]]:
-        """Get Exchange Key By Id"""
+    ) -> Union[None, Awaitable[None]]:
+        """Delete Exchange Key"""
         if self.is_sync:
-            return self._get_exchange_key_by_id_sync(
+            return self._delete_exchange_key_sync(
                 id=id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -528,7 +529,7 @@ class APIKeysApi:
             )
 
         else:
-            return self._get_exchange_key_by_id_async(
+            return self._delete_exchange_key_async(
                 id=id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -538,9 +539,9 @@ class APIKeysApi:
             )
 
     @validate_call
-    def get_exchange_key_by_id_with_http_info(
+    def delete_exchange_key_with_http_info(
         self,
-        id: Annotated[StrictStr, Field(description="The ID of the API key to get.")],
+        id: Annotated[StrictStr, Field(description="The ID of the API key to delete.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -552,10 +553,10 @@ class APIKeysApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[ApiResponse[ExchangeKey], Awaitable[ApiResponse[ExchangeKey]]]:
-        """Get Exchange Key By Id with HTTP info"""
+    ) -> Union[ApiResponse[None], Awaitable[ApiResponse[None]]]:
+        """Delete Exchange Key with HTTP info"""
         if self.is_sync:
-            return self._get_exchange_key_by_id_sync_with_http_info(
+            return self._delete_exchange_key_sync_with_http_info(
                 id=id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -565,7 +566,7 @@ class APIKeysApi:
             )
 
         else:
-            return self._get_exchange_key_by_id_async_with_http_info(
+            return self._delete_exchange_key_async_with_http_info(
                 id=id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -575,9 +576,9 @@ class APIKeysApi:
             )
 
     @validate_call
-    def get_exchange_key_by_id_without_preload_content(
+    def delete_exchange_key_without_preload_content(
         self,
-        id: Annotated[StrictStr, Field(description="The ID of the API key to get.")],
+        id: Annotated[StrictStr, Field(description="The ID of the API key to delete.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -590,9 +591,9 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
-        """Get Exchange Key By Id without preloading content"""
+        """Delete Exchange Key without preloading content"""
         if self.is_sync:
-            return self._get_exchange_key_by_id_sync_without_preload_content(
+            return self._delete_exchange_key_sync_without_preload_content(
                 id=id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -602,7 +603,7 @@ class APIKeysApi:
             )
 
         else:
-            return self._get_exchange_key_by_id_async_without_preload_content(
+            return self._delete_exchange_key_async_without_preload_content(
                 id=id,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
@@ -613,9 +614,9 @@ class APIKeysApi:
 
     # Private async implementation methods
     @validate_call
-    async def _get_exchange_key_by_id_async(
+    async def _delete_exchange_key_async(
         self,
-        id: Annotated[StrictStr, Field(description="The ID of the API key to get.")],
+        id: Annotated[StrictStr, Field(description="The ID of the API key to delete.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -627,12 +628,12 @@ class APIKeysApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ExchangeKey:
-        """Get Exchange Key By Id
+    ) -> None:
+        """Delete Exchange Key
 
-        Get an exchange key by ID.
+        Delete an exchange key.
 
-        :param id: The ID of the API key to get. (required)
+        :param id: The ID of the API key to delete. (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -656,7 +657,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_exchange_key_by_id_serialize(
+        _param = self._delete_exchange_key_serialize(
             id=id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -665,7 +666,7 @@ class APIKeysApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "ExchangeKey",
+            "204": None,
         }
 
         response_data = await self.api_client.call_api(
@@ -678,9 +679,9 @@ class APIKeysApi:
         ).data
 
     @validate_call
-    async def _get_exchange_key_by_id_async_with_http_info(
+    async def _delete_exchange_key_async_with_http_info(
         self,
-        id: Annotated[StrictStr, Field(description="The ID of the API key to get.")],
+        id: Annotated[StrictStr, Field(description="The ID of the API key to delete.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -692,12 +693,12 @@ class APIKeysApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ExchangeKey]:
-        """Get Exchange Key By Id
+    ) -> ApiResponse[None]:
+        """Delete Exchange Key
 
-        Get an exchange key by ID.
+        Delete an exchange key.
 
-        :param id: The ID of the API key to get. (required)
+        :param id: The ID of the API key to delete. (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -721,7 +722,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_exchange_key_by_id_serialize(
+        _param = self._delete_exchange_key_serialize(
             id=id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -730,7 +731,7 @@ class APIKeysApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "ExchangeKey",
+            "204": None,
         }
 
         response_data = await self.api_client.call_api(
@@ -742,9 +743,9 @@ class APIKeysApi:
         )
 
     @validate_call
-    async def _get_exchange_key_by_id_async_without_preload_content(
+    async def _delete_exchange_key_async_without_preload_content(
         self,
-        id: Annotated[StrictStr, Field(description="The ID of the API key to get.")],
+        id: Annotated[StrictStr, Field(description="The ID of the API key to delete.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -757,11 +758,11 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get Exchange Key By Id
+        """Delete Exchange Key
 
-        Get an exchange key by ID.
+        Delete an exchange key.
 
-        :param id: The ID of the API key to get. (required)
+        :param id: The ID of the API key to delete. (required)
         :type id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -785,7 +786,7 @@ class APIKeysApi:
         :return: Returns the result object.
         """  # noqa: E501
 
-        _param = self._get_exchange_key_by_id_serialize(
+        _param = self._delete_exchange_key_serialize(
             id=id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -794,7 +795,7 @@ class APIKeysApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "200": "ExchangeKey",
+            "204": None,
         }
 
         response_data = await self.api_client.call_api(
@@ -804,9 +805,9 @@ class APIKeysApi:
 
     # Private sync implementation methods
     @validate_call
-    def _get_exchange_key_by_id_sync(
+    def _delete_exchange_key_sync(
         self,
-        id: Annotated[StrictStr, Field(description="The ID of the API key to get.")],
+        id: Annotated[StrictStr, Field(description="The ID of the API key to delete.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -818,9 +819,9 @@ class APIKeysApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ExchangeKey:
-        """Synchronous version of get_exchange_key_by_id"""
-        return async_to_sync(self._get_exchange_key_by_id_async)(
+    ) -> None:
+        """Synchronous version of delete_exchange_key"""
+        return async_to_sync(self._delete_exchange_key_async)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -830,9 +831,9 @@ class APIKeysApi:
         )
 
     @validate_call
-    def _get_exchange_key_by_id_sync_with_http_info(
+    def _delete_exchange_key_sync_with_http_info(
         self,
-        id: Annotated[StrictStr, Field(description="The ID of the API key to get.")],
+        id: Annotated[StrictStr, Field(description="The ID of the API key to delete.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -844,9 +845,9 @@ class APIKeysApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ExchangeKey]:
-        """Synchronous version of get_exchange_key_by_id_with_http_info"""
-        return async_to_sync(self._get_exchange_key_by_id_async_with_http_info)(
+    ) -> ApiResponse[None]:
+        """Synchronous version of delete_exchange_key_with_http_info"""
+        return async_to_sync(self._delete_exchange_key_async_with_http_info)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -856,9 +857,9 @@ class APIKeysApi:
         )
 
     @validate_call
-    def _get_exchange_key_by_id_sync_without_preload_content(
+    def _delete_exchange_key_sync_without_preload_content(
         self,
-        id: Annotated[StrictStr, Field(description="The ID of the API key to get.")],
+        id: Annotated[StrictStr, Field(description="The ID of the API key to delete.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -871,10 +872,8 @@ class APIKeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Synchronous version of get_exchange_key_by_id_without_preload_content"""
-        return async_to_sync(
-            self._get_exchange_key_by_id_async_without_preload_content
-        )(
+        """Synchronous version of delete_exchange_key_without_preload_content"""
+        return async_to_sync(self._delete_exchange_key_async_without_preload_content)(
             id=id,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
@@ -883,7 +882,7 @@ class APIKeysApi:
             _host_index=_host_index,
         )
 
-    def _get_exchange_key_by_id_serialize(
+    def _delete_exchange_key_serialize(
         self,
         id,
         _request_auth,
@@ -923,8 +922,418 @@ class APIKeysApi:
         _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
 
         return self.api_client.param_serialize(
-            method="GET",
+            method="DELETE",
             resource_path="/api-keys/{id}",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
+    def get_exchange_key_balances(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[List[ExchangeKeyBalance], Awaitable[List[ExchangeKeyBalance]]]:
+        """Get Exchange Key Balances"""
+        if self.is_sync:
+            return self._get_exchange_key_balances_sync(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_exchange_key_balances_async(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_exchange_key_balances_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[
+        ApiResponse[List[ExchangeKeyBalance]],
+        Awaitable[ApiResponse[List[ExchangeKeyBalance]]],
+    ]:
+        """Get Exchange Key Balances with HTTP info"""
+        if self.is_sync:
+            return self._get_exchange_key_balances_sync_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_exchange_key_balances_async_with_http_info(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_exchange_key_balances_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
+        """Get Exchange Key Balances without preloading content"""
+        if self.is_sync:
+            return self._get_exchange_key_balances_sync_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_exchange_key_balances_async_without_preload_content(
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_exchange_key_balances_async(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[ExchangeKeyBalance]:
+        """Get Exchange Key Balances
+
+        Get the balances of all exchange keys.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_exchange_key_balances_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "List[ExchangeKeyBalance]",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    async def _get_exchange_key_balances_async_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[ExchangeKeyBalance]]:
+        """Get Exchange Key Balances
+
+        Get the balances of all exchange keys.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_exchange_key_balances_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "List[ExchangeKeyBalance]",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data, response_types_map=_response_types_map
+        )
+
+    @validate_call
+    async def _get_exchange_key_balances_async_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Exchange Key Balances
+
+        Get the balances of all exchange keys.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_exchange_key_balances_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "List[ExchangeKeyBalance]",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _get_exchange_key_balances_sync(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> List[ExchangeKeyBalance]:
+        """Synchronous version of get_exchange_key_balances"""
+        return async_to_sync(self._get_exchange_key_balances_async)(
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_exchange_key_balances_sync_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[List[ExchangeKeyBalance]]:
+        """Synchronous version of get_exchange_key_balances_with_http_info"""
+        return async_to_sync(self._get_exchange_key_balances_async_with_http_info)(
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_exchange_key_balances_sync_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of get_exchange_key_balances_without_preload_content"""
+        return async_to_sync(
+            self._get_exchange_key_balances_async_without_preload_content
+        )(
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    def _get_exchange_key_balances_serialize(
+        self,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+        # set the HTTP header `Accept`
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
+            )
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
+
+        return self.api_client.param_serialize(
+            method="GET",
+            resource_path="/api-keys/balances",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

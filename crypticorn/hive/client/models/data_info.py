@@ -19,13 +19,12 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing_extensions import Self
 
 from crypticorn.hive.client.models.coin_info import CoinInfo
 from crypticorn.hive.client.models.data_options import DataOptions
 from crypticorn.hive.client.models.data_version_info import DataVersionInfo
-from crypticorn.hive.client.models.feature_size import FeatureSize
 from crypticorn.hive.client.models.target_info import TargetInfo
 
 
@@ -35,12 +34,12 @@ class DataInfo(BaseModel):
     """  # noqa: E501
 
     data: Dict[str, Dict[str, DataOptions]] = Field(
-        description="The complete data information for all versions, coins, feature sizes and targets."
+        description="The data available for all data versions."
     )
     coins: List[CoinInfo] = Field(
         description="The coins available for all data versions."
     )
-    feature_sizes: List[FeatureSize] = Field(
+    feature_sizes: List[StrictStr] = Field(
         description="The feature sizes available for all data versions."
     )
     targets: List[TargetInfo] = Field(
@@ -60,6 +59,16 @@ class DataInfo(BaseModel):
         "all_versions",
         "available_versions",
     ]
+
+    @field_validator("feature_sizes")
+    def feature_sizes_validate_enum(cls, value):
+        """Validates the enum"""
+        for i in value:
+            if i not in set(["small", "medium", "large"]):
+                raise ValueError(
+                    "each list item must be one of ('small', 'medium', 'large')"
+                )
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

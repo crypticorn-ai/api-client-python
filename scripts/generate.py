@@ -130,7 +130,6 @@ __all__ = ["{upper_module_name}Client"]
     print("If you are adding a new module, you need to do the following:")
     print("- Edit the generated crypticorn/client.py file.")
     print(f"- Edit the generated crypticorn/{module_name}/main.py file.")
-    print("- Edit the crypticorn/common/urls.py file to add the new module.")
     print("=========================================================")
 
 

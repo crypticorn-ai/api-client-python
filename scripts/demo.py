@@ -22,7 +22,7 @@ def main():
 
     api = SyncClient(base_url="https://api.crypticorn.dev", api_key=API_KEY)
 
-    res = api.auth.login.verify()
+    res = api.auth.admin.user_list()
     print(res)
 
 

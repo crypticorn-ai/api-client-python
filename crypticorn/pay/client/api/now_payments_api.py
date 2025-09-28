@@ -172,7 +172,7 @@ class NOWPaymentsApi:
     ) -> str:
         """Get Status
 
-        Get the status of the NOWPayments API
+        Get the status of the NOWPayments API, returns OK if the API is up, else raises an error
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -233,7 +233,7 @@ class NOWPaymentsApi:
     ) -> ApiResponse[str]:
         """Get Status
 
-        Get the status of the NOWPayments API
+        Get the status of the NOWPayments API, returns OK if the API is up, else raises an error
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -293,7 +293,7 @@ class NOWPaymentsApi:
     ) -> RESTResponseType:
         """Get Status
 
-        Get the status of the NOWPayments API
+        Get the status of the NOWPayments API, returns OK if the API is up, else raises an error
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

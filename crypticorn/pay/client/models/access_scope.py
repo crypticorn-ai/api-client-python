@@ -20,20 +20,18 @@ from enum import Enum
 from typing_extensions import Self
 
 
-class ApiErrorLevel(str, Enum):
+class AccessScope(str, Enum):
     """
-    Level of the API error.
+    Access scopes
     """
 
     """
     allowed enum values
     """
-    ERROR = "error"
-    INFO = "info"
-    SUCCESS = "success"
-    WARNING = "warning"
+    READ_COLON_PREDICTIONS = "read:predictions"
+    READ_COLON_DEX_COLON_SIGNALS = "read:dex:signals"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of ApiErrorLevel from a JSON string"""
+        """Create an instance of AccessScope from a JSON string"""
         return cls(json.loads(json_str))

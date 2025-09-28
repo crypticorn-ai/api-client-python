@@ -35,18 +35,21 @@ __all__ = [
     "Bot",
     "BotCreate",
     "BotUpdate",
+    "ErrorResponse",
     "ExchangeKey",
+    "ExchangeKeyBalance",
     "ExchangeKeyCreate",
     "ExchangeKeyUpdate",
     "ExecutionIds",
+    "FuturesBalance",
     "FuturesTradingAction",
     "FuturesTradingActionCreate",
     "Order",
-    "OrdersCount",
     "PaginatedResponseFuturesTradingAction",
     "PaginatedResponseOrder",
     "PnL",
     "PostFuturesAction",
+    "SpotBalance",
     "SpotTradingActionCreate",
     "Strategy",
     "StrategyCreate",
@@ -82,7 +85,11 @@ from crypticorn.trade.client.exceptions import OpenApiException as OpenApiExcept
 from crypticorn.trade.client.models.bot import Bot as Bot
 from crypticorn.trade.client.models.bot_create import BotCreate as BotCreate
 from crypticorn.trade.client.models.bot_update import BotUpdate as BotUpdate
+from crypticorn.trade.client.models.error_response import ErrorResponse as ErrorResponse
 from crypticorn.trade.client.models.exchange_key import ExchangeKey as ExchangeKey
+from crypticorn.trade.client.models.exchange_key_balance import (
+    ExchangeKeyBalance as ExchangeKeyBalance,
+)
 from crypticorn.trade.client.models.exchange_key_create import (
     ExchangeKeyCreate as ExchangeKeyCreate,
 )
@@ -90,6 +97,9 @@ from crypticorn.trade.client.models.exchange_key_update import (
     ExchangeKeyUpdate as ExchangeKeyUpdate,
 )
 from crypticorn.trade.client.models.execution_ids import ExecutionIds as ExecutionIds
+from crypticorn.trade.client.models.futures_balance import (
+    FuturesBalance as FuturesBalance,
+)
 from crypticorn.trade.client.models.futures_trading_action import (
     FuturesTradingAction as FuturesTradingAction,
 )
@@ -97,7 +107,6 @@ from crypticorn.trade.client.models.futures_trading_action_create import (
     FuturesTradingActionCreate as FuturesTradingActionCreate,
 )
 from crypticorn.trade.client.models.order import Order as Order
-from crypticorn.trade.client.models.orders_count import OrdersCount as OrdersCount
 from crypticorn.trade.client.models.paginated_response_futures_trading_action import (
     PaginatedResponseFuturesTradingAction as PaginatedResponseFuturesTradingAction,
 )
@@ -108,6 +117,7 @@ from crypticorn.trade.client.models.pn_l import PnL as PnL
 from crypticorn.trade.client.models.post_futures_action import (
     PostFuturesAction as PostFuturesAction,
 )
+from crypticorn.trade.client.models.spot_balance import SpotBalance as SpotBalance
 from crypticorn.trade.client.models.spot_trading_action_create import (
     SpotTradingActionCreate as SpotTradingActionCreate,
 )

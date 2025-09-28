@@ -19,10 +19,8 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
 from typing_extensions import Self
-
-from crypticorn.hive.client.models.data_version import DataVersion
 
 
 class DataVersionInfo(BaseModel):
@@ -30,11 +28,18 @@ class DataVersionInfo(BaseModel):
     Information about a specific data version including release metadata.
     """  # noqa: E501
 
-    version: DataVersion = Field(description="Data version")
+    version: StrictStr = Field(description="Data version")
     release_date: StrictInt = Field(
         description="Release date of the data version in unix timestamp"
     )
     __properties: ClassVar[List[str]] = ["version", "release_date"]
+
+    @field_validator("version")
+    def version_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["1.0"]):
+            raise ValueError("must be one of enum values ('1.0')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

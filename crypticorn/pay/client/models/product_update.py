@@ -29,7 +29,7 @@ from pydantic import (
 )
 from typing_extensions import Self
 
-from crypticorn.pay.client.models.scope import Scope
+from crypticorn.pay.client.models.access_scope import AccessScope
 
 
 class ProductUpdate(BaseModel):
@@ -39,7 +39,7 @@ class ProductUpdate(BaseModel):
 
     name: Optional[StrictStr] = None
     price: Optional[Union[StrictFloat, StrictInt]] = None
-    scopes: Optional[List[Scope]] = None
+    scopes: Optional[List[AccessScope]] = None
     duration: Optional[StrictInt] = None
     description: Optional[StrictStr] = None
     is_active: Optional[StrictBool] = None

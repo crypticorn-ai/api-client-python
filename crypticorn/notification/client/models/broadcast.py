@@ -22,6 +22,8 @@ from typing import Any, ClassVar, Dict, List, Optional, Set
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing_extensions import Annotated, Self
 
+from crypticorn.notification.client.models.broadcast_recipient import BroadcastRecipient
+
 
 class Broadcast(BaseModel):
     """
@@ -34,21 +36,17 @@ class Broadcast(BaseModel):
     template_preferences: List[
         Annotated[List[Any], Field(min_length=2, max_length=2)]
     ] = Field(
-        description="List of templates and whether the user wants to receive the notification"
+        description="List of templates and whether the broadcast sends the notification for"
     )
-    discord_webhook_url: StrictStr = Field(
-        description="Discord webhook URL for the broadcast to be sent to"
-    )
-    telegram_chat_id: StrictStr = Field(
-        description="Telegram chat ID for the broadcast to be sent to"
+    recipients: List[BroadcastRecipient] = Field(
+        description="List of recipients for the broadcast to be sent to"
     )
     __properties: ClassVar[List[str]] = [
         "id",
         "created_at",
         "updated_at",
         "template_preferences",
-        "discord_webhook_url",
-        "telegram_chat_id",
+        "recipients",
     ]
 
     model_config = ConfigDict(
@@ -88,6 +86,13 @@ class Broadcast(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in recipients (list)
+        _items = []
+        if self.recipients:
+            for _item_recipients in self.recipients:
+                if _item_recipients:
+                    _items.append(_item_recipients.to_dict())
+            _dict["recipients"] = _items
         return _dict
 
     @classmethod
@@ -105,8 +110,11 @@ class Broadcast(BaseModel):
                 "created_at": obj.get("created_at"),
                 "updated_at": obj.get("updated_at"),
                 "template_preferences": obj.get("template_preferences"),
-                "discord_webhook_url": obj.get("discord_webhook_url"),
-                "telegram_chat_id": obj.get("telegram_chat_id"),
+                "recipients": (
+                    [BroadcastRecipient.from_dict(_item) for _item in obj["recipients"]]
+                    if obj.get("recipients") is not None
+                    else None
+                ),
             }
         )
         return _obj

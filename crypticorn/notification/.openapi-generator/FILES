@@ -11,12 +11,13 @@ client/exceptions.py
 client/models/__init__.py
 client/models/broadcast.py
 client/models/broadcast_create.py
+client/models/broadcast_recipient.py
 client/models/broadcast_update.py
 client/models/dashboard_action_button.py
 client/models/dashboard_field.py
 client/models/dashboard_notification.py
 client/models/dashboard_notification_update.py
-client/models/exception_detail_literal_unknown_error_invalid_data_request_invalid_data_response_object_already_exists_object_not_found_template_not_found_invalid_template_variables.py
+client/models/error_response.py
 client/models/notification_create.py
 client/models/paginated_response_dashboard_notification.py
 client/models/template.py

@@ -27,6 +27,8 @@ client/models/error_notfound.py
 client/models/error_unauthorized.py
 client/models/generate_otp_code_request.py
 client/models/get_api_keys200_response_inner.py
+client/models/get_license200_response.py
+client/models/link_license_request.py
 client/models/list_wallets200_response.py
 client/models/list_wallets200_response_data_inner.py
 client/models/refresh_token_info200_response.py

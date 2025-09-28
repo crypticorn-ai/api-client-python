@@ -16,6 +16,7 @@ Do not edit the class manually.
 # import models into model package
 from crypticorn.notification.client.models.broadcast import Broadcast
 from crypticorn.notification.client.models.broadcast_create import BroadcastCreate
+from crypticorn.notification.client.models.broadcast_recipient import BroadcastRecipient
 from crypticorn.notification.client.models.broadcast_update import BroadcastUpdate
 from crypticorn.notification.client.models.dashboard_action_button import (
     DashboardActionButton,
@@ -27,9 +28,7 @@ from crypticorn.notification.client.models.dashboard_notification import (
 from crypticorn.notification.client.models.dashboard_notification_update import (
     DashboardNotificationUpdate,
 )
-from crypticorn.notification.client.models.exception_detail_literal_unknown_error_invalid_data_request_invalid_data_response_object_already_exists_object_not_found_template_not_found_invalid_template_variables import (
-    ExceptionDetailLiteralUnknownErrorInvalidDataRequestInvalidDataResponseObjectAlreadyExistsObjectNotFoundTemplateNotFoundInvalidTemplateVariables,
-)
+from crypticorn.notification.client.models.error_response import ErrorResponse
 from crypticorn.notification.client.models.notification_create import NotificationCreate
 from crypticorn.notification.client.models.paginated_response_dashboard_notification import (
     PaginatedResponseDashboardNotification,

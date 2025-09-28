@@ -49,6 +49,8 @@ __all__ = [
     "ErrorUNAUTHORIZED",
     "GenerateOtpCodeRequest",
     "GetApiKeys200ResponseInner",
+    "GetLicense200Response",
+    "LinkLicenseRequest",
     "ListWallets200Response",
     "ListWallets200ResponseDataInner",
     "RefreshTokenInfo200Response",
@@ -143,6 +145,12 @@ from crypticorn.auth.client.models.generate_otp_code_request import (
 )
 from crypticorn.auth.client.models.get_api_keys200_response_inner import (
     GetApiKeys200ResponseInner as GetApiKeys200ResponseInner,
+)
+from crypticorn.auth.client.models.get_license200_response import (
+    GetLicense200Response as GetLicense200Response,
+)
+from crypticorn.auth.client.models.link_license_request import (
+    LinkLicenseRequest as LinkLicenseRequest,
 )
 from crypticorn.auth.client.models.list_wallets200_response import (
     ListWallets200Response as ListWallets200Response,

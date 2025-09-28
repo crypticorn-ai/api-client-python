@@ -18,7 +18,6 @@ from typing_extensions import Annotated
 
 from crypticorn.hive.client.api_client import ApiClient, RequestSerialized
 from crypticorn.hive.client.api_response import ApiResponse
-from crypticorn.hive.client.models.data_version import DataVersion
 from crypticorn.hive.client.models.evaluation_response import EvaluationResponse
 from crypticorn.hive.client.models.model_create import ModelCreate
 from crypticorn.hive.client.models.model_read import ModelRead
@@ -945,7 +944,7 @@ class ModelsApi:
         ],
         request_body: List[Any],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing."
             ),
@@ -995,7 +994,7 @@ class ModelsApi:
         ],
         request_body: List[Any],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing."
             ),
@@ -1047,7 +1046,7 @@ class ModelsApi:
         ],
         request_body: List[Any],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing."
             ),
@@ -1098,7 +1097,7 @@ class ModelsApi:
         ],
         request_body: List[Any],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing."
             ),
@@ -1124,7 +1123,7 @@ class ModelsApi:
         :param request_body: (required)
         :type request_body: List[object]
         :param version: Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing.
-        :type version: DataVersion
+        :type version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1178,7 +1177,7 @@ class ModelsApi:
         ],
         request_body: List[Any],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing."
             ),
@@ -1204,7 +1203,7 @@ class ModelsApi:
         :param request_body: (required)
         :type request_body: List[object]
         :param version: Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing.
-        :type version: DataVersion
+        :type version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1257,7 +1256,7 @@ class ModelsApi:
         ],
         request_body: List[Any],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing."
             ),
@@ -1283,7 +1282,7 @@ class ModelsApi:
         :param request_body: (required)
         :type request_body: List[object]
         :param version: Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing.
-        :type version: DataVersion
+        :type version: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1334,7 +1333,7 @@ class ModelsApi:
         ],
         request_body: List[Any],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing."
             ),
@@ -1371,7 +1370,7 @@ class ModelsApi:
         ],
         request_body: List[Any],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing."
             ),
@@ -1408,7 +1407,7 @@ class ModelsApi:
         ],
         request_body: List[Any],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="Data version for evaluation. Defaults to latest public version. Using older versions won't affect leaderboard rankings but can be useful for additional model testing."
             ),
@@ -1469,7 +1468,7 @@ class ModelsApi:
         # process the query parameters
         if version is not None:
 
-            _query_params.append(("version", version.value))
+            _query_params.append(("version", version))
 
         # process the header parameters
         # process the form parameters

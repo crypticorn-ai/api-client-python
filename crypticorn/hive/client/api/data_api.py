@@ -20,8 +20,6 @@ from crypticorn.hive.client.api_client import ApiClient, RequestSerialized
 from crypticorn.hive.client.api_response import ApiResponse
 from crypticorn.hive.client.models.data_download_response import DataDownloadResponse
 from crypticorn.hive.client.models.data_info import DataInfo
-from crypticorn.hive.client.models.data_version import DataVersion
-from crypticorn.hive.client.models.feature_size import FeatureSize
 from crypticorn.hive.client.rest import RESTResponseType
 
 # Import async_to_sync for sync methods
@@ -63,13 +61,13 @@ class DataApi:
             StrictInt, Field(description="The ID of the model to download data for.")
         ],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="The version of the data to download. Default is the latest public version."
             ),
         ] = None,
         feature_size: Annotated[
-            Optional[FeatureSize],
+            Optional[StrictStr],
             Field(
                 description="The number of features in the data. Default is `LARGE`."
             ),
@@ -118,13 +116,13 @@ class DataApi:
             StrictInt, Field(description="The ID of the model to download data for.")
         ],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="The version of the data to download. Default is the latest public version."
             ),
         ] = None,
         feature_size: Annotated[
-            Optional[FeatureSize],
+            Optional[StrictStr],
             Field(
                 description="The number of features in the data. Default is `LARGE`."
             ),
@@ -175,13 +173,13 @@ class DataApi:
             StrictInt, Field(description="The ID of the model to download data for.")
         ],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="The version of the data to download. Default is the latest public version."
             ),
         ] = None,
         feature_size: Annotated[
-            Optional[FeatureSize],
+            Optional[StrictStr],
             Field(
                 description="The number of features in the data. Default is `LARGE`."
             ),
@@ -231,13 +229,13 @@ class DataApi:
             StrictInt, Field(description="The ID of the model to download data for.")
         ],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="The version of the data to download. Default is the latest public version."
             ),
         ] = None,
         feature_size: Annotated[
-            Optional[FeatureSize],
+            Optional[StrictStr],
             Field(
                 description="The number of features in the data. Default is `LARGE`."
             ),
@@ -261,9 +259,9 @@ class DataApi:
         :param model_id: The ID of the model to download data for. (required)
         :type model_id: int
         :param version: The version of the data to download. Default is the latest public version.
-        :type version: DataVersion
+        :type version: str
         :param feature_size: The number of features in the data. Default is `LARGE`.
-        :type feature_size: FeatureSize
+        :type feature_size: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -316,13 +314,13 @@ class DataApi:
             StrictInt, Field(description="The ID of the model to download data for.")
         ],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="The version of the data to download. Default is the latest public version."
             ),
         ] = None,
         feature_size: Annotated[
-            Optional[FeatureSize],
+            Optional[StrictStr],
             Field(
                 description="The number of features in the data. Default is `LARGE`."
             ),
@@ -346,9 +344,9 @@ class DataApi:
         :param model_id: The ID of the model to download data for. (required)
         :type model_id: int
         :param version: The version of the data to download. Default is the latest public version.
-        :type version: DataVersion
+        :type version: str
         :param feature_size: The number of features in the data. Default is `LARGE`.
-        :type feature_size: FeatureSize
+        :type feature_size: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -400,13 +398,13 @@ class DataApi:
             StrictInt, Field(description="The ID of the model to download data for.")
         ],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="The version of the data to download. Default is the latest public version."
             ),
         ] = None,
         feature_size: Annotated[
-            Optional[FeatureSize],
+            Optional[StrictStr],
             Field(
                 description="The number of features in the data. Default is `LARGE`."
             ),
@@ -430,9 +428,9 @@ class DataApi:
         :param model_id: The ID of the model to download data for. (required)
         :type model_id: int
         :param version: The version of the data to download. Default is the latest public version.
-        :type version: DataVersion
+        :type version: str
         :param feature_size: The number of features in the data. Default is `LARGE`.
-        :type feature_size: FeatureSize
+        :type feature_size: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -482,13 +480,13 @@ class DataApi:
             StrictInt, Field(description="The ID of the model to download data for.")
         ],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="The version of the data to download. Default is the latest public version."
             ),
         ] = None,
         feature_size: Annotated[
-            Optional[FeatureSize],
+            Optional[StrictStr],
             Field(
                 description="The number of features in the data. Default is `LARGE`."
             ),
@@ -524,13 +522,13 @@ class DataApi:
             StrictInt, Field(description="The ID of the model to download data for.")
         ],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="The version of the data to download. Default is the latest public version."
             ),
         ] = None,
         feature_size: Annotated[
-            Optional[FeatureSize],
+            Optional[StrictStr],
             Field(
                 description="The number of features in the data. Default is `LARGE`."
             ),
@@ -566,13 +564,13 @@ class DataApi:
             StrictInt, Field(description="The ID of the model to download data for.")
         ],
         version: Annotated[
-            Optional[DataVersion],
+            Optional[StrictStr],
             Field(
                 description="The version of the data to download. Default is the latest public version."
             ),
         ] = None,
         feature_size: Annotated[
-            Optional[FeatureSize],
+            Optional[StrictStr],
             Field(
                 description="The number of features in the data. Default is `LARGE`."
             ),
@@ -633,11 +631,11 @@ class DataApi:
 
         if version is not None:
 
-            _query_params.append(("version", version.value))
+            _query_params.append(("version", version))
 
         if feature_size is not None:
 
-            _query_params.append(("feature_size", feature_size.value))
+            _query_params.append(("feature_size", feature_size))
 
         # process the header parameters
         # process the form parameters

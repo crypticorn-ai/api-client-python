@@ -30,28 +30,25 @@ __all__ = [
     "ApiKeyError",
     "ApiAttributeError",
     "ApiException",
-    "ApiErrorIdentifier",
-    "ApiErrorLevel",
-    "ApiErrorType",
+    "BenchmarksValue",
+    "BinaryEvaluation",
     "CoinInfo",
-    "Coins",
+    "ContinuousEvaluation",
     "DataDownloadResponse",
     "DataInfo",
     "DataOptions",
-    "DataVersion",
     "DataVersionInfo",
     "DownloadLinks",
+    "ErrorResponse",
     "Evaluation",
     "EvaluationResponse",
-    "ExceptionDetail",
-    "FeatureSize",
+    "Metrics",
     "ModelCreate",
     "ModelRead",
     "ModelStatus",
     "ModelUpdate",
     "Target",
     "TargetInfo",
-    "TargetType",
 ]
 
 # import apis into sdk package
@@ -71,35 +68,34 @@ from crypticorn.hive.client.exceptions import ApiValueError as ApiValueError
 from crypticorn.hive.client.exceptions import OpenApiException as OpenApiException
 
 # import models into sdk package
-from crypticorn.hive.client.models.api_error_identifier import (
-    ApiErrorIdentifier as ApiErrorIdentifier,
+from crypticorn.hive.client.models.benchmarks_value import (
+    BenchmarksValue as BenchmarksValue,
 )
-from crypticorn.hive.client.models.api_error_level import ApiErrorLevel as ApiErrorLevel
-from crypticorn.hive.client.models.api_error_type import ApiErrorType as ApiErrorType
+from crypticorn.hive.client.models.binary_evaluation import (
+    BinaryEvaluation as BinaryEvaluation,
+)
 from crypticorn.hive.client.models.coin_info import CoinInfo as CoinInfo
-from crypticorn.hive.client.models.coins import Coins as Coins
+from crypticorn.hive.client.models.continuous_evaluation import (
+    ContinuousEvaluation as ContinuousEvaluation,
+)
 from crypticorn.hive.client.models.data_download_response import (
     DataDownloadResponse as DataDownloadResponse,
 )
 from crypticorn.hive.client.models.data_info import DataInfo as DataInfo
 from crypticorn.hive.client.models.data_options import DataOptions as DataOptions
-from crypticorn.hive.client.models.data_version import DataVersion as DataVersion
 from crypticorn.hive.client.models.data_version_info import (
     DataVersionInfo as DataVersionInfo,
 )
 from crypticorn.hive.client.models.download_links import DownloadLinks as DownloadLinks
+from crypticorn.hive.client.models.error_response import ErrorResponse as ErrorResponse
 from crypticorn.hive.client.models.evaluation import Evaluation as Evaluation
 from crypticorn.hive.client.models.evaluation_response import (
     EvaluationResponse as EvaluationResponse,
 )
-from crypticorn.hive.client.models.exception_detail import (
-    ExceptionDetail as ExceptionDetail,
-)
-from crypticorn.hive.client.models.feature_size import FeatureSize as FeatureSize
+from crypticorn.hive.client.models.metrics import Metrics as Metrics
 from crypticorn.hive.client.models.model_create import ModelCreate as ModelCreate
 from crypticorn.hive.client.models.model_read import ModelRead as ModelRead
 from crypticorn.hive.client.models.model_status import ModelStatus as ModelStatus
 from crypticorn.hive.client.models.model_update import ModelUpdate as ModelUpdate
 from crypticorn.hive.client.models.target import Target as Target
 from crypticorn.hive.client.models.target_info import TargetInfo as TargetInfo
-from crypticorn.hive.client.models.target_type import TargetType as TargetType

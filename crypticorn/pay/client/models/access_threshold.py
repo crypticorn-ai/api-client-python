@@ -22,7 +22,7 @@ from typing import Any, ClassVar, Dict, List, Optional, Set, Union
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
 from typing_extensions import Self
 
-from crypticorn.pay.client.models.scope import Scope
+from crypticorn.pay.client.models.access_scope import AccessScope
 
 
 class AccessThreshold(BaseModel):
@@ -31,7 +31,7 @@ class AccessThreshold(BaseModel):
     """  # noqa: E501
 
     usd_amount: Union[StrictFloat, StrictInt] = Field(description="Amount of USD")
-    scope: Scope = Field(description="Scope that is granted with this threshold")
+    scope: AccessScope = Field(description="Scope that is granted with this threshold")
     __properties: ClassVar[List[str]] = ["usd_amount", "scope"]
 
     model_config = ConfigDict(

@@ -33,12 +33,13 @@ __all__ = [
     "ApiException",
     "Broadcast",
     "BroadcastCreate",
+    "BroadcastRecipient",
     "BroadcastUpdate",
     "DashboardActionButton",
     "DashboardField",
     "DashboardNotification",
     "DashboardNotificationUpdate",
-    "ExceptionDetailLiteralUnknownErrorInvalidDataRequestInvalidDataResponseObjectAlreadyExistsObjectNotFoundTemplateNotFoundInvalidTemplateVariables",
+    "ErrorResponse",
     "NotificationCreate",
     "PaginatedResponseDashboardNotification",
     "Template",
@@ -78,6 +79,9 @@ from crypticorn.notification.client.models.broadcast import Broadcast as Broadca
 from crypticorn.notification.client.models.broadcast_create import (
     BroadcastCreate as BroadcastCreate,
 )
+from crypticorn.notification.client.models.broadcast_recipient import (
+    BroadcastRecipient as BroadcastRecipient,
+)
 from crypticorn.notification.client.models.broadcast_update import (
     BroadcastUpdate as BroadcastUpdate,
 )
@@ -93,8 +97,8 @@ from crypticorn.notification.client.models.dashboard_notification import (
 from crypticorn.notification.client.models.dashboard_notification_update import (
     DashboardNotificationUpdate as DashboardNotificationUpdate,
 )
-from crypticorn.notification.client.models.exception_detail_literal_unknown_error_invalid_data_request_invalid_data_response_object_already_exists_object_not_found_template_not_found_invalid_template_variables import (
-    ExceptionDetailLiteralUnknownErrorInvalidDataRequestInvalidDataResponseObjectAlreadyExistsObjectNotFoundTemplateNotFoundInvalidTemplateVariables as ExceptionDetailLiteralUnknownErrorInvalidDataRequestInvalidDataResponseObjectAlreadyExistsObjectNotFoundTemplateNotFoundInvalidTemplateVariables,
+from crypticorn.notification.client.models.error_response import (
+    ErrorResponse as ErrorResponse,
 )
 from crypticorn.notification.client.models.notification_create import (
     NotificationCreate as NotificationCreate,

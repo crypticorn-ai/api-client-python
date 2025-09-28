@@ -19,11 +19,8 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing_extensions import Self
-
-from crypticorn.hive.client.models.coins import Coins
-from crypticorn.hive.client.models.data_version import DataVersion
 
 
 class CoinInfo(BaseModel):
@@ -31,18 +28,44 @@ class CoinInfo(BaseModel):
     Metadata about a cryptocurrency including availability across data versions.
     """  # noqa: E501
 
-    identifier: Coins = Field(
+    identifier: StrictStr = Field(
         description="The identifier of the coin. Obfuscated for public use."
     )
-    version_added: DataVersion = Field(
+    version_added: StrictStr = Field(
         description="The data version the coin got introduced in"
     )
-    version_removed: Optional[DataVersion] = None
+    version_removed: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = [
         "identifier",
         "version_added",
         "version_removed",
     ]
+
+    @field_validator("identifier")
+    def identifier_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]):
+            raise ValueError(
+                "must be one of enum values ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10')"
+            )
+        return value
+
+    @field_validator("version_added")
+    def version_added_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["1.0"]):
+            raise ValueError("must be one of enum values ('1.0')")
+        return value
+
+    @field_validator("version_removed")
+    def version_removed_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(["1.0"]):
+            raise ValueError("must be one of enum values ('1.0')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

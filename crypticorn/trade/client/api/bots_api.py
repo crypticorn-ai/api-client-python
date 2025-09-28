@@ -21,7 +21,6 @@ from crypticorn.trade.client.api_response import ApiResponse
 from crypticorn.trade.client.models.bot import Bot
 from crypticorn.trade.client.models.bot_create import BotCreate
 from crypticorn.trade.client.models.bot_update import BotUpdate
-from crypticorn.trade.client.models.orders_count import OrdersCount
 from crypticorn.trade.client.models.paginated_response_futures_trading_action import (
     PaginatedResponseFuturesTradingAction,
 )
@@ -2478,1445 +2477,6 @@ class BotsApi:
         )
 
     @validate_call
-    def get_bot_orders_count(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[List[OrdersCount], Awaitable[List[OrdersCount]]]:
-        """Get Bot Orders Count"""
-        if self.is_sync:
-            return self._get_bot_orders_count_sync(
-                id=id,
-                sort_order=sort_order,
-                sort_by=sort_by,
-                group_by=group_by,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bot_orders_count_async(
-                id=id,
-                sort_order=sort_order,
-                sort_by=sort_by,
-                group_by=group_by,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def get_bot_orders_count_with_http_info(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[
-        ApiResponse[List[OrdersCount]], Awaitable[ApiResponse[List[OrdersCount]]]
-    ]:
-        """Get Bot Orders Count with HTTP info"""
-        if self.is_sync:
-            return self._get_bot_orders_count_sync_with_http_info(
-                id=id,
-                sort_order=sort_order,
-                sort_by=sort_by,
-                group_by=group_by,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bot_orders_count_async_with_http_info(
-                id=id,
-                sort_order=sort_order,
-                sort_by=sort_by,
-                group_by=group_by,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def get_bot_orders_count_without_preload_content(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
-        """Get Bot Orders Count without preloading content"""
-        if self.is_sync:
-            return self._get_bot_orders_count_sync_without_preload_content(
-                id=id,
-                sort_order=sort_order,
-                sort_by=sort_by,
-                group_by=group_by,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bot_orders_count_async_without_preload_content(
-                id=id,
-                sort_order=sort_order,
-                sort_by=sort_by,
-                group_by=group_by,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    # Private async implementation methods
-    @validate_call
-    async def _get_bot_orders_count_async(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[OrdersCount]:
-        """Get Bot Orders Count
-
-        Get the number of orders for a bot by day, week, month, or year. The default sort is `timestamp` and the default order is `asc`.
-
-        :param id: The ID of the bot (required)
-        :type id: str
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param group_by: The group by period for the orders count. Defaults to day.
-        :type group_by: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bot_orders_count_serialize(
-            id=id,
-            sort_order=sort_order,
-            sort_by=sort_by,
-            group_by=group_by,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[OrdersCount]",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-    @validate_call
-    async def _get_bot_orders_count_async_with_http_info(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[OrdersCount]]:
-        """Get Bot Orders Count
-
-        Get the number of orders for a bot by day, week, month, or year. The default sort is `timestamp` and the default order is `asc`.
-
-        :param id: The ID of the bot (required)
-        :type id: str
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param group_by: The group by period for the orders count. Defaults to day.
-        :type group_by: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bot_orders_count_serialize(
-            id=id,
-            sort_order=sort_order,
-            sort_by=sort_by,
-            group_by=group_by,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[OrdersCount]",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data, response_types_map=_response_types_map
-        )
-
-    @validate_call
-    async def _get_bot_orders_count_async_without_preload_content(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Get Bot Orders Count
-
-        Get the number of orders for a bot by day, week, month, or year. The default sort is `timestamp` and the default order is `asc`.
-
-        :param id: The ID of the bot (required)
-        :type id: str
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param group_by: The group by period for the orders count. Defaults to day.
-        :type group_by: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bot_orders_count_serialize(
-            id=id,
-            sort_order=sort_order,
-            sort_by=sort_by,
-            group_by=group_by,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[OrdersCount]",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        return response_data
-
-    # Private sync implementation methods
-    @validate_call
-    def _get_bot_orders_count_sync(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[OrdersCount]:
-        """Synchronous version of get_bot_orders_count"""
-        return async_to_sync(self._get_bot_orders_count_async)(
-            id=id,
-            sort_order=sort_order,
-            sort_by=sort_by,
-            group_by=group_by,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _get_bot_orders_count_sync_with_http_info(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[OrdersCount]]:
-        """Synchronous version of get_bot_orders_count_with_http_info"""
-        return async_to_sync(self._get_bot_orders_count_async_with_http_info)(
-            id=id,
-            sort_order=sort_order,
-            sort_by=sort_by,
-            group_by=group_by,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _get_bot_orders_count_sync_without_preload_content(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        group_by: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="The group by period for the orders count. Defaults to day."
-            ),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Synchronous version of get_bot_orders_count_without_preload_content"""
-        return async_to_sync(self._get_bot_orders_count_async_without_preload_content)(
-            id=id,
-            sort_order=sort_order,
-            sort_by=sort_by,
-            group_by=group_by,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    def _get_bot_orders_count_serialize(
-        self,
-        id,
-        sort_order,
-        sort_by,
-        group_by,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {}
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        if id is not None:
-            _path_params["id"] = id
-        # process the query parameters
-        if sort_order is not None:
-
-            _query_params.append(("sort_order", sort_order))
-
-        if sort_by is not None:
-
-            _query_params.append(("sort_by", sort_by))
-
-        if group_by is not None:
-
-            _query_params.append(("group_by", group_by))
-
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-        # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(
-                ["application/json"]
-            )
-
-        # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
-
-        return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/bots/{id}/orders/count",
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth,
-        )
-
-    @validate_call
-    def get_bot_pnl(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        type: Annotated[
-            Optional[StrictStr],
-            Field(description="The type of PnL to return. Defaults to relative."),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[List[PnL], Awaitable[List[PnL]]]:
-        """Get Bot Pnl"""
-        if self.is_sync:
-            return self._get_bot_pnl_sync(
-                id=id,
-                sort_order=sort_order,
-                sort_by=sort_by,
-                window=window,
-                period=period,
-                limit=limit,
-                type=type,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bot_pnl_async(
-                id=id,
-                sort_order=sort_order,
-                sort_by=sort_by,
-                window=window,
-                period=period,
-                limit=limit,
-                type=type,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def get_bot_pnl_with_http_info(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        type: Annotated[
-            Optional[StrictStr],
-            Field(description="The type of PnL to return. Defaults to relative."),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[ApiResponse[List[PnL]], Awaitable[ApiResponse[List[PnL]]]]:
-        """Get Bot Pnl with HTTP info"""
-        if self.is_sync:
-            return self._get_bot_pnl_sync_with_http_info(
-                id=id,
-                sort_order=sort_order,
-                sort_by=sort_by,
-                window=window,
-                period=period,
-                limit=limit,
-                type=type,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bot_pnl_async_with_http_info(
-                id=id,
-                sort_order=sort_order,
-                sort_by=sort_by,
-                window=window,
-                period=period,
-                limit=limit,
-                type=type,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    @validate_call
-    def get_bot_pnl_without_preload_content(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        type: Annotated[
-            Optional[StrictStr],
-            Field(description="The type of PnL to return. Defaults to relative."),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
-        """Get Bot Pnl without preloading content"""
-        if self.is_sync:
-            return self._get_bot_pnl_sync_without_preload_content(
-                id=id,
-                sort_order=sort_order,
-                sort_by=sort_by,
-                window=window,
-                period=period,
-                limit=limit,
-                type=type,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-        else:
-            return self._get_bot_pnl_async_without_preload_content(
-                id=id,
-                sort_order=sort_order,
-                sort_by=sort_by,
-                window=window,
-                period=period,
-                limit=limit,
-                type=type,
-                _request_timeout=_request_timeout,
-                _request_auth=_request_auth,
-                _content_type=_content_type,
-                _headers=_headers,
-                _host_index=_host_index,
-            )
-
-    # Private async implementation methods
-    @validate_call
-    async def _get_bot_pnl_async(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        type: Annotated[
-            Optional[StrictStr],
-            Field(description="The type of PnL to return. Defaults to relative."),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[PnL]:
-        """Get Bot Pnl
-
-        Returns a list of PnLs for a bot over time, sorted by `timestamp` ascending by default.  If more than 1000 data points exist, PnLs are grouped by day.  For relative type, uses TWR-style cumulative percentage returns. For absolute type, uses traditional cumulative PnL calculation.
-
-        :param id: The ID of the bot (required)
-        :type id: str
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param window: Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range.
-        :type window: str
-        :param period: The number of days to return the PnL for. Only used if `window` is `period`. Default is 30.
-        :type period: int
-        :param limit: The number of items to return. Defaults to None, meaning no limit.
-        :type limit: int
-        :param type: The type of PnL to return. Defaults to relative.
-        :type type: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bot_pnl_serialize(
-            id=id,
-            sort_order=sort_order,
-            sort_by=sort_by,
-            window=window,
-            period=period,
-            limit=limit,
-            type=type,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[PnL]",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-    @validate_call
-    async def _get_bot_pnl_async_with_http_info(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        type: Annotated[
-            Optional[StrictStr],
-            Field(description="The type of PnL to return. Defaults to relative."),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[PnL]]:
-        """Get Bot Pnl
-
-        Returns a list of PnLs for a bot over time, sorted by `timestamp` ascending by default.  If more than 1000 data points exist, PnLs are grouped by day.  For relative type, uses TWR-style cumulative percentage returns. For absolute type, uses traditional cumulative PnL calculation.
-
-        :param id: The ID of the bot (required)
-        :type id: str
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param window: Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range.
-        :type window: str
-        :param period: The number of days to return the PnL for. Only used if `window` is `period`. Default is 30.
-        :type period: int
-        :param limit: The number of items to return. Defaults to None, meaning no limit.
-        :type limit: int
-        :param type: The type of PnL to return. Defaults to relative.
-        :type type: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bot_pnl_serialize(
-            id=id,
-            sort_order=sort_order,
-            sort_by=sort_by,
-            window=window,
-            period=period,
-            limit=limit,
-            type=type,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[PnL]",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        await response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data, response_types_map=_response_types_map
-        )
-
-    @validate_call
-    async def _get_bot_pnl_async_without_preload_content(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        type: Annotated[
-            Optional[StrictStr],
-            Field(description="The type of PnL to return. Defaults to relative."),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Get Bot Pnl
-
-        Returns a list of PnLs for a bot over time, sorted by `timestamp` ascending by default.  If more than 1000 data points exist, PnLs are grouped by day.  For relative type, uses TWR-style cumulative percentage returns. For absolute type, uses traditional cumulative PnL calculation.
-
-        :param id: The ID of the bot (required)
-        :type id: str
-        :param sort_order: The order to sort by
-        :type sort_order: str
-        :param sort_by: The field to sort by
-        :type sort_by: str
-        :param window: Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range.
-        :type window: str
-        :param period: The number of days to return the PnL for. Only used if `window` is `period`. Default is 30.
-        :type period: int
-        :param limit: The number of items to return. Defaults to None, meaning no limit.
-        :type limit: int
-        :param type: The type of PnL to return. Defaults to relative.
-        :type type: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """  # noqa: E501
-
-        _param = self._get_bot_pnl_serialize(
-            id=id,
-            sort_order=sort_order,
-            sort_by=sort_by,
-            window=window,
-            period=period,
-            limit=limit,
-            type=type,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            "200": "List[PnL]",
-        }
-
-        response_data = await self.api_client.call_api(
-            *_param, _request_timeout=_request_timeout
-        )
-        return response_data
-
-    # Private sync implementation methods
-    @validate_call
-    def _get_bot_pnl_sync(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        type: Annotated[
-            Optional[StrictStr],
-            Field(description="The type of PnL to return. Defaults to relative."),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> List[PnL]:
-        """Synchronous version of get_bot_pnl"""
-        return async_to_sync(self._get_bot_pnl_async)(
-            id=id,
-            sort_order=sort_order,
-            sort_by=sort_by,
-            window=window,
-            period=period,
-            limit=limit,
-            type=type,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _get_bot_pnl_sync_with_http_info(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        type: Annotated[
-            Optional[StrictStr],
-            Field(description="The type of PnL to return. Defaults to relative."),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[List[PnL]]:
-        """Synchronous version of get_bot_pnl_with_http_info"""
-        return async_to_sync(self._get_bot_pnl_async_with_http_info)(
-            id=id,
-            sort_order=sort_order,
-            sort_by=sort_by,
-            window=window,
-            period=period,
-            limit=limit,
-            type=type,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    @validate_call
-    def _get_bot_pnl_sync_without_preload_content(
-        self,
-        id: Annotated[StrictStr, Field(description="The ID of the bot")],
-        sort_order: Annotated[
-            Optional[StrictStr], Field(description="The order to sort by")
-        ] = None,
-        sort_by: Annotated[
-            Optional[StrictStr], Field(description="The field to sort by")
-        ] = None,
-        window: Annotated[
-            Optional[StrictStr],
-            Field(
-                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
-            ),
-        ] = None,
-        period: Annotated[
-            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
-            Field(
-                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
-            ),
-        ] = None,
-        limit: Annotated[
-            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
-            Field(
-                description="The number of items to return. Defaults to None, meaning no limit."
-            ),
-        ] = None,
-        type: Annotated[
-            Optional[StrictStr],
-            Field(description="The type of PnL to return. Defaults to relative."),
-        ] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
-            ],
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """Synchronous version of get_bot_pnl_without_preload_content"""
-        return async_to_sync(self._get_bot_pnl_async_without_preload_content)(
-            id=id,
-            sort_order=sort_order,
-            sort_by=sort_by,
-            window=window,
-            period=period,
-            limit=limit,
-            type=type,
-            _request_timeout=_request_timeout,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index,
-        )
-
-    def _get_bot_pnl_serialize(
-        self,
-        id,
-        sort_order,
-        sort_by,
-        window,
-        period,
-        limit,
-        type,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {}
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        if id is not None:
-            _path_params["id"] = id
-        # process the query parameters
-        if sort_order is not None:
-
-            _query_params.append(("sort_order", sort_order))
-
-        if sort_by is not None:
-
-            _query_params.append(("sort_by", sort_by))
-
-        if window is not None:
-
-            _query_params.append(("window", window))
-
-        if period is not None:
-
-            _query_params.append(("period", period))
-
-        if limit is not None:
-
-            _query_params.append(("limit", limit))
-
-        if type is not None:
-
-            _query_params.append(("type", type))
-
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-        # set the HTTP header `Accept`
-        if "Accept" not in _header_params:
-            _header_params["Accept"] = self.api_client.select_header_accept(
-                ["application/json"]
-            )
-
-        # authentication setting
-        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
-
-        return self.api_client.param_serialize(
-            method="GET",
-            resource_path="/bots/{id}/orders/pnl",
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth,
-        )
-
-    @validate_call
     def get_bots(
         self,
         filter_by: Annotated[
@@ -4586,6 +3146,803 @@ class BotsApi:
         return self.api_client.param_serialize(
             method="GET",
             resource_path="/bots",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
+    def get_bots_pnl(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        window: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
+            ),
+        ] = None,
+        period: Annotated[
+            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
+            Field(
+                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
+            ),
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items to return. Defaults to None, meaning no limit."
+            ),
+        ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[Dict[str, List[PnL]], Awaitable[Dict[str, List[PnL]]]]:
+        """Get Bots Pnl"""
+        if self.is_sync:
+            return self._get_bots_pnl_sync(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                window=window,
+                period=period,
+                limit=limit,
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_bots_pnl_async(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                window=window,
+                period=period,
+                limit=limit,
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_bots_pnl_with_http_info(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        window: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
+            ),
+        ] = None,
+        period: Annotated[
+            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
+            Field(
+                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
+            ),
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items to return. Defaults to None, meaning no limit."
+            ),
+        ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[
+        ApiResponse[Dict[str, List[PnL]]], Awaitable[ApiResponse[Dict[str, List[PnL]]]]
+    ]:
+        """Get Bots Pnl with HTTP info"""
+        if self.is_sync:
+            return self._get_bots_pnl_sync_with_http_info(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                window=window,
+                period=period,
+                limit=limit,
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_bots_pnl_async_with_http_info(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                window=window,
+                period=period,
+                limit=limit,
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_bots_pnl_without_preload_content(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        window: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
+            ),
+        ] = None,
+        period: Annotated[
+            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
+            Field(
+                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
+            ),
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items to return. Defaults to None, meaning no limit."
+            ),
+        ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
+        """Get Bots Pnl without preloading content"""
+        if self.is_sync:
+            return self._get_bots_pnl_sync_without_preload_content(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                window=window,
+                period=period,
+                limit=limit,
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_bots_pnl_async_without_preload_content(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                window=window,
+                period=period,
+                limit=limit,
+                type=type,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_bots_pnl_async(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        window: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
+            ),
+        ] = None,
+        period: Annotated[
+            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
+            Field(
+                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
+            ),
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items to return. Defaults to None, meaning no limit."
+            ),
+        ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Dict[str, List[PnL]]:
+        """Get Bots Pnl
+
+        Returns a dictionary of PnLs for multiple bots over time, sorted by `timestamp` ascending by default.  If more than 1000 per bot data points exist, PnLs are grouped by day.  For relative type, uses TWR-style cumulative percentage returns. For absolute type, uses traditional cumulative PnL calculation.
+
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
+        :param window: Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range.
+        :type window: str
+        :param period: The number of days to return the PnL for. Only used if `window` is `period`. Default is 30.
+        :type period: int
+        :param limit: The number of items to return. Defaults to None, meaning no limit.
+        :type limit: int
+        :param type: The type of PnL to return. Defaults to relative.
+        :type type: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_bots_pnl_serialize(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            window=window,
+            period=period,
+            limit=limit,
+            type=type,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "Dict[str, List[PnL]]",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    async def _get_bots_pnl_async_with_http_info(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        window: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
+            ),
+        ] = None,
+        period: Annotated[
+            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
+            Field(
+                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
+            ),
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items to return. Defaults to None, meaning no limit."
+            ),
+        ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Dict[str, List[PnL]]]:
+        """Get Bots Pnl
+
+        Returns a dictionary of PnLs for multiple bots over time, sorted by `timestamp` ascending by default.  If more than 1000 per bot data points exist, PnLs are grouped by day.  For relative type, uses TWR-style cumulative percentage returns. For absolute type, uses traditional cumulative PnL calculation.
+
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
+        :param window: Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range.
+        :type window: str
+        :param period: The number of days to return the PnL for. Only used if `window` is `period`. Default is 30.
+        :type period: int
+        :param limit: The number of items to return. Defaults to None, meaning no limit.
+        :type limit: int
+        :param type: The type of PnL to return. Defaults to relative.
+        :type type: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_bots_pnl_serialize(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            window=window,
+            period=period,
+            limit=limit,
+            type=type,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "Dict[str, List[PnL]]",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data, response_types_map=_response_types_map
+        )
+
+    @validate_call
+    async def _get_bots_pnl_async_without_preload_content(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        window: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
+            ),
+        ] = None,
+        period: Annotated[
+            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
+            Field(
+                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
+            ),
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items to return. Defaults to None, meaning no limit."
+            ),
+        ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Bots Pnl
+
+        Returns a dictionary of PnLs for multiple bots over time, sorted by `timestamp` ascending by default.  If more than 1000 per bot data points exist, PnLs are grouped by day.  For relative type, uses TWR-style cumulative percentage returns. For absolute type, uses traditional cumulative PnL calculation.
+
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
+        :param window: Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range.
+        :type window: str
+        :param period: The number of days to return the PnL for. Only used if `window` is `period`. Default is 30.
+        :type period: int
+        :param limit: The number of items to return. Defaults to None, meaning no limit.
+        :type limit: int
+        :param type: The type of PnL to return. Defaults to relative.
+        :type type: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_bots_pnl_serialize(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            window=window,
+            period=period,
+            limit=limit,
+            type=type,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "Dict[str, List[PnL]]",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _get_bots_pnl_sync(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        window: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
+            ),
+        ] = None,
+        period: Annotated[
+            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
+            Field(
+                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
+            ),
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items to return. Defaults to None, meaning no limit."
+            ),
+        ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Dict[str, List[PnL]]:
+        """Synchronous version of get_bots_pnl"""
+        return async_to_sync(self._get_bots_pnl_async)(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            window=window,
+            period=period,
+            limit=limit,
+            type=type,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_bots_pnl_sync_with_http_info(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        window: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
+            ),
+        ] = None,
+        period: Annotated[
+            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
+            Field(
+                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
+            ),
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items to return. Defaults to None, meaning no limit."
+            ),
+        ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[Dict[str, List[PnL]]]:
+        """Synchronous version of get_bots_pnl_with_http_info"""
+        return async_to_sync(self._get_bots_pnl_async_with_http_info)(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            window=window,
+            period=period,
+            limit=limit,
+            type=type,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_bots_pnl_sync_without_preload_content(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        window: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="Time window for PnL. Defaults to full (all time), or use period (last X days), month, quarter, or year for values since the start of that range."
+            ),
+        ] = None,
+        period: Annotated[
+            Optional[Annotated[int, Field(le=365, strict=True, ge=1)]],
+            Field(
+                description="The number of days to return the PnL for. Only used if `window` is `period`. Default is 30."
+            ),
+        ] = None,
+        limit: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items to return. Defaults to None, meaning no limit."
+            ),
+        ] = None,
+        type: Annotated[
+            Optional[StrictStr],
+            Field(description="The type of PnL to return. Defaults to relative."),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of get_bots_pnl_without_preload_content"""
+        return async_to_sync(self._get_bots_pnl_async_without_preload_content)(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            window=window,
+            period=period,
+            limit=limit,
+            type=type,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    def _get_bots_pnl_serialize(
+        self,
+        sort_order,
+        sort_by,
+        window,
+        period,
+        limit,
+        type,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if sort_order is not None:
+
+            _query_params.append(("sort_order", sort_order))
+
+        if sort_by is not None:
+
+            _query_params.append(("sort_by", sort_by))
+
+        if window is not None:
+
+            _query_params.append(("window", window))
+
+        if period is not None:
+
+            _query_params.append(("period", period))
+
+        if limit is not None:
+
+            _query_params.append(("limit", limit))
+
+        if type is not None:
+
+            _query_params.append(("type", type))
+
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+        # set the HTTP header `Accept`
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
+            )
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader", "HTTPBearer"]
+
+        return self.api_client.param_serialize(
+            method="GET",
+            resource_path="/bots/orders/pnl",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

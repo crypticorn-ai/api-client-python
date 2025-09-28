@@ -19,22 +19,17 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from pydantic import BaseModel, ConfigDict, Field
-from typing_extensions import Annotated, Self
-
-from crypticorn.notification.client.models.broadcast_recipient import BroadcastRecipient
+from pydantic import BaseModel, ConfigDict, StrictStr
+from typing_extensions import Self
 
 
-class BroadcastUpdate(BaseModel):
+class ErrorResponse(BaseModel):
     """
-    Update a broadcast
+    Error response schema.
     """  # noqa: E501
 
-    template_preferences: Optional[
-        List[Annotated[List[Any], Field(min_length=2, max_length=2)]]
-    ] = None
-    recipients: Optional[List[BroadcastRecipient]] = None
-    __properties: ClassVar[List[str]] = ["template_preferences", "recipients"]
+    detail: StrictStr
+    __properties: ClassVar[List[str]] = ["detail"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +48,7 @@ class BroadcastUpdate(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of BroadcastUpdate from a JSON string"""
+        """Create an instance of ErrorResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,45 +68,16 @@ class BroadcastUpdate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in recipients (list)
-        _items = []
-        if self.recipients:
-            for _item_recipients in self.recipients:
-                if _item_recipients:
-                    _items.append(_item_recipients.to_dict())
-            _dict["recipients"] = _items
-        # set to None if template_preferences (nullable) is None
-        # and model_fields_set contains the field
-        if (
-            self.template_preferences is None
-            and "template_preferences" in self.model_fields_set
-        ):
-            _dict["template_preferences"] = None
-
-        # set to None if recipients (nullable) is None
-        # and model_fields_set contains the field
-        if self.recipients is None and "recipients" in self.model_fields_set:
-            _dict["recipients"] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of BroadcastUpdate from a dict"""
+        """Create an instance of ErrorResponse from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "template_preferences": obj.get("template_preferences"),
-                "recipients": (
-                    [BroadcastRecipient.from_dict(_item) for _item in obj["recipients"]]
-                    if obj.get("recipients") is not None
-                    else None
-                ),
-            }
-        )
+        _obj = cls.model_validate({"detail": obj.get("detail")})
         return _obj
