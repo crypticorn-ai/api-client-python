@@ -10,8 +10,6 @@ from crypticorn.hive import (
     ApiClient,
     Configuration,
     DataApi,
-    DataVersion,
-    FeatureSize,
     ModelsApi,
     StatusApi,
 )
@@ -55,8 +53,8 @@ class DataApiWrapper(DataApi):
         self,
         model_id: StrictInt,
         folder: Path = Path("data"),
-        version: Optional[DataVersion] = None,
-        feature_size: Optional[FeatureSize] = None,
+        version: Optional[str] = None,
+        feature_size: Optional[str] = None,
         **kwargs,
     ) -> Union[list[Path], Awaitable[list[Path]]]:
         """
@@ -90,8 +88,8 @@ class DataApiWrapper(DataApi):
         self,
         model_id: StrictInt,
         folder: Path = Path("data"),
-        version: Optional[DataVersion] = None,
-        feature_size: Optional[FeatureSize] = None,
+        version: Optional[str] = None,
+        feature_size: Optional[str] = None,
         **kwargs,
     ) -> list[Path]:
         """
@@ -129,8 +127,8 @@ class DataApiWrapper(DataApi):
         self,
         model_id: StrictInt,
         folder: Path = Path("data"),
-        version: Optional[DataVersion] = None,
-        feature_size: Optional[FeatureSize] = None,
+        version: Optional[str] = None,
+        feature_size: Optional[str] = None,
         **kwargs,
     ) -> list[Path]:
         """
