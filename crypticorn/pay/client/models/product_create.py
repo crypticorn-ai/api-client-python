@@ -30,7 +30,7 @@ from pydantic import (
 )
 from typing_extensions import Self
 
-from crypticorn.pay.client.models.scope import Scope
+from crypticorn.pay.client.models.access_scope import AccessScope
 
 
 class ProductCreate(BaseModel):
@@ -40,7 +40,7 @@ class ProductCreate(BaseModel):
 
     name: StrictStr = Field(description="Product name")
     price: Union[StrictFloat, StrictInt] = Field(description="Product price")
-    scopes: Optional[List[Scope]] = None
+    scopes: List[AccessScope] = Field(description="Scopes that product provides")
     duration: StrictInt = Field(
         description="Product duration in days. 0 means forever."
     )
@@ -94,11 +94,6 @@ class ProductCreate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if scopes (nullable) is None
-        # and model_fields_set contains the field
-        if self.scopes is None and "scopes" in self.model_fields_set:
-            _dict["scopes"] = None
-
         # set to None if images (nullable) is None
         # and model_fields_set contains the field
         if self.images is None and "images" in self.model_fields_set:

@@ -14,14 +14,12 @@ client/api_response.py
 client/configuration.py
 client/exceptions.py
 client/models/__init__.py
+client/models/access_scope.py
 client/models/access_threshold.py
-client/models/api_error_identifier.py
-client/models/api_error_level.py
-client/models/api_error_type.py
 client/models/coupon.py
 client/models/coupon_create.py
 client/models/coupon_update.py
-client/models/exception_detail.py
+client/models/exception_detail_literal_unknown_error_invalid_data_request_invalid_data_response_object_already_exists_object_not_found_lifetime_subscription_already_active_coupon_invalid_now_api_down_forbidden_insufficient_staked_balance.py
 client/models/invoice.py
 client/models/invoice_create.py
 client/models/paginated_response_coupon.py
@@ -30,7 +28,6 @@ client/models/payment.py
 client/models/product.py
 client/models/product_create.py
 client/models/product_update.py
-client/models/scope.py
 client/models/scope_info.py
 client/models/scopes_info.py
 client/models/stake_details.py

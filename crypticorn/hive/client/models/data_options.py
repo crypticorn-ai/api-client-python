@@ -19,10 +19,9 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing_extensions import Self
 
-from crypticorn.hive.client.models.feature_size import FeatureSize
 from crypticorn.hive.client.models.target import Target
 
 
@@ -34,10 +33,20 @@ class DataOptions(BaseModel):
     targets: List[Target] = Field(
         description="The targets available on the latest data version."
     )
-    feature_sizes: List[FeatureSize] = Field(
+    feature_sizes: List[StrictStr] = Field(
         description="The feature sizes available on the latest data version."
     )
     __properties: ClassVar[List[str]] = ["targets", "feature_sizes"]
+
+    @field_validator("feature_sizes")
+    def feature_sizes_validate_enum(cls, value):
+        """Validates the enum"""
+        for i in value:
+            if i not in set(["small", "medium", "large"]):
+                raise ValueError(
+                    "each list item must be one of ('small', 'medium', 'large')"
+                )
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

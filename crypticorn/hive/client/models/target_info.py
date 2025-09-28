@@ -19,12 +19,10 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing_extensions import Self
 
-from crypticorn.hive.client.models.data_version import DataVersion
 from crypticorn.hive.client.models.target import Target
-from crypticorn.hive.client.models.target_type import TargetType
 
 
 class TargetInfo(BaseModel):
@@ -33,17 +31,41 @@ class TargetInfo(BaseModel):
     """  # noqa: E501
 
     name: Target = Field(description="The name of the target.")
-    type: TargetType = Field(description="The type of the target.")
-    version_added: DataVersion = Field(
+    type: StrictStr = Field(description="The type of the target.")
+    version_added: StrictStr = Field(
         description="The data version the target got introduced in."
     )
-    version_removed: Optional[DataVersion] = None
+    version_removed: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = [
         "name",
         "type",
         "version_added",
         "version_removed",
     ]
+
+    @field_validator("type")
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["continuous", "binary"]):
+            raise ValueError("must be one of enum values ('continuous', 'binary')")
+        return value
+
+    @field_validator("version_added")
+    def version_added_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["1.0"]):
+            raise ValueError("must be one of enum values ('1.0')")
+        return value
+
+    @field_validator("version_removed")
+    def version_removed_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(["1.0"]):
+            raise ValueError("must be one of enum values ('1.0')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

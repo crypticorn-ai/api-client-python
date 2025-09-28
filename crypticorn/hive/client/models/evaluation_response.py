@@ -17,10 +17,13 @@ from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set, Union
+from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
+from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Self
+
+from crypticorn.hive.client.models.benchmarks_value import BenchmarksValue
+from crypticorn.hive.client.models.metrics import Metrics
 
 
 class EvaluationResponse(BaseModel):
@@ -28,10 +31,9 @@ class EvaluationResponse(BaseModel):
     Pydantic model for evaluation response
     """  # noqa: E501
 
-    metrics: Dict[str, Union[StrictFloat, StrictInt]] = Field(
-        description="Evaluation metrics"
-    )
-    __properties: ClassVar[List[str]] = ["metrics"]
+    metrics: Metrics
+    benchmarks: Dict[str, BenchmarksValue] = Field(description="Evaluation benchmarks")
+    __properties: ClassVar[List[str]] = ["metrics", "benchmarks"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -70,6 +72,18 @@ class EvaluationResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of metrics
+        if self.metrics:
+            _dict["metrics"] = self.metrics.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each value in benchmarks (dict)
+        _field_dict = {}
+        if self.benchmarks:
+            for _key_benchmarks in self.benchmarks:
+                if self.benchmarks[_key_benchmarks]:
+                    _field_dict[_key_benchmarks] = self.benchmarks[
+                        _key_benchmarks
+                    ].to_dict()
+            _dict["benchmarks"] = _field_dict
         return _dict
 
     @classmethod
@@ -81,5 +95,21 @@ class EvaluationResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({"metrics": obj.get("metrics")})
+        _obj = cls.model_validate(
+            {
+                "metrics": (
+                    Metrics.from_dict(obj["metrics"])
+                    if obj.get("metrics") is not None
+                    else None
+                ),
+                "benchmarks": (
+                    dict(
+                        (_k, BenchmarksValue.from_dict(_v))
+                        for _k, _v in obj["benchmarks"].items()
+                    )
+                    if obj.get("benchmarks") is not None
+                    else None
+                ),
+            }
+        )
         return _obj

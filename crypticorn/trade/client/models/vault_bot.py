@@ -38,6 +38,7 @@ class VaultBot(BaseModel):
         description="UID for the trading strategy used by the bot"
     )
     api_key_id: StrictStr = Field(description="UID for the API key")
+    exchange: StrictStr = Field(description="Exchange name")
     vault_details: VaultDetails = Field(description="Vault details")
     __properties: ClassVar[List[str]] = [
         "created_at",
@@ -46,6 +47,7 @@ class VaultBot(BaseModel):
         "status",
         "strategy_id",
         "api_key_id",
+        "exchange",
         "vault_details",
     ]
 
@@ -56,6 +58,13 @@ class VaultBot(BaseModel):
             raise ValueError(
                 "must be one of enum values ('running', 'stopping', 'stopped', 'deleted')"
             )
+        return value
+
+    @field_validator("exchange")
+    def exchange_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["hyperliquid"]):
+            raise ValueError("must be one of enum values ('hyperliquid')")
         return value
 
     model_config = ConfigDict(
@@ -117,6 +126,7 @@ class VaultBot(BaseModel):
                 "status": obj.get("status"),
                 "strategy_id": obj.get("strategy_id"),
                 "api_key_id": obj.get("api_key_id"),
+                "exchange": obj.get("exchange"),
                 "vault_details": (
                     VaultDetails.from_dict(obj["vault_details"])
                     if obj.get("vault_details") is not None

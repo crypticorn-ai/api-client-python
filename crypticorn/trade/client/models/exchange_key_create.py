@@ -32,13 +32,27 @@ class ExchangeKeyCreate(BaseModel):
     api_key: StrictStr = Field(description="API key")
     secret: StrictStr = Field(description="API secret")
     exchange: StrictStr = Field(description="The exchange the API key is for.")
-    __properties: ClassVar[List[str]] = ["label", "api_key", "secret", "exchange"]
+    type: StrictStr = Field(description="The type of the API key.")
+    __properties: ClassVar[List[str]] = [
+        "label",
+        "api_key",
+        "secret",
+        "exchange",
+        "type",
+    ]
 
     @field_validator("exchange")
     def exchange_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(["hyperliquid"]):
             raise ValueError("must be one of enum values ('hyperliquid')")
+        return value
+
+    @field_validator("type")
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["user", "vault"]):
+            raise ValueError("must be one of enum values ('user', 'vault')")
         return value
 
     model_config = ConfigDict(
@@ -95,6 +109,7 @@ class ExchangeKeyCreate(BaseModel):
                 "api_key": obj.get("api_key"),
                 "secret": obj.get("secret"),
                 "exchange": obj.get("exchange"),
+                "type": obj.get("type"),
             }
         )
         return _obj

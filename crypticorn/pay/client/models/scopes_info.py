@@ -22,7 +22,7 @@ from typing import Any, ClassVar, Dict, List, Optional, Set
 from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Self
 
-from crypticorn.pay.client.models.scope import Scope
+from crypticorn.pay.client.models.access_scope import AccessScope
 from crypticorn.pay.client.models.scope_info import ScopeInfo
 
 
@@ -31,7 +31,7 @@ class ScopesInfo(BaseModel):
     Model containing all scopes the user has access to, and detailed info for each access method (allowlist, subscription, balance).
     """  # noqa: E501
 
-    scopes: List[Scope] = Field(description="List of scopes")
+    scopes: List[AccessScope] = Field(description="List of scopes")
     info: List[ScopeInfo] = Field(
         description="List of scope access info. Contains one entry for each scope, for each access method (allowlist, subscription, balance) if the user has (or had in the last 7 days) access to the scope."
     )

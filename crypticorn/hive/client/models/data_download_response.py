@@ -19,13 +19,10 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing_extensions import Self
 
-from crypticorn.hive.client.models.coins import Coins
-from crypticorn.hive.client.models.data_version import DataVersion
 from crypticorn.hive.client.models.download_links import DownloadLinks
-from crypticorn.hive.client.models.feature_size import FeatureSize
 from crypticorn.hive.client.models.target import Target
 
 
@@ -34,9 +31,9 @@ class DataDownloadResponse(BaseModel):
     Response model containing download links and metadata for requested training data.
     """  # noqa: E501
 
-    coin: Coins = Field(description="The coin the data is for")
-    feature_size: FeatureSize = Field(description="The feature size the data is for")
-    version: DataVersion = Field(description="The version of the data")
+    coin: StrictStr = Field(description="The coin the data is for")
+    feature_size: StrictStr = Field(description="The feature size the data is for")
+    version: StrictStr = Field(description="The version of the data")
     target: Target = Field(description="The target of the data")
     links: DownloadLinks = Field(description="The download links for the data")
     __properties: ClassVar[List[str]] = [
@@ -46,6 +43,29 @@ class DataDownloadResponse(BaseModel):
         "target",
         "links",
     ]
+
+    @field_validator("coin")
+    def coin_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]):
+            raise ValueError(
+                "must be one of enum values ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10')"
+            )
+        return value
+
+    @field_validator("feature_size")
+    def feature_size_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["small", "medium", "large"]):
+            raise ValueError("must be one of enum values ('small', 'medium', 'large')")
+        return value
+
+    @field_validator("version")
+    def version_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["1.0"]):
+            raise ValueError("must be one of enum values ('1.0')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

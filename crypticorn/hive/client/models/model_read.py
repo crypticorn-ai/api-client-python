@@ -19,14 +19,12 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
 from typing_extensions import Self
 
-from crypticorn.hive.client.models.coins import Coins
 from crypticorn.hive.client.models.evaluation import Evaluation
 from crypticorn.hive.client.models.model_status import ModelStatus
 from crypticorn.hive.client.models.target import Target
-from crypticorn.hive.client.models.target_type import TargetType
 
 
 class ModelRead(BaseModel):
@@ -36,10 +34,10 @@ class ModelRead(BaseModel):
 
     id: StrictInt = Field(description="Unique model identifier")
     name: StrictStr = Field(description="Model name")
-    coin_id: Coins = Field(description="Coin ID")
+    coin_id: StrictStr = Field(description="Coin ID")
     target: Target = Field(description="Target variable")
     status: ModelStatus = Field(description="Model status")
-    target_type: TargetType = Field(description="Target type")
+    target_type: StrictStr = Field(description="Target type")
     evaluations: List[Evaluation] = Field(description="Model evaluations")
     user_id: StrictStr = Field(description="Developer user ID")
     created_at: StrictInt = Field(description="Model creation unix timestamp")
@@ -56,6 +54,22 @@ class ModelRead(BaseModel):
         "created_at",
         "updated_at",
     ]
+
+    @field_validator("coin_id")
+    def coin_id_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]):
+            raise ValueError(
+                "must be one of enum values ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10')"
+            )
+        return value
+
+    @field_validator("target_type")
+    def target_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["continuous", "binary"]):
+            raise ValueError("must be one of enum values ('continuous', 'binary')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

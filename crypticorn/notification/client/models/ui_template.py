@@ -36,9 +36,9 @@ class UITemplate(BaseModel):
     title: StrictStr = Field(description="The title of the notification.")
     subtitle: Optional[StrictStr] = None
     body: StrictStr = Field(description="The body of the notification.")
-    image_url: Optional[StrictStr] = Field(alias="imageUrl")
-    actions: Optional[List[DashboardActionButton]]
-    fields: Optional[List[DashboardField]]
+    image_url: Optional[StrictStr] = Field(default=None, alias="imageUrl")
+    actions: Optional[List[DashboardActionButton]] = None
+    fields: Optional[List[DashboardField]] = None
     __properties: ClassVar[List[str]] = [
         "title",
         "subtitle",

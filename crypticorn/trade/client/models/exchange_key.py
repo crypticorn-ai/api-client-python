@@ -40,17 +40,21 @@ class ExchangeKey(BaseModel):
     updated_at: StrictInt = Field(description="Timestamp of last update")
     id: StrictStr = Field(description="Unique identifier for the resource")
     label: StrictStr = Field(description="Label for the API key")
+    user_id: Optional[StrictStr] = None
     exchange: StrictStr = Field(description="The exchange the API key is for.")
     deleted: Optional[StrictBool] = Field(
         default=False, description="Whether the API key has been deleted."
     )
+    type: StrictStr = Field(description="The type of the API key.")
     __properties: ClassVar[List[str]] = [
         "created_at",
         "updated_at",
         "id",
         "label",
+        "user_id",
         "exchange",
         "deleted",
+        "type",
     ]
 
     @field_validator("exchange")
@@ -58,6 +62,13 @@ class ExchangeKey(BaseModel):
         """Validates the enum"""
         if value not in set(["hyperliquid"]):
             raise ValueError("must be one of enum values ('hyperliquid')")
+        return value
+
+    @field_validator("type")
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["user", "vault"]):
+            raise ValueError("must be one of enum values ('user', 'vault')")
         return value
 
     model_config = ConfigDict(
@@ -97,6 +108,11 @@ class ExchangeKey(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if user_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.user_id is None and "user_id" in self.model_fields_set:
+            _dict["user_id"] = None
+
         return _dict
 
     @classmethod
@@ -114,10 +130,12 @@ class ExchangeKey(BaseModel):
                 "updated_at": obj.get("updated_at"),
                 "id": obj.get("id"),
                 "label": obj.get("label"),
+                "user_id": obj.get("user_id"),
                 "exchange": obj.get("exchange"),
                 "deleted": (
                     obj.get("deleted") if obj.get("deleted") is not None else False
                 ),
+                "type": obj.get("type"),
             }
         )
         return _obj

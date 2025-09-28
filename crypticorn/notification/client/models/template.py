@@ -41,15 +41,15 @@ class Template(BaseModel):
     channels: List[StrictStr] = Field(
         description="Channels to send the notification to for this template"
     )
-    unsubscribable: StrictBool = Field(
-        description="Whether the user can unsubscribe from the template"
+    user_controllable: StrictBool = Field(
+        description="Whether the user can enable/disable this notification template in their settings"
     )
     __properties: ClassVar[List[str]] = [
         "identifier",
         "name",
         "variables",
         "channels",
-        "unsubscribable",
+        "user_controllable",
     ]
 
     @field_validator("identifier")
@@ -66,14 +66,13 @@ class Template(BaseModel):
                 "new_dex_ai_call",
                 "new_dex_ai_call_incognito",
                 "order_completion",
-                "trading_agent_execution_alert",
                 "otp_code",
                 "subscription_expiring",
                 "subscription_expired",
             ]
         ):
             raise ValueError(
-                "must be one of enum values ('subscription_predictions_welcome', 'subscription_dex_signals_welcome', 'subscription_combo_welcome', 'new_member', 'exchange_api_key_expiring', 'test', 'new_dex_ai_call', 'new_dex_ai_call_incognito', 'order_completion', 'trading_agent_execution_alert', 'otp_code', 'subscription_expiring', 'subscription_expired')"
+                "must be one of enum values ('subscription_predictions_welcome', 'subscription_dex_signals_welcome', 'subscription_combo_welcome', 'new_member', 'exchange_api_key_expiring', 'test', 'new_dex_ai_call', 'new_dex_ai_call_incognito', 'order_completion', 'otp_code', 'subscription_expiring', 'subscription_expired')"
             )
         return value
 
@@ -141,7 +140,7 @@ class Template(BaseModel):
                 "name": obj.get("name"),
                 "variables": obj.get("variables"),
                 "channels": obj.get("channels"),
-                "unsubscribable": obj.get("unsubscribable"),
+                "user_controllable": obj.get("user_controllable"),
             }
         )
         return _obj

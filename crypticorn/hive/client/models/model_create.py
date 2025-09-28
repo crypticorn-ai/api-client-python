@@ -19,10 +19,9 @@ import pprint
 import re  # noqa: F401
 from typing import Any, ClassVar, Dict, List, Optional, Set
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing_extensions import Self
 
-from crypticorn.hive.client.models.coins import Coins
 from crypticorn.hive.client.models.target import Target
 
 
@@ -31,10 +30,19 @@ class ModelCreate(BaseModel):
     Base Pydantic model for model data
     """  # noqa: E501
 
-    coin_id: Coins = Field(description="Coin ID for the model")
+    coin_id: StrictStr = Field(description="Coin ID for the model")
     target: Target = Field(description="Target variable for the model")
     name: StrictStr = Field(description="Model name")
     __properties: ClassVar[List[str]] = ["coin_id", "target", "name"]
+
+    @field_validator("coin_id")
+    def coin_id_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]):
+            raise ValueError(
+                "must be one of enum values ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10')"
+            )
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

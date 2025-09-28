@@ -14,14 +14,14 @@ Do not edit the class manually.
 
 
 # import models into model package
+from crypticorn.pay.client.models.access_scope import AccessScope
 from crypticorn.pay.client.models.access_threshold import AccessThreshold
-from crypticorn.pay.client.models.api_error_identifier import ApiErrorIdentifier
-from crypticorn.pay.client.models.api_error_level import ApiErrorLevel
-from crypticorn.pay.client.models.api_error_type import ApiErrorType
 from crypticorn.pay.client.models.coupon import Coupon
 from crypticorn.pay.client.models.coupon_create import CouponCreate
 from crypticorn.pay.client.models.coupon_update import CouponUpdate
-from crypticorn.pay.client.models.exception_detail import ExceptionDetail
+from crypticorn.pay.client.models.exception_detail_literal_unknown_error_invalid_data_request_invalid_data_response_object_already_exists_object_not_found_lifetime_subscription_already_active_coupon_invalid_now_api_down_forbidden_insufficient_staked_balance import (
+    ExceptionDetailLiteralUnknownErrorInvalidDataRequestInvalidDataResponseObjectAlreadyExistsObjectNotFoundLifetimeSubscriptionAlreadyActiveCouponInvalidNowApiDownForbiddenInsufficientStakedBalance,
+)
 from crypticorn.pay.client.models.invoice import Invoice
 from crypticorn.pay.client.models.invoice_create import InvoiceCreate
 from crypticorn.pay.client.models.paginated_response_coupon import (
@@ -34,7 +34,6 @@ from crypticorn.pay.client.models.payment import Payment
 from crypticorn.pay.client.models.product import Product
 from crypticorn.pay.client.models.product_create import ProductCreate
 from crypticorn.pay.client.models.product_update import ProductUpdate
-from crypticorn.pay.client.models.scope import Scope
 from crypticorn.pay.client.models.scope_info import ScopeInfo
 from crypticorn.pay.client.models.scopes_info import ScopesInfo
 from crypticorn.pay.client.models.stake_details import StakeDetails
