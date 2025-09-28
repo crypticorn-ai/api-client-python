@@ -41,9 +41,6 @@ You can either explore each API by clicking through the library or checkout the 
 
 Request and response models for API operations should be accessed through the sub package you are using for an operation. All symbols are re-exported at the sub package level for convenience.
 
-```python
-from crypticorn.trade import BotCreate
-```
 
 ## Versioning
 
