@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     from aiohttp import ClientSession
 
 
-class AuthClient:
+class AuthClient(AdminApi, AuthApi, UserApi, WalletApi):
     """
     A client for interacting with the Crypticorn Auth API.
     """
@@ -34,8 +34,9 @@ class AuthClient:
             self.base_client.rest_client.pool_manager = http_client
         # Pass sync context to REST client for proper session management
         self.base_client.rest_client.is_sync = is_sync
-        # Instantiate all the endpoint clients
+        # Instantiate all the endpoint clients for backward compatibility
         self.admin = AdminApi(self.base_client, is_sync=is_sync)
         self.user = UserApi(self.base_client, is_sync=is_sync)
         self.wallet = WalletApi(self.base_client, is_sync=is_sync)
         self.login = AuthApi(self.base_client, is_sync=is_sync)
+        super().__init__(self.base_client, is_sync=is_sync)
