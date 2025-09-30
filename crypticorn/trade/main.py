@@ -41,4 +41,3 @@ class TradeClient(BotsApi, StatusApi, StrategiesApi, TradingActionsApi, APIKeysA
         self.strategies = StrategiesApi(self.base_client, is_sync=is_sync)
         self.actions = TradingActionsApi(self.base_client, is_sync=is_sync)
         self.keys = APIKeysApi(self.base_client, is_sync=is_sync)
-        super().__init__(self.base_client, is_sync=is_sync)
