@@ -49,3 +49,10 @@ class CrypticornExperimentalWarning(Warning):
     This warning is raised when using experimental functionality in Crypticorn.
     It is raised to warn users that the functionality may change or be removed in future versions of Crypticorn.
     """
+
+
+class CrypticornDeprecatedSince31(CrypticornDeprecationWarning):
+    """A specific `CrypticornDeprecationWarning` subclass defining functionality deprecated since crypticorn 3.1."""
+
+    def __init__(self, message: str, *args: object) -> None:
+        super().__init__(message, *args, since=(3, 1), expected_removal=(4, 0))
