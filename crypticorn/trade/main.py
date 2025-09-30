@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from aiohttp import ClientSession
 
 
-class TradeClient:
+class TradeClient(BotsApi, StatusApi, StrategiesApi, TradingActionsApi, APIKeysApi):
     """
     A client for interacting with the Crypticorn Trade API.
     """
@@ -41,3 +41,4 @@ class TradeClient:
         self.strategies = StrategiesApi(self.base_client, is_sync=is_sync)
         self.actions = TradingActionsApi(self.base_client, is_sync=is_sync)
         self.keys = APIKeysApi(self.base_client, is_sync=is_sync)
+        super().__init__(self.base_client, is_sync=is_sync)

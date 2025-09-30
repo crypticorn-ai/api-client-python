@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     from aiohttp import ClientSession
 
 
-class NotificationClient:
+class NotificationClient(NotificationsApi, SettingsApi, StatusApi, TemplatesApi):
     """
     A client for interacting with the Crypticorn Notification API.
     """
@@ -34,8 +34,9 @@ class NotificationClient:
             self.base_client.rest_client.pool_manager = http_client
         # Pass sync context to REST client for proper session management
         self.base_client.rest_client.is_sync = is_sync
-        # Instantiate all the endpoint clients
+        # Instantiate all the endpoint clients for backward compatibility
         self.notifications = NotificationsApi(self.base_client, is_sync=is_sync)
         self.templates = TemplatesApi(self.base_client, is_sync=is_sync)
         self.settings = SettingsApi(self.base_client, is_sync=is_sync)
         self.status = StatusApi(self.base_client, is_sync=is_sync)
+        super().__init__(self.base_client, is_sync=is_sync)

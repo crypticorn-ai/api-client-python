@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from aiohttp import ClientSession
 
 
-class DexClient:
+class DexClient(SignalsApi, StatusApi):
     """
     A client for interacting with the Crypticorn DEX API.
     """
@@ -32,6 +32,7 @@ class DexClient:
             self.base_client.rest_client.pool_manager = http_client
         # Pass sync context to REST client for proper session management
         self.base_client.rest_client.is_sync = is_sync
-        # Instantiate all the endpoint clients
+        # Instantiate all the endpoint clients for backward compatibility
         self.signals = SignalsApi(self.base_client, is_sync=is_sync)
         self.status = StatusApi(self.base_client, is_sync=is_sync)
+        super().__init__(self.base_client, is_sync=is_sync)
