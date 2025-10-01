@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import os
 from pathlib import Path
 from typing import Awaitable, Optional, Union
@@ -108,24 +109,24 @@ class DataApiWrapper(DataApi):
             feature_size=feature_size,
             **kwargs,
         )
-        base_path = f"{folder}/v{response.version}/coin_{response.coin}/"
-        os.makedirs(base_path, exist_ok=True)
+        base_path = Path(folder) / f"v{response.version}" / f"coin_{response.coin}"
+        base_path.mkdir(parents=True, exist_ok=True)
 
-        return [
-            download_file(
+        results = await asyncio.gather(
+            asyncio.to_thread(
+                download_file,
                 url=response.links.y_train,
-                dest_path=Path(base_path + "y_train_" + response.target + ".feather"),
+                dest_path=base_path / f"y_train_{response.target}.feather",
             ),
-            download_file(
+            asyncio.to_thread(
+                download_file,
                 url=response.links.x_test,
-                dest_path=Path(
-                    base_path + "x_test_" + response.feature_size + ".feather"
-                ),
+                dest_path=base_path / f"x_test_{response.feature_size}.feather",
             ),
-            download_file(
+            asyncio.to_thread(
+                download_file,
                 url=response.links.x_train,
-                dest_path=Path(
-                    base_path + "x_train_" + response.feature_size + ".feather"
-                ),
+                dest_path=base_path / f"x_train_{response.feature_size}.feather",
             ),
-        ]
+        )
+        return list(results)
