@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from aiohttp import ClientSession
 
 
-class TradeClient:
+class TradeClient(BotsApi, StatusApi, StrategiesApi, TradingActionsApi, APIKeysApi):
     """
     A client for interacting with the Crypticorn Trade API.
     """
