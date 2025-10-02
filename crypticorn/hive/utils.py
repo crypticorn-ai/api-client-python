@@ -10,11 +10,12 @@ logger = logging.getLogger("crypticorn")
 def download_file(url: str, dest_path: Path, show_progress_bars: bool = True) -> Path:
     """downloads a file and shows a progress bar. allow resuming a download"""
     file_size = 0
+    dest_path.parent.mkdir(parents=True, exist_ok=True)
     req = requests.get(url, stream=True, timeout=600)
     req.raise_for_status()
 
     total_size = int(req.headers.get("content-length", 0))
-    temp_path = dest_path.joinpath(".temp")
+    temp_path = dest_path.with_suffix(dest_path.suffix + ".temp")
 
     if dest_path.exists():
         logger.info(f" file already exists: {dest_path}")
@@ -51,7 +52,7 @@ def download_file(url: str, dest_path: Path, show_progress_bars: bool = True) ->
         total=total_size,
         unit="B",
         unit_scale=True,
-        desc=dest_path,
+        desc=str(dest_path),
         disable=not show_progress_bars,
     )
     # Update progress bar to reflect how much of the file is already downloaded

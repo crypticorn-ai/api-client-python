@@ -67,12 +67,12 @@ There are scopes which don't follow this structure. Those are either scopes that
 You can use the async client with the context manager protocol...
 ```python
 async with AsyncClient(api_key="your-api-key") as client:
-    await client.pay.products.get_products()
+    await client.pay.get_products()
 ```
 ...or without it like this...
 ```python
 client = AsyncClient(api_key="your-api-key")
-asyncio.run(client.pay.products.get_products())
+asyncio.run(client.pay.get_products())
 asyncio.run(client.close())
 ```
 ...or this.
@@ -80,7 +80,7 @@ asyncio.run(client.close())
 client = AsyncClient(api_key="your-api-key")
 
 async def main():
-    await client.pay.products.get_products()
+    await client.pay.get_products()
 
 asyncio.run(main())
 asyncio.run(client.close())
@@ -95,14 +95,14 @@ from crypticorn import SyncClient
 
 # With context manager (recommended)
 with SyncClient(api_key="your-api-key") as client:
-    products = client.pay.products.get_products()
-    status = client.trade.status.ping()
+    products = client.pay.get_products()
+    status = client.trade.ping()
 
 # Or without context manager
 client = SyncClient(api_key="your-api-key")
 try:
-    products = client.pay.products.get_products()
-    status = client.trade.status.ping()
+    products = client.pay.get_products()
+    status = client.trade.ping()
 finally:
     client.close()  # Manual cleanup required
 ```
@@ -117,9 +117,9 @@ There are three different available output formats you can choose from:
 You can get fully serialized responses as pydantic models. Using this, you get the full benefits of pydantic's type checking.
 ```python
 # Async client
-res = await client.pay.products.get_products()
+res = await client.pay.get_products()
 # Sync client
-res = client.pay.products.get_products()
+res = client.pay.get_products()
 print(res)
 ```
 The output would look like this:
@@ -130,9 +130,9 @@ The output would look like this:
 ### Serialized Response with HTTP Info
 ```python
 # Async client
-res = await client.pay.products.get_products_with_http_info()
+res = await client.pay.get_products_with_http_info()
 # Sync client
-res = client.pay.products.get_products_with_http_info()
+res = client.pay.get_products_with_http_info()
 print(res)
 ```
 The output would look like this:
@@ -154,11 +154,11 @@ print(res.headers)
 You can receive a classical JSON response by suffixing the function name with `_without_preload_content`
 ```python
 # Async client
-response = await client.pay.products.get_products_without_preload_content()
+response = await client.pay.get_products_without_preload_content()
 print(await response.json())
 
 # Sync client - Note: use regular methods instead as response.json() returns a coroutine
-response = client.pay.products.get_products_without_preload_content()
+response = client.pay.get_products_without_preload_content()
 ```
 The output would look like this:
 ```python
@@ -174,7 +174,7 @@ Some API operations allow to get the returned data formatted as a pandas Datafra
 
 ### Data Downloads
 This utility allows direct data streaming to your local disk, instead of only returning download links. It is being used in the following functions:
-- `client.hive.data.download_data()` (overrides the [default response](https://docs.crypticorn.com/api/?api=hive-ai-api#tag/data/GET/data))
+- `client.hive.download_data()` (overrides the [default response](https://docs.crypticorn.com/api/?api=hive-ai-api#tag/data/GET/data))
 
 ## Advanced Usage
 
@@ -210,7 +210,7 @@ from crypticorn import AsyncClient
 async def main():
     custom_session = aiohttp.ClientSession()
     async with AsyncClient(api_key="your-key", http_client=custom_session) as client:
-        await client.trade.status.ping()
+        await client.trade.ping()
     await custom_session.close()
 
 ```
