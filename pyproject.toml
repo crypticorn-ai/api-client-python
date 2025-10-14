@@ -88,12 +88,8 @@ build-backend = "setuptools.build_meta"
 
 [dependency-groups]
 dev = [
-    "mypy>=1.18.2",
-    "pre-commit>=4.3.0",
     "pytest==8.3.5",
     "pytest-asyncio==0.26.0",
     "pytest-cov==6.1.1",
     "python-semantic-release==9.21.0",
-    "ruff>=0.14.0",
-    "setuptools>=80.0.0,<81.0.0",
 ]
