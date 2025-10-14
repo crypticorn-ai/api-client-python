@@ -14,7 +14,7 @@ repos:
       - id: ruff
         args: [--fix, --ignore=E721, --ignore=F403, --ignore=E402]
 
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.9.2
     hooks:
       - id: uv-lock
