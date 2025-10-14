@@ -13,6 +13,7 @@ Do not edit the class manually.
 
 from typing import Any, Awaitable, Dict, List, Optional, Tuple, Union
 
+from asgiref.sync import async_to_sync
 from pydantic import Field, StrictFloat, StrictInt, StrictStr, validate_call
 from typing_extensions import Annotated
 
@@ -22,24 +23,6 @@ from crypticorn.trade.client.models.strategy import Strategy
 from crypticorn.trade.client.models.strategy_create import StrategyCreate
 from crypticorn.trade.client.models.strategy_update import StrategyUpdate
 from crypticorn.trade.client.rest import RESTResponseType
-
-# Import async_to_sync for sync methods
-try:
-    from asgiref.sync import async_to_sync
-
-    _HAS_ASGIREF = True
-except ImportError:
-    _HAS_ASGIREF = False
-
-    def async_to_sync(async_func):
-        """Fallback decorator that raises an error if asgiref is not available."""
-
-        def wrapper(*args, **kwargs):
-            raise ImportError(
-                "asgiref is required for sync methods. Install with: pip install asgiref"
-            )
-
-        return wrapper
 
 
 class StrategiesApi:
