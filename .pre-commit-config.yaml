@@ -9,7 +9,7 @@
 # somehow `noqa` is not working for some reason, thus ignoring globally, should be checked from time to time
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.12
+    rev: v0.14.0
     hooks:
       - id: ruff
         args: [--fix, --ignore=E721, --ignore=F403, --ignore=E402]
