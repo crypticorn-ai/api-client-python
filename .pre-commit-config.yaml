@@ -17,30 +17,4 @@ repos:
   - repo: https://github.com/psf/black
     rev: 25.1.0
     hooks:
-      - id: black
-        language_version: python3.12
-
-  - repo: https://github.com/PyCQA/isort
-    rev: 6.0.1
-    hooks:
-      - id: isort
-        name: 'Sort imports'
-        language_version: python3.12
-        args: ["--profile", "black"]
-
-# disabled due to huge codebase managed by openapi-cli
-  # - repo: local
-  #   hooks:
-  #     - id: mypy
-  #       name: mypy
-  #       entry: .venv/bin/mypy
-  #       language: system
-  #       types: [python]
-  #       files: ^(crypticorn/client\.py|.*/main\.py)$
-  #       args:
-  #         - --config-file=mypy.ini
-
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
-    hooks:
-      - id: trailing-whitespace
+      - id: uv-lock
