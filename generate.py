@@ -1,3 +1,11 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#   "openapi-generator-cli==7.14.0",
+#   "requests",
+# ]
+# ///
+
 import os
 import subprocess
 import sys
@@ -75,7 +83,7 @@ def main(module_name: str, environment: str, version: str):
         "--library",
         "asyncio",
         "-t",
-        "scripts/templates",
+        "templates",
     ]
     subprocess.run(generator_cmd, check=True)
 

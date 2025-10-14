@@ -1,11 +1,10 @@
 # https://pre-commit.com/
 # pre commit hooks for python
 # install with:
-# pip install pre-commit
+# uv sync --only-dev
 # pre-commit install
 # pre-commit run --all-files
 
-# ruff and mypy just run on some files, due to the nature of the codebase
 # somehow `noqa` is not working for some reason, thus ignoring globally, should be checked from time to time
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
