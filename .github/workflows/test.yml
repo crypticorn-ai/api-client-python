@@ -30,21 +30,18 @@ jobs:
       - name: Check-out repository
         uses: actions/checkout@v4
 
-      - name: Generate .env
-        run: ./scripts/merge-env.sh
-
       - name: Install package
-        run: pip install -e .[dev]
+        run: uv add --editbale . --dev
 
       - name: Package build test
         run: |
-          python -m build --wheel --sdist
+          uv build
       - name: Import verification
         run: |
-          python -c "import crypticorn; import importlib.metadata; print(f'Package version: {importlib.metadata.distribution(\"crypticorn\").version}')"
+          uv run python -c "import crypticorn; import importlib.metadata; print(f'Package version: {importlib.metadata.distribution(\"crypticorn\").version}')"
 
       - name: Test with pytest
-        run: pytest tests/ --cov=crypticorn --cov-branch --cov-report=xml --cov-report=term-missing:skip-covered
+        run: uv run pytest tests/ --cov=crypticorn --cov-branch --cov-report=xml --cov-report=term-missing:skip-covered
 
       - name: Pytest coverage comment
         if: ${{ matrix.python-version == '3.14' }}
