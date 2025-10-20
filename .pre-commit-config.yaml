@@ -1,19 +1,29 @@
 # https://pre-commit.com/
 # pre commit hooks for python
-# install with:
-# uv sync --only-dev
+# uv tool install pre-commit
 # pre-commit install
 # pre-commit run --all-files
 
-# somehow `noqa` is not working for some reason, thus ignoring globally, should be checked from time to time
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.0
+    rev: v0.14.1
     hooks:
-      - id: ruff
-        args: [--fix, --ignore=E721, --ignore=F403]
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.9.2
+    rev: 0.9.4
     hooks:
       - id: uv-lock
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.8.6
+    hooks:
+      - id: bandit
+        files: "^src"
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
