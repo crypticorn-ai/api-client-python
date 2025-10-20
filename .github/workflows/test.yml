@@ -1,4 +1,3 @@
-# https://github.com/marketplace/actions/pytest-coverage-comment
 name: Test and Coverage
 
 on: [push, pull_request]
@@ -7,10 +6,6 @@ permissions:
   contents: write
   checks: write
   pull-requests: write
-
-env:
-  API_ENV: ${{ (github.event_name == 'pull_request' && github.base_ref == 'v3') || (github.event_name == 'push' && github.ref == 'refs/heads/v3') && 'prod' || 'dev' }}
-  JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
 jobs:
   ci:
