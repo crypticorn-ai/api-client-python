@@ -27,7 +27,7 @@ def test_client_ping_functionality():
     client = SyncClient()
 
     try:
-        response = client.hive.status.ping()
+        response = client.hive.ping()
         # Should not raise any exceptions
         assert response is not None
     finally:
@@ -58,7 +58,7 @@ def test_client_no_exceptions_on_basic_operations():
         assert hive_client is not None
 
         # Ping should work
-        response = client.hive.status.ping()
+        response = client.hive.ping()
         assert response is not None
 
     except Exception as e:
@@ -74,7 +74,7 @@ def test_client_service_lazy_initialization():
     # But HTTP client should be None until first use
     assert client._http_client is None
     # First access should create the session
-    client.hive.status.ping()
+    client.hive.ping()
     assert client._http_client is None
 
     client.close()
@@ -87,7 +87,7 @@ def test_client_concurrent_operations():
 
     responses = []
     for _ in range(5):
-        responses.append(client.hive.status.ping())  # ✅ Each call properly managed
+        responses.append(client.hive.ping())  # ✅ Each call properly managed
 
     client.close()  # ✅ Reliable cleanup
     assert client._http_client is None
