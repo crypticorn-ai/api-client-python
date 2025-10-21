@@ -54,8 +54,7 @@ module-root = ""
 
 [project.urls]
 Homepage = "https://crypticorn.com"
-Documentation = "https://docs.crypticorn.com"
-Dashboard = "https://app.crypticorn.com"
+Changelog = "https://github.com/crypticorn-ai/api-client-python/releases"
 
 [project.optional-dependencies]
 extra = [
