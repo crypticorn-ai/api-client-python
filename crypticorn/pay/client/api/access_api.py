@@ -527,7 +527,6 @@ class AccessApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -544,11 +543,9 @@ class AccessApi:
         # process the path parameters
         # process the query parameters
         if user_id is not None:
-
             _query_params.append(("user_id", user_id))
 
         if force is not None:
-
             _query_params.append(("force", force))
 
         # process the header parameters
@@ -1023,7 +1020,6 @@ class AccessApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1040,11 +1036,9 @@ class AccessApi:
         # process the path parameters
         # process the query parameters
         if user_id is not None:
-
             _query_params.append(("user_id", user_id))
 
         if force is not None:
-
             _query_params.append(("force", force))
 
         # process the header parameters
@@ -1439,7 +1433,6 @@ class AccessApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}

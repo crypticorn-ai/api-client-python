@@ -558,7 +558,6 @@ class LogsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -575,15 +574,12 @@ class LogsApi:
         # process the path parameters
         # process the query parameters
         if severity is not None:
-
             _query_params.append(("severity", severity.value))
 
         if start_timestamp is not None:
-
             _query_params.append(("start_timestamp", start_timestamp))
 
         if end_timestamp is not None:
-
             _query_params.append(("end_timestamp", end_timestamp))
 
         # process the header parameters

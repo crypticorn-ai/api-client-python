@@ -471,7 +471,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -931,7 +930,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1391,7 +1389,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1408,7 +1405,6 @@ class AuthApi:
         # process the path parameters
         # process the query parameters
         if id is not None:
-
             _query_params.append(("id", id))
 
         # process the header parameters
@@ -1840,7 +1836,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -2271,7 +2266,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -2747,7 +2741,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -2764,11 +2757,9 @@ class AuthApi:
         # process the path parameters
         # process the query parameters
         if origin is not None:
-
             _query_params.append(("origin", origin))
 
         if oob_code is not None:
-
             _query_params.append(("oobCode", oob_code))
 
         # process the header parameters
@@ -3203,7 +3194,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -3220,7 +3210,6 @@ class AuthApi:
         # process the path parameters
         # process the query parameters
         if user_id is not None:
-
             _query_params.append(("userId", user_id))
 
         # process the header parameters
@@ -3624,7 +3613,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -4215,7 +4203,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -4232,27 +4219,21 @@ class AuthApi:
         # process the path parameters
         # process the query parameters
         if code is not None:
-
             _query_params.append(("code", code))
 
         if scope is not None:
-
             _query_params.append(("scope", scope))
 
         if authuser is not None:
-
             _query_params.append(("authuser", authuser))
 
         if prompt is not None:
-
             _query_params.append(("prompt", prompt))
 
         if origin is not None:
-
             _query_params.append(("origin", origin))
 
         if state is not None:
-
             _query_params.append(("state", state))
 
         # process the header parameters
@@ -4656,7 +4637,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -5073,7 +5053,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -5490,7 +5469,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -5907,7 +5885,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -6323,7 +6300,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -6740,7 +6716,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -7194,7 +7169,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -7211,7 +7185,6 @@ class AuthApi:
         # process the path parameters
         # process the query parameters
         if api_key is not None:
-
             _query_params.append(("apiKey", api_key))
 
         # process the header parameters
@@ -7677,7 +7650,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -7694,11 +7666,9 @@ class AuthApi:
         # process the path parameters
         # process the query parameters
         if username is not None:
-
             _query_params.append(("username", username))
 
         if password is not None:
-
             _query_params.append(("password", password))
 
         # process the header parameters
@@ -8133,7 +8103,6 @@ class AuthApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}

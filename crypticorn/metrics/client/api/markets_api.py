@@ -634,7 +634,6 @@ class MarketsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -651,19 +650,15 @@ class MarketsApi:
         # process the path parameters
         # process the query parameters
         if market is not None:
-
             _query_params.append(("market", market.value))
 
         if ticker is not None:
-
             _query_params.append(("ticker", ticker))
 
         if quote_currency is not None:
-
             _query_params.append(("quote_currency", quote_currency))
 
         if status is not None:
-
             _query_params.append(("status", status.value))
 
         # process the header parameters
