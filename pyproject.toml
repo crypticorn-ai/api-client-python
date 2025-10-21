@@ -48,6 +48,9 @@ prerelease_token = "rc"
 match = "v3"
 prerelease = false
 
+[tool.uv]
+add-bounds = "major"
+
 [tool.uv.build-backend]
 module-name = "crypticorn"
 module-root = ""
@@ -73,7 +76,7 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
-    "pytest==8.3.5",
-    "pytest-asyncio==0.26.0",
-    "pytest-cov==6.1.1",
+    "pytest>=8.4.2,<9.0.0",
+    "pytest-asyncio>=1.2.0,<2.0.0",
+    "pytest-cov>=7.0.0,<8.0.0",
 ]
