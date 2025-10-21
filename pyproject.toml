@@ -65,6 +65,9 @@ extra = [
 [tool.ruff]
 ignore = ["E721", "F403"]
 
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
+
 [build-system]
 requires = ["uv_build==0.9.4"]
 build-backend = "uv_build"
