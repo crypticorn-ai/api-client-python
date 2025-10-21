@@ -6,17 +6,16 @@
 # ]
 # ///
 
+import argparse
 import os
 import subprocess
 import sys
-from typing import Final, Literal, Optional, Union
+from typing import Final, Literal
 
 import requests
 
 # List of possible module names
-MODULE_TYPE = Literal[
-    "trade", "hive", "pay", "auth", "metrics", "dex", "notification", "all"
-]
+MODULE_TYPE = Literal["trade", "hive", "pay", "auth", "metrics", "dex", "notification"]
 MODULES: Final[tuple[MODULE_TYPE, ...]] = (
     "trade",
     "hive",
@@ -25,7 +24,6 @@ MODULES: Final[tuple[MODULE_TYPE, ...]] = (
     "metrics",
     "dex",
     "notification",
-    "all",
 )
 VERSION_TYPE = Literal["v1", "v2"]
 VERSIONS: Final[tuple[VERSION_TYPE, ...]] = ("v1", "v2")
@@ -142,64 +140,44 @@ __all__ = ["{upper_module_name}Client"]
 
 
 if __name__ == "__main__":
-    print(sys.argv)
     # Check if script is run from the root directory
     if not os.path.exists("crypticorn"):
         print("Please run the script from the root directory")
         sys.exit(1)
 
-    if "-m" in sys.argv:
-        print("Please run as a python script instead of a module.")
+    # Create argument parser
+    parser = argparse.ArgumentParser(
+        description="Generate API clients from OpenAPI specifications"
+    )
 
-    # Initialize variables
-    module_name: Optional[Union[MODULE_TYPE, str]] = None
-    version: Optional[Union[VERSION_TYPE, str]] = None
-    environment: Optional[Union[ENVIRONMENT_TYPE, str]] = None
-    # Parse command-line arguments
-    for arg in sys.argv[1:]:
-        if arg.startswith("--service="):
-            module_name = arg.split("=")[1]
-        elif arg.startswith("--env="):
-            environment = arg.split("=")[1]
-        elif arg.startswith("--version="):
-            version = arg.split("=")[1]
+    parser.add_argument("service", choices=MODULES, help="Service to generate")
 
-    # Check if service is provided
-    if module_name is None:
-        print(
-            "No service specified, generating all clients for the given environmnet and version"
-        )
-        module_name = "all"
+    parser.add_argument(
+        "--env",
+        choices=ENVIRONMENTS,
+        default="local",
+        help="Environment to use (default: local)",
+    )
 
-    # Validate service name
-    if module_name not in MODULES:
-        print(f"Invalid service: {module_name}")
-        print(f"Valid services: {', '.join(MODULES)}")
-        sys.exit(1)
+    parser.add_argument(
+        "--version",
+        choices=VERSIONS,
+        default="v1",
+        help="API version to use (default: v1)",
+    )
 
-    if environment is None:
-        environment = "local"
-        print(
-            f"No environment specified, generating client for the given service and version from {environment.upper()} environment"
-        )
-    # Validate environment
-    if environment not in ENVIRONMENTS:
-        print(f"Invalid environment: {environment}")
-        print(f"Valid environments: {', '.join(ENVIRONMENTS)}")
-        sys.exit(1)
+    # Parse arguments
+    args = parser.parse_args()
 
-    if version is None:
-        version = "v1"
-        print(
-            f"No version specified, generating client for the given service and environemnt from {version.upper()} version"
-        )
-    # Validate environment
-    if version not in VERSIONS:
-        print(f"Invalid version: {version}")
-        print(f"Valid versions: {', '.join(VERSIONS)}")
-        sys.exit(1)
-    if module_name == "all":
-        for module in MODULES:
-            main(module, environment, version)
-        sys.exit(0)
+    # Get parsed values
+    module_name = args.service
+    environment = args.env
+    version = args.version
+
+    # Print configuration
+    print(f"Generating {module_name} client for the given environment and version")
+
+    print(f"Environment: {environment.upper()}")
+    print(f"Version: {version.upper()}")
+
     main(module_name, environment, version)
