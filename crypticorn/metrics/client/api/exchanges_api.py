@@ -828,7 +828,6 @@ class ExchangesApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -845,31 +844,24 @@ class ExchangesApi:
         # process the path parameters
         # process the query parameters
         if market is not None:
-
             _query_params.append(("market", market.value))
 
         if symbol is not None:
-
             _query_params.append(("symbol", symbol))
 
         if interval is not None:
-
             _query_params.append(("interval", interval.value))
 
         if start_timestamp is not None:
-
             _query_params.append(("start_timestamp", start_timestamp))
 
         if end_timestamp is not None:
-
             _query_params.append(("end_timestamp", end_timestamp))
 
         if quote_currency is not None:
-
             _query_params.append(("quote_currency", quote_currency))
 
         if status is not None:
-
             _query_params.append(("status", status.value))
 
         # process the header parameters
@@ -1315,7 +1307,6 @@ class ExchangesApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1332,7 +1323,6 @@ class ExchangesApi:
         # process the path parameters
         # process the query parameters
         if market is not None:
-
             _query_params.append(("market", market.value))
 
         # process the header parameters
@@ -1828,7 +1818,6 @@ class ExchangesApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1845,11 +1834,9 @@ class ExchangesApi:
         # process the path parameters
         # process the query parameters
         if market is not None:
-
             _query_params.append(("market", market.value))
 
         if exchange is not None:
-
             _query_params.append(("exchange", exchange.value))
 
         # process the header parameters
@@ -2502,7 +2489,6 @@ class ExchangesApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -2519,19 +2505,15 @@ class ExchangesApi:
         # process the path parameters
         # process the query parameters
         if pair is not None:
-
             _query_params.append(("pair", pair))
 
         if market is not None:
-
             _query_params.append(("market", market.value))
 
         if exchange is not None:
-
             _query_params.append(("exchange", exchange.value))
 
         if quote_currency is not None:
-
             _query_params.append(("quote_currency", quote_currency))
 
         # process the header parameters

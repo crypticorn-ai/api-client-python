@@ -427,7 +427,6 @@ class ProductsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -846,7 +845,6 @@ class ProductsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1490,7 +1488,6 @@ class ProductsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1507,23 +1504,18 @@ class ProductsApi:
         # process the path parameters
         # process the query parameters
         if filter_by is not None:
-
             _query_params.append(("filter_by", filter_by))
 
         if filter_value is not None:
-
             _query_params.append(("filter_value", filter_value))
 
         if sort_order is not None:
-
             _query_params.append(("sort_order", sort_order))
 
         if sort_by is not None:
-
             _query_params.append(("sort_by", sort_by))
 
         if coupon is not None:
-
             _query_params.append(("coupon", coupon))
 
         # process the header parameters
@@ -2027,7 +2019,6 @@ class ProductsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -2044,11 +2035,9 @@ class ProductsApi:
         # process the path parameters
         # process the query parameters
         if coupon is not None:
-
             _query_params.append(("coupon", coupon))
 
         if captcha_token is not None:
-
             _query_params.append(("captcha_token", captcha_token))
 
         # process the header parameters
@@ -2496,7 +2485,6 @@ class ProductsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}

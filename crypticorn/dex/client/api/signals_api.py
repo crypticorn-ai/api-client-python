@@ -402,7 +402,6 @@ class SignalsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1115,7 +1114,6 @@ class SignalsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1132,27 +1130,21 @@ class SignalsApi:
         # process the path parameters
         # process the query parameters
         if filter_by is not None:
-
             _query_params.append(("filter_by", filter_by))
 
         if filter_value is not None:
-
             _query_params.append(("filter_value", filter_value))
 
         if sort_order is not None:
-
             _query_params.append(("sort_order", sort_order))
 
         if sort_by is not None:
-
             _query_params.append(("sort_by", sort_by))
 
         if page is not None:
-
             _query_params.append(("page", page))
 
         if page_size is not None:
-
             _query_params.append(("page_size", page_size))
 
         # process the header parameters
@@ -1741,7 +1733,6 @@ class SignalsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1758,15 +1749,12 @@ class SignalsApi:
         # process the path parameters
         # process the query parameters
         if page is not None:
-
             _query_params.append(("page", page))
 
         if page_size is not None:
-
             _query_params.append(("page_size", page_size))
 
         if since is not None:
-
             _query_params.append(("since", since))
 
         # process the header parameters

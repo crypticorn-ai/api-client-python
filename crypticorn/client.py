@@ -185,9 +185,9 @@ class BaseAsyncClient:
         >>> with SyncClient() as client:
         ...     client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive')
         """
-        assert (
-            service in self._service_classes
-        ), f"Invalid service: {service}. Must be one of {list(self._service_classes.keys())}"
+        assert service in self._service_classes, (
+            f"Invalid service: {service}. Must be one of {list(self._service_classes.keys())}"
+        )
         client = self._services[service]
         new_config = client.config
         for attr in vars(config):

@@ -592,7 +592,6 @@ class DataApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -609,15 +608,12 @@ class DataApi:
         # process the path parameters
         # process the query parameters
         if model_id is not None:
-
             _query_params.append(("model_id", model_id))
 
         if version is not None:
-
             _query_params.append(("version", version))
 
         if feature_size is not None:
-
             _query_params.append(("feature_size", feature_size))
 
         # process the header parameters
@@ -1009,7 +1005,6 @@ class DataApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}

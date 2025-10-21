@@ -460,7 +460,6 @@ class MarketcapApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -477,7 +476,6 @@ class MarketcapApi:
         # process the path parameters
         # process the query parameters
         if limit is not None:
-
             _query_params.append(("limit", limit))
 
         # process the header parameters
@@ -968,7 +966,6 @@ class MarketcapApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -985,11 +982,9 @@ class MarketcapApi:
         # process the path parameters
         # process the query parameters
         if start_timestamp is not None:
-
             _query_params.append(("start_timestamp", start_timestamp))
 
         if end_timestamp is not None:
-
             _query_params.append(("end_timestamp", end_timestamp))
 
         # process the header parameters
@@ -1677,7 +1672,6 @@ class MarketcapApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1694,23 +1688,18 @@ class MarketcapApi:
         # process the path parameters
         # process the query parameters
         if start_timestamp is not None:
-
             _query_params.append(("start_timestamp", start_timestamp))
 
         if end_timestamp is not None:
-
             _query_params.append(("end_timestamp", end_timestamp))
 
         if interval is not None:
-
             _query_params.append(("interval", interval))
 
         if market is not None:
-
             _query_params.append(("market", market.value))
 
         if exchange is not None:
-
             _query_params.append(("exchange", exchange))
 
         # process the header parameters
@@ -2366,7 +2355,6 @@ class MarketcapApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -2383,23 +2371,18 @@ class MarketcapApi:
         # process the path parameters
         # process the query parameters
         if timestamp is not None:
-
             _query_params.append(("timestamp", timestamp))
 
         if timeframe is not None:
-
             _query_params.append(("timeframe", timeframe))
 
         if market is not None:
-
             _query_params.append(("market", market.value))
 
         if top_n is not None:
-
             _query_params.append(("top_n", top_n))
 
         if ohlcv_limit is not None:
-
             _query_params.append(("ohlcv_limit", ohlcv_limit))
 
         # process the header parameters

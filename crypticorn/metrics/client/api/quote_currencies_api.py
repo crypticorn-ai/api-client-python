@@ -443,7 +443,6 @@ class QuoteCurrenciesApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -460,7 +459,6 @@ class QuoteCurrenciesApi:
         # process the path parameters
         # process the query parameters
         if market is not None:
-
             _query_params.append(("market", market.value))
 
         # process the header parameters

@@ -780,7 +780,6 @@ class PaymentsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -797,31 +796,24 @@ class PaymentsApi:
         # process the path parameters
         # process the query parameters
         if filter_by is not None:
-
             _query_params.append(("filter_by", filter_by))
 
         if filter_value is not None:
-
             _query_params.append(("filter_value", filter_value))
 
         if sort_order is not None:
-
             _query_params.append(("sort_order", sort_order))
 
         if sort_by is not None:
-
             _query_params.append(("sort_by", sort_by))
 
         if page is not None:
-
             _query_params.append(("page", page))
 
         if page_size is not None:
-
             _query_params.append(("page_size", page_size))
 
         if user_id is not None:
-
             _query_params.append(("user_id", user_id))
 
         # process the header parameters
@@ -1243,7 +1235,6 @@ class PaymentsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1798,7 +1789,6 @@ class PaymentsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1815,11 +1805,9 @@ class PaymentsApi:
         # process the path parameters
         # process the query parameters
         if user_id is not None:
-
             _query_params.append(("user_id", user_id))
 
         if state is not None:
-
             _query_params.append(("state", state))
 
         # process the header parameters

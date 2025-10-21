@@ -451,7 +451,6 @@ class TokenApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -468,7 +467,6 @@ class TokenApi:
         # process the path parameters
         # process the query parameters
         if force is not None:
-
             _query_params.append(("force", force))
 
         # process the header parameters

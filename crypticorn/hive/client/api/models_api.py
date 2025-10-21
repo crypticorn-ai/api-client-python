@@ -428,7 +428,6 @@ class ModelsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -873,7 +872,6 @@ class ModelsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1429,7 +1427,6 @@ class ModelsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {
@@ -1450,7 +1447,6 @@ class ModelsApi:
             _path_params["id"] = id
         # process the query parameters
         if version is not None:
-
             _query_params.append(("version", version))
 
         # process the header parameters
@@ -1882,7 +1878,6 @@ class ModelsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -2317,7 +2312,6 @@ class ModelsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -2870,7 +2864,6 @@ class ModelsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -2887,11 +2880,9 @@ class ModelsApi:
         # process the path parameters
         # process the query parameters
         if by_user is not None:
-
             _query_params.append(("by_user", by_user))
 
         if user_id is not None:
-
             _query_params.append(("user_id", user_id))
 
         # process the header parameters
@@ -3339,7 +3330,6 @@ class ModelsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}

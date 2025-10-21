@@ -592,7 +592,6 @@ class IndicatorsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -609,19 +608,15 @@ class IndicatorsApi:
         # process the path parameters
         # process the query parameters
         if symbol is not None:
-
             _query_params.append(("symbol", symbol))
 
         if market is not None:
-
             _query_params.append(("market", market.value))
 
         if period is not None:
-
             _query_params.append(("period", period))
 
         if timestamp is not None:
-
             _query_params.append(("timestamp", timestamp))
 
         # process the header parameters
@@ -1226,7 +1221,6 @@ class IndicatorsApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1243,19 +1237,15 @@ class IndicatorsApi:
         # process the path parameters
         # process the query parameters
         if symbol is not None:
-
             _query_params.append(("symbol", symbol))
 
         if market is not None:
-
             _query_params.append(("market", market.value))
 
         if period is not None:
-
             _query_params.append(("period", period))
 
         if timestamp is not None:
-
             _query_params.append(("timestamp", timestamp))
 
         # process the header parameters

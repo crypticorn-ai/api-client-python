@@ -484,7 +484,6 @@ class WalletApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -974,7 +973,6 @@ class WalletApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1466,7 +1464,6 @@ class WalletApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1959,7 +1956,6 @@ class WalletApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -1976,7 +1972,6 @@ class WalletApi:
         # process the path parameters
         # process the query parameters
         if user_id is not None:
-
             _query_params.append(("userId", user_id))
 
         # process the header parameters
@@ -2438,7 +2433,6 @@ class WalletApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -2928,7 +2922,6 @@ class WalletApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -3415,7 +3408,6 @@ class WalletApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -3904,7 +3896,6 @@ class WalletApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -4397,7 +4388,6 @@ class WalletApi:
         _headers,
         _host_index,
     ) -> RequestSerialized:
-
         _host = None
 
         _collection_formats: Dict[str, str] = {}
@@ -4414,7 +4404,6 @@ class WalletApi:
         # process the path parameters
         # process the query parameters
         if address is not None:
-
             _query_params.append(("address", address))
 
         # process the header parameters
