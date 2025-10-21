@@ -34,7 +34,7 @@ async def test_client_context_manager():
         assert isinstance(client._http_client, ClientSession)
 
         # Test ping to ensure it works
-        response = await client.hive.status.ping()
+        response = await client.hive.ping()
         assert response is not None
 
 
@@ -58,7 +58,7 @@ async def test_client_ping_functionality():
     client = AsyncClient()
 
     try:
-        response = await client.hive.status.ping()
+        response = await client.hive.ping()
         # Should not raise any exceptions
         assert response is not None
     finally:
@@ -119,7 +119,7 @@ async def test_client_no_exceptions_on_basic_operations():
         assert hive_client is not None
 
         # Ping should work
-        response = await client.hive.status.ping()
+        response = await client.hive.ping()
         assert response is not None
 
     except Exception as e:
@@ -139,7 +139,7 @@ async def test_client_service_lazy_initialization():
     assert client._http_client is not None
 
     # First access should create the session
-    await client.hive.status.ping()
+    await client.hive.ping()
     assert client._http_client is not None
 
     await client.close()
@@ -173,7 +173,7 @@ async def test_client_concurrent_operations():
 
     try:
         # Run multiple ping operations concurrently
-        tasks = [client.hive.status.ping() for _ in range(5)]
+        tasks = [client.hive.ping() for _ in range(5)]
         responses = await asyncio.gather(*tasks)
 
         # All responses should be valid

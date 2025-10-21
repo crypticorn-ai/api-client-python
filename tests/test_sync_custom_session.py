@@ -73,7 +73,7 @@ def test_close_owned_http_client():
     client = SyncClient()
 
     # Trigger some operation that would create sessions
-    client.hive.status.ping()
+    client.hive.ping()
 
     # Should still be None since sessions are created and closed per operation
     assert client._http_client is None
@@ -88,7 +88,7 @@ def test_no_persistent_sessions_in_sync_mode():
 
     # Make multiple calls
     for _ in range(3):
-        response = client.hive.status.ping()
+        response = client.hive.ping()
         assert response is not None
         # Should still be None after each call
         assert client._http_client is None
@@ -108,7 +108,7 @@ def test_sync_client_operations_work():
         # Multiple operations should all work
         responses = []
         for _ in range(3):
-            responses.append(client.hive.status.ping())
+            responses.append(client.hive.ping())
 
         # All responses should be valid
         assert len(responses) == 3
@@ -129,7 +129,7 @@ def test_context_manager_usage():
         assert client._http_client is None
 
         # Operations should work
-        response = client.hive.status.ping()
+        response = client.hive.ping()
         assert response is not None
 
         # Still no persistent session
@@ -151,7 +151,7 @@ def test_concurrent_operations():
         # Run multiple operations that would each create their own session
         responses = []
         for i in range(5):
-            response = client.hive.status.ping()
+            response = client.hive.ping()
             responses.append(response)
             # Verify no session persistence
             assert client._http_client is None
@@ -171,7 +171,7 @@ def test_no_session_warnings_in_sync_mode():
         warnings.simplefilter("always")
 
         client = SyncClient()
-        client.hive.status.ping()
+        client.hive.ping()
 
         # Intentionally don't close manually to test cleanup
         del client
