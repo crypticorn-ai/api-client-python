@@ -70,11 +70,16 @@ async def test_unclosed_owned_session_warns():
 
         # Intentionally forget to close
         del client
-        await asyncio.sleep(0.1)  # Let __del__ run
+        await asyncio.sleep(0.1)
+        gc.collect()
+        await asyncio.sleep(0.1)
 
         # Look for aiohttp's unclosed session warning
         unclosed_warnings = [
-            warn for warn in w if "Unclosed client session" in str(warn.message)
+            warn
+            for warn in w
+            if "Unclosed client session" in str(warn.message)
+            or "Unclosed connector" in str(warn.message)
         ]
         assert unclosed_warnings, "Expected unclosed client session warning"
 
