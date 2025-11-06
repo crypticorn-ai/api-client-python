@@ -15,7 +15,9 @@ from typing import Final, Literal
 import requests
 
 # List of possible module names
-MODULE_TYPE = Literal["trade", "hive", "pay", "auth", "metrics", "dex", "notification"]
+MODULE_TYPE = Literal[
+    "trade", "hive", "pay", "auth", "metrics", "dex", "notification", "indicator"
+]
 MODULES: Final[tuple[MODULE_TYPE, ...]] = (
     "trade",
     "hive",
@@ -24,6 +26,7 @@ MODULES: Final[tuple[MODULE_TYPE, ...]] = (
     "metrics",
     "dex",
     "notification",
+    "indicator",
 )
 VERSION_TYPE = Literal["v1", "v2"]
 VERSIONS: Final[tuple[VERSION_TYPE, ...]] = ("v1", "v2")
