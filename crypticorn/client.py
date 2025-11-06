@@ -10,10 +10,13 @@ from crypticorn.metrics import MetricsClient
 from crypticorn.notification import NotificationClient
 from crypticorn.pay import PayClient
 from crypticorn.trade import TradeClient
+from crypticorn.indicator import IndicatorClient
 
 ConfigT = TypeVar("ConfigT")
 SubClient = TypeVar("SubClient")
-_SERVICES = Literal["hive", "trade", "pay", "metrics", "auth", "dex", "notification"]
+_SERVICES = Literal[
+    "hive", "trade", "pay", "metrics", "auth", "dex", "notification", "indicator"
+]
 
 
 class BaseAsyncClient:
@@ -54,6 +57,7 @@ class BaseAsyncClient:
             "auth": (AuthClient, "v1/auth"),
             "dex": (DexClient, "v1/dex"),
             "notification": (NotificationClient, "v1/notification"),
+            "indicator": (IndicatorClient, "v1/indicator"),
         }
 
         self._services = self._create_services()
@@ -167,6 +171,13 @@ class BaseAsyncClient:
         Entry point for the DEX API ([Docs](https://docs.crypticorn.com/api/?api=dex-api)).
         """
         return self._services["dex"]
+
+    @property
+    def indicator(self) -> IndicatorClient:
+        """
+        Entry point for the Indicator API ([Docs](https://docs.crypticorn.com/api/?api=indicator-api)).
+        """
+        return self._services["indicator"]
 
     def configure(self, config: ConfigT, service: _SERVICES) -> None:
         """
