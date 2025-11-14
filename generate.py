@@ -16,7 +16,15 @@ import requests
 
 # List of possible module names
 MODULE_TYPE = Literal[
-    "trade", "hive", "pay", "auth", "metrics", "dex", "notification", "indicator"
+    "trade",
+    "hive",
+    "pay",
+    "auth",
+    "metrics",
+    "dex",
+    "notification",
+    "indicator",
+    "klines",
 ]
 MODULES: Final[tuple[MODULE_TYPE, ...]] = (
     "trade",
@@ -27,6 +35,7 @@ MODULES: Final[tuple[MODULE_TYPE, ...]] = (
     "dex",
     "notification",
     "indicator",
+    "klines",
 )
 VERSION_TYPE = Literal["v1", "v2"]
 VERSIONS: Final[tuple[VERSION_TYPE, ...]] = ("v1", "v2")
@@ -85,7 +94,7 @@ def main(module_name: str, environment: str, version: str):
         "asyncio",
         "-t",
         "templates",
-        "--skip-validate-spec",
+        "--skip-validate-spec",  # used because the payment module has duplicate operation ids for one endpoint
     ]
     subprocess.run(generator_cmd, check=True)
 

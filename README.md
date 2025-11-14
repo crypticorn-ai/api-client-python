@@ -46,10 +46,10 @@ Request and response models for API operations should be accessed through the su
 
 The SDK major version tracks the highest supported API version. A new API major bump always triggers a new major release of this package. Minor and patch versions only add non-breaking changes. We follow [Semantic Versioning](https://semver.org/).
 
-| SDK Version | Auth | Trade | Klines | Metrics | Hive | Dex | Pay | Notification | Indicator        |
-| ----------- | ---- | ----- | ------ | ------- | ---- | --- | --- | ------------ | ---------------- |
-| v2.x        | v1   | v1    | v1     | v1      | v1   | v1  | v1  | v1           | -
-| v3.x        | v1   | v2    | -      | v1      | v1   | v1  | v1  | v1           | v1 (since 3.2.0) |
+| SDK Version | Auth | Trade | Klines       | Metrics | Hive | Dex | Pay | Notification | Indicator        |
+| ----------- | ---- | ----- | ------------ | ------- | ---- | --- | --- | ------------ | ---------------- |
+| v2.x        | v1   | v1    | v1           | v1      | v1   | v1  | v1  | v1           | -
+| v3.x        | v1   | v2    | v1 (v3.3.0+) | v1      | v1   | v1  | v1  | v1           | v1 (v3.2.0+) |
 
 ## Authentication
 
