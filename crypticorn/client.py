@@ -11,11 +11,20 @@ from crypticorn.notification import NotificationClient
 from crypticorn.pay import PayClient
 from crypticorn.trade import TradeClient
 from crypticorn.indicator import IndicatorClient
+from crypticorn.klines import KlinesClient
 
 ConfigT = TypeVar("ConfigT")
 SubClient = TypeVar("SubClient")
 _SERVICES = Literal[
-    "hive", "trade", "pay", "metrics", "auth", "dex", "notification", "indicator"
+    "hive",
+    "trade",
+    "pay",
+    "metrics",
+    "auth",
+    "dex",
+    "notification",
+    "indicator",
+    "klines",
 ]
 
 
@@ -58,6 +67,7 @@ class BaseAsyncClient:
             "dex": (DexClient, "v1/dex"),
             "notification": (NotificationClient, "v1/notification"),
             "indicator": (IndicatorClient, "v1/indicator"),
+            "klines": (KlinesClient, "v1/klines"),
         }
 
         self._services = self._create_services()
@@ -178,6 +188,13 @@ class BaseAsyncClient:
         Entry point for the Indicator API ([Docs](https://docs.crypticorn.com/api/?api=indicator-api)).
         """
         return self._services["indicator"]
+
+    @property
+    def klines(self) -> KlinesClient:
+        """
+        Entry point for the Klines API ([Docs](https://docs.crypticorn.com/api/?api=klines-api)).
+        """
+        return self._services["klines"]
 
     def configure(self, config: ConfigT, service: _SERVICES) -> None:
         """
