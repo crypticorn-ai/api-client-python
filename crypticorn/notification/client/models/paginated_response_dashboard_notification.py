@@ -12,18 +12,17 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
-from typing_extensions import Self
-
-from crypticorn.notification.client.models.dashboard_notification import (
-    DashboardNotification,
+from typing import Any, ClassVar, Dict, List, Optional
+from crypticorn.notification.client.models.dashboard_notification_output import (
+    DashboardNotificationOutput,
 )
+from typing import Set
+from typing_extensions import Self
 
 
 class PaginatedResponseDashboardNotification(BaseModel):
@@ -31,7 +30,7 @@ class PaginatedResponseDashboardNotification(BaseModel):
     PaginatedResponseDashboardNotification
     """  # noqa: E501
 
-    data: List[DashboardNotification]
+    data: List[DashboardNotificationOutput]
     total: StrictInt = Field(description="The total number of items")
     page: StrictInt = Field(description="The current page number")
     page_size: StrictInt = Field(description="The number of items per page")
@@ -120,11 +119,12 @@ class PaginatedResponseDashboardNotification(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "data": (
-                    [DashboardNotification.from_dict(_item) for _item in obj["data"]]
-                    if obj.get("data") is not None
-                    else None
-                ),
+                "data": [
+                    DashboardNotificationOutput.from_dict(_item)
+                    for _item in obj["data"]
+                ]
+                if obj.get("data") is not None
+                else None,
                 "total": obj.get("total"),
                 "page": obj.get("page"),
                 "page_size": obj.get("page_size"),

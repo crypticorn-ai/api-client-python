@@ -232,7 +232,7 @@ class Configuration:
     ) -> None:
         """Constructor"""
         self._base_path = (
-            "https://api.crypticorn.dev/v2/trade" if host is None else host
+            "https://api.crypticorn.com/v2/trade" if host is None else host
         )
         """Default Base url
         """
@@ -582,7 +582,7 @@ class Configuration:
         """
         return [
             {
-                "url": "https://api.crypticorn.dev/v2/trade",
+                "url": "https://api.crypticorn.com/v2/trade",
                 "description": "No description provided",
             }
         ]

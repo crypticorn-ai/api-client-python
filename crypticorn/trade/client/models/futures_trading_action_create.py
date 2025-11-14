@@ -49,6 +49,9 @@ class FuturesTradingActionCreate(BaseModel):
         description="Trading symbol or asset pair in format: 'symbol/quote_currency' (see market service for valid symbols)"
     )
     limit_price: Optional[StrictStr] = None
+    order_type: Optional[StrictStr] = Field(
+        default="market", description="The type of order to place. Default is market."
+    )
     allocation: StrictStr = Field(
         description="How much of bot's balance to use for the order (for open actions). How much of the reference open order (open_order_execution_id) to close (for close actions). 0=0%, 1=100%."
     )
@@ -65,6 +68,7 @@ class FuturesTradingActionCreate(BaseModel):
         "strategy_id",
         "symbol",
         "limit_price",
+        "order_type",
         "allocation",
         "take_profit",
         "stop_loss",
@@ -89,6 +93,16 @@ class FuturesTradingActionCreate(BaseModel):
 
         if value not in set(["spot", "futures"]):
             raise ValueError("must be one of enum values ('spot', 'futures')")
+        return value
+
+    @field_validator("order_type")
+    def order_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(["market", "limit"]):
+            raise ValueError("must be one of enum values ('market', 'limit')")
         return value
 
     model_config = ConfigDict(
@@ -206,6 +220,9 @@ class FuturesTradingActionCreate(BaseModel):
                 "strategy_id": obj.get("strategy_id"),
                 "symbol": obj.get("symbol"),
                 "limit_price": obj.get("limit_price"),
+                "order_type": obj.get("order_type")
+                if obj.get("order_type") is not None
+                else "market",
                 "allocation": obj.get("allocation"),
                 "take_profit": [
                     TPSLCreate.from_dict(_item) for _item in obj["take_profit"]

@@ -12,11 +12,9 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set, Union
+import json
 
 from pydantic import (
     BaseModel,
@@ -27,7 +25,10 @@ from pydantic import (
     StrictStr,
     field_validator,
 )
-from typing_extensions import Annotated, Self
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
+from typing import Set
+from typing_extensions import Self
 
 
 class CouponCreate(BaseModel):
@@ -151,9 +152,9 @@ class CouponCreate(BaseModel):
                 "valid_from": obj.get("valid_from"),
                 "usage_limit": obj.get("usage_limit"),
                 "products": obj.get("products"),
-                "is_active": (
-                    obj.get("is_active") if obj.get("is_active") is not None else True
-                ),
+                "is_active": obj.get("is_active")
+                if obj.get("is_active") is not None
+                else True,
             }
         )
         return _obj

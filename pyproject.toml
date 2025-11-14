@@ -65,7 +65,7 @@ extra = [
 ]
 
 [tool.ruff]
-ignore = ["E721", "F403"]
+lint.ignore = ["E721", "F403"]
 
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"

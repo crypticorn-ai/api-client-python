@@ -80,17 +80,17 @@ from crypticorn.auth.client.api.admin_api import AdminApi as AdminApi
 from crypticorn.auth.client.api.auth_api import AuthApi as AuthApi
 from crypticorn.auth.client.api.user_api import UserApi as UserApi
 from crypticorn.auth.client.api.wallet_api import WalletApi as WalletApi
-from crypticorn.auth.client.api_client import ApiClient as ApiClient
 
 # import ApiClient
 from crypticorn.auth.client.api_response import ApiResponse as ApiResponse
+from crypticorn.auth.client.api_client import ApiClient as ApiClient
 from crypticorn.auth.client.configuration import Configuration as Configuration
-from crypticorn.auth.client.exceptions import ApiAttributeError as ApiAttributeError
-from crypticorn.auth.client.exceptions import ApiException as ApiException
-from crypticorn.auth.client.exceptions import ApiKeyError as ApiKeyError
+from crypticorn.auth.client.exceptions import OpenApiException as OpenApiException
 from crypticorn.auth.client.exceptions import ApiTypeError as ApiTypeError
 from crypticorn.auth.client.exceptions import ApiValueError as ApiValueError
-from crypticorn.auth.client.exceptions import OpenApiException as OpenApiException
+from crypticorn.auth.client.exceptions import ApiKeyError as ApiKeyError
+from crypticorn.auth.client.exceptions import ApiAttributeError as ApiAttributeError
+from crypticorn.auth.client.exceptions import ApiException as ApiException
 
 # import models into sdk package
 from crypticorn.auth.client.models.add_wallet200_response import (

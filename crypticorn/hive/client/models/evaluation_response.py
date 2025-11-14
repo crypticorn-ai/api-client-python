@@ -12,17 +12,16 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List
 from crypticorn.hive.client.models.benchmarks_value import BenchmarksValue
 from crypticorn.hive.client.models.metrics import Metrics
+from typing import Optional, Set
+from typing_extensions import Self
 
 
 class EvaluationResponse(BaseModel):
@@ -96,19 +95,15 @@ class EvaluationResponse(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "metrics": (
-                    Metrics.from_dict(obj["metrics"])
-                    if obj.get("metrics") is not None
-                    else None
-                ),
-                "benchmarks": (
-                    dict(
-                        (_k, BenchmarksValue.from_dict(_v))
-                        for _k, _v in obj["benchmarks"].items()
-                    )
-                    if obj.get("benchmarks") is not None
-                    else None
-                ),
+                "metrics": Metrics.from_dict(obj["metrics"])
+                if obj.get("metrics") is not None
+                else None,
+                "benchmarks": dict(
+                    (_k, BenchmarksValue.from_dict(_v))
+                    for _k, _v in obj["benchmarks"].items()
+                )
+                if obj.get("benchmarks") is not None
+                else None,
             }
         )
         return _obj

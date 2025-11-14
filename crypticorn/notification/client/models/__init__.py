@@ -21,8 +21,11 @@ from crypticorn.notification.client.models.dashboard_action_button import (
     DashboardActionButton,
 )
 from crypticorn.notification.client.models.dashboard_field import DashboardField
-from crypticorn.notification.client.models.dashboard_notification import (
-    DashboardNotification,
+from crypticorn.notification.client.models.dashboard_notification_input import (
+    DashboardNotificationInput,
+)
+from crypticorn.notification.client.models.dashboard_notification_output import (
+    DashboardNotificationOutput,
 )
 from crypticorn.notification.client.models.dashboard_notification_update import (
     DashboardNotificationUpdate,

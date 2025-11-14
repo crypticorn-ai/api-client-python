@@ -85,6 +85,7 @@ def main(module_name: str, environment: str, version: str):
         "asyncio",
         "-t",
         "templates",
+        "--skip-validate-spec",
     ]
     subprocess.run(generator_cmd, check=True)
 

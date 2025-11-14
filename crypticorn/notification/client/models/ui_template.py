@@ -12,19 +12,18 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.notification.client.models.dashboard_action_button import (
     DashboardActionButton,
 )
 from crypticorn.notification.client.models.dashboard_field import DashboardField
+from typing import Set
+from typing_extensions import Self
 
 
 class UITemplate(BaseModel):
@@ -135,16 +134,14 @@ class UITemplate(BaseModel):
                 "subtitle": obj.get("subtitle"),
                 "body": obj.get("body"),
                 "imageUrl": obj.get("imageUrl"),
-                "actions": (
-                    [DashboardActionButton.from_dict(_item) for _item in obj["actions"]]
-                    if obj.get("actions") is not None
-                    else None
-                ),
-                "fields": (
-                    [DashboardField.from_dict(_item) for _item in obj["fields"]]
-                    if obj.get("fields") is not None
-                    else None
-                ),
+                "actions": [
+                    DashboardActionButton.from_dict(_item) for _item in obj["actions"]
+                ]
+                if obj.get("actions") is not None
+                else None,
+                "fields": [DashboardField.from_dict(_item) for _item in obj["fields"]]
+                if obj.get("fields") is not None
+                else None,
             }
         )
         return _obj

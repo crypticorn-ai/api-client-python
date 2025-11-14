@@ -12,17 +12,16 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List
 from crypticorn.pay.client.models.access_scope import AccessScope
 from crypticorn.pay.client.models.scope_info import ScopeInfo
+from typing import Optional, Set
+from typing_extensions import Self
 
 
 class ScopesInfo(BaseModel):
@@ -94,11 +93,9 @@ class ScopesInfo(BaseModel):
         _obj = cls.model_validate(
             {
                 "scopes": obj.get("scopes"),
-                "info": (
-                    [ScopeInfo.from_dict(_item) for _item in obj["info"]]
-                    if obj.get("info") is not None
-                    else None
-                ),
+                "info": [ScopeInfo.from_dict(_item) for _item in obj["info"]]
+                if obj.get("info") is not None
+                else None,
             }
         )
         return _obj

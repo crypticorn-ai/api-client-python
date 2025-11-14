@@ -12,19 +12,18 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.auth.client.models.create_user200_response_auth import (
     CreateUser200ResponseAuth,
 )
 from crypticorn.auth.client.models.whoami200_response import Whoami200Response
+from typing import Set
+from typing_extensions import Self
 
 
 class CreateUser200Response(BaseModel):
@@ -97,16 +96,12 @@ class CreateUser200Response(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "user": (
-                    Whoami200Response.from_dict(obj["user"])
-                    if obj.get("user") is not None
-                    else None
-                ),
-                "auth": (
-                    CreateUser200ResponseAuth.from_dict(obj["auth"])
-                    if obj.get("auth") is not None
-                    else None
-                ),
+                "user": Whoami200Response.from_dict(obj["user"])
+                if obj.get("user") is not None
+                else None,
+                "auth": CreateUser200ResponseAuth.from_dict(obj["auth"])
+                if obj.get("auth") is not None
+                else None,
                 "oobCode": obj.get("oobCode"),
             }
         )

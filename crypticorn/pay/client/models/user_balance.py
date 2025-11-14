@@ -12,18 +12,17 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List
 from crypticorn.pay.client.models.stake_details import StakeDetails
 from crypticorn.pay.client.models.total_balance import TotalBalance
 from crypticorn.pay.client.models.wallet_balance import WalletBalance
+from typing import Optional, Set
+from typing_extensions import Self
 
 
 class UserBalance(BaseModel):
@@ -113,22 +112,16 @@ class UserBalance(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "wallets": (
-                    [WalletBalance.from_dict(_item) for _item in obj["wallets"]]
-                    if obj.get("wallets") is not None
-                    else None
-                ),
+                "wallets": [WalletBalance.from_dict(_item) for _item in obj["wallets"]]
+                if obj.get("wallets") is not None
+                else None,
                 "updated_at": obj.get("updated_at"),
-                "total": (
-                    TotalBalance.from_dict(obj["total"])
-                    if obj.get("total") is not None
-                    else None
-                ),
-                "pools": (
-                    [StakeDetails.from_dict(_item) for _item in obj["pools"]]
-                    if obj.get("pools") is not None
-                    else None
-                ),
+                "total": TotalBalance.from_dict(obj["total"])
+                if obj.get("total") is not None
+                else None,
+                "pools": [StakeDetails.from_dict(_item) for _item in obj["pools"]]
+                if obj.get("pools") is not None
+                else None,
             }
         )
         return _obj

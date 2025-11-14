@@ -40,7 +40,7 @@ __all__ = [
     "Coupon",
     "CouponCreate",
     "CouponUpdate",
-    "ExceptionDetailLiteralUnknownErrorInvalidDataRequestInvalidDataResponseObjectAlreadyExistsObjectNotFoundLifetimeSubscriptionAlreadyActiveCouponInvalidNowApiDownForbiddenInsufficientStakedBalance",
+    "ErrorResponse",
     "Invoice",
     "InvoiceCreate",
     "PaginatedResponseCoupon",
@@ -54,6 +54,7 @@ __all__ = [
     "StakeDetails",
     "Subscription",
     "TotalBalance",
+    "UnstakeTokensRequest",
     "UserBalance",
     "WalletBalance",
 ]
@@ -68,17 +69,17 @@ from crypticorn.pay.client.api.products_api import ProductsApi as ProductsApi
 from crypticorn.pay.client.api.status_api import StatusApi as StatusApi
 from crypticorn.pay.client.api.stripe_api import StripeApi as StripeApi
 from crypticorn.pay.client.api.token_api import TokenApi as TokenApi
-from crypticorn.pay.client.api_client import ApiClient as ApiClient
 
 # import ApiClient
 from crypticorn.pay.client.api_response import ApiResponse as ApiResponse
+from crypticorn.pay.client.api_client import ApiClient as ApiClient
 from crypticorn.pay.client.configuration import Configuration as Configuration
-from crypticorn.pay.client.exceptions import ApiAttributeError as ApiAttributeError
-from crypticorn.pay.client.exceptions import ApiException as ApiException
-from crypticorn.pay.client.exceptions import ApiKeyError as ApiKeyError
+from crypticorn.pay.client.exceptions import OpenApiException as OpenApiException
 from crypticorn.pay.client.exceptions import ApiTypeError as ApiTypeError
 from crypticorn.pay.client.exceptions import ApiValueError as ApiValueError
-from crypticorn.pay.client.exceptions import OpenApiException as OpenApiException
+from crypticorn.pay.client.exceptions import ApiKeyError as ApiKeyError
+from crypticorn.pay.client.exceptions import ApiAttributeError as ApiAttributeError
+from crypticorn.pay.client.exceptions import ApiException as ApiException
 
 # import models into sdk package
 from crypticorn.pay.client.models.access_scope import AccessScope as AccessScope
@@ -88,9 +89,7 @@ from crypticorn.pay.client.models.access_threshold import (
 from crypticorn.pay.client.models.coupon import Coupon as Coupon
 from crypticorn.pay.client.models.coupon_create import CouponCreate as CouponCreate
 from crypticorn.pay.client.models.coupon_update import CouponUpdate as CouponUpdate
-from crypticorn.pay.client.models.exception_detail_literal_unknown_error_invalid_data_request_invalid_data_response_object_already_exists_object_not_found_lifetime_subscription_already_active_coupon_invalid_now_api_down_forbidden_insufficient_staked_balance import (
-    ExceptionDetailLiteralUnknownErrorInvalidDataRequestInvalidDataResponseObjectAlreadyExistsObjectNotFoundLifetimeSubscriptionAlreadyActiveCouponInvalidNowApiDownForbiddenInsufficientStakedBalance as ExceptionDetailLiteralUnknownErrorInvalidDataRequestInvalidDataResponseObjectAlreadyExistsObjectNotFoundLifetimeSubscriptionAlreadyActiveCouponInvalidNowApiDownForbiddenInsufficientStakedBalance,
-)
+from crypticorn.pay.client.models.error_response import ErrorResponse as ErrorResponse
 from crypticorn.pay.client.models.invoice import Invoice as Invoice
 from crypticorn.pay.client.models.invoice_create import InvoiceCreate as InvoiceCreate
 from crypticorn.pay.client.models.paginated_response_coupon import (
@@ -108,5 +107,8 @@ from crypticorn.pay.client.models.scopes_info import ScopesInfo as ScopesInfo
 from crypticorn.pay.client.models.stake_details import StakeDetails as StakeDetails
 from crypticorn.pay.client.models.subscription import Subscription as Subscription
 from crypticorn.pay.client.models.total_balance import TotalBalance as TotalBalance
+from crypticorn.pay.client.models.unstake_tokens_request import (
+    UnstakeTokensRequest as UnstakeTokensRequest,
+)
 from crypticorn.pay.client.models.user_balance import UserBalance as UserBalance
 from crypticorn.pay.client.models.wallet_balance import WalletBalance as WalletBalance

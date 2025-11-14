@@ -12,11 +12,9 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import (
     BaseModel,
@@ -27,14 +25,15 @@ from pydantic import (
     StrictStr,
     field_validator,
 )
+from typing import Any, ClassVar, Dict, List, Optional
+from crypticorn.notification.client.models.ui_template import UITemplate
+from typing import Set
 from typing_extensions import Self
 
-from crypticorn.notification.client.models.ui_template import UITemplate
 
-
-class DashboardNotification(BaseModel):
+class DashboardNotificationInput(BaseModel):
     """
-    DashboardNotification
+    DashboardNotificationInput
     """  # noqa: E501
 
     id: StrictStr = Field(description="Unique identifier for the resource")
@@ -75,10 +74,11 @@ class DashboardNotification(BaseModel):
                 "otp_code",
                 "subscription_expiring",
                 "subscription_expired",
+                "development_update",
             ]
         ):
             raise ValueError(
-                "must be one of enum values ('subscription_predictions_welcome', 'subscription_dex_signals_welcome', 'subscription_combo_welcome', 'new_member', 'exchange_api_key_expiring', 'test', 'new_dex_ai_call', 'new_dex_ai_call_incognito', 'order_completion', 'otp_code', 'subscription_expiring', 'subscription_expired')"
+                "must be one of enum values ('subscription_predictions_welcome', 'subscription_dex_signals_welcome', 'subscription_combo_welcome', 'new_member', 'exchange_api_key_expiring', 'test', 'new_dex_ai_call', 'new_dex_ai_call_incognito', 'order_completion', 'otp_code', 'subscription_expiring', 'subscription_expired', 'development_update')"
             )
         return value
 
@@ -99,7 +99,7 @@ class DashboardNotification(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of DashboardNotification from a JSON string"""
+        """Create an instance of DashboardNotificationInput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -126,7 +126,7 @@ class DashboardNotification(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of DashboardNotification from a dict"""
+        """Create an instance of DashboardNotificationInput from a dict"""
         if obj is None:
             return None
 
@@ -142,11 +142,9 @@ class DashboardNotification(BaseModel):
                 "viewed": obj.get("viewed") if obj.get("viewed") is not None else False,
                 "variables": obj.get("variables"),
                 "user_id": obj.get("user_id"),
-                "rendered": (
-                    UITemplate.from_dict(obj["rendered"])
-                    if obj.get("rendered") is not None
-                    else None
-                ),
+                "rendered": UITemplate.from_dict(obj["rendered"])
+                if obj.get("rendered") is not None
+                else None,
             }
         )
         return _obj

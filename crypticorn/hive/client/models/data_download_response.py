@@ -12,17 +12,16 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List
 from crypticorn.hive.client.models.download_links import DownloadLinks
 from crypticorn.hive.client.models.target import Target
+from typing import Optional, Set
+from typing_extensions import Self
 
 
 class DataDownloadResponse(BaseModel):
@@ -123,11 +122,9 @@ class DataDownloadResponse(BaseModel):
                 "feature_size": obj.get("feature_size"),
                 "version": obj.get("version"),
                 "target": obj.get("target"),
-                "links": (
-                    DownloadLinks.from_dict(obj["links"])
-                    if obj.get("links") is not None
-                    else None
-                ),
+                "links": DownloadLinks.from_dict(obj["links"])
+                if obj.get("links") is not None
+                else None,
             }
         )
         return _obj

@@ -12,16 +12,15 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List
 from crypticorn.pay.client.models.stake_details import StakeDetails
+from typing import Optional, Set
+from typing_extensions import Self
 
 
 class WalletBalance(BaseModel):
@@ -95,11 +94,9 @@ class WalletBalance(BaseModel):
             {
                 "address": obj.get("address"),
                 "balance": obj.get("balance"),
-                "staked": (
-                    [StakeDetails.from_dict(_item) for _item in obj["staked"]]
-                    if obj.get("staked") is not None
-                    else None
-                ),
+                "staked": [StakeDetails.from_dict(_item) for _item in obj["staked"]]
+                if obj.get("staked") is not None
+                else None,
             }
         )
         return _obj
