@@ -54,17 +54,17 @@ __all__ = [
 from crypticorn.hive.client.api.data_api import DataApi as DataApi
 from crypticorn.hive.client.api.models_api import ModelsApi as ModelsApi
 from crypticorn.hive.client.api.status_api import StatusApi as StatusApi
-from crypticorn.hive.client.api_client import ApiClient as ApiClient
 
 # import ApiClient
 from crypticorn.hive.client.api_response import ApiResponse as ApiResponse
+from crypticorn.hive.client.api_client import ApiClient as ApiClient
 from crypticorn.hive.client.configuration import Configuration as Configuration
-from crypticorn.hive.client.exceptions import ApiAttributeError as ApiAttributeError
-from crypticorn.hive.client.exceptions import ApiException as ApiException
-from crypticorn.hive.client.exceptions import ApiKeyError as ApiKeyError
+from crypticorn.hive.client.exceptions import OpenApiException as OpenApiException
 from crypticorn.hive.client.exceptions import ApiTypeError as ApiTypeError
 from crypticorn.hive.client.exceptions import ApiValueError as ApiValueError
-from crypticorn.hive.client.exceptions import OpenApiException as OpenApiException
+from crypticorn.hive.client.exceptions import ApiKeyError as ApiKeyError
+from crypticorn.hive.client.exceptions import ApiAttributeError as ApiAttributeError
+from crypticorn.hive.client.exceptions import ApiException as ApiException
 
 # import models into sdk package
 from crypticorn.hive.client.models.benchmarks_value import (

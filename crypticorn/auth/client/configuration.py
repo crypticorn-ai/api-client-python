@@ -14,12 +14,13 @@ Do not edit the class manually.
 import copy
 import http.client as httplib
 import logging
-import sys
 from logging import FileHandler
+import sys
 from typing import Any, ClassVar, Dict, List, Literal, Optional, TypedDict, Union
+from typing_extensions import NotRequired, Self
 
 import urllib3
-from typing_extensions import NotRequired, Self
+
 
 JSON_SCHEMA_VALIDATION_KEYWORDS = {
     "multipleOf",
@@ -213,7 +214,7 @@ class Configuration:
         debug: Optional[bool] = None,
     ) -> None:
         """Constructor"""
-        self._base_path = "http://localhost/v1/auth" if host is None else host
+        self._base_path = "https://api.crypticorn.com/v1/auth" if host is None else host
         """Default Base url
         """
         self.server_index = 0 if server_index is None and host is None else server_index
@@ -555,7 +556,7 @@ class Configuration:
         """
         return [
             {
-                "url": "http://localhost/v1/auth",
+                "url": "https://api.crypticorn.com/v1/auth",
                 "description": "No description provided",
             }
         ]

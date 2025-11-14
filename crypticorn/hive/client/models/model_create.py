@@ -12,16 +12,16 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List
+from typing_extensions import Annotated
 from crypticorn.hive.client.models.target import Target
+from typing import Optional, Set
+from typing_extensions import Self
 
 
 class ModelCreate(BaseModel):
@@ -31,7 +31,9 @@ class ModelCreate(BaseModel):
 
     coin_id: StrictStr = Field(description="Coin ID for the model")
     target: Target = Field(description="Target variable for the model")
-    name: StrictStr = Field(description="Model name")
+    name: Annotated[str, Field(min_length=5, strict=True, max_length=30)] = Field(
+        description="The name of the model."
+    )
     __properties: ClassVar[List[str]] = ["coin_id", "target", "name"]
 
     @field_validator("coin_id")
@@ -41,6 +43,13 @@ class ModelCreate(BaseModel):
             raise ValueError(
                 "must be one of enum values ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10')"
             )
+        return value
+
+    @field_validator("name")
+    def name_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if not re.match(r"^[a-z0-9_-]+$", value):
+            raise ValueError(r"must validate the regular expression /^[a-z0-9_-]+$/")
         return value
 
     model_config = ConfigDict(

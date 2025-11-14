@@ -12,16 +12,15 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.dex.client.models.signal_with_token import SignalWithToken
+from typing import Set
+from typing_extensions import Self
 
 
 class PaginatedResponseSignalWithToken(BaseModel):
@@ -118,11 +117,9 @@ class PaginatedResponseSignalWithToken(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "data": (
-                    [SignalWithToken.from_dict(_item) for _item in obj["data"]]
-                    if obj.get("data") is not None
-                    else None
-                ),
+                "data": [SignalWithToken.from_dict(_item) for _item in obj["data"]]
+                if obj.get("data") is not None
+                else None,
                 "total": obj.get("total"),
                 "page": obj.get("page"),
                 "page_size": obj.get("page_size"),

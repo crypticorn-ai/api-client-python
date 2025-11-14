@@ -12,19 +12,18 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List
 from crypticorn.hive.client.models.coin_info import CoinInfo
 from crypticorn.hive.client.models.data_options import DataOptions
 from crypticorn.hive.client.models.data_version_info import DataVersionInfo
 from crypticorn.hive.client.models.target_info import TargetInfo
+from typing import Optional, Set
+from typing_extensions import Self
 
 
 class DataInfo(BaseModel):
@@ -154,48 +153,37 @@ class DataInfo(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "data": (
-                    dict(
-                        (
-                            _k,
-                            (
-                                dict(
-                                    (_ik, DataOptions.from_dict(_iv))
-                                    for _ik, _iv in _v.items()
-                                )
-                                if _v is not None
-                                else None
-                            ),
+                "data": dict(
+                    (
+                        _k,
+                        dict(
+                            (_ik, DataOptions.from_dict(_iv)) for _ik, _iv in _v.items()
                         )
-                        for _k, _v in obj.get("data").items()
+                        if _v is not None
+                        else None,
                     )
-                    if obj.get("data") is not None
-                    else None
-                ),
-                "coins": (
-                    [CoinInfo.from_dict(_item) for _item in obj["coins"]]
-                    if obj.get("coins") is not None
-                    else None
-                ),
+                    for _k, _v in obj.get("data").items()
+                )
+                if obj.get("data") is not None
+                else None,
+                "coins": [CoinInfo.from_dict(_item) for _item in obj["coins"]]
+                if obj.get("coins") is not None
+                else None,
                 "feature_sizes": obj.get("feature_sizes"),
-                "targets": (
-                    [TargetInfo.from_dict(_item) for _item in obj["targets"]]
-                    if obj.get("targets") is not None
-                    else None
-                ),
-                "all_versions": (
-                    [DataVersionInfo.from_dict(_item) for _item in obj["all_versions"]]
-                    if obj.get("all_versions") is not None
-                    else None
-                ),
-                "available_versions": (
-                    [
-                        DataVersionInfo.from_dict(_item)
-                        for _item in obj["available_versions"]
-                    ]
-                    if obj.get("available_versions") is not None
-                    else None
-                ),
+                "targets": [TargetInfo.from_dict(_item) for _item in obj["targets"]]
+                if obj.get("targets") is not None
+                else None,
+                "all_versions": [
+                    DataVersionInfo.from_dict(_item) for _item in obj["all_versions"]
+                ]
+                if obj.get("all_versions") is not None
+                else None,
+                "available_versions": [
+                    DataVersionInfo.from_dict(_item)
+                    for _item in obj["available_versions"]
+                ]
+                if obj.get("available_versions") is not None
+                else None,
             }
         )
         return _obj

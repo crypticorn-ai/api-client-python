@@ -13,10 +13,7 @@ Do not edit the class manually.
 """  # noqa: E501
 
 # import models into model package
-from crypticorn.dex.client.models.api_error_identifier import ApiErrorIdentifier
-from crypticorn.dex.client.models.api_error_level import ApiErrorLevel
-from crypticorn.dex.client.models.api_error_type import ApiErrorType
-from crypticorn.dex.client.models.exception_detail import ExceptionDetail
+from crypticorn.dex.client.models.error_response import ErrorResponse
 from crypticorn.dex.client.models.paginated_response_signal_with_token import (
     PaginatedResponseSignalWithToken,
 )

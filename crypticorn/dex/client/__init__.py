@@ -28,10 +28,7 @@ __all__ = [
     "ApiKeyError",
     "ApiAttributeError",
     "ApiException",
-    "ApiErrorIdentifier",
-    "ApiErrorLevel",
-    "ApiErrorType",
-    "ExceptionDetail",
+    "ErrorResponse",
     "PaginatedResponseSignalWithToken",
     "Risk",
     "SignalOverviewStats",
@@ -44,27 +41,20 @@ __all__ = [
 # import apis into sdk package
 from crypticorn.dex.client.api.signals_api import SignalsApi as SignalsApi
 from crypticorn.dex.client.api.status_api import StatusApi as StatusApi
-from crypticorn.dex.client.api_client import ApiClient as ApiClient
 
 # import ApiClient
 from crypticorn.dex.client.api_response import ApiResponse as ApiResponse
+from crypticorn.dex.client.api_client import ApiClient as ApiClient
 from crypticorn.dex.client.configuration import Configuration as Configuration
-from crypticorn.dex.client.exceptions import ApiAttributeError as ApiAttributeError
-from crypticorn.dex.client.exceptions import ApiException as ApiException
-from crypticorn.dex.client.exceptions import ApiKeyError as ApiKeyError
+from crypticorn.dex.client.exceptions import OpenApiException as OpenApiException
 from crypticorn.dex.client.exceptions import ApiTypeError as ApiTypeError
 from crypticorn.dex.client.exceptions import ApiValueError as ApiValueError
-from crypticorn.dex.client.exceptions import OpenApiException as OpenApiException
+from crypticorn.dex.client.exceptions import ApiKeyError as ApiKeyError
+from crypticorn.dex.client.exceptions import ApiAttributeError as ApiAttributeError
+from crypticorn.dex.client.exceptions import ApiException as ApiException
 
 # import models into sdk package
-from crypticorn.dex.client.models.api_error_identifier import (
-    ApiErrorIdentifier as ApiErrorIdentifier,
-)
-from crypticorn.dex.client.models.api_error_level import ApiErrorLevel as ApiErrorLevel
-from crypticorn.dex.client.models.api_error_type import ApiErrorType as ApiErrorType
-from crypticorn.dex.client.models.exception_detail import (
-    ExceptionDetail as ExceptionDetail,
-)
+from crypticorn.dex.client.models.error_response import ErrorResponse as ErrorResponse
 from crypticorn.dex.client.models.paginated_response_signal_with_token import (
     PaginatedResponseSignalWithToken as PaginatedResponseSignalWithToken,
 )

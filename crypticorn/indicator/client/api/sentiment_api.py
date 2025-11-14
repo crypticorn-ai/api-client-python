@@ -51,6 +51,10 @@ class SentimentApi:
         sort_by: Annotated[
             Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(description="The number of days to return. Default is 1 day."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -70,6 +74,7 @@ class SentimentApi:
                 filter_value=filter_value,
                 sort_order=sort_order,
                 sort_by=sort_by,
+                limit=limit,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -83,6 +88,7 @@ class SentimentApi:
                 filter_value=filter_value,
                 sort_order=sort_order,
                 sort_by=sort_by,
+                limit=limit,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -105,6 +111,10 @@ class SentimentApi:
         sort_by: Annotated[
             Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(description="The number of days to return. Default is 1 day."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -124,6 +134,7 @@ class SentimentApi:
                 filter_value=filter_value,
                 sort_order=sort_order,
                 sort_by=sort_by,
+                limit=limit,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -137,6 +148,7 @@ class SentimentApi:
                 filter_value=filter_value,
                 sort_order=sort_order,
                 sort_by=sort_by,
+                limit=limit,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -159,6 +171,10 @@ class SentimentApi:
         sort_by: Annotated[
             Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(description="The number of days to return. Default is 1 day."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -178,6 +194,7 @@ class SentimentApi:
                 filter_value=filter_value,
                 sort_order=sort_order,
                 sort_by=sort_by,
+                limit=limit,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -191,6 +208,7 @@ class SentimentApi:
                 filter_value=filter_value,
                 sort_order=sort_order,
                 sort_by=sort_by,
+                limit=limit,
                 _request_timeout=_request_timeout,
                 _request_auth=_request_auth,
                 _content_type=_content_type,
@@ -213,6 +231,10 @@ class SentimentApi:
         ] = None,
         sort_by: Annotated[
             Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(description="The number of days to return. Default is 1 day."),
         ] = None,
         _request_timeout: Union[
             None,
@@ -238,6 +260,8 @@ class SentimentApi:
         :type sort_order: str
         :param sort_by: The field to sort by
         :type sort_by: str
+        :param limit: The number of days to return. Default is 1 day.
+        :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -265,6 +289,7 @@ class SentimentApi:
             filter_value=filter_value,
             sort_order=sort_order,
             sort_by=sort_by,
+            limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -299,6 +324,10 @@ class SentimentApi:
         sort_by: Annotated[
             Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(description="The number of days to return. Default is 1 day."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -323,6 +352,8 @@ class SentimentApi:
         :type sort_order: str
         :param sort_by: The field to sort by
         :type sort_by: str
+        :param limit: The number of days to return. Default is 1 day.
+        :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -350,6 +381,7 @@ class SentimentApi:
             filter_value=filter_value,
             sort_order=sort_order,
             sort_by=sort_by,
+            limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -383,6 +415,10 @@ class SentimentApi:
         sort_by: Annotated[
             Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(description="The number of days to return. Default is 1 day."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -407,6 +443,8 @@ class SentimentApi:
         :type sort_order: str
         :param sort_by: The field to sort by
         :type sort_by: str
+        :param limit: The number of days to return. Default is 1 day.
+        :type limit: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -434,6 +472,7 @@ class SentimentApi:
             filter_value=filter_value,
             sort_order=sort_order,
             sort_by=sort_by,
+            limit=limit,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -465,6 +504,10 @@ class SentimentApi:
         sort_by: Annotated[
             Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(description="The number of days to return. Default is 1 day."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -483,6 +526,7 @@ class SentimentApi:
             filter_value=filter_value,
             sort_order=sort_order,
             sort_by=sort_by,
+            limit=limit,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -505,6 +549,10 @@ class SentimentApi:
         sort_by: Annotated[
             Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(description="The number of days to return. Default is 1 day."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -523,6 +571,7 @@ class SentimentApi:
             filter_value=filter_value,
             sort_order=sort_order,
             sort_by=sort_by,
+            limit=limit,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -545,6 +594,10 @@ class SentimentApi:
         sort_by: Annotated[
             Optional[StrictStr], Field(description="The field to sort by")
         ] = None,
+        limit: Annotated[
+            Optional[StrictInt],
+            Field(description="The number of days to return. Default is 1 day."),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -563,6 +616,7 @@ class SentimentApi:
             filter_value=filter_value,
             sort_order=sort_order,
             sort_by=sort_by,
+            limit=limit,
             _request_timeout=_request_timeout,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -576,6 +630,7 @@ class SentimentApi:
         filter_value,
         sort_order,
         sort_by,
+        limit,
         _request_auth,
         _content_type,
         _headers,
@@ -607,6 +662,9 @@ class SentimentApi:
 
         if sort_by is not None:
             _query_params.append(("sort_by", sort_by))
+
+        if limit is not None:
+            _query_params.append(("limit", limit))
 
         # process the header parameters
         # process the form parameters

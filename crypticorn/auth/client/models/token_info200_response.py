@@ -12,18 +12,17 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.auth.client.models.create_user200_response_auth_auth import (
     CreateUser200ResponseAuthAuth,
 )
+from typing import Set
+from typing_extensions import Self
 
 
 class TokenInfo200Response(BaseModel):
@@ -87,11 +86,9 @@ class TokenInfo200Response(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "payload": (
-                    CreateUser200ResponseAuthAuth.from_dict(obj["payload"])
-                    if obj.get("payload") is not None
-                    else None
-                )
+                "payload": CreateUser200ResponseAuthAuth.from_dict(obj["payload"])
+                if obj.get("payload") is not None
+                else None
             }
         )
         return _obj

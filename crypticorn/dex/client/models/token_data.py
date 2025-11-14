@@ -12,17 +12,16 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List
 from crypticorn.dex.client.models.risk import Risk
 from crypticorn.dex.client.models.token_detail import TokenDetail
+from typing import Optional, Set
+from typing_extensions import Self
 
 
 class TokenData(BaseModel):
@@ -107,17 +106,15 @@ class TokenData(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "token": (
-                    TokenDetail.from_dict(obj["token"])
-                    if obj.get("token") is not None
-                    else None
-                ),
+                "token": TokenDetail.from_dict(obj["token"])
+                if obj.get("token") is not None
+                else None,
                 "mcap": obj.get("mcap"),
                 "price": obj.get("price"),
                 "liquidity": obj.get("liquidity"),
-                "risk": (
-                    Risk.from_dict(obj["risk"]) if obj.get("risk") is not None else None
-                ),
+                "risk": Risk.from_dict(obj["risk"])
+                if obj.get("risk") is not None
+                else None,
                 "buys": obj.get("buys"),
                 "sells": obj.get("sells"),
                 "txns": obj.get("txns"),

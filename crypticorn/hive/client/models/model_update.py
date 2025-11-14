@@ -12,13 +12,14 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
+from typing import Set
 from typing_extensions import Self
 
 
@@ -27,8 +28,20 @@ class ModelUpdate(BaseModel):
     Pydantic model for model update
     """  # noqa: E501
 
-    name: StrictStr = Field(description="Model name")
+    name: Optional[Annotated[str, Field(min_length=5, strict=True, max_length=30)]] = (
+        None
+    )
     __properties: ClassVar[List[str]] = ["name"]
+
+    @field_validator("name")
+    def name_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"^[a-z0-9_-]+$", value):
+            raise ValueError(r"must validate the regular expression /^[a-z0-9_-]+$/")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -67,6 +80,11 @@ class ModelUpdate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if name (nullable) is None
+        # and model_fields_set contains the field
+        if self.name is None and "name" in self.model_fields_set:
+            _dict["name"] = None
+
         return _dict
 
     @classmethod

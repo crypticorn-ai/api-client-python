@@ -12,17 +12,16 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set, Union
+import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from crypticorn.dex.client.models.signal_volume import SignalVolume
 from crypticorn.dex.client.models.token_data import TokenData
+from typing import Set
+from typing_extensions import Self
 
 
 class SignalWithToken(BaseModel):
@@ -142,21 +141,17 @@ class SignalWithToken(BaseModel):
                 "risk": obj.get("risk"),
                 "performance": obj.get("performance"),
                 "price": obj.get("price"),
-                "volume": (
-                    SignalVolume.from_dict(obj["volume"])
-                    if obj.get("volume") is not None
-                    else None
-                ),
+                "volume": SignalVolume.from_dict(obj["volume"])
+                if obj.get("volume") is not None
+                else None,
                 "liquidity": obj.get("liquidity"),
                 "mcap": obj.get("mcap"),
                 "called_at": obj.get("called_at"),
                 "updated_at": obj.get("updated_at"),
                 "tg_id": obj.get("tg_id"),
-                "data": (
-                    TokenData.from_dict(obj["data"])
-                    if obj.get("data") is not None
-                    else None
-                ),
+                "data": TokenData.from_dict(obj["data"])
+                if obj.get("data") is not None
+                else None,
                 "performance_float": obj.get("performance_float"),
             }
         )

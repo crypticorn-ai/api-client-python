@@ -18,9 +18,7 @@ from crypticorn.pay.client.models.access_threshold import AccessThreshold
 from crypticorn.pay.client.models.coupon import Coupon
 from crypticorn.pay.client.models.coupon_create import CouponCreate
 from crypticorn.pay.client.models.coupon_update import CouponUpdate
-from crypticorn.pay.client.models.exception_detail_literal_unknown_error_invalid_data_request_invalid_data_response_object_already_exists_object_not_found_lifetime_subscription_already_active_coupon_invalid_now_api_down_forbidden_insufficient_staked_balance import (
-    ExceptionDetailLiteralUnknownErrorInvalidDataRequestInvalidDataResponseObjectAlreadyExistsObjectNotFoundLifetimeSubscriptionAlreadyActiveCouponInvalidNowApiDownForbiddenInsufficientStakedBalance,
-)
+from crypticorn.pay.client.models.error_response import ErrorResponse
 from crypticorn.pay.client.models.invoice import Invoice
 from crypticorn.pay.client.models.invoice_create import InvoiceCreate
 from crypticorn.pay.client.models.paginated_response_coupon import (
@@ -38,5 +36,6 @@ from crypticorn.pay.client.models.scopes_info import ScopesInfo
 from crypticorn.pay.client.models.stake_details import StakeDetails
 from crypticorn.pay.client.models.subscription import Subscription
 from crypticorn.pay.client.models.total_balance import TotalBalance
+from crypticorn.pay.client.models.unstake_tokens_request import UnstakeTokensRequest
 from crypticorn.pay.client.models.user_balance import UserBalance
 from crypticorn.pay.client.models.wallet_balance import WalletBalance

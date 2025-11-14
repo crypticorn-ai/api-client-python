@@ -12,17 +12,15 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
 import json
 import pprint
 import re  # noqa: F401
-from typing import TYPE_CHECKING, Any, Dict, Optional, Set, Union
-
 from pydantic import BaseModel, ValidationError, field_validator
-from typing_extensions import Self
-
+from typing import Optional
 from crypticorn.hive.client.models.binary_evaluation import BinaryEvaluation
 from crypticorn.hive.client.models.continuous_evaluation import ContinuousEvaluation
+from typing import Union, Any, Set, TYPE_CHECKING, Dict
+from typing_extensions import Self
 
 METRICS_ANY_OF_SCHEMAS = ["BinaryEvaluation", "ContinuousEvaluation"]
 
@@ -63,6 +61,7 @@ class Metrics(BaseModel):
 
     @field_validator("actual_instance")
     def actual_instance_must_validate_anyof(cls, v):
+        _ = Metrics.model_construct()
         error_messages = []
         # validate data type: BinaryEvaluation
         if not isinstance(v, BinaryEvaluation):

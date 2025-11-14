@@ -36,7 +36,8 @@ __all__ = [
     "BroadcastUpdate",
     "DashboardActionButton",
     "DashboardField",
-    "DashboardNotification",
+    "DashboardNotificationInput",
+    "DashboardNotificationOutput",
     "DashboardNotificationUpdate",
     "ErrorResponse",
     "NotificationCreate",
@@ -57,21 +58,21 @@ from crypticorn.notification.client.api.status_api import StatusApi as StatusApi
 from crypticorn.notification.client.api.templates_api import (
     TemplatesApi as TemplatesApi,
 )
-from crypticorn.notification.client.api_client import ApiClient as ApiClient
 
 # import ApiClient
 from crypticorn.notification.client.api_response import ApiResponse as ApiResponse
+from crypticorn.notification.client.api_client import ApiClient as ApiClient
 from crypticorn.notification.client.configuration import Configuration as Configuration
+from crypticorn.notification.client.exceptions import (
+    OpenApiException as OpenApiException,
+)
+from crypticorn.notification.client.exceptions import ApiTypeError as ApiTypeError
+from crypticorn.notification.client.exceptions import ApiValueError as ApiValueError
+from crypticorn.notification.client.exceptions import ApiKeyError as ApiKeyError
 from crypticorn.notification.client.exceptions import (
     ApiAttributeError as ApiAttributeError,
 )
 from crypticorn.notification.client.exceptions import ApiException as ApiException
-from crypticorn.notification.client.exceptions import ApiKeyError as ApiKeyError
-from crypticorn.notification.client.exceptions import ApiTypeError as ApiTypeError
-from crypticorn.notification.client.exceptions import ApiValueError as ApiValueError
-from crypticorn.notification.client.exceptions import (
-    OpenApiException as OpenApiException,
-)
 
 # import models into sdk package
 from crypticorn.notification.client.models.broadcast import Broadcast as Broadcast
@@ -90,8 +91,11 @@ from crypticorn.notification.client.models.dashboard_action_button import (
 from crypticorn.notification.client.models.dashboard_field import (
     DashboardField as DashboardField,
 )
-from crypticorn.notification.client.models.dashboard_notification import (
-    DashboardNotification as DashboardNotification,
+from crypticorn.notification.client.models.dashboard_notification_input import (
+    DashboardNotificationInput as DashboardNotificationInput,
+)
+from crypticorn.notification.client.models.dashboard_notification_output import (
+    DashboardNotificationOutput as DashboardNotificationOutput,
 )
 from crypticorn.notification.client.models.dashboard_notification_update import (
     DashboardNotificationUpdate as DashboardNotificationUpdate,

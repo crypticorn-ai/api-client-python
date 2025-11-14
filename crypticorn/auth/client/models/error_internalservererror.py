@@ -12,18 +12,17 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List, Optional
 from crypticorn.auth.client.models.revoke_user_tokens200_response import (
     RevokeUserTokens200Response,
 )
+from typing import Set
+from typing_extensions import Self
 
 
 class ErrorINTERNALSERVERERROR(BaseModel):
@@ -98,14 +97,12 @@ class ErrorINTERNALSERVERERROR(BaseModel):
             {
                 "message": obj.get("message"),
                 "code": obj.get("code"),
-                "issues": (
-                    [
-                        RevokeUserTokens200Response.from_dict(_item)
-                        for _item in obj["issues"]
-                    ]
-                    if obj.get("issues") is not None
-                    else None
-                ),
+                "issues": [
+                    RevokeUserTokens200Response.from_dict(_item)
+                    for _item in obj["issues"]
+                ]
+                if obj.get("issues") is not None
+                else None,
             }
         )
         return _obj

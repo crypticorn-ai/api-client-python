@@ -12,13 +12,13 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Set
 from typing_extensions import Self
 
 
@@ -28,7 +28,7 @@ class NotificationCreate(BaseModel):
     """  # noqa: E501
 
     template: StrictStr = Field(description="Template ID")
-    variables: Dict[str, Any] = Field(description="Variables for the template")
+    variables: Dict[str, StrictStr] = Field(description="Variables for the template")
     user_ids: Optional[List[StrictStr]] = None
     __properties: ClassVar[List[str]] = ["template", "variables", "user_ids"]
 
@@ -49,10 +49,11 @@ class NotificationCreate(BaseModel):
                 "otp_code",
                 "subscription_expiring",
                 "subscription_expired",
+                "development_update",
             ]
         ):
             raise ValueError(
-                "must be one of enum values ('subscription_predictions_welcome', 'subscription_dex_signals_welcome', 'subscription_combo_welcome', 'new_member', 'exchange_api_key_expiring', 'test', 'new_dex_ai_call', 'new_dex_ai_call_incognito', 'order_completion', 'otp_code', 'subscription_expiring', 'subscription_expired')"
+                "must be one of enum values ('subscription_predictions_welcome', 'subscription_dex_signals_welcome', 'subscription_combo_welcome', 'new_member', 'exchange_api_key_expiring', 'test', 'new_dex_ai_call', 'new_dex_ai_call_incognito', 'order_completion', 'otp_code', 'subscription_expiring', 'subscription_expired', 'development_update')"
             )
         return value
 

@@ -12,18 +12,17 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List
 from crypticorn.hive.client.models.evaluation import Evaluation
 from crypticorn.hive.client.models.model_status import ModelStatus
 from crypticorn.hive.client.models.target import Target
+from typing import Optional, Set
+from typing_extensions import Self
 
 
 class ModelRead(BaseModel):
@@ -133,11 +132,11 @@ class ModelRead(BaseModel):
                 "target": obj.get("target"),
                 "status": obj.get("status"),
                 "target_type": obj.get("target_type"),
-                "evaluations": (
-                    [Evaluation.from_dict(_item) for _item in obj["evaluations"]]
-                    if obj.get("evaluations") is not None
-                    else None
-                ),
+                "evaluations": [
+                    Evaluation.from_dict(_item) for _item in obj["evaluations"]
+                ]
+                if obj.get("evaluations") is not None
+                else None,
                 "user_id": obj.get("user_id"),
                 "created_at": obj.get("created_at"),
                 "updated_at": obj.get("updated_at"),

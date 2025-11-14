@@ -12,16 +12,16 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field
-from typing_extensions import Annotated, Self
-
+from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from crypticorn.notification.client.models.broadcast_recipient import BroadcastRecipient
+from typing import Set
+from typing_extensions import Self
 
 
 class BroadcastUpdate(BaseModel):
@@ -106,11 +106,11 @@ class BroadcastUpdate(BaseModel):
         _obj = cls.model_validate(
             {
                 "template_preferences": obj.get("template_preferences"),
-                "recipients": (
-                    [BroadcastRecipient.from_dict(_item) for _item in obj["recipients"]]
-                    if obj.get("recipients") is not None
-                    else None
-                ),
+                "recipients": [
+                    BroadcastRecipient.from_dict(_item) for _item in obj["recipients"]
+                ]
+                if obj.get("recipients") is not None
+                else None,
             }
         )
         return _obj

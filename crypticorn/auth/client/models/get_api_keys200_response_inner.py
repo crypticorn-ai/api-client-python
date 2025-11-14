@@ -12,13 +12,13 @@ Do not edit the class manually.
 """  # noqa: E501
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List, Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Set
 from typing_extensions import Self
 
 
@@ -55,8 +55,6 @@ class GetApiKeys200ResponseInner(BaseModel):
         for i in value:
             if i not in set(
                 [
-                    "read:predictions",
-                    "read:dex:signals",
                     "read:hive:model",
                     "read:hive:data",
                     "write:hive:model",
@@ -85,7 +83,10 @@ class GetApiKeys200ResponseInner(BaseModel):
                     "read:metrics:exchanges",
                     "read:metrics:tokens",
                     "read:metrics:markets",
-                    "read:sentiment",
+                    "read:indicator:news",
+                    "read:indicator:sentiment",
+                    "read:predictions",
+                    "write:predictions",
                     "read:klines",
                     "read:notifications:broadcast-settings",
                     "write:notifications:broadcast-settings",
@@ -94,10 +95,11 @@ class GetApiKeys200ResponseInner(BaseModel):
                     "read:notifications:notifications",
                     "write:notifications:notifications",
                     "read:prometheus:metrics",
+                    "read:dex:signals",
                 ]
             ):
                 raise ValueError(
-                    "each list item must be one of ('read:predictions', 'read:dex:signals', 'read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:exchangekeys', 'write:trade:exchangekeys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'write:pay:coupons', 'read:pay:coupons', 'write:pay:invoices', 'read:metrics:marketcap', 'read:metrics:indicators', 'read:metrics:exchanges', 'read:metrics:tokens', 'read:metrics:markets', 'read:sentiment', 'read:klines', 'read:notifications:broadcast-settings', 'write:notifications:broadcast-settings', 'read:notifications:user-settings', 'write:notifications:user-settings', 'read:notifications:notifications', 'write:notifications:notifications', 'read:prometheus:metrics')"
+                    "each list item must be one of ('read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:exchangekeys', 'write:trade:exchangekeys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'write:pay:coupons', 'read:pay:coupons', 'write:pay:invoices', 'read:metrics:marketcap', 'read:metrics:indicators', 'read:metrics:exchanges', 'read:metrics:tokens', 'read:metrics:markets', 'read:indicator:news', 'read:indicator:sentiment', 'read:predictions', 'write:predictions', 'read:klines', 'read:notifications:broadcast-settings', 'write:notifications:broadcast-settings', 'read:notifications:user-settings', 'write:notifications:user-settings', 'read:notifications:notifications', 'write:notifications:notifications', 'read:prometheus:metrics', 'read:dex:signals')"
                 )
         return value
 

@@ -21,38 +21,44 @@ from pydantic import (
     ConfigDict,
     Field,
     StrictBool,
+    StrictInt,
     StrictStr,
     field_validator,
 )
-from typing import Any, ClassVar, Dict, List
-from typing import Optional, Set
+from typing import Any, ClassVar, Dict, List, Optional
+from crypticorn.notification.client.models.ui_template import UITemplate
+from typing import Set
 from typing_extensions import Self
 
 
-class Template(BaseModel):
+class DashboardNotificationOutput(BaseModel):
     """
-    Template
+    DashboardNotificationOutput
     """  # noqa: E501
 
-    identifier: StrictStr = Field(description="Identifier of the template")
-    name: StrictStr = Field(description="Name of the template")
-    variables: Dict[str, Any] = Field(description="Variables for the template")
-    channels: List[StrictStr] = Field(
-        description="Channels to send the notification to for this template"
+    id: StrictStr = Field(description="Unique identifier for the resource")
+    created_at: StrictInt = Field(description="Timestamp of creation")
+    updated_at: StrictInt = Field(description="Timestamp of last update")
+    template_id: StrictStr = Field(description="Template ID of the notification")
+    viewed: Optional[StrictBool] = Field(
+        default=False, description="Whether the notification has been marked as seen"
     )
-    user_controllable: StrictBool = Field(
-        description="Whether the user can enable/disable this notification template in their settings"
-    )
+    variables: Dict[str, Any] = Field(description="Variables of the notification")
+    user_id: StrictStr = Field(description="User ID")
+    rendered: UITemplate = Field(description="Rendered notification")
     __properties: ClassVar[List[str]] = [
-        "identifier",
-        "name",
+        "id",
+        "created_at",
+        "updated_at",
+        "template_id",
+        "viewed",
         "variables",
-        "channels",
-        "user_controllable",
+        "user_id",
+        "rendered",
     ]
 
-    @field_validator("identifier")
-    def identifier_validate_enum(cls, value):
+    @field_validator("template_id")
+    def template_id_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(
             [
@@ -76,16 +82,6 @@ class Template(BaseModel):
             )
         return value
 
-    @field_validator("channels")
-    def channels_validate_enum(cls, value):
-        """Validates the enum"""
-        for i in value:
-            if i not in set(["email", "telegram", "discord", "websocket", "ui"]):
-                raise ValueError(
-                    "each list item must be one of ('email', 'telegram', 'discord', 'websocket', 'ui')"
-                )
-        return value
-
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
@@ -103,7 +99,7 @@ class Template(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Template from a JSON string"""
+        """Create an instance of DashboardNotificationOutput from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -123,11 +119,14 @@ class Template(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of rendered
+        if self.rendered:
+            _dict["rendered"] = self.rendered.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Template from a dict"""
+        """Create an instance of DashboardNotificationOutput from a dict"""
         if obj is None:
             return None
 
@@ -136,11 +135,16 @@ class Template(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "identifier": obj.get("identifier"),
-                "name": obj.get("name"),
+                "id": obj.get("id"),
+                "created_at": obj.get("created_at"),
+                "updated_at": obj.get("updated_at"),
+                "template_id": obj.get("template_id"),
+                "viewed": obj.get("viewed") if obj.get("viewed") is not None else False,
                 "variables": obj.get("variables"),
-                "channels": obj.get("channels"),
-                "user_controllable": obj.get("user_controllable"),
+                "user_id": obj.get("user_id"),
+                "rendered": UITemplate.from_dict(obj["rendered"])
+                if obj.get("rendered") is not None
+                else None,
             }
         )
         return _obj
