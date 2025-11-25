@@ -32,7 +32,7 @@ from typing_extensions import Self
 
 class EconomicNewsEntry(BaseModel):
     """
-    Economic Calendar News Entry Pydantic Model
+    Economic Calendar News Entry Pydantic Model. Aliases are used to match the database table columns.
     """  # noqa: E501
 
     timestamp: StrictInt = Field(description="The timestamp of the event")

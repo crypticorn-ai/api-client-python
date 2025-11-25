@@ -34,6 +34,7 @@ __all__ = [
     "ErrorResponse",
     "FnGEntry",
     "PaginatedResponseEconomicNewsEntry",
+    "PolymarketPrediction",
     "Prediction",
     "PredictionCreate",
 ]
@@ -69,6 +70,9 @@ from crypticorn.indicator.client.models.error_response import (
 from crypticorn.indicator.client.models.fn_g_entry import FnGEntry as FnGEntry
 from crypticorn.indicator.client.models.paginated_response_economic_news_entry import (
     PaginatedResponseEconomicNewsEntry as PaginatedResponseEconomicNewsEntry,
+)
+from crypticorn.indicator.client.models.polymarket_prediction import (
+    PolymarketPrediction as PolymarketPrediction,
 )
 from crypticorn.indicator.client.models.prediction import Prediction as Prediction
 from crypticorn.indicator.client.models.prediction_create import (

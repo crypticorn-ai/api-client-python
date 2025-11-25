@@ -13,6 +13,7 @@ client/models/economic_news_entry.py
 client/models/error_response.py
 client/models/fn_g_entry.py
 client/models/paginated_response_economic_news_entry.py
+client/models/polymarket_prediction.py
 client/models/prediction.py
 client/models/prediction_create.py
 client/py.typed

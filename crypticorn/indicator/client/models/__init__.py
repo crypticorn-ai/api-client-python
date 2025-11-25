@@ -19,5 +19,8 @@ from crypticorn.indicator.client.models.fn_g_entry import FnGEntry
 from crypticorn.indicator.client.models.paginated_response_economic_news_entry import (
     PaginatedResponseEconomicNewsEntry,
 )
+from crypticorn.indicator.client.models.polymarket_prediction import (
+    PolymarketPrediction,
+)
 from crypticorn.indicator.client.models.prediction import Prediction
 from crypticorn.indicator.client.models.prediction_create import PredictionCreate
