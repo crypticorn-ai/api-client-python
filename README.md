@@ -1,4 +1,4 @@
-![Crypticorn Logo](https://crypticorn-public.s3.eu-west-1.amazonaws.com/logo-full.svg)
+![Crypticorn Logo](https://www.crypticorn.com/wp-content/uploads/2024/05/Logo-horizontal_blue.svg)
 
 ## What is Crypticorn?
 
@@ -33,9 +33,7 @@ Our API is available as both an asynchronous and synchronous Python SDK. The mai
 ```python
 from crypticorn import AsyncClient, SyncClient
 ```
-Both clients serve as the central interface for API operations and instantiate multiple API wrappers corresponding to our micro services. These are structured the following:
-
-<img src="https://crypticorn-public.s3.eu-west-1.amazonaws.com/api-client-python-structure.svg" alt="pip package structure" />
+Both clients serve as the central interface for API operations and instantiate multiple API wrappers corresponding to our micro services.
 
 You can either explore each API by clicking through the library or checkout the [API Documentation](https://docs.crypticorn.com/api).
 
