@@ -18,19 +18,17 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.notification.client.models.dashboard_notification import (
-    DashboardNotification,
-)
+from crypticorn.notification.client.models.notification_result import NotificationResult
 from typing import Set
 from typing_extensions import Self
 
 
-class PaginatedResponseDashboardNotification(BaseModel):
+class PaginatedResponseNotificationResult(BaseModel):
     """
-    PaginatedResponseDashboardNotification
+    PaginatedResponseNotificationResult
     """  # noqa: E501
 
-    data: List[DashboardNotification]
+    data: List[NotificationResult]
     total: StrictInt = Field(description="The total number of items")
     page: StrictInt = Field(description="The current page number")
     page_size: StrictInt = Field(description="The number of items per page")
@@ -64,7 +62,7 @@ class PaginatedResponseDashboardNotification(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PaginatedResponseDashboardNotification from a JSON string"""
+        """Create an instance of PaginatedResponseNotificationResult from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -110,7 +108,7 @@ class PaginatedResponseDashboardNotification(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PaginatedResponseDashboardNotification from a dict"""
+        """Create an instance of PaginatedResponseNotificationResult from a dict"""
         if obj is None:
             return None
 
@@ -119,9 +117,7 @@ class PaginatedResponseDashboardNotification(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "data": [
-                    DashboardNotification.from_dict(_item) for _item in obj["data"]
-                ]
+                "data": [NotificationResult.from_dict(_item) for _item in obj["data"]]
                 if obj.get("data") is not None
                 else None,
                 "total": obj.get("total"),

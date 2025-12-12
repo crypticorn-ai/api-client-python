@@ -22,15 +22,38 @@ from typing import Set
 from typing_extensions import Self
 
 
-class NotificationCreate(BaseModel):
+class NotificationResult(BaseModel):
     """
-    NotificationCreate
+    Result for a single notification sent via a specific channel to a specific recipient.
     """  # noqa: E501
 
+    status: StrictStr = Field(description="Status of the notification")
+    recipient: StrictStr = Field(
+        description="Recipient of the notification, email address if channel is email, hash + broadcast ID if channel is discord or telegram, or user ID if channel is dashboard"
+    )
     template: StrictStr = Field(description="Template ID")
-    variables: Dict[str, StrictStr] = Field(description="Variables for the template")
-    user_ids: Optional[List[StrictStr]] = None
-    __properties: ClassVar[List[str]] = ["template", "variables", "user_ids"]
+    error: Optional[StrictStr] = None
+    channel: StrictStr = Field(description="Channel of the notification")
+    message_id: Optional[StrictStr] = None
+    action_id: StrictStr = Field(
+        description="ID of the action that triggered the notification. This matches the respective _id field in the notification_actions collection."
+    )
+    __properties: ClassVar[List[str]] = [
+        "status",
+        "recipient",
+        "template",
+        "error",
+        "channel",
+        "message_id",
+        "action_id",
+    ]
+
+    @field_validator("status")
+    def status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["success", "error"]):
+            raise ValueError("must be one of enum values ('success', 'error')")
+        return value
 
     @field_validator("template")
     def template_validate_enum(cls, value):
@@ -59,6 +82,15 @@ class NotificationCreate(BaseModel):
             )
         return value
 
+    @field_validator("channel")
+    def channel_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(["email", "telegram", "discord", "websocket", "ui"]):
+            raise ValueError(
+                "must be one of enum values ('email', 'telegram', 'discord', 'websocket', 'ui')"
+            )
+        return value
+
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
@@ -76,7 +108,7 @@ class NotificationCreate(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of NotificationCreate from a JSON string"""
+        """Create an instance of NotificationResult from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -96,16 +128,21 @@ class NotificationCreate(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if user_ids (nullable) is None
+        # set to None if error (nullable) is None
         # and model_fields_set contains the field
-        if self.user_ids is None and "user_ids" in self.model_fields_set:
-            _dict["user_ids"] = None
+        if self.error is None and "error" in self.model_fields_set:
+            _dict["error"] = None
+
+        # set to None if message_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.message_id is None and "message_id" in self.model_fields_set:
+            _dict["message_id"] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of NotificationCreate from a dict"""
+        """Create an instance of NotificationResult from a dict"""
         if obj is None:
             return None
 
@@ -114,9 +151,13 @@ class NotificationCreate(BaseModel):
 
         _obj = cls.model_validate(
             {
+                "status": obj.get("status"),
+                "recipient": obj.get("recipient"),
                 "template": obj.get("template"),
-                "variables": obj.get("variables"),
-                "user_ids": obj.get("user_ids"),
+                "error": obj.get("error"),
+                "channel": obj.get("channel"),
+                "message_id": obj.get("message_id"),
+                "action_id": obj.get("action_id"),
             }
         )
         return _obj

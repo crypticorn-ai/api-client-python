@@ -21,19 +21,21 @@ from crypticorn.notification.client.models.dashboard_action_button import (
     DashboardActionButton,
 )
 from crypticorn.notification.client.models.dashboard_field import DashboardField
-from crypticorn.notification.client.models.dashboard_notification_input import (
-    DashboardNotificationInput,
-)
-from crypticorn.notification.client.models.dashboard_notification_output import (
-    DashboardNotificationOutput,
+from crypticorn.notification.client.models.dashboard_notification import (
+    DashboardNotification,
 )
 from crypticorn.notification.client.models.dashboard_notification_update import (
     DashboardNotificationUpdate,
 )
 from crypticorn.notification.client.models.error_response import ErrorResponse
+from crypticorn.notification.client.models.notification import Notification
 from crypticorn.notification.client.models.notification_create import NotificationCreate
+from crypticorn.notification.client.models.notification_result import NotificationResult
 from crypticorn.notification.client.models.paginated_response_dashboard_notification import (
     PaginatedResponseDashboardNotification,
+)
+from crypticorn.notification.client.models.paginated_response_notification_result import (
+    PaginatedResponseNotificationResult,
 )
 from crypticorn.notification.client.models.template import Template
 from crypticorn.notification.client.models.ui_template import UITemplate
