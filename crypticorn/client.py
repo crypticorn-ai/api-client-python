@@ -213,9 +213,10 @@ class BaseAsyncClient:
         >>> with SyncClient() as client:
         ...     client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive')
         """
-        assert service in self._service_classes, (
-            f"Invalid service: {service}. Must be one of {list(self._service_classes.keys())}"
-        )
+        if service not in self._service_classes:
+            raise ValueError(
+                f"Invalid service: {service}. Must be one of {list(self._service_classes.keys())}"
+            )
         client = self._services[service]
         new_config = client.config
         for attr in vars(config):
@@ -361,5 +362,5 @@ class SyncClient(BaseAsyncClient):
         """Automatic cleanup when the object is garbage collected."""
         try:
             self.close()
-        except Exception:
+        except Exception:  # nosec: B110
             pass
