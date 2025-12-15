@@ -1,4 +1,5 @@
 [tools]
+python = "3.11"
 uv = "0.9.9"
 
 # https://mise.jdx.dev/mise-cookbook/python.html#mise-uv
