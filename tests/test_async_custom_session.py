@@ -66,7 +66,7 @@ async def test_unclosed_owned_session_warns():
         warnings.simplefilter("always")  # Catch all warnings
 
         client = AsyncClient()
-        await client.hive.status.ping()
+        await client.hive.ping()
 
         # Intentionally forget to close
         del client
@@ -90,7 +90,7 @@ async def test_custom_session_not_closed_by_client():
         warnings.simplefilter("always")
         custom_session = ClientSession()
         client = AsyncClient(http_client=custom_session)
-        await client.hive.status.ping()
+        await client.hive.ping()
 
         # Don't close the custom session
         del client
