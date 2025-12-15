@@ -16,25 +16,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Union
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
 
-class SignalOverviewStats(BaseModel):
+class Token(BaseModel):
     """
-    Model for signal statistics response
+    Token
     """  # noqa: E501
 
-    timestamp: StrictInt = Field(
-        description="The unix timestamp of the stats calculation"
-    )
-    total: StrictInt = Field(description="Total number of tokens analyzed")
-    win_rate: Union[StrictFloat, StrictInt] = Field(
-        description="Overall win rate as a decimal"
-    )
-    __properties: ClassVar[List[str]] = ["timestamp", "total", "win_rate"]
+    address: StrictStr = Field(description="Token contract address")
+    name: StrictStr = Field(description="Token name")
+    symbol: StrictStr = Field(description="Token symbol")
+    __properties: ClassVar[List[str]] = ["address", "name", "symbol"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +49,7 @@ class SignalOverviewStats(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SignalOverviewStats from a JSON string"""
+        """Create an instance of Token from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -77,7 +73,7 @@ class SignalOverviewStats(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SignalOverviewStats from a dict"""
+        """Create an instance of Token from a dict"""
         if obj is None:
             return None
 
@@ -86,9 +82,9 @@ class SignalOverviewStats(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "timestamp": obj.get("timestamp"),
-                "total": obj.get("total"),
-                "win_rate": obj.get("win_rate"),
+                "address": obj.get("address"),
+                "name": obj.get("name"),
+                "symbol": obj.get("symbol"),
             }
         )
         return _obj

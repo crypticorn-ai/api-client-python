@@ -64,7 +64,7 @@ class BaseAsyncClient:
             "pay": (PayClient, "v1/pay"),
             "metrics": (MetricsClient, "v1/metrics"),
             "auth": (AuthClient, "v1/auth"),
-            "dex": (DexClient, "v1/dex"),
+            "dex": (DexClient, "v2/dex"),
             "notification": (NotificationClient, "v1/notification"),
             "indicator": (IndicatorClient, "v1/indicator"),
             "klines": (KlinesClient, "v1/klines"),

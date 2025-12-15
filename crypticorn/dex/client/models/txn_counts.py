@@ -17,24 +17,26 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Union
-from typing import Optional, Set
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing import Set
 from typing_extensions import Self
 
 
-class SignalOverviewStats(BaseModel):
+class TxnCounts(BaseModel):
     """
-    Model for signal statistics response
+    TxnCounts
     """  # noqa: E501
 
-    timestamp: StrictInt = Field(
-        description="The unix timestamp of the stats calculation"
+    buys: Optional[StrictInt] = Field(
+        default=0, description="Number of buy transactions in this window"
     )
-    total: StrictInt = Field(description="Total number of tokens analyzed")
-    win_rate: Union[StrictFloat, StrictInt] = Field(
-        description="Overall win rate as a decimal"
+    sells: Optional[StrictInt] = Field(
+        default=0, description="Number of sell transactions in this window"
     )
-    __properties: ClassVar[List[str]] = ["timestamp", "total", "win_rate"]
+    ratio: Union[StrictFloat, StrictInt] = Field(
+        description="Buy/sell ratio (BSR) where: - ratio = buys / (buys + sells) - 0.5 = neutral when there are no transactions."
+    )
+    __properties: ClassVar[List[str]] = ["buys", "sells", "ratio"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +55,7 @@ class SignalOverviewStats(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SignalOverviewStats from a JSON string"""
+        """Create an instance of TxnCounts from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -65,8 +67,13 @@ class SignalOverviewStats(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * OpenAPI `readOnly` fields are excluded.
         """
-        excluded_fields: Set[str] = set([])
+        excluded_fields: Set[str] = set(
+            [
+                "ratio",
+            ]
+        )
 
         _dict = self.model_dump(
             by_alias=True,
@@ -77,7 +84,7 @@ class SignalOverviewStats(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SignalOverviewStats from a dict"""
+        """Create an instance of TxnCounts from a dict"""
         if obj is None:
             return None
 
@@ -86,9 +93,9 @@ class SignalOverviewStats(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "timestamp": obj.get("timestamp"),
-                "total": obj.get("total"),
-                "win_rate": obj.get("win_rate"),
+                "buys": obj.get("buys") if obj.get("buys") is not None else 0,
+                "sells": obj.get("sells") if obj.get("sells") is not None else 0,
+                "ratio": obj.get("ratio"),
             }
         )
         return _obj
