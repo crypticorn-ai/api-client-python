@@ -36,12 +36,14 @@ __all__ = [
     "BroadcastUpdate",
     "DashboardActionButton",
     "DashboardField",
-    "DashboardNotificationInput",
-    "DashboardNotificationOutput",
+    "DashboardNotification",
     "DashboardNotificationUpdate",
     "ErrorResponse",
+    "Notification",
     "NotificationCreate",
+    "NotificationResult",
     "PaginatedResponseDashboardNotification",
+    "PaginatedResponseNotificationResult",
     "Template",
     "UITemplate",
     "UserSetting",
@@ -91,11 +93,8 @@ from crypticorn.notification.client.models.dashboard_action_button import (
 from crypticorn.notification.client.models.dashboard_field import (
     DashboardField as DashboardField,
 )
-from crypticorn.notification.client.models.dashboard_notification_input import (
-    DashboardNotificationInput as DashboardNotificationInput,
-)
-from crypticorn.notification.client.models.dashboard_notification_output import (
-    DashboardNotificationOutput as DashboardNotificationOutput,
+from crypticorn.notification.client.models.dashboard_notification import (
+    DashboardNotification as DashboardNotification,
 )
 from crypticorn.notification.client.models.dashboard_notification_update import (
     DashboardNotificationUpdate as DashboardNotificationUpdate,
@@ -103,11 +102,20 @@ from crypticorn.notification.client.models.dashboard_notification_update import 
 from crypticorn.notification.client.models.error_response import (
     ErrorResponse as ErrorResponse,
 )
+from crypticorn.notification.client.models.notification import (
+    Notification as Notification,
+)
 from crypticorn.notification.client.models.notification_create import (
     NotificationCreate as NotificationCreate,
 )
+from crypticorn.notification.client.models.notification_result import (
+    NotificationResult as NotificationResult,
+)
 from crypticorn.notification.client.models.paginated_response_dashboard_notification import (
     PaginatedResponseDashboardNotification as PaginatedResponseDashboardNotification,
+)
+from crypticorn.notification.client.models.paginated_response_notification_result import (
+    PaginatedResponseNotificationResult as PaginatedResponseNotificationResult,
 )
 from crypticorn.notification.client.models.template import Template as Template
 from crypticorn.notification.client.models.ui_template import UITemplate as UITemplate

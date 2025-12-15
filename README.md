@@ -9,7 +9,7 @@ crypto market - and programmatically interact with the entire Crypticorn ecosyst
 
 ## Installation
 
-You need Python 3.10-3.14 installed to be able to use this library.
+You need Python 3.10-3.14 installed to be able to use this library. It might work with older versions, but we don't test it.
 
 You can install the latest stable version from [PyPi](https://pypi.org/project/crypticorn/):
 ```bash
@@ -35,7 +35,7 @@ from crypticorn import AsyncClient, SyncClient
 ```
 Both clients serve as the central interface for API operations and instantiate multiple API wrappers corresponding to our micro services.
 
-You can either explore each API by clicking through the library or checkout the [API Documentation](https://docs.crypticorn.com/api).
+You can either explore each API by clicking through the library or checkout the [API Documentation](https://api.crypticorn.dev/docs).
 
 Request and response models for API operations should be accessed through the sub package you are using for an operation. All symbols are re-exported at the sub package level for convenience.
 
@@ -46,8 +46,9 @@ The SDK major version tracks the highest supported API version. A new API major 
 
 | SDK Version | Auth | Trade | Klines       | Metrics | Hive | Dex | Pay | Notification | Indicator        |
 | ----------- | ---- | ----- | ------------ | ------- | ---- | --- | --- | ------------ | ---------------- |
-| v2.x        | v1   | v1    | v1           | v1      | v1   | v1  | v1  | v1           | -
-| v3.x        | v1   | v2    | v1 (v3.3.0+) | v1      | v1   | v1  | v1  | v1           | v1 (v3.2.0+) |
+| v2.x        | v1   | v1    | -           | v1      | v1   | v1  | v1  | v1           | -              |
+| v3.x        | v1   | v2    | v1 (v3.3.0+) | v1      | v1   | v1  | v1  | v1           | v1 (v3.2.0+)   |
+| v4.x        | v1   | v2    | v1           | v1      | v1   | v2  | v1  | v1           | v1             |
 
 ## Authentication
 
@@ -172,7 +173,7 @@ Some API operations allow to get the returned data formatted as a pandas Datafra
 
 ### Data Downloads
 This utility allows direct data streaming to your local disk, instead of only returning download links. It is being used in the following functions:
-- `client.hive.download_data()` (overrides the [default response](https://docs.crypticorn.com/api/?api=hive-ai-api#tag/data/GET/data))
+- `client.hive.download_data()` (overrides the [default response](https://api.crypticorn.dev/docs/?api=hive-ai-api#tag/data/GET/data))
 
 ## Advanced Usage
 

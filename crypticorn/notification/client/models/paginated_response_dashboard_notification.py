@@ -18,8 +18,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.notification.client.models.dashboard_notification_output import (
-    DashboardNotificationOutput,
+from crypticorn.notification.client.models.dashboard_notification import (
+    DashboardNotification,
 )
 from typing import Set
 from typing_extensions import Self
@@ -30,7 +30,7 @@ class PaginatedResponseDashboardNotification(BaseModel):
     PaginatedResponseDashboardNotification
     """  # noqa: E501
 
-    data: List[DashboardNotificationOutput]
+    data: List[DashboardNotification]
     total: StrictInt = Field(description="The total number of items")
     page: StrictInt = Field(description="The current page number")
     page_size: StrictInt = Field(description="The number of items per page")
@@ -120,8 +120,7 @@ class PaginatedResponseDashboardNotification(BaseModel):
         _obj = cls.model_validate(
             {
                 "data": [
-                    DashboardNotificationOutput.from_dict(_item)
-                    for _item in obj["data"]
+                    DashboardNotification.from_dict(_item) for _item in obj["data"]
                 ]
                 if obj.get("data") is not None
                 else None,

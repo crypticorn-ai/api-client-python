@@ -31,9 +31,9 @@ from typing import Set
 from typing_extensions import Self
 
 
-class DashboardNotificationOutput(BaseModel):
+class DashboardNotification(BaseModel):
     """
-    DashboardNotificationOutput
+    DashboardNotification
     """  # noqa: E501
 
     id: StrictStr = Field(description="Unique identifier for the resource")
@@ -68,17 +68,19 @@ class DashboardNotificationOutput(BaseModel):
                 "new_member",
                 "exchange_api_key_expiring",
                 "test",
-                "new_dex_ai_call",
-                "new_dex_ai_call_incognito",
+                "dex_first_call",
+                "dex_profit_call",
                 "order_completion",
                 "otp_code",
                 "subscription_expiring",
                 "subscription_expired",
                 "development_update",
+                "verify_email",
+                "reset_password",
             ]
         ):
             raise ValueError(
-                "must be one of enum values ('subscription_predictions_welcome', 'subscription_dex_signals_welcome', 'subscription_combo_welcome', 'new_member', 'exchange_api_key_expiring', 'test', 'new_dex_ai_call', 'new_dex_ai_call_incognito', 'order_completion', 'otp_code', 'subscription_expiring', 'subscription_expired', 'development_update')"
+                "must be one of enum values ('subscription_predictions_welcome', 'subscription_dex_signals_welcome', 'subscription_combo_welcome', 'new_member', 'exchange_api_key_expiring', 'test', 'dex_first_call', 'dex_profit_call', 'order_completion', 'otp_code', 'subscription_expiring', 'subscription_expired', 'development_update', 'verify_email', 'reset_password')"
             )
         return value
 
@@ -99,7 +101,7 @@ class DashboardNotificationOutput(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of DashboardNotificationOutput from a JSON string"""
+        """Create an instance of DashboardNotification from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -126,7 +128,7 @@ class DashboardNotificationOutput(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of DashboardNotificationOutput from a dict"""
+        """Create an instance of DashboardNotification from a dict"""
         if obj is None:
             return None
 

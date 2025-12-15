@@ -16,33 +16,29 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.dex.client.models.signal_with_token import SignalWithToken
+from crypticorn.dex.client.models.website import Website
 from typing import Set
 from typing_extensions import Self
 
 
-class PaginatedResponseSignalWithToken(BaseModel):
+class Info(BaseModel):
     """
-    PaginatedResponseSignalWithToken
+    Info
     """  # noqa: E501
 
-    data: List[SignalWithToken]
-    total: StrictInt = Field(description="The total number of items")
-    page: StrictInt = Field(description="The current page number")
-    page_size: StrictInt = Field(description="The number of items per page")
-    prev: Optional[StrictInt] = None
-    next: Optional[StrictInt] = None
-    last: Optional[StrictInt] = None
+    image_url: Optional[StrictStr] = None
+    header: Optional[StrictStr] = None
+    open_graph: Optional[StrictStr] = None
+    websites: Optional[List[Website]] = Field(
+        default=None, description="List of related websites"
+    )
     __properties: ClassVar[List[str]] = [
-        "data",
-        "total",
-        "page",
-        "page_size",
-        "prev",
-        "next",
-        "last",
+        "image_url",
+        "header",
+        "open_graph",
+        "websites",
     ]
 
     model_config = ConfigDict(
@@ -62,7 +58,7 @@ class PaginatedResponseSignalWithToken(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of PaginatedResponseSignalWithToken from a JSON string"""
+        """Create an instance of Info from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -82,33 +78,33 @@ class PaginatedResponseSignalWithToken(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in data (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in websites (list)
         _items = []
-        if self.data:
-            for _item_data in self.data:
-                if _item_data:
-                    _items.append(_item_data.to_dict())
-            _dict["data"] = _items
-        # set to None if prev (nullable) is None
+        if self.websites:
+            for _item_websites in self.websites:
+                if _item_websites:
+                    _items.append(_item_websites.to_dict())
+            _dict["websites"] = _items
+        # set to None if image_url (nullable) is None
         # and model_fields_set contains the field
-        if self.prev is None and "prev" in self.model_fields_set:
-            _dict["prev"] = None
+        if self.image_url is None and "image_url" in self.model_fields_set:
+            _dict["image_url"] = None
 
-        # set to None if next (nullable) is None
+        # set to None if header (nullable) is None
         # and model_fields_set contains the field
-        if self.next is None and "next" in self.model_fields_set:
-            _dict["next"] = None
+        if self.header is None and "header" in self.model_fields_set:
+            _dict["header"] = None
 
-        # set to None if last (nullable) is None
+        # set to None if open_graph (nullable) is None
         # and model_fields_set contains the field
-        if self.last is None and "last" in self.model_fields_set:
-            _dict["last"] = None
+        if self.open_graph is None and "open_graph" in self.model_fields_set:
+            _dict["open_graph"] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of PaginatedResponseSignalWithToken from a dict"""
+        """Create an instance of Info from a dict"""
         if obj is None:
             return None
 
@@ -117,15 +113,12 @@ class PaginatedResponseSignalWithToken(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "data": [SignalWithToken.from_dict(_item) for _item in obj["data"]]
-                if obj.get("data") is not None
+                "image_url": obj.get("image_url"),
+                "header": obj.get("header"),
+                "open_graph": obj.get("open_graph"),
+                "websites": [Website.from_dict(_item) for _item in obj["websites"]]
+                if obj.get("websites") is not None
                 else None,
-                "total": obj.get("total"),
-                "page": obj.get("page"),
-                "page_size": obj.get("page_size"),
-                "prev": obj.get("prev"),
-                "next": obj.get("next"),
-                "last": obj.get("last"),
             }
         )
         return _obj

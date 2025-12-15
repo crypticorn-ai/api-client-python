@@ -15,12 +15,14 @@ client/models/broadcast_recipient.py
 client/models/broadcast_update.py
 client/models/dashboard_action_button.py
 client/models/dashboard_field.py
-client/models/dashboard_notification_input.py
-client/models/dashboard_notification_output.py
+client/models/dashboard_notification.py
 client/models/dashboard_notification_update.py
 client/models/error_response.py
+client/models/notification.py
 client/models/notification_create.py
+client/models/notification_result.py
 client/models/paginated_response_dashboard_notification.py
+client/models/paginated_response_notification_result.py
 client/models/template.py
 client/models/ui_template.py
 client/models/user_setting.py

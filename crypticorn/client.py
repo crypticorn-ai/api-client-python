@@ -64,7 +64,7 @@ class BaseAsyncClient:
             "pay": (PayClient, "v1/pay"),
             "metrics": (MetricsClient, "v1/metrics"),
             "auth": (AuthClient, "v1/auth"),
-            "dex": (DexClient, "v1/dex"),
+            "dex": (DexClient, "v2/dex"),
             "notification": (NotificationClient, "v1/notification"),
             "indicator": (IndicatorClient, "v1/indicator"),
             "klines": (KlinesClient, "v1/klines"),
@@ -136,63 +136,63 @@ class BaseAsyncClient:
     @property
     def hive(self) -> HiveClient:
         """
-        Entry point for the Hive AI API ([Docs](https://docs.crypticorn.com/api/?api=hive-ai-api)).
+        Entry point for the Hive AI API ([Docs](https://api.crypticorn.com/docs/?api=hive-ai-api)).
         """
         return self._services["hive"]
 
     @property
     def trade(self) -> TradeClient:
         """
-        Entry point for the Trading API ([Docs](https://docs.crypticorn.com/api/?api=trading-api)).
+        Entry point for the Trading API ([Docs](https://api.crypticorn.com/docs/?api=trading-api)).
         """
         return self._services["trade"]
 
     @property
     def metrics(self) -> MetricsClient:
         """
-        Entry point for the Metrics API ([Docs](https://docs.crypticorn.com/api/?api=metrics-api)).
+        Entry point for the Metrics API ([Docs](https://api.crypticorn.com/docs/?api=metrics-api)).
         """
         return self._services["metrics"]
 
     @property
     def pay(self) -> PayClient:
         """
-        Entry point for the Payment API ([Docs](https://docs.crypticorn.com/api/?api=payment-api)).
+        Entry point for the Payment API ([Docs](https://api.crypticorn.com/docs/?api=payment-api)).
         """
         return self._services["pay"]
 
     @property
     def auth(self) -> AuthClient:
         """
-        Entry point for the Auth API ([Docs](https://docs.crypticorn.com/api/?api=auth-api)).
+        Entry point for the Auth API ([Docs](https://api.crypticorn.com/docs/?api=auth-api)).
         """
         return self._services["auth"]
 
     @property
     def notification(self) -> NotificationClient:
         """
-        Entry point for the Notification API ([Docs](https://docs.crypticorn.com/api/?api=notification-api)).
+        Entry point for the Notification API ([Docs](https://api.crypticorn.com/docs/?api=notification-api)).
         """
         return self._services["notification"]
 
     @property
     def dex(self) -> DexClient:
         """
-        Entry point for the DEX API ([Docs](https://docs.crypticorn.com/api/?api=dex-api)).
+        Entry point for the DEX API ([Docs](https://api.crypticorn.com/docs/?api=dex-api)).
         """
         return self._services["dex"]
 
     @property
     def indicator(self) -> IndicatorClient:
         """
-        Entry point for the Indicator API ([Docs](https://docs.crypticorn.com/api/?api=indicator-api)).
+        Entry point for the Indicator API ([Docs](https://api.crypticorn.com/docs/?api=indicator-api)).
         """
         return self._services["indicator"]
 
     @property
     def klines(self) -> KlinesClient:
         """
-        Entry point for the Klines API ([Docs](https://docs.crypticorn.com/api/?api=klines-api)).
+        Entry point for the Klines API ([Docs](https://api.crypticorn.com/docs/?api=klines-api)).
         """
         return self._services["klines"]
 
@@ -213,9 +213,10 @@ class BaseAsyncClient:
         >>> with SyncClient() as client:
         ...     client.configure(config=HiveConfig(host="http://localhost:8000"), service='hive')
         """
-        assert service in self._service_classes, (
-            f"Invalid service: {service}. Must be one of {list(self._service_classes.keys())}"
-        )
+        if service not in self._service_classes:
+            raise ValueError(
+                f"Invalid service: {service}. Must be one of {list(self._service_classes.keys())}"
+            )
         client = self._services[service]
         new_config = client.config
         for attr in vars(config):
@@ -361,5 +362,5 @@ class SyncClient(BaseAsyncClient):
         """Automatic cleanup when the object is garbage collected."""
         try:
             self.close()
-        except Exception:
+        except Exception:  # nosec: B110
             pass

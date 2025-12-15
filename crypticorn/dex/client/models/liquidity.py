@@ -17,24 +17,26 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Union
-from typing import Optional, Set
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing import Set
 from typing_extensions import Self
 
 
-class SignalOverviewStats(BaseModel):
+class Liquidity(BaseModel):
     """
-    Model for signal statistics response
+    Liquidity
     """  # noqa: E501
 
-    timestamp: StrictInt = Field(
-        description="The unix timestamp of the stats calculation"
+    usd: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=0.0, description="Liquidity in USD"
     )
-    total: StrictInt = Field(description="Total number of tokens analyzed")
-    win_rate: Union[StrictFloat, StrictInt] = Field(
-        description="Overall win rate as a decimal"
+    base: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=0.0, description="Amount of base token in the pool"
     )
-    __properties: ClassVar[List[str]] = ["timestamp", "total", "win_rate"]
+    quote: Optional[Union[StrictFloat, StrictInt]] = Field(
+        default=0.0, description="Amount of quote token in the pool"
+    )
+    __properties: ClassVar[List[str]] = ["usd", "base", "quote"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +55,7 @@ class SignalOverviewStats(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SignalOverviewStats from a JSON string"""
+        """Create an instance of Liquidity from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -77,7 +79,7 @@ class SignalOverviewStats(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SignalOverviewStats from a dict"""
+        """Create an instance of Liquidity from a dict"""
         if obj is None:
             return None
 
@@ -86,9 +88,9 @@ class SignalOverviewStats(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "timestamp": obj.get("timestamp"),
-                "total": obj.get("total"),
-                "win_rate": obj.get("win_rate"),
+                "usd": obj.get("usd") if obj.get("usd") is not None else 0.0,
+                "base": obj.get("base") if obj.get("base") is not None else 0.0,
+                "quote": obj.get("quote") if obj.get("quote") is not None else 0.0,
             }
         )
         return _obj

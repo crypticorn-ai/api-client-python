@@ -62,17 +62,19 @@ class Template(BaseModel):
                 "new_member",
                 "exchange_api_key_expiring",
                 "test",
-                "new_dex_ai_call",
-                "new_dex_ai_call_incognito",
+                "dex_first_call",
+                "dex_profit_call",
                 "order_completion",
                 "otp_code",
                 "subscription_expiring",
                 "subscription_expired",
                 "development_update",
+                "verify_email",
+                "reset_password",
             ]
         ):
             raise ValueError(
-                "must be one of enum values ('subscription_predictions_welcome', 'subscription_dex_signals_welcome', 'subscription_combo_welcome', 'new_member', 'exchange_api_key_expiring', 'test', 'new_dex_ai_call', 'new_dex_ai_call_incognito', 'order_completion', 'otp_code', 'subscription_expiring', 'subscription_expired', 'development_update')"
+                "must be one of enum values ('subscription_predictions_welcome', 'subscription_dex_signals_welcome', 'subscription_combo_welcome', 'new_member', 'exchange_api_key_expiring', 'test', 'dex_first_call', 'dex_profit_call', 'order_completion', 'otp_code', 'subscription_expiring', 'subscription_expired', 'development_update', 'verify_email', 'reset_password')"
             )
         return value
 

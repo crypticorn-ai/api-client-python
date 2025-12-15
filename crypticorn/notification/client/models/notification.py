@@ -16,49 +16,34 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    Field,
-    StrictBool,
-    StrictInt,
-    StrictStr,
-    field_validator,
-)
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.notification.client.models.ui_template import UITemplate
 from typing import Set
 from typing_extensions import Self
 
 
-class DashboardNotificationInput(BaseModel):
+class Notification(BaseModel):
     """
-    DashboardNotificationInput
+    Notification
     """  # noqa: E501
 
     id: StrictStr = Field(description="Unique identifier for the resource")
     created_at: StrictInt = Field(description="Timestamp of creation")
     updated_at: StrictInt = Field(description="Timestamp of last update")
-    template_id: StrictStr = Field(description="Template ID of the notification")
-    viewed: Optional[StrictBool] = Field(
-        default=False, description="Whether the notification has been marked as seen"
-    )
-    variables: Dict[str, Any] = Field(description="Variables of the notification")
-    user_id: StrictStr = Field(description="User ID")
-    rendered: UITemplate = Field(description="Rendered notification")
+    template: StrictStr = Field(description="Template ID")
+    variables: Dict[str, StrictStr] = Field(description="Variables for the template")
+    user_ids: Optional[List[StrictStr]] = None
     __properties: ClassVar[List[str]] = [
         "id",
         "created_at",
         "updated_at",
-        "template_id",
-        "viewed",
+        "template",
         "variables",
-        "user_id",
-        "rendered",
+        "user_ids",
     ]
 
-    @field_validator("template_id")
-    def template_id_validate_enum(cls, value):
+    @field_validator("template")
+    def template_validate_enum(cls, value):
         """Validates the enum"""
         if value not in set(
             [
@@ -68,17 +53,19 @@ class DashboardNotificationInput(BaseModel):
                 "new_member",
                 "exchange_api_key_expiring",
                 "test",
-                "new_dex_ai_call",
-                "new_dex_ai_call_incognito",
+                "dex_first_call",
+                "dex_profit_call",
                 "order_completion",
                 "otp_code",
                 "subscription_expiring",
                 "subscription_expired",
                 "development_update",
+                "verify_email",
+                "reset_password",
             ]
         ):
             raise ValueError(
-                "must be one of enum values ('subscription_predictions_welcome', 'subscription_dex_signals_welcome', 'subscription_combo_welcome', 'new_member', 'exchange_api_key_expiring', 'test', 'new_dex_ai_call', 'new_dex_ai_call_incognito', 'order_completion', 'otp_code', 'subscription_expiring', 'subscription_expired', 'development_update')"
+                "must be one of enum values ('subscription_predictions_welcome', 'subscription_dex_signals_welcome', 'subscription_combo_welcome', 'new_member', 'exchange_api_key_expiring', 'test', 'dex_first_call', 'dex_profit_call', 'order_completion', 'otp_code', 'subscription_expiring', 'subscription_expired', 'development_update', 'verify_email', 'reset_password')"
             )
         return value
 
@@ -99,7 +86,7 @@ class DashboardNotificationInput(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of DashboardNotificationInput from a JSON string"""
+        """Create an instance of Notification from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -119,14 +106,16 @@ class DashboardNotificationInput(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of rendered
-        if self.rendered:
-            _dict["rendered"] = self.rendered.to_dict()
+        # set to None if user_ids (nullable) is None
+        # and model_fields_set contains the field
+        if self.user_ids is None and "user_ids" in self.model_fields_set:
+            _dict["user_ids"] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of DashboardNotificationInput from a dict"""
+        """Create an instance of Notification from a dict"""
         if obj is None:
             return None
 
@@ -138,13 +127,9 @@ class DashboardNotificationInput(BaseModel):
                 "id": obj.get("id"),
                 "created_at": obj.get("created_at"),
                 "updated_at": obj.get("updated_at"),
-                "template_id": obj.get("template_id"),
-                "viewed": obj.get("viewed") if obj.get("viewed") is not None else False,
+                "template": obj.get("template"),
                 "variables": obj.get("variables"),
-                "user_id": obj.get("user_id"),
-                "rendered": UITemplate.from_dict(obj["rendered"])
-                if obj.get("rendered") is not None
-                else None,
+                "user_ids": obj.get("user_ids"),
             }
         )
         return _obj

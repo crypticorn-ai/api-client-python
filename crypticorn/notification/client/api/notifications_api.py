@@ -19,9 +19,13 @@ from typing_extensions import Annotated
 from crypticorn.notification.client.models.dashboard_notification_update import (
     DashboardNotificationUpdate,
 )
+from crypticorn.notification.client.models.notification import Notification
 from crypticorn.notification.client.models.notification_create import NotificationCreate
 from crypticorn.notification.client.models.paginated_response_dashboard_notification import (
     PaginatedResponseDashboardNotification,
+)
+from crypticorn.notification.client.models.paginated_response_notification_result import (
+    PaginatedResponseNotificationResult,
 )
 
 from crypticorn.notification.client.api_client import ApiClient, RequestSerialized
@@ -881,6 +885,739 @@ class NotificationsApi:
         )
 
     @validate_call
+    def get_notification_results(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[
+        PaginatedResponseNotificationResult,
+        Awaitable[PaginatedResponseNotificationResult],
+    ]:
+        """Get Notification Results"""
+        if self.is_sync:
+            return self._get_notification_results_sync(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                page=page,
+                page_size=page_size,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_notification_results_async(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                page=page,
+                page_size=page_size,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_notification_results_with_http_info(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[
+        ApiResponse[PaginatedResponseNotificationResult],
+        Awaitable[ApiResponse[PaginatedResponseNotificationResult]],
+    ]:
+        """Get Notification Results with HTTP info"""
+        if self.is_sync:
+            return self._get_notification_results_sync_with_http_info(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                page=page,
+                page_size=page_size,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_notification_results_async_with_http_info(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                page=page,
+                page_size=page_size,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    @validate_call
+    def get_notification_results_without_preload_content(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> Union[RESTResponseType, Awaitable[RESTResponseType]]:
+        """Get Notification Results without preloading content"""
+        if self.is_sync:
+            return self._get_notification_results_sync_without_preload_content(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                page=page,
+                page_size=page_size,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+        else:
+            return self._get_notification_results_async_without_preload_content(
+                sort_order=sort_order,
+                sort_by=sort_by,
+                filter_by=filter_by,
+                filter_value=filter_value,
+                page=page,
+                page_size=page_size,
+                _request_timeout=_request_timeout,
+                _request_auth=_request_auth,
+                _content_type=_content_type,
+                _headers=_headers,
+                _host_index=_host_index,
+            )
+
+    # Private async implementation methods
+    @validate_call
+    async def _get_notification_results_async(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> PaginatedResponseNotificationResult:
+        """Get Notification Results
+
+        Get notification results. These are the single notifications sent via the different channels to a specific recipient. Default sort is `created_at` and default order is `desc`. To get results for a specific notification initiated via sendNotification, use the action_id filter with the ID returned by sendNotification.
+
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
+        :param filter_by: The field to filter by
+        :type filter_by: str
+        :param filter_value: The value to filter with
+        :type filter_value: str
+        :param page: The current page number
+        :type page: int
+        :param page_size: The number of items per page. Default is 100, max is 1000.
+        :type page_size: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_notification_results_serialize(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            page=page,
+            page_size=page_size,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "PaginatedResponseNotificationResult",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+    @validate_call
+    async def _get_notification_results_async_with_http_info(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[PaginatedResponseNotificationResult]:
+        """Get Notification Results
+
+        Get notification results. These are the single notifications sent via the different channels to a specific recipient. Default sort is `created_at` and default order is `desc`. To get results for a specific notification initiated via sendNotification, use the action_id filter with the ID returned by sendNotification.
+
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
+        :param filter_by: The field to filter by
+        :type filter_by: str
+        :param filter_value: The value to filter with
+        :type filter_value: str
+        :param page: The current page number
+        :type page: int
+        :param page_size: The number of items per page. Default is 100, max is 1000.
+        :type page_size: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_notification_results_serialize(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            page=page,
+            page_size=page_size,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "PaginatedResponseNotificationResult",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        await response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data, response_types_map=_response_types_map
+        )
+
+    @validate_call
+    async def _get_notification_results_async_without_preload_content(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get Notification Results
+
+        Get notification results. These are the single notifications sent via the different channels to a specific recipient. Default sort is `created_at` and default order is `desc`. To get results for a specific notification initiated via sendNotification, use the action_id filter with the ID returned by sendNotification.
+
+        :param sort_order: The order to sort by
+        :type sort_order: str
+        :param sort_by: The field to sort by
+        :type sort_by: str
+        :param filter_by: The field to filter by
+        :type filter_by: str
+        :param filter_value: The value to filter with
+        :type filter_value: str
+        :param page: The current page number
+        :type page: int
+        :param page_size: The number of items per page. Default is 100, max is 1000.
+        :type page_size: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """  # noqa: E501
+
+        _param = self._get_notification_results_serialize(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            page=page,
+            page_size=page_size,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            "200": "PaginatedResponseNotificationResult",
+        }
+
+        response_data = await self.api_client.call_api(
+            *_param, _request_timeout=_request_timeout
+        )
+        return response_data
+
+    # Private sync implementation methods
+    @validate_call
+    def _get_notification_results_sync(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> PaginatedResponseNotificationResult:
+        """Synchronous version of get_notification_results"""
+        return async_to_sync(self._get_notification_results_async)(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            page=page,
+            page_size=page_size,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_notification_results_sync_with_http_info(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[PaginatedResponseNotificationResult]:
+        """Synchronous version of get_notification_results_with_http_info"""
+        return async_to_sync(self._get_notification_results_async_with_http_info)(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            page=page,
+            page_size=page_size,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    @validate_call
+    def _get_notification_results_sync_without_preload_content(
+        self,
+        sort_order: Annotated[
+            Optional[StrictStr], Field(description="The order to sort by")
+        ] = None,
+        sort_by: Annotated[
+            Optional[StrictStr], Field(description="The field to sort by")
+        ] = None,
+        filter_by: Annotated[
+            Optional[StrictStr], Field(description="The field to filter by")
+        ] = None,
+        filter_value: Annotated[
+            Optional[StrictStr], Field(description="The value to filter with")
+        ] = None,
+        page: Annotated[
+            Optional[StrictInt], Field(description="The current page number")
+        ] = None,
+        page_size: Annotated[
+            Optional[Annotated[int, Field(le=1000, strict=True, ge=1)]],
+            Field(
+                description="The number of items per page. Default is 100, max is 1000."
+            ),
+        ] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Synchronous version of get_notification_results_without_preload_content"""
+        return async_to_sync(
+            self._get_notification_results_async_without_preload_content
+        )(
+            sort_order=sort_order,
+            sort_by=sort_by,
+            filter_by=filter_by,
+            filter_value=filter_value,
+            page=page,
+            page_size=page_size,
+            _request_timeout=_request_timeout,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index,
+        )
+
+    def _get_notification_results_serialize(
+        self,
+        sort_order,
+        sort_by,
+        filter_by,
+        filter_value,
+        page,
+        page_size,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+        _host = None
+
+        _collection_formats: Dict[str, str] = {}
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if sort_order is not None:
+            _query_params.append(("sort_order", sort_order))
+
+        if sort_by is not None:
+            _query_params.append(("sort_by", sort_by))
+
+        if filter_by is not None:
+            _query_params.append(("filter_by", filter_by))
+
+        if filter_value is not None:
+            _query_params.append(("filter_value", filter_value))
+
+        if page is not None:
+            _query_params.append(("page", page))
+
+        if page_size is not None:
+            _query_params.append(("page_size", page_size))
+
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+        # set the HTTP header `Accept`
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
+            )
+
+        # authentication setting
+        _auth_settings: List[str] = ["APIKeyHeader"]
+
+        return self.api_client.param_serialize(
+            method="GET",
+            resource_path="/notifications/results",
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth,
+        )
+
+    @validate_call
     def get_notifications(
         self,
         sort_order: Annotated[
@@ -1626,7 +2363,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[object, Awaitable[object]]:
+    ) -> Union[Notification, Awaitable[Notification]]:
         """Send Notification"""
         if self.is_sync:
             return self._send_notification_sync(
@@ -1663,7 +2400,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> Union[ApiResponse[object], Awaitable[ApiResponse[object]]]:
+    ) -> Union[ApiResponse[Notification], Awaitable[ApiResponse[Notification]]]:
         """Send Notification with HTTP info"""
         if self.is_sync:
             return self._send_notification_sync_with_http_info(
@@ -1738,7 +2475,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> Notification:
         """Send Notification
 
         Send template-based notification to the registered channels.
@@ -1776,7 +2513,7 @@ class NotificationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "202": "object",
+            "202": "Notification",
         }
 
         response_data = await self.api_client.call_api(
@@ -1803,7 +2540,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> ApiResponse[Notification]:
         """Send Notification
 
         Send template-based notification to the registered channels.
@@ -1841,7 +2578,7 @@ class NotificationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "202": "object",
+            "202": "Notification",
         }
 
         response_data = await self.api_client.call_api(
@@ -1905,7 +2642,7 @@ class NotificationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            "202": "object",
+            "202": "Notification",
         }
 
         response_data = await self.api_client.call_api(
@@ -1929,7 +2666,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> object:
+    ) -> Notification:
         """Synchronous version of send_notification"""
         return async_to_sync(self._send_notification_async)(
             notification_create=notification_create,
@@ -1955,7 +2692,7 @@ class NotificationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[object]:
+    ) -> ApiResponse[Notification]:
         """Synchronous version of send_notification_with_http_info"""
         return async_to_sync(self._send_notification_async_with_http_info)(
             notification_create=notification_create,
