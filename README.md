@@ -9,7 +9,7 @@ crypto market - and programmatically interact with the entire Crypticorn ecosyst
 
 ## Installation
 
-You need Python 3.10-3.14 installed to be able to use this library.
+You need Python 3.10-3.14 installed to be able to use this library. It might work with older versions, but we don't test it.
 
 You can install the latest stable version from [PyPi](https://pypi.org/project/crypticorn/):
 ```bash
