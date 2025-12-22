@@ -35,7 +35,7 @@ from crypticorn import AsyncClient, SyncClient
 ```
 Both clients serve as the central interface for API operations and instantiate multiple API wrappers corresponding to our micro services.
 
-You can either explore each API by clicking through the library or checkout the [API Documentation](https://api.crypticorn.dev/docs).
+You can either explore each API by clicking through the library or checkout the [API Documentation](https://api.crypticorn.com/docs).
 
 Request and response models for API operations should be accessed through the sub package you are using for an operation. All symbols are re-exported at the sub package level for convenience.
 
@@ -173,7 +173,7 @@ Some API operations allow to get the returned data formatted as a pandas Datafra
 
 ### Data Downloads
 This utility allows direct data streaming to your local disk, instead of only returning download links. It is being used in the following functions:
-- `client.hive.download_data()` (overrides the [default response](https://api.crypticorn.dev/docs/?api=hive-ai-api#tag/data/GET/data))
+- `client.hive.download_data()` (overrides the [default response](https://api.crypticorn.com/docs/?api=hive-ai-api#tag/data/GET/data))
 
 ## Advanced Usage
 
