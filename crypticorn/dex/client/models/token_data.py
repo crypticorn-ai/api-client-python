@@ -53,12 +53,8 @@ class TokenData(BaseModel):
     liquidity: Optional[Liquidity] = Field(
         default=None, description="Liquidity breakdown for the pair"
     )
-    fdv: Union[StrictFloat, StrictInt] = Field(
-        description="Fully diluted valuation in USD"
-    )
-    market_cap: Union[StrictFloat, StrictInt] = Field(
-        description="Market capitalization in USD"
-    )
+    fdv: Optional[Union[StrictFloat, StrictInt]] = None
+    market_cap: Optional[Union[StrictFloat, StrictInt]] = None
     pair_created_at: StrictInt = Field(
         description="Pair creation timestamp (milliseconds since epoch)"
     )
@@ -140,6 +136,16 @@ class TokenData(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of info
         if self.info:
             _dict["info"] = self.info.to_dict()
+        # set to None if fdv (nullable) is None
+        # and model_fields_set contains the field
+        if self.fdv is None and "fdv" in self.model_fields_set:
+            _dict["fdv"] = None
+
+        # set to None if market_cap (nullable) is None
+        # and model_fields_set contains the field
+        if self.market_cap is None and "market_cap" in self.model_fields_set:
+            _dict["market_cap"] = None
+
         # set to None if info (nullable) is None
         # and model_fields_set contains the field
         if self.info is None and "info" in self.model_fields_set:

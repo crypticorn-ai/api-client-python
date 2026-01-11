@@ -33,6 +33,8 @@ __all__ = [
     "Liquidity",
     "PaginatedResponseSignalWithToken",
     "PriceChange",
+    "Risk",
+    "RugCheckReport",
     "SignalOverviewStats",
     "SignalWithToken",
     "Token",
@@ -66,6 +68,10 @@ from crypticorn.dex.client.models.paginated_response_signal_with_token import (
     PaginatedResponseSignalWithToken as PaginatedResponseSignalWithToken,
 )
 from crypticorn.dex.client.models.price_change import PriceChange as PriceChange
+from crypticorn.dex.client.models.risk import Risk as Risk
+from crypticorn.dex.client.models.rug_check_report import (
+    RugCheckReport as RugCheckReport,
+)
 from crypticorn.dex.client.models.signal_overview_stats import (
     SignalOverviewStats as SignalOverviewStats,
 )

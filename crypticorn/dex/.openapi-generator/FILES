@@ -12,6 +12,8 @@ client/models/info.py
 client/models/liquidity.py
 client/models/paginated_response_signal_with_token.py
 client/models/price_change.py
+client/models/risk.py
+client/models/rug_check_report.py
 client/models/signal_overview_stats.py
 client/models/signal_with_token.py
 client/models/token.py

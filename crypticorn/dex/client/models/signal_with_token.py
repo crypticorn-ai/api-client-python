@@ -27,6 +27,7 @@ from pydantic import (
     field_validator,
 )
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from crypticorn.dex.client.models.rug_check_report import RugCheckReport
 from crypticorn.dex.client.models.token_data import TokenData
 from typing import Set
 from typing_extensions import Self
@@ -49,6 +50,7 @@ class SignalWithToken(BaseModel):
     called_at: datetime = Field(description="Time of the first call")
     updated_at: Optional[datetime] = None
     data: Optional[TokenData] = None
+    security: Optional[RugCheckReport] = None
     performance: Optional[Union[StrictFloat, StrictInt]]
     __properties: ClassVar[List[str]] = [
         "stage",
@@ -63,6 +65,7 @@ class SignalWithToken(BaseModel):
         "called_at",
         "updated_at",
         "data",
+        "security",
         "performance",
     ]
 
@@ -117,6 +120,9 @@ class SignalWithToken(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of data
         if self.data:
             _dict["data"] = self.data.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of security
+        if self.security:
+            _dict["security"] = self.security.to_dict()
         # set to None if pair_address (nullable) is None
         # and model_fields_set contains the field
         if self.pair_address is None and "pair_address" in self.model_fields_set:
@@ -157,6 +163,11 @@ class SignalWithToken(BaseModel):
         if self.data is None and "data" in self.model_fields_set:
             _dict["data"] = None
 
+        # set to None if security (nullable) is None
+        # and model_fields_set contains the field
+        if self.security is None and "security" in self.model_fields_set:
+            _dict["security"] = None
+
         # set to None if performance (nullable) is None
         # and model_fields_set contains the field
         if self.performance is None and "performance" in self.model_fields_set:
@@ -188,6 +199,9 @@ class SignalWithToken(BaseModel):
                 "updated_at": obj.get("updated_at"),
                 "data": TokenData.from_dict(obj["data"])
                 if obj.get("data") is not None
+                else None,
+                "security": RugCheckReport.from_dict(obj["security"])
+                if obj.get("security") is not None
                 else None,
                 "performance": obj.get("performance"),
             }
