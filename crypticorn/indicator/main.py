@@ -8,6 +8,7 @@ from crypticorn.indicator.client import (
     SentimentApi,
     NewsApi,
     PredictionsApi,
+    HistogramsApi,
     StatusApi,
 )
 
@@ -19,6 +20,7 @@ class IndicatorClient(
     SentimentApi,
     NewsApi,
     PredictionsApi,
+    HistogramsApi,
     StatusApi,
 ):
     """
