@@ -16,11 +16,25 @@ Do not edit the class manually.
 from crypticorn.indicator.client.models.economic_news_entry import EconomicNewsEntry
 from crypticorn.indicator.client.models.error_response import ErrorResponse
 from crypticorn.indicator.client.models.fn_g_entry import FnGEntry
+from crypticorn.indicator.client.models.histogram_bin_data import HistogramBinData
+from crypticorn.indicator.client.models.histogram_data_input import HistogramDataInput
+from crypticorn.indicator.client.models.histogram_data_output import HistogramDataOutput
+from crypticorn.indicator.client.models.histogram_probabilities import (
+    HistogramProbabilities,
+)
+from crypticorn.indicator.client.models.horizon_histogram_data import (
+    HorizonHistogramData,
+)
 from crypticorn.indicator.client.models.paginated_response_economic_news_entry import (
     PaginatedResponseEconomicNewsEntry,
+)
+from crypticorn.indicator.client.models.polymarket_histogram import PolymarketHistogram
+from crypticorn.indicator.client.models.polymarket_histogram_update import (
+    PolymarketHistogramUpdate,
 )
 from crypticorn.indicator.client.models.polymarket_prediction import (
     PolymarketPrediction,
 )
 from crypticorn.indicator.client.models.prediction import Prediction
 from crypticorn.indicator.client.models.prediction_create import PredictionCreate
+from crypticorn.indicator.client.models.query_info import QueryInfo

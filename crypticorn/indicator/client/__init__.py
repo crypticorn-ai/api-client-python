@@ -17,6 +17,7 @@ __version__ = "1.0.0"
 
 # Define package exports
 __all__ = [
+    "HistogramsApi",
     "NewsApi",
     "PredictionsApi",
     "SentimentApi",
@@ -33,13 +34,24 @@ __all__ = [
     "EconomicNewsEntry",
     "ErrorResponse",
     "FnGEntry",
+    "HistogramBinData",
+    "HistogramDataInput",
+    "HistogramDataOutput",
+    "HistogramProbabilities",
+    "HorizonHistogramData",
     "PaginatedResponseEconomicNewsEntry",
+    "PolymarketHistogram",
+    "PolymarketHistogramUpdate",
     "PolymarketPrediction",
     "Prediction",
     "PredictionCreate",
+    "QueryInfo",
 ]
 
 # import apis into sdk package
+from crypticorn.indicator.client.api.histograms_api import (
+    HistogramsApi as HistogramsApi,
+)
 from crypticorn.indicator.client.api.news_api import NewsApi as NewsApi
 from crypticorn.indicator.client.api.predictions_api import (
     PredictionsApi as PredictionsApi,
@@ -68,8 +80,29 @@ from crypticorn.indicator.client.models.error_response import (
     ErrorResponse as ErrorResponse,
 )
 from crypticorn.indicator.client.models.fn_g_entry import FnGEntry as FnGEntry
+from crypticorn.indicator.client.models.histogram_bin_data import (
+    HistogramBinData as HistogramBinData,
+)
+from crypticorn.indicator.client.models.histogram_data_input import (
+    HistogramDataInput as HistogramDataInput,
+)
+from crypticorn.indicator.client.models.histogram_data_output import (
+    HistogramDataOutput as HistogramDataOutput,
+)
+from crypticorn.indicator.client.models.histogram_probabilities import (
+    HistogramProbabilities as HistogramProbabilities,
+)
+from crypticorn.indicator.client.models.horizon_histogram_data import (
+    HorizonHistogramData as HorizonHistogramData,
+)
 from crypticorn.indicator.client.models.paginated_response_economic_news_entry import (
     PaginatedResponseEconomicNewsEntry as PaginatedResponseEconomicNewsEntry,
+)
+from crypticorn.indicator.client.models.polymarket_histogram import (
+    PolymarketHistogram as PolymarketHistogram,
+)
+from crypticorn.indicator.client.models.polymarket_histogram_update import (
+    PolymarketHistogramUpdate as PolymarketHistogramUpdate,
 )
 from crypticorn.indicator.client.models.polymarket_prediction import (
     PolymarketPrediction as PolymarketPrediction,
@@ -78,3 +111,4 @@ from crypticorn.indicator.client.models.prediction import Prediction as Predicti
 from crypticorn.indicator.client.models.prediction_create import (
     PredictionCreate as PredictionCreate,
 )
+from crypticorn.indicator.client.models.query_info import QueryInfo as QueryInfo
