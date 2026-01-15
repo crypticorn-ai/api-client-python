@@ -422,7 +422,7 @@ toml = [
 
 [[package]]
 name = "crypticorn"
-version = "4.2.0rc1"
+version = "4.2.0"
 source = { editable = "." }
 dependencies = [
     { name = "aiohttp" },
