@@ -79,6 +79,9 @@ class CreateApiKeyRequest(BaseModel):
                     "read:indicator:sentiment",
                     "read:predictions",
                     "write:predictions",
+                    "read:polymarket:predictions",
+                    "write:polymarket:predictions",
+                    "read:polymarket:histograms",
                     "read:klines",
                     "read:notifications:broadcast-settings",
                     "write:notifications:broadcast-settings",
@@ -86,13 +89,14 @@ class CreateApiKeyRequest(BaseModel):
                     "write:notifications:user-settings",
                     "read:notifications:notifications",
                     "write:notifications:notifications",
+                    "send:notifications:notifications",
+                    "read:notifications:notification-results",
                     "read:prometheus:metrics",
                     "read:dex:signals",
-                    "read:histograms",
                 ]
             ):
                 raise ValueError(
-                    "each list item must be one of ('read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:exchangekeys', 'write:trade:exchangekeys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'write:pay:coupons', 'read:pay:coupons', 'write:pay:invoices', 'read:metrics:marketcap', 'read:metrics:indicators', 'read:metrics:exchanges', 'read:metrics:tokens', 'read:metrics:markets', 'read:indicator:news', 'read:indicator:sentiment', 'read:predictions', 'write:predictions', 'read:klines', 'read:notifications:broadcast-settings', 'write:notifications:broadcast-settings', 'read:notifications:user-settings', 'write:notifications:user-settings', 'read:notifications:notifications', 'write:notifications:notifications', 'read:prometheus:metrics', 'read:dex:signals', 'read:histograms')"
+                    "each list item must be one of ('read:hive:model', 'read:hive:data', 'write:hive:model', 'read:trade:bots', 'write:trade:bots', 'read:trade:exchangekeys', 'write:trade:exchangekeys', 'read:trade:orders', 'read:trade:actions', 'write:trade:actions', 'read:trade:exchanges', 'read:trade:futures', 'write:trade:futures', 'read:trade:notifications', 'write:trade:notifications', 'read:trade:strategies', 'write:trade:strategies', 'read:pay:payments', 'read:pay:products', 'write:pay:products', 'write:pay:coupons', 'read:pay:coupons', 'write:pay:invoices', 'read:metrics:marketcap', 'read:metrics:indicators', 'read:metrics:exchanges', 'read:metrics:tokens', 'read:metrics:markets', 'read:indicator:news', 'read:indicator:sentiment', 'read:predictions', 'write:predictions', 'read:polymarket:predictions', 'write:polymarket:predictions', 'read:polymarket:histograms', 'read:klines', 'read:notifications:broadcast-settings', 'write:notifications:broadcast-settings', 'read:notifications:user-settings', 'write:notifications:user-settings', 'read:notifications:notifications', 'write:notifications:notifications', 'send:notifications:notifications', 'read:notifications:notification-results', 'read:prometheus:metrics', 'read:dex:signals')"
                 )
         return value
 
