@@ -27,6 +27,7 @@ class AccessScope(str, Enum):
     """
     READ_COLON_PREDICTIONS = "read:predictions"
     READ_COLON_DEX_COLON_SIGNALS = "read:dex:signals"
+    READ_COLON_HISTOGRAMS = "read:histograms"
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
