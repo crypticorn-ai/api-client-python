@@ -71,7 +71,7 @@ extra = [
     "pandas>=2.3.3",
 ]
 build = [
-    "uv==0.9.17",
+    "uv==0.10.7",
 ]
 
 [tool.ruff]
@@ -81,7 +81,7 @@ lint.ignore = ["E721", "F403"]
 asyncio_default_fixture_loop_scope = "function"
 
 [build-system]
-requires = ["uv_build==0.9.17"]
+requires = ["uv_build==0.10.7"]
 build-backend = "uv_build"
 
 [dependency-groups]
