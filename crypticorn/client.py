@@ -4,14 +4,19 @@ from typing import Literal, Optional, TypeVar
 from aiohttp import ClientSession, ClientTimeout, TCPConnector
 
 from crypticorn.auth import AuthClient
+from crypticorn.defi import DefiClient
+from crypticorn.derivatives import DerivativesClient
 from crypticorn.dex import DexClient
 from crypticorn.hive import HiveClient
-from crypticorn.metrics import MetricsClient
-from crypticorn.notification import NotificationClient
-from crypticorn.pay import PayClient
-from crypticorn.trade import TradeClient
 from crypticorn.indicator import IndicatorClient
 from crypticorn.klines import KlinesClient
+from crypticorn.metrics import MetricsClient
+from crypticorn.news import NewsClient
+from crypticorn.notification import NotificationClient
+from crypticorn.pay import PayClient
+from crypticorn.sentiment import SentimentClient
+from crypticorn.social import SocialClient
+from crypticorn.trade import TradeClient
 
 ConfigT = TypeVar("ConfigT")
 SubClient = TypeVar("SubClient")
@@ -25,6 +30,11 @@ _SERVICES = Literal[
     "notification",
     "indicator",
     "klines",
+    "news",
+    "sentiment",
+    "social",
+    "defi",
+    "derivatives",
 ]
 
 
@@ -68,6 +78,11 @@ class BaseAsyncClient:
             "notification": (NotificationClient, "v1/notification"),
             "indicator": (IndicatorClient, "v1/indicator"),
             "klines": (KlinesClient, "v1/klines"),
+            "news": (NewsClient, "v1/news"),
+            "sentiment": (SentimentClient, "v1/sentiment"),
+            "social": (SocialClient, "v1/social"),
+            "defi": (DefiClient, "v1/defi"),
+            "derivatives": (DerivativesClient, "v1/derivatives"),
         }
 
         self._services = self._create_services()
@@ -195,6 +210,41 @@ class BaseAsyncClient:
         Entry point for the Klines API ([Docs](https://api.crypticorn.com/docs/?api=klines-api)).
         """
         return self._services["klines"]
+
+    @property
+    def news(self) -> NewsClient:
+        """
+        Entry point for the News API (``/v1/news``).
+        """
+        return self._services["news"]
+
+    @property
+    def sentiment(self) -> SentimentClient:
+        """
+        Entry point for the Sentiment API (``/v1/sentiment``).
+        """
+        return self._services["sentiment"]
+
+    @property
+    def social(self) -> SocialClient:
+        """
+        Entry point for the Social API (``/v1/social``).
+        """
+        return self._services["social"]
+
+    @property
+    def defi(self) -> DefiClient:
+        """
+        Entry point for the DeFi API (``/v1/defi``).
+        """
+        return self._services["defi"]
+
+    @property
+    def derivatives(self) -> DerivativesClient:
+        """
+        Entry point for the Derivatives API (``/v1/derivatives``).
+        """
+        return self._services["derivatives"]
 
     def configure(self, config: ConfigT, service: _SERVICES) -> None:
         """
