@@ -17,21 +17,25 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.dex.client.models.website import Website
 from typing import Optional, Set
 from typing_extensions import Self
 
-class Info(BaseModel):
+class RiskAnalysisInfo(BaseModel):
     """
-    Info
+    RiskAnalysisInfo
     """ # noqa: E501
-    image_url: Optional[StrictStr] = None
-    header: Optional[StrictStr] = None
-    open_graph: Optional[StrictStr] = None
-    websites: Optional[List[Website]] = Field(default=None, description="List of related websites")
-    __properties: ClassVar[List[str]] = ["image_url", "header", "open_graph", "websites"]
+    risk_level: Optional[StrictInt] = 0
+    risk_control_level: Optional[StrictInt] = 0
+    buy_taxes: Optional[StrictStr] = ''
+    sell_taxes: Optional[StrictStr] = ''
+    high_risk_num: Optional[StrictInt] = 0
+    middle_risk_num: Optional[StrictInt] = 0
+    low_risk_num: Optional[StrictInt] = 0
+    swap_analysis: Optional[Dict[str, Any]] = None
+    contract_analysis: Optional[Dict[str, Any]] = None
+    __properties: ClassVar[List[str]] = ["risk_level", "risk_control_level", "buy_taxes", "sell_taxes", "high_risk_num", "middle_risk_num", "low_risk_num", "swap_analysis", "contract_analysis"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -51,7 +55,7 @@ class Info(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Info from a JSON string"""
+        """Create an instance of RiskAnalysisInfo from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,33 +76,21 @@ class Info(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in websites (list)
-        _items = []
-        if self.websites:
-            for _item_websites in self.websites:
-                if _item_websites:
-                    _items.append(_item_websites.to_dict())
-            _dict['websites'] = _items
-        # set to None if image_url (nullable) is None
+        # set to None if swap_analysis (nullable) is None
         # and model_fields_set contains the field
-        if self.image_url is None and "image_url" in self.model_fields_set:
-            _dict['image_url'] = None
+        if self.swap_analysis is None and "swap_analysis" in self.model_fields_set:
+            _dict['swap_analysis'] = None
 
-        # set to None if header (nullable) is None
+        # set to None if contract_analysis (nullable) is None
         # and model_fields_set contains the field
-        if self.header is None and "header" in self.model_fields_set:
-            _dict['header'] = None
-
-        # set to None if open_graph (nullable) is None
-        # and model_fields_set contains the field
-        if self.open_graph is None and "open_graph" in self.model_fields_set:
-            _dict['open_graph'] = None
+        if self.contract_analysis is None and "contract_analysis" in self.model_fields_set:
+            _dict['contract_analysis'] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Info from a dict"""
+        """Create an instance of RiskAnalysisInfo from a dict"""
         if obj is None:
             return None
 
@@ -106,10 +98,15 @@ class Info(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "image_url": obj.get("image_url"),
-            "header": obj.get("header"),
-            "open_graph": obj.get("open_graph"),
-            "websites": [Website.from_dict(_item) for _item in obj["websites"]] if obj.get("websites") is not None else None
+            "risk_level": obj.get("risk_level") if obj.get("risk_level") is not None else 0,
+            "risk_control_level": obj.get("risk_control_level") if obj.get("risk_control_level") is not None else 0,
+            "buy_taxes": obj.get("buy_taxes") if obj.get("buy_taxes") is not None else '',
+            "sell_taxes": obj.get("sell_taxes") if obj.get("sell_taxes") is not None else '',
+            "high_risk_num": obj.get("high_risk_num") if obj.get("high_risk_num") is not None else 0,
+            "middle_risk_num": obj.get("middle_risk_num") if obj.get("middle_risk_num") is not None else 0,
+            "low_risk_num": obj.get("low_risk_num") if obj.get("low_risk_num") is not None else 0,
+            "swap_analysis": obj.get("swap_analysis"),
+            "contract_analysis": obj.get("contract_analysis")
         })
         return _obj
 

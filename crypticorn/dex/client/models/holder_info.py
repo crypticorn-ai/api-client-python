@@ -17,21 +17,28 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.dex.client.models.website import Website
 from typing import Optional, Set
 from typing_extensions import Self
 
-class Info(BaseModel):
+class HolderInfo(BaseModel):
     """
-    Info
+    HolderInfo
     """ # noqa: E501
-    image_url: Optional[StrictStr] = None
-    header: Optional[StrictStr] = None
-    open_graph: Optional[StrictStr] = None
-    websites: Optional[List[Website]] = Field(default=None, description="List of related websites")
-    __properties: ClassVar[List[str]] = ["image_url", "header", "open_graph", "websites"]
+    rank: Optional[StrictInt] = 0
+    address: Optional[StrictStr] = ''
+    amount: Optional[StrictStr] = ''
+    amount_usd: Optional[StrictStr] = ''
+    amount_percentage: Optional[StrictStr] = ''
+    cost: Optional[StrictStr] = ''
+    cost_rate: Optional[StrictStr] = ''
+    holding_time: Optional[StrictInt] = 0
+    realized_profit: Optional[StrictStr] = ''
+    unrealized_profit: Optional[StrictStr] = ''
+    pnl: Optional[StrictStr] = ''
+    tags: Optional[List[StrictStr]] = None
+    __properties: ClassVar[List[str]] = ["rank", "address", "amount", "amount_usd", "amount_percentage", "cost", "cost_rate", "holding_time", "realized_profit", "unrealized_profit", "pnl", "tags"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -51,7 +58,7 @@ class Info(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Info from a JSON string"""
+        """Create an instance of HolderInfo from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,33 +79,11 @@ class Info(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in websites (list)
-        _items = []
-        if self.websites:
-            for _item_websites in self.websites:
-                if _item_websites:
-                    _items.append(_item_websites.to_dict())
-            _dict['websites'] = _items
-        # set to None if image_url (nullable) is None
-        # and model_fields_set contains the field
-        if self.image_url is None and "image_url" in self.model_fields_set:
-            _dict['image_url'] = None
-
-        # set to None if header (nullable) is None
-        # and model_fields_set contains the field
-        if self.header is None and "header" in self.model_fields_set:
-            _dict['header'] = None
-
-        # set to None if open_graph (nullable) is None
-        # and model_fields_set contains the field
-        if self.open_graph is None and "open_graph" in self.model_fields_set:
-            _dict['open_graph'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Info from a dict"""
+        """Create an instance of HolderInfo from a dict"""
         if obj is None:
             return None
 
@@ -106,10 +91,18 @@ class Info(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "image_url": obj.get("image_url"),
-            "header": obj.get("header"),
-            "open_graph": obj.get("open_graph"),
-            "websites": [Website.from_dict(_item) for _item in obj["websites"]] if obj.get("websites") is not None else None
+            "rank": obj.get("rank") if obj.get("rank") is not None else 0,
+            "address": obj.get("address") if obj.get("address") is not None else '',
+            "amount": obj.get("amount") if obj.get("amount") is not None else '',
+            "amount_usd": obj.get("amount_usd") if obj.get("amount_usd") is not None else '',
+            "amount_percentage": obj.get("amount_percentage") if obj.get("amount_percentage") is not None else '',
+            "cost": obj.get("cost") if obj.get("cost") is not None else '',
+            "cost_rate": obj.get("cost_rate") if obj.get("cost_rate") is not None else '',
+            "holding_time": obj.get("holding_time") if obj.get("holding_time") is not None else 0,
+            "realized_profit": obj.get("realized_profit") if obj.get("realized_profit") is not None else '',
+            "unrealized_profit": obj.get("unrealized_profit") if obj.get("unrealized_profit") is not None else '',
+            "pnl": obj.get("pnl") if obj.get("pnl") is not None else '',
+            "tags": obj.get("tags")
         })
         return _obj
 

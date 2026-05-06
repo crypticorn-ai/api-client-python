@@ -17,21 +17,26 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.dex.client.models.website import Website
 from typing import Optional, Set
 from typing_extensions import Self
 
-class Info(BaseModel):
+class WalletComposition(BaseModel):
     """
-    Info
+    WalletComposition
     """ # noqa: E501
-    image_url: Optional[StrictStr] = None
-    header: Optional[StrictStr] = None
-    open_graph: Optional[StrictStr] = None
-    websites: Optional[List[Website]] = Field(default=None, description="List of related websites")
-    __properties: ClassVar[List[str]] = ["image_url", "header", "open_graph", "websites"]
+    smart_wallets: Optional[StrictInt] = 0
+    fresh_wallets: Optional[StrictInt] = 0
+    renowned_wallets: Optional[StrictInt] = 0
+    creator_wallets: Optional[StrictInt] = 0
+    sniper_wallets: Optional[StrictInt] = 0
+    rat_trader_wallets: Optional[StrictInt] = 0
+    whale_wallets: Optional[StrictInt] = 0
+    top_wallets: Optional[StrictInt] = 0
+    following_wallets: Optional[StrictInt] = 0
+    bundler_wallets: Optional[StrictInt] = 0
+    __properties: ClassVar[List[str]] = ["smart_wallets", "fresh_wallets", "renowned_wallets", "creator_wallets", "sniper_wallets", "rat_trader_wallets", "whale_wallets", "top_wallets", "following_wallets", "bundler_wallets"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -51,7 +56,7 @@ class Info(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Info from a JSON string"""
+        """Create an instance of WalletComposition from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,33 +77,11 @@ class Info(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in websites (list)
-        _items = []
-        if self.websites:
-            for _item_websites in self.websites:
-                if _item_websites:
-                    _items.append(_item_websites.to_dict())
-            _dict['websites'] = _items
-        # set to None if image_url (nullable) is None
-        # and model_fields_set contains the field
-        if self.image_url is None and "image_url" in self.model_fields_set:
-            _dict['image_url'] = None
-
-        # set to None if header (nullable) is None
-        # and model_fields_set contains the field
-        if self.header is None and "header" in self.model_fields_set:
-            _dict['header'] = None
-
-        # set to None if open_graph (nullable) is None
-        # and model_fields_set contains the field
-        if self.open_graph is None and "open_graph" in self.model_fields_set:
-            _dict['open_graph'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Info from a dict"""
+        """Create an instance of WalletComposition from a dict"""
         if obj is None:
             return None
 
@@ -106,10 +89,16 @@ class Info(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "image_url": obj.get("image_url"),
-            "header": obj.get("header"),
-            "open_graph": obj.get("open_graph"),
-            "websites": [Website.from_dict(_item) for _item in obj["websites"]] if obj.get("websites") is not None else None
+            "smart_wallets": obj.get("smart_wallets") if obj.get("smart_wallets") is not None else 0,
+            "fresh_wallets": obj.get("fresh_wallets") if obj.get("fresh_wallets") is not None else 0,
+            "renowned_wallets": obj.get("renowned_wallets") if obj.get("renowned_wallets") is not None else 0,
+            "creator_wallets": obj.get("creator_wallets") if obj.get("creator_wallets") is not None else 0,
+            "sniper_wallets": obj.get("sniper_wallets") if obj.get("sniper_wallets") is not None else 0,
+            "rat_trader_wallets": obj.get("rat_trader_wallets") if obj.get("rat_trader_wallets") is not None else 0,
+            "whale_wallets": obj.get("whale_wallets") if obj.get("whale_wallets") is not None else 0,
+            "top_wallets": obj.get("top_wallets") if obj.get("top_wallets") is not None else 0,
+            "following_wallets": obj.get("following_wallets") if obj.get("following_wallets") is not None else 0,
+            "bundler_wallets": obj.get("bundler_wallets") if obj.get("bundler_wallets") is not None else 0
         })
         return _obj
 

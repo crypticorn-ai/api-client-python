@@ -17,21 +17,26 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
-from crypticorn.dex.client.models.website import Website
 from typing import Optional, Set
 from typing_extensions import Self
 
-class Info(BaseModel):
+class HolderComposition(BaseModel):
     """
-    Info
+    HolderComposition
     """ # noqa: E501
-    image_url: Optional[StrictStr] = None
-    header: Optional[StrictStr] = None
-    open_graph: Optional[StrictStr] = None
-    websites: Optional[List[Website]] = Field(default=None, description="List of related websites")
-    __properties: ClassVar[List[str]] = ["image_url", "header", "open_graph", "websites"]
+    smart_degen_count: Optional[StrictInt] = 0
+    renowned_count: Optional[StrictInt] = 0
+    fresh_wallet_count: Optional[StrictInt] = 0
+    dex_bot_count: Optional[StrictInt] = 0
+    insider_count: Optional[StrictInt] = 0
+    following_count: Optional[StrictInt] = 0
+    dev_count: Optional[StrictInt] = 0
+    bluechip_owner_count: Optional[StrictInt] = 0
+    bundler_count: Optional[StrictInt] = 0
+    sniper_count: Optional[StrictInt] = 0
+    __properties: ClassVar[List[str]] = ["smart_degen_count", "renowned_count", "fresh_wallet_count", "dex_bot_count", "insider_count", "following_count", "dev_count", "bluechip_owner_count", "bundler_count", "sniper_count"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -51,7 +56,7 @@ class Info(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Info from a JSON string"""
+        """Create an instance of HolderComposition from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,33 +77,11 @@ class Info(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in websites (list)
-        _items = []
-        if self.websites:
-            for _item_websites in self.websites:
-                if _item_websites:
-                    _items.append(_item_websites.to_dict())
-            _dict['websites'] = _items
-        # set to None if image_url (nullable) is None
-        # and model_fields_set contains the field
-        if self.image_url is None and "image_url" in self.model_fields_set:
-            _dict['image_url'] = None
-
-        # set to None if header (nullable) is None
-        # and model_fields_set contains the field
-        if self.header is None and "header" in self.model_fields_set:
-            _dict['header'] = None
-
-        # set to None if open_graph (nullable) is None
-        # and model_fields_set contains the field
-        if self.open_graph is None and "open_graph" in self.model_fields_set:
-            _dict['open_graph'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Info from a dict"""
+        """Create an instance of HolderComposition from a dict"""
         if obj is None:
             return None
 
@@ -106,10 +89,16 @@ class Info(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "image_url": obj.get("image_url"),
-            "header": obj.get("header"),
-            "open_graph": obj.get("open_graph"),
-            "websites": [Website.from_dict(_item) for _item in obj["websites"]] if obj.get("websites") is not None else None
+            "smart_degen_count": obj.get("smart_degen_count") if obj.get("smart_degen_count") is not None else 0,
+            "renowned_count": obj.get("renowned_count") if obj.get("renowned_count") is not None else 0,
+            "fresh_wallet_count": obj.get("fresh_wallet_count") if obj.get("fresh_wallet_count") is not None else 0,
+            "dex_bot_count": obj.get("dex_bot_count") if obj.get("dex_bot_count") is not None else 0,
+            "insider_count": obj.get("insider_count") if obj.get("insider_count") is not None else 0,
+            "following_count": obj.get("following_count") if obj.get("following_count") is not None else 0,
+            "dev_count": obj.get("dev_count") if obj.get("dev_count") is not None else 0,
+            "bluechip_owner_count": obj.get("bluechip_owner_count") if obj.get("bluechip_owner_count") is not None else 0,
+            "bundler_count": obj.get("bundler_count") if obj.get("bundler_count") is not None else 0,
+            "sniper_count": obj.get("sniper_count") if obj.get("sniper_count") is not None else 0
         })
         return _obj
 

@@ -18,15 +18,16 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from crypticorn.dex.client.models.token_data import TokenData
+from crypticorn.dex.client.models.token_intelligence import TokenIntelligence
 from typing import Optional, Set
 from typing_extensions import Self
 
-class SignalWithToken(BaseModel):
+class SignalDetail(BaseModel):
     """
-    Trading signal enriched with comprehensive token metadata and information.
+    Signal enriched with full token intelligence.
     """ # noqa: E501
     stage: StrictStr = Field(description="Lifecycle stage")
     address: StrictStr = Field(description="Token contract address")
@@ -41,8 +42,10 @@ class SignalWithToken(BaseModel):
     created_at: datetime = Field(description="When the signal was created")
     updated_at: datetime = Field(description="When the signal was last updated")
     data: Optional[TokenData] = None
+    intel: Optional[TokenIntelligence] = None
+    intel_stale: Optional[StrictBool] = Field(default=False, description="True when intel is missing or older than the freshness window")
     performance: Optional[Union[StrictFloat, StrictInt]]
-    __properties: ClassVar[List[str]] = ["stage", "address", "pair_address", "chain", "first_call_time", "mc_at_call", "ath_mc", "last_x", "call_id", "called_at", "created_at", "updated_at", "data", "performance"]
+    __properties: ClassVar[List[str]] = ["stage", "address", "pair_address", "chain", "first_call_time", "mc_at_call", "ath_mc", "last_x", "call_id", "called_at", "created_at", "updated_at", "data", "intel", "intel_stale", "performance"]
 
     @field_validator('chain')
     def chain_validate_enum(cls, value):
@@ -69,7 +72,7 @@ class SignalWithToken(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SignalWithToken from a JSON string"""
+        """Create an instance of SignalDetail from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -93,6 +96,9 @@ class SignalWithToken(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of data
         if self.data:
             _dict['data'] = self.data.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of intel
+        if self.intel:
+            _dict['intel'] = self.intel.to_dict()
         # set to None if pair_address (nullable) is None
         # and model_fields_set contains the field
         if self.pair_address is None and "pair_address" in self.model_fields_set:
@@ -128,6 +134,11 @@ class SignalWithToken(BaseModel):
         if self.data is None and "data" in self.model_fields_set:
             _dict['data'] = None
 
+        # set to None if intel (nullable) is None
+        # and model_fields_set contains the field
+        if self.intel is None and "intel" in self.model_fields_set:
+            _dict['intel'] = None
+
         # set to None if performance (nullable) is None
         # and model_fields_set contains the field
         if self.performance is None and "performance" in self.model_fields_set:
@@ -137,7 +148,7 @@ class SignalWithToken(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SignalWithToken from a dict"""
+        """Create an instance of SignalDetail from a dict"""
         if obj is None:
             return None
 
@@ -158,6 +169,8 @@ class SignalWithToken(BaseModel):
             "created_at": obj.get("created_at"),
             "updated_at": obj.get("updated_at"),
             "data": TokenData.from_dict(obj["data"]) if obj.get("data") is not None else None,
+            "intel": TokenIntelligence.from_dict(obj["intel"]) if obj.get("intel") is not None else None,
+            "intel_stale": obj.get("intel_stale") if obj.get("intel_stale") is not None else False,
             "performance": obj.get("performance")
         })
         return _obj
